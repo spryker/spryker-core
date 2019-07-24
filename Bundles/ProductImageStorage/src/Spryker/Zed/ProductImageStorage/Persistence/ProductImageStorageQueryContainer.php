@@ -145,6 +145,8 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int[] $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery

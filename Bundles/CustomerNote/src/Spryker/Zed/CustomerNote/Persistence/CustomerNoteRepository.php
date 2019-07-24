@@ -19,8 +19,6 @@ class CustomerNoteRepository extends AbstractRepository implements CustomerNoteR
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer

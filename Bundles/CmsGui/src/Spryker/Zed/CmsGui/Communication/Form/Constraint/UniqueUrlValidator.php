@@ -42,30 +42,21 @@ class UniqueUrlValidator extends ConstraintValidator
         $submittedUrlTransfer = $this->buildUrlTransfer($cmsPageAttributesTransfer, $uniqueUrlConstraint);
         $existingUrlTransfer = $uniqueUrlConstraint->getUrlFacade()->findUrlCaseInsensitive($submittedUrlTransfer);
 
-        if ($existingUrlTransfer === null || $this->isResourcePageChanged($submittedUrlTransfer, $existingUrlTransfer)) {
+        if ($existingUrlTransfer === null || $existingUrlTransfer->getFkResourcePage() === null) {
             return;
         }
 
-        if ($existingUrlTransfer->getUrl() === $submittedUrlTransfer->getUrl()) {
+        if ($existingUrlTransfer->getFkResourcePage() === $submittedUrlTransfer->getFkResourcePage()) {
+            return;
+        }
+
+        if ($existingUrlTransfer->getUrl() !== $submittedUrlTransfer->getUrl()) {
             return;
         }
 
         $this->context->buildViolation(sprintf(static::ERROR_MESSAGE_PROVIDED_URL_IS_ALREADY_TAKEN, $submittedUrlTransfer->getUrl()))
             ->atPath('url')
             ->addViolation();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $submittedUrlTransfer
-     * @param \Generated\Shared\Transfer\UrlTransfer $existingUrlTransfer
-     *
-     * @return bool
-     */
-    protected function isResourcePageChanged(UrlTransfer $submittedUrlTransfer, UrlTransfer $existingUrlTransfer): bool
-    {
-        $submittedUrlFkResourcePage = $submittedUrlTransfer->getFkResourcePage();
-
-        return $submittedUrlFkResourcePage !== null && $submittedUrlFkResourcePage !== $existingUrlTransfer->getFkResourcePage();
     }
 
     /**
