@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImageStorage\Persistence;
 
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductImageStorageQueryContainerInterface extends QueryContainerInterface
@@ -64,6 +65,20 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
     public function queryProductAbstractIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds);
+
+    /**
+     * Specification:
+     * - Returns a a query for the table `spy_product_image_set_to_product_image` joining `spy_product_image_set` filtered by primary ids.
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @param int[] $productImageSetToProductImageIds
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
+    public function queryProductImageSetToProductImageByIds(array $productImageSetToProductImageIds): SpyProductImageSetToProductImageQuery;
 
     /**
      * @api

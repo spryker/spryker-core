@@ -7,20 +7,11 @@
 
 namespace Spryker\Zed\Sales\Dependency\Plugin;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 
-interface HydrateOrderPluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface instead.
+ */
+interface HydrateOrderPluginInterface extends OrderExpanderPluginInterface
 {
-    /**
-     * Specification:
-     *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
-     *   - Can be used to add additional data to OrderTransfer
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function hydrate(OrderTransfer $orderTransfer);
 }

@@ -15,8 +15,6 @@ interface CmsRepositoryInterface
      * Specification:
      * - Retrieve stores related to cms page
      *
-     * @api
-     *
      * @param int $idCmsPage
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]

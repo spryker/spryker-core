@@ -8,7 +8,7 @@
     "spryker/application": "^3.2.0",
     "spryker/customer": "^7.16.1",
     "spryker/glossary": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/mail": "^4.0.0",
     "spryker/product": "^6.8.0",

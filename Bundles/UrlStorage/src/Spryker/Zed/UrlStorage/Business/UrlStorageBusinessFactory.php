@@ -16,6 +16,7 @@ use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
 /**
  * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface getRepository()
  */
 class UrlStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -26,9 +27,9 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new UrlStorageWriter(
             $this->getUtilSanitizeService(),
-            $this->getQueryContainer(),
-            $this->getConfig()->isSendingToQueue(),
-            $this->getStoreFacade()
+            $this->getRepository(),
+            $this->getStoreFacade(),
+            $this->getConfig()->isSendingToQueue()
         );
     }
 

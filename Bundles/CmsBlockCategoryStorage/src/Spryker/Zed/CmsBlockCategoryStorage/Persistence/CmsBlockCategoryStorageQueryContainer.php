@@ -64,6 +64,8 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     /**
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()` instead.
+     *
      * @param int[] $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
@@ -82,6 +84,23 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
             )
             ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->filterByIdCmsBlockCategoryConnector_In($cmsBlockCategoriesIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $cmsBlockCategoriesIds
+     *
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoriesByCmsCategoryIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery
+    {
+        return $this->getFactory()
+            ->getCmsBlockCategoryConnectorQuery()
+            ->queryCmsBlockCategoryConnector()
             ->filterByIdCmsBlockCategoryConnector_In($cmsBlockCategoriesIds);
     }
 

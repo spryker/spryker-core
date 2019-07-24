@@ -14,8 +14,10 @@ use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementSalesUnitTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\EntityNotFoundException;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -92,7 +94,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @uses SpyStoreQuery
+     * @module Store
      *
      * @param int[] $salesUnitsIds
      *
@@ -230,12 +232,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
     {
-        $query = $this->getFactory()
-            ->createProductMeasurementUnitQuery()
-            ->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit());
-
-        $productMeasurementUnitEntityCollection = $query->find();
+        $productMeasurementUnitEntityCollection = $this->buildQueryFromCriteria(
+            $this->getFactory()->createProductMeasurementUnitQuery(),
+            $filterTransfer
+        )->find();
 
         return $this->getMappedProductMeasurementUnitTransfers($productMeasurementUnitEntityCollection);
     }
@@ -274,18 +274,11 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      */
     protected function findProductMeasurementSalesUnitIdsFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
-        $productMeasurementSalesUnitIds = [];
-
-        $query = $this->getFactory()
-            ->createProductMeasurementSalesUnitQuery()
-            ->offset($filterTransfer->getOffset())
-            ->limit($filterTransfer->getLimit());
-
-        foreach ($query->find() as $productMeasurementSalesUnit) {
-            $productMeasurementSalesUnitIds[] = $productMeasurementSalesUnit->getIdProductMeasurementSalesUnit();
-        }
-
-        return $productMeasurementSalesUnitIds;
+        return $this->buildQueryFromCriteria($this->getFactory()->createProductMeasurementSalesUnitQuery(), $filterTransfer)
+            ->select(SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT)
+            ->setFormatter(SimpleArrayFormatter::class)
+            ->find()
+            ->toArray();
     }
 
     /**
@@ -352,5 +345,20 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
 
         return $productMeasurementSalesUnitQuery->find()
             ->toKeyValue(SpyProductTableMap::COL_SKU, SpyProductMeasurementSalesUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_SALES_UNIT);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
+    {
+        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
+
+        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
+
+        return $criteria;
     }
 }
