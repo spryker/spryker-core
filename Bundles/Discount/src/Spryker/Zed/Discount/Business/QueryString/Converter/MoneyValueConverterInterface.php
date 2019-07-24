@@ -13,7 +13,7 @@ interface MoneyValueConverterInterface
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\ClauseTransfer
+     * @return void
      */
-    public function convertDecimalToCent(ClauseTransfer $clauseTransfer): ClauseTransfer;
+    public function convertDecimalToCent(ClauseTransfer $clauseTransfer);
 }
