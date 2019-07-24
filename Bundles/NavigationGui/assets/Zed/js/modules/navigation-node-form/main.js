@@ -41,17 +41,17 @@ $(document).ready(function() {
     safeChecks.addSafeDatetimeCheck();
 
     $('.spryker-form-autocomplete').each(function(key, value) {
-        var obj = $(value);
-        if (obj.data('url') === 'undefined') {
+        var autoCompletedField = $(value);
+        if (autoCompletedField.data('url') === 'undefined') {
             return;
         }
 
-        if (obj.hasClass('ui-autocomplete')) {
-            obj.autocomplete('destroy');
+        if (autoCompletedField.hasClass('ui-autocomplete')) {
+            autoCompletedField.autocomplete('destroy');
         }
 
-        obj.autocomplete({
-            source: obj.data('url'),
+        autoCompletedField.autocomplete({
+            source: autoCompletedField.data('url'),
             minLength: 3
         });
     });
