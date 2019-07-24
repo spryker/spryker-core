@@ -76,6 +76,11 @@ $(document).ready(function() {
         if (obj.data('url') === 'undefined') {
             return;
         }
+
+        if (obj.hasClass('ui-autocomplete')) {
+            obj.autocomplete('destroy');
+        }
+
         obj.autocomplete({
             source: obj.data('url'),
             minLength: 3
