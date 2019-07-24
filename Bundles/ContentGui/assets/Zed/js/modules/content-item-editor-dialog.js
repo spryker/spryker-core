@@ -134,7 +134,7 @@ var ContentItemDialog = function(
                     elementForInsert = this.updateElementForInsert($clickedNode, elementForInsert);
                 }
 
-                this.context.invoke('pasteHTML', elementForInsert)
+                this.context.invoke('pasteHTML', elementForInsert);
                 this.removeUnecessaryLines($clickedNode);
             };
 
@@ -151,7 +151,7 @@ var ContentItemDialog = function(
                     return false;
                 }
 
-                return $nodeInnerItems.length <= 1 && $nodeInnerItems.children().length <= 1;
+                return $nodeInnerItems.length <= 2 && $nodeInnerItems.eq(1).is('br') && $nodeInnerItems.children().length <= 1;
             };
 
             this.removeItemFromEditor = function () {
@@ -169,14 +169,11 @@ var ContentItemDialog = function(
                 var $nextNode = $insertedNode.next();
 
                 if (this.isWidgetEmpty($nextNode) || this.isNodeEmpty($nextNode)) {
-                    $.when(function () {
-                        $insertedNode.removeAttr('style');
-                        $nextNode.remove();
-                    }()).then(function () {
-                        self.history.stackOffset--;
-                        self.history.stack.splice(-1,1);
-                        self.history.recordUndo();
-                    });
+                    $insertedNode.removeAttr('style');
+                    $nextNode.remove();
+                    self.history.stackOffset--;
+                    self.history.stack.splice(-1,1);
+                    self.history.recordUndo();
                 };
             };
 
