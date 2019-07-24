@@ -57,4 +57,11 @@ interface StoreReaderInterface
      * @return string[]
      */
     public function getCountries();
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array;
 }
