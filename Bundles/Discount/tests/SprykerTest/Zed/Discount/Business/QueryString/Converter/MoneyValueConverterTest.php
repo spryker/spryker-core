@@ -41,7 +41,7 @@ class MoneyValueConverterTest extends Unit
         $clauseTransfer->setValue(implode(ComparatorOperators::LIST_DELIMITER, $values));
         $clauseTransfer->setOperator(IsNotIn::EXPRESSION);
 
-        $clauseTransfer = $currencyConverterMock->convertDecimalToCent($clauseTransfer);
+        $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
         $convertedValues = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
 
@@ -62,7 +62,7 @@ class MoneyValueConverterTest extends Unit
         $clauseTransfer->setValue(implode(ComparatorOperators::LIST_DELIMITER, $values));
         $clauseTransfer->setOperator(IsIn::EXPRESSION);
 
-        $clauseTransfer = $currencyConverterMock->convertDecimalToCent($clauseTransfer);
+        $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
         $convertedValues = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
 
@@ -82,7 +82,7 @@ class MoneyValueConverterTest extends Unit
         $clauseTransfer->setValue('10,50');
         $clauseTransfer->setOperator(IsIn::EXPRESSION);
 
-        $clauseTransfer = $currencyConverterMock->convertDecimalToCent($clauseTransfer);
+        $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
         $this->assertEquals(1050, $clauseTransfer->getValue());
     }
