@@ -76,7 +76,7 @@ class CartSharer implements CartSharerInterface
         SharedCartToPersistentCartClientInterface $persistentCartClient,
         SharedCartToMessengerClientInterface $messengerClient,
         SharedCartToCustomerClientInterface $customerClient,
-        ?SharedCartToQuoteClientInterface $quoteClient
+        SharedCartToQuoteClientInterface $quoteClient
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->persistentCartClient = $persistentCartClient;
