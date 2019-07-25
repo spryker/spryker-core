@@ -58,7 +58,7 @@ class CartSharer implements CartSharerInterface
     protected $customerClient;
 
     /**
-     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface|null
+     * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface
      */
     protected $quoteClient;
 
@@ -68,7 +68,7 @@ class CartSharer implements CartSharerInterface
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface $messengerClient
      * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface $customerClient
-     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface|null $quoteClient
+     * @param \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface $quoteClient
      */
     public function __construct(
         SharedCartStubInterface $sharedCartStub,
@@ -76,7 +76,7 @@ class CartSharer implements CartSharerInterface
         SharedCartToPersistentCartClientInterface $persistentCartClient,
         SharedCartToMessengerClientInterface $messengerClient,
         SharedCartToCustomerClientInterface $customerClient,
-        ?SharedCartToQuoteClientInterface $quoteClient = null
+        ?SharedCartToQuoteClientInterface $quoteClient
     ) {
         $this->multiCartClient = $multiCartClient;
         $this->persistentCartClient = $persistentCartClient;
@@ -145,7 +145,7 @@ class CartSharer implements CartSharerInterface
 
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
 
-        if ($this->isQuoteLocked($quoteTransfer)) {
+        if ($this->quoteClient->isQuoteLocked($quoteTransfer)) {
             return (new QuoteResponseTransfer())->setIsSuccessful(false);
         }
 
@@ -319,15 +319,5 @@ class CartSharer implements CartSharerInterface
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         return $quoteUpdateRequestTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteLocked(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteClient && $this->quoteClient->isQuoteLocked($quoteTransfer);
     }
 }
