@@ -45,9 +45,9 @@ class CmsBlockProductEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryCmsBlockProductsByIds($ids);
+        $query = $this->getQueryContainer()->queryCmsBlockProductsByCmsBlockProductIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 

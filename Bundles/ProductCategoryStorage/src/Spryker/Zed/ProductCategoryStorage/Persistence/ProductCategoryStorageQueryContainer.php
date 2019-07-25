@@ -12,6 +12,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
@@ -48,6 +49,8 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     /**
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int[] $productCategoryIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
@@ -65,6 +68,23 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
             )
             ->filterByIdProductCategory_In($productCategoryIds)
             ->orderByProductOrder();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productCategoryIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategoryByProductCategoryIds($productCategoryIds): SpyProductCategoryQuery
+    {
+        return $this->getFactory()
+            ->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->filterByIdProductCategory_In($productCategoryIds);
     }
 
     /**

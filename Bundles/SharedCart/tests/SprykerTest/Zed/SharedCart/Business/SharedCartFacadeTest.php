@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ResourceShareDataTransfer;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
 use Generated\Shared\Transfer\ResourceShareResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
 
 /**
  * Auto-generated group annotations
@@ -290,6 +292,84 @@ class SharedCartFacadeTest extends Test
         $this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomersSharingSameQuoteShouldReturnQuoteOwnerInCollection(): void
+    {
+        //Arrange
+        $ownerCustomerTransfer = $this->tester->haveCustomer();
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+        ]);
+
+        $otherCustomerTransfer = $this->tester->haveCustomer();
+        $otherCompanyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $otherCustomerTransfer->getIdCustomer(),
+            CompanyUserTransfer::CUSTOMER => $otherCustomerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+
+        $this->tester->haveQuoteCompanyUser(
+            $otherCompanyUserTransfer,
+            $quoteTransfer,
+            $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
+                ReadSharedCartPermissionPlugin::KEY,
+                WriteSharedCartPermissionPlugin::KEY,
+            ])
+        );
+
+        //Act
+        $customerCollectionTransfer = $this->tester->getFacade()
+            ->getCustomerCollectionByQuote($quoteTransfer->setCustomer($otherCustomerTransfer));
+
+        //Assert
+        $this->assertNotEmpty($customerCollectionTransfer->getCustomers());
+        $this->assertCount(2, $customerCollectionTransfer->getCustomers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomersSharingSameQuoteShouldReturnCustomerCollectionWithCustomerWithAccessToQuote(): void
+    {
+        //Arrange
+        $ownerCustomerTransfer = $this->tester->haveCustomer();
+        $quoteTransfer = $this->tester->havePersistentQuote([
+            QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),
+            QuoteTransfer::CUSTOMER => $ownerCustomerTransfer,
+        ]);
+
+        $otherCustomerTransfer = $this->tester->haveCustomer();
+        $otherCompanyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $otherCustomerTransfer->getIdCustomer(),
+            CompanyUserTransfer::CUSTOMER => $otherCustomerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+
+        $this->tester->haveQuoteCompanyUser(
+            $otherCompanyUserTransfer,
+            $quoteTransfer,
+            $this->tester->haveQuotePermissionGroup(static::PERMISSION_GROUP_FULL_ACCESS, [
+                ReadSharedCartPermissionPlugin::KEY,
+                WriteSharedCartPermissionPlugin::KEY,
+            ])
+        );
+
+        //Act
+        $customerCollectionTransfer = $this->tester->getFacade()
+            ->getCustomerCollectionByQuote($quoteTransfer);
+
+        //Assert
+        $this->assertNotEmpty($customerCollectionTransfer->getCustomers());
+        $this->assertCount(1, $customerCollectionTransfer->getCustomers());
+        $this->assertSame(
+            $otherCustomerTransfer->getCustomerReference(),
+            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getCustomerReference()
         );
     }
 

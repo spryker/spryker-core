@@ -38,7 +38,7 @@ class RedirectAfterLoginProviderTest extends Unit
     public function setUp()
     {
         Request::setTrustedHosts([]);
-        Request::setTrustedProxies([]);
+        Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
     }
 
     /**

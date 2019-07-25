@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Table;
 
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
@@ -22,6 +24,8 @@ class CompanyUnitAddressTable extends AbstractTable
     public const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
     public const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
     public const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
+    public const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
+    public const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
 
     public const COL_COUNTRY_RELATION = 'Country';
     public const COL_COMPANY_RELATION = 'Company';
@@ -79,6 +83,11 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_ID_COMPANY_UNIT_ADDRESS,
             static::COL_CITY,
             static::COL_ZIPCODE,
+            static::COL_ADDRESS1,
+            static::COL_ADDRESS2,
+            static::COL_ADDRESS3,
+            static::COL_COUNTRY_NAME,
+            static::COL_COMPANY_NAME,
         ]);
         $config = $this->companyUnitAddressTablePluginsExecutor->executeTableConfigExpanderPlugins($config);
 
@@ -92,7 +101,7 @@ class CompanyUnitAddressTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->companyUnitAddressQueryContainer->queryCompanyUnitAddress();
+        $query = $this->companyUnitAddressQueryContainer->queryCompanyUnitAddressWithCompanyAndCountry();
         $queryResults = $this->runQuery($query, $config);
         $results = [];
 

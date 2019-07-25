@@ -5,8 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/checkout-rest-api-extension": "^1.2.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },

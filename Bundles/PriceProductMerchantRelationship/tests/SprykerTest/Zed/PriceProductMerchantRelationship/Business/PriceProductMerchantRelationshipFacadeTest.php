@@ -28,6 +28,8 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @deprecated will be removed without replacement.
+     *
      * @return void
      */
     public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore()

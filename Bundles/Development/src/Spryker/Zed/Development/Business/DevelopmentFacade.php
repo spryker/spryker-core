@@ -56,6 +56,19 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param string|null $module
      * @param array $options
      *
+     * @return void
+     */
+    public function runFixtures($module, array $options = [])
+    {
+        $this->getFactory()->createCodeTester()->runFixtures($module, $options);
+    }
+
+    /**
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
      * @return int Exit code
      */
     public function runPhpMd($module, array $options = [])
