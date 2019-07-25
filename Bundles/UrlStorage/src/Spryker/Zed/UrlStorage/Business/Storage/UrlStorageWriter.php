@@ -214,6 +214,12 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             ->fromArray($urlEntity->toArray(), true)
             ->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());
 
+        $urlStorageTransfer->addUrlStorage(
+            (new UrlStorageTransfer())
+                ->fromArray($urlEntity->toArray(), true)
+                ->setLocaleName($urlEntity->getSpyLocale()->getLocaleName())
+        );
+
         foreach ($urlEntities as $otherUrlEntity) {
             $urlStorageTransfer->addUrlStorage(
                 (new UrlStorageTransfer())

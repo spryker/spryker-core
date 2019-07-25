@@ -30,7 +30,9 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
             ->getFactory()
             ->getUrlQueryContainer()
             ->queryUrls()
-            ->filterByIdUrl_In($urlIds)
+            ->_if($urlIds !== [])
+                ->filterByIdUrl_In($urlIds)
+            ->_endif()
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $queryUrl;
