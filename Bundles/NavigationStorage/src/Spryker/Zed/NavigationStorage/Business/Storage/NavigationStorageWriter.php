@@ -153,7 +153,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     protected function getNavigationTreeTransfer(array $navigationIds)
     {
         $navigationTrees = [];
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getSharedPersistenceLocaleNames();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find()->getData();
         foreach ($navigationIds as $navigationId) {
             $navigationTransfer = new NavigationTransfer();
@@ -165,6 +165,21 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
         }
 
         return $navigationTrees;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSharedPersistenceLocaleNames(): array
+    {
+        $localeNames = $this->store->getLocales();
+        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[] = $localeName;
+            }
+        }
+
+        return array_unique($localeNames);
     }
 
     /**
@@ -211,11 +226,16 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     {
         $nodes = new ArrayObject();
         foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
+            $navigationNodeLocalizedAttributes = $navigationTreeNodeTransfer->getNavigationNode()->getNavigationNodeLocalizedAttributes()->getIterator()->current();
+            if (!$navigationNodeLocalizedAttributes instanceof NavigationNodeLocalizedAttributesTransfer) {
+                continue;
+            }
+
             $nodeTransfer = new NavigationNodeStorageTransfer();
             $nodeTransfer->setId($navigationTreeNodeTransfer->getNavigationNode()->getIdNavigationNode());
-            $nodeTransfer->setTitle($navigationTreeNodeTransfer->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getTitle());
-            $nodeTransfer->setCssClass($navigationTreeNodeTransfer->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]->getCssClass());
-            $nodeTransfer->setUrl($this->getNavigationNodeUrl($navigationTreeNodeTransfer->getNavigationNode()->getNavigationNodeLocalizedAttributes()[0]));
+            $nodeTransfer->setTitle($navigationNodeLocalizedAttributes->getTitle());
+            $nodeTransfer->setCssClass($navigationNodeLocalizedAttributes->getCssClass());
+            $nodeTransfer->setUrl($this->getNavigationNodeUrl($navigationNodeLocalizedAttributes));
             $nodeTransfer->setNodeType($navigationTreeNodeTransfer->getNavigationNode()->getNodeType());
             $nodeTransfer->setIsActive($navigationTreeNodeTransfer->getNavigationNode()->getIsActive());
             $nodeTransfer->setValidFrom($navigationTreeNodeTransfer->getNavigationNode()->getValidFrom());

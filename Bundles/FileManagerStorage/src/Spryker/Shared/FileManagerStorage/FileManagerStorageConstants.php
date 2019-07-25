@@ -30,6 +30,14 @@ interface FileManagerStorageConstants
 
     /**
      * Specification:
+     * - Resource name, this will use for key generating.
+     *
+     * @api
+     */
+    public const RESOURCE_NAME = 'file';
+
+    /**
+     * Specification:
      * - Enables/disables storage synchronization.
      *
      * @api

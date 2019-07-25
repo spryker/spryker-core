@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit-gui-extension": "^1.0.0",
-    "spryker/company-unit-address": "^1.7.0",
+    "spryker/company-unit-address": "^1.10.0",
     "spryker/company-unit-address-gui-extension": "^1.0.0",
     "spryker/country": "^3.0.0",
     "spryker/gui": "^3.0.0",

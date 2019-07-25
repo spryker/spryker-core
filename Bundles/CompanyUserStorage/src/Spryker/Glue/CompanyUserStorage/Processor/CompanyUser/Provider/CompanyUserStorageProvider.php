@@ -49,6 +49,10 @@ class CompanyUserStorageProvider implements CompanyUserStorageProviderInterface
             $companyUserTransfer->getUuid()
         );
 
+        if (!$companyUserStorageTransfer) {
+            return new CompanyUserTransfer();
+        }
+
         return $this->companyUserStorageMapper->mapCompanyUserStorageTransferToCompanyUserTransfer(
             $companyUserStorageTransfer,
             $companyUserTransfer

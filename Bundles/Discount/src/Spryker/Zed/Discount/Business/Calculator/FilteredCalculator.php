@@ -26,6 +26,7 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
      * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Discount\Business\Distributor\DistributorInterface $distributor
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface[] $calculatorPlugins
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[] $collectedDiscountGroupingPlugins
      * @param \Spryker\Zed\Discount\Business\Filter\DiscountableItemFilterInterface $discountableItemFilter
      */
     public function __construct(
@@ -33,9 +34,10 @@ class FilteredCalculator extends Calculator implements CalculatorInterface
         DiscountToMessengerInterface $messengerFacade,
         DistributorInterface $distributor,
         array $calculatorPlugins,
+        array $collectedDiscountGroupingPlugins,
         DiscountableItemFilterInterface $discountableItemFilter
     ) {
-        parent::__construct($collectorBuilder, $messengerFacade, $distributor, $calculatorPlugins);
+        parent::__construct($collectorBuilder, $messengerFacade, $distributor, $calculatorPlugins, $collectedDiscountGroupingPlugins);
         $this->discountableItemFilter = $discountableItemFilter;
     }
 

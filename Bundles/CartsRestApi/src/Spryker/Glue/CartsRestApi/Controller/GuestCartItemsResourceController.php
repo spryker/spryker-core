@@ -51,6 +51,7 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "patch": {
+     *          "path": "/guest-carts/{guestCartId}/guest-cart-items/{guestCartItemId}",
      *          "summary": [
      *              "Updates guest cart item quantity."
      *          ],
@@ -83,6 +84,7 @@ class GuestCartItemsResourceController extends AbstractController
     /**
      * @Glue({
      *      "delete": {
+     *          "path": "/guest-carts/{guestCartId}/guest-cart-items/{guestCartItemId}",
      *          "summary": [
      *              "Removes item from guest cart."
      *          ],

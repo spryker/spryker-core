@@ -23,8 +23,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
@@ -51,8 +49,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *

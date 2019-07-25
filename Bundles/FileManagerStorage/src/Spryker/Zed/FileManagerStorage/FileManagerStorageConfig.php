@@ -23,6 +23,14 @@ class FileManagerStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string|null
+     */
+    public function getFileManagerSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
      * @return bool
      */
     public function isSendingToQueue()
