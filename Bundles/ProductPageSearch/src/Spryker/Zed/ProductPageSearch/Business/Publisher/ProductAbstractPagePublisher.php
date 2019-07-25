@@ -15,6 +15,7 @@ use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\ProductPageSearch\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface;
 
 class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterface
@@ -50,24 +51,32 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $productPageSearchWriter;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductPageSearchQueryContainerInterface $queryContainer,
         array $pageDataExpanderPlugins,
         array $productPageDataLoaderPlugins,
         ProductPageSearchMapperInterface $productPageSearchMapper,
-        ProductPageSearchWriterInterface $productPageSearchWriter
+        ProductPageSearchWriterInterface $productPageSearchWriter,
+        ProductPageSearchToStoreFacadeInterface $storeFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->pageDataExpanderPlugins = $pageDataExpanderPlugins;
         $this->productPageDataLoaderPlugins = $productPageDataLoaderPlugins;
         $this->productPageSearchMapper = $productPageSearchMapper;
         $this->productPageSearchWriter = $productPageSearchWriter;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -478,16 +487,31 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
                 $mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName] :
                 new SpyProductAbstractPageSearch();
 
+            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
+
+            if (!$this->isValidStoreLocale($storeName, $localeName)) {
+                continue;
+            }
+
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
-
-            unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    protected function isValidStoreLocale(string $storeName, string $localeName): bool
+    {
+        return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
     }
 }

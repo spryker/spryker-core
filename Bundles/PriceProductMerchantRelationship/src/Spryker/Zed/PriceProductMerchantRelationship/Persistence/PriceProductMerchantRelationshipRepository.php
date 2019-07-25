@@ -22,12 +22,22 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildMerchantRelationshipPriceDimensionCriteria(
+    public function buildMerchantRelationshipPriceDimensionQueryCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?QueryCriteriaTransfer {
         return $this->getFactory()
             ->createMerchantRelationshipPriceQueryExpander()
             ->buildMerchantRelationshipPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantRelationshipPriceQueryExpander()
+            ->buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria();
     }
 
     /**

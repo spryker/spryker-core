@@ -45,11 +45,12 @@ class ProductConcreteImageEventResourceQueryContainerPlugin extends AbstractPlug
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductImageSetToProductImageByIds($ids);
+        $query = $this->getQueryContainer()->queryProductIdsByProductImageSetToProductImageIds($ids);
 
         if ($ids === []) {
             $query->clear();
             $query->clearSelectColumns();
+            $query->innerJoinSpyProductImageSet();
         }
 
         return $query;
