@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
+use Throwable;
 
 /**
  * Auto-generated group annotations
@@ -1444,6 +1445,49 @@ class QuoteRequestFacadeTest extends Unit
         // Assert
         $this->assertNull($updatedQuoteTransfer->getQuoteRequestReference());
         $this->assertNull($updatedQuoteTransfer->getQuoteRequestVersionReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteQuoteRequestsForCompanyUserWillDeleteAllAssignedQuoteRequests(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+
+        // Act
+        $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(
+            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
+        );
+        $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
+            $this->createFilterTransfer($quoteRequestTransfer)
+        );
+
+        // Assert
+        $this->assertEquals(0, $quoteRequestCollection->getQuoteRequests()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteQuoteRequestsForCompanyUserWillSucessfullyFinishWhenNoQuoteRequestsAssigned(): void
+    {
+        $isSuccessful = true;
+
+        // Act
+        try {
+            $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(
+                $this->companyUserTransfer->getIdCompanyUser()
+            );
+        } catch (Throwable $unexpectedException) {
+            $isSuccessful = false;
+        }
+
+        // Assert
+        $this->assertTrue($isSuccessful);
     }
 
     /**
