@@ -306,13 +306,7 @@ class Console extends SymfonyCommand
         $width = max(0, $width);
         $message .= str_repeat(' ', $width);
 
-        if ($this->output->isVerbose()) {
-            $this->output->writeln('<error>' . str_repeat(' ', $this->getTerminalWidth()) . '</error>');
-        }
         $this->output->writeln(sprintf('<error> %s</error>', $message));
-        if ($this->output->isVerbose()) {
-            $this->output->writeln('<error>' . str_repeat(' ', $this->getTerminalWidth()) . '</error>');
-        }
     }
 
     /**
@@ -329,13 +323,7 @@ class Console extends SymfonyCommand
         $width = max(0, $width);
         $message .= str_repeat(' ', $width);
 
-        if ($this->output->isVerbose()) {
-            $this->output->writeln('<warning>' . str_repeat(' ', $this->getTerminalWidth()) . '</warning>');
-        }
         $this->output->writeln(sprintf('<warning> %s</warning>', $message));
-        if ($this->output->isVerbose()) {
-            $this->output->writeln('<warning>' . str_repeat(' ', $this->getTerminalWidth()) . '</warning>');
-        }
     }
 
     /**
@@ -352,13 +340,7 @@ class Console extends SymfonyCommand
         $width = max(0, $width);
         $message .= str_repeat(' ', $width);
 
-        if ($this->output->isVerbose()) {
-            $this->output->writeln('<success>' . str_repeat(' ', $this->getTerminalWidth()) . '</success>');
-        }
         $this->output->writeln(sprintf('<success> %s</success>', $message));
-        if ($this->output->isVerbose()) {
-            $this->output->writeln('<success>' . str_repeat(' ', $this->getTerminalWidth()) . '</success>');
-        }
     }
 
     /**
