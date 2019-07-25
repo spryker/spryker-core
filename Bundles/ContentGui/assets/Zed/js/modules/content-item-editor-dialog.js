@@ -22,6 +22,7 @@ var ContentItemDialog = function(
             this.options = context.options;
             this.$ui = $.summernote.ui;
             this.$range = $.summernote.range;
+            this.history = context.modules.editor.history;
             this.contentCache = {};
 
             this.initialize = function() {
@@ -111,37 +112,46 @@ var ContentItemDialog = function(
                 }
             };
 
+            this.updateElementForInsert = function ($clickedNode, elementForInsert) {
+                if (this.isNodeEmpty($clickedNode)) {
+                    this.clearNode($clickedNode);
+
+                    return elementForInsert;
+                }
+
+                return '<p>' + elementForInsert + '</p>';
+            };
+
             this.addItemInEditor = function (elementForInsert) {
                 var $clickedNode = this.context.invoke('contentItemPopover.getClickedNode');
 
                 if ($clickedNode.length) {
                     this.clearNode($clickedNode);
-                } else {
-                    $clickedNode = $(this.context.invoke('editor.createRange').sc);
+                }
 
-                    if (this.isNodeEmpty($clickedNode)) {
-                        $clickedNode.parents('p').empty();
-                    } else {
-                        elementForInsert = '<p>' + elementForInsert + '</p>'
-                    }
+                if (!$clickedNode.length) {
+                    $clickedNode = $(this.context.invoke('editor.createRange').sc);
+                    elementForInsert = this.updateElementForInsert($clickedNode, elementForInsert);
                 }
 
                 this.context.invoke('pasteHTML', elementForInsert);
-                this.removeUnecessaryLines();
+                this.removeUnecessaryLines($clickedNode);
             };
 
             this.isNodeEmpty = function ($clickedNode) {
                 var $nodeInnerItems = $clickedNode.children();
 
-                return $nodeInnerItems.length <= 1 && $nodeInnerItems.eq(0).is('br');
+                return $nodeInnerItems.length <= 1 && $nodeInnerItems.eq(0).is('br'); // Empty node in summernote consider <br> tag
             };
 
             this.isWidgetEmpty = function ($clickedNode) {
                 var $nodeInnerItems = $clickedNode.children();
 
-                return $nodeInnerItems.length <= 1 &&
-                    $nodeInnerItems.eq(0).is('span') &&
-                    $nodeInnerItems.children().length <= 1;
+                if (!$nodeInnerItems.eq(0).is('.js-content-item-editor')) {
+                    return false;
+                }
+
+                return $nodeInnerItems.length <= 2 && $nodeInnerItems.eq(1).is('br') && $nodeInnerItems.children().length <= 1;
             };
 
             this.removeItemFromEditor = function () {
@@ -152,20 +162,25 @@ var ContentItemDialog = function(
                 this.context.invoke('pasteHTML', ' ');
             };
 
-            this.removeUnecessaryLines = function () {
-                var $insertedNode = $(this.context.invoke('editor.createRange').sc);
+            this.removeUnecessaryLines = function ($clickedNode) {
+                $clickedNode = $clickedNode.is('p') ? $clickedNode : $clickedNode.parents('p');
+                var self = this;
+                var $insertedNode = $clickedNode.next();
                 var $nextNode = $insertedNode.next();
 
                 if (this.isWidgetEmpty($nextNode) || this.isNodeEmpty($nextNode)) {
                     $insertedNode.removeAttr('style');
                     $nextNode.remove();
+                    self.history.stackOffset--;
+                    self.history.stack.splice(-1,1);
+                    self.history.recordUndo();
                 };
             };
 
             this.clearNode = function ($clickedNode) {
-                var $clickedNodeParent = $clickedNode.parent('p');
+                $clickedNode = $clickedNode.is('p') ? $clickedNode : $clickedNode.parents('p');
 
-                $clickedNodeParent.empty();
+                $clickedNode.empty();
             };
 
             this.getNewDomElement = function (
