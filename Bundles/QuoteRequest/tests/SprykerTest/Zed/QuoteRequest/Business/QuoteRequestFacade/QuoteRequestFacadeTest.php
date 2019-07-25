@@ -1466,7 +1466,7 @@ class QuoteRequestFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(0, $quoteRequestCollection->getQuoteRequests()->count());
+        $this->assertSame(0, $quoteRequestCollection->getQuoteRequests()->count());
     }
 
     /**
