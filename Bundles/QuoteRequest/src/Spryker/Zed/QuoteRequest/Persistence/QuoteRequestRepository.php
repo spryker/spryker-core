@@ -140,8 +140,8 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     {
         return $this->getFactory()
             ->getQuoteRequestPropelQuery()
-            ->select(SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST)
             ->filterByFkCompanyUser($idCompanyUser)
+            ->select(SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST)
             ->find()
             ->toArray();
     }
