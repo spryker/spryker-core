@@ -155,11 +155,13 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      */
     public function getKeys(string $pattern, ?int $limit = null): array
     {
+        $keys = $this->getClient()->getKeys($pattern);
+
         if ($limit !== null) {
-            return array_slice($this->getClient()->getKeys($pattern), 0, $limit);
+            return array_slice($keys, 0, $limit);
         }
 
-        return $this->getClient()->getKeys($pattern);
+        return $keys;
     }
 
     /**

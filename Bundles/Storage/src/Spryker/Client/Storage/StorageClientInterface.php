@@ -94,17 +94,6 @@ interface StorageClientInterface
     /**
      * @api
      *
-     * @param string $match
-     * @param int $count
-     * @param int|null $cursor
-     *
-     * @return array [string, string[]]
-     */
-    public function scanKeys(string $match, int $count, ?int $cursor = 0): array;
-
-    /**
-     * @api
-     *
      * @param string $pattern
      * @param int|null $limit
      *
