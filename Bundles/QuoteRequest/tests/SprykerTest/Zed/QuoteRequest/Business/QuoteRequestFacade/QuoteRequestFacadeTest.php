@@ -1475,6 +1475,7 @@ class QuoteRequestFacadeTest extends Unit
      */
     public function testDeleteQuoteRequestsForCompanyUserWillSucessfullyFinishWhenNoQuoteRequestsAssigned(): void
     {
+        // Arrange
         $isSuccessful = true;
 
         // Act
