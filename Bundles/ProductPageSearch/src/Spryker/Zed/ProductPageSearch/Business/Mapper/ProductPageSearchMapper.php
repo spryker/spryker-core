@@ -133,7 +133,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return array
      */
-    protected function getConcreteProductData(array $concreteProducts, $idLocale)
+    protected function getConcreteProductData(array $concreteProducts, int $idLocale)
     {
         $concreteNames = [];
         $concreteSkus = [];
@@ -174,7 +174,15 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      */
     protected function isSearchable(array $concreteProduct, int $idLocale): bool
     {
+        if (isset($concreteProduct['SpyProductSearches']) === false) {
+            return false;
+        }
+
         foreach ($concreteProduct['SpyProductSearches'] as $spyProductSearch) {
+            if (isset($spyProductSearch['fk_locale']) === false || isset($spyProductSearch['is_searchable']) === false) {
+                return false;
+            }
+
             if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
                 return true;
             }
@@ -192,7 +200,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return void
      */
-    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
+    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, int $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
     {
         $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {
