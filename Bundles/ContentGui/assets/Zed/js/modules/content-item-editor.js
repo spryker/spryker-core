@@ -132,13 +132,13 @@ var ContentItemEditor = function(options) {
     };
 
     this.onChangeHandler = function ($editor, self) {
-        var twigMacroRegExp = /.*\{{.*}}/;
+        var curlyBracesRegExp = /{{.+}}/;
         var $editorRange = $editor.summernote('createRange');
         var $editorNode = $($editorRange.sc);
         var nodeContent = $editorNode.text();
-        var isTwigMacro = twigMacroRegExp.test(nodeContent);
+        var hasCurlyBraces = curlyBracesRegExp.test(nodeContent);
 
-        if (!isTwigMacro) {
+        if (!hasCurlyBraces) {
             return;
         }
 
@@ -159,10 +159,10 @@ var ContentItemEditor = function(options) {
         );
 
         $editorParentNode.replaceWith($elementForInsert);
-        this.putCaretInTheEnd($elementForInsert);
+        this.putCaretAtTheLineEnd($elementForInsert);
     };
 
-    this.putCaretInTheEnd = function ($insertedElement) {
+    this.putCaretAtTheLineEnd = function ($insertedElement) {
         var range = document.createRange();
         range.selectNode($insertedElement[0].childNodes[0]);
         var selection = window.getSelection();
