@@ -26,14 +26,15 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
      */
     public function queryUrls(array $urlIds)
     {
-        $queryUrl = $this
-            ->getFactory()
+        $queryUrl = $this->getFactory()
             ->getUrlQueryContainer()
-            ->queryUrls()
-            ->_if($urlIds !== [])
-                ->filterByIdUrl_In($urlIds)
-            ->_endif()
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+            ->queryUrls();
+
+        if ($urlIds !== []) {
+            $queryUrl->filterByIdUrl_In($urlIds);
+        }
+
+        $queryUrl->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $queryUrl;
     }
