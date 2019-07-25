@@ -161,6 +161,9 @@ class PriceManagerTest extends Unit
         $priceFacadeMock->method('getGrossPriceModeIdentifier')
             ->willReturn('GROSS_MODE');
 
+        $priceFacadeMock->method('getDefaultPriceMode')
+            ->willReturn('GROSS_MODE');
+
         return new PriceManager($priceProductCartToPriceBridge, $priceFacadeMock);
     }
 

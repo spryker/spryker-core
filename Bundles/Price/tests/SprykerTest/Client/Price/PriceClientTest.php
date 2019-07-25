@@ -88,7 +88,7 @@ class PriceClientTest extends Unit
 
         //Act
         $priceClient->switchPriceMode($defaultPriceMode);
-        $priceModeCache = $this->createPriceModeCache()->get();
+        $priceModeCache = $this->tester->createPriceModeCache()->get();
 
         //Assert
         $this->assertNotNull($priceModeCache);
