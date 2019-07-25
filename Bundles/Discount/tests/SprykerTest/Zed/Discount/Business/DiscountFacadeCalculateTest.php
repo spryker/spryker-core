@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Discount\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -30,8 +29,6 @@ use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface;
-use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilPriceServiceBridge;
-use Spryker\Zed\Discount\Dependency\Service\DiscountToUtilQuantityServiceBridge;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -49,11 +46,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class DiscountFacadeCalculateTest extends Unit
 {
     use LocatorHelperTrait;
-
-    /**
-     * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
-     */
-    protected $tester;
 
     /**
      * @return void
@@ -93,23 +85,18 @@ class DiscountFacadeCalculateTest extends Unit
     }
 
     /**
-     * @dataProvider calculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscountsDataProvider
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int|float $minimumItemAmount
-     *
      * @return void
      */
-    public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(
-        QuoteTransfer $quoteTransfer,
-        $minimumItemAmount
-    ): void {
+    public function testCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(): void
+    {
         $this->createDiscountEntity(
             '(sku = "123")',
             'sku = "123"',
             DiscountConstants::TYPE_CART_RULE,
-            $minimumItemAmount
+            2
         );
+
+        $quoteTransfer = $this->createQuoteTransfer();
 
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
@@ -120,58 +107,18 @@ class DiscountFacadeCalculateTest extends Unit
     }
 
     /**
-     * @return array
-     */
-    public function calculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscountsDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getDataForCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(1),
-            'float stock' => $this->getDataForCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts(1.1),
-        ];
-    }
-
-    /**
-     * @param int|float $quantity
-     *
-     * @return array
-     */
-    protected function getDataForCalculateWhenMinimumItemAmountNotMatchesItemsIncludeAllProvidedDiscounts($quantity): array
-    {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem([
-                ItemTransfer::SKU => '123',
-                ItemTransfer::QUANTITY => $quantity,
-            ])
-            ->withItem([
-                ItemTransfer::SKU => '456',
-                ItemTransfer::QUANTITY => $quantity,
-            ])
-            ->build();
-        $quoteTransfer->setStore($this->getCurrentStore());
-
-        return [$quoteTransfer, $quantity * 2];
-    }
-
-    /**
-     * @dataProvider calculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscountsDataProvider
-     *
-     * @group her
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int|float $minimumItemAmount
-     *
      * @return void
      */
-    public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(
-        QuoteTransfer $quoteTransfer,
-        $minimumItemAmount
-    ): void {
+    public function testCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(): void
+    {
         $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
             'sku = "123" or sku is in "123' . ComparatorOperators::LIST_DELIMITER . '431"',
             DiscountConstants::TYPE_CART_RULE,
-            $minimumItemAmount
+            2
         );
+
+        $quoteTransfer = $this->createQuoteTransfer();
 
         $discountFacade = $this->getFacade();
         $quoteTransfer = $discountFacade->calculateDiscounts($quoteTransfer);
@@ -182,42 +129,6 @@ class DiscountFacadeCalculateTest extends Unit
 
         $discountTransfer = current($cartRuleDiscounts);
         $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
-    }
-
-    /**
-     * @return array
-     */
-    public function calculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscountsDataProvider(): array
-    {
-        return [
-            'int stock' => $this->getDataForCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(1),
-            'float stock' => $this->getDataForCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts(1.1),
-        ];
-    }
-
-    /**
-     * @param int|float $quantity
-     *
-     * @return array
-     */
-    protected function getDataForCalculateWhenMinimumItemAmountMatchesMoreThanOneItemIncludeAllProvidedDiscounts($quantity): array
-    {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withCurrency([
-                CurrencyTransfer::CODE => 'EUR',
-            ])
-            ->withItem([
-                ItemTransfer::SKU => '123',
-                ItemTransfer::QUANTITY => $quantity,
-            ])
-            ->withItem([
-                ItemTransfer::SKU => '431',
-                ItemTransfer::QUANTITY => $quantity,
-            ])
-            ->build();
-        $quoteTransfer->setStore($this->getCurrentStore());
-
-        return [$quoteTransfer, $quantity * 2];
     }
 
     /**
@@ -381,7 +292,7 @@ class DiscountFacadeCalculateTest extends Unit
      * @param string $decisionRuleQueryString
      * @param string $collectorQueryString
      * @param string $discountType
-     * @param float $minimumItemAmount
+     * @param int $minimumItemAmount
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
@@ -389,7 +300,7 @@ class DiscountFacadeCalculateTest extends Unit
         $decisionRuleQueryString,
         $collectorQueryString,
         $discountType = DiscountConstants::TYPE_CART_RULE,
-        $minimumItemAmount = 1.0
+        $minimumItemAmount = 1
     ) {
         $discountVoucherPool = new SpyDiscountVoucherPool();
         $discountVoucherPool->setIsActive(true);
@@ -464,6 +375,7 @@ class DiscountFacadeCalculateTest extends Unit
         $messengerFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
         $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
         $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
+        $collectedDiscountGroupingPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::COLLECTED_DISCOUNT_GROUPING_PLUGINS);
         $applicableFilterPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
         $currencyFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
         $storeFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
@@ -471,59 +383,51 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container = new Container();
 
-        $container[DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS] = function () use ($collectorStrategyPlugins) {
+        $container->set(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS, function () use ($collectorStrategyPlugins) {
             return $collectorStrategyPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::DECISION_RULE_PLUGINS] = function () use ($decisionRulePlugins) {
+        $container->set(DiscountDependencyProvider::DECISION_RULE_PLUGINS, function () use ($decisionRulePlugins) {
             return $decisionRulePlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::FACADE_MESSENGER] = function () use ($messengerFacade) {
+        $container->set(DiscountDependencyProvider::FACADE_MESSENGER, function () use ($messengerFacade) {
             return $messengerFacade;
-        };
+        });
 
-        $container[DiscountDependencyProvider::FACADE_STORE] = function () use ($storeFacade) {
+        $container->set(DiscountDependencyProvider::FACADE_STORE, function () use ($storeFacade) {
             return $storeFacade;
-        };
+        });
 
-        $container[DiscountDependencyProvider::COLLECTOR_PLUGINS] = function () use ($collectorPlugins) {
+        $container->set(DiscountDependencyProvider::COLLECTOR_PLUGINS, function () use ($collectorPlugins) {
             return $collectorPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::CALCULATOR_PLUGINS] = function () use ($calculatorPlugins) {
+        $container->set(DiscountDependencyProvider::COLLECTED_DISCOUNT_GROUPING_PLUGINS, function () use ($collectedDiscountGroupingPlugins) {
+            return $collectedDiscountGroupingPlugins;
+        });
+
+        $container->set(DiscountDependencyProvider::CALCULATOR_PLUGINS, function () use ($calculatorPlugins) {
             return $calculatorPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () use ($filterPluginMock) {
+        $container->set(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER, function () use ($filterPluginMock) {
             return [
                 $filterPluginMock,
             ];
-        };
+        });
 
-        $container[DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () use ($applicableFilterPlugins) {
+        $container->set(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS, function () use ($applicableFilterPlugins) {
             return $applicableFilterPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::FACADE_CURRENCY] = function () use ($currencyFacade) {
+        $container->set(DiscountDependencyProvider::FACADE_CURRENCY, function () use ($currencyFacade) {
             return $currencyFacade;
-        };
+        });
 
-        $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY] = function () use ($discountableItemTransformerStrategyPlugins) {
+        $container->set(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY, function () use ($discountableItemTransformerStrategyPlugins) {
             return $discountableItemTransformerStrategyPlugins;
-        };
-
-        $container[DiscountDependencyProvider::SERVICE_UTIL_PRICE] = function () {
-            return new DiscountToUtilPriceServiceBridge(
-                $this->tester->getLocator()->utilPrice()->service()
-            );
-        };
-
-        $container[DiscountDependencyProvider::SERVICE_UTIL_QUANTITY] = function () {
-            return new DiscountToUtilQuantityServiceBridge(
-                $this->tester->getLocator()->utilQuantity()->service()
-            );
-        };
+        });
 
         $discountBusinessFactory->setContainer($container);
 

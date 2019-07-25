@@ -11,6 +11,19 @@ coverage:
     remote: false
     whitelist: { include: ['../../../../src/*'] }
 
-modules:
-    enabled:
-        - \SprykerTest\Zed\Country\Helper\CountryDataHelper
+suites:
+    Business:
+        path: Business
+        class_name: CompanyUnitAddressBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - \SprykerTest\Zed\Country\Helper\CountryDataHelper
+                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Zed\CompanyUnitAddress\Helper\CompanyUnitAddressDataHelper

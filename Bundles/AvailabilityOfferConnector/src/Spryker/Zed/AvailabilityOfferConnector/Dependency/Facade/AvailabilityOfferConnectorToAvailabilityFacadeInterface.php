@@ -15,7 +15,7 @@ interface AvailabilityOfferConnectorToAvailabilityFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer): float;
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer): int;
 }

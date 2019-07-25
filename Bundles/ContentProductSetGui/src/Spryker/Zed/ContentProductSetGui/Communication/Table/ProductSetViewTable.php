@@ -24,7 +24,7 @@ class ProductSetViewTable extends AbstractTable
 
     public const COL_ID_PRODUCT_SET = 'ID';
     public const COL_NAME = 'Name';
-    public const COL_COUNT = '# of Products';
+    public const COL_COUNT = 'Number of Products';
     public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
 
@@ -87,6 +87,7 @@ class ProductSetViewTable extends AbstractTable
         $config->setRawColumns([
             static::COL_STATUS,
             static::COL_ACTIONS,
+            static::COL_COUNT,
         ]);
 
         $config->setStateSave(false);

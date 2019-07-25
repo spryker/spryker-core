@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -78,17 +77,19 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @module ProductPackagingUnit
      *
-     * @return int[]
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function findProductAbstractIdsWithProductPackagingUnit(): array
+    public function getProductPackagingLeadProductEntityTransfersByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->getSpyProductQuery()
-            ->innerJoinWithSpyProductPackagingUnit()
-            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->distinct()
-            ->find()
-            ->toArray();
+        $query = $this->getFactory()->getProductPackagingLeadProductQuery();
+
+        if ($productAbstractIds !== []) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
     }
 
     /**

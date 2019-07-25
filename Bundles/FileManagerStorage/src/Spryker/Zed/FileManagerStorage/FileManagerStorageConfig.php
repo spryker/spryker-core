@@ -20,4 +20,12 @@ class FileManagerStorageConfig extends AbstractBundleConfig
     {
         return static::STORAGE_COMPOSITE_KEY;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getFileManagerSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
 }

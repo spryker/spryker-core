@@ -15,6 +15,8 @@ use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery;
 use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupQuery;
 use Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\CustomerMapper;
+use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuoteCompanyUserMapper;
 use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuotePermissionGroupMapper;
 use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuotePermissionGroupMapperInterface;
 use Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuoteShareDetailMapper;
@@ -97,5 +99,21 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     public function createQuoteShareDetailMapper(): QuoteShareDetailMapperInterface
     {
         return new QuoteShareDetailMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Persistence\Propel\Mapper\QuoteCompanyUserMapper
+     */
+    public function createQuoteCompanyUserMapper(): QuoteCompanyUserMapper
+    {
+        return new QuoteCompanyUserMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Persistence\Propel\Mapper\CustomerMapper
+     */
+    public function createCustomerMapper(): CustomerMapper
+    {
+        return new CustomerMapper();
     }
 }

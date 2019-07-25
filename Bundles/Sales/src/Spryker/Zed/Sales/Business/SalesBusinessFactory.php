@@ -31,7 +31,6 @@ use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
 use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
-use Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -102,7 +101,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getOrderPostSavePlugins()
         );
     }
 
@@ -120,7 +120,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getStore(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper()
+            $this->createOrderItemMapper(),
+            $this->getOrderPostSavePlugins()
         );
     }
 
@@ -178,7 +179,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydrator(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->getUtilPriceService(),
             $this->getHydrateOrderPlugins()
         );
     }
@@ -273,7 +273,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     public function getHydrateOrderPlugins()
     {
@@ -323,6 +323,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    public function getOrderPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE);
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface
      */
     public function createExpenseWriter(): ExpenseWriterInterface
@@ -330,13 +338,5 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new ExpenseWriter(
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Dependency\Service\SalesToUtilPriceServiceInterface
-     */
-    public function getUtilPriceService(): SalesToUtilPriceServiceInterface
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::SERVICE_UTIL_PRICE);
     }
 }

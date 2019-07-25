@@ -9,7 +9,7 @@
     "spryker/elastica": "^4.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/guzzle": "^2.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
     "spryker/money": "^2.0.0",
     "spryker/product-page-search-extension": "^1.0.0",

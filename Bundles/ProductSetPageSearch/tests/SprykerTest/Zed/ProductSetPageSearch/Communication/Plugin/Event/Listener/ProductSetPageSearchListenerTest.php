@@ -24,6 +24,7 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\Product
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetImageSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageProductImageSetSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchListener;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageUrlSearchListener;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchBridge;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainer;
@@ -45,10 +46,18 @@ use SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchConfigMock;
  */
 class ProductSetPageSearchListenerTest extends Unit
 {
+    protected const MESSAGE_PRODUCT_SET_NOT_DELETED = 'Product set has not been removed.';
+    protected const MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED = 'Unnecessary product set was has been removed.';
+
     /**
      * @var \SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @var \Spryker\Zed\ProductSet\Business\ProductSetFacadeInterface
+     */
+    protected $productSetFacadeInterface;
 
     /**
      * @throws \PHPUnit\Framework\SkippedTestError
@@ -62,6 +71,8 @@ class ProductSetPageSearchListenerTest extends Unit
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
         }
+
+        $this->productSetFacadeInterface = $this->tester->getLocator()->productSet()->facade();
     }
 
     /**
@@ -110,6 +121,45 @@ class ProductSetPageSearchListenerTest extends Unit
         $afterCount = SpyProductSetPageSearchQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertProductSetPageSearch();
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductSetSearchUnpublishListener(): void
+    {
+        // Arrange
+        $productSetTransfers = [
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+        ];
+        $this->tester->publishProductSetTransfers($productSetTransfers, $this->getProductSetPageSearchFacade());
+        $productSetBeforeUnpublish = SpyProductSetPageSearchQuery::create()->count();
+        $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
+        $this->productSetFacadeInterface->deleteProductSet($productSetTransfers[0]);
+
+        $productSetSearchUnpublishListener = new ProductSetPageSearchUnpublishListener();
+        $productSetSearchUnpublishListener->setFacade($this->getProductSetPageSearchFacade());
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($productSetDeletedId),
+        ];
+
+        // Act
+        $productSetSearchUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
+
+        // Assert
+        $this->assertSame(
+            0,
+            SpyProductSetPageSearchQuery::create()->filterByFkProductSet($productSetDeletedId)->count(),
+            static::MESSAGE_PRODUCT_SET_NOT_DELETED
+        );
+        $this->assertGreaterThan(
+            SpyProductSetPageSearchQuery::create()->count(),
+            $productSetBeforeUnpublish,
+            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED
+        );
     }
 
     /**

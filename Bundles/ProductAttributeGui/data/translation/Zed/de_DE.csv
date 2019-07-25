@@ -4,8 +4,8 @@ Add,Hinzufügen
 "Add Attribute","Attribut hinzufügen"
 "Allow input any value other than predefined ones","Erlaubt die Eingabe eines anderen als der vordefinierten Werte"
 "Attribute ID",Attribut-ID
-"Attribute Key",Attributschlüssel
 "Attribute key",Attributschlüssel
+"Attribute Key",Attributschlüssel
 "Attribute list",Attributliste
 "Attribute name translation","Übersetzung Attributnamen"
 "Attributes and their values are used by the backoffice application. They are unique and cannot contain special characters.","Attribute und ihre Werte werden von der Backoffice Application verwendet. Sie sind einmalig und dürfen keine Sonderzeichen enthalten."

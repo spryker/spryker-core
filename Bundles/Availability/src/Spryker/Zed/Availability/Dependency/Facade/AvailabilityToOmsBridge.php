@@ -30,7 +30,7 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
      *
      * @param string $sku
      *
-     * @return float
+     * @return int
      */
     public function sumReservedProductQuantitiesForSku($sku)
     {
@@ -41,7 +41,7 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return float
+     * @return int
      */
     public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
     {

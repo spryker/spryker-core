@@ -36,13 +36,13 @@ class ProductPackagingUnitBusinessTester extends Actor
 
     /**
      * @param int $amount
-     * @param float $quantity
+     * @param int $quantity
      * @param float $conversion
      * @param int $precision
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransferForValueCalculation(int $amount, float $quantity, float $conversion, int $precision): QuoteTransfer
+    public function createQuoteTransferForValueCalculation(int $amount, int $quantity, float $conversion, int $precision): QuoteTransfer
     {
         return (new QuoteTransfer())
             ->addItem((new ItemTransfer())
@@ -71,16 +71,16 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $boxProductConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-     * @param float $quoteAmount
-     * @param float $quoteQuantity
+     * @param int $quoteAmount
+     * @param int $quoteQuantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function createCartChangeTransferForProductPackagingUnitValidation(
         ProductConcreteTransfer $boxProductConcreteTransfer,
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
-        float $quoteAmount,
-        float $quoteQuantity
+        int $quoteAmount,
+        int $quoteQuantity
     ): CartChangeTransfer {
         $cartChangeTransfer = (new CartChangeTransfer())
             ->setQuote(
@@ -144,12 +144,12 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param string $dummyGroupKey
      * @param int $dummyAmount
-     * @param float $dummyQuantity
+     * @param int $dummyQuantity
      * @param int $dummySalesUnitId
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, float $dummyQuantity, int $dummySalesUnitId): CartChangeTransfer
+    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, int $dummyQuantity, int $dummySalesUnitId): CartChangeTransfer
     {
         return (new CartChangeTransfer())
             ->addItem(
@@ -171,19 +171,19 @@ class ProductPackagingUnitBusinessTester extends Actor
 
     /**
      * @param string $sku
-     * @param float $itemQuantity
-     * @param float $itemAmount
+     * @param int|null $itemQuantity
+     * @param int|null $itemAmount
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function createProductPackagingUnitItemTransfer(
         string $sku,
-        float $itemQuantity = 1.0,
-        float $itemAmount = 1.0
+        int $itemQuantity = 1,
+        int $itemAmount = 1
     ): ItemTransfer {
         return (new ItemTransfer())
             ->setSku($sku)
             ->setQuantity($itemQuantity)
-            ->setAmount($itemAmount);
+            ->setAmount($itemQuantity);
     }
 }

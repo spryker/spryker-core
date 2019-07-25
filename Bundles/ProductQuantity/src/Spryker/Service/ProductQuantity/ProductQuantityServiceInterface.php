@@ -18,19 +18,9 @@ interface ProductQuantityServiceInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
-     * @param float $quantity
+     * @param int $quantity
      *
-     * @return float
+     * @return int
      */
-    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, float $quantity): float;
-
-    /**
-     * Specification:
-     * - gets default minimum quantity value from config.
-     *
-     * @api
-     *
-     * @return float
-     */
-    public function getDefaultMinimumQuantity(): float;
+    public function getNearestQuantity(ProductQuantityTransfer $productQuantityTransfer, int $quantity): int;
 }
