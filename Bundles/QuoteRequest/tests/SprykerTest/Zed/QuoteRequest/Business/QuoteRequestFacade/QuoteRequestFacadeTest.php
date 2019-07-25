@@ -24,7 +24,6 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
-use Throwable;
 
 /**
  * Auto-generated group annotations
@@ -1468,27 +1467,6 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $this->assertEquals(0, $quoteRequestCollection->getQuoteRequests()->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testDeleteQuoteRequestsForCompanyUserWillSucessfullyFinishWhenNoQuoteRequestsAssigned(): void
-    {
-        // Arrange
-        $isSuccessful = true;
-
-        // Act
-        try {
-            $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(
-                $this->companyUserTransfer->getIdCompanyUser()
-            );
-        } catch (Throwable $unexpectedException) {
-            $isSuccessful = false;
-        }
-
-        // Assert
-        $this->assertTrue($isSuccessful);
     }
 
     /**
