@@ -15,13 +15,28 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
-        <property name="id" type="int" />
+        <property name="idConfigurableBundleTemplate" type="int" />
         <property name="uuid" type="string" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
-        <property name="id" type="int" />
+        <property name="idConfigurableBundleTemplateSlot" type="int" />
         <property name="uuid" type="string" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
+        <property name="idSalesOrderConfiguredBundle" type="int" />
+        <property name="configurableBundleTemplateUuid" type="string" />
+        <property name="name" type="string" />
+        <property name="items" type="SalesOrderConfiguredBundleItem[]" singular="item" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
+        <property name="idSalesOrderConfiguredBundleItem" type="int" />
+        <property name="idSalesOrderConfiguredBundle" type="int" />
+        <property name="idSalesOrderItem" type="int" />
+        <property name="configurableBundleTemplateSlotUuid" type="string" />
     </transfer>
 
 </transfers>

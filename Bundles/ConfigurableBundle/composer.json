@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
     }
   },
   "autoload-dev": {

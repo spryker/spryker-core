@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business;
+namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ConfigurableBundleFacadeInterface
+interface SalesOrderConfiguredBundleWriterInterface
 {
     /**
-     * Specification:
-     * - Persists configured bundles from ItemTransfer in Quote to sales_order configured bundle tables.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void

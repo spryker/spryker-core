@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,4 +17,19 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBundleFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getFactory()
+            ->createSalesOrderConfiguredBundleWriter()
+            ->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+    }
 }
