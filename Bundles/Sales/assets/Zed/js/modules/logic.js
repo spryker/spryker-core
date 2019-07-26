@@ -73,11 +73,6 @@ $(document).ready(function () {
 
         disableTrigger($item);
 
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
     });
 
     $('.trigger-order-event').click(function(e){
@@ -86,11 +81,6 @@ $(document).ready(function () {
         var $item = $(this);
 
         disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, eventName);
     });
 
     $('.item-check').click(function(){
