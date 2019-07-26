@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
 
 interface ConfigurableBundleFacadeInterface
 {
@@ -22,4 +24,20 @@ interface ConfigurableBundleFacadeInterface
      * @return void
      */
     public function saveSalesOrderConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrieves sales order configured bundles entities.
+     * - Filters by template uuid when provided.
+     * - Filters by slot uuid when provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
+     */
+    public function getSalesOrderConfiguredBundleCollectionByFilter(
+        ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+    ): SalesOrderConfiguredBundleCollectionTransfer;
 }

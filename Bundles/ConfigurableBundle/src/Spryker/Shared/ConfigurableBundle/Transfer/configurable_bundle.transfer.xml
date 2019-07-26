@@ -25,10 +25,20 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="ConfiguredBundleFilter">
+        <property name="template" type="ConfigurableBundleTemplate" />
+        <property name="slot" type="ConfigurableBundleTemplateSlot" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleCollection">
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
+    </transfer>
+
     <transfer name="SalesOrderConfiguredBundle">
         <property name="idSalesOrderConfiguredBundle" type="int" />
         <property name="configurableBundleTemplateUuid" type="string" />
         <property name="name" type="string" />
+        <property name="quantity" type="int" />
         <property name="items" type="SalesOrderConfiguredBundleItem[]" singular="item" />
     </transfer>
 

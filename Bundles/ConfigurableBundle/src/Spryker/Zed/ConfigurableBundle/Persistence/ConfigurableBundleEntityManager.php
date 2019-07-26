@@ -28,7 +28,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     ): SalesOrderConfiguredBundleTransfer {
         $salesOrderConfiguredBundleEntity = $this->getFactory()
             ->createSalesOrderConfiguredBundleMapper()
-            ->mapSalesOrderConfiguredBundleTransferToSalesOrderConfiguredBundleEntity(
+            ->mapBundleTransferToBundleEntity(
                 $salesOrderConfiguredBundleTransfer,
                 new SpySalesOrderConfiguredBundle()
             );
@@ -53,7 +53,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
 
         $salesOrderConfiguredBundleItemEntity = $this->getFactory()
             ->createSalesOrderConfiguredBundleMapper()
-            ->mapSalesOrderConfiguredBundleItemTransferToSalesOrderConfiguredBundleItemEntity(
+            ->mapBundleItemTransferToBundleItemEntity(
                 $salesOrderConfiguredBundleItemTransfer,
                 new SpySalesOrderConfiguredBundleItem()
             );

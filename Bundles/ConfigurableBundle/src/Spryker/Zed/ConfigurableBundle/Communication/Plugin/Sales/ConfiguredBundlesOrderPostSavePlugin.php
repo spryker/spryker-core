@@ -21,7 +21,7 @@ class ConfiguredBundlesOrderPostSavePlugin extends AbstractPlugin implements Ord
 {
     /**
      * {@inheritdoc}
-     * - Copies configuredBundle from ItemTransfer to order item.
+     * - Persists configured bundles from ItemTransfer in Quote to sales_order configured bundle tables.
      *
      * @api
      *

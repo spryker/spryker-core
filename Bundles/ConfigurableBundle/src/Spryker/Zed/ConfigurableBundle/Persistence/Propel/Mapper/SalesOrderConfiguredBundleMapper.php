@@ -7,78 +7,122 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle;
 use Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleItem;
+use Propel\Runtime\Collection\Collection;
 
 class SalesOrderConfiguredBundleMapper
 {
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
-     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle $salesOrderConfiguredBundleEntity
+     * @param \Propel\Runtime\Collection\Collection $bundleEntities
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
+     */
+    public function mapBundleEntityCollectionToBundleTransferCollection(
+        Collection $bundleEntities
+    ): SalesOrderConfiguredBundleCollectionTransfer {
+        $bundleCollectionTransfer = new SalesOrderConfiguredBundleCollectionTransfer();
+
+        foreach ($bundleEntities as $bundleEntity) {
+            $bundleTransfer = $this->mapBundleEntityToBundleTransfer(
+                $bundleEntity,
+                new SalesOrderConfiguredBundleTransfer()
+            );
+            $bundleCollectionTransfer->addSalesOrderConfiguredBundle($bundleTransfer);
+        }
+
+        return $bundleCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $bundleTransfer
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle $bundleEntity
      *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle
      */
-    public function mapSalesOrderConfiguredBundleTransferToSalesOrderConfiguredBundleEntity(
-        SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer,
-        SpySalesOrderConfiguredBundle $salesOrderConfiguredBundleEntity
+    public function mapBundleTransferToBundleEntity(
+        SalesOrderConfiguredBundleTransfer $bundleTransfer,
+        SpySalesOrderConfiguredBundle $bundleEntity
     ): SpySalesOrderConfiguredBundle {
-        $salesOrderConfiguredBundleEntity->fromArray($salesOrderConfiguredBundleTransfer->modifiedToArray());
+        $bundleEntity->fromArray($bundleTransfer->modifiedToArray());
 
-        return $salesOrderConfiguredBundleEntity;
+        return $bundleEntity;
     }
 
     /**
-     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle $salesOrderConfiguredBundleEntity
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle $bundleEntity
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $bundleTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer
      */
-    public function mapSalesOrderConfiguredBundleEntityToSalesOrderConfiguredBundleTransfer(
-        SpySalesOrderConfiguredBundle $salesOrderConfiguredBundleEntity,
-        SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
+    public function mapBundleEntityToBundleTransfer(
+        SpySalesOrderConfiguredBundle $bundleEntity,
+        SalesOrderConfiguredBundleTransfer $bundleTransfer
     ): SalesOrderConfiguredBundleTransfer {
-        $salesOrderConfiguredBundleTransfer = $salesOrderConfiguredBundleTransfer->fromArray($salesOrderConfiguredBundleEntity->toArray(), true);
+        $bundleTransfer = $bundleTransfer->fromArray($bundleEntity->toArray(), true);
 
-        return $salesOrderConfiguredBundleTransfer;
+        $bundleTransfer->setItems(
+            new ArrayObject($this->mapBundleEntityToBundleItemTransfers($bundleEntity))
+        );
+
+        return $bundleTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
-     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleItem $salesOrderConfiguredBundleItemEntity
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $bundleItemTransfer
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleItem $bundleItemEntity
      *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleItem
      */
-    public function mapSalesOrderConfiguredBundleItemTransferToSalesOrderConfiguredBundleItemEntity(
-        SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer,
-        SpySalesOrderConfiguredBundleItem $salesOrderConfiguredBundleItemEntity
+    public function mapBundleItemTransferToBundleItemEntity(
+        SalesOrderConfiguredBundleItemTransfer $bundleItemTransfer,
+        SpySalesOrderConfiguredBundleItem $bundleItemEntity
     ): SpySalesOrderConfiguredBundleItem {
-        $salesOrderConfiguredBundleItemEntity->fromArray($salesOrderConfiguredBundleItemTransfer->modifiedToArray());
+        $bundleItemEntity->fromArray($bundleItemTransfer->modifiedToArray());
 
-        $salesOrderConfiguredBundleItemEntity
-            ->setFkSalesOrderConfiguredBundle($salesOrderConfiguredBundleItemTransfer->getIdSalesOrderConfiguredBundle())
-            ->setFkSalesOrderItem($salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItem());
+        $bundleItemEntity
+            ->setFkSalesOrderConfiguredBundle($bundleItemTransfer->getIdSalesOrderConfiguredBundle())
+            ->setFkSalesOrderItem($bundleItemTransfer->getIdSalesOrderItem());
 
-        return $salesOrderConfiguredBundleItemEntity;
+        return $bundleItemEntity;
     }
 
     /**
-     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleItem $salesOrderConfiguredBundleItemEntity
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleItem $bundleItemEntity
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $bundleItemTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer
      */
-    public function mapSalesOrderConfiguredBundleItemEntityToSalesOrderConfiguredBundleItemTransfer(
-        SpySalesOrderConfiguredBundleItem $salesOrderConfiguredBundleItemEntity,
-        SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
+    public function mapBundleItemEntityToBundleItemTransfer(
+        SpySalesOrderConfiguredBundleItem $bundleItemEntity,
+        SalesOrderConfiguredBundleItemTransfer $bundleItemTransfer
     ): SalesOrderConfiguredBundleItemTransfer {
-        $salesOrderConfiguredBundleItemTransfer = $salesOrderConfiguredBundleItemTransfer->fromArray($salesOrderConfiguredBundleItemEntity->toArray(), true);
+        $bundleItemTransfer = $bundleItemTransfer->fromArray($bundleItemEntity->toArray(), true);
 
-        $salesOrderConfiguredBundleItemTransfer
-            ->setIdSalesOrderConfiguredBundle($salesOrderConfiguredBundleItemEntity->getFkSalesOrderConfiguredBundle())
-            ->setIdSalesOrderItem($salesOrderConfiguredBundleItemEntity->getFkSalesOrderItem());
+        $bundleItemTransfer
+            ->setIdSalesOrderConfiguredBundle($bundleItemEntity->getFkSalesOrderConfiguredBundle())
+            ->setIdSalesOrderItem($bundleItemEntity->getFkSalesOrderItem());
 
-        return $salesOrderConfiguredBundleItemTransfer;
+        return $bundleItemTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundle $bundleEntity
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
+     */
+    protected function mapBundleEntityToBundleItemTransfers(SpySalesOrderConfiguredBundle $bundleEntity): array
+    {
+        $bundleItemTransfers = [];
+
+        foreach ($bundleEntity->getSpySalesOrderConfiguredBundleItems() as $bundleItemEntity) {
+            $bundleItemTransfers[] = $this->mapBundleItemEntityToBundleItemTransfer($bundleItemEntity, new SalesOrderConfiguredBundleItemTransfer());
+        }
+
+        return $bundleItemTransfers;
     }
 }

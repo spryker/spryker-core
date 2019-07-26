@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -31,5 +33,21 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
         $this->getFactory()
             ->createSalesOrderConfiguredBundleWriter()
             ->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
+     */
+    public function getSalesOrderConfiguredBundleCollectionByFilter(
+        ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+    ): SalesOrderConfiguredBundleCollectionTransfer {
+        return $this->getRepository()
+            ->getSalesOrderConfiguredBundleCollectionByFilter($configuredBundleFilterTransfer);
     }
 }

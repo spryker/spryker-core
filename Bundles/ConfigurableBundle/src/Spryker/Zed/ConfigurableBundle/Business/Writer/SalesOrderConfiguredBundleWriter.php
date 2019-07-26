@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
@@ -74,31 +75,59 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
      */
     protected function mapSalesOrderConfiguredBundles(QuoteTransfer $quoteTransfer): array
     {
-        /** @var \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers */
         $salesOrderConfiguredBundleTransfers = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundle()) {
-                continue;
+            if ($itemTransfer->getConfiguredBundle()) {
+                $salesOrderConfiguredBundleTransfers = $this->mapSalesOrderConfiguredBundle(
+                    $itemTransfer,
+                    $salesOrderConfiguredBundleTransfers
+                );
             }
-
-            $configurableBundleTemplateTransfer = $itemTransfer->getConfiguredBundle()->getTemplate();
-
-            $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
-                ->setConfigurableBundleTemplateUuid($configurableBundleTemplateTransfer->getUuid())
-                ->setName($configurableBundleTemplateTransfer->getName());
-
-            if (!isset($salesOrderConfiguredBundleTransfers[$configurableBundleTemplateTransfer->getUuid()])) {
-                $salesOrderConfiguredBundleTransfers[$configurableBundleTemplateTransfer->getUuid()] = $salesOrderConfiguredBundleTransfer;
-            }
-
-            $salesOrderConfiguredBundleItemTransfer = (new SalesOrderConfiguredBundleItemTransfer())
-                ->setConfigurableBundleTemplateSlotUuid($itemTransfer->getConfiguredBundle()->getSlot()->getUuid())
-                ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
-
-            $salesOrderConfiguredBundleTransfers[$configurableBundleTemplateTransfer->getUuid()]
-                ->addItem($salesOrderConfiguredBundleItemTransfer);
         }
+
+        return $salesOrderConfiguredBundleTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     */
+    protected function mapSalesOrderConfiguredBundle(ItemTransfer $itemTransfer, array $salesOrderConfiguredBundleTransfers): array
+    {
+        $configuredBundleTransfer = $itemTransfer
+            ->requireIdSalesOrderItem()
+            ->getConfiguredBundle();
+
+        $configuredBundleTransfer
+            ->requireGroupKey()
+            ->requireQuantity()
+            ->requireTemplate()
+            ->getTemplate()
+                ->requireUuid()
+                ->requireName();
+
+        $configuredBundleTransfer->requireSlot()
+            ->getSlot()
+            ->requireUuid();
+
+        $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
+            ->setConfigurableBundleTemplateUuid($configuredBundleTransfer->getTemplate()->getUuid())
+            ->setName($configuredBundleTransfer->getTemplate()->getName())
+            ->setQuantity($configuredBundleTransfer->getQuantity());
+
+        if (!isset($salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()])) {
+            $salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = $salesOrderConfiguredBundleTransfer;
+        }
+
+        $salesOrderConfiguredBundleItemTransfer = (new SalesOrderConfiguredBundleItemTransfer())
+            ->setConfigurableBundleTemplateSlotUuid($configuredBundleTransfer->getSlot()->getUuid())
+            ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
+
+        $salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()]
+            ->addItem($salesOrderConfiguredBundleItemTransfer);
 
         return $salesOrderConfiguredBundleTransfers;
     }
