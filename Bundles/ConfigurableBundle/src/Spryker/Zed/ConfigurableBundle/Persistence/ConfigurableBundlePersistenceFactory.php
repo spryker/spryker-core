@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
-use Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\SalesOrderConfiguredBundleItemMapper;
 use Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\SalesOrderConfiguredBundleMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -24,13 +23,5 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderConfiguredBundleMapper(): SalesOrderConfiguredBundleMapper
     {
         return new SalesOrderConfiguredBundleMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\SalesOrderConfiguredBundleItemMapper
-     */
-    public function createSalesOrderConfiguredBundleItemMapper(): SalesOrderConfiguredBundleItemMapper
-    {
-        return new SalesOrderConfiguredBundleItemMapper();
     }
 }

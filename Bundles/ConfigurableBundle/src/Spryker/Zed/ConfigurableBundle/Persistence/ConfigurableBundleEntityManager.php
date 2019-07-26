@@ -52,7 +52,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
             ->requireIdSalesOrderConfiguredBundle();
 
         $salesOrderConfiguredBundleItemEntity = $this->getFactory()
-            ->createSalesOrderConfiguredBundleItemMapper()
+            ->createSalesOrderConfiguredBundleMapper()
             ->mapSalesOrderConfiguredBundleItemTransferToSalesOrderConfiguredBundleItemEntity(
                 $salesOrderConfiguredBundleItemTransfer,
                 new SpySalesOrderConfiguredBundleItem()

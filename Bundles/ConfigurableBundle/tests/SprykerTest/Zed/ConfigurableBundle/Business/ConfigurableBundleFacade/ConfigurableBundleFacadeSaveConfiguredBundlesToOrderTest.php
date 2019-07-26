@@ -152,8 +152,6 @@ class ConfigurableBundleFacadeSaveConfiguredBundlesToOrderTest extends Unit
     }
 
     /**
-     * @group her
-     *
      * @return void
      */
     public function testSaveConfiguredBundlesToOrderCopyConfiguredBundlesFromQuoteToNewOrder(): void
