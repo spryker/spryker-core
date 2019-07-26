@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
-use Generated\Shared\Transfer\ConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,6 +20,22 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBundleFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
+     */
+    public function getSalesOrderConfiguredBundleCollectionByFilter(
+        SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
+    ): SalesOrderConfiguredBundleCollectionTransfer {
+        return $this->getRepository()
+            ->getSalesOrderConfiguredBundleCollectionByFilter($salesOrderConfiguredBundleFilterTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -36,18 +53,19 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Hydrates sales order configured bundle to ItemTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getSalesOrderConfiguredBundleCollectionByFilter(
-        ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
-    ): SalesOrderConfiguredBundleCollectionTransfer {
-        return $this->getRepository()
-            ->getSalesOrderConfiguredBundleCollectionByFilter($configuredBundleFilterTransfer);
+    public function hydrateConfiguredBundlesToOrder(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createSalesOrderConfiguredBundleExpander()
+            ->hydrateConfiguredBundlesToOrder($orderTransfer);
     }
 }

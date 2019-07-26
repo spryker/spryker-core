@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
-use Generated\Shared\Transfer\ConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -18,12 +18,12 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ConfigurableBundleRepository extends AbstractRepository implements ConfigurableBundleRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
      */
     public function getSalesOrderConfiguredBundleCollectionByFilter(
-        ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+        SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
     ): SalesOrderConfiguredBundleCollectionTransfer {
         $salesOrderConfiguredBundleQuery = $this->getFactory()
             ->getSalesOrderConfiguredBundlePropelQuery()
@@ -31,7 +31,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         $salesOrderConfiguredBundleQuery = $this->setSalesOrderConfiguredBundleFilters(
             $salesOrderConfiguredBundleQuery,
-            $configuredBundleFilterTransfer
+            $salesOrderConfiguredBundleFilterTransfer
         );
 
         return $this->getFactory()
@@ -41,22 +41,29 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
     /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleQuery $salesOrderConfiguredBundleQuery
-     * @param \Generated\Shared\Transfer\ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
      *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleQuery
      */
     protected function setSalesOrderConfiguredBundleFilters(
         SpySalesOrderConfiguredBundleQuery $salesOrderConfiguredBundleQuery,
-        ConfiguredBundleFilterTransfer $configuredBundleFilterTransfer
+        SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
     ): SpySalesOrderConfiguredBundleQuery {
-        if ($configuredBundleFilterTransfer->getTemplate() && $configuredBundleFilterTransfer->getTemplate()->getUuid()) {
-            $salesOrderConfiguredBundleQuery->filterByConfigurableBundleTemplateUuid($configuredBundleFilterTransfer->getTemplate()->getUuid());
+        if ($salesOrderConfiguredBundleFilterTransfer->getConfigurableBundleTemplateUuid()) {
+            $salesOrderConfiguredBundleQuery->filterByConfigurableBundleTemplateUuid($salesOrderConfiguredBundleFilterTransfer->getConfigurableBundleTemplateUuid());
         }
 
-        if ($configuredBundleFilterTransfer->getSlot() && $configuredBundleFilterTransfer->getSlot()->getUuid()) {
+        if ($salesOrderConfiguredBundleFilterTransfer->getConfigurableBundleTemplateSlotUuid()) {
             $salesOrderConfiguredBundleQuery
                 ->useSpySalesOrderConfiguredBundleItemQuery()
-                    ->filterByConfigurableBundleTemplateSlotUuid($configuredBundleFilterTransfer->getSlot()->getUuid())
+                    ->filterByConfigurableBundleTemplateSlotUuid($salesOrderConfiguredBundleFilterTransfer->getConfigurableBundleTemplateSlotUuid())
+                ->endUse();
+        }
+
+        if ($salesOrderConfiguredBundleFilterTransfer->getSalesOrderItemIds()) {
+            $salesOrderConfiguredBundleQuery
+                ->useSpySalesOrderConfiguredBundleItemQuery()
+                    ->filterByFkSalesOrderItem_In($salesOrderConfiguredBundleFilterTransfer->getSalesOrderItemIds())
                 ->endUse();
         }
 

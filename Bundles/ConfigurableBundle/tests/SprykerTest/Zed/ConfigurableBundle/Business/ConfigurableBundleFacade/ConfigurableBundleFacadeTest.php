@@ -14,10 +14,12 @@ use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
-use Generated\Shared\Transfer\ConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
@@ -72,8 +74,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
 
-        $configuredBundleFilterTransfer = (new ConfiguredBundleFilterTransfer())
-            ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2));
+        $configuredBundleFilterTransfer = (new SalesOrderConfiguredBundleFilterTransfer())
+            ->setConfigurableBundleTemplateUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2);
 
         $salesOrderConfiguredBundleCollection = $this->tester
             ->getFacade()
@@ -86,7 +88,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveSalesOrderConfiguredBundlesFromQuoteThrowsExceptionWhenGroupKeyNotProvided(): void
+    public function testSaveSalesOrderConfiguredBundlesFromQuoteThrowsExceptionWhenIdSalesOrderItemNotProvided(): void
     {
         // Arrange
         $quoteTransfer = $this->getFakeQuoteWithConfiguredBundleItems();
@@ -103,7 +105,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveSalesOrderConfiguredBundlesFromQuoteThrowsExceptionWhenIdSalesOrderItemNotProvided(): void
+    public function testSaveSalesOrderConfiguredBundlesFromQuoteThrowsExceptionWhenGroupKeyNotProvided(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -111,7 +113,7 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build(),
+                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()->setGroupKey(null),
             ])
             ->withCustomer()
             ->withTotals()
@@ -119,6 +121,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withBillingAddress()
             ->withCurrency()
             ->build();
+
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -151,6 +155,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withCurrency()
             ->build();
 
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
@@ -181,6 +187,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withBillingAddress()
             ->withCurrency()
             ->build();
+
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -213,6 +221,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withCurrency()
             ->build();
 
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
@@ -244,6 +254,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withCurrency()
             ->build();
 
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
@@ -274,6 +286,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withBillingAddress()
             ->withCurrency()
             ->build();
+
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
 
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
@@ -307,6 +321,8 @@ class ConfigurableBundleFacadeTest extends Unit
             ->withCurrency()
             ->build();
 
+        $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
@@ -314,6 +330,69 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->tester
             ->getFacade()
             ->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHydrateConfiguredBundlesToOrderExpandItemInOrderByConfiguredBundle(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->getFakeQuoteWithConfiguredBundleItems();
+        $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
+        $this->tester->getFacade()->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+
+        $orderTransfer = (new OrderTransfer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+
+        // Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->hydrateConfiguredBundlesToOrder($orderTransfer);
+
+        // Assert
+        $this->assertCount(2, $orderTransfer->getSalesOrderConfiguredBundles());
+        $this->assertInstanceOf(
+            SalesOrderConfiguredBundleItemTransfer::class,
+            $orderTransfer->getItems()->offsetGet(0)->getSalesOrderConfiguredBundleItem()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testHydrateConfiguredBundlesWithoutConfiguredBundle(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::UNIT_PRICE => 1,
+                ItemTransfer::QUANTITY => 1,
+            ])
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $saveOrderTransfer = $this->tester->haveOrderFromQuote($quoteTransfer, BusinessHelper::DEFAULT_OMS_PROCESS_NAME);
+
+        $this->tester->getFacade()->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
+
+        $orderTransfer = (new OrderTransfer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+
+        // Act
+        $orderTransfer = $this->tester
+            ->getFacade()
+            ->hydrateConfiguredBundlesToOrder($orderTransfer);
+
+        // Assert
+        $this->assertCount(0, $orderTransfer->getSalesOrderConfiguredBundles());
+        $this->assertNull($orderTransfer->getItems()->offsetGet(0)->getSalesOrderConfiguredBundleItem());
     }
 
     /**

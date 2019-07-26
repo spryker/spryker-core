@@ -5,6 +5,11 @@
 
     <transfer name="Item">
         <property name="configuredBundle" type="ConfiguredBundle" />
+        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
     </transfer>
 
     <transfer name="ConfiguredBundle">
@@ -25,9 +30,10 @@
         <property name="uuid" type="string" />
     </transfer>
 
-    <transfer name="ConfiguredBundleFilter">
-        <property name="template" type="ConfigurableBundleTemplate" />
-        <property name="slot" type="ConfigurableBundleTemplateSlot" />
+    <transfer name="SalesOrderConfiguredBundleFilter">
+        <property name="configurableBundleTemplateUuid" type="string" />
+        <property name="configurableBundleTemplateSlotUuid" type="string" />
+        <property name="salesOrderItemIds" type="array" />
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleCollection">
