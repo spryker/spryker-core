@@ -34,9 +34,21 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
+     * - Returns an array of ApplicationPlugins
+     *
+     * @api
+     *
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins();
+
+    /**
+     * Specification
      * - Returns an array of ServiceProviders
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacadeInterface::getApplicationPlugins()` instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */

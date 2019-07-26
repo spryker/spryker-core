@@ -49,6 +49,7 @@ class ConsoleBootstrap extends Application
 
         $this->application = new SprykerApplication();
 
+        $this->provideApplicationPlugins();
         $this->registerServiceProviders();
 
         Pimple::setApplication($this->application);
@@ -68,6 +69,20 @@ class ConsoleBootstrap extends Application
     }
 
     /**
+     * @return void
+     */
+    private function provideApplicationPlugins()
+    {
+        $applicationPlugins = $this->getFacade()->getApplicationPlugins();
+
+        foreach ($applicationPlugins as $applicationPlugin) {
+            $applicationPlugin->provide($this->application);
+        }
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()` instead.
+     *
      * @return void
      */
     private function registerServiceProviders()
