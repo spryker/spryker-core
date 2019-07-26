@@ -68,6 +68,7 @@ class CategoryDataProvider
             CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
             CategoryType::OPTION_WRONG_CMS_BLOCK_LIST => $this->getWrongCmsBlockList(),
             CategoryType::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST => $this->getAssignedIdCmsBlocksForTemplates(),
+            CategoryType::OPTION_CATEGORY_TEMPLATES => $this->getCategoryTemplates(),
         ];
     }
 
@@ -82,10 +83,7 @@ class CategoryDataProvider
 
         $idCmsBlocks = [];
         if ($categoryTransfer->getIdCategory()) {
-            $idCmsBlocks = $this->getAssignedIdCmsBlocks(
-                $categoryTransfer->getIdCategory(),
-                $categoryTransfer->getFkCategoryTemplate()
-            );
+            $idCmsBlocks = $this->getAssignedIdCmsBlocksByIdCategory($categoryTransfer->getIdCategory());
         }
 
         $categoryTransfer->setIdCmsBlocks($idCmsBlocks);
@@ -109,6 +107,27 @@ class CategoryDataProvider
 
         foreach ($query as $item) {
             $assignedBlocks[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCmsBlock();
+            $this->assertCmsBlock($item->getCmsBlock());
+        }
+
+        return $assignedBlocks;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return array
+     */
+    protected function getAssignedIdCmsBlocksByIdCategory(int $idCategory): array
+    {
+        $query = $this->queryContainer
+            ->queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
+            ->find();
+
+        $assignedBlocks = [];
+
+        foreach ($query as $item) {
+            $assignedBlocks[$item->getFkCategoryTemplate()][$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCmsBlock();
             $this->assertCmsBlock($item->getCmsBlock());
         }
 
@@ -204,5 +223,16 @@ class CategoryDataProvider
     protected function getWrongCmsBlockList()
     {
         return $this->wrongCmsBlocks;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCategoryTemplates(): array
+    {
+        return $this->categoryQueryContainer
+            ->queryCategoryTemplate()
+            ->find()
+            ->toKeyValue('idCategoryTemplate', 'name');
     }
 }
