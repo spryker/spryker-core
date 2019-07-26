@@ -228,6 +228,7 @@
         <xs:attribute name="value" type="xs:string" use="optional"/>
         <xs:attribute name="required" type="xs:boolean" use="optional"/>
         <xs:attribute name="column" type="xs:string" use="optional"/>
+        <xs:attribute name="operator" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="validator">
@@ -259,16 +260,16 @@
     </xs:complexType>
 
     <xs:complexType name="index">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="index-column" type="index-column" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="index-column" type="index-column" maxOccurs="unbounded"/>
             <xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="name" type="index_name" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="unique">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="unique-column" type="unique-column" minOccurs="1" maxOccurs="unbounded"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="unique-column" type="unique-column" maxOccurs="unbounded"/>
             <xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="name" type="index_name" use="optional"/>
@@ -304,14 +305,14 @@
     </xs:complexType>
 
     <xs:complexType name="behavior">
-        <xs:choice maxOccurs="unbounded">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="parameter" type="parameter" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="column">
-        <xs:choice maxOccurs="unbounded">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="inheritance" type="inheritance" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
@@ -482,8 +483,8 @@
     </xs:complexType>
 
     <xs:complexType name="foreign-key">
-        <xs:choice maxOccurs="unbounded">
-            <xs:element name="reference" type="reference" minOccurs="1" maxOccurs="unbounded">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="reference" type="reference" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">
                         A reference between a local and a foreign column. Composite foreign keys can have several references.
@@ -557,7 +558,7 @@
     </xs:complexType>
 
     <xs:complexType name="table">
-        <xs:choice maxOccurs="unbounded">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
 
             <xs:element name="column" type="column" maxOccurs="unbounded">
                 <xs:annotation>
@@ -788,7 +789,7 @@
     </xs:complexType>
 
     <xs:complexType name="database">
-        <xs:choice maxOccurs="unbounded">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="external-schema" type="external-schema" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">
@@ -796,7 +797,7 @@
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="table" type="table" minOccurs="1" maxOccurs="unbounded">
+            <xs:element name="table" type="table" maxOccurs="unbounded">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">
                         A table using the database connection.
@@ -910,4 +911,5 @@
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
+
 </xs:schema>

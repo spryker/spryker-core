@@ -9,6 +9,7 @@
             <xsd:sequence>
                 <xsd:element name="transfer" maxOccurs="unbounded" minOccurs="0">
                     <xsd:complexType>
+
                         <xsd:sequence>
                             <xsd:choice minOccurs="0" maxOccurs="unbounded">
                                 <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
@@ -32,13 +33,16 @@
                                 </xsd:element>
                             </xsd:choice>
                         </xsd:sequence>
+
                         <xsd:attribute type="xsd:string" name="name" use="required"/>
                         <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+
                     </xsd:complexType>
                 </xsd:element>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
+
     <xsd:simpleType name="restRequestParameterType">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="yes"/>
@@ -46,4 +50,5 @@
             <xsd:enumeration value="required"/>
         </xsd:restriction>
     </xsd:simpleType>
+
 </xsd:schema>
