@@ -1,0 +1,4 @@
+template_path,slot_key,content_provider,name,description,is_active
+"@CatalogPage/views/catalog/search.twig","footer-center","SprykerCmsBlock","Footer Center","After links block.",1
+"@CatalogPage/views/catalog/search.twig","footer-right","CoreMediaFragment","Footer Right","In the footer near copyrigth.",1
+"@HomePage/views/home/home.twig","home-regular-footer-right","SprykerCmsBlock","Footer Center","After links block.",0

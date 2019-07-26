@@ -4,7 +4,7 @@
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\CmsSlot\Persistence" package="src.Orm.Zed.CmsSlot.Persistence">
 
-    <table name="spy_cms_slot_template" phpName="SpyCmsSlotTemplate" identifierQuoting="true">
+    <table name="spy_cms_slot_template" idMethod="native" allowPkInsert="true" phpName="SpyCmsSlotTemplate" identifierQuoting="true" >
         <column name="id_cms_slot_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="path" required="true" type="LONGVARCHAR" description="Identifier for existing entities. It should never be changed." />
         <column name="name" required="true" type="VARCHAR" size="255" />
@@ -17,7 +17,7 @@
         </unique>
     </table>
 
-    <table name="spy_cms_slot" phpName="SpyCmsSlot" identifierQuoting="true">
+    <table name="spy_cms_slot" idMethod="native" allowPkInsert="true" phpName="SpyCmsSlot" identifierQuoting="true">
         <column name="id_cms_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <column name="content_provider_type" required="true" type="VARCHAR" size="64" />
@@ -32,14 +32,9 @@
         <id-method-parameter value="spy_cms_slot_pk_seq"/>
     </table>
 
-    <table name="spy_cms_slot_to_cms_slot_template">
-        <column name="fk_cms_slot_template" required="true" type="INTEGER" />
-        <column name="fk_cms_slot" required="true" type="INTEGER" />
-
-        <unique name="spy_cms_slot_to_cms_slot_template-template-slot">
-            <unique-column name="fk_cms_slot_template"/>
-            <unique-column name="fk_cms_slot"/>
-        </unique>
+    <table name="spy_cms_slot_to_cms_slot_template" idMethod="native" allowPkInsert="true">
+        <column name="fk_cms_slot_template" required="true" type="INTEGER" primaryKey="true" />
+        <column name="fk_cms_slot" required="true" type="INTEGER" primaryKey="true" />
 
         <foreign-key name="spy_cms_slot_to_cms_slot_template-fk_cms_slot_template" foreignTable="spy_cms_slot_template" phpName="CmsSlotTemplate">
             <reference foreign="id_cms_slot_template" local="fk_cms_slot_template"/>

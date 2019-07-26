@@ -1,0 +1,4 @@
+template_path,name,description
+"@CatalogPage/views/catalog/search.twig","Catalog Search","When you do search by catalog you see this template."
+"@CatalogPageDE/views/catalog/search.twig","Catalog Search DE","When you do search by catalog you see this template."
+"@HomePage/views/home/home.twig","Home Page","At home page the middle part with content."
