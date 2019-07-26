@@ -19,8 +19,6 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
     protected const COLUMN_COMPANY_USER_IS_ACTIVE = 'IsActive';
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -42,8 +40,6 @@ class CompanyUserEntityManager extends AbstractEntityManager implements CompanyU
     }
 
     /**
-     * @api
-     *
      * @param int $idCompanyUser
      *
      * @return void

@@ -133,4 +133,9 @@
         <property name="customers" type="Customer[]" singular="customer"/>
     </transfer>
 
+    <transfer name="ShareCartResponse">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
 </transfers>
