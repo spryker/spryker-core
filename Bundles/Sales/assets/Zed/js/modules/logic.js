@@ -72,7 +72,6 @@ $(document).ready(function () {
         var $item = $(this);
 
         disableTrigger($item);
-
     });
 
     $('.trigger-order-event').click(function(e){
