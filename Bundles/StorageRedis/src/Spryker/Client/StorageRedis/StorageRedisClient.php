@@ -163,7 +163,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function scanKeys(string $pattern, int $limit, int $cursor): array
     {
-        return $this->getFactory()->createStorageRedisScanIterator()->scanKeys($pattern, $limit, $cursor);
+        return $this->getFactory()->createStorageRedisWrapper()->scanKeys($pattern, $limit, $cursor);
     }
 
     /**

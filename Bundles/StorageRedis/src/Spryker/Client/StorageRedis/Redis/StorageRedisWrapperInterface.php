@@ -80,6 +80,15 @@ interface StorageRedisWrapperInterface
     public function getKeys(string $pattern): array;
 
     /**
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return array [string, string[]]
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): array;
+
+    /**
      * @return void
      */
     public function resetAccessStats(): void;

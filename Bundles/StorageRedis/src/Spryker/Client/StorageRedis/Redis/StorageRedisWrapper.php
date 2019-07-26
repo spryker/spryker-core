@@ -10,6 +10,7 @@ namespace Spryker\Client\StorageRedis\Redis;
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
 use Spryker\Client\StorageRedis\Exception\StorageRedisException;
+use Spryker\Client\StorageRedis\StorageRedisConfig;
 
 class StorageRedisWrapper implements StorageRedisWrapperInterface
 {
@@ -19,6 +20,11 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      * @var \Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface
      */
     protected $redisClient;
+
+    /**
+     * @var \Spryker\Client\StorageRedis\StorageRedisConfig
+     */
+    protected $storageRedisConfig;
 
     /**
      * @var bool
@@ -31,28 +37,21 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     protected $accessStats;
 
     /**
-     * @var string
-     */
-    private $connectionKey;
-
-    /**
      * @param \Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface $redisClient
-     * @param string $connectionKey
-     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
-     * @param bool $debug
+     * @param \Spryker\Client\StorageRedis\StorageRedisConfig $storageRedisConfig
+     * @param bool|null $debug
      */
     public function __construct(
         StorageRedisToRedisClientInterface $redisClient,
-        string $connectionKey,
-        RedisConfigurationTransfer $redisConfigurationTransfer,
-        bool $debug = false
+        StorageRedisConfig $storageRedisConfig,
+        ?bool $debug = null
     ) {
         $this->redisClient = $redisClient;
-        $this->connectionKey = $connectionKey;
-        $this->debug = $debug;
+        $this->storageRedisConfig = $storageRedisConfig;
+        $this->debug = $debug ?? $this->storageRedisConfig->getDebugMode();
 
         $this->resetAccessStats();
-        $this->setupConnection($redisConfigurationTransfer);
+        $this->setupConnection($this->storageRedisConfig->getRedisConnectionConfiguration());
     }
 
     /**
@@ -102,7 +101,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     public function get(string $key)
     {
         $key = $this->getKeyName($key);
-        $value = $this->redisClient->get($this->connectionKey, $key);
+        $value = $this->redisClient->get($this->storageRedisConfig->getRedisConnectionKey(), $key);
         $this->addReadAccessStats($key);
 
         $result = json_decode($value, true);
@@ -130,7 +129,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
-        $values = array_combine($transformedKeys, $this->redisClient->mget($this->connectionKey, $transformedKeys));
+        $values = array_combine($transformedKeys, $this->redisClient->mget($this->storageRedisConfig->getRedisConnectionKey(), $transformedKeys));
         $this->addMultiReadAccessStats($keys);
 
         return $values;
@@ -143,7 +142,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      */
     public function getStats(?string $section = null): array
     {
-        return $this->redisClient->info($this->connectionKey, $section);
+        return $this->redisClient->info($this->storageRedisConfig->getRedisConnectionKey(), $section);
     }
 
     /**
@@ -161,7 +160,44 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      */
     public function getKeys(string $pattern): array
     {
-        return $this->redisClient->keys($this->connectionKey, $this->getSearchPattern($pattern));
+        return $this->redisClient->keys($this->storageRedisConfig->getRedisConnectionKey(), $this->getSearchPattern($pattern));
+    }
+
+    /**
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return array [string, string[]]
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): array
+    {
+        $result = [];
+        $nextCursor = null;
+        do {
+            [$nextCursor, $keys] = $this->redisScan($this->getSearchPattern($pattern), $nextCursor ?? $cursor);
+            $result = array_merge($result, $keys);
+        } while ($nextCursor > 0 && count($result) < $limit);
+
+        return [$cursor, array_unique($result)];
+    }
+
+    /**
+     * @param string $match
+     * @param int $cursor
+     *
+     * @return array [string, string[]]
+     */
+    protected function redisScan(string $match, int $cursor): array
+    {
+        return $this->redisClient->scan(
+            $this->storageRedisConfig->getRedisConnectionKey(),
+            $cursor,
+            [
+                'COUNT' => $this->storageRedisConfig->getRedisScanChunkSize(),
+                'MATCH' => $match,
+            ]
+        );
     }
 
     /**
@@ -169,7 +205,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      */
     public function getCountItems(): int
     {
-        return count($this->redisClient->keys($this->connectionKey, $this->getSearchPattern()));
+        return count($this->redisClient->keys($this->storageRedisConfig->getRedisConnectionKey(), $this->getSearchPattern()));
     }
 
     /**
@@ -177,7 +213,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      */
     public function getDbSize(): int
     {
-        return $this->redisClient->dbSize($this->connectionKey);
+        return $this->redisClient->dbSize($this->storageRedisConfig->getRedisConnectionKey());
     }
 
     /**
@@ -194,9 +230,9 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
         $key = $this->getKeyName($key);
 
         if ($ttl === null) {
-            $result = $this->redisClient->set($this->connectionKey, $key, $value);
+            $result = $this->redisClient->set($this->storageRedisConfig->getRedisConnectionKey(), $key, $value);
         } else {
-            $result = $this->redisClient->setex($this->connectionKey, $key, $ttl, $value);
+            $result = $this->redisClient->setex($this->storageRedisConfig->getRedisConnectionKey(), $key, $ttl, $value);
         }
 
         $this->addWriteAccessStats($key);
@@ -234,7 +270,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             return;
         }
 
-        $result = $this->redisClient->mset($this->connectionKey, $data);
+        $result = $this->redisClient->mset($this->storageRedisConfig->getRedisConnectionKey(), $data);
         $this->addMultiWriteAccessStats($data);
 
         if (!$result) {
@@ -256,7 +292,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     public function delete(string $key): int
     {
         $key = $this->getKeyName($key);
-        $result = $this->redisClient->del($this->connectionKey, [$key]);
+        $result = $this->redisClient->del($this->storageRedisConfig->getRedisConnectionKey(), [$key]);
         $this->addDeleteAccessStats($key);
 
         return $result;
@@ -278,7 +314,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $transformedKeys[] = $this->getKeyName($key);
         }
 
-        $result = $this->redisClient->del($this->connectionKey, $transformedKeys);
+        $result = $this->redisClient->del($this->storageRedisConfig->getRedisConnectionKey(), $transformedKeys);
         $this->addMultiDeleteAccessStats($transformedKeys);
 
         return $result;
@@ -291,7 +327,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     {
         $keys = $this->getAllKeys();
 
-        return $this->redisClient->del($this->connectionKey, $keys);
+        return $this->redisClient->del($this->storageRedisConfig->getRedisConnectionKey(), $keys);
     }
 
     /**
@@ -400,7 +436,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     protected function setupConnection(RedisConfigurationTransfer $configurationTransfer): void
     {
         $this->redisClient->setupConnection(
-            $this->connectionKey,
+            $this->storageRedisConfig->getRedisConnectionKey(),
             $configurationTransfer
         );
     }
