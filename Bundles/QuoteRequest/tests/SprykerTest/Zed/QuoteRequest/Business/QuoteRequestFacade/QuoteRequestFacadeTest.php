@@ -1447,6 +1447,29 @@ class QuoteRequestFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteQuoteRequestsForCompanyUserWillDeleteAllAssignedQuoteRequests(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+
+        // Act
+        $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(
+            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
+        );
+        $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
+            $this->createFilterTransfer($quoteRequestTransfer)
+        );
+
+        // Assert
+        $this->assertSame(0, $quoteRequestCollection->getQuoteRequests()->count());
+    }
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
