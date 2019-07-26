@@ -132,7 +132,7 @@ var ContentItemEditor = function(options) {
     };
 
     this.onChangeHandler = function ($editor, self) {
-        var curlyBracesRegExp = /{{.+}}/;
+        var curlyBracesRegExp = /\{\{\s*((?!\}\}).)*\s*\}\}/;
         var $editorRange = $editor.summernote('createRange');
         var $editorNode = $($editorRange.sc);
         var nodeContent = $editorNode.text();
