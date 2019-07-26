@@ -14,16 +14,6 @@
                             <xsd:choice minOccurs="0" maxOccurs="unbounded">
                                 <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
                                     <xsd:complexType mixed="true">
-                                        <xsd:sequence>
-                                            <xsd:element name="fixture" minOccurs="0">
-                                                <xsd:complexType mixed="true">
-                                                    <xsd:sequence>
-                                                        <xsd:element type="xsd:byte" name="param" minOccurs="0"/>
-                                                    </xsd:sequence>
-                                                    <xsd:attribute type="xsd:string" name="name" use="required"/>
-                                                </xsd:complexType>
-                                            </xsd:element>
-                                        </xsd:sequence>
                                         <xsd:attribute type="xsd:string" name="name" use="required"/>
                                         <xsd:attribute type="xsd:string" name="type" use="required" />
                                         <xsd:attribute type="xsd:string" name="singular" use="optional"/>
