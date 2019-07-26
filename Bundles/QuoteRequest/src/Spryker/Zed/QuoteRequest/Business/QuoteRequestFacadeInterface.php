@@ -274,4 +274,16 @@ interface QuoteRequestFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
      */
     public function getQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes Quote Requests assigned to a specific Company User from the database.
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteQuoteRequestsByIdCompanyUser(int $idCompanyUser): void;
 }

@@ -226,7 +226,9 @@ class LocaleManager
 
         $localeTransfers = $this->localeRepository->getLocaleTransfersByLocaleNames($availableLocales);
 
-        return $this->indexLocaleTransfersByLocalename($localeTransfers);
+        $indexedLocaleTransfers = $this->indexLocaleTransfersByLocalename($localeTransfers);
+
+        return array_merge(array_flip($availableLocales), $indexedLocaleTransfers);
     }
 
     /**
