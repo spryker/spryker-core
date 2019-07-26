@@ -90,6 +90,10 @@ class CategoryType extends AbstractType
         array $categoryTemplates
     ) {
         foreach ($categoryTemplates as $idTemplate => $templateName) {
+            if (!in_array($templateName, static::SUPPORTED_CATEGORY_TEMPLATE_LIST, true)) {
+                continue;
+            }
+
             foreach ($positions as $idCmsBlockCategoryPosition => $positionName) {
                 $assignedForPosition = [];
 
