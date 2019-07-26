@@ -1,6 +1,7 @@
 "Add Company Role","Add company user role"
 "Assigned Permissions","Assigned Permissions"
 "Assigned Roles","Assigned Roles"
+"Back to Roles","Back to Roles"
 "Company Account","Company Account"
 "Company Business Unit","Company Business Unit"
 "Company role deletion confirmation","Company role deletion confirmation"
@@ -18,4 +19,3 @@ Roles,Roles
 "Unassigned Roles","Unassigned Roles"
 "Update role","Update role"
 "You are trying to delete company role","You are trying to delete company role"
-"Back to Roles","Back to Roles"
