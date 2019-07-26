@@ -132,6 +132,16 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalDefaultPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getFactory()
+            ->createDefaultPriceQueryExpander()
+            ->buildDefaultPriceDimensionQueryCriteria(new PriceProductCriteriaTransfer());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
     public function findOrphanPriceProductStoreEntities(): array

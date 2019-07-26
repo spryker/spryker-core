@@ -47,6 +47,8 @@ interface PriceProductMerchantRelationshipFacadeInterface
      *
      * @api
      *
+     * @deprecated will be removed without replacement.
+     *
      * @param int $idPriceProductStore
      *
      * @return void
