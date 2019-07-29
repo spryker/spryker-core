@@ -31,6 +31,6 @@ class ConfiguredBundleOrderExpanderPlugin extends AbstractPlugin implements Orde
      */
     public function hydrate(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->hydrateConfiguredBundlesToOrder($orderTransfer);
+        return $this->getFacade()->expandOrderWithConfiguredBundles($orderTransfer);
     }
 }
