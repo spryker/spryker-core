@@ -77,6 +77,7 @@ class CmsSlotConstraintsProvider implements CmsSlotConstraintsProviderInterface
         return [
             new Required(),
             new NotBlank(),
+            new Length(['max' => 1024]),
         ];
     }
 
@@ -88,7 +89,6 @@ class CmsSlotConstraintsProvider implements CmsSlotConstraintsProviderInterface
         return [
             new Required(),
             new NotBlank(),
-            new Length(['max' => 1028]),
             new Choice([
                 'choices' => [0, 1, '0', '1', false, true],
                 'message' => 'Is not a valid boolean value.',

@@ -61,6 +61,7 @@ class CmsSlotTemplateConstraintsProvider implements CmsSlotTemplateConstraintsPr
         return [
             new Required(),
             new NotBlank(),
+            new Length(['max' => 1024]),
         ];
     }
 }
