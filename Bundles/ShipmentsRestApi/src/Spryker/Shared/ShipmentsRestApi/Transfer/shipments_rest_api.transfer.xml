@@ -33,4 +33,17 @@
         <property name="quantity" type="int" />
     </transfer>
 
+    <transfer name="CheckoutData">
+        <property name="shipment" type="RestShipment" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string" />
+    </transfer>
+
 </transfers>

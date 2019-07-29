@@ -124,11 +124,8 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
 
         $productSetStorageTransfer->fromArray($spyProductSetLocalizedEntity, true);
         $productSetStorageTransfer->fromArray($spyProductSetLocalizedEntity['SpyProductSet'], true);
-        $productAbstractIds = [];
-        foreach ($spyProductSetLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'] as $productAbstract) {
-            $productAbstractIds[] = $productAbstract['fk_product_abstract'];
-        }
 
+        $productAbstractIds = $this->extractProductAbstractIdsFromProductSetLocalizedEntity($spyProductSetLocalizedEntity);
         $productImageSet = $this->getProductImageSets($spyProductSetLocalizedEntity);
 
         $productSetStorageTransfer->setProductAbstractIds($productAbstractIds);
@@ -141,13 +138,35 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
     }
 
     /**
+     * @param array $productSetLocalizedEntity
+     *
+     * @return int[]
+     */
+    protected function extractProductAbstractIdsFromProductSetLocalizedEntity(array $productSetLocalizedEntity): array
+    {
+        $productAbstractSetEntities = $productSetLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'];
+
+        if (!$productAbstractSetEntities[0]) {
+            return [];
+        }
+
+        $productAbstractIds = [];
+
+        foreach ($productAbstractSetEntities as $productAbstract) {
+            $productAbstractIds[] = $productAbstract['fk_product_abstract'];
+        }
+
+        return $productAbstractIds;
+    }
+
+    /**
      * @param array $productSetIds
      *
      * @return array
      */
     protected function findProductSetLocalizedEntities(array $productSetIds)
     {
-        return $this->queryContainer->queryProductSetDataByIds($productSetIds)->find()->getData();
+        return $this->queryContainer->queryProductSetDataByProductSetIds($productSetIds)->find()->getData();
     }
 
     /**

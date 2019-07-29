@@ -79,7 +79,6 @@ class TaxSetForm extends AbstractType
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choices_as_values' => true,
             'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
             'choice_label' => 'name',
             'choice_value' => 'idTaxRate',

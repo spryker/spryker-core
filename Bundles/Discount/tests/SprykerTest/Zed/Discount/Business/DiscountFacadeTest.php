@@ -958,11 +958,11 @@ class DiscountFacadeTest extends Unit
         $discountFacade = $this->createDiscountFacade();
         $factory = new DiscountBusinessFactory();
         $container = new Container();
-        $container[$dependencyType] = function () use ($discountRulePluginMock) {
+        $container->set($dependencyType, function () use ($discountRulePluginMock) {
             return [
                 $discountRulePluginMock,
             ];
-        };
+        });
         $factory->setContainer($container);
         $discountFacade->setFactory($factory);
 

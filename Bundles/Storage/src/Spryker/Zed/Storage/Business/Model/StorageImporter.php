@@ -35,7 +35,7 @@ class StorageImporter implements StorageImporterInterface
     public function import($source)
     {
         $command = sprintf('sudo cp %s %s', $source, $this->destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR);
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
         $process->run();
 
         if ($process->isSuccessful()) {

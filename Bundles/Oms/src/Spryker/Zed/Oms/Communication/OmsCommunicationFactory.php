@@ -8,6 +8,10 @@
 namespace Spryker\Zed\Oms\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilder;
+use Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilderInterface;
+use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactory;
+use Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface;
 use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
 
 /**
@@ -26,5 +30,21 @@ class OmsCommunicationFactory extends AbstractCommunicationFactory
         $queryContainer = $this->getQueryContainer();
 
         return new TransitionLogTable($queryContainer);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Communication\Factory\OmsTriggerFormFactoryInterface
+     */
+    public function createOmsTriggerFormFactory(): OmsTriggerFormFactoryInterface
+    {
+        return new OmsTriggerFormFactory($this->getFormFactory());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Communication\Builder\OmsTriggerFormCollectionBuilderInterface
+     */
+    public function createOmsTriggerFormCollectionBuilder(): OmsTriggerFormCollectionBuilderInterface
+    {
+        return new OmsTriggerFormCollectionBuilder($this->createOmsTriggerFormFactory());
     }
 }

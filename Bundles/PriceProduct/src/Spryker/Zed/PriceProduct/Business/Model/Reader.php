@@ -513,11 +513,34 @@ class Reader implements ReaderInterface
         $skusWithMissingPrices = $this->getProductConcreteSkusWithMissingPrices($priceProductFilterTransfers, $concretePricesBySku);
         $abstractPricesBySku = $this->findPricesForAbstractProducts($skusWithMissingPrices, $priceProductFilterTransfers);
 
-        return $this->resolveProductPrices(array_merge($abstractPricesBySku, $concretePricesBySku), $priceProductFilterTransfers);
+        return $this->resolveProductPrices(
+            $this->mergeIndexedPriceProductTransfers($abstractPricesBySku, $concretePricesBySku),
+            $priceProductFilterTransfers
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $indexedAbstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $indexedConcretePriceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function mergeIndexedPriceProductTransfers(array $indexedAbstractPriceProductTransfers, array $indexedConcretePriceProductTransfers): array
+    {
+        $mergedPriceProductTransfers = [];
+        foreach ($indexedAbstractPriceProductTransfers as $sku => $abstractPriceProductTransfers) {
+            $mergedPriceProductTransfers[$sku] = $abstractPriceProductTransfers;
+        }
+
+        foreach ($indexedConcretePriceProductTransfers as $sku => $concretePriceProductTransfers) {
+            $mergedPriceProductTransfers[$sku] = $concretePriceProductTransfers;
+        }
+
+        return $mergedPriceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
