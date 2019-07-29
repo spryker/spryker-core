@@ -19,7 +19,7 @@ class ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate implements Dat
     /**
      * @var int[]
      */
-    protected static $idConfigurableBundleTemplateCache = [];
+    protected static $idConfigurableBundleTemplateBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -32,7 +32,7 @@ class ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate implements Dat
     {
         $configurableBundleTemplateKey = $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_KEY];
 
-        if (!isset(static::$idConfigurableBundleTemplateCache[$configurableBundleTemplateKey])) {
+        if (!isset(static::$idConfigurableBundleTemplateBuffer[$configurableBundleTemplateKey])) {
             $idConfigurableBundleTemplate = $this->createConfigurableBundleTemplateQuery()
                 ->select([SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE])
                 ->findOneByKey($configurableBundleTemplateKey);
@@ -41,10 +41,10 @@ class ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate implements Dat
                 throw new EntityNotFoundException(sprintf('Could not find configurable bundle template by key "%s"', $configurableBundleTemplateKey));
             }
 
-            static::$idConfigurableBundleTemplateCache[$configurableBundleTemplateKey] = $idConfigurableBundleTemplate;
+            static::$idConfigurableBundleTemplateBuffer[$configurableBundleTemplateKey] = $idConfigurableBundleTemplate;
         }
 
-        $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_CONFIGURABLE_BUNDLE_TEMPLATE] = static::$idConfigurableBundleTemplateCache[$configurableBundleTemplateKey];
+        $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_CONFIGURABLE_BUNDLE_TEMPLATE] = static::$idConfigurableBundleTemplateBuffer[$configurableBundleTemplateKey];
     }
 
     /**
