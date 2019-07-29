@@ -335,7 +335,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateConfiguredBundlesToOrderExpandsItemInOrderByConfiguredBundle(): void
+    public function testExpandOrderWithConfiguredBundlesToOrderExpandsItemInOrderByConfiguredBundle(): void
     {
         // Arrange
         $quoteTransfer = $this->getFakeQuoteWithConfiguredBundleItems();
@@ -349,7 +349,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Act
         $orderTransfer = $this->tester
             ->getFacade()
-            ->hydrateConfiguredBundlesToOrder($orderTransfer);
+            ->expandOrderWithConfiguredBundles($orderTransfer);
 
         // Assert
         $this->assertCount(2, $orderTransfer->getSalesOrderConfiguredBundles());
@@ -362,7 +362,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateConfiguredBundlesWithoutConfiguredBundle(): void
+    public function testExpandOrderWithConfiguredBundlesWithoutConfiguredBundle(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -388,7 +388,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Act
         $orderTransfer = $this->tester
             ->getFacade()
-            ->hydrateConfiguredBundlesToOrder($orderTransfer);
+            ->expandOrderWithConfiguredBundles($orderTransfer);
 
         // Assert
         $this->assertCount(0, $orderTransfer->getSalesOrderConfiguredBundles());

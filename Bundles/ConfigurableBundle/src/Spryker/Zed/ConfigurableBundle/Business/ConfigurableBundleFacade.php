@@ -61,10 +61,10 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateConfiguredBundlesToOrder(OrderTransfer $orderTransfer): OrderTransfer
+    public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
             ->createSalesOrderConfiguredBundleExpander()
-            ->hydrateConfiguredBundlesToOrder($orderTransfer);
+            ->expandOrderWithConfiguredBundles($orderTransfer);
     }
 }

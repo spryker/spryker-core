@@ -58,5 +58,5 @@ interface ConfigurableBundleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateConfiguredBundlesToOrder(OrderTransfer $orderTransfer): OrderTransfer;
+    public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer;
 }
