@@ -69,10 +69,8 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
         $authenticatedCustomerAccess = $this->customerAccessStorageClient->getAuthenticatedCustomerAccess();
         foreach ($authenticatedCustomerAccess->getContentTypeAccess() as $contentTypeAccessTransfer) {
             if (!array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted()) {
-                continue;
+                unset($customerAccessContentTypeResourceType[$contentTypeAccessTransfer->getContentType()]);
             }
-
-            unset($customerAccessContentTypeResourceType[$contentTypeAccessTransfer->getContentType()]);
         }
 
         return $customerAccessContentTypeResourceType;
