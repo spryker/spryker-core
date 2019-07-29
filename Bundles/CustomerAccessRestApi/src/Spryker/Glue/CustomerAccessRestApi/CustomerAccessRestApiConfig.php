@@ -11,7 +11,10 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class CustomerAccessRestApiConfig extends AbstractBundleConfig
 {
+    public const RESOURCE_CUSTOMER_ACCESS = 'customer-access';
+
     protected const RESOURCE_TYPE_PERMISSION_PLUGIN = [];
+    protected const CUSTOMER_ACCESS_CONTENT_TYPE_RESOURCE_TYPE = [];
 
     /**
      * @param string $resourceType
@@ -31,5 +34,13 @@ class CustomerAccessRestApiConfig extends AbstractBundleConfig
     public function getPluginNameByResourceType(string $resourceType): string
     {
         return static::RESOURCE_TYPE_PERMISSION_PLUGIN[$resourceType];
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomerAccessContentTypeResourceType(): array
+    {
+        return static::CUSTOMER_ACCESS_CONTENT_TYPE_RESOURCE_TYPE;
     }
 }
