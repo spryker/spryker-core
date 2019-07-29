@@ -36,9 +36,15 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
     {
+        $localeName = $this->findLocaleName($urlStorageTransfer);
+
+        if (!$localeName) {
+            return null;
+        }
+
         $data = $this->productStorageClient->findProductAbstractStorageData(
             $urlStorageTransfer->getFkResourceProductAbstract(),
-            $urlStorageTransfer->getLocaleName()
+            $localeName
         );
 
         if (!$data || !$data[static::KEY_SKU]) {
@@ -48,5 +54,23 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         return (new ResourceIdentifierTransfer())
             ->setType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS)
             ->setId($data[static::KEY_SKU]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
+     *
+     * @return string|null
+     */
+    protected function findLocaleName(UrlStorageTransfer $urlStorageTransfer): ?string
+    {
+        foreach ($urlStorageTransfer->getLocaleUrls() as $localeUrlStorageTransfer) {
+            if ($localeUrlStorageTransfer->getFkLocale() !== $urlStorageTransfer->getFkLocale()) {
+                continue;
+            }
+
+            return $localeUrlStorageTransfer->getLocaleName();
+        }
+
+        return null;
     }
 }
