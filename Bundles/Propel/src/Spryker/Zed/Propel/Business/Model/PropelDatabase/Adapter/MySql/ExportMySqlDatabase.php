@@ -36,7 +36,7 @@ class ExportMySqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, 600);
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR, null, null, 600);
         $process->run();
 
         if (!$process->isSuccessful()) {

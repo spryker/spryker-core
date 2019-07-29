@@ -39,6 +39,22 @@ $(document).ready(function() {
     });
 
     safeChecks.addSafeDatetimeCheck();
+
+    $('.spryker-form-autocomplete').each(function(key, value) {
+        var autoCompletedField = $(value);
+        if (autoCompletedField.data('url') === 'undefined') {
+            return;
+        }
+
+        if (autoCompletedField.hasClass('ui-autocomplete')) {
+            autoCompletedField.autocomplete('destroy');
+        }
+
+        autoCompletedField.autocomplete({
+            source: autoCompletedField.data('url'),
+            minLength: 3
+        });
+    });
 });
 
 /**

@@ -120,7 +120,7 @@ class AttributeController extends AbstractController
             ->getAttributeTranslationFormCollection($dataProvider->getData($idProductManagementAttribute), $dataProvider->getOptions())
             ->handleRequest($request);
 
-        if (!$attributeTranslateFormCollection->isValid()) {
+        if ($attributeTranslateFormCollection->isSubmitted() === false || $attributeTranslateFormCollection->isValid() === false) {
             return $this->viewResponse([
                 'form' => $attributeTranslateFormCollection->createView(),
                 'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
