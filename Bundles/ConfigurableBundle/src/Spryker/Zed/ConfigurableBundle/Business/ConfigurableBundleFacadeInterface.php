@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
@@ -59,4 +60,16 @@ interface ConfigurableBundleFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Extracts configured bundle from QuoteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
+     */
+    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer;
 }

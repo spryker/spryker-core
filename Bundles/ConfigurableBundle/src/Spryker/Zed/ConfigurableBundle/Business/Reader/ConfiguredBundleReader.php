@@ -5,17 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundle\Zed;
+namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ConfigurableBundleStubInterface
+class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
      */
-    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer;
+    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer
+    {
+        // TODO: Implement getConfiguredBundlesFromQuote() method.
+    }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ConfigurableBundle;
 
+use Spryker\Client\ConfigurableBundle\Dependency\Client\ConfigurableBundleToZedRequestClientInterface;
+use Spryker\Client\ConfigurableBundle\Zed\ConfigurableBundleStub;
+use Spryker\Client\ConfigurableBundle\Zed\ConfigurableBundleStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 /**
@@ -14,4 +17,19 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class ConfigurableBundleFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\ConfigurableBundle\Zed\ConfigurableBundleStubInterface
+     */
+    public function createZedConfigurableBundleStub(): ConfigurableBundleStubInterface
+    {
+        return new ConfigurableBundleStub($this->getZedRequestClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundle\Dependency\Client\ConfigurableBundleToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): ConfigurableBundleToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::CLIENT_ZED_REQUEST);
+    }
 }

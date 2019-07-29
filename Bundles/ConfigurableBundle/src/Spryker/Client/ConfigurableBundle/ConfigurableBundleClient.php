@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ConfigurableBundle;
 
+use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\ConfigurableBundle\Zed\ConfigurableBundleStubInterface;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -14,4 +17,25 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ConfigurableBundleClient extends AbstractClient implements ConfigurableBundleClientInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
+     */
+    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer
+    {
+        return $this->getZedStub()->getConfiguredBundlesFromQuote($quoteTransfer);
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundle\Zed\ConfigurableBundleStubInterface
+     */
+    protected function getZedStub(): ConfigurableBundleStubInterface
+    {
+        return $this->getFactory()->createZedConfigurableBundleStub();
+    }
 }

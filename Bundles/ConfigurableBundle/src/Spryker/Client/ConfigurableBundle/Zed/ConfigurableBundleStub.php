@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ConfigurableBundle\Zed;
 
+use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ConfigurableBundle\Dependency\Client\ConfigurableBundleToZedRequestClientInterface;
 
 class ConfigurableBundleStub implements ConfigurableBundleStubInterface
@@ -22,5 +24,21 @@ class ConfigurableBundleStub implements ConfigurableBundleStubInterface
     public function __construct(ConfigurableBundleToZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
+     */
+    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer $configuredBundleCollectionTransfer */
+        $configuredBundleCollectionTransfer = $this->zedRequestClient->call(
+            '/configurable-bundle/gateway/get-configurable-bundles-from-quote',
+            $quoteTransfer
+        );
+
+        return $configuredBundleCollectionTransfer;
     }
 }
