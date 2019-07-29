@@ -178,7 +178,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command, null, null, null, 0);
+        return new Process(explode(' ', $command), null, null, null, 0);
     }
 
     /**
