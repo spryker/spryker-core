@@ -179,10 +179,6 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         }
 
         foreach ($concreteProduct['SpyProductSearches'] as $spyProductSearch) {
-            if (isset($spyProductSearch['fk_locale']) === false || isset($spyProductSearch['is_searchable']) === false) {
-                return false;
-            }
-
             if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
                 return true;
             }
