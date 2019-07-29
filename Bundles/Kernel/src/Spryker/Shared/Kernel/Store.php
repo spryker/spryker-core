@@ -79,7 +79,7 @@ class Store
     protected static $defaultStore;
 
     /**
-     * Cache for for data from stores.php to not open it too many times.
+     * Cache for data from stores.php to not open it too many times.
      *
      * @var array
      */
