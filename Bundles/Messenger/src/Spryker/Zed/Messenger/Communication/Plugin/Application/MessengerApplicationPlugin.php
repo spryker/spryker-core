@@ -20,6 +20,11 @@ class MessengerApplicationPlugin extends AbstractPlugin implements ApplicationPl
     public const SERVICE_MESSENGER = 'messenger';
 
     /**
+     * Specification:
+     * - Adds the Messenger service to the Container.
+     *
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
@@ -28,7 +33,7 @@ class MessengerApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(self::SERVICE_MESSENGER, function () {
+        $container->set(static::SERVICE_MESSENGER, function () {
             return $this->getFacade();
         });
 
