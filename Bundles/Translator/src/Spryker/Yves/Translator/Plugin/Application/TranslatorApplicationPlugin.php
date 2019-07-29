@@ -5,16 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Translator\Communication\Plugin\Application;
+namespace Spryker\Yves\Translator\Plugin\Application;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
- * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
- * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
+ * @method \Spryker\Yves\Translator\TranslatorFactory getFactory()
+ * @method \Spryker\Yves\Translator\TranslatorConfig getConfig()
  */
 class TranslatorApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
@@ -39,7 +38,7 @@ class TranslatorApplicationPlugin extends AbstractPlugin implements ApplicationP
     {
         $container->set(static::BC_FEATURE_FLAG_TWIG_TRANSLATOR, false);
         $container->set(static::SERVICE_TRANSLATOR, function () {
-            return $this->getFactory()->getTranslatorPlugin();
+            return $this->getFactory()->createTranslator();
         });
 
         return $container;
