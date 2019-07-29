@@ -63,7 +63,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveSalesOrderConfiguredBundlesFromQuoteCopyConfiguredBundlesFromQuoteToNewOrder(): void
+    public function testSaveSalesOrderConfiguredBundlesFromQuoteCopiesConfiguredBundlesFromQuoteToNewOrder(): void
     {
         // Arrange
         $quoteTransfer = $this->getFakeQuoteWithConfiguredBundleItems();
@@ -74,6 +74,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
 
+        // Assert
         $configuredBundleFilterTransfer = (new SalesOrderConfiguredBundleFilterTransfer())
             ->setConfigurableBundleTemplateUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2);
 
@@ -81,7 +82,6 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getSalesOrderConfiguredBundleCollectionByFilter($configuredBundleFilterTransfer);
 
-        // Assert
         $this->assertCount(3, $salesOrderConfiguredBundleCollection->getSalesOrderConfiguredBundles()->offsetGet(0)->getItems());
     }
 
@@ -335,7 +335,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateConfiguredBundlesToOrderExpandItemInOrderByConfiguredBundle(): void
+    public function testHydrateConfiguredBundlesToOrderExpandsItemInOrderByConfiguredBundle(): void
     {
         // Arrange
         $quoteTransfer = $this->getFakeQuoteWithConfiguredBundleItems();

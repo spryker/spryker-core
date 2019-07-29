@@ -59,12 +59,12 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
         OrderTransfer $orderTransfer,
         ArrayObject $salesOrderConfiguredBundleTransfers
     ): OrderTransfer {
-        $mappedSalesOrderConfiguredBundleItemTransfers = $this->mapSalesOrderConfiguredBundleItems($salesOrderConfiguredBundleTransfers);
+        $salesOrderConfiguredBundleItemTransfers = $this->extractSalesOrderConfiguredBundleItems($salesOrderConfiguredBundleTransfers);
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
-            if (array_key_exists($itemTransfer->getIdSalesOrderItem(), $mappedSalesOrderConfiguredBundleItemTransfers)) {
+            if (array_key_exists($itemTransfer->getIdSalesOrderItem(), $salesOrderConfiguredBundleItemTransfers)) {
                 $itemTransfer->setSalesOrderConfiguredBundleItem(
-                    $mappedSalesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()]
+                    $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()]
                 );
             }
         }
@@ -77,18 +77,18 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
      *
      * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
      */
-    protected function mapSalesOrderConfiguredBundleItems(ArrayObject $salesOrderConfiguredBundleTransfers): array
+    protected function extractSalesOrderConfiguredBundleItems(ArrayObject $salesOrderConfiguredBundleTransfers): array
     {
-        $mappedSalesOrderConfiguredBundleItemTransfers = [];
+        $salesOrderConfiguredBundleItemTransfers = [];
 
         foreach ($salesOrderConfiguredBundleTransfers as $configuredBundleTransfer) {
             foreach ($configuredBundleTransfer->getItems() as $salesOrderConfiguredBundleItemTransfer) {
                 $idSalesOrderItem = $salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItem();
-                $mappedSalesOrderConfiguredBundleItemTransfers[$idSalesOrderItem] = $salesOrderConfiguredBundleItemTransfer;
+                $salesOrderConfiguredBundleItemTransfers[$idSalesOrderItem] = $salesOrderConfiguredBundleItemTransfer;
             }
         }
 
-        return $mappedSalesOrderConfiguredBundleItemTransfers;
+        return $salesOrderConfiguredBundleItemTransfers;
     }
 
     /**

@@ -53,8 +53,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * Specification:
-     * - Hydrates sales order configured bundle to ItemTransfer.
+     * {@inheritdoc}
      *
      * @api
      *
