@@ -7,7 +7,7 @@
     <table name="spy_configurable_bundle_template" phpName="SpyConfigurableBundleTemplate">
         <column name="id_configurable_bundle_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>
-        <column name="name" required="true" type="VARCHAR"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
 
         <unique name="spy_configurable_bundle_template-uuid">
             <unique-column name="uuid"/>
