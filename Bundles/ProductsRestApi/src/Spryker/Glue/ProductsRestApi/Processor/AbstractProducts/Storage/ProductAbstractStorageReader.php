@@ -9,7 +9,6 @@ namespace Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage;
 
 use Generated\Shared\Transfer\ResourceIdentifierTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
-use Spryker\Client\Locale\LocaleClient;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
@@ -39,7 +38,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     {
         $data = $this->productStorageClient->findProductAbstractStorageData(
             $urlStorageTransfer->getFkResourceProductAbstract(),
-            (new LocaleClient())->getCurrentLocale() // TODO: change this to pulling the locale from the RestRequest.
+            $urlStorageTransfer->getLocaleName()
         );
 
         if (!$data || !$data[static::KEY_SKU]) {
