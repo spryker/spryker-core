@@ -1,8 +1,8 @@
-namespace: SprykerTest\Zed\ContentStorage
-actor: Tester
+namespace: SprykerTest
 
 include:
   - tests/SprykerTest/Zed/ContentStorage
+  - tests/SprykerTest/Client/ContentStorage
 
 paths:
   tests: tests
@@ -21,4 +21,3 @@ settings:
 coverage:
   enabled: true
   whitelist: { include: ['src/*.php'] }
-

@@ -17,8 +17,10 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -81,6 +83,21 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractWithLocalizedAttributesByIds(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryAllProductAbstractLocalizedAttributes()
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 
     /**
@@ -242,12 +259,16 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryAllProductImageSetsByProductAbstractIds(array $productAbstractIds)
     {
-        return $this->getFactory()
+        $productImageSetQuery = $this->getFactory()
             ->getProductImageQueryContainer()
             ->queryProductImageSet()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->joinWithSpyProductImageSetToProductImage()
             ->joinWith('SpyProductImageSetToProductImage.SpyProductImage');
+
+        $productImageSetQuery = $this->sortProductImageSetToProductImageQuery($productImageSetQuery);
+
+        return $productImageSetQuery;
     }
 
     /**
@@ -344,5 +365,21 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
         $params = [];
 
         return sprintf('(%s)', $idImageSetSubQuery->createSelectSql($params));
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetToProductImageQuery
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function sortProductImageSetToProductImageQuery(
+        SpyProductImageSetQuery $productImageSetToProductImageQuery
+    ): SpyProductImageSetQuery {
+        $productImageSetToProductImageQuery->useSpyProductImageSetToProductImageQuery()
+                ->orderBySortOrder()
+                ->orderByIdProductImageSetToProductImage()
+            ->endUse();
+
+        return $productImageSetToProductImageQuery;
     }
 }

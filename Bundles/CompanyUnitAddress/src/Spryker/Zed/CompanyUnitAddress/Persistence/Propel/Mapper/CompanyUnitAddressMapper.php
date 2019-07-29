@@ -88,9 +88,28 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         SpyCompanyUnitAddress $companyUnitAddressEntity,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer {
-        return $companyUnitAddressTransfer->fromArray(
+        $companyUnitAddressTransfer = $companyUnitAddressTransfer->fromArray(
             $companyUnitAddressEntity->toArray(),
             true
         );
+
+        $companyUnitAddressTransfer->setIso2Code($companyUnitAddressEntity->getCountry()->getIso2Code());
+
+        return $companyUnitAddressTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
+     */
+    public function mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
+        SpyCompanyUnitAddress $companyUnitAddressEntity
+    ): SpyCompanyUnitAddress {
+        $companyUnitAddressEntity->fromArray($companyUnitAddressTransfer->toArray());
+
+        return $companyUnitAddressEntity;
     }
 }

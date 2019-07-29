@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManagerStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface FileManagerStorageRepositoryInterface
 {
     /**
@@ -22,4 +24,12 @@ interface FileManagerStorageRepositoryInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
      */
     public function findFileStoragesByIds(array $fileStorageIds);
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $fileManagerStorageIds
+     *
+     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
+     */
+    public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $fileManagerStorageIds = []): array;
 }

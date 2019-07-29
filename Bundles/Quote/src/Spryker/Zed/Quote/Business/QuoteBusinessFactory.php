@@ -22,6 +22,8 @@ use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidatorInterface;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
+use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\QuoteConfig;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 
@@ -41,7 +43,9 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createQuoteWriterPluginExecutor(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->createQuoteValidator(),
+            $this->getQuoteExpandBeforeCreatePlugins()
         );
     }
 
@@ -112,6 +116,16 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface
+     */
+    public function createQuoteValidator(): QuoteValidatorInterface
+    {
+        return new QuoteValidator(
+            $this->getQuoteValidatorPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Quote\QuoteConfig
      */
     public function getBundleConfig(): QuoteConfig
@@ -152,6 +166,14 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     */
+    public function getQuoteExpandBeforeCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_EXPAND_BEFORE_CREATE);
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteUpdateAfterPlugins(): array
@@ -181,5 +203,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteDeleteAfterPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_DELETE_AFTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
+     */
+    public function getQuoteValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_VALIDATOR);
     }
 }

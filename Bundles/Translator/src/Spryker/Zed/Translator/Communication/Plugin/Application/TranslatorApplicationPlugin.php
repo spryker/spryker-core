@@ -37,10 +37,11 @@ class TranslatorApplicationPlugin extends AbstractPlugin implements ApplicationP
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::BC_FEATURE_FLAG_TWIG_TRANSLATOR, false);
-        $container->set(static::SERVICE_TRANSLATOR, function (ContainerInterface $container) {
+        $container[static::BC_FEATURE_FLAG_TWIG_TRANSLATOR] = false;
+        $container[static::SERVICE_TRANSLATOR] = function (ContainerInterface $container) {
             return $this->getFactory()->getTranslatorPlugin();
-        });
+        };
+
         $container->configure(static::SERVICE_TRANSLATOR, ['isGlobal' => true]);
 
         return $container;

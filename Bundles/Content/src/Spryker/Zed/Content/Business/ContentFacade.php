@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Content\Business;
 
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -36,7 +37,23 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
      *
      * @api
      *
+     * @param string $contentKey
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
+     */
+    public function findContentByKey(string $contentKey): ?ContentTransfer
+    {
+        return $this->getFactory()->createContentReader()->findContentByKey($contentKey);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @throws \Spryker\Zed\Content\Business\Exception\ContentKeyNotCreatedException
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
@@ -59,5 +76,19 @@ class ContentFacade extends AbstractFacade implements ContentFacadeInterface
     public function update(ContentTransfer $contentTransfer): ContentTransfer
     {
         return $this->getFactory()->createContentWriter()->update($contentTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
+     */
+    public function validateContent(ContentTransfer $contentTransfer): ContentValidationResponseTransfer
+    {
+        return $this->getFactory()->createContentValidator()->validateContent($contentTransfer);
     }
 }

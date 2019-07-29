@@ -44,6 +44,7 @@ class ProductCategoryFilterReader implements ProductCategoryFilterReaderInterfac
         if (!$productCategoryFilterEntity) {
             $productCategoryFilterTransfer = new ProductCategoryFilterTransfer();
             $productCategoryFilterTransfer->setFkCategory($categoryId);
+
             return $productCategoryFilterTransfer;
         }
 

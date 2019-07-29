@@ -1,4 +1,4 @@
-{% extends '@CmsBlockGui/_layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'Edit Block Glossary:' | trans ~ ' ' ~ idCmsBlock %}
 
@@ -31,5 +31,15 @@
 
 {% endblock %}
 
+
+{% block footer_js %}
+    {% block common_js %}{{ parent() }}{% endblock %}
+    {% block init_js %}
+        {{ render(controller('/cms-content-widget/assets/index'), {'ignore_errors':true}) }}
+        {{ render(controller('/content-gui/assets/index'), {'ignore_errors':true}) }}
+        {{ parent() }}
+    {% endblock %}
+    <script src="/assets/js/spryker-zed-cms-block-gui-main.js"></script>
+{% endblock %}
 
 

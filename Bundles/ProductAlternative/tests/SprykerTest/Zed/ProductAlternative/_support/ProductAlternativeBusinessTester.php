@@ -24,7 +24,7 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  *
- * @method \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacade getFacade()
+ * @method \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface getFacade()
  */
 class ProductAlternativeBusinessTester extends Actor
 {

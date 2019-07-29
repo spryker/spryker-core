@@ -303,8 +303,9 @@ class EditOfferType extends AbstractType
             ],
             'constraints' => [
                 new Callback(function ($items, ExecutionContextInterface $context) {
+                    /** @var \Generated\Shared\Transfer\ItemTransfer[] $items */
                     foreach ($items as $itemTransfer) {
-                        if ($itemTransfer->getSku() && empty($itemTransfer->getQuantity())) {
+                        if ($itemTransfer->getSku() && !$itemTransfer->getQuantity()) {
                             $context->buildViolation('One of selected products contains invalid quantity')
                                 ->addViolation();
                             break;
@@ -428,13 +429,14 @@ class EditOfferType extends AbstractType
         $quoteTransfer = $offerTransfer->getQuote();
         $storeName = $quoteTransfer->getStore()->getName();
         $currencyCode = $quoteTransfer->getCurrency()->getCode();
+
         return implode(';', [$storeName, $currencyCode]);
     }
 
     /**
      * @param string $storeCurrency
      *
-     * @return array
+     * @return string[]
      */
     private function getStoreAndCurrency(string $storeCurrency)
     {

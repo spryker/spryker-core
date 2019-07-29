@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,7 +18,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findProductAbstractPackagingStorageEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
@@ -65,7 +65,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array
     {
@@ -77,16 +77,35 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @module ProductPackagingUnit
      *
-     * @return int[]
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function findProductAbstractIdsWithProductPackagingUnit(): array
+    public function getProductPackagingLeadProductEntityTransfersByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->getSpyProductQuery()
-            ->innerJoinWithSpyProductPackagingUnit()
-            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->distinct()
-            ->find()
-            ->toArray();
+        $query = $this->getFactory()->getProductPackagingLeadProductQuery();
+
+        if ($productAbstractIds !== []) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findFilteredProductAbstractPackagingUnitStorages(FilterTransfer $filterTransfer, array $productAbstractIds = []): array
+    {
+        $query = $this->getFactory()->createSpyProductAbstractPackagingStorageQuery();
+
+        if ($productAbstractIds) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

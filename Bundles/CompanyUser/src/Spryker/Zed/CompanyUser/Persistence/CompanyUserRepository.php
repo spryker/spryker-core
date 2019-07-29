@@ -9,8 +9,10 @@ namespace Spryker\Zed\CompanyUser\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -94,6 +96,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->useCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
+            ->joinWithCustomer()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
             ->endUse()
@@ -204,6 +207,36 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @module Customer
+     * @module Company
+     *
+     * @param string $uuidCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findActiveCompanyUserByUuid(string $uuidCompanyUser): ?CompanyUserTransfer
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCustomer()
+            ->useCompanyQuery()
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->filterByIsActive(true)
+            ->filterByUuid($uuidCompanyUser);
+
+        $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        if ($companyUserEntityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserMapper()
+                ->mapEntityTransferToCompanyUserTransfer($companyUserEntityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
@@ -237,7 +270,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @module Customer
      *
      * @param int $idCompany
      *
@@ -262,7 +295,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @module Company
      *
      * @param int $idCustomer
      *
@@ -326,5 +359,97 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         return $this->getFactory()
             ->createCompanyUserMapper()
             ->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
+    }
+
+    /**
+     * @module Customer
+     * @module Company
+     *
+     * @param array $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByIds(array $companyUserIds): array
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByIdCompanyUser_In($companyUserIds)
+            ->filterByIsActive(true)
+            ->joinWithCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+            ->endUse()
+            ->joinWithCustomer()
+            ->useCustomerQuery()
+                ->filterByAnonymizedAt(null, Criteria::ISNULL)
+            ->endUse();
+
+        $companyUserEntityCollection = $query->find();
+
+        $companyUnitTransfers = [];
+        $mapper = $this->getFactory()->createCompanyUserMapper();
+        foreach ($companyUserEntityCollection as $companyUserEntity) {
+            $companyUnitTransfers[] = $mapper->mapCompanyUserEntityToCompanyUserTransfer($companyUserEntity);
+        }
+
+        return $companyUnitTransfers;
+    }
+
+    /**
+     * @module Customer
+     *
+     * @param array $companyIds
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCompany_In($companyIds)
+            ->filterByIsActive(true)
+            ->useCustomerQuery()
+                ->filterByAnonymizedAt(null, Criteria::ISNULL)
+            ->endUse()
+            ->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER]);
+
+        return $query->find()->getData();
+    }
+
+    /**
+     * @module Company
+     * @module Customer
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserCriteriaTransfer $companyUserCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
+     */
+    public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer
+    {
+        $queryPattern = $companyUserCriteriaTransfer->getPattern() . '%';
+
+        $companyUsersQuery = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->joinWithCompany()
+            ->joinWithCustomer()
+            ->useCustomerQuery()
+                ->filterByEmail_Like($queryPattern)
+                ->_or()
+                ->filterByLastName_Like($queryPattern)
+                ->_or()
+                ->filterByFirstName_Like($queryPattern)
+                ->setIgnoreCase(true)
+            ->endUse();
+
+        if ($companyUserCriteriaTransfer->getLimit()) {
+            $companyUsersQuery->limit($companyUserCriteriaTransfer->getLimit());
+        }
+
+        $companyUserEntityTransferCollection = $this->buildQueryFromCriteria($companyUsersQuery)->find();
+
+        return $this->getFactory()
+            ->createCompanyUserMapper()
+            ->mapCompanyUserCollection($companyUserEntityTransferCollection);
     }
 }

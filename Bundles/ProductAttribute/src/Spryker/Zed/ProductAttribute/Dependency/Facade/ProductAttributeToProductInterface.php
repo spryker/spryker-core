@@ -120,7 +120,7 @@ interface ProductAttributeToProductInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return bool
+     * @return void
      */
     public function activateProductConcrete($idProductConcrete);
 
@@ -129,7 +129,7 @@ interface ProductAttributeToProductInterface
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException
      *
-     * @return bool
+     * @return void
      */
     public function deactivateProductConcrete($idProductConcrete);
 

@@ -91,6 +91,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     protected function getProductConcreteStorageData(array $idProductConcreteCollection)
     {
         $storageKeyCollection = $this->getStorageKeyCollection($idProductConcreteCollection);
+
         return $this->storage->getMulti($storageKeyCollection);
     }
 

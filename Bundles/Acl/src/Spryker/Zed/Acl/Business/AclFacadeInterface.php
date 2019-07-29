@@ -251,7 +251,7 @@ interface AclFacadeInterface
      *
      * @param int $idUser
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getUserRoles($idUser);
 

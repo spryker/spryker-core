@@ -9,24 +9,17 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
-class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
+class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
 {
     protected const PATTERN_GUEST_CART_ITEM_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
     protected const KEY_REST_RESOURCE_SELF_LINK = 'self';
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
@@ -48,7 +41,7 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
         CartsResourceMapperInterface $cartsResourceMapper,
         CartItemsResourceMapperInterface $cartItemsResourceMapper
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        parent::__construct($restResourceBuilder, $cartsResourceMapper);
         $this->cartsResourceMapper = $cartsResourceMapper;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
     }
@@ -79,66 +72,6 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
         }
 
         return $this->createEmptyGuestCartRestResponse()->addResource($cartResource);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartNotFoundErrorRestResponse(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND);
-
-        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $errors
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartErrorRestResponseFromErrorMessageTransfer(array $errors): RestResponseInterface
-    {
-        $restResponse = $this->createEmptyGuestCartRestResponse();
-
-        foreach ($errors as $messageTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CartsRestApiConfig::RESPONSE_CODE_ITEM_VALIDATION)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail($messageTransfer->getValue());
-
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createGuestCartIdMissingError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
-
-        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createAnonymousCustomerUniqueIdEmptyErrorRestResponse(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(CartsRestApiConfig::RESPONSE_CODE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_ANONYMOUS_CUSTOMER_UNIQUE_ID_EMPTY);
-
-        return $this->createEmptyGuestCartRestResponse()->addError($restErrorTransfer);
     }
 
     /**

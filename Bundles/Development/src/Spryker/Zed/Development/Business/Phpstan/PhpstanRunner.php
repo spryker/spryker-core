@@ -151,6 +151,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
             $output->writeln($command);
+
             return static::CODE_SUCCESS;
         }
 
@@ -177,7 +178,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command, null, null, null, 0);
+        return new Process(explode(' ', $command), null, null, null, 0);
     }
 
     /**
