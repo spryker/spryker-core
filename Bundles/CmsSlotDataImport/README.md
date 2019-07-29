@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/cms-slot-data-import.svg)](https://travis-ci.org/spryker/cms-slot-data-import)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/cms-slot-data-import/badge.svg)](https://coveralls.io/github/spryker/cms-slot-data-import)
 
-{{ADD DESCRIPTION HERE}}
+Data importer for CmsSlot.
 
 ## Installation
 

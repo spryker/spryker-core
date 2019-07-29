@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/cms-slot.svg)](https://travis-ci.org/spryker/cms-slot)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/cms-slot/badge.svg)](https://coveralls.io/github/spryker/cms-slot)
 
-{{ADD DESCRIPTION HERE}}
+CmsSlot provides slots and templates to use them for easily assign any CMS content for every store page.
 
 ## Installation
 
