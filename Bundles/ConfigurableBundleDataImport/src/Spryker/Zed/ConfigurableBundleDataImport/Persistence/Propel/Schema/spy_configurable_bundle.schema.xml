@@ -5,12 +5,20 @@
           namespace="Orm\Zed\ConfigurableBundle\Persistence" package="src.Orm.Zed.ConfigurableBundle.Persistence"
 >
 
-    <table name="spy_configurable_bundle_template" phpName="SpyConfigurableBundleTemplate">
+    <table name="spy_configurable_bundle_template" phpName="SpyConfigurableBundleTemplate" identifierQuoting="true">
         <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
+
+        <unique name="spy_configurable_bundle_template-unique-key">
+            <unique-column name="key"/>
+        </unique>
     </table>
 
-    <table name="spy_configurable_bundle_template_slot" phpName="SpyConfigurableBundleTemplateSlot">
+    <table name="spy_configurable_bundle_template_slot" phpName="SpyConfigurableBundleTemplateSlot" identifierQuoting="true">
         <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>
+
+        <unique name="spy_configurable_bundle_template_slot-unique-key">
+            <unique-column name="key"/>
+        </unique>
     </table>
 
 </database>

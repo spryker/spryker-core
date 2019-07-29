@@ -33,8 +33,6 @@ class ConfigurableBundleDataImportCommunicationTester extends Actor
 {
     use _generated\ConfigurableBundleDataImportCommunicationTesterActions;
 
-    protected const TEST_PRODUCT_LIST_TYPE = 0;
-
     /**
      * @return void
      */

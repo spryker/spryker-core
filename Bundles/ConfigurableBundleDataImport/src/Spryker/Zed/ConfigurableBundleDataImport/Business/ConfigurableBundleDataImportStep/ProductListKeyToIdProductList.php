@@ -19,7 +19,7 @@ class ProductListKeyToIdProductList implements DataImportStepInterface
     /**
      * @var int[]
      */
-    protected $idProductListCache;
+    protected static $idProductListCache;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -32,7 +32,7 @@ class ProductListKeyToIdProductList implements DataImportStepInterface
     {
         $productListKey = $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_PRODUCT_LIST_KEY];
 
-        if (!isset($this->idProductListCache[$productListKey])) {
+        if (!isset(static::$idProductListCache[$productListKey])) {
             $idProductList = $this->createProductListQuery()
                 ->select([SpyProductListTableMap::COL_ID_PRODUCT_LIST])
                 ->findOneByKey($productListKey);
@@ -41,10 +41,10 @@ class ProductListKeyToIdProductList implements DataImportStepInterface
                 throw new EntityNotFoundException(sprintf('Could not find product list by key "%s"', $productListKey));
             }
 
-            $this->idProductListCache[$productListKey] = $idProductList;
+            static::$idProductListCache[$productListKey] = $idProductList;
         }
 
-        $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_PRODUCT_LIST] = $this->idProductListCache[$productListKey];
+        $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_PRODUCT_LIST] = static::$idProductListCache[$productListKey];
     }
 
     /**
