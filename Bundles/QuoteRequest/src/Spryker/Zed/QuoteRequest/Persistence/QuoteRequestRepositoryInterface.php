@@ -46,4 +46,11 @@ interface QuoteRequestRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
     public function findQuoteRequestByVersionReference(string $versionReference): ?QuoteRequestTransfer;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return int[]
+     */
+    public function findQuoteRequestIdsByIdCompanyUser(int $idCompanyUser): array;
 }

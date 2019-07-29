@@ -44,6 +44,32 @@ class SalesDataHelper extends Module
         $this->saveOrderStack = $saveOrderStack;
         $quoteTransfer = $this->createQuoteTransfer($override);
 
+        return $this->persistOrder($quoteTransfer, $stateMachineProcessName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function haveOrderFromQuote(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
+    {
+        return $this->persistOrder($quoteTransfer, $stateMachineProcessName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function persistOrder(QuoteTransfer $quoteTransfer, string $stateMachineProcessName): SaveOrderTransfer
+    {
+        /**
+         * @var \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+         */
+        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
         $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
         $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
 
