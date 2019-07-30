@@ -187,6 +187,6 @@ class ProcessManager implements ProcessManagerInterface
      */
     protected function createProcess($command)
     {
-        return new Process($command);
+        return new Process(explode(' ', $command));
     }
 }

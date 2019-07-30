@@ -45,9 +45,9 @@ class CmsPageEventResourceQueryContainerPlugin extends AbstractPlugin implements
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryCmsPageVersionByIds($ids);
+        $query = $this->getQueryContainer()->queryCmsPageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 

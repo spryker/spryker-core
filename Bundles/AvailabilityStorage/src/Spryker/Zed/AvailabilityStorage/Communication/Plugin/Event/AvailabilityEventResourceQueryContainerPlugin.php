@@ -45,9 +45,9 @@ class AvailabilityEventResourceQueryContainerPlugin extends AbstractPlugin imple
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
+        $query = $this->getQueryContainer()->queryAvailabilityByAvailabilityAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 interface CompanyUnitAddressLabelEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return void
@@ -23,8 +21,6 @@ interface CompanyUnitAddressLabelEntityManagerInterface
     ): void;
 
     /**
-     * @api
-     *
      * @param array $labelToAddressRelationIds
      *
      * @return void

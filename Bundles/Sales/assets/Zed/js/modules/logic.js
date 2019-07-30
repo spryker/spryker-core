@@ -18,6 +18,9 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
+/**
+ * @deprecated not used any more
+ */
 function createTriggerUrl(idOrder, eventName) {
     var url = '/oms/trigger/trigger-event-for-order';
     var parameters = {
@@ -33,6 +36,9 @@ function createTriggerUrl(idOrder, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
+/**
+ * @deprecated not used any more
+ */
 function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
     var url = '/oms/trigger/trigger-event-for-order-items';
     var parameters = {
@@ -48,38 +54,32 @@ function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
+/**
+ * @deprecated not used any more
+ */
 function disableTrigger($item) {
     $item
         .prop('disabled', true)
         .addClass('disabled');
 }
 
-$(document).ready(function() {
-    $('.trigger-order-single-event').click(function(e){
+$(document).ready(function () {
+    $('.trigger-event').click(function (e) {
         e.preventDefault();
 
+        $(this).prop('disabled', true).addClass('disabled');
+        $(this).parents('form').first().submit();
         var $item = $(this);
 
         disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
     });
 
     $('.trigger-order-event').click(function(e){
         e.preventDefault();
 
         var $item = $(this);
-        
+
         disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, eventName);
     });
 
     $('.item-check').click(function(){

@@ -42,15 +42,11 @@ class ProductQuantityEventResourceRepositoryPlugin extends AbstractPlugin implem
      *
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData(array $ids = []): array
     {
-        if (!empty($ids)) {
-            return $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
-        }
-
-        return $this->getFacade()->findProductQuantityTransfers();
+        return $this->getRepository()->getProductQuantityEntityTransfersByProductIds($ids);
     }
 
     /**

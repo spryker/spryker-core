@@ -59,6 +59,14 @@ interface ApplicationConstants
 
     /**
      * Specification:
+     * - A bit field of trusted Request::HEADER_*, to set which headers to trust from your proxies.
+     *
+     * @api
+     */
+    public const YVES_TRUSTED_HEADER = 'YVES_TRUSTED_HEADER';
+
+    /**
+     * Specification:
      * - List of trusted hosts managed by regexp.
      *
      * @api

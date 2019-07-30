@@ -33,6 +33,14 @@ class CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerBridge implements C
     }
 
     /**
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCompanyAndCountry(): SpyCompanyUnitAddressQuery
+    {
+        return $this->companyUnitAddressQueryContainer->queryCompanyUnitAddressWithCompanyAndCountry();
+    }
+
+    /**
      * @param int $idCompanyUnitAddress
      *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery

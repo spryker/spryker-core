@@ -11,8 +11,8 @@
 Delete,Delete
 Edit,Edit
 "Edit filter order","Edit filter order"
-"Edit Search Preferences","Edit search preferences"
 "Edit search preferences","Edit search preferences"
+"Edit Search Preferences","Edit search preferences"
 "Filter name","Filter name"
 "Filter position","Filter position"
 "Filter preference was created successfully.","Filter preference was created successfully."
@@ -34,8 +34,8 @@ range,range
 Save,Save
 "Save Order","Save Order"
 "Search and Filters","Search and Filters"
-"Search preferences","Search Preferences"
 "Search Preferences","Search Preferences"
+"Search preferences","Search Preferences"
 "Search preferences synchronization was successful.","Search preferences synchronization was successful."
 single-select,"Single select"
 "Suggestion terms","Suggestion terms"

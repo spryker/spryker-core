@@ -493,4 +493,172 @@ class Reader implements ReaderInterface
             ]
         );
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        if (count($priceProductFilterTransfers) === 0) {
+            return [];
+        }
+        $priceProductFilterTransfers = $this->filterPriceProductFilterTransfersWithoutExistingPriceType($priceProductFilterTransfers);
+        if (!$priceProductFilterTransfers) {
+            return [];
+        }
+
+        $concretePricesBySku = $this->findPricesForConcreteProducts($priceProductFilterTransfers);
+        $skusWithMissingPrices = $this->getProductConcreteSkusWithMissingPrices($priceProductFilterTransfers, $concretePricesBySku);
+        $abstractPricesBySku = $this->findPricesForAbstractProducts($skusWithMissingPrices, $priceProductFilterTransfers);
+
+        return $this->resolveProductPrices(
+            $this->mergeIndexedPriceProductTransfers($abstractPricesBySku, $concretePricesBySku),
+            $priceProductFilterTransfers
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $indexedAbstractPriceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $indexedConcretePriceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function mergeIndexedPriceProductTransfers(array $indexedAbstractPriceProductTransfers, array $indexedConcretePriceProductTransfers): array
+    {
+        $mergedPriceProductTransfers = [];
+        foreach ($indexedAbstractPriceProductTransfers as $sku => $abstractPriceProductTransfers) {
+            $mergedPriceProductTransfers[$sku] = $abstractPriceProductTransfers;
+        }
+
+        foreach ($indexedConcretePriceProductTransfers as $sku => $concretePriceProductTransfers) {
+            $mergedPriceProductTransfers[$sku] = $concretePriceProductTransfers;
+        }
+
+        return $mergedPriceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function resolveProductPrices(array $priceProductTransfers, array $priceProductFilterTransfers): array
+    {
+        $priceProductCriteriaTransfersBySku = $this
+            ->priceProductCriteriaBuilder
+            ->buildCriteriaTransfersFromFilterTransfersIndexedBySku($priceProductFilterTransfers);
+
+        $resolvedPriceProductTransfers = [];
+        foreach ($priceProductTransfers as $sku => $pricesBySku) {
+            $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesBySku, $priceProductCriteriaTransfersBySku[$sku]);
+            if ($resolvedItemPrice) {
+                $resolvedPriceProductTransfers[] = $resolvedItemPrice;
+            }
+        }
+
+        return $resolvedPriceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function findPricesForConcreteProducts(array $priceProductFilterTransfers): array
+    {
+        $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
+        $productConcreteSkus = array_map(function (PriceProductFilterTransfer $priceProductFilterTransfer) {
+            return $priceProductFilterTransfer->getSku();
+        }, $priceProductFilterTransfers);
+
+        $concretePricesBySku = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
+            $productConcreteSkus,
+            $priceProductCriteriaTransfer
+        );
+
+        return $concretePricesBySku;
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function findPricesForAbstractProducts(array $productConcreteSkus, array $priceProductFilterTransfers): array
+    {
+        $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
+        $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
+
+        return $this->priceProductAbstractReader->getProductAbstractPricesByConcreteSkusAndCriteria(
+            $productConcreteSkus,
+            $priceProductCriteriaTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePricesBySku
+     *
+     * @return string[]
+     */
+    protected function getProductConcreteSkusWithMissingPrices(array $priceProductFilterTransfers, array $concretePricesBySku): array
+    {
+        $productConcreteSkus = array_map(function (PriceProductFilterTransfer $priceProductFilterTransfer) {
+            return $priceProductFilterTransfer->getSku();
+        }, $priceProductFilterTransfers);
+        $foundKeys = array_keys($concretePricesBySku);
+        $skusWithMissingPrices = array_diff($productConcreteSkus, $foundKeys);
+
+        return $skusWithMissingPrices;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     */
+    protected function getPriceProductFilterTransfersBySku(array $priceProductFilterTransfers): array
+    {
+        $priceProductFilterTransfersBySku = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductFilterTransfersBySku[$priceProductFilterTransfer->getSku()] = $priceProductFilterTransfer;
+        }
+
+        return $priceProductFilterTransfersBySku;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function getCommonPriceProductFilterTransfer(array $priceProductFilterTransfers): PriceProductFilterTransfer
+    {
+        return array_shift($priceProductFilterTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     */
+    protected function filterPriceProductFilterTransfersWithoutExistingPriceType(array $priceProductFilterTransfers): array
+    {
+        $filteredPriceProductFilterTransfers = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceTypeName = $this->priceProductTypeReader->handleDefaultPriceType(
+                $priceProductFilterTransfer->getPriceTypeName()
+            );
+            if ($this->priceProductTypeReader->hasPriceType($priceTypeName)) {
+                $filteredPriceProductFilterTransfers[] = $priceProductFilterTransfer;
+            }
+        }
+
+        return $filteredPriceProductFilterTransfers;
+    }
 }

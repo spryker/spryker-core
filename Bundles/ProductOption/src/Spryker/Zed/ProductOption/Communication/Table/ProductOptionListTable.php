@@ -204,7 +204,7 @@ class ProductOptionListTable extends AbstractTable
         }
 
         $moneyTransfer = (new MoneyTransfer())
-            ->setAmount($price)
+            ->setAmount((string)$price)
             ->setCurrency($this->getCurrencyTransfer($idCurrency));
 
         return sprintf(static::PRICE_LABEL, $this->moneyFacade->formatWithSymbol($moneyTransfer));

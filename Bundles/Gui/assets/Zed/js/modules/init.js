@@ -72,12 +72,17 @@ $(document).ready(function() {
     $('.fix-height').sprykerFixHeight();
 
     $('.spryker-form-autocomplete').each(function(key, value) {
-        var obj = $(value);
-        if (obj.data('url') === 'undefined') {
+        var autoCompletedField = $(value);
+        if (autoCompletedField.data('url') === 'undefined') {
             return;
         }
-        obj.autocomplete({
-            source: obj.data('url'),
+
+        if (autoCompletedField.hasClass('ui-autocomplete')) {
+            autoCompletedField.autocomplete('destroy');
+        }
+
+        autoCompletedField.autocomplete({
+            source: autoCompletedField.data('url'),
             minLength: 3
         });
     });
@@ -102,7 +107,39 @@ $(document).ready(function() {
     );
 
     $('.dropdown-toggle').dropdown();
-    $('.spryker-form-select2combobox').select2();
+
+    $('.spryker-form-select2combobox').each(function(index, element) {
+        var select2InitOptions = {};
+        var selectElement = $(element);
+
+        if (selectElement.data('autocomplete-url')) {
+            select2InitOptions = {
+                ajax: {
+                    url: selectElement.data('autocomplete-url'),
+                    dataType: 'json',
+                    delay: 500,
+                    cache: true,
+                    data: function(params) {
+                        params.page = params.page || 1;
+
+                        return params;
+                    }
+                },
+                minimumInputLength: 3
+            };
+
+            selectElement.on('select2:unselecting', function(e) {
+                var idSelected = e.params.args.data.id;
+                var selectedValues = selectElement.val();
+
+                selectElement.val(selectedValues.filter(function(value) {
+                    return value !== ('' + idSelected);
+                })).trigger('change');
+            });
+        }
+
+        selectElement.select2(select2InitOptions);
+    });
 
     /* Init tabs */
     $('.tabs-container').each(function(index, item){

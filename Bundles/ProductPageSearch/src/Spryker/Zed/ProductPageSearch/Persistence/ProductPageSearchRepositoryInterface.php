@@ -22,4 +22,11 @@ interface ProductPageSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityTransfers(array $productIds): array;
 }

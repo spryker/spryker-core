@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CreditCardSubForm extends AbstractSubForm
 {
@@ -68,11 +67,11 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }
@@ -177,7 +176,6 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'label' => 'dummyPaymentCreditCard.card_expires',
                 'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_MONTH]),
-                'choices_as_values' => true,
                 'required' => true,
                 'constraints' => [
                     $this->createNotBlankConstraint(),
@@ -202,7 +200,6 @@ class CreditCardSubForm extends AbstractSubForm
             [
                 'label' => false,
                 'choices' => array_flip($options[self::OPTIONS_FIELD_NAME][self::OPTION_CARD_EXPIRES_CHOICES_YEAR]),
-                'choices_as_values' => true,
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Expires year',
