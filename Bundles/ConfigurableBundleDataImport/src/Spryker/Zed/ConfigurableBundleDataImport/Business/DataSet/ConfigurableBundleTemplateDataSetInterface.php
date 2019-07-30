@@ -10,5 +10,6 @@ namespace Spryker\Zed\ConfigurableBundleDataImport\Business\DataSet;
 interface ConfigurableBundleTemplateDataSetInterface
 {
     public const COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_KEY = 'configurable_bundle_template_key';
+    public const COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_UUID = 'configurable_bundle_template_uuid';
     public const COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_NAME = 'configurable_bundle_template_name';
 }

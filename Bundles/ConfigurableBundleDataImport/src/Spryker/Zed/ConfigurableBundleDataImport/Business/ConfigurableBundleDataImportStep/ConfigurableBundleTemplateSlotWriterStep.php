@@ -26,7 +26,7 @@ class ConfigurableBundleTemplateSlotWriterStep implements DataImportStepInterfac
             ->findOneOrCreate();
 
         $configurableBundleTemplateSlotEntity
-            ->setUuid($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_KEY])
+            ->setUuid($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUID])
             ->setFkConfigurableBundleTemplate($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_CONFIGURABLE_BUNDLE_TEMPLATE])
             ->setFkProductList($dataSet[ConfigurableBundleTemplateSlotDataSetInterface::ID_PRODUCT_LIST])
             ->save();
