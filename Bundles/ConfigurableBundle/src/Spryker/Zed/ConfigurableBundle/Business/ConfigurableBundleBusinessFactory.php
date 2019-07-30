@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -16,4 +20,24 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface
+     */
+    public function createSalesOrderConfiguredBundleWriter(): SalesOrderConfiguredBundleWriterInterface
+    {
+        return new SalesOrderConfiguredBundleWriter(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface
+     */
+    public function createSalesOrderConfiguredBundleExpander(): SalesOrderConfiguredBundleExpanderInterface
+    {
+        return new SalesOrderConfiguredBundleExpander(
+            $this->getRepository()
+        );
+    }
 }
