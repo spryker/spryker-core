@@ -63,6 +63,10 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     protected function findLocaleName(UrlStorageTransfer $urlStorageTransfer): ?string
     {
+        if ($urlStorageTransfer->getLocaleName()) {
+            return $urlStorageTransfer->getLocaleName();
+        }
+
         foreach ($urlStorageTransfer->getLocaleUrls() as $localeUrlStorageTransfer) {
             if ($localeUrlStorageTransfer->getFkLocale() !== $urlStorageTransfer->getFkLocale()) {
                 continue;

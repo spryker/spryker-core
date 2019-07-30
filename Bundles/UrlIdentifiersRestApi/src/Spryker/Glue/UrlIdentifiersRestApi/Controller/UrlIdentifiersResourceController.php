@@ -25,7 +25,11 @@ class UrlIdentifiersResourceController extends AbstractController
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
-     *          }]
+     *          }],
+     *          "responses": {
+     *              "404": "Not found.",
+     *              "422": "Bad request."
+     *          }
      *     }
      * })
      *

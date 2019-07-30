@@ -56,7 +56,7 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
      */
     public function getUrlIdentifier(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $urlRequestParameter = $restRequest->getHttpRequest()->get(static::URL_REQUEST_PARAMETER);
+        $urlRequestParameter = urldecode($restRequest->getHttpRequest()->get(static::URL_REQUEST_PARAMETER));
 
         if (!$urlRequestParameter) {
             return $this->urlIdentifierResponseBuilder->createUrlRequestParamMissingErrorResponse();
