@@ -50,7 +50,7 @@ class RenderFormController extends AbstractController
      */
     public function orderItemAction(Request $request): array
     {
-        $redirectUrl = $request->attributes->get(static::KEY_REDIRECT_URL);
+        $redirectUrl = (string)$request->attributes->get(static::KEY_REDIRECT_URL);
         $eventsGroupedByItem = $request->attributes->get(static::KEY_EVENTS_GROUPED_BY_ITEM);
         $idSalesOrderItem = $request->attributes->get(static::KEY_ID_SALES_ORDER_ITEM);
         $orderItemOmsTriggerFormCollection = $this->getFactory()

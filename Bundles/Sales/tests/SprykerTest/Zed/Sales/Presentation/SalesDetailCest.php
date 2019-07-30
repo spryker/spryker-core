@@ -36,7 +36,7 @@ class SalesDetailCest
 
         $i->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
 
-        $i->waitForElement('#items', 3);
+        $i->waitForElement(SalesDetailPage::SELECTOR_SALES_ORDER_ITEMS_TABLE, 3);
         $i->seeElement(['xpath' => SalesDetailPage::getSalesOrderItemRowSelector(1)]);
     }
 }
