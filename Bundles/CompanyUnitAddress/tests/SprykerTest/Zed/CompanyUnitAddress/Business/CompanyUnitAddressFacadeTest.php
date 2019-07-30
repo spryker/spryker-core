@@ -243,7 +243,7 @@ class CompanyUnitAddressFacadeTest extends Test
         // Arrange
         $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
-            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->createCompanyUnitAddressCollection(static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->createCompanyUnitAddressesCollection(static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT),
         ]);
         $this->tester->getFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
 
@@ -265,22 +265,5 @@ class CompanyUnitAddressFacadeTest extends Test
             static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT_EXPECTED,
             $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()
         );
-    }
-
-    /**
-     * @param int $addressesCount
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
-     */
-    public function createCompanyUnitAddressCollection(int $addressesCount): CompanyUnitAddressCollectionTransfer
-    {
-        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
-        for ($i = 0; $i < $addressesCount; $i++) {
-            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress(
-                $this->tester->haveCompanyUnitAddress()
-            );
-        }
-
-        return $companyUnitAddressCollectionTransfer;
     }
 }
