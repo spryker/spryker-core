@@ -181,7 +181,8 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             ->findIdPriceProductForProductAbstract($priceProductTransfer);
 
         if ($idPriceProduct === null) {
-            $idPriceProduct = $this->priceProductEntityManager->savePriceProductForProductAbstract($priceProductTransfer);
+            $idPriceProduct = $this->priceProductEntityManager
+                        ->savePriceProductForProductAbstract($priceProductTransfer);
         }
 
         $priceProductTransfer->setIdPriceProduct($idPriceProduct);
