@@ -124,11 +124,34 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
      *
      * @return int
      */
-    public function savePriceProductEntityForProductConcrete(PriceProductTransfer $priceProductTransfer): int
+    public function savePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): int
     {
+        $priceProductTransfer
+            ->requireFkPriceType()
+            ->requireIdProduct();
+
         return $this->getFactory()
             ->createPriceProductQuery()
             ->filterByFKProduct($priceProductTransfer->getIdProduct())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOneOrCreate()
+            ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): int
+    {
+        $priceProductTransfer
+            ->requireFkPriceType()
+            ->requireIdProductAbstract();
+
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
             ->findOneOrCreate()
             ->save();

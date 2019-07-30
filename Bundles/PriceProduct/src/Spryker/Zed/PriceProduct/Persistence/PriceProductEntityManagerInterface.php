@@ -62,5 +62,12 @@ interface PriceProductEntityManagerInterface
      *
      * @return int
      */
-    public function savePriceProductEntityForProductConcrete(PriceProductTransfer $priceProductTransfer): int;
+    public function savePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): int;
 }
