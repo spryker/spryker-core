@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
@@ -170,7 +169,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
             if ($idPriceProduct === null) {
                 $idPriceProduct = $this->priceProductEntityManager
-                    ->savePriceProductEntityForProductConcrete($priceProductTransfer);
+                    ->savePriceProductForProductConcrete($priceProductTransfer);
             }
 
             $priceProductTransfer->setIdPriceProduct($idPriceProduct);
@@ -178,25 +177,14 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             return $priceProductTransfer;
         }
 
-        if ($priceProductTransfer->getIdProductAbstract() !== null) {
-            $idPriceProduct = $this->priceProductRepository
-                ->findIdPriceProductForProductAbstract($priceProductTransfer);
+        $idPriceProduct = $this->priceProductRepository
+            ->findIdPriceProductForProductAbstract($priceProductTransfer);
 
-            if ($idPriceProduct !== null) {
-                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-                return $priceProductTransfer;
-            }
+        if ($idPriceProduct === null) {
+            $idPriceProduct = $this->priceProductEntityManager->savePriceProductForProductAbstract($priceProductTransfer);
         }
 
-        $priceProductEntity = (new SpyPriceProduct())
-            ->setFkPriceType($priceProductTransfer->getFkPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct())
-            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-
-        $priceProductEntity->save();
-
-        $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+        $priceProductTransfer->setIdPriceProduct($idPriceProduct);
 
         return $priceProductTransfer;
     }
