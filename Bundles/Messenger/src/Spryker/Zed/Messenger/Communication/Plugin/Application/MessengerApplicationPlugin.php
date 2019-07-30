@@ -20,7 +20,7 @@ class MessengerApplicationPlugin extends AbstractPlugin implements ApplicationPl
     public const SERVICE_MESSENGER = 'messenger';
 
     /**
-     * Specification:
+     * {@inheritdoc}
      * - Adds the Messenger service to the Container.
      *
      * {@inheritdoc}
