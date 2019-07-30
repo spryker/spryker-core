@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
-class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
+class ProductAbstractResourceIdentifierReader implements ProductAbstractStorageReaderInterface
 {
     protected const KEY_SKU = 'sku';
 

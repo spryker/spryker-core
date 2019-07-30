@@ -28,7 +28,7 @@ class UrlIdentifiersResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Not found.",
-     *              "422": "Bad request."
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
@@ -40,7 +40,7 @@ class UrlIdentifiersResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createUrlIdentifiersReader()
+            ->createUrlIdentifierReader()
             ->getUrlIdentifier($restRequest);
     }
 }

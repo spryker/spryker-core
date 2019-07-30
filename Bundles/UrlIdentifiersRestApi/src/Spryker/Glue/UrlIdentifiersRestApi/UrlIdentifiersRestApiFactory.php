@@ -9,19 +9,19 @@ namespace Spryker\Glue\UrlIdentifiersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface;
-use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifiersReader;
-use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifiersReaderInterface;
+use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifierReader;
+use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifierReaderInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilder;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface;
 
 class UrlIdentifiersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifiersReaderInterface
+     * @return \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifierReaderInterface
      */
-    public function createUrlIdentifiersReader(): UrlIdentifiersReaderInterface
+    public function createUrlIdentifierReader(): UrlIdentifierReaderInterface
     {
-        return new UrlIdentifiersReader(
+        return new UrlIdentifierReader(
             $this->getUrlStorageClient(),
             $this->createUrlIdentifierResponseBuilder(),
             $this->getResourceIdentifierProviderPlugins()

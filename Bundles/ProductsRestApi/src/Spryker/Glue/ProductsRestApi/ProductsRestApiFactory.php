@@ -12,7 +12,7 @@ use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStor
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
-use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractStorageReader;
+use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractResourceIdentifierReader;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractStorageReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface;
@@ -54,9 +54,9 @@ class ProductsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractStorageReaderInterface
      */
-    public function createProductAbstractStorageReader(): ProductAbstractStorageReaderInterface
+    public function createProductAbstractResourceIdentifierReader(): ProductAbstractStorageReaderInterface
     {
-        return new ProductAbstractStorageReader(
+        return new ProductAbstractResourceIdentifierReader(
             $this->getProductStorageClient()
         );
     }

@@ -8,14 +8,14 @@
 namespace Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader;
 
 use Generated\Shared\Transfer\ResourceIdentifierTransfer;
-use Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer;
+use Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface;
 
-class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
+class UrlIdentifierReader implements UrlIdentifierReaderInterface
 {
     protected const URL_REQUEST_PARAMETER = 'url';
 
@@ -56,7 +56,7 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
      */
     public function getUrlIdentifier(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $urlRequestParameter = urldecode($restRequest->getHttpRequest()->get(static::URL_REQUEST_PARAMETER));
+        $urlRequestParameter = urldecode($restRequest->getHttpRequest()->query->get(static::URL_REQUEST_PARAMETER));
 
         if (!$urlRequestParameter) {
             return $this->urlIdentifierResponseBuilder->createUrlRequestParamMissingErrorResponse();
@@ -73,12 +73,15 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
             return $this->urlIdentifierResponseBuilder->createUrlNotFoundErrorResponse();
         }
 
-        $restUrlIdentifierAttributesTransfer = $this->mapResourceIdentifierTransferToRestUrlIdentifierAttributesTransfer(
+        $restUrlIdentifiersAttributesTransfer = $this->mapResourceIdentifierTransferToRestUrlIdentifiersAttributesTransfer(
             $resourceIdentifierTransfer,
-            new RestUrlIdentifierAttributesTransfer()
+            new RestUrlIdentifiersAttributesTransfer()
         );
 
-        return $this->urlIdentifierResponseBuilder->createUrlIdentifiersResourceResponse((string)$urlStorageTransfer->getIdUrl(), $restUrlIdentifierAttributesTransfer);
+        return $this->urlIdentifierResponseBuilder->createUrlIdentifiersResourceResponse(
+            (string)$urlStorageTransfer->getIdUrl(),
+            $restUrlIdentifiersAttributesTransfer
+        );
     }
 
     /**
@@ -125,14 +128,14 @@ class UrlIdentifiersReader implements UrlIdentifiersReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceIdentifierTransfer $resourceIdentifierTransfer
-     * @param \Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer $restUrlIdentifiersAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer
      */
-    protected function mapResourceIdentifierTransferToRestUrlIdentifierAttributesTransfer(
+    protected function mapResourceIdentifierTransferToRestUrlIdentifiersAttributesTransfer(
         ResourceIdentifierTransfer $resourceIdentifierTransfer,
-        RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
-    ): RestUrlIdentifierAttributesTransfer {
-        return $restUrlIdentifierAttributesTransfer->fromArray($resourceIdentifierTransfer->toArray(), true);
+        RestUrlIdentifiersAttributesTransfer $restUrlIdentifiersAttributesTransfer
+    ): RestUrlIdentifiersAttributesTransfer {
+        return $restUrlIdentifiersAttributesTransfer->fromArray($resourceIdentifierTransfer->toArray(), true);
     }
 }

@@ -72,8 +72,9 @@ class UrlRedirectStorageReader implements UrlRedirectStorageReaderInterface
 
             return $collectorDataKey;
         }
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference($idRedirectUrl);
+
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setReference($idRedirectUrl);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(UrlStorageConstants::REDIRECT_RESOURCE_NAME)

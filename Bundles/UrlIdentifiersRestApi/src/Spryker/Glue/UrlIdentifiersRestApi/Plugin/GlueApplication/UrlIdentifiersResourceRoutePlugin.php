@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\UrlIdentifiersRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer;
+use Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
@@ -27,8 +27,7 @@ class UrlIdentifiersResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addGet('get', false);
+        $resourceRouteCollection->addGet('get', false);
 
         return $resourceRouteCollection;
     }
@@ -66,6 +65,6 @@ class UrlIdentifiersResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestUrlIdentifierAttributesTransfer::class;
+        return RestUrlIdentifiersAttributesTransfer::class;
     }
 }

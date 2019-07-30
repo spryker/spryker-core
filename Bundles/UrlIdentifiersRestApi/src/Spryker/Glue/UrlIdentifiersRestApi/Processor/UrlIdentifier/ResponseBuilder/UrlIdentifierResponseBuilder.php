@@ -8,7 +8,7 @@
 namespace Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer;
+use Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\UrlIdentifiersRestApiConfig;
@@ -59,19 +59,19 @@ class UrlIdentifierResponseBuilder implements UrlIdentifierResponseBuilderInterf
 
     /**
      * @param string $urlIdentifierId
-     * @param \Generated\Shared\Transfer\RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer $restUrlIdentifiersAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createUrlIdentifiersResourceResponse(
         string $urlIdentifierId,
-        RestUrlIdentifierAttributesTransfer $restUrlIdentifierAttributesTransfer
+        RestUrlIdentifiersAttributesTransfer $restUrlIdentifiersAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()->addResource(
             $this->restResourceBuilder->createRestResource(
                 UrlIdentifiersRestApiConfig::RESOURCE_URL_IDENTIFIERS,
                 $urlIdentifierId,
-                $restUrlIdentifierAttributesTransfer
+                $restUrlIdentifiersAttributesTransfer
             )
         );
     }

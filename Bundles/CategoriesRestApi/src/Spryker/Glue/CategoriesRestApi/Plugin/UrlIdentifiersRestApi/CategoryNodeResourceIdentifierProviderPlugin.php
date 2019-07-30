@@ -34,8 +34,7 @@ class CategoryNodeResourceIdentifierProviderPlugin extends AbstractPlugin implem
 
     /**
      * {@inheritdoc}
-     * - Creates ResourceIdentifierTransfer from the data in UrlStorageTransfer.
-     * - Returns ResourceIdentifierTransfer on success, null otherwise.
+     * - Maps data for ResourceIdentifierTransfer from the UrlStorageTransfer.
      *
      * @api
      *
@@ -46,7 +45,7 @@ class CategoryNodeResourceIdentifierProviderPlugin extends AbstractPlugin implem
     public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
     {
         return $this->getFactory()
-            ->createCategoryMapper()
+            ->createResourceIdentifierMapper()
             ->mapUrlStorageTransferToResourceIdentifierTransfer($urlStorageTransfer, new ResourceIdentifierTransfer());
     }
 }

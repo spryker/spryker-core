@@ -17,6 +17,7 @@ use Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiTo
 class UrlIdentifiersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
+
     public const PLUGINS_RESOURCE_IDENTIFIER_PROVIDER = 'PLUGINS_RESOURCE_IDENTIFIER_PROVIDER';
 
     /**
@@ -41,11 +42,9 @@ class UrlIdentifiersRestApiDependencyProvider extends AbstractBundleDependencyPr
     protected function addUrlStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_URL_STORAGE, function (Container $container) {
-            $urlIdentifiersRestApiToUrlStorageClientBridge = new UrlIdentifiersRestApiToUrlStorageClientBridge(
+            return new UrlIdentifiersRestApiToUrlStorageClientBridge(
                 $container->getLocator()->urlStorage()->client()
             );
-
-            return $urlIdentifiersRestApiToUrlStorageClientBridge;
         });
 
         return $container;

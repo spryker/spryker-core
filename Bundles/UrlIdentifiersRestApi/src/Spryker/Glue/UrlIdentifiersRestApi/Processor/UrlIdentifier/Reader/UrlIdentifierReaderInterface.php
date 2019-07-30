@@ -10,7 +10,7 @@ namespace Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface UrlIdentifiersReaderInterface
+interface UrlIdentifierReaderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

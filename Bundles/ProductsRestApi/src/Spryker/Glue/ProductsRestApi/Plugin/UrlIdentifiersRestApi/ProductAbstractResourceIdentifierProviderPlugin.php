@@ -46,7 +46,7 @@ class ProductAbstractResourceIdentifierProviderPlugin extends AbstractPlugin imp
     public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
     {
         return $this->getFactory()
-            ->createProductAbstractStorageReader()
+            ->createProductAbstractResourceIdentifierReader()
             ->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
     }
 }
