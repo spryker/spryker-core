@@ -21,17 +21,17 @@ class Application extends SilexApplication
     use UrlGeneratorTrait;
 
     /**
-     * @deprecated Use `\Spryker\Shared\Application\Application::SERVICE_ROUTER` instead.
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
      */
     public const ROUTERS = 'routers';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Application\Application::SERVICE_REQUEST` instead.
+     * @see \Spryker\Shared\Application\Application::SERVICE_REQUEST
      */
     public const REQUEST = 'request';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Application\Application::SERVICE_REQUEST_STACK` instead.
+     * @dsee \Spryker\Shared\Application\Application::SERVICE_REQUEST_STACK
      */
     public const REQUEST_STACK = 'request_stack';
 

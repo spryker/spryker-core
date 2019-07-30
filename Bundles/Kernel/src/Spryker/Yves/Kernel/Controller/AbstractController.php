@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Kernel\Controller;
 
-use Silex\Application;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
@@ -22,7 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 abstract class AbstractController
 {
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
 
@@ -44,11 +43,11 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Application $application
+     * @param \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface $application
      *
      * @return $this
      */
-    public function setApplication(Application $application)
+    public function setApplication($application)
     {
         $this->application = $application;
 
@@ -68,7 +67,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Yves\Kernel\Application
+     * @return \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
     {
@@ -80,7 +79,7 @@ abstract class AbstractController
      */
     protected function getLocale()
     {
-        return $this->getApplication()['locale'];
+        return $this->getApplication()->get('locale');
     }
 
     /**
@@ -234,7 +233,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        $messenger = ($this->application->offsetExists('flash_messenger')) ? $this->application['flash_messenger'] : new NullMessenger();
+        $messenger = ($this->getApplication()->has('flash_messenger')) ? $$this->getApplication()->get('flash_messenger') : new NullMessenger();
         $applicationToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $applicationToMessengerBridge;

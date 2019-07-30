@@ -10,6 +10,7 @@ namespace Spryker\Zed\Twig\Communication\Subscriber;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolverInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -71,24 +72,35 @@ class TwigEventSubscriber implements EventSubscriberInterface
     /**
      * Renders the template for the current controller/action
      *
-     * @param array $params
+     * @param array $parameters
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
-    protected function getResponse(array $params = []): ?Response
+    protected function getResponse(array $parameters = []): ?Response
     {
         $request = $this->getRequestStack()->getCurrentRequest();
         $controller = $request->attributes->get('_controller');
 
         if ($request->attributes->has('_template')) {
-            return $this->render(sprintf('@%s.twig', $request->attributes->get('_template')), $params);
+            return $this->renderTemplateFromRouterCache($request, $parameters);
         }
 
         if (!is_string($controller)) {
             return null;
         }
 
-        return $this->render($this->buildViewName($controller, $params), $params);
+        return $this->render($this->buildViewName($controller, $parameters), $parameters);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $parameters
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderTemplateFromRouterCache(Request $request, array $parameters): Response
+    {
+        return $this->render(sprintf('@%s.twig', $request->attributes->get('_template')), $parameters);
     }
 
     /**

@@ -15,6 +15,7 @@ use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
@@ -34,7 +35,7 @@ use Twig\RuntimeLoader\FactoryRuntimeLoader;
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * @var \Silex\Application
+     * @var \Silex\Application|\Spryker\Shared\Kernel\Communication\Application
      */
     private $app;
 
@@ -134,7 +135,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         $controller = $request->attributes->get('_controller');
 
         if ($request->attributes->has('_template')) {
-            return $this->app->render('@' . $request->attributes->get('_template') . '.twig', $parameters);
+            return $this->renderTemplateFromRouterCache($request, $parameters);
         }
 
         if (!is_string($controller) || empty($controller)) {
@@ -149,6 +150,17 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
         }
 
         return $this->app->render('@' . $route . '.twig', $parameters);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $parameters
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderTemplateFromRouterCache(Request $request, array $parameters): Response
+    {
+        return $this->app->render('@' . $request->attributes->get('_template') . '.twig', $parameters);
     }
 
     /**

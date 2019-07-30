@@ -15,6 +15,10 @@ namespace Spryker\Zed\Testify\Business;
 interface TestifyFacadeInterface
 {
     /**
+     * Specification:
+     * - Removes all files in configured directories.
+     * - Directories are configured in `\Spryker\Zed\Testify\TestifyConfig::getOutputDirectoriesForCleanup()`.
+     *
      * @api
      *
      * @return array

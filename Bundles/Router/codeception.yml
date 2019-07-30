@@ -1,6 +1,8 @@
 namespace: Router
 include:
+    - tests/SprykerTest/Shared/Router
     - tests/SprykerTest/Yves/Router
+    - tests/SprykerTest/Zed/Router
 
 actor: Tester
 paths:

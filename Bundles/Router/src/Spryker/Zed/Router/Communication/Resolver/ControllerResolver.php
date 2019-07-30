@@ -7,106 +7,26 @@
 
 namespace Spryker\Zed\Router\Communication\Resolver;
 
-use InvalidArgumentException;
-use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Router\Resolver\ControllerResolver as SharedControllerResolver;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver as ControllerClassResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
-class ControllerResolver implements ControllerResolverInterface
+class ControllerResolver extends SharedControllerResolver
 {
     /**
-     * @var \Spryker\Service\Container\ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string $controller
      *
-     * This method looks for a '_controller' request attribute that represents
-     * the controller.
-     *
-     * @throws \InvalidArgumentException
+     * @return array|bool
      */
-    public function getController(Request $request)
+    protected function getControllerFromString(Request $request, string $controller)
     {
-        $controller = $request->attributes->get('_controller');
-        if (!$controller) {
-            return false;
+        if (strpos($controller, '/') !== false) {
+            return $this->resolveControllerFromUri($controller, $request);
         }
 
-        if (is_string($controller)) {
-            if (strpos($controller, '/') !== false) {
-                return $this->resolveControllerFromUri($controller, $request);
-            }
-
-            [$controllerServiceIdentifier, $actionName] = explode(':', $controller);
-            if ($this->container->has($controllerServiceIdentifier)) {
-                return [$this->container->get($controllerServiceIdentifier), $actionName];
-            }
-        }
-
-        if (is_array($controller)) {
-            if (is_callable($controller[0])) {
-                $controllerInstance = $controller[0]();
-                $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
-
-                return [$controllerInstance, $controller[1]];
-            }
-
-            $controllerInstance = new $controller[0]();
-            $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
-
-            return [$controllerInstance, $controller[1]];
-        }
-
-        if (is_object($controller)) {
-            if (method_exists($controller, '__invoke')) {
-                $controller = $this->injectContainerAndInitialize($controller);
-
-                return $controller;
-            }
-
-            throw new InvalidArgumentException(sprintf('Controller "%s" for URI "%s" is not callable.', get_class($controller), $request->getPathInfo()));
-        }
-
-        return false;
-    }
-
-    /**
-     * @param mixed $controller
-     *
-     * @return mixed
-     */
-    protected function injectContainerAndInitialize($controller)
-    {
-        if (method_exists($controller, 'setApplication')) {
-            $controller->setApplication($this->container);
-        }
-
-        if (method_exists($controller, 'initialize')) {
-            $controller->initialize();
-        }
-
-        return $controller;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated This method is deprecated as of 3.1 and will be removed in 4.0. Implement the ArgumentResolverInterface and inject it in the HttpKernel instead.
-     */
-    public function getArguments(Request $request, $controller)
-    {
+        return parent::getControllerFromString($request, $controller);
     }
 
     /**
