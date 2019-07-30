@@ -7,10 +7,23 @@
         <property name="resourceTypes" type="string[]" singular="resourceType" />
     </transfer>
 
-    <transfer name="CustomerUserConnectionUpdateNew">
-        <property name="idUser" type="int" />
-        <property name="idCustomersToAssign" type="array" />
-        <property name="idCustomersToDeAssign" type="array" />
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
+    <transfer name="CustomerAccess">
+        <property name="ContentTypeAccess" type="ContentTypeAccess[]" singular="ContentTypeAccess" />
+    </transfer>
+
+    <transfer name="ContentTypeAccess">
+        <property name="contentType" type="string" />
+        <property name="isRestricted" type="bool" />
     </transfer>
 
 </transfers>

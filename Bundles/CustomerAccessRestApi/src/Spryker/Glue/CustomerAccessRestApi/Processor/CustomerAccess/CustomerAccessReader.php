@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess;
 
+use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Spryker\Glue\CustomerAccessRestApi\CustomerAccessRestApiConfig;
 use Spryker\Glue\CustomerAccessRestApi\Dependency\Client\CustomerAccessRestApiToCustomerAccessStorageClientInterface;
 use Spryker\Glue\CustomerAccessRestApi\Processor\RestResponseBuilder\CustomerAccessRestResponseBuilderInterface;
@@ -68,11 +69,22 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     {
         $authenticatedCustomerAccess = $this->customerAccessStorageClient->getAuthenticatedCustomerAccess();
         foreach ($authenticatedCustomerAccess->getContentTypeAccess() as $contentTypeAccessTransfer) {
-            if (!array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted()) {
+            if ($this->isCustomerAccessResourceUnrestricted($contentTypeAccessTransfer, $customerAccessContentTypeResourceType)) {
                 unset($customerAccessContentTypeResourceType[$contentTypeAccessTransfer->getContentType()]);
             }
         }
 
         return $customerAccessContentTypeResourceType;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
+     * @param array $customerAccessContentTypeResourceType
+     *
+     * @return bool
+     */
+    protected function isCustomerAccessResourceUnrestricted(ContentTypeAccessTransfer $contentTypeAccessTransfer, array $customerAccessContentTypeResourceType): bool
+    {
+        return !array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted();
     }
 }

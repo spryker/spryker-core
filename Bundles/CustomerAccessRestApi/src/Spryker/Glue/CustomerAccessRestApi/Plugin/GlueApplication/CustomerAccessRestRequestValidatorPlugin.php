@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerAccessRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * Specification:
+     * {@inheritdoc}
      *  - Validates if customer has access to requested resource.
      *
      * @api
