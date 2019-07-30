@@ -62,8 +62,6 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
     /**
      * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
-     * @api
-     *
      * @deprecated Will be removed without replacement.
      *
      * @param string $identifier The message id (may also be an object that can be cast to string)
