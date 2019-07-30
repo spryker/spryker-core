@@ -120,7 +120,10 @@ class DependencyInjectorResolver extends AbstractClassResolver
      */
     protected function getDependencyInjectorConfiguration(): array
     {
-        return Config::get(KernelConstants::DEPENDENCY_INJECTOR_GLUE, []);
+        return Config::get(
+            KernelConstants::DEPENDENCY_INJECTOR_GLUE,
+            $this->getDefaultGlueDependencyInjectorConfiguration()
+        );
     }
 
     /**
@@ -129,5 +132,19 @@ class DependencyInjectorResolver extends AbstractClassResolver
     protected function getDependencyInjectorCollection(): DependencyInjectorCollection
     {
         return new DependencyInjectorCollection();
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
+     * @return array
+     */
+    protected function getDefaultGlueDependencyInjectorConfiguration(): array
+    {
+        return [
+            'GlueApplication' => [
+                'ProductsRestApi',
+            ],
+        ];
     }
 }
