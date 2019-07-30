@@ -41,10 +41,6 @@
         <property name="salesOrderItemIds" type="array" />
     </transfer>
 
-    <transfer name="ConfiguredBundleCollection">
-        <property name="configuredBundles" type="ConfiguredBundle[]" singular="configuredBundle" />
-    </transfer>
-
     <transfer name="SalesOrderConfiguredBundleCollection">
         <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
     </transfer>

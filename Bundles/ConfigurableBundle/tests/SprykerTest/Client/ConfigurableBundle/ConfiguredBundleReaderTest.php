@@ -84,8 +84,10 @@ class ConfiguredBundleReaderTest extends Unit
             ])
             ->build();
 
+        // Act
         $configuredBundleCollectionTransfer = $this->configuredBundleReaderMock->getConfiguredBundlesFromQuote($quoteTransfer);
 
+        // Assert
         $this->assertCount(2, $configuredBundleCollectionTransfer->getConfiguredBundles());
         $this->assertCount(2, $configuredBundleCollectionTransfer->getConfiguredBundles()->offsetGet(0)->getItems());
         $this->assertCount(1, $configuredBundleCollectionTransfer->getConfiguredBundles()->offsetGet(1)->getItems());
@@ -103,8 +105,10 @@ class ConfiguredBundleReaderTest extends Unit
             ->withItem()
             ->build();
 
+        // Act
         $configuredBundleCollectionTransfer = $this->configuredBundleReaderMock->getConfiguredBundlesFromQuote($quoteTransfer);
 
+        // Assert
         $this->assertCount(0, $configuredBundleCollectionTransfer->getConfiguredBundles());
     }
 
