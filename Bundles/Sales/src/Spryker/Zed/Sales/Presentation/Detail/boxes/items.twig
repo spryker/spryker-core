@@ -6,9 +6,14 @@
             {% block widget_content %}
 
                 <div>
-                    {% for event in events %}
-                        <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
-                    {% endfor %}
+                    {% include [
+                        '@Oms/RenderForm/_partial/order-actions.twig',
+                        '@Sales/Detail/_partial/order-actions.twig',
+                    ] ignore missing with {
+                        redirectUrl: changeStatusRedirectUrl,
+                        idSalesOrder: order.idSalesOrder,
+                        events: events,
+                    } only %}
                 </div>
 
             {% endblock %}

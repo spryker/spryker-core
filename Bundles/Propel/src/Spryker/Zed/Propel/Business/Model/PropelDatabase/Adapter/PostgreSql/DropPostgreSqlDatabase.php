@@ -121,9 +121,11 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command);
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command);
+        }
 
-        return $process;
+        return new Process($command);
     }
 
     /**

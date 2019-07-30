@@ -43,7 +43,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         foreach ($salesOrderDiscounts as $salesOrderDiscountEntity) {
             $calculatedDiscountTransfer = $this->hydrateCalculatedDiscountTransfer($salesOrderDiscountEntity);
 
-            $this->addCalculatedDiscount($orderTransfer, $salesOrderDiscountEntity, $calculatedDiscountTransfer);
+            $this->addCalculatedDiscount($orderTransfer, $salesOrderDiscountEntity, clone $calculatedDiscountTransfer);
 
             if (isset($groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()])) {
                 $existingDiscountTransfer = $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()];
@@ -56,6 +56,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
                     $calculatedDiscountTransfer->getSumAmount() + $existingDiscountTransfer->getSumAmount()
                 );
             }
+            $calculatedDiscountTransfer->setUnitAmount(null);
             $groupedDiscounts[$salesOrderDiscountEntity->getDisplayName()] = $calculatedDiscountTransfer;
         }
 

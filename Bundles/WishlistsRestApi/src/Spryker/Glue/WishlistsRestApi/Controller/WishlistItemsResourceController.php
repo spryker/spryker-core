@@ -20,6 +20,7 @@ class WishlistItemsResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
+     *          "path": "/wishlists/{wishlistId}/wishlist-items/{wishlistItemId}",
      *          "summary": [
      *              "Removes item from the wishlist."
      *          ],
