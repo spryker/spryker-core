@@ -39,7 +39,7 @@ interface UrlStorageClientInterface
     public function findUrlStorageTransferByUrl($url);
 
     /**
-     * Specification
+     * Specification:
      * - Looks up the redirect entity in key-value storage.
      * - Return RedirectTransfer in case redirect is found in the storage and null otherwise.
      *
