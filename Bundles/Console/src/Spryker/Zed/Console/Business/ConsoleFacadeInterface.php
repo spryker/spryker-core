@@ -33,17 +33,17 @@ interface ConsoleFacadeInterface
     public function getEventSubscriber();
 
     /**
-     * Specification
+     * Specification:
      * - Returns an array of ApplicationPlugins
      *
      * @api
      *
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    public function getApplicationPlugins();
+    public function getApplicationPlugins(): array;
 
     /**
-     * Specification
+     * Specification:
      * - Returns an array of ServiceProviders
      *
      * @api

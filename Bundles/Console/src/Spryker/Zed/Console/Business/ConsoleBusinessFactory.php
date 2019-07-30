@@ -46,9 +46,9 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    public function getApplicationPlugins()
+    public function getApplicationPlugins(): array
     {
-        return $this->getProvidedDependency(ConsoleDependencyProvider::APPLICATION_PLUGINS);
+        return $this->getProvidedDependency(ConsoleDependencyProvider::PLUGINS_APPLICATION);
     }
 
     /**

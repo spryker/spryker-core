@@ -49,8 +49,8 @@ class ConsoleBootstrap extends Application
 
         $this->application = new SprykerApplication();
 
-        $this->provideApplicationPlugins();
         $this->registerServiceProviders();
+        $this->provideApplicationPlugins();
 
         Pimple::setApplication($this->application);
     }
@@ -71,7 +71,7 @@ class ConsoleBootstrap extends Application
     /**
      * @return void
      */
-    private function provideApplicationPlugins()
+    private function provideApplicationPlugins(): void
     {
         $applicationPlugins = $this->getFacade()->getApplicationPlugins();
 

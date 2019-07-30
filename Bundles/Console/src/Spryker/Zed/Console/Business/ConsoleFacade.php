@@ -47,7 +47,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
      *
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    public function getApplicationPlugins()
+    public function getApplicationPlugins(): array
     {
         return $this->getFactory()->getApplicationPlugins();
     }

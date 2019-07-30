@@ -18,7 +18,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     public const COMMANDS = 'commands';
     public const EVENT_SUBSCRIBER = 'event_subscriber';
 
-    public const APPLICATION_PLUGINS = 'APPLICATION_PLUGINS';
+    public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
     /**
      * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS` instead.
@@ -51,9 +51,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCommands(Container $container)
     {
-        $container[self::COMMANDS] = function (Container $container) {
+        $container->set(static::COMMANDS, function (Container $container) {
             return $this->getConsoleCommands($container);
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventSubscriber(Container $container)
     {
-        $container[static::EVENT_SUBSCRIBER] = function (Container $container) {
+        $container->set(static::EVENT_SUBSCRIBER, function (Container $container) {
             return $this->getEventSubscriber($container);
-        };
+        });
 
         return $container;
     }
@@ -99,13 +99,13 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConsoleHookPlugins(Container $container)
     {
-        $container[static::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
+        $container->set(static::PLUGINS_CONSOLE_PRE_RUN_HOOK, function (Container $container) {
             return $this->getConsolePreRunHookPlugins($container);
-        };
+        });
 
-        $container[static::PLUGINS_CONSOLE_POST_RUN_HOOK] = function (Container $container) {
+        $container->set(static::PLUGINS_CONSOLE_POST_RUN_HOOK, function (Container $container) {
             return $this->getConsolePostRunHookPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -135,11 +135,11 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addApplicationPlugins(Container $container)
+    protected function addApplicationPlugins(Container $container): Container
     {
-        $container[static::APPLICATION_PLUGINS] = function (Container $container) {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container) {
             return $this->getApplicationPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -149,7 +149,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
-    protected function getApplicationPlugins(Container $container)
+    protected function getApplicationPlugins(Container $container): array
     {
         return [];
     }
@@ -163,9 +163,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addServiceProviders(Container $container)
     {
-        $container[static::SERVICE_PROVIDERS] = function (Container $container) {
+        $container->set(static::SERVICE_PROVIDERS, function (Container $container) {
             return $this->getServiceProviders($container);
-        };
+        });
 
         return $container;
     }
