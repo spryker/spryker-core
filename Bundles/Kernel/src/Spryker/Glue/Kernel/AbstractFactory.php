@@ -7,7 +7,11 @@
 
 namespace Spryker\Glue\Kernel;
 
+use Spryker\Glue\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use Spryker\Glue\Kernel\Dependency\Injector\DependencyInjector;
+use Spryker\Glue\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
+use Spryker\Glue\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Spryker\Glue\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Glue\Kernel\Plugin\Pimple;
 use Spryker\Shared\Kernel\ContainerGlobals;
@@ -88,9 +92,12 @@ abstract class AbstractFactory
     protected function createContainerWithProvidedDependencies()
     {
         $container = $this->createContainer();
+        $dependencyInjectorCollection = $this->resolveDependencyInjectorCollection();
+        $dependencyInjector = $this->createDependencyInjector($dependencyInjectorCollection);
         $dependencyProvider = $this->resolveDependencyProvider();
 
         $container = $this->provideDependencies($dependencyProvider, $container);
+        $container = $dependencyInjector->inject($container);
 
         /** @var \Spryker\Glue\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
@@ -123,5 +130,31 @@ abstract class AbstractFactory
     protected function createDependencyProviderResolver()
     {
         return new DependencyProviderResolver();
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface $dependencyInjectorCollection
+     *
+     * @return \Spryker\Glue\Kernel\Dependency\Injector\DependencyInjectorInterface
+     */
+    protected function createDependencyInjector(DependencyInjectorCollectionInterface $dependencyInjectorCollection): DependencyInjectorInterface
+    {
+        return new DependencyInjector($dependencyInjectorCollection);
+    }
+
+    /**
+     * @return \Spryker\Glue\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver
+     */
+    protected function createDependencyInjectorResolver(): DependencyInjectorResolver
+    {
+        return new DependencyInjectorResolver();
+    }
+
+    /**
+     * @return \Spryker\Glue\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
+     */
+    protected function resolveDependencyInjectorCollection(): DependencyInjectorCollectionInterface
+    {
+        return $this->createDependencyInjectorResolver()->resolve($this);
     }
 }
