@@ -129,4 +129,17 @@ interface PriceProductScheduleFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
     public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer;
+
+    /**
+     * Specification:
+     * - Removes scheduled price with given id.
+     * - Apply scheduled price for product, related to given scheduled price.
+     *
+     * @api
+     *
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void;
 }
