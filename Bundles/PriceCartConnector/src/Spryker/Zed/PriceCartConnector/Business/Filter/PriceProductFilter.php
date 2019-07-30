@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\PriceCartConnector\PriceCartConnectorConstants;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 class PriceProductFilter implements PriceProductFilterInterface
 {
@@ -163,7 +163,7 @@ class PriceProductFilter implements PriceProductFilterInterface
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku() === $cartChangeItemTransfer->getSku()) {
-                if ($cartChangeTransfer->getOperation() === PriceCartConnectorConstants::OPERATION_REMOVE) {
+                if ($cartChangeTransfer->getOperation() === PriceCartConnectorConfig::OPERATION_REMOVE) {
                     $quantity -= $itemTransfer->getQuantity();
                     continue;
                 }
