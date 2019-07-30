@@ -9,6 +9,7 @@ namespace Spryker\Client\ConfigurableBundle\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -57,8 +58,9 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
                 ->requireUuid();
 
         if (!isset($configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()])) {
-            $configuredBundleTransfer->setSlot(null);
-            $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = $configuredBundleTransfer;
+            $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = (new ConfiguredBundleTransfer())
+                ->setTemplate($configuredBundleTransfer->getTemplate())
+                ->setQuantity($configuredBundleTransfer->getQuantity());
         }
 
         $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()]->addItem($itemTransfer);
