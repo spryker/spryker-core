@@ -9,8 +9,6 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 
 use Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfiguredBundleReader;
-use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfiguredBundleReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -41,13 +39,5 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderConfiguredBundleExpander(
             $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfiguredBundleReaderInterface
-     */
-    public function createConfiguredBundleReader(): ConfiguredBundleReaderInterface
-    {
-        return new ConfiguredBundleReader();
     }
 }

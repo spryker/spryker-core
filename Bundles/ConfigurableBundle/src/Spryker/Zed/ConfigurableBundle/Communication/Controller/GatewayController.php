@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Communication\Controller;
 
-use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -16,13 +14,4 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  */
 class GatewayController extends AbstractGatewayController
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
-     */
-    public function getConfiguredBundlesFromQuoteAction(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer
-    {
-        return $this->getFacade()->getConfiguredBundlesFromQuote($quoteTransfer);
-    }
 }

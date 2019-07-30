@@ -14,8 +14,7 @@ interface ConfigurableBundleClientInterface
 {
     /**
      * Specification:
-     * - Makes Zed request.
-     * - Extracts configured bundle from QuoteTransfer.
+     * - Extracts configured bundles from QuoteTransfer.
      *
      * @api
      *

@@ -109,9 +109,10 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
                 ->requireUuid()
                 ->requireName();
 
-        $configuredBundleTransfer->requireSlot()
+        $configuredBundleTransfer
+            ->requireSlot()
             ->getSlot()
-            ->requireUuid();
+                ->requireUuid();
 
         $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
             ->setConfigurableBundleTemplateUuid($configuredBundleTransfer->getTemplate()->getUuid())

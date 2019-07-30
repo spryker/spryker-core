@@ -15,8 +15,13 @@
     <transfer name="ConfiguredBundle">
         <property name="template" type="ConfigurableBundleTemplate" />
         <property name="slot" type="ConfigurableBundleTemplateSlot" />
+        <property name="items" type="Item[]" singular="item" />
         <property name="quantity" type="int" />
         <property name="groupKey" type="string" />
+    </transfer>
+
+    <transfer name="ConfiguredBundleCollection">
+        <property name="configuredBundles" type="ConfiguredBundle[]" singular="configuredBundle" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
