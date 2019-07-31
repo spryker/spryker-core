@@ -41,8 +41,6 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
     }
 
     /**
-     * @api
-     *
      * @param string $identifier The message id (may also be an object that can be cast to string)
      * @param array $parameters An array of parameters for the message
      * @param string|null $domain The domain for the message or null to use the default
