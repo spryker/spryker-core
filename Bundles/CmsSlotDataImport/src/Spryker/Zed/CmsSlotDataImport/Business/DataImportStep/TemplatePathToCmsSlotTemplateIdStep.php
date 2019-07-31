@@ -36,6 +36,8 @@ class TemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterface
     /**
      * @param string $templatePath
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
      * @return int
      */
     protected function getIdCmsSlotTemplateByTemplatePath(string $templatePath): int
@@ -44,18 +46,6 @@ class TemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterface
             return $this->idCmsSlotTemplateCache[$templatePath];
         }
 
-        return $this->resolveIdCmsSlotTemplate($templatePath);
-    }
-
-    /**
-     * @param string $templatePath
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
-     * @return int
-     */
-    protected function resolveIdCmsSlotTemplate(string $templatePath): int
-    {
         /** @var int $idCmsSlotTemplate */
         $idCmsSlotTemplate = SpyCmsSlotTemplateQuery::create()
             ->filterByPath($templatePath)
