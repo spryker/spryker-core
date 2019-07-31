@@ -38,13 +38,13 @@ class SearchDependencyProvider extends AbstractDependencyProvider
         $container = $this->provideStore($container);
         $container = $this->addClientAdapterPlugins($container);
 
-        $container[static::SEARCH_CONFIG_BUILDER] = function (Container $container) {
+        $container->set(static::SEARCH_CONFIG_BUILDER, function (Container $container) {
             return $this->createSearchConfigBuilderPlugin($container);
-        };
+        });
 
-        $container[static::SEARCH_CONFIG_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::SEARCH_CONFIG_EXPANDER_PLUGINS, function (Container $container) {
             return $this->createSearchConfigExpanderPlugins($container);
-        };
+        });
 
         $container = $this->addMoneyPlugin($container);
 
@@ -58,9 +58,9 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMoneyPlugin(Container $container)
     {
-        $container[static::PLUGIN_MONEY] = function () {
+        $container->set(static::PLUGIN_MONEY, function () {
             return new MoneyPlugin();
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
