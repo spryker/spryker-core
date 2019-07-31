@@ -92,9 +92,6 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         }
 
         $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-        }
 
         return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer()));
     }
