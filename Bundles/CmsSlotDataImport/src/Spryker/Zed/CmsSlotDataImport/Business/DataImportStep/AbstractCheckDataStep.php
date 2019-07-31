@@ -7,25 +7,25 @@
 
 namespace Spryker\Zed\CmsSlotDataImport\Business\DataImportStep;
 
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 abstract class AbstractCheckDataStep
 {
     /**
-     * @param \Generated\Shared\Transfer\DataObjectValidationResponseTransfer $dataObjectValidationResponseTransfer
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
      * @return string[]
      */
-    protected function getErrorMessages(DataObjectValidationResponseTransfer $dataObjectValidationResponseTransfer): array
+    protected function getErrorMessages(ValidationResponseTransfer $validationResponseTransfer): array
     {
         $messages = [];
 
-        foreach ($dataObjectValidationResponseTransfer->getValidationResults() as $validationResult) {
-            foreach ($validationResult->getMessages() as $propertyValidationResultMessage) {
+        foreach ($validationResponseTransfer->getConstraintViolations() as $constraintViolationTransfer) {
+            foreach ($constraintViolationTransfer->getMessages() as $constraintViolationMessageTransfer) {
                 $messages[] = sprintf(
                     '"%s" property: %s',
-                    $validationResult->getPropertyName(),
-                    $propertyValidationResultMessage->getValue()
+                    $constraintViolationTransfer->getPropertyName(),
+                    $constraintViolationMessageTransfer->getValue()
                 );
             }
         }

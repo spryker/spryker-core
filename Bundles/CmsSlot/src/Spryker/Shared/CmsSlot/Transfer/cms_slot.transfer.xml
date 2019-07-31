@@ -19,12 +19,12 @@
         <property name="description" type="string" />
     </transfer>
 
-    <transfer name="DataObjectValidationResponse">
+    <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool" />
-        <property name="validationResults" type="PropertyValidationResult[]" />
+        <property name="constraintViolations" type="ConstraintViolation[]" />
     </transfer>
 
-    <transfer name="PropertyValidationResult">
+    <transfer name="ConstraintViolation">
         <property name="propertyName" type="string" />
         <property name="messages" type="Message[]" singular="message" />
     </transfer>

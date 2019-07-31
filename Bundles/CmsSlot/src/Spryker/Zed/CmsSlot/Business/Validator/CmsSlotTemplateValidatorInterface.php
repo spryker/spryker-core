@@ -8,14 +8,14 @@
 namespace Spryker\Zed\CmsSlot\Business\Validator;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface CmsSlotTemplateValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsSlotTemplateTransfer $cmsSlotTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): DataObjectValidationResponseTransfer;
+    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer;
 }

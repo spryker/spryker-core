@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsSlot\Business;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -24,9 +24,9 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): DataObjectValidationResponseTransfer
+    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): ValidationResponseTransfer
     {
         return $this->getFactory()->createCmsSlotValidator()->validateCmsSlot($cmsSlotTransfer);
     }
@@ -38,9 +38,9 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CmsSlotTemplateTransfer $cmsSlotTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): DataObjectValidationResponseTransfer
+    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer
     {
         return $this->getFactory()->createCmsSlotTemplateValidator()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
     }

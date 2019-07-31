@@ -9,33 +9,33 @@ namespace Spryker\Zed\CmsSlot\Business;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface CmsSlotFacadeInterface
 {
     /**
      * Specification:
      * - Validates cms slot transfer.
-     * - Returns DataObjectValidationResponseTransfer with status and messages in case of fail.
+     * - Returns ValidationResponseTransfer with status and messages in case of fail.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): DataObjectValidationResponseTransfer;
+    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): ValidationResponseTransfer;
 
     /**
      * Specification:
      * - Validates cms slot template transfer.
-     * - Returns DataObjectValidationResponseTransfer with status and messages in case of fail.
+     * - Returns ValidationResponseTransfer with status and messages in case of fail.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsSlotTemplateTransfer $cmsSlotTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): DataObjectValidationResponseTransfer;
+    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer;
 }

@@ -36,7 +36,7 @@ class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
             new Required(),
             new NotBlank(),
             new Regex([
-                'pattern' => '/^@[^\s]+\.twig$/',
+                'pattern' => '/^@.+\.twig$/',
             ]),
         ];
     }

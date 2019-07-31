@@ -9,21 +9,21 @@ namespace Spryker\Zed\CmsSlotDataImport\Dependency\Facade;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface CmsSlotDataImportToCmsSlotFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): DataObjectValidationResponseTransfer;
+    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): ValidationResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsSlotTemplateTransfer $cmsSlotTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): DataObjectValidationResponseTransfer;
+    public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer;
 }

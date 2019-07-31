@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsSlot\Business\Validator;
 
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
 use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
 
@@ -39,9 +39,9 @@ class CmsSlotValidator extends AbstractTransferValidator implements CmsSlotValid
     /**
      * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): DataObjectValidationResponseTransfer
+    public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): ValidationResponseTransfer
     {
         return $this->validate($cmsSlotTransfer, $this->validationAdapter, $this->constraintsProvider);
     }

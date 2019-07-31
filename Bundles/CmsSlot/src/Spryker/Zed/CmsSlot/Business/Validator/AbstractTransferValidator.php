@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CmsSlot\Business\Validator;
 
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
+use Generated\Shared\Transfer\ConstraintViolationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\PropertyValidationResultTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
 use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -18,21 +18,21 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 abstract class AbstractTransferValidator
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
      * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface $validationAdapter
      * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      *
-     * @return \Generated\Shared\Transfer\DataObjectValidationResponseTransfer
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     protected function validate(
-        AbstractTransfer $transfer,
+        TransferInterface $transfer,
         CmsSlotToValidationAdapterInterface $validationAdapter,
         ConstraintsProviderInterface $constraintsProvider
-    ): DataObjectValidationResponseTransfer {
+    ): ValidationResponseTransfer {
         $isSuccess = true;
         $validator = $validationAdapter->createValidator();
         $properties = $transfer->toArray(true, true);
-        $dataObjectValidationResponseTransfer = new DataObjectValidationResponseTransfer();
+        $validationResponseTransfer = new ValidationResponseTransfer();
 
         foreach ($constraintsProvider->getConstraintsMap() as $propertyName => $constraintCollection) {
             $violations = $validator->validate(
@@ -41,35 +41,35 @@ abstract class AbstractTransferValidator
             );
 
             if ($violations->count()) {
-                $propertyValidationResultTransfer = $this->getPropertyValidationResultTransfer($propertyName, $violations);
-                $dataObjectValidationResponseTransfer->addValidationResults($propertyValidationResultTransfer);
+                $constraintViolationTransfer = $this->getConstraintViolationTransfer($propertyName, $violations);
+                $validationResponseTransfer->addConstraintViolations($constraintViolationTransfer);
                 $isSuccess = false;
             }
         }
 
-        return $dataObjectValidationResponseTransfer->setIsSuccess($isSuccess);
+        return $validationResponseTransfer->setIsSuccess($isSuccess);
     }
 
     /**
      * @param string $propertyName
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
      *
-     * @return \Generated\Shared\Transfer\PropertyValidationResultTransfer
+     * @return \Generated\Shared\Transfer\ConstraintViolationTransfer
      */
-    protected function getPropertyValidationResultTransfer(
+    protected function getConstraintViolationTransfer(
         string $propertyName,
         ConstraintViolationListInterface $violations
-    ): PropertyValidationResultTransfer {
-        $propertyValidationResultTransfer = new PropertyValidationResultTransfer();
-        $propertyValidationResultTransfer->setPropertyName($propertyName);
+    ): ConstraintViolationTransfer {
+        $constraintViolationTransfer = new ConstraintViolationTransfer();
+        $constraintViolationTransfer->setPropertyName($propertyName);
 
         /** @var \Symfony\Component\Validator\ConstraintViolation $violation */
         foreach ($violations as $violation) {
-            $propertyValidationResultTransfer->addMessage(
+            $constraintViolationTransfer->addMessage(
                 (new MessageTransfer())->setValue($violation->getMessage())
             );
         }
 
-        return $propertyValidationResultTransfer;
+        return $constraintViolationTransfer;
     }
 }
