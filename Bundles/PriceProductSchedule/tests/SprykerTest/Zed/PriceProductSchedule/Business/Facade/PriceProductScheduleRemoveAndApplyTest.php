@@ -263,9 +263,9 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 hour')),
-            PriceProductScheduleTransfer::IS_CURRENT => true,
+            PriceProductScheduleTransfer::IS_CURRENT => false,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                 PriceProductTransfer::PRICE_TYPE => [
                     PriceTypeTransfer::NAME => $defaultPriceTypeTransfer->getName(),
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
@@ -283,9 +283,9 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-6 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+6 days')),
-            PriceProductScheduleTransfer::IS_CURRENT => true,
+            PriceProductScheduleTransfer::IS_CURRENT => false,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
-                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                 PriceProductTransfer::PRICE_TYPE => [
                     PriceTypeTransfer::NAME => $defaultPriceTypeTransfer->getName(),
                     PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
@@ -312,7 +312,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
 
         // Assert
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
-            ->setSku($productConcreteTransfer->getSku())
+            ->setSku($productConcreteTransfer->getAbstractSku())
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
             ->setCurrencyIsoCode($currencyTransfer->getCode());
 
@@ -361,7 +361,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 hour')),
-            PriceProductScheduleTransfer::IS_CURRENT => true,
+            PriceProductScheduleTransfer::IS_CURRENT => false,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                 PriceProductTransfer::PRICE_TYPE => [
@@ -381,7 +381,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
         $this->tester->havePriceProductSchedule([
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-6 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+6 days')),
-            PriceProductScheduleTransfer::IS_CURRENT => true,
+            PriceProductScheduleTransfer::IS_CURRENT => false,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
                 PriceProductTransfer::PRICE_TYPE => [

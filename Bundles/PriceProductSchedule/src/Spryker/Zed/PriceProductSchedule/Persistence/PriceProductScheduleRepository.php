@@ -84,6 +84,60 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      * @module PriceProduct
      * @module Currency
      *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array
+    {
+        $priceProductScheduleEntities = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByIsCurrent(true)
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+    }
+
+    /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array
+    {
+        $priceProductScheduleEntities = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByIsCurrent(true)
+            ->filterByFkProduct($idProductConcrete)
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+    }
+
+    /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
@@ -121,10 +175,6 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
-     * @module Product
-     * @module PriceProduct
-     * @module Currency
-     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
@@ -137,17 +187,43 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             $currentDatabaseEngineName
         );
 
+        return $this->findPriceProductSchedulesToEnableByStoreResult(
+            $priceProductScheduleFilteredByMinResultSubQuery,
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
+    }
+
+    /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $subQuery
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $dbEngineName
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    protected function findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
+        SpyPriceProductScheduleQuery $subQuery,
+        StoreTransfer $storeTransfer,
+        string $dbEngineName,
+        int $idProductAbstract
+    ): array {
         $priceProductScheduleEntities = $this->getFactory()
             ->createPriceProductScheduleQuery()
-            ->addSelectQuery($priceProductScheduleFilteredByMinResultSubQuery, static::ALIAS_FILTERED, false)
+            ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
             ->joinWithPriceType()
             ->leftJoinWithProduct()
             ->leftJoinWithProductAbstract()
             ->filterByIsCurrent(false)
             ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkProductAbstract($idProductAbstract)
             ->where($this->getFilterByConcatenatedProductIdExpression())
-            ->where($this->getFilterByConcatenatedResultExpression($currentDatabaseEngineName))
+            ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
             ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
             ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
             ->find()
@@ -155,6 +231,121 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
 
         return $this->priceProductScheduleMapper
             ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+    }
+
+    /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $subQuery
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $dbEngineName
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(SpyPriceProductScheduleQuery $subQuery, StoreTransfer $storeTransfer, string $dbEngineName, int $idProductConcrete): array
+    {
+        $priceProductScheduleEntities = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByIsCurrent(false)
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkProduct($idProductConcrete)
+            ->where($this->getFilterByConcatenatedProductIdExpression())
+            ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
+            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+    }
+
+    /**
+     * @module Product
+     * @module PriceProduct
+     * @module Currency
+     *
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $subQuery
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $dbEngineName
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    protected function findPriceProductSchedulesToEnableByStoreResult(SpyPriceProductScheduleQuery $subQuery, StoreTransfer $storeTransfer, string $dbEngineName): array
+    {
+        $priceProductScheduleEntities = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByIsCurrent(false)
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->where($this->getFilterByConcatenatedProductIdExpression())
+            ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
+            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
+        StoreTransfer $storeTransfer,
+        int $idProductAbstract
+    ): array {
+        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
+
+        return $this->findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
+            $priceProductScheduleFilteredByMinResultSubQuery,
+            $storeTransfer,
+            $currentDatabaseEngineName,
+            $idProductAbstract
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
+        StoreTransfer $storeTransfer,
+        int $idProductConcrete
+    ): array {
+        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
+        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
+
+        return $this->findPriceProductSchedulesToEnableByStoreResult(
+            $priceProductScheduleFilteredByMinResultSubQuery,
+            $storeTransfer,
+            $currentDatabaseEngineName
+        );
     }
 
     /**
@@ -358,5 +549,26 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 $priceProductScheduleListEntity,
                 new PriceProductScheduleListTransfer()
             );
+    }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer
+    {
+        $priceProductScheduleEntity = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->filterByIdPriceProductSchedule($idPriceProductSchedule)
+            ->findOne();
+
+        if ($priceProductScheduleEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPriceProductScheduleMapper()
+            ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer($priceProductScheduleEntity, new PriceProductScheduleTransfer());
     }
 }

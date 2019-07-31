@@ -131,4 +131,17 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
 
         return $priceProductScheduleListTransfer;
     }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleById(int $idPriceProductSchedule): void
+    {
+        $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->filterByIdPriceProductSchedule($idPriceProductSchedule)
+            ->delete();
+    }
 }

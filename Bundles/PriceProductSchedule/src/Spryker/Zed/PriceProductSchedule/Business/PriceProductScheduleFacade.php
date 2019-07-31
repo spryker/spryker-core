@@ -167,6 +167,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      */
     public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void
     {
-        // TODO: Implement removeAndApplyPriceProductSchedule() method.
+        $this->getFactory()
+            ->createPriceProductScheduleRemover()
+            ->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
     }
 }

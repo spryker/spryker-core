@@ -80,6 +80,40 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
     }
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function disableNotActiveScheduledPricesByIdProductAbstract(int $idProductAbstract): void
+    {
+        $productSchedulePricesForDisable = $this->priceProductScheduleRepository
+            ->findPriceProductSchedulesToDisableByIdProductAbstract($idProductAbstract);
+
+        foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
+                $this->executeExitLogicTransaction($priceProductScheduleTransfer);
+            });
+        }
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function disableNotActiveScheduledPricesByIdProductConcrete(int $idProductConcrete): void
+    {
+        $productSchedulePricesForDisable = $this->priceProductScheduleRepository
+            ->findPriceProductSchedulesToDisableByIdProductConcrete($idProductConcrete);
+
+        foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
+                $this->executeExitLogicTransaction($priceProductScheduleTransfer);
+            });
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return void

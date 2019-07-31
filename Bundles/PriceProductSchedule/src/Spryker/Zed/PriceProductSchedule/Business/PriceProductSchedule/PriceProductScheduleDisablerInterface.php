@@ -17,6 +17,20 @@ interface PriceProductScheduleDisablerInterface
     public function disableNotActiveScheduledPrices(): void;
 
     /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function disableNotActiveScheduledPricesByIdProductAbstract(int $idProductAbstract): void;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function disableNotActiveScheduledPricesByIdProductConcrete(int $idProductConcrete): void;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return void

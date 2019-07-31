@@ -100,4 +100,14 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     {
         return $this->priceProductScheduleFacade->validateCsvFile($uploadedFile);
     }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void
+    {
+        $this->priceProductScheduleFacade->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
+    }
 }

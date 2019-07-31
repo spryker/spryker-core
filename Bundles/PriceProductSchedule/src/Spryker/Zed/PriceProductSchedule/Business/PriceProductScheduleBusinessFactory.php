@@ -14,11 +14,17 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackF
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductFallbackFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProduct\PriceProductUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplierInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferMoneyValueDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceTypeDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutor;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\CurrencyDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\DateDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ImportDataValidatorInterface;
@@ -45,6 +51,10 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Remover\PriceProductScheduleRemover;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Remover\PriceProductScheduleRemoverInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolver;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinder;
@@ -89,11 +99,59 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleApplier(): PriceProductScheduleApplierInterface
     {
         return new PriceProductScheduleApplier(
-            $this->createPriceProductScheduleWriter(),
             $this->createPriceProductScheduleDisabler(),
             $this->getRepository(),
+            $this->getStoreFacade(),
+            $this->createApplyScheduledPriceTransactionExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplierInterface
+     */
+    public function createAbstractProductPriceProductScheduleApplier(): AbstractProductPriceProductScheduleApplierInterface
+    {
+        return new AbstractProductPriceProductScheduleApplier(
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->createApplyScheduledPriceTransactionExecutor(),
+            $this->createPriceProductScheduleDisabler()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplierInterface
+     */
+    public function createConcreteProductPriceProductScheduleApplier(): ConcreteProductPriceProductScheduleApplierInterface
+    {
+        return new ConcreteProductPriceProductScheduleApplier(
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->createApplyScheduledPriceTransactionExecutor(),
+            $this->createPriceProductScheduleDisabler()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface
+     */
+    public function createPriceProductScheduleApplierByProductTypeResolver(): PriceProductScheduleApplierByProductTypeResolverInterface
+    {
+        return new PriceProductScheduleApplierByProductTypeResolver(
+            $this->createAbstractProductPriceProductScheduleApplier(),
+            $this->createConcreteProductPriceProductScheduleApplier()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface
+     */
+    public function createApplyScheduledPriceTransactionExecutor(): ApplyScheduledPriceTransactionExecutorInterface
+    {
+        return new ApplyScheduledPriceTransactionExecutor(
+            $this->createPriceProductScheduleDisabler(),
             $this->getPriceProductFacade(),
-            $this->getStoreFacade()
+            $this->createPriceProductScheduleWriter()
         );
     }
 
@@ -384,6 +442,18 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleCsvValidator(
             $this->getUtilCsvService(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Remover\PriceProductScheduleRemoverInterface
+     */
+    public function createPriceProductScheduleRemover(): PriceProductScheduleRemoverInterface
+    {
+        return new PriceProductScheduleRemover(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createPriceProductScheduleApplierByProductTypeResolver()
         );
     }
 
