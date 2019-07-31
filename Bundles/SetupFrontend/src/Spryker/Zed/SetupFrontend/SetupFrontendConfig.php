@@ -27,7 +27,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getProjectInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**
@@ -70,7 +70,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getYvesInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**
@@ -121,7 +121,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getZedInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**

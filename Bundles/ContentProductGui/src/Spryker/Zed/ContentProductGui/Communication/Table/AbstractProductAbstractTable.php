@@ -16,9 +16,11 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 
 abstract class AbstractProductAbstractTable extends AbstractTable
 {
-    public const HEADER_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const HEADER_ID_PRODUCT_ABSTRACT = 'ID';
+    public const HEADER_NAME = 'Name';
+    public const HEADER_SKU = 'SKU';
 
-    public const COL_ID_PRODUCT_ABSTRACT = 'ID';
+    public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     public const COL_SKU = 'sku';
     public const COL_IMAGE = 'Image';
     public const COL_NAME = 'name';
@@ -104,11 +106,11 @@ abstract class AbstractProductAbstractTable extends AbstractTable
     }
 
     /**
-     * @param string $link
+     * @param string|null $link
      *
      * @return string
      */
-    protected function getProductPreview(string $link): string
+    protected function getProductPreview(?string $link): string
     {
         if ($link) {
             return sprintf('<img src="%s">', $link);

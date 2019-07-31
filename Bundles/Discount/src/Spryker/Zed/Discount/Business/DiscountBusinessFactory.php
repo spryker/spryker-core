@@ -187,6 +187,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[]
+     */
+    public function getCollectedDiscountGroupingPlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::COLLECTED_DISCOUNT_GROUPING_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected function getMessengerFacade()
@@ -484,6 +492,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getMessengerFacade(),
             $this->createDistributor(),
             $this->getCalculatorPlugins(),
+            $this->getCollectedDiscountGroupingPlugins(),
             $this->createDiscountableItemFilter()
         );
 

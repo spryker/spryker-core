@@ -24,7 +24,12 @@ class ContentFileListViewTable extends AbstractTable
 
     public const COL_ID_FILE = 'id_file';
     public const COL_FILE_NAME = 'file_name';
-    public const COL_SELECTED = 'Selected';
+
+    /**
+     * @deprecated Use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable::COL_ACTIONS instead.
+     */
+    public const COL_SELECTED = 'Actions';
+    public const COL_ACTIONS = 'Actions';
 
     /**
      * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery
@@ -75,7 +80,7 @@ class ContentFileListViewTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_FILE => static::HEADER_ID_FILE,
             static::COL_FILE_NAME => static::HEADER_NAME,
-            static::COL_SELECTED => static::COL_SELECTED,
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
 
         $config->setSearchable([
@@ -84,7 +89,7 @@ class ContentFileListViewTable extends AbstractTable
         ]);
 
         $config->setRawColumns([
-            static::COL_SELECTED,
+            static::COL_ACTIONS,
         ]);
 
         $config->setStateSave(false);
@@ -123,7 +128,7 @@ class ContentFileListViewTable extends AbstractTable
         return [
             static::COL_ID_FILE => $idFile,
             static::COL_FILE_NAME => $fileEntity->getFileName(),
-            static::COL_SELECTED => $this->getAddButtonField($idFile),
+            static::COL_ACTIONS => $this->getAddButtonField($idFile),
         ];
     }
 
