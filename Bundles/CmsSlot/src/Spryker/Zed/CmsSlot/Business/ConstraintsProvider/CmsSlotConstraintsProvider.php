@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
-class CmsSlotConstraintsProvider implements CmsSlotConstraintsProviderInterface
+class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
 {
     /**
      * @return array
@@ -91,7 +91,7 @@ class CmsSlotConstraintsProvider implements CmsSlotConstraintsProviderInterface
             new NotBlank(),
             new Choice([
                 'choices' => [0, 1, '0', '1', false, true],
-                'message' => 'Is not a valid boolean value.',
+                'message' => 'This value is not a valid boolean value.',
             ]),
         ];
     }

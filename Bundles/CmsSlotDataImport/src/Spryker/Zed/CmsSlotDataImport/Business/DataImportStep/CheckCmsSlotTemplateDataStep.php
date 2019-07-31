@@ -15,11 +15,8 @@ use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CheckCmsSlotTemplateDataStep implements DataImportStepInterface
+class CheckCmsSlotTemplateDataStep extends AbstractCheckDataStep implements DataImportStepInterface
 {
-    protected const MESSAGE_INVALID_DATA_EXCEPTION = 'Failed to import cms slot template with path [%s]: %s';
-    protected const MESSAGE_PROPERTY_ERROR = '"%s" property: %s';
-
     /**
      * @var \Spryker\Zed\CmsSlotDataImport\Dependency\Facade\CmsSlotDataImportToCmsSlotFacadeInterface
      */
@@ -54,33 +51,11 @@ class CheckCmsSlotTemplateDataStep implements DataImportStepInterface
 
             throw new InvalidDataException(
                 sprintf(
-                    static::MESSAGE_INVALID_DATA_EXCEPTION,
+                    "Failed to import cms slot template with path [%s]: \n%s",
                     $cmsSlotTemplateTransfer->getPath(),
-                    implode(';', $errorMessages)
+                    implode("\n", $errorMessages)
                 )
             );
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataObjectValidationResponseTransfer $dataObjectValidationResponseTransfer
-     *
-     * @return string[]
-     */
-    protected function getErrorMessages(DataObjectValidationResponseTransfer $dataObjectValidationResponseTransfer): array
-    {
-        $messages = [];
-
-        foreach ($dataObjectValidationResponseTransfer->getValidationResults() as $validationResult) {
-            foreach ($validationResult->getMessages() as $propertyValidationResultMessage) {
-                $messages[] = sprintf(
-                    static::MESSAGE_PROPERTY_ERROR,
-                    $validationResult->getPropertyName(),
-                    $propertyValidationResultMessage->getValue()
-                );
-            }
-        }
-
-        return $messages;
     }
 }

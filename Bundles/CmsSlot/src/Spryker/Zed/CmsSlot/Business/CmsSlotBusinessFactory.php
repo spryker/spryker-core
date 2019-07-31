@@ -8,9 +8,8 @@
 namespace Spryker\Zed\CmsSlot\Business;
 
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProvider;
-use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProviderInterface;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProvider;
-use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProviderInterface;
+use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidator;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidatorInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotValidator;
@@ -47,17 +46,17 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProviderInterface
+     * @return \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface
      */
-    public function createCmsSlotConstraintsProvider(): CmsSlotConstraintsProviderInterface
+    public function createCmsSlotConstraintsProvider(): ConstraintsProviderInterface
     {
         return new CmsSlotConstraintsProvider();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProviderInterface
+     * @return \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface
      */
-    public function createCmsSlotTemplateConstraintsProvider(): CmsSlotTemplateConstraintsProviderInterface
+    public function createCmsSlotTemplateConstraintsProvider(): ConstraintsProviderInterface
     {
         return new CmsSlotTemplateConstraintsProvider();
     }

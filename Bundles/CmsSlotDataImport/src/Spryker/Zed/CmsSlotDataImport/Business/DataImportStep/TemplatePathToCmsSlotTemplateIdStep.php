@@ -16,8 +16,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class TemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterface
 {
-    protected const MESSAGE_ENTITY_NOT_FOUND_EXCEPTION = 'Could not find template by template path "%s".';
-
     /**
      * @var int[]
      */
@@ -65,7 +63,7 @@ class TemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterface
             ->findOne();
 
         if (!$idCmsSlotTemplate) {
-            throw new EntityNotFoundException(sprintf(static::MESSAGE_ENTITY_NOT_FOUND_EXCEPTION, $templatePath));
+            throw new EntityNotFoundException(sprintf('Could not find template by template path "%s".', $templatePath));
         }
 
         $this->idCmsSlotTemplateCache[$templatePath] = $idCmsSlotTemplate;

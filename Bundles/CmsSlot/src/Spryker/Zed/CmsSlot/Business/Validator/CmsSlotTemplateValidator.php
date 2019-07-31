@@ -9,13 +9,10 @@ namespace Spryker\Zed\CmsSlot\Business\Validator;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\PropertyValidationResultTransfer;
-use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProviderInterface;
+use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
 use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class CmsSlotTemplateValidator implements CmsSlotTemplateValidatorInterface
+class CmsSlotTemplateValidator extends AbstractTransferValidator implements CmsSlotTemplateValidatorInterface
 {
     /**
      * @var \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface
@@ -23,17 +20,17 @@ class CmsSlotTemplateValidator implements CmsSlotTemplateValidatorInterface
     protected $validationAdapter;
 
     /**
-     * @var \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProviderInterface
+     * @var \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface
      */
     protected $constraintsProvider;
 
     /**
      * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface $validationAdapter
-     * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProviderInterface $constraintsProvider
+     * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      */
     public function __construct(
         CmsSlotToValidationAdapterInterface $validationAdapter,
-        CmsSlotTemplateConstraintsProviderInterface $constraintsProvider
+        ConstraintsProviderInterface $constraintsProvider
     ) {
         $this->validationAdapter = $validationAdapter;
         $this->constraintsProvider = $constraintsProvider;
@@ -46,47 +43,6 @@ class CmsSlotTemplateValidator implements CmsSlotTemplateValidatorInterface
      */
     public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): DataObjectValidationResponseTransfer
     {
-        $isSuccess = true;
-        $validator = $this->validationAdapter->createValidator();
-        $properties = $cmsSlotTemplateTransfer->toArray(true, true);
-        $dataObjectValidationResponseTransfer = new DataObjectValidationResponseTransfer();
-
-        foreach ($this->constraintsProvider->getConstraintsMap() as $propertyName => $constraintCollection) {
-            $violations = $validator->validate(
-                $properties[$propertyName],
-                $constraintCollection
-            );
-
-            if ($violations->count()) {
-                $propertyValidationResultTransfer = $this->getPropertyValidationResultTransfer($propertyName, $violations);
-                $dataObjectValidationResponseTransfer->addValidationResults($propertyValidationResultTransfer);
-                $isSuccess = false;
-            }
-        }
-
-        return $dataObjectValidationResponseTransfer->setIsSuccess($isSuccess);
-    }
-
-    /**
-     * @param string $propertyName
-     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $violations
-     *
-     * @return \Generated\Shared\Transfer\PropertyValidationResultTransfer
-     */
-    protected function getPropertyValidationResultTransfer(
-        string $propertyName,
-        ConstraintViolationListInterface $violations
-    ): PropertyValidationResultTransfer {
-        $propertyValidationResultTransfer = new PropertyValidationResultTransfer();
-        $propertyValidationResultTransfer->setPropertyName($propertyName);
-
-        /** @var \Symfony\Component\Validator\ConstraintViolation $violation */
-        foreach ($violations as $violation) {
-            $propertyValidationResultTransfer->addMessage(
-                (new MessageTransfer())->setValue($violation->getMessage())
-            );
-        }
-
-        return $propertyValidationResultTransfer;
+        return $this->validate($cmsSlotTemplateTransfer, $this->validationAdapter, $this->constraintsProvider);
     }
 }

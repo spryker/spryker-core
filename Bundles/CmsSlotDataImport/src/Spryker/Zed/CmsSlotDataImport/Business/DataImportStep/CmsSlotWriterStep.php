@@ -18,8 +18,6 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsSlotWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    protected const MESSAGE_MISSING_PATH_ID_EXCEPTION = '';
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -42,25 +40,11 @@ class CmsSlotWriterStep extends PublishAwareStep implements DataImportStepInterf
 
         $cmsSlotEntity->save();
 
-        if (!isset($dataSet[CmsSlotDataSetInterface::CMS_SLOT_TEMPLATE_ID])) {
-            throw new InvalidDataException(sprintf(
-                static::MESSAGE_MISSING_PATH_ID_EXCEPTION,
-                $dataSet[CmsSlotDataSetInterface::CMS_SLOT_KEY]
-            ));
-        }
-
-        $existingCmsSlotToCmsSlotTemplateEntities = SpyCmsSlotToCmsSlotTemplateQuery::create()
-            ->findByFkCmsSlot($cmsSlotEntity->getIdCmsSlot());
-
-        foreach ($existingCmsSlotToCmsSlotTemplateEntities as $existingCmsSlotToCmsSlotTemplateEntity) {
-            $existingCmsSlotToCmsSlotTemplateEntity->delete();
-        }
-
-        $idCmsSlotTemplate = $dataSet[CmsSlotDataSetInterface::CMS_SLOT_TEMPLATE_ID];
+        SpyCmsSlotToCmsSlotTemplateQuery::create()->filterByFkCmsSlot($cmsSlotEntity->getIdCmsSlot())->delete();
 
         $cmsSlotToCmsSlotTemplateEntity = (new SpyCmsSlotToCmsSlotTemplate())
             ->setFkCmsSlot($cmsSlotEntity->getIdCmsSlot())
-            ->setFkCmsSlotTemplate($idCmsSlotTemplate);
+            ->setFkCmsSlotTemplate($dataSet[CmsSlotDataSetInterface::CMS_SLOT_TEMPLATE_ID]);
 
         $cmsSlotToCmsSlotTemplateEntity->save();
     }

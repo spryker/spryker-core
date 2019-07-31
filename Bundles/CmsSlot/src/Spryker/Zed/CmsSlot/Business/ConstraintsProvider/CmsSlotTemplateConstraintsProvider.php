@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
-class CmsSlotTemplateConstraintsProvider implements CmsSlotTemplateConstraintsProviderInterface
+class CmsSlotTemplateConstraintsProvider implements ConstraintsProviderInterface
 {
     /**
      * @return array
@@ -36,7 +36,7 @@ class CmsSlotTemplateConstraintsProvider implements CmsSlotTemplateConstraintsPr
             new Required(),
             new NotBlank(),
             new Regex([
-                'pattern' => '/^@[a-zA-Z0-9\/\-\_]+\.twig$/',
+                'pattern' => '/^@[^\s]+\.twig$/',
             ]),
         ];
     }

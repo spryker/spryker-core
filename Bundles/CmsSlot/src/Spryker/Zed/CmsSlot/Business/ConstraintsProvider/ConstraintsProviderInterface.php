@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot\Business\ConstraintsProvider;
 
-interface CmsSlotTemplateConstraintsProviderInterface
+interface ConstraintsProviderInterface
 {
     /**
      * @return array

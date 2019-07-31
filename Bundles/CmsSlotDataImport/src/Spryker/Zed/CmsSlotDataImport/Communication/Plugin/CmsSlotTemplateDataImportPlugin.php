@@ -21,7 +21,7 @@ class CmsSlotTemplateDataImportPlugin extends AbstractPlugin implements DataImpo
 {
     /**
      * {@inheritdoc}
-     * - Imports CmsSlotsTemplate data.
+     * - Imports CmsSlotTemplate data.
      *
      * @api
      *
