@@ -164,25 +164,45 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->requireFieldsBaseOnProductType($priceProductTransfer);
 
         if ($priceProductTransfer->getIdProduct() !== null) {
-            $idPriceProduct = $this->priceProductRepository
-                ->findIdPriceProductForProductConcrete($priceProductTransfer);
-
-            if ($idPriceProduct === null) {
-                $idPriceProduct = $this->priceProductEntityManager
-                    ->savePriceProductForProductConcrete($priceProductTransfer);
-            }
-
-            $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-            return $priceProductTransfer;
+            return $this->getPriceProductForProductConcrete($priceProductTransfer);
         }
 
+        return $this->getPriceProductForProductAbstract($priceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function getPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $idPriceProduct = $this->priceProductRepository
+            ->findIdPriceProductForProductConcrete($priceProductTransfer);
+
+        if ($idPriceProduct === null) {
+            $idPriceProduct = $this->priceProductEntityManager
+                ->savePriceProductForProductConcrete($priceProductTransfer);
+        }
+
+        $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function getPriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
         $idPriceProduct = $this->priceProductRepository
             ->findIdPriceProductForProductAbstract($priceProductTransfer);
 
         if ($idPriceProduct === null) {
             $idPriceProduct = $this->priceProductEntityManager
-                        ->savePriceProductForProductAbstract($priceProductTransfer);
+                ->savePriceProductForProductAbstract($priceProductTransfer);
         }
 
         $priceProductTransfer->setIdPriceProduct($idPriceProduct);
