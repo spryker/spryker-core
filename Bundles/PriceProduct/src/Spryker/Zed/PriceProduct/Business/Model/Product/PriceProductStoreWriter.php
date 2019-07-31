@@ -164,10 +164,10 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->requireFieldsBaseOnProductType($priceProductTransfer);
 
         if ($priceProductTransfer->getIdProduct() !== null) {
-            return $this->getPriceProductForProductConcrete($priceProductTransfer);
+            return $this->preparePriceProductForProductConcrete($priceProductTransfer);
         }
 
-        return $this->getPriceProductForProductAbstract($priceProductTransfer);
+        return $this->preparePriceProductForProductAbstract($priceProductTransfer);
     }
 
     /**
@@ -175,7 +175,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getPriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    protected function preparePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $idPriceProduct = $this->priceProductRepository
             ->findIdPriceProductForProductConcrete($priceProductTransfer);
@@ -195,7 +195,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getPriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    protected function preparePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $idPriceProduct = $this->priceProductRepository
             ->findIdPriceProductForProductAbstract($priceProductTransfer);
