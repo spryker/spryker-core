@@ -227,13 +227,15 @@ class DataImporterCollection implements
         }
 
         foreach ($dataImporters as $dataImporter) {
-            if (in_array($dataImporter->getImportType(), $this->config->getFullImportTypes())) {
-                $this->executeDataImporter(
-                    $dataImporter,
-                    $dataImporterReportTransfer,
-                    $dataImporterConfigurationTransfer
-                );
+            if (!in_array($dataImporter->getImportType(), $this->config->getFullImportTypes())) {
+                continue;
             }
+
+            $this->executeDataImporter(
+                $dataImporter,
+                $dataImporterReportTransfer,
+                $dataImporterConfigurationTransfer
+            );
         }
     }
 
