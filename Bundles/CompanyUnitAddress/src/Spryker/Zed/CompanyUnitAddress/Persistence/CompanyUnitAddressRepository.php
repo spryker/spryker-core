@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
-use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -38,7 +37,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->innerJoinWithCountry()
             ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithCompanyBusinessUnit()
+            ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->find();
@@ -58,28 +57,44 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-        $companyUnitAddressQuery = $this->getFactory()
-            ->createCompanyUnitAddressQuery();
 
-        $companyUnitAddressQuery = $this->setCompanyUnitAddressQueryFilters($companyUnitAddressQuery, $criteriaFilterTransfer);
-
-        $companyUnitAddressQuery->innerJoinWithCountry()
+        $query = $this->getFactory()
+            ->createCompanyUnitAddressQuery()
+            ->innerJoinWithCountry()
             ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithCompanyBusinessUnit()
+            ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
-        $companyUnitAddressEntityTransfers = $this->buildQueryFromCriteria($companyUnitAddressQuery, $criteriaFilterTransfer->getFilter())->find();
+        if ($criteriaFilterTransfer->getIdCompany() !== null) {
+            $query->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
 
-        $companyUnitAddressCollectionTransfer = $this->getFactory()
-            ->createCompanyUnitAddressMapper()
-            ->mapCompanyUnitAddressEntityTransfersToCompanyUnitAddressCollectionTransfer(
-                $companyUnitAddressEntityTransfers
-            );
+        if ($criteriaFilterTransfer->getIdCompanyBusinessUnit() !== null) {
+            $query->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
+                ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
+                ->endUse();
+        }
 
-        $companyUnitAddressCollectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
+        $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
+        /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
+        $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
-        return $companyUnitAddressCollectionTransfer;
+        $collectionTransfer = new CompanyUnitAddressCollectionTransfer();
+        foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
+            $unitAddressTransfer = $this->getFactory()
+                ->createCompanyUnitAddressMapper()
+                ->mapEntityTransferToCompanyUnitAddressTransfer(
+                    $companyUnitAddressEntityTransfer,
+                    new CompanyUnitAddressTransfer()
+                );
+
+            $collectionTransfer->addCompanyUnitAddress($unitAddressTransfer);
+        }
+
+        $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
+
+        return $collectionTransfer;
     }
 
     /**
@@ -97,7 +112,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->filterByIdCompanyUnitAddress($idCompanyUnitAddress)
             ->leftJoinWithCountry()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithCompanyBusinessUnit()
+            ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
         /**
@@ -130,7 +145,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             ->filterByUuid($companyBusinessUnitAddressUuid)
             ->leftJoinWithCountry()
             ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinCompanyBusinessUnit()
+            ->leftJoinCompanyBusinessUnit()
             ->endUse()
             ->findOne();
 
@@ -147,64 +162,35 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $companyUnitAddressCriteriaFilterTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function setCompanyUnitAddressQueryFilters(
-        SpyCompanyUnitAddressQuery $companyUnitAddressQuery,
-        CompanyUnitAddressCriteriaFilterTransfer $companyUnitAddressCriteriaFilterTransfer
-    ): SpyCompanyUnitAddressQuery {
-        if ($companyUnitAddressCriteriaFilterTransfer->getIdCompany()) {
-            $companyUnitAddressQuery->filterByFkCompany(
-                $companyUnitAddressCriteriaFilterTransfer->getIdCompany()
-            );
+    protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
+    {
+        if ($paginationTransfer !== null) {
+            $page = $paginationTransfer
+                ->requirePage()
+                ->getPage();
+
+            $maxPerPage = $paginationTransfer
+                ->requireMaxPerPage()
+                ->getMaxPerPage();
+
+            $paginationModel = $query->paginate($page, $maxPerPage);
+
+            $paginationTransfer->setNbResults($paginationModel->getNbResults());
+            $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
+            $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
+            $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
+            $paginationTransfer->setLastPage($paginationModel->getLastPage());
+            $paginationTransfer->setNextPage($paginationModel->getNextPage());
+            $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+
+            return $paginationModel->getResults();
         }
 
-        if ($companyUnitAddressCriteriaFilterTransfer->getIdCompanyBusinessUnit()) {
-            $companyUnitAddressQuery->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
-                ->filterByFkCompanyBusinessUnit(
-                    $companyUnitAddressCriteriaFilterTransfer->getIdCompanyBusinessUnit()
-                )
-                ->endUse();
-        }
-
-        if ($companyUnitAddressCriteriaFilterTransfer->getPagination()) {
-            $companyUnitAddressQuery->filterByIdCompanyUnitAddress_In(
-                $this->getPaginatedCompanyUnitAddressIds($companyUnitAddressQuery, $companyUnitAddressCriteriaFilterTransfer->getPagination())
-            );
-        }
-
-        return $companyUnitAddressQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return int[]
-     */
-    protected function getPaginatedCompanyUnitAddressIds(
-        SpyCompanyUnitAddressQuery $companyUnitAddressQuery,
-        PaginationTransfer $paginationTransfer
-    ): array {
-        $paginationTransfer->requirePage()
-            ->requireMaxPerPage();
-
-        $propelModelPager = $companyUnitAddressQuery->paginate($paginationTransfer->getPage(), $paginationTransfer->getMaxPerPage());
-
-        $paginationTransfer->setNbResults($propelModelPager->getNbResults())
-            ->setFirstIndex($propelModelPager->getFirstIndex())
-            ->setLastIndex($propelModelPager->getLastIndex())
-            ->setFirstPage($propelModelPager->getFirstPage())
-            ->setLastPage($propelModelPager->getLastPage())
-            ->setNextPage($propelModelPager->getNextPage())
-            ->setPreviousPage($propelModelPager->getPreviousPage());
-
-        return $propelModelPager->getQuery()
-            ->select(SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS)
-            ->find()
-            ->toArray();
+        return $query->find();
     }
 }
