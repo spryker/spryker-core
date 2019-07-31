@@ -26,7 +26,7 @@ class ConfigurableBundleTemplateWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
 
         $configurableBundleTemplateEntity
-            ->setUuid($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_UUID])
+            ->setUuid($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_UUID] ?? null)
             ->setName($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_NAME])
             ->save();
     }
