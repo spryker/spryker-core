@@ -13,9 +13,8 @@ class SalesDetailPage
 {
     public const URL = '/sales/detail?id-sales-order=';
 
-    public const SELECTOR_SALES_ORDER_ITEMS_TABLE = 'table[@data-qa="order-item-list"]';
-    public const SELECTOR_ID_SALES_ORDER_ITEM = '//table[@data-qa="order-item-list"]/tbody/tr/td[{{position}}]/input';
-    public const SELECTOR_SALES_ORDER_ROW = '//table[@data-qa="order-item-list"]/tbody/tr/td[{{position}}]/input';
+    public const SELECTOR_ID_SALES_ORDER_ITEM = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
+    public const SELECTOR_SALES_ORDER_ROW = '//div[@id="items"]//table/tbody/tr/td[{{position}}]/input';
     public const SELECTOR_ITEM_TOTAL_ELEMENT = '//table[@data-qa="order-item-list"]/tbody/tr[@data-qa-item-row="{{idSalesOrderItem}}"]/td[@data-qa="item-total-amount"]';
     public const SELECTOR_CURRENT_STATE = '//td[@data-qa-item-current-state={{idSalesOrderItem}}]';
 
