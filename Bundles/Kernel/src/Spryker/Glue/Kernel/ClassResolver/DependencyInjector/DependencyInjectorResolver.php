@@ -17,12 +17,12 @@ use Spryker\Shared\Kernel\KernelConstants;
 class DependencyInjectorResolver extends AbstractClassResolver
 {
     protected const CLASS_NAME_PATTERN = '\\%1$s\\Glue\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
-    protected const KEY_FROM_BUNDLE = '%fromBundle%';
+    protected const KEY_FROM_MODULE = '%fromModule%';
 
     /**
      * @var string
      */
-    private $fromBundle;
+    private $fromModule;
 
     /**
      * @param object|string $callerClass
@@ -34,11 +34,11 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $dependencyInjectorCollection = $this->getDependencyInjectorCollection();
 
         $this->setCallerClass($callerClass);
-        $injectToBundle = $this->getClassInfo()->getBundle();
-        $injectFromBundles = $this->getInjectorBundles($injectToBundle);
+        $injectToModules = $this->getClassInfo()->getBundle();
+        $injectFromModules = $this->getInjectorModules($injectToModules);
 
-        foreach ($injectFromBundles as $injectFromBundle) {
-            $this->fromBundle = $injectFromBundle;
+        foreach ($injectFromModules as $injectFromModule) {
+            $this->fromModule = $injectFromModule;
 
             $this->unsetCurrentCacheEntry();
 
@@ -70,7 +70,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         return sprintf(
             static::CLASS_NAME_PATTERN,
             static::KEY_NAMESPACE,
-            static::KEY_FROM_BUNDLE,
+            static::KEY_FROM_MODULE,
             static::KEY_STORE,
             static::KEY_BUNDLE
         );
@@ -87,7 +87,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
         $searchAndReplace = [
             static::KEY_NAMESPACE => $namespace,
             static::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            static::KEY_FROM_BUNDLE => $this->fromBundle,
+            static::KEY_FROM_MODULE => $this->fromModule,
             static::KEY_STORE => $store,
         ];
 
@@ -101,18 +101,18 @@ class DependencyInjectorResolver extends AbstractClassResolver
     }
 
     /**
-     * @param string $injectToBundle
+     * @param string $injectToModules
      *
      * @return array
      */
-    protected function getInjectorBundles($injectToBundle): array
+    protected function getInjectorModules(string $injectToModules): array
     {
         $injectorConfiguration = $this->getDependencyInjectorConfiguration();
-        if (!isset($injectorConfiguration[$injectToBundle])) {
+        if (!isset($injectorConfiguration[$injectToModules])) {
             return [];
         }
 
-        return $injectorConfiguration[$injectToBundle];
+        return $injectorConfiguration[$injectToModules];
     }
 
     /**
