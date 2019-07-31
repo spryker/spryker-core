@@ -53,7 +53,7 @@ class DataImportConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getFullImportPlugins(): array
+    public function getFullImportTypes(): array
     {
         return [];
     }

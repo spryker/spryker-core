@@ -30,6 +30,11 @@ class DataImporterCollection implements
     protected $dataImporter = [];
 
     /**
+     * @var \Spryker\Zed\DataImport\DataImportConfig
+     */
+    protected $config;
+
+    /**
      * @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
      */
     protected $beforeImportHooks = [];
@@ -40,20 +45,15 @@ class DataImporterCollection implements
     protected $afterImportHooks = [];
 
     /**
-     * @var string[]
-     */
-    protected $fullImportPlugins = [];
-
-    /**
+     * @param \Spryker\Zed\DataImport\DataImportConfig $config
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[] $afterImportHooks
-     * @param string[] $fullImportPlugins
      */
-    public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [], array $fullImportPlugins = [])
+    public function __construct(DataImportConfig $config, array $beforeImportHooks = [], array $afterImportHooks = [])
     {
+        $this->config = $config;
         $this->beforeImportHooks = $beforeImportHooks;
         $this->afterImportHooks = $afterImportHooks;
-        $this->fullImportPlugins = $fullImportPlugins;
     }
 
     /**
@@ -154,7 +154,7 @@ class DataImporterCollection implements
         }
 
         foreach ($dataImporters as $dataImporter) {
-            if (in_array(get_class($dataImporter), $this->fullImportPlugins)) {
+            if (in_array($dataImporter->getImportType(), $this->config->getFullImportTypes())) {
                 $this->executeDataImporter(
                     $dataImporter,
                     $dataImporterReportTransfer,

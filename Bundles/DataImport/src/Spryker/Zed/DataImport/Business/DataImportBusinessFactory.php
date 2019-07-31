@@ -63,9 +63,9 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     public function createDataImporterCollection()
     {
         $dataImporterCollection = new DataImporterCollection(
+            $this->getConfig(),
             $this->getDataImportBeforeImportHookPlugins(),
-            $this->getDataImportAfterImportHookPlugins(),
-            $this->getConfig()->getFullImportPlugins()
+            $this->getDataImportAfterImportHookPlugins()
         );
 
         return $dataImporterCollection;
