@@ -62,7 +62,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
      */
     protected function saveSalesOrderConfiguredBundleItems(SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer): void
     {
-        foreach ($salesOrderConfiguredBundleTransfer->getItems() as $salesOrderConfiguredBundleItemTransfer) {
+        foreach ($salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems() as $salesOrderConfiguredBundleItemTransfer) {
             $salesOrderConfiguredBundleItemTransfer->setIdSalesOrderConfiguredBundle($salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle());
             $this->configurableBundleEntityManager->createSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer);
         }
@@ -78,7 +78,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
         $salesOrderConfiguredBundleTransfers = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getConfiguredBundle()) {
+            if ($itemTransfer->getConfiguredBundleItem() && $itemTransfer->getConfiguredBundle()) {
                 $salesOrderConfiguredBundleTransfers = $this->mapSalesOrderConfiguredBundle(
                     $itemTransfer,
                     $salesOrderConfiguredBundleTransfers
@@ -97,9 +97,13 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
      */
     protected function mapSalesOrderConfiguredBundle(ItemTransfer $itemTransfer, array $salesOrderConfiguredBundleTransfers): array
     {
-        $configuredBundleTransfer = $itemTransfer
-            ->requireIdSalesOrderItem()
-            ->getConfiguredBundle();
+        $configuredBundleItemTransfer = $itemTransfer->getConfiguredBundleItem();
+        $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
+
+        $configuredBundleItemTransfer
+            ->requireSlot()
+            ->getSlot()
+                ->requireUuid();
 
         $configuredBundleTransfer
             ->requireGroupKey()
@@ -108,10 +112,6 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
             ->getTemplate()
                 ->requireUuid()
                 ->requireName();
-
-        $configuredBundleTransfer->requireSlot()
-            ->getSlot()
-            ->requireUuid();
 
         $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
             ->setConfigurableBundleTemplateUuid($configuredBundleTransfer->getTemplate()->getUuid())
@@ -123,11 +123,11 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
         }
 
         $salesOrderConfiguredBundleItemTransfer = (new SalesOrderConfiguredBundleItemTransfer())
-            ->setConfigurableBundleTemplateSlotUuid($configuredBundleTransfer->getSlot()->getUuid())
+            ->setConfigurableBundleTemplateSlotUuid($configuredBundleItemTransfer->getSlot()->getUuid())
             ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
         $salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()]
-            ->addItem($salesOrderConfiguredBundleItemTransfer);
+            ->addSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer);
 
         return $salesOrderConfiguredBundleTransfers;
     }

@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundle;
+namespace Spryker\Client\ConfigurableBundle\Reader;
 
 use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ConfigurableBundleClientInterface
+interface ConfiguredBundleReaderInterface
 {
     /**
-     * Specification:
-     * - Extracts configured bundles from QuoteTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer

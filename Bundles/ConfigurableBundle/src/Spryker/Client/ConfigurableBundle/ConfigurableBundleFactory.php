@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ConfigurableBundle;
 
+use Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReader;
+use Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 /**
@@ -14,4 +16,11 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class ConfigurableBundleFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReaderInterface
+     */
+    public function createConfiguredBundleReader(): ConfiguredBundleReaderInterface
+    {
+        return new ConfiguredBundleReader();
+    }
 }

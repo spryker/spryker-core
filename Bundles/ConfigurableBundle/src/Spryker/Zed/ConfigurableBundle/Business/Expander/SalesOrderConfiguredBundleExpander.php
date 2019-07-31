@@ -82,7 +82,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
         $salesOrderConfiguredBundleItemTransfers = [];
 
         foreach ($salesOrderConfiguredBundleTransfers as $configuredBundleTransfer) {
-            foreach ($configuredBundleTransfer->getItems() as $salesOrderConfiguredBundleItemTransfer) {
+            foreach ($configuredBundleTransfer->getSalesOrderConfiguredBundleItems() as $salesOrderConfiguredBundleItemTransfer) {
                 $idSalesOrderItem = $salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItem();
                 $salesOrderConfiguredBundleItemTransfers[$idSalesOrderItem] = $salesOrderConfiguredBundleItemTransfer;
             }
