@@ -50,7 +50,7 @@
         <property name="configurableBundleTemplateUuid" type="string" />
         <property name="name" type="string" />
         <property name="quantity" type="int" />
-        <property name="items" type="SalesOrderConfiguredBundleItem[]" singular="item" />
+        <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleItem">

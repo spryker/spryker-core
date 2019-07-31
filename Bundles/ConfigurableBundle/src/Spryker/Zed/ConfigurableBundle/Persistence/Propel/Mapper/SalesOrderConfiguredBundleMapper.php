@@ -65,7 +65,7 @@ class SalesOrderConfiguredBundleMapper
     ): SalesOrderConfiguredBundleTransfer {
         $bundleTransfer = $bundleTransfer->fromArray($bundleEntity->toArray(), true);
 
-        $bundleTransfer->setItems(
+        $bundleTransfer->setSalesOrderConfiguredBundleItems(
             new ArrayObject($this->mapBundleEntityToBundleItemTransfers($bundleEntity))
         );
 

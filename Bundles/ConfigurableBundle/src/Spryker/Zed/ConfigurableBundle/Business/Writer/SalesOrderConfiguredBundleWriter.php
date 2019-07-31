@@ -62,7 +62,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
      */
     protected function saveSalesOrderConfiguredBundleItems(SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer): void
     {
-        foreach ($salesOrderConfiguredBundleTransfer->getItems() as $salesOrderConfiguredBundleItemTransfer) {
+        foreach ($salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems() as $salesOrderConfiguredBundleItemTransfer) {
             $salesOrderConfiguredBundleItemTransfer->setIdSalesOrderConfiguredBundle($salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle());
             $this->configurableBundleEntityManager->createSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer);
         }
@@ -128,7 +128,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
             ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
         $salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()]
-            ->addItem($salesOrderConfiguredBundleItemTransfer);
+            ->addSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer);
 
         return $salesOrderConfiguredBundleTransfers;
     }

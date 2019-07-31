@@ -82,7 +82,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getSalesOrderConfiguredBundleCollectionByFilter($configuredBundleFilterTransfer);
 
-        $this->assertCount(3, $salesOrderConfiguredBundleCollection->getSalesOrderConfiguredBundles()->offsetGet(0)->getItems());
+        $this->assertCount(3, $salesOrderConfiguredBundleCollection->getSalesOrderConfiguredBundles()->offsetGet(0)->getSalesOrderConfiguredBundleItems());
     }
 
     /**
