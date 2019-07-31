@@ -185,9 +185,8 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
                 ->savePriceProductForProductConcrete($priceProductTransfer);
         }
 
-        $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-        return $priceProductTransfer;
+        return $priceProductTransfer
+            ->setIdPriceProduct($idPriceProduct);
     }
 
     /**
@@ -205,9 +204,8 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
                 ->savePriceProductForProductAbstract($priceProductTransfer);
         }
 
-        $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-        return $priceProductTransfer;
+        return $priceProductTransfer
+            ->setIdPriceProduct($idPriceProduct);
     }
 
     /**
