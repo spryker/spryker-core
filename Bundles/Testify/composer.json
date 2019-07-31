@@ -36,7 +36,8 @@
       "SprykerTest\\Zed\\Testify\\Helper\\": "tests/SprykerTest/Zed/Testify/_support/Helper/",
       "SprykerTest\\Shared\\Testify\\Fixtures\\": "tests/SprykerTest/Shared/Testify/_support/Fixtures/",
       "SprykerTest\\Shared\\Testify\\Tester\\": "tests/SprykerTest/Shared/Testify/_support/Tester/",
-      "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/"
+      "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/",
+      "SprykerTest\\Shared\\Testify\\Filter\\": "tests/SprykerTest/Shared/Testify/_support/Filter/"
     }
   },
   "autoload-dev": {
