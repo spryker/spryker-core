@@ -97,18 +97,13 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
      */
     protected function mapSalesOrderConfiguredBundle(ItemTransfer $itemTransfer, array $salesOrderConfiguredBundleTransfers): array
     {
-        $configuredBundleItemTransfer = $itemTransfer
-            ->requireConfiguredBundleItem()
-            ->getConfiguredBundleItem();
+        $configuredBundleItemTransfer = $itemTransfer->getConfiguredBundleItem();
+        $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
 
         $configuredBundleItemTransfer
             ->requireSlot()
             ->getSlot()
                 ->requireUuid();
-
-        $configuredBundleTransfer = $itemTransfer
-            ->requireIdSalesOrderItem()
-            ->getConfiguredBundle();
 
         $configuredBundleTransfer
             ->requireGroupKey()

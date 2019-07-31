@@ -42,18 +42,13 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
      */
     protected function mapConfiguredBundle(ItemTransfer $itemTransfer, array $configuredBundleTransfers): array
     {
-        $configuredBundleItemTransfer = $itemTransfer
-            ->requireConfiguredBundleItem()
-            ->getConfiguredBundleItem();
+        $configuredBundleItemTransfer = $itemTransfer->getConfiguredBundleItem();
+        $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
 
         $configuredBundleItemTransfer
             ->requireSlot()
             ->getSlot()
-            ->requireUuid();
-
-        $configuredBundleTransfer = $itemTransfer
-            ->requireConfiguredBundle()
-            ->getConfiguredBundle();
+                ->requireUuid();
 
         $configuredBundleTransfer
             ->requireGroupKey()
