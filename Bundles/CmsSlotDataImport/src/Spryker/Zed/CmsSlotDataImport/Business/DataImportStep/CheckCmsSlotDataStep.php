@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsSlotDataImport\Business\DataImportStep;
 
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Generated\Shared\Transfer\DataObjectValidationResponseTransfer;
 use Spryker\Zed\CmsSlotDataImport\Business\DataSet\CmsSlotDataSetInterface;
 use Spryker\Zed\CmsSlotDataImport\Dependency\Facade\CmsSlotDataImportToCmsSlotFacadeInterface;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
