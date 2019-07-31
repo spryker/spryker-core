@@ -23,8 +23,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceTypeDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutor;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyProductScheduleApplyTransactionExecutor;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\CurrencyDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\DateDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ImportDataValidatorInterface;
@@ -102,7 +102,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductScheduleDisabler(),
             $this->getRepository(),
             $this->getStoreFacade(),
-            $this->createApplyScheduledPriceTransactionExecutor()
+            $this->createPriceProductScheduleApplyTransactionExecutor()
         );
     }
 
@@ -114,7 +114,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new AbstractProductPriceProductScheduleApplier(
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->createApplyScheduledPriceTransactionExecutor(),
+            $this->createPriceProductScheduleApplyTransactionExecutor(),
             $this->createPriceProductScheduleDisabler()
         );
     }
@@ -127,7 +127,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new ConcreteProductPriceProductScheduleApplier(
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->createApplyScheduledPriceTransactionExecutor(),
+            $this->createPriceProductScheduleApplyTransactionExecutor(),
             $this->createPriceProductScheduleDisabler()
         );
     }
@@ -144,11 +144,11 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface
      */
-    public function createApplyScheduledPriceTransactionExecutor(): ApplyScheduledPriceTransactionExecutorInterface
+    public function createPriceProductScheduleApplyTransactionExecutor(): PriceProductScheduleApplyTransactionExecutorInterface
     {
-        return new ApplyScheduledPriceTransactionExecutor(
+        return new PriceProductScheduleApplyProductScheduleApplyTransactionExecutor(
             $this->createPriceProductScheduleDisabler(),
             $this->getPriceProductFacade(),
             $this->createPriceProductScheduleWriter()

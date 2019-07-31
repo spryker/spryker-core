@@ -15,7 +15,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
-class ApplyScheduledPriceTransactionExecutor implements ApplyScheduledPriceTransactionExecutorInterface
+class PriceProductScheduleApplyProductScheduleApplyTransactionExecutor implements PriceProductScheduleApplyTransactionExecutorInterface
 {
     use TransactionTrait;
 

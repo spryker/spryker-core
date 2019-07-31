@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor;
 
-interface ApplyScheduledPriceTransactionExecutorInterface
+interface PriceProductScheduleApplyTransactionExecutorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer[] $priceProductScheduleForEnable

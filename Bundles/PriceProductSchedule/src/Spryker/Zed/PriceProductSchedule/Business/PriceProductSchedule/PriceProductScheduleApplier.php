@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
 
@@ -32,7 +32,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface
      */
     protected $applyScheduledPriceTransactionExecutor;
 
@@ -40,13 +40,13 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface $priceProductScheduleDisabler
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\ApplyScheduledPriceTransactionExecutorInterface $applyScheduledPriceTransactionExecutor
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface $applyScheduledPriceTransactionExecutor
      */
     public function __construct(
         PriceProductScheduleDisablerInterface $priceProductScheduleDisabler,
         PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
         PriceProductScheduleToStoreFacadeInterface $storeFacade,
-        ApplyScheduledPriceTransactionExecutorInterface $applyScheduledPriceTransactionExecutor
+        PriceProductScheduleApplyTransactionExecutorInterface $applyScheduledPriceTransactionExecutor
     ) {
         $this->priceProductScheduleDisabler = $priceProductScheduleDisabler;
         $this->priceProductScheduleRepository = $priceProductScheduleRepository;

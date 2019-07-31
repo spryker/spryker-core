@@ -18,6 +18,8 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
 {
     use TransactionTrait;
 
+    protected const DATE_IN_THE_PAST = '-1 day';
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
      */
@@ -74,7 +76,7 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
      */
     protected function executeRemoveLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
-        $priceProductScheduleTransfer->setActiveTo(new DateTime('-4 days'));
+        $priceProductScheduleTransfer->setActiveTo(new DateTime(static::DATE_IN_THE_PAST));
         $this->priceProductScheduleEntityManager
             ->savePriceProductSchedule($priceProductScheduleTransfer);
         $this->priceProductScheduleApplierByProductTypeResolver
