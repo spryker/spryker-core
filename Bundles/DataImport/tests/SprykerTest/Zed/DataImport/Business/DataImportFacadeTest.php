@@ -94,22 +94,6 @@ class DataImportFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testDataImportFacadeWillImportGroup(): void
-    {
-        $dataImportBusinessFactoryMock = $this->createDataImportBusinessFactoryMock();
-        $dataImportFacade = $this->getFacade();
-        $dataImportFacade->setFactory($dataImportBusinessFactoryMock);
-        $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImporterConfigurationTransfer->setImportType(static::IMPORT_TYPE_SPECIFIC_A);
-        $dataImporterConfigurationTransfer->setImportGroup(static::IMPORT_GROUP_FULL);
-
-        $dataImporterReportTransfer = $dataImportFacade->importType($dataImporterConfigurationTransfer);
-        $this->assertSame(static::IMPORT_TYPE_SPECIFIC_A, $dataImporterReportTransfer->getImportType());
-    }
-
-    /**
      * @return \Spryker\Zed\DataImport\Business\DataImportFacade
      */
     private function getFacade()

@@ -20,7 +20,6 @@ use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriter;
 use Spryker\Zed\DataImport\Business\DataWriter\QueueWriter\QueueWriterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterCollection;
-use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterDataSetWriterAware;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\AddLocalesStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
@@ -59,21 +58,14 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface
-     */
-    public function getDataImporterCollection(): DataImporterCollectionInterface
-    {
-        return $this->createDataImporterCollection();
-    }
-
-    /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface
      */
     public function createDataImporterCollection()
     {
         $dataImporterCollection = new DataImporterCollection(
             $this->getDataImportBeforeImportHookPlugins(),
-            $this->getDataImportAfterImportHookPlugins()
+            $this->getDataImportAfterImportHookPlugins(),
+            $this->getConfig()->getFullImportPlugins()
         );
 
         return $dataImporterCollection;
@@ -137,14 +129,6 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     public function getDataImporterPlugins(): array
     {
         return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORTER_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[]
-     */
-    public function getDataImporterRegisteredPlugins(): array
-    {
-        return $this->getProvidedDependency(DataImportDependencyProvider::DATA_IMPORTER_REGISTERED_PLUGINS);
     }
 
     /**

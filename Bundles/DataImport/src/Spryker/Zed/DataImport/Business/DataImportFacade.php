@@ -8,7 +8,6 @@
 namespace Spryker\Zed\DataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,20 +27,6 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     public function import(?DataImporterConfigurationTransfer $dataImporterConfiguration = null)
     {
         return $this->getFactory()->getImporter()->import($dataImporterConfiguration);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfiguration
-     *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
-     */
-    public function importType(?DataImporterConfigurationTransfer $dataImporterConfiguration = null): DataImporterReportTransfer
-    {
-        return $this->getFactory()->getDataImporterCollection()->import($dataImporterConfiguration);
     }
 
     /**

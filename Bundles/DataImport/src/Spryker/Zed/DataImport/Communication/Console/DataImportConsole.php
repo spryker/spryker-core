@@ -121,8 +121,8 @@ class DataImportConsole extends Console
         }
 
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType($input)));
+        $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
 
-        $dataImportReportTransfer = $this->executeImport($dataImporterConfigurationTransfer);
         if ($dataImportReportTransfer->getDataImporterReports()) {
             $this->printDataImporterReports($dataImportReportTransfer->getDataImporterReports());
         }
@@ -135,20 +135,6 @@ class DataImportConsole extends Console
         }
 
         return static::CODE_ERROR;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
-     */
-    protected function executeImport(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
-    {
-        if ($dataImporterConfigurationTransfer->getImportType() === static::DEFAULT_IMPORTER_TYPE) {
-            return $this->getFacade()->import($dataImporterConfigurationTransfer);
-        }
-
-        return $this->getFacade()->importType($dataImporterConfigurationTransfer);
     }
 
     /**
