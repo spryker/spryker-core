@@ -25,7 +25,7 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
         $configuredBundleTransfers = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getConfiguredBundle()) {
+            if ($itemTransfer->getConfiguredBundleItem() && $itemTransfer->getConfiguredBundle()) {
                 $configuredBundleTransfers = $this->mapConfiguredBundle($itemTransfer, $configuredBundleTransfers);
             }
         }
@@ -42,7 +42,18 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
      */
     protected function mapConfiguredBundle(ItemTransfer $itemTransfer, array $configuredBundleTransfers): array
     {
-        $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
+        $configuredBundleItemTransfer = $itemTransfer
+            ->requireConfiguredBundleItem()
+            ->getConfiguredBundleItem();
+
+        $configuredBundleItemTransfer
+            ->requireSlot()
+            ->getSlot()
+            ->requireUuid();
+
+        $configuredBundleTransfer = $itemTransfer
+            ->requireConfiguredBundle()
+            ->getConfiguredBundle();
 
         $configuredBundleTransfer
             ->requireGroupKey()
@@ -51,11 +62,6 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
             ->getTemplate()
                 ->requireUuid()
                 ->requireName();
-
-        $configuredBundleTransfer
-            ->requireSlot()
-            ->getSlot()
-                ->requireUuid();
 
         if (!isset($configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()])) {
             $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = (new ConfiguredBundleTransfer())

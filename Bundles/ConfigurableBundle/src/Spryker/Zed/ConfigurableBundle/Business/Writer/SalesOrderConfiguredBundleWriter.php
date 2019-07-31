@@ -78,7 +78,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
         $salesOrderConfiguredBundleTransfers = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getConfiguredBundle()) {
+            if ($itemTransfer->getConfiguredBundleItem() && $itemTransfer->getConfiguredBundle()) {
                 $salesOrderConfiguredBundleTransfers = $this->mapSalesOrderConfiguredBundle(
                     $itemTransfer,
                     $salesOrderConfiguredBundleTransfers
@@ -97,6 +97,15 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
      */
     protected function mapSalesOrderConfiguredBundle(ItemTransfer $itemTransfer, array $salesOrderConfiguredBundleTransfers): array
     {
+        $configuredBundleItemTransfer = $itemTransfer
+            ->requireConfiguredBundleItem()
+            ->getConfiguredBundleItem();
+
+        $configuredBundleItemTransfer
+            ->requireSlot()
+            ->getSlot()
+                ->requireUuid();
+
         $configuredBundleTransfer = $itemTransfer
             ->requireIdSalesOrderItem()
             ->getConfiguredBundle();
@@ -109,11 +118,6 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
                 ->requireUuid()
                 ->requireName();
 
-        $configuredBundleTransfer
-            ->requireSlot()
-            ->getSlot()
-                ->requireUuid();
-
         $salesOrderConfiguredBundleTransfer = (new SalesOrderConfiguredBundleTransfer())
             ->setConfigurableBundleTemplateUuid($configuredBundleTransfer->getTemplate()->getUuid())
             ->setName($configuredBundleTransfer->getTemplate()->getName())
@@ -124,7 +128,7 @@ class SalesOrderConfiguredBundleWriter implements SalesOrderConfiguredBundleWrit
         }
 
         $salesOrderConfiguredBundleItemTransfer = (new SalesOrderConfiguredBundleItemTransfer())
-            ->setConfigurableBundleTemplateSlotUuid($configuredBundleTransfer->getSlot()->getUuid())
+            ->setConfigurableBundleTemplateSlotUuid($configuredBundleItemTransfer->getSlot()->getUuid())
             ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
         $salesOrderConfiguredBundleTransfers[$configuredBundleTransfer->getGroupKey()]

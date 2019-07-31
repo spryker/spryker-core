@@ -12,7 +12,7 @@ use Generated\Shared\DataBuilder\ConfigurableBundleTemplateBuilder;
 use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -62,25 +62,16 @@ class ConfiguredBundleReaderTest extends Unit
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_1,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1,
-                    $firstGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, $firstGroupKey),
             ])
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_1,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2,
-                    $firstGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, $firstGroupKey),
             ])
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3,
-                    $secondGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2, $secondGroupKey),
             ])
             ->build();
 
@@ -101,8 +92,44 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()
-            ->withItem()
-            ->withItem()
+            ->build();
+
+        // Act
+        $configuredBundleCollectionTransfer = $this->configuredBundleReaderMock->getConfiguredBundlesFromQuote($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $configuredBundleCollectionTransfer->getConfiguredBundles());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfiguredBundlesFromQuoteIgnoresItemWithoutConfiguredBundleProperty(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+            ])
+            ->build();
+
+        // Act
+        $configuredBundleCollectionTransfer = $this->configuredBundleReaderMock->getConfiguredBundlesFromQuote($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $configuredBundleCollectionTransfer->getConfiguredBundles());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfiguredBundlesFromQuoteIgnoresItemWithoutConfiguredBundleItemProperty(): void
+    {
+        // Arrange
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true)),
+            ])
             ->build();
 
         // Act
@@ -120,7 +147,8 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()->setGroupKey(null),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, null),
             ])
             ->build();
 
@@ -139,8 +167,8 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true))
                     ->setQuantity(null),
             ])
             ->build();
@@ -160,8 +188,8 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true))
                     ->setTemplate(null),
             ])
             ->build();
@@ -181,9 +209,8 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(null)),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(null, uniqid('', true)),
             ])
             ->build();
 
@@ -202,9 +229,10 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
                 ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
                     ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)->setName(null)),
+                    ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)->setName(null)),
             ])
             ->build();
 
@@ -223,9 +251,8 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => new ConfiguredBundleItemTransfer(),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true)),
             ])
             ->build();
 
@@ -244,10 +271,8 @@ class ConfiguredBundleReaderTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1))
-                    ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(null)),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true)),
             ])
             ->build();
 
@@ -269,17 +294,26 @@ class ConfiguredBundleReaderTest extends Unit
     }
 
     /**
-     * @param string $templateUuid
-     * @param string $slotUuid
+     * @param string|null $templateUuid
      * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
      */
-    protected function createFakeConfiguredBundle(string $templateUuid, string $slotUuid, ?string $groupKey = null): ConfiguredBundleTransfer
+    protected function createConfiguredBundle(?string $templateUuid = null, ?string $groupKey = null): ConfiguredBundleTransfer
     {
         return (new ConfiguredBundleBuilder())->build()
             ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid($templateUuid))
-            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid($slotUuid))
             ->setGroupKey($groupKey);
+    }
+
+    /**
+     * @param string|null $slotUuid
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleItemTransfer
+     */
+    protected function createConfiguredBundleItem(?string $slotUuid = null): ConfiguredBundleItemTransfer
+    {
+        return (new ConfiguredBundleItemTransfer())
+            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid($slotUuid));
     }
 }

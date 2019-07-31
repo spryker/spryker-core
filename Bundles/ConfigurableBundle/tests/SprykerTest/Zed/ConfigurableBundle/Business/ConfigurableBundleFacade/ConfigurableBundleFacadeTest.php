@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -113,7 +114,8 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()->setGroupKey(null),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1),
             ])
             ->withCustomer()
             ->withTotals()
@@ -144,8 +146,8 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true))
                     ->setQuantity(null),
             ])
             ->withCustomer()
@@ -177,8 +179,8 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true))
                     ->setTemplate(null),
             ])
             ->withCustomer()
@@ -210,9 +212,8 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(null)),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(null, uniqid('', true)),
             ])
             ->withCustomer()
             ->withTotals()
@@ -243,6 +244,7 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
                 ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
                     ->setGroupKey(uniqid('', true))
                     ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)->setName(null)),
@@ -276,9 +278,8 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1)),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => new ConfiguredBundleItemTransfer(),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true)),
             ])
             ->withCustomer()
             ->withTotals()
@@ -309,10 +310,8 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleBuilder())->build()
-                    ->setGroupKey(uniqid('', true))
-                    ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1))
-                    ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(null)),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, uniqid('', true)),
             ])
             ->withCustomer()
             ->withTotals()
@@ -408,51 +407,36 @@ class ConfigurableBundleFacadeTest extends Unit
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_1,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1,
-                    $firstGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, $firstGroupKey),
             ])
             ->withItem([
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_1,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2,
-                    $firstGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1, $firstGroupKey),
             ])
             ->withItem([
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3,
-                    $secondGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_3),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2, $secondGroupKey),
             ])
             ->withItem([
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4,
-                    $secondGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_4),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2, $secondGroupKey),
             ])
             ->withItem([
                 ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
                 ItemTransfer::UNIT_PRICE => 1,
                 ItemTransfer::QUANTITY => 1,
-                ItemTransfer::CONFIGURED_BUNDLE => $this->createFakeConfiguredBundle(
-                    static::FAKE_CONFIGURABLE_BUNDLE_UUID_2,
-                    static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_5,
-                    $secondGroupKey
-                ),
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_5),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(static::FAKE_CONFIGURABLE_BUNDLE_UUID_2, $secondGroupKey),
             ])
             ->withCustomer()
             ->withTotals()
@@ -463,17 +447,26 @@ class ConfigurableBundleFacadeTest extends Unit
     }
 
     /**
-     * @param string $templateUuid
-     * @param string $slotUuid
+     * @param string|null $templateUuid
      * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
      */
-    protected function createFakeConfiguredBundle(string $templateUuid, string $slotUuid, ?string $groupKey = null): ConfiguredBundleTransfer
+    protected function createConfiguredBundle(?string $templateUuid = null, ?string $groupKey = null): ConfiguredBundleTransfer
     {
         return (new ConfiguredBundleBuilder())->build()
             ->setTemplate((new ConfigurableBundleTemplateBuilder())->build()->setUuid($templateUuid))
-            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid($slotUuid))
             ->setGroupKey($groupKey);
+    }
+
+    /**
+     * @param string|null $slotUuid
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleItemTransfer
+     */
+    protected function createConfiguredBundleItem(?string $slotUuid = null): ConfiguredBundleItemTransfer
+    {
+        return (new ConfiguredBundleItemTransfer())
+            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid($slotUuid));
     }
 }
