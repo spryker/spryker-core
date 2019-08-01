@@ -32,25 +32,17 @@ class SalesController extends AbstractController
             throw new OrderNotFoundException();
         }
 
-        /** @var string[] $events */
-        $events = $request->attributes->get('events', []);
-
-        /** @var string[] $eventsGroupedByShipment */
-        $eventsGroupedByShipment = $request->attributes->get('eventsGroupedByShipment', []);
-
-        /** @var string[][] $events */
-        $eventsGroupedByItem = $request->attributes->get('eventsGroupedByItem', []);
-
         $shipmentGroupsCollection = $this->getFactory()
             ->getShipmentService()
             ->groupItemsByShipment($orderTransfer->getItems());
 
         return $this->viewResponse([
-            'events' => $events,
-            'eventsGroupedByShipment' => $eventsGroupedByShipment,
-            'eventsGroupedByItem' => $eventsGroupedByItem,
+            'events' => $request->attributes->get('events', []),
+            'eventsGroupedByShipment' => $request->attributes->get('eventsGroupedByShipment', []),
+            'eventsGroupedByItem' => $request->attributes->get('eventsGroupedByItem', []),
             'order' => $orderTransfer,
             'groupedOrderItemsByShipment' => $shipmentGroupsCollection,
+            'changeStatusRedirectUrl' => $request->attributes->get('changeStatusRedirectUrl'),
         ]);
     }
 }
