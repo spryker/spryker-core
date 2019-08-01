@@ -32,6 +32,8 @@ class CategoryType extends AbstractType
     public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
     public const OPTION_CATEGORY_TEMPLATES = 'option-category-templates';
 
+    private const LABEL_CMS_BLOCKS = 'CMS Blocks:';
+
     /**
      * @var array
      */
@@ -49,13 +51,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addWarningParagraphs($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
-        $this->addCmsBlockFields(
-            $builder,
-            $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
-            $options[static::OPTION_CMS_BLOCK_LIST],
-            $options[static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST],
-            $options[static::OPTION_CATEGORY_TEMPLATES]
-        );
+        $this->addCmsBlockFields($builder, $options);
     }
 
     /**
@@ -75,26 +71,20 @@ class CategoryType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $positions
-     * @param array $choices
-     * @param array $assignedCmsBlocksForTemplates
-     * @param array $categoryTemplates
+     * @param array $options
      *
      * @return $this
      */
-    protected function addCmsBlockFields(
-        FormBuilderInterface $builder,
-        array $positions,
-        array $choices,
-        array $assignedCmsBlocksForTemplates,
-        array $categoryTemplates
-    ) {
-        foreach ($categoryTemplates as $idTemplate => $templateName) {
+    protected function addCmsBlockFields(FormBuilderInterface $builder, array $options)
+    {
+        $assignedCmsBlocksForTemplates = $options[static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST];
+
+        foreach ($options[static::OPTION_CATEGORY_TEMPLATES] as $idTemplate => $templateName) {
             if (!in_array($templateName, static::SUPPORTED_CATEGORY_TEMPLATE_LIST, true)) {
                 continue;
             }
 
-            foreach ($positions as $idCmsBlockCategoryPosition => $positionName) {
+            foreach ($options[static::OPTION_CMS_BLOCK_POSITION_LIST] as $idCmsBlockCategoryPosition => $positionName) {
                 $assignedForPosition = [];
 
                 if (isset($assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition][$idTemplate])) {
@@ -103,8 +93,8 @@ class CategoryType extends AbstractType
 
                 $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idTemplate . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
                     'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idTemplate . '][' . $idCmsBlockCategoryPosition . ']',
-                    'label' => 'CMS Blocks: ' . $positionName,
-                    'choices' => array_flip($choices),
+                    'label' => static::LABEL_CMS_BLOCKS . $positionName,
+                    'choices' => array_flip($options[static::OPTION_CMS_BLOCK_LIST]),
                     'multiple' => true,
                     'required' => false,
                     'attr' => [

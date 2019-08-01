@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use DateTime;
+use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
@@ -89,28 +90,6 @@ class CategoryDataProvider
         $categoryTransfer->setIdCmsBlocks($idCmsBlocks);
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @param int $idCategory
-     * @param int $idCategoryTemplate
-     *
-     * @return array
-     */
-    protected function getAssignedIdCmsBlocks($idCategory, $idCategoryTemplate)
-    {
-        $query = $this->queryContainer
-            ->queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate)
-            ->find();
-
-        $assignedBlocks = [];
-
-        foreach ($query as $item) {
-            $assignedBlocks[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCmsBlock();
-            $this->assertCmsBlock($item->getCmsBlock());
-        }
-
-        return $assignedBlocks;
     }
 
     /**
@@ -233,6 +212,6 @@ class CategoryDataProvider
         return $this->categoryQueryContainer
             ->queryCategoryTemplate()
             ->find()
-            ->toKeyValue('idCategoryTemplate', 'name');
+            ->toKeyValue(CategoryTemplateTransfer::ID_CATEGORY_TEMPLATE, CategoryTemplateTransfer::NAME);
     }
 }

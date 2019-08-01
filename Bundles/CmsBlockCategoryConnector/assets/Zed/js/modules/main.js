@@ -22,9 +22,9 @@ $(document).ready( function () {
 
         $("select[id^='category_id_cms_blocks_']").each(function (key, item) {
             var assignedCmsBlocks = $(item).data('assigned-cms-blocks');
-            var supportedTemplate = $(item).data('template');
+            var template = $(item).data('template');
 
-            if (nameCategoryTemplate === supportedTemplate) {
+            if (nameCategoryTemplate === template) {
                 console.log(1);
                 $(item).prev('label').show();
                 $(item).next('.select2-container').show();
