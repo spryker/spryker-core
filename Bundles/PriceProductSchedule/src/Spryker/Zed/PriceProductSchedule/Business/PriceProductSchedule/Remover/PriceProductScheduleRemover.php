@@ -18,8 +18,6 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
 {
     use TransactionTrait;
 
-    protected const PATTERN_MINUS_ONE_DAY = '-1 day';
-
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
      */
