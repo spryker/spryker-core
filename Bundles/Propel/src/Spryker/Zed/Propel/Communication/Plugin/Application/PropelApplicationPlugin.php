@@ -25,8 +25,8 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected const DATA_SOURCE_NAME = 'zed';
 
     /**
-     * Specification:
-     * - Initialized PropelOrm to be used within Zed.
+     * {@inheritdoc}
+     * - Initializes PropelOrm to be used within Zed.
      *
      * @api
      *
