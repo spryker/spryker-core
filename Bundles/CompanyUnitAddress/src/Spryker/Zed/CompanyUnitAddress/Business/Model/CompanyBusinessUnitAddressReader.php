@@ -51,7 +51,20 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
         );
 
-        return $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+        return $this->getCompanyBusinessUnitAddressesByFilter($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyBusinessUnitAddressesByFilter(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        $collectionTransfer = $this->repository->getPaginatedAddress($criteriaFilterTransfer);
+
+        return $this->repository->getRelationToBusinessUnit($collectionTransfer, $criteriaFilterTransfer);
     }
 
     /**
