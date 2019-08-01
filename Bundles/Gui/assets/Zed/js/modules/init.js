@@ -72,12 +72,17 @@ $(document).ready(function() {
     $('.fix-height').sprykerFixHeight();
 
     $('.spryker-form-autocomplete').each(function(key, value) {
-        var obj = $(value);
-        if (obj.data('url') === 'undefined') {
+        var autoCompletedField = $(value);
+        if (autoCompletedField.data('url') === 'undefined') {
             return;
         }
-        obj.autocomplete({
-            source: obj.data('url'),
+
+        if (autoCompletedField.hasClass('ui-autocomplete')) {
+            autoCompletedField.autocomplete('destroy');
+        }
+
+        autoCompletedField.autocomplete({
+            source: autoCompletedField.data('url'),
             minLength: 3
         });
     });
