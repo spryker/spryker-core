@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 abstract class AbstractTransferValidator
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface $validationAdapter
      * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      *
