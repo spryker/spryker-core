@@ -50,4 +50,11 @@ interface PriceProductScheduleEntityManagerInterface
     public function updatePriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListTransfer;
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleById(int $idPriceProductSchedule): void;
 }
