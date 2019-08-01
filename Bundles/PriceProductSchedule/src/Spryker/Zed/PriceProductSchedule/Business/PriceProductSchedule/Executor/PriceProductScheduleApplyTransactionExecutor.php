@@ -15,7 +15,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 
-class PriceProductScheduleApplyProductScheduleApplyTransactionExecutor implements PriceProductScheduleApplyTransactionExecutorInterface
+class PriceProductScheduleApplyTransactionExecutor implements PriceProductScheduleApplyTransactionExecutorInterface
 {
     use TransactionTrait;
 
@@ -51,7 +51,7 @@ class PriceProductScheduleApplyProductScheduleApplyTransactionExecutor implement
      *
      * @return void
      */
-    public function executeApplyScheduledPriceTransaction(array $priceProductScheduleForEnable): void
+    public function execute(array $priceProductScheduleForEnable): void
     {
         foreach ($priceProductScheduleForEnable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {

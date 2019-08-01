@@ -38,4 +38,11 @@ interface PriceProductScheduleDisablerInterface
     public function disableNotRelevantPriceProductSchedulesByPriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function disablePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer;
 }

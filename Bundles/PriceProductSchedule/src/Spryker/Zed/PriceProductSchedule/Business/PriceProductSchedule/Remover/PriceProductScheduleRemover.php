@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Remover;
 
-use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
@@ -18,7 +18,7 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
 {
     use TransactionTrait;
 
-    protected const DATE_IN_THE_PAST = '-1 day';
+    protected const PATTERN_MINUS_ONE_DAY = '-1 day';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
@@ -36,18 +36,26 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
     protected $priceProductScheduleApplierByProductTypeResolver;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface
+     */
+    protected $priceProductScheduleDisabler;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface $priceProductScheduleRepository
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface $priceProductScheduleDisabler
      */
     public function __construct(
         PriceProductScheduleRepositoryInterface $priceProductScheduleRepository,
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
-        PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver
+        PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver,
+        PriceProductScheduleDisablerInterface $priceProductScheduleDisabler
     ) {
         $this->priceProductScheduleRepository = $priceProductScheduleRepository;
         $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
         $this->priceProductScheduleApplierByProductTypeResolver = $priceProductScheduleApplierByProductTypeResolver;
+        $this->priceProductScheduleDisabler = $priceProductScheduleDisabler;
     }
 
     /**
@@ -77,9 +85,9 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
     protected function executeRemoveLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
         $priceProductScheduleTransfer->requireIdPriceProductSchedule();
-        $priceProductScheduleTransfer->setActiveTo(new DateTime(static::DATE_IN_THE_PAST));
-        $this->priceProductScheduleEntityManager
-            ->savePriceProductSchedule($priceProductScheduleTransfer);
+        $priceProductScheduleTransfer = $this->priceProductScheduleDisabler
+            ->disablePriceProductSchedule($priceProductScheduleTransfer);
+
         $this->priceProductScheduleApplierByProductTypeResolver
             ->applyPriceProductScheduleByProductType($priceProductScheduleTransfer);
         $this->priceProductScheduleEntityManager

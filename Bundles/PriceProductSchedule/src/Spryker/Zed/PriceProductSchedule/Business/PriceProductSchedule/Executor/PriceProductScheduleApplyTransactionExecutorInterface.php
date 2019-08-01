@@ -14,5 +14,5 @@ interface PriceProductScheduleApplyTransactionExecutorInterface
      *
      * @return void
      */
-    public function executeApplyScheduledPriceTransaction(array $priceProductScheduleForEnable): void;
+    public function execute(array $priceProductScheduleForEnable): void;
 }

@@ -23,7 +23,7 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceTypeDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyProductScheduleApplyTransactionExecutor;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutor;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\CurrencyDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\DateDataValidator;
@@ -148,7 +148,7 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductScheduleApplyTransactionExecutor(): PriceProductScheduleApplyTransactionExecutorInterface
     {
-        return new PriceProductScheduleApplyProductScheduleApplyTransactionExecutor(
+        return new PriceProductScheduleApplyTransactionExecutor(
             $this->createPriceProductScheduleDisabler(),
             $this->getPriceProductFacade(),
             $this->createPriceProductScheduleWriter()
@@ -453,7 +453,8 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleRemover(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createPriceProductScheduleApplierByProductTypeResolver()
+            $this->createPriceProductScheduleApplierByProductTypeResolver(),
+            $this->createPriceProductScheduleDisabler()
         );
     }
 

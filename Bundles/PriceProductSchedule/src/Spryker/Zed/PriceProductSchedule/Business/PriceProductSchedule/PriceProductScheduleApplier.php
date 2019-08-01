@@ -61,7 +61,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     {
         $productSchedulePricesForEnable = $this->findPriceProductSchedulesToEnableForCurrentStore();
 
-        $this->applyScheduledPriceTransactionExecutor->executeApplyScheduledPriceTransaction($productSchedulePricesForEnable);
+        $this->applyScheduledPriceTransactionExecutor->execute($productSchedulePricesForEnable);
 
         $this->priceProductScheduleDisabler->disableNotActiveScheduledPrices();
     }

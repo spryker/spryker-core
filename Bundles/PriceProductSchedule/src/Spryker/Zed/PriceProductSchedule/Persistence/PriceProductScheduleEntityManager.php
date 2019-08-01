@@ -142,6 +142,7 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
         $this->getFactory()
             ->createPriceProductScheduleQuery()
             ->filterByIdPriceProductSchedule($idPriceProductSchedule)
+            ->find()
             ->delete();
     }
 }
