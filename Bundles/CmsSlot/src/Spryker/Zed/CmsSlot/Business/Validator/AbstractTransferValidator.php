@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlot\Business\Validator;
 use Generated\Shared\Transfer\ConstraintViolationTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
 use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -25,7 +25,7 @@ abstract class AbstractTransferValidator
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     protected function validate(
-        TransferInterface $transfer,
+        AbstractTransfer $transfer,
         CmsSlotToValidationAdapterInterface $validationAdapter,
         ConstraintsProviderInterface $constraintsProvider
     ): ValidationResponseTransfer {
