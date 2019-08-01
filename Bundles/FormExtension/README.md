@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/form-extension.svg)](https://travis-ci.org/spryker/form-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/form-extension/badge.svg)](https://coveralls.io/github/spryker/form-extension)
 
-Provides extension plugins for module Form.
+Provides extension interfaces for the Form module.
 
 ## Installation
 

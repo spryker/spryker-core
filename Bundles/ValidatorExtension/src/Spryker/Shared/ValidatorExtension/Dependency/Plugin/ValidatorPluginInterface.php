@@ -14,7 +14,7 @@ interface ValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Extends Validator service;
+     * - Extends `validator` service.
      *
      * @api
      *

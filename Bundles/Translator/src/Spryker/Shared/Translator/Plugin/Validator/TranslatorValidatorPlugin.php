@@ -18,7 +18,7 @@ class TranslatorValidatorPlugin implements ValidatorPluginInterface
 
     /**
      * {@inheritdoc}
-     * - Sets translator for validator service;
+     * - Adds `translator`.
      *
      * @api
      *

@@ -7,10 +7,10 @@
 
 namespace Spryker\Yves\Form;
 
-use Spryker\Shared\Form\Plugin\Form\HttpFoundationFormPlugin;
-use Spryker\Shared\Validator\Plugin\Form\ValidatorFormPlugin;
+use Spryker\Yves\Http\Plugin\Form\HttpFoundationFormPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Validator\Plugin\Form\ValidatorFormPlugin;
 
 /**
  * @method \Spryker\Yves\Form\FormConfig getConfig()
@@ -18,6 +18,7 @@ use Spryker\Yves\Kernel\Container;
 class FormDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_FORM = 'PLUGINS_FORM';
+    public const PLUGINS_CORE_FORM = 'PLUGINS_CORE_FORM';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -27,6 +28,7 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addFormPlugins($container);
+        $container = $this->addCoreFormPlugins($container);
 
         return $container;
     }
@@ -38,8 +40,22 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFormPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_FORM, function (Container $container) {
+        $container->set(static::PLUGINS_FORM, function () {
             return $this->getFormPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCoreFormPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CORE_FORM, function () {
+            return $this->getCoreFormPlugins();
         });
 
         return $container;
@@ -49,6 +65,14 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
      */
     protected function getFormPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     */
+    protected function getCoreFormPlugins(): array
     {
         return [
             new ValidatorFormPlugin(),

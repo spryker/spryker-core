@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Form\Communication;
 
+use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
+use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Zed\Form\FormDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormFactoryBuilder;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
+use Symfony\Component\Security\Csrf\TokenStorage\NativeSessionTokenStorage;
 
 /**
  * @method \Spryker\Zed\Form\FormConfig getConfig()
@@ -26,10 +30,34 @@ class FormCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
+     */
+    public function createTokenGenerator(): TokenGeneratorInterface
+    {
+        return new TokenHashGenerator();
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface
+     */
+    public function createDefaultTokenStorage(): ClearableTokenStorageInterface
+    {
+        return new NativeSessionTokenStorage();
+    }
+
+    /**
      * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
      */
     public function getFormPlugins(): array
     {
         return $this->getProvidedDependency(FormDependencyProvider::PLUGINS_FORM);
+    }
+
+    /**
+     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     */
+    public function getCoreFormPlugins(): array
+    {
+        return $this->getProvidedDependency(FormDependencyProvider::PLUGINS_CORE_FORM);
     }
 }

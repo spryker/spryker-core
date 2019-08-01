@@ -33,12 +33,35 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
+        $container = $this->addServiceValidatorIds($container);
+        $container = $this->addValidatorService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addServiceValidatorIds(ContainerInterface $container): ContainerInterface
+    {
         $container->set(static::SERVICE_VALIDATOR_SERVICE_IDS, function () {
             return [];
         });
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addValidatorService(ContainerInterface $container): ContainerInterface
+    {
         $container->setGlobal(static::SERVICE_VALIDATOR, function (ContainerInterface $container) {
-            $validatorBuilder = $this->getFactory()->createValidationBuilder();
+            $validatorBuilder = $this->getFactory()->createValidatorBuilder();
 
             $validatorBuilder = $this->extendValidator($validatorBuilder, $container);
 
@@ -49,6 +72,14 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
     }
 
     /**
+     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface[]
+     */
+    protected function getValidatorPlugins(): array
+    {
+        return array_merge($this->getFactory()->getCoreValidatorPlugins(), $this->getFactory()->getValidatorPlugins());
+    }
+
+    /**
      * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
@@ -56,7 +87,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     protected function extendValidator(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface
     {
-        foreach ($this->getFactory()->getValidatorPlugins() as $validatorPlugin) {
+        foreach ($this->getValidatorPlugins() as $validatorPlugin) {
             $validatorBuilder = $validatorPlugin->extend($validatorBuilder, $container);
         }
 

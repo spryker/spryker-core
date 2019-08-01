@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/validator.svg)](https://travis-ci.org/spryker/validator)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/validator/badge.svg)](https://coveralls.io/github/spryker/validator)
 
-Validator module provides a plugin that adds an validator to the Application.
+Validator module provides a plugin that adds a validator to the Application.
 
 ## Installation
 

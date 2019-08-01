@@ -53,16 +53,6 @@ class FormEventSubscriber implements EventSubscriberInterface
     protected $translationOptions = [];
 
     /**
-     * @return array
-     */
-    public static function getSubscribedEvents()
-    {
-        return [
-            FormEvents::PRE_SUBMIT => 'validateToken',
-        ];
-    }
-
-    /**
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $generator
      * @param \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $storage
      * @param string $fieldName
@@ -84,6 +74,16 @@ class FormEventSubscriber implements EventSubscriberInterface
         $this->translationDomain = $translationDomain;
         $this->fieldName = $fieldName;
         $this->errorMessage = $errorMessage;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            FormEvents::PRE_SUBMIT => 'validateToken',
+        ];
     }
 
     /**

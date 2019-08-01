@@ -7,13 +7,15 @@
 
 namespace Spryker\Yves\Validator;
 
-use Spryker\Shared\Validator\Plugin\Validator\MetadataFactoryValidatorPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Validator\Plugin\Validator\ConstraintFactoryValidatorPlugin;
+use Spryker\Yves\Validator\Plugin\Validator\MetadataFactoryValidatorPlugin;
 
 class ValidatorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_VALIDATOR = 'PLUGINS_VALIDATOR';
+    public const PLUGINS_CORE_VALIDATOR = 'PLUGINS_CORE_VALIDATOR';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -46,8 +48,31 @@ class ValidatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getValidatorPlugins(): array
     {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addCoreValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CORE_VALIDATOR, function () {
+            return $this->getCoreValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface[]
+     */
+    protected function getCoreValidatorPlugins(): array
+    {
         return [
             new MetadataFactoryValidatorPlugin(),
+            new ConstraintFactoryValidatorPlugin(),
         ];
     }
 }

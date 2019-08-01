@@ -8,9 +8,7 @@
 namespace Spryker\Zed\Application\Communication;
 
 use Spryker\Shared\Application\EventListener\KernelLogListener;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Log\LoggerTrait;
-use Spryker\Zed\Application\ApplicationDependencyProvider;
 use Spryker\Shared\Twig\TwigFunction;
 use Spryker\Zed\Application\Communication\Twig\YvesUrlFunction;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -49,13 +47,5 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     public function createYvesUrlFunction(): TwigFunction
     {
         return new YvesUrlFunction($this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Shared\Config\Environment
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->getProvidedDependency(ApplicationDependencyProvider::ENVIRONMENT);
     }
 }
