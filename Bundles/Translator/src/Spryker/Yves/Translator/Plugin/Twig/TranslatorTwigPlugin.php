@@ -5,23 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Twig\Plugin;
+namespace Spryker\Yves\Translator\Plugin\Twig;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
-use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin` instead.
- * @deprecated Use `\Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin` instead.
+ * @method \Spryker\Yves\Translator\TranslatorFactory getFactory()
  */
-class TranslationTwigPlugin implements TwigPluginInterface
+class TranslatorTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
-    protected const SERVICE_TRANSLATOR = 'translator';
-
     /**
      * {@inheritdoc}
+     * - Adds `TranslatorExtension`.
      *
      * @api
      *
@@ -32,11 +30,7 @@ class TranslationTwigPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        if (!class_exists(TranslationExtension::class) || $container->has(static::SERVICE_TRANSLATOR) === false) {
-            return $twig;
-        }
-
-        $twig->addExtension(new TranslationExtension($container->get(static::SERVICE_TRANSLATOR)));
+        $twig->addExtension($this->getFactory()->createTwigTranslationExtension());
 
         return $twig;
     }
