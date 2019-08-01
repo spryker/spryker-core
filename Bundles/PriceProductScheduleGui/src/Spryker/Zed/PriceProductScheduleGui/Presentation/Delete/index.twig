@@ -9,8 +9,10 @@
     {{ widget_title }}
 {% endblock %}
 
+{% set redirectUrl = app.request.headers.get('referer')~'#tab-content-scheduled_prices' %}
+
 {% block action %}
-    {{ backActionButton(app.request.headers.get('referer')~'#tab-content-scheduled_prices', 'Back' | trans) }}
+    {{ backActionButton(redirectUrl, 'Back' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -19,10 +21,10 @@
 
         {% block widget_content %}
 
-            <a href="{{ app.request.headers.get('referer')~'#tab-content-scheduled_prices' }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
+            <a href="{{ redirectUrl }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
             <a href="{{ url('/price-product-schedule-gui/delete/confirm', {
                 'id-price-product-schedule': idPriceProductSchedule,
-                'redirectUrl': app.request.headers.get('referer')~'#tab-content-scheduled_prices',
+                'redirectUrl': redirectUrl,
             }) }}" class="btn btn-danger safe-submit">{{ 'Yes, delete this price' | trans}}</a>
 
         {% endblock %}

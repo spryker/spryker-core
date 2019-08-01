@@ -341,10 +341,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             $currentDatabaseEngineName
         );
 
-        return $this->findPriceProductSchedulesToEnableByStoreResult(
+        return $this->findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
             $priceProductScheduleFilteredByMinResultSubQuery,
             $storeTransfer,
-            $currentDatabaseEngineName
+            $currentDatabaseEngineName,
+            $idProductConcrete
         );
     }
 

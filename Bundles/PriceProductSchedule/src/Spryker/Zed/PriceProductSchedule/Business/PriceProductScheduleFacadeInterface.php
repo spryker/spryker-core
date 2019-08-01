@@ -133,7 +133,7 @@ interface PriceProductScheduleFacadeInterface
     /**
      * Specification:
      * - Removes scheduled price with given id.
-     * - Apply scheduled price for product, related to given scheduled price.
+     * - Applies scheduled price for product, related to given scheduled price.
      *
      * @api
      *

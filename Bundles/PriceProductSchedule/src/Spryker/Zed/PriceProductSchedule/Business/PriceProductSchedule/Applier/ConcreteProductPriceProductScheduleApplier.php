@@ -64,7 +64,7 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
         $priceProductTransfer->requireIdProduct();
 
-        $priceProductScheduleTransferCollection = $this->findPriceProductSchedulesToEnableForCurrentStoreAndIdProductAbstract($priceProductScheduleTransfer);
+        $priceProductScheduleTransferCollection = $this->findPriceProductSchedulesToEnableForCurrentStoreAndIdProductConcrete($priceProductScheduleTransfer);
         $this->applyScheduledPriceTransactionExecutor
             ->execute($priceProductScheduleTransferCollection);
         $this->priceProductScheduleDisabler
@@ -76,7 +76,7 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
-    protected function findPriceProductSchedulesToEnableForCurrentStoreAndIdProductAbstract(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
+    protected function findPriceProductSchedulesToEnableForCurrentStoreAndIdProductConcrete(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
