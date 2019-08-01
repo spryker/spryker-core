@@ -76,6 +76,7 @@ class PriceProductScheduleRemover implements PriceProductScheduleRemoverInterfac
      */
     protected function executeRemoveLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
+        $priceProductScheduleTransfer->requireIdPriceProductSchedule();
         $priceProductScheduleTransfer->setActiveTo(new DateTime(static::DATE_IN_THE_PAST));
         $this->priceProductScheduleEntityManager
             ->savePriceProductSchedule($priceProductScheduleTransfer);
