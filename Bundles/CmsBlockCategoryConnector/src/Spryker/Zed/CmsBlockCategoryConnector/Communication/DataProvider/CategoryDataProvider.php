@@ -99,15 +99,15 @@ class CategoryDataProvider
      */
     protected function getAssignedIdCmsBlocksByIdCategory(int $idCategory): array
     {
-        $query = $this->queryContainer
+        $cmsBlockCategoryEntities = $this->queryContainer
             ->queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
             ->find();
 
         $assignedBlocks = [];
 
-        foreach ($query as $item) {
-            $assignedBlocks[$item->getFkCategoryTemplate()][$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCmsBlock();
-            $this->assertCmsBlock($item->getCmsBlock());
+        foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
+            $assignedBlocks[$cmsBlockCategoryEntity->getFkCategoryTemplate()][$cmsBlockCategoryEntity->getFkCmsBlockCategoryPosition()][] = $cmsBlockCategoryEntity->getFkCmsBlock();
+            $this->assertCmsBlock($cmsBlockCategoryEntity->getCmsBlock());
         }
 
         return $assignedBlocks;

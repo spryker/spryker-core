@@ -32,7 +32,7 @@ class CategoryType extends AbstractType
     public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
     public const OPTION_CATEGORY_TEMPLATES = 'option-category-templates';
 
-    private const LABEL_CMS_BLOCKS = 'CMS Blocks:';
+    protected const LABEL_CMS_BLOCKS = 'CMS Blocks:';
 
     /**
      * @var array
