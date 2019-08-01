@@ -1,0 +1,21 @@
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create price product schedule' | trans %}
+
+{% block action %}
+    {{ backActionButton(url(app.request.headers.get('referer')~'#tab-content-scheduled_prices'), 'Back to price product schedules' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price product schedule details' | trans } %}
+
+        {% block widget_content %}
+            {{ form(form, {'method': 'POST'}) }}
+        {% endblock %}
+
+    {% endembed %}
+
+
+{% endblock %}
