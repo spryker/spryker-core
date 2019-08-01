@@ -25,11 +25,9 @@ $(document).ready( function () {
             var template = $(item).data('template');
 
             if (nameCategoryTemplate === template) {
-                console.log(1);
                 $(item).prev('label').show();
                 $(item).next('.select2-container').show();
             } else {
-                console.log(2);
                 $(item).prev('label').hide();
                 $(item).next('.select2-container').hide();
             }
