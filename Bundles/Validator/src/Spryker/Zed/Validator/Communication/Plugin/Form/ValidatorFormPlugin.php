@@ -22,7 +22,7 @@ class ValidatorFormPlugin extends AbstractPlugin implements FormPluginInterface
 
     /**
      * {@inheritdoc}
-     * - Adds form validator extension to forms.
+     * - Adds `Symfony\Component\Form\Extension\Validator\ValidatorExtension`.
      *
      * @api
      *

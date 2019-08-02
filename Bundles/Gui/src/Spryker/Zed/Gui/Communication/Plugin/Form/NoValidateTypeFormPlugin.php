@@ -20,7 +20,7 @@ class NoValidateTypeFormPlugin extends AbstractPlugin implements FormPluginInter
 {
     /**
      * {@inheritdoc}
-     * - Adds `Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension` to the form type attributes.
+     * - Adds `Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension`.
      *
      * @api
      *

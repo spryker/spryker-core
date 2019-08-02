@@ -22,7 +22,7 @@ class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
 
     /**
      * {@inheritdoc}
-     * - Adds CSRF extension to forms.
+     * - Adds 'Symfony\Component\Form\Extension\Csrf\CsrfExtension` extension.
      *
      * @api
      *
