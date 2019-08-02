@@ -58,13 +58,12 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
         $bundledProductsTransferCollection = new ArrayObject();
         foreach ($bundledProducts as $bundledProductEntity) {
-            $productForBundleTransfer = new ProductForBundleTransfer();
-            $productForBundleTransfer->setIdProductConcrete($bundledProductEntity->getFkBundledProduct());
+            $productForBundleTransfer = (new ProductForBundleTransfer())
+                ->fromArray($bundledProductEntity->toArray(), true)
+                ->setIdProductConcrete($bundledProductEntity->getFkBundledProduct())
+                ->setSku($bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getSku())
+                ->setIsActive($bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getIsActive());
 
-            $sku = $bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
-            $productForBundleTransfer->setSku($sku);
-
-            $productForBundleTransfer->fromArray($bundledProductEntity->toArray(), true);
             $bundledProductsTransferCollection->append($productForBundleTransfer);
         }
 

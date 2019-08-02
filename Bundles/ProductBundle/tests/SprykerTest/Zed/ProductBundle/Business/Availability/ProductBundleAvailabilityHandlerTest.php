@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -39,7 +38,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      */
     public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
     {
-        $bundleSku = 'sku-2';
+        $bundledId = 1;
+        $bundledSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
         $bundledItemAvailability = 10;
@@ -48,13 +48,13 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
 
-        $bundledProducts = new ObjectCollection();
+        $bundledProducts = [];
         $productBundleEntity = new SpyProductBundle();
         $productEntity = new SpyProduct();
 
-        $productEntity->setSku($bundleSku);
+        $productEntity->setIdProduct($bundledId)->setSku($bundledSku);
         $productBundleEntity->setSpyProductRelatedByFkProduct($productEntity);
-        $bundledProducts->append($productBundleEntity);
+        $bundledProducts[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundlesUsingProductBySku')
             ->willReturn($bundledProducts);
@@ -64,7 +64,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
 
         $availabilityFacadeMock->expects($this->once())
             ->method('saveProductAvailabilityForStore')
-            ->with($bundleSku, $expectedBundleAvailability);
+            ->with($bundledSku, $expectedBundleAvailability);
 
         $productBundleAvailabilityHandlerMock->updateAffectedBundlesAvailability('sku-1');
     }
@@ -83,7 +83,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
 
-        $bundleProductEntity = new SpyProductBundle();
+        $bundleProductEntity = (new SpyProductBundle())->setFkProduct(2);
 
         $productBundleAvailabilityHandlerMock->method('findBundleProductEntityBySku')->willReturn($bundleProductEntity);
 
@@ -171,14 +171,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      */
     protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
     {
-        $bundleItems = new ObjectCollection();
+        $bundleItems = [];
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
         $productEntity = new SpyProduct();
 
         $productEntity->setSku($bundledItemSku);
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
-        $bundleItems->append($productBundleEntity);
+        $bundleItems[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundleItemsByIdProduct')
             ->willReturn($bundleItems);

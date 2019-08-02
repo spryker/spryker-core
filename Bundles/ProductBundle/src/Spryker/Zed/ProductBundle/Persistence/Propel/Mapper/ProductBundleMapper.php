@@ -62,7 +62,8 @@ class ProductBundleMapper
         $productForBundleTransfers = [];
         foreach ($productBundleEntities as $productBundleEntity) {
             $productForBundleTransfers[] = (new ProductBundleTransfer())
-                ->setIdProductConcreteBundle($productBundleEntity->getFkProduct());
+                ->setIdProductConcreteBundle($productBundleEntity->getFkProduct())
+                ->setSkuProductConcreteBundle($productBundleEntity->getSpyProductRelatedByFkProduct()->getSku());
         }
 
         return $productForBundleTransfers;

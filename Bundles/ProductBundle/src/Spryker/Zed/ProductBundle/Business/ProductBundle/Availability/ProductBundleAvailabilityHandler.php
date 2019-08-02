@@ -14,7 +14,6 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInter
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-use Traversable;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
@@ -71,7 +70,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    public function updateAffectedBundlesAvailability($bundledProductSku)
+    public function updateAffectedBundlesAvailability(string $bundledProductSku): void
     {
         $bundleProducts = $this->getBundlesUsingProductBySku($bundledProductSku);
 
@@ -90,7 +89,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    public function updateBundleAvailability($bundleProductSku)
+    public function updateBundleAvailability(string $bundleProductSku): void
     {
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
         if ($bundleProductEntity === null) {
@@ -107,7 +106,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
+    public function removeBundleAvailability(string $bundleProductSku, StoreTransfer $storeTransfer): void
     {
         $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0, $storeTransfer);
     }
@@ -115,14 +114,18 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param int $idConcreteProduct
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function getBundleItemsByIdProduct($idConcreteProduct)
+    protected function getBundleItemsByIdProduct(int $idConcreteProduct): array
     {
         if (!isset(static::$bundleItemEntityCache[$idConcreteProduct]) || count(static::$bundleItemEntityCache[$idConcreteProduct]) == 0) {
             static::$bundleItemEntityCache[$idConcreteProduct] = $this->productBundleQueryContainer
                 ->queryBundleProduct($idConcreteProduct)
-                ->find();
+                ->useSpyProductRelatedByFkBundledProductQuery()
+                    ->filterByIsActive(true)
+                ->endUse()
+                ->find()
+                ->getData();
         }
 
         return static::$bundleItemEntityCache[$idConcreteProduct];
@@ -131,14 +134,15 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param string $bundledProductSku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function getBundlesUsingProductBySku($bundledProductSku)
+    protected function getBundlesUsingProductBySku(string $bundledProductSku): array
     {
-        if (!isset(static::$bundledItemEntityCache[$bundledProductSku]) || count(static::$bundledItemEntityCache[$bundledProductSku]) == 0) {
+        if (!isset(static::$bundledItemEntityCache[$bundledProductSku]) || count(static::$bundledItemEntityCache[$bundledProductSku]) === 0) {
             static::$bundledItemEntityCache[$bundledProductSku] = $this->productBundleQueryContainer
                 ->queryBundledProductBySku($bundledProductSku)
-                ->find();
+                ->find()
+                ->getData();
         }
 
         return static::$bundledItemEntityCache[$bundledProductSku];
@@ -150,7 +154,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    protected function updateBundleProductAvailability($bundleItems, $bundleProductSku)
+    protected function updateBundleProductAvailability(array $bundleItems, $bundleProductSku): void
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
@@ -174,7 +178,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
-    protected function findBundleProductEntityBySku($bundleProductSku)
+    protected function findBundleProductEntityBySku(string $bundleProductSku): ?SpyProductBundle
     {
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($bundleProductSku)
@@ -187,7 +191,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
      */
-    protected function findBundledItemAvailabilityEntityBySku($bundledItemSku, $idStore)
+    protected function findBundledItemAvailabilityEntityBySku(string $bundledItemSku, int $idStore): ?SpyAvailability
     {
         return $this->availabilityQueryContainer
             ->querySpyAvailabilityBySku($bundledItemSku, $idStore)
@@ -195,12 +199,12 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    protected function calculateBundleQuantity(Traversable $bundleItems, StoreTransfer $storeTransfer)
+    protected function calculateBundleQuantity(array $bundleItems, StoreTransfer $storeTransfer): int
     {
         $bundleAvailabilityQuantity = 0;
         foreach ($bundleItems as $bundleItemEntity) {
@@ -235,7 +239,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return bool
      */
-    protected function isBundledItemUnavailable(?SpyAvailability $bundledProductAvailabilityEntity)
+    protected function isBundledItemUnavailable(?SpyAvailability $bundledProductAvailabilityEntity): bool
     {
         if (!$bundledProductAvailabilityEntity) {
             return false;
@@ -249,7 +253,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return bool
      */
-    protected function skipBundledItem(?SpyAvailability $bundledProductAvailabilityEntity)
+    protected function skipBundledItem(?SpyAvailability $bundledProductAvailabilityEntity): bool
     {
         if ($bundledProductAvailabilityEntity === null) {
             return false;
@@ -268,8 +272,8 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected function calculateBundledItemQuantity(
         ?SpyAvailability $bundledProductAvailabilityEntity,
         SpyProductBundle $bundleItemEntity,
-        $bundleAvailabilityQuantity
-    ) {
+        int $bundleAvailabilityQuantity
+    ): int {
         if (!$bundledProductAvailabilityEntity) {
             return 0;
         }
@@ -288,7 +292,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return bool
      */
-    protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
+    protected function isMaxQuantity(int $bundleAvailabilityQuantity, int $bundledItemQuantity): bool
     {
         return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
     }
