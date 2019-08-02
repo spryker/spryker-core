@@ -146,7 +146,8 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteShareDetailsReader(): QuoteShareDetailsReaderInterface
     {
         return new QuoteShareDetailsReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getCustomerFacade()
         );
     }
 

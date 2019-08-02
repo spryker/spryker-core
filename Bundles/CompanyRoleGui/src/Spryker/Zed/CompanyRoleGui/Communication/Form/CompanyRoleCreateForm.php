@@ -165,7 +165,6 @@ class CompanyRoleCreateForm extends AbstractType
     {
         $builder->add(static::FIELD_PERMISSION_COLLECTION, ChoiceType::class, [
             'choices' => $options[static::OPTION_PERMISSION_CHOICES],
-            'choices_as_values' => true,
             'label' => false,
             'expanded' => true,
             'required' => true,

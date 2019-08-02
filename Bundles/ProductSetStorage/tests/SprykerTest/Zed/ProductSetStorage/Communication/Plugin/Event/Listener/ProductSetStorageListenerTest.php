@@ -46,6 +46,9 @@ use SprykerTest\Zed\ProductSetStorage\ProductSetStorageConfigMock;
  */
 class ProductSetStorageListenerTest extends Unit
 {
+    protected const MESSAGE_PRODUCT_SET_NOT_DELETED = 'Product set has not been removed.';
+    protected const MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED = 'Unnecessary product set was has been removed.';
+
     /**
      * @var \SprykerTest\Zed\ProductSetStorage\ProductSetStorageCommunicationTester
      */
@@ -116,19 +119,38 @@ class ProductSetStorageListenerTest extends Unit
      */
     public function testProductSetStorageUnpublishListener(): void
     {
-        // Prepare
+        // Arrange
+        $productSetTransfers = [
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+            $this->tester->generateProductSetTransfer(),
+        ];
+        $this->tester->publishProductSetTransfers($productSetTransfers, $this->getProductSetStorageFacade());
+        $productSetBeforeUnpublish = SpyProductSetStorageQuery::create()->count();
+        $productSetDeletedId = $productSetTransfers[0]->getIdProductSet();
+        $this->tester->deleteProductSet($productSetTransfers[0]);
+
         $productSetStorageUnpublishListener = new ProductSetStorageUnpublishListener();
         $productSetStorageUnpublishListener->setFacade($this->getProductSetStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($productSetDeletedId),
         ];
 
         // Act
         $productSetStorageUnpublishListener->handleBulk($eventTransfers, ProductSetEvents::PRODUCT_SET_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyProductSetStorageQuery::create()->filterByFkProductSet(1)->count());
+        $this->assertSame(
+            0,
+            SpyProductSetStorageQuery::create()->filterByFkProductSet($productSetDeletedId)->count(),
+            static::MESSAGE_PRODUCT_SET_NOT_DELETED
+        );
+        $this->assertGreaterThan(
+            SpyProductSetStorageQuery::create()->count(),
+            $productSetBeforeUnpublish,
+            static::MESSAGE_UNNECESSARY_PRODUCT_SET_DELETED
+        );
     }
 
     /**

@@ -62,7 +62,10 @@ $(document).ready(function() {
             return;
         }
 
-        obj.autocomplete('destroy');
+        if (obj.hasClass('ui-autocomplete')) {
+            obj.autocomplete('destroy');
+        }
+
         obj.autocomplete({
             source: function(request, response) {
                 $.get(

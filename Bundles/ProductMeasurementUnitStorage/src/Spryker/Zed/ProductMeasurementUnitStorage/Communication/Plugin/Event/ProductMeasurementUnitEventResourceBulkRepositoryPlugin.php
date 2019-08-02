@@ -84,6 +84,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT)
             ->setOffset($offset)
             ->setLimit($limit);
     }
