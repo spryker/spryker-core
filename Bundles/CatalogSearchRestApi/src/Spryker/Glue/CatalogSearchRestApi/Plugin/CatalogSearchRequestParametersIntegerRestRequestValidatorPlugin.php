@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiFactory getFactory()
  */
-class CatalogSearchRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
+class CatalogSearchRequestParametersIntegerRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class CatalogSearchRequestValidatorPlugin extends AbstractPlugin implements Rest
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         return $this->getFactory()
-            ->createCatalogSearchRequestParametersValidator()
+            ->createCatalogSearchRequestParametersIntegerValidator()
             ->validate($restRequest);
     }
 }

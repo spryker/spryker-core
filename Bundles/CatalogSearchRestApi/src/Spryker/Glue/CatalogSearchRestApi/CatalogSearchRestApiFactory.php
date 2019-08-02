@@ -12,8 +12,8 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGl
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReader;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReaderInterface;
-use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidator;
-use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidatorInterface;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersIntegerValidator;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersIntegerValidatorInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
@@ -69,11 +69,11 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersValidatorInterface
+     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersIntegerValidatorInterface
      */
-    public function createCatalogSearchRequestParametersValidator(): CatalogSearchRequestParametersValidatorInterface
+    public function createCatalogSearchRequestParametersIntegerValidator(): CatalogSearchRequestParametersIntegerValidatorInterface
     {
-        return new CatalogSearchRequestParametersValidator(
+        return new CatalogSearchRequestParametersIntegerValidator(
             $this->getResourceBuilder(),
             $this->getConfig()
         );

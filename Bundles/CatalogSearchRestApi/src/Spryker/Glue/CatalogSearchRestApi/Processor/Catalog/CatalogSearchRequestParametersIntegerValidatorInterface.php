@@ -10,7 +10,7 @@ namespace Spryker\Glue\CatalogSearchRestApi\Processor\Catalog;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CatalogSearchRequestParametersValidatorInterface
+interface CatalogSearchRequestParametersIntegerValidatorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

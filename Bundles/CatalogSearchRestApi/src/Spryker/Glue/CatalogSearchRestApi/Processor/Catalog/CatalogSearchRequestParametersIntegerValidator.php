@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CatalogSearchRequestParametersValidator implements CatalogSearchRequestParametersValidatorInterface
+class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchRequestParametersIntegerValidatorInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
