@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\PostgreSql;
 
+use PDO;
 use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
@@ -19,65 +20,31 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
 
     /**
-     * @return bool
+     * @return void
      */
     public function dropDatabase()
     {
-        if ($this->useSudo()) {
-            return $this->runSudoDropCommand();
-        }
-
-        return $this->runDropCommandRemote();
-    }
-
-    /**
-     * @return bool
-     */
-    protected function runSudoDropCommand()
-    {
         $this->closeOpenConnections();
 
-        return $this->runProcess($this->getSudoDropCommand());
+        $this->runDropCommand();
     }
 
     /**
      * @return bool
      */
-    protected function runDropCommandRemote()
+    protected function runDropCommand()
     {
         return $this->runProcess($this->getDropCommand());
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @return void
      */
-    protected function closeOpenConnections()
+    protected function closeOpenConnections(): void
     {
-        $postgresVersion = $this->getPostgresVersion();
-        $process = $this->getProcess(sprintf('sudo pg_ctlcluster %s main restart --force', $postgresVersion));
-        $process->run();
-        if (!$process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput());
-        }
-    }
-
-    /**
-     * @throws \RuntimeException
-     *
-     * @return string
-     */
-    protected function getPostgresVersion()
-    {
-        $process = $this->getProcess('psql --version | awk \'{print $3}\' | cut -f1,2 -d\'.\'');
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new RuntimeException($process->getErrorOutput());
-        }
-
-        return trim($process->getOutput(), "\n");
+        $pdoConnection = $this->createPdoConnection();
+        $pdoConnection->exec($this->getCloseOpenedConnectionsQuery());
+        $pdoConnection = null;
     }
 
     /**
@@ -127,10 +94,8 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $this->exportPostgresPassword();
-
         $process = $this->getProcess($command);
-        $process->run();
+        $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
             throw new RuntimeException($process->getErrorOutput());
@@ -139,17 +104,6 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
-    }
-
-    /**
-     * @return void
-     */
-    protected function exportPostgresPassword()
-    {
-        putenv(sprintf(
-            'PGPASSWORD=%s',
-            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
-        ));
     }
 
     /**
@@ -167,9 +121,11 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command);
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command);
+        }
 
-        return $process;
+        return new Process($command);
     }
 
     /**
@@ -190,5 +146,45 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
         }
 
         return $value;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCloseOpenedConnectionsQuery(): string
+    {
+        return sprintf('
+            SELECT pg_terminate_backend(pg_stat_activity.pid)
+                FROM pg_stat_activity
+                WHERE pg_stat_activity.datname = \'%s\';
+        ', $this->getConfigValue(PropelConstants::ZED_DB_DATABASE));
+    }
+
+    /**
+     * @return \PDO
+     */
+    protected function createPdoConnection(): PDO
+    {
+        $dsn = sprintf(
+            'pgsql:host=%s;port=%s;dbname=postgres',
+            $this->getConfigValue(PropelConstants::ZED_DB_HOST),
+            $this->getConfigValue(PropelConstants::ZED_DB_PORT)
+        );
+
+        return new PDO(
+            $dsn,
+            $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
+            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD)
+        );
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironmentVariables(): array
+    {
+        return [
+            'PGPASSWORD' => $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
+        ];
     }
 }

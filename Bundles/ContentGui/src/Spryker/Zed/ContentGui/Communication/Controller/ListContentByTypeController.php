@@ -12,11 +12,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacade getFacade()
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
  */
 class ListContentByTypeController extends AbstractController
 {
     public const PARAM_CONTENT_TYPE = 'type';
+    public const PARAM_CONTENT_KEY = 'contentKey';
+    public const PARAM_CONTENT_TEMPLATE = 'template';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -26,7 +29,9 @@ class ListContentByTypeController extends AbstractController
     public function indexAction(Request $request): array
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
-        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
+        $contentKey = $request->query->get(static::PARAM_CONTENT_KEY);
+        $selectedTemplateIdentifier = $request->query->get(static::PARAM_CONTENT_TEMPLATE);
+        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);
         $contentTypeTemplates = $this->getFactory()->createContentEditorPluginsResolver()->getTemplatesByType($contentType);
         $twigFunctionTemplate = $this->getFactory()->createContentEditorPluginsResolver()->getTwigFunctionTemplateByType($contentType);
 
@@ -34,6 +39,8 @@ class ListContentByTypeController extends AbstractController
             'table' => $contentByTypeTable->render(),
             'templates' => $contentTypeTemplates,
             'twigFunctionTemplate' => $twigFunctionTemplate,
+            'selectedTemplateIdentifier' => $selectedTemplateIdentifier,
+            'contentType' => $contentType,
         ];
 
         return $this->viewResponse($data);
@@ -47,7 +54,8 @@ class ListContentByTypeController extends AbstractController
     public function tableAction(Request $request): JsonResponse
     {
         $contentType = $request->query->get(static::PARAM_CONTENT_TYPE);
-        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType);
+        $contentKey = $request->query->get(static::PARAM_CONTENT_KEY);
+        $contentByTypeTable = $this->getFactory()->createContentByTypeTable($contentType, $contentKey);
 
         return $this->jsonResponse($contentByTypeTable->fetchData());
     }

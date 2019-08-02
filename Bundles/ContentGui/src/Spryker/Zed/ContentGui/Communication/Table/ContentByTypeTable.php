@@ -16,7 +16,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
-    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s name="content-item" value="%s"/>';
+    protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
 
     /**
      * @var string
@@ -29,23 +29,23 @@ class ContentByTypeTable extends AbstractTable
     protected $contentQuery;
 
     /**
-     * @var int|null
+     * @var string|null
      */
-    protected $idContent;
+    protected $contentKey;
 
     /**
      * @param string $contentType
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
-     * @param int|null $idContent
+     * @param string|null $contentKey
      */
     public function __construct(
         string $contentType,
         SpyContentQuery $contentQuery,
-        ?int $idContent = null
+        ?string $contentKey = null
     ) {
         $this->contentType = $contentType;
         $this->contentQuery = $contentQuery;
-        $this->idContent = $idContent;
+        $this->contentKey = $contentKey;
     }
 
     /**
@@ -59,14 +59,14 @@ class ContentByTypeTable extends AbstractTable
 
         $config->setUrl($this->getTableUrl());
         $config->setSortable([
-            ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
         ]);
 
         $config->addRawColumn(ContentTableConstants::COL_ACTIONS);
-        $config->setDefaultSortField(ContentTableConstants::COL_ID_CONTENT, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(ContentTableConstants::COL_NAME, TableConfiguration::SORT_ASC);
         $config->setSearchable([
-            ContentTableConstants::COL_ID_CONTENT,
+            ContentTableConstants::COL_KEY,
             ContentTableConstants::COL_NAME,
         ]);
         $config->setStateSave(false);
@@ -83,7 +83,7 @@ class ContentByTypeTable extends AbstractTable
     {
         $header = [
             ContentTableConstants::COL_ACTIONS => '',
-            ContentTableConstants::COL_ID_CONTENT => 'ID',
+            ContentTableConstants::COL_KEY => 'Content Item Key',
             ContentTableConstants::COL_NAME => 'Name',
         ];
 
@@ -100,20 +100,39 @@ class ContentByTypeTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $this->contentQuery->filterByContentTypeKey($this->contentType);
+
+        if ($this->contentKey) {
+            $this->addOrderBySelectedKey();
+        }
+
         $contentItems = $this->runQuery($this->contentQuery, $config);
         $results = [];
 
         foreach ($contentItems as $key => $contentItem) {
-            $checked = $this->isCheckedItem($key, $contentItem[SpyContentTableMap::COL_ID_CONTENT]);
+            $checked = $this->isCheckedItem($key, $contentItem[SpyContentTableMap::COL_KEY]);
 
             $results[] = [
                 ContentTableConstants::COL_ACTIONS => $this->buildRadioButton($contentItem, $checked),
-                ContentTableConstants::COL_ID_CONTENT => $contentItem[SpyContentTableMap::COL_ID_CONTENT],
+                ContentTableConstants::COL_KEY => $contentItem[SpyContentTableMap::COL_KEY],
                 ContentTableConstants::COL_NAME => $contentItem[SpyContentTableMap::COL_NAME],
             ];
         }
 
         return $results;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addOrderBySelectedKey(): void
+    {
+        $keyColumn = SpyContentTableMap::COL_KEY;
+        $selectedKeyColumn = sprintf("(CASE WHEN $keyColumn = '%s' THEN 0 ELSE 1 END)", $this->contentKey);
+
+        $this->contentQuery
+            ->withColumn($selectedKeyColumn, 'selectedKey')
+            ->orderBy('selectedKey')
+            ->orderBy(SpyContentTableMap::COL_ID_CONTENT);
     }
 
     /**
@@ -129,20 +148,22 @@ class ContentByTypeTable extends AbstractTable
         return sprintf(
             static::FIELD_ACTION_CONTENT_ITEM,
             $selectedAttr,
-            $contentItem[ContentTableConstants::COL_ID_CONTENT]
+            $contentItem[ContentTableConstants::COL_NAME],
+            $contentItem[ContentTableConstants::COL_ID_CONTENT],
+            $contentItem[ContentTableConstants::COL_KEY]
         );
     }
 
     /**
      * @param int $key
-     * @param int $idContent
+     * @param string $contentKey
      *
      * @return bool
      */
-    protected function isCheckedItem(int $key, int $idContent): bool
+    protected function isCheckedItem(int $key, string $contentKey): bool
     {
-        if ($this->idContent) {
-            return $this->idContent === $idContent;
+        if ($this->contentKey) {
+            return $this->contentKey === $contentKey;
         }
 
         return $key === 0;
@@ -153,6 +174,12 @@ class ContentByTypeTable extends AbstractTable
      */
     protected function getTableUrl(): string
     {
-        return Url::generate($this->defaultUrl, [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType]);
+        $params = [ListContentByTypeController::PARAM_CONTENT_TYPE => $this->contentType];
+
+        if ($this->contentKey) {
+            $params[ListContentByTypeController::PARAM_CONTENT_KEY] = $this->contentKey;
+        }
+
+        return Url::generate($this->defaultUrl, $params);
     }
 }

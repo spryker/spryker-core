@@ -9,15 +9,11 @@ namespace Spryker\Zed\ContentBannerGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * @method \Spryker\Zed\ContentBannerGui\Communication\ContentBannerGuiCommunicationFactory getFactory()
@@ -63,6 +59,12 @@ class BannerContentTermForm extends AbstractType
                 return [];
             },
         ]);
+
+        $resolver->setNormalizer('constraints', function (Options $options, $value) {
+                return array_merge($value, [
+                    $this->getFactory()->createContentBannerConstraint(),
+                ]);
+        });
     }
 
     /**
@@ -97,12 +99,6 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_TITLE, TextType::class, [
             'label' => static::LABEL_TITLE,
-            'constraints' => array_merge(
-                $this->getTextFieldConstraints(),
-                [
-                    new Length(['max' => 64]),
-                ]
-            ),
         ]);
 
         return $this;
@@ -117,12 +113,6 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_SUBTITLE, TextType::class, [
             'label' => static::LABEL_SUBTITLE,
-            'constraints' => array_merge(
-                $this->getTextFieldConstraints(),
-                [
-                    new Length(['max' => 128]),
-                ]
-            ),
         ]);
 
         return $this;
@@ -137,13 +127,6 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_IMAGE_URL, TextType::class, [
             'label' => static::LABEL_IMAGE_URL,
-            'constraints' => array_merge(
-                $this->getTextFieldConstraints(),
-                [
-                    new Length(['max' => 1028]),
-                    new Url(),
-                ]
-            ),
         ]);
 
         return $this;
@@ -156,15 +139,8 @@ class BannerContentTermForm extends AbstractType
      */
     protected function addClickUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CLICK_URL, UrlType::class, [
+        $builder->add(static::FIELD_CLICK_URL, TextType::class, [
             'label' => static::LABEL_CLICK_URL,
-            'constraints' => array_merge(
-                $this->getTextFieldConstraints(),
-                [
-                    new Length(['max' => 1028]),
-                    new Url(),
-                ]
-            ),
         ]);
 
         return $this;
@@ -179,25 +155,8 @@ class BannerContentTermForm extends AbstractType
     {
         $builder->add(static::FIELD_ALT_TEXT, TextType::class, [
             'label' => static::LABEL_ALT_TEXT,
-            'constraints' => array_merge(
-                $this->getTextFieldConstraints(),
-                [
-                    new Length(['max' => 125]),
-                ]
-            ),
         ]);
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getTextFieldConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-        ];
     }
 }

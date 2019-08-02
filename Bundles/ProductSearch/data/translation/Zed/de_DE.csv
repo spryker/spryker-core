@@ -11,8 +11,8 @@
 Delete,Löschen
 Edit,Bearbeiten
 "Edit filter order","Filteranordnung bearbeiten"
-"Edit Search Preferences","Suchpräferenzen bearbeiten"
 "Edit search preferences","Suchpräferenzen bearbeiten"
+"Edit Search Preferences","Suchpräferenzen bearbeiten"
 "Filter name",Filtername
 "Filter position",Filterposition
 "Filter preference was created successfully.","Filterpräferenz wurde erfolgreich erstellt."
@@ -34,8 +34,8 @@ range,Umfang
 Save,Speichern
 "Save Order","Bestellung speichern"
 "Search and Filters","Suche und Filter"
-"Search preferences",Suchpräferenzen
 "Search Preferences",Suchpräferenzen
+"Search preferences",Suchpräferenzen
 "Search preferences synchronization was successful.","Suchpräferenzen wurden erfolgreich synchronisiert."
 single-select,Einfachauswahl
 "Suggestion terms","Vorgeschlagene Begriffe"

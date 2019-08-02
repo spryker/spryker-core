@@ -13,6 +13,7 @@ use Spryker\Zed\Locale\Business\Exception\LocaleExistsException;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
 use Spryker\Zed\Locale\Business\TransferGeneratorInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface;
 
 class LocaleManager
 {
@@ -27,15 +28,23 @@ class LocaleManager
     protected $transferGenerator;
 
     /**
+     * @var \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface|null
+     */
+    protected $localeRepository;
+
+    /**
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Zed\Locale\Business\TransferGeneratorInterface $transferGenerator
+     * @param \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface|null $localeRepository
      */
     public function __construct(
         LocaleQueryContainerInterface $localeQueryContainer,
-        TransferGeneratorInterface $transferGenerator
+        TransferGeneratorInterface $transferGenerator,
+        ?LocaleRepositoryInterface $localeRepository = null
     ) {
         $this->localeQueryContainer = $localeQueryContainer;
         $this->transferGenerator = $transferGenerator;
+        $this->localeRepository = $localeRepository;
     }
 
     /**
@@ -176,8 +185,12 @@ class LocaleManager
      */
     public function getLocaleCollection()
     {
-        $availableLocales = Store::getInstance()->getLocales();
+        $storeInstance = Store::getInstance();
+        if ($this->localeRepository) {
+            return $this->getAvailableLocaleCollection($storeInstance);
+        }
 
+        $availableLocales = $storeInstance->getLocales();
         $transferCollection = [];
         foreach ($availableLocales as $localeName) {
             $localeInfo = $this->getLocale($localeName);
@@ -188,8 +201,6 @@ class LocaleManager
     }
 
     /**
-     * @api
-     *
      * @return array
      */
     public function getAvailableLocales()
@@ -202,5 +213,37 @@ class LocaleManager
         }
 
         return $locales;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Store $store
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected function getAvailableLocaleCollection(Store $store): array
+    {
+        $availableLocales = $store->getLocales();
+
+        $localeTransfers = $this->localeRepository->getLocaleTransfersByLocaleNames($availableLocales);
+
+        $indexedLocaleTransfers = $this->indexLocaleTransfersByLocalename($localeTransfers);
+
+        return array_merge(array_flip($availableLocales), $indexedLocaleTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected function indexLocaleTransfersByLocaleName(array $localeTransfers): array
+    {
+        $indexedLocaleTransfers = [];
+
+        foreach ($localeTransfers as $localeTransfer) {
+            $indexedLocaleTransfers[$localeTransfer->getLocaleName()] = $localeTransfer;
+        }
+
+        return $indexedLocaleTransfers;
     }
 }

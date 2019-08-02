@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductQuantityRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param string[] $productSkus
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]

@@ -37,7 +37,7 @@ class SubRequestHandlerTest extends WebTestCase
     public function setUp()
     {
         Request::setTrustedHosts([]);
-        Request::setTrustedProxies([]);
+        Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
 
         parent::setUp();
     }

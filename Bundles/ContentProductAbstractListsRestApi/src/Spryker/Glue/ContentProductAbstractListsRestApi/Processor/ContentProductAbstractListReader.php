@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor;
 
-use Exception;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
@@ -16,6 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class ContentProductAbstractListReader implements ContentProductAbstractListReaderInterface
 {
@@ -71,11 +71,11 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         try {
-            $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeById(
-                (int)$parentResource->getId(),
+            $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey(
+                $parentResource->getId(),
                 $restRequest->getMetadata()->getLocale()
             );
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             return $this->addContentTypeInvalidError($restResponse);
         }
 
@@ -101,9 +101,9 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected function addContentItemIdNotSpecifiedError(RestResponseInterface $response): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_ID_IS_MISSING)
+            ->setCode(ContentProductAbstractListsRestApiConfig::RESPONSE_CODE_CONTENT_KEY_IS_MISSING)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_ID_IS_MISSING);
+            ->setDetail(ContentProductAbstractListsRestApiConfig::RESPONSE_DETAILS_CONTENT_KEY_IS_MISSING);
 
         return $response->addError($restErrorTransfer);
     }

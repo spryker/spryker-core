@@ -5,10 +5,13 @@ Active,Active
 "Create Product Set","Create Product Set"
 Deactivate,Deactivate
 Default,Default
+"Delete image","Delete image"
+"Delete image set","Delete image set"
 "Deselect All","Deselect All"
 "Deselected products","Deselected products"
 Edit,Edit
 ID,ID
+"Image Set","Image Set"
 "Image Set Name","Image Set Name"
 Inactive,Inactive
 Keywords,Keywords
@@ -24,6 +27,7 @@ Price,Price
 "Products to be assigned","Products to be assigned"
 "Products to be deassigned","Products to be deassigned"
 "Reorder Product Sets","Reorder Product Sets"
+Save,Save
 "Select All","Select all"
 "Select products to assign","Select Products to assign"
 Selected,Selected

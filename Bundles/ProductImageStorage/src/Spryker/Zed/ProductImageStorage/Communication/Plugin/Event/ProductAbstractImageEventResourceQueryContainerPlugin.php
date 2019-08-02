@@ -47,7 +47,7 @@ class ProductAbstractImageEventResourceQueryContainerPlugin extends AbstractPlug
     {
         $query = $this->getQueryContainer()->queryProductAbstractIdsByProductImageSetToProductImageIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
             $query->clearSelectColumns();
             $query->innerJoinSpyProductImageSet();

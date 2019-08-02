@@ -70,11 +70,12 @@
   {% endif %}
 </td>
 <td rowspan="{{ numberOfItemAdditions }}">
-  {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
-    {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
-        <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.fkSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
-    {% endfor %}
-  {% else -%}
-      -
-  {%- endif %}
+    {% include [
+        '@Oms/RenderForm/_partial/order-item-actions.twig',
+        '@Sales/Detail/_partial/order-item-actions.twig',
+    ] ignore missing  with {
+        redirectUrl: changeStatusRedirectUrl,
+        idSalesOrderItem: orderItem.idSalesOrderItem,
+        eventsGroupedByItem: eventsGroupedByItem[orderItem.IdSalesOrderItem],
+    } only %}
 </td>

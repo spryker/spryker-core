@@ -1,10 +1,13 @@
-"Delete","Delete"
-"Add","Add"
-"Product Set","Product Set"
-"ID","ID"
-"Name","Name"
-"# of Products","# of Products"
-"Status","Status"
-"Actions","Actions"
+Actions,Actions
+Add,Add
 "Available Product Sets","Available Product Sets"
 "Clear locale","Clear locale"
+content_product_set_gui.template.cart-button-btm,"Add all to Cart Button Bottom"
+content_product_set_gui.template.cart-button-top,"Add all to Cart Button Top"
+content_product_set_gui.template.default,Default
+Delete,Delete
+ID,ID
+Name,Name
+"Number of Products","# of Products"
+"Product Set","Product Set"
+Status,Status

@@ -13,7 +13,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 /**
  * @method \Spryker\Zed\TaxProductStorage\TaxProductStorageConfig getConfig()
- * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepository getRepository()
+ * @method \Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\TaxProductStorage\Business\TaxProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxProductStorage\Communication\TaxProductStorageCommunicationFactory getFactory()
  */
@@ -54,11 +54,11 @@ class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements Sync
      */
     public function getData(array $ids = []): array
     {
-        if (count($ids)) {
-            return $this->getRepository()->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds($ids);
+        if ($ids === []) {
+            return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxProductStorages();
         }
 
-        return $this->getRepository()->getAllSynchronizationDataTransfersFromTaxProductStorages();
+        return $this->getRepository()->getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds($ids);
     }
 
     /**

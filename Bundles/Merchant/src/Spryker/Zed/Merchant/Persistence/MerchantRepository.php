@@ -19,8 +19,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
@@ -43,8 +41,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
@@ -70,8 +66,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param string $key
      *
