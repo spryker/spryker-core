@@ -392,11 +392,11 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductStoreEntities = $priceProductStoreQuery
             ->joinWithCurrency()
             ->addAsColumn('product_sku', 'spy_product.sku')
-            ->innerJoinWithPriceProduct()
+            ->rightJoinWithPriceProduct()
             ->usePriceProductQuery()
-                ->innerJoinWithSpyProductAbstract()
+                ->rightJoinWithSpyProductAbstract()
                 ->useSpyProductAbstractQuery()
-                    ->innerJoinWithSpyProduct()
+                    ->rightJoinWithSpyProduct()
                     ->useSpyProductQuery()
                         ->filterBySku_In($concreteSkus)
                     ->endUse()
@@ -450,7 +450,21 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $mapper = $this->getFactory()->createPriceProductMapper();
         $priceProductTransfers = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $priceProductTransfers[] = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
+            $priceProductTransfer = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
+            $concreateProductEntities = $priceProductStoreEntity->getPriceProduct()
+                ->getSpyProductAbstract()
+                ->getSpyProducts();
+
+            if ($concreateProductEntities->count() === 1) {
+                $priceProductTransfers[] = $priceProductTransfer;
+
+                continue;
+            }
+
+            foreach ($concreateProductEntities as $concreateProductEntitity) {
+                $priceProductTransferTemplate = clone $priceProductTransfer;
+                $priceProductTransfers[] = $priceProductTransferTemplate->setSkuProduct($concreateProductEntitity->getSku());
+            }
         }
 
         return $priceProductTransfers;
