@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AuthRestApiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 
 interface PostAuthPluginInterface
 {
@@ -17,9 +17,9 @@ interface PostAuthPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
      *
      * @return void
      */
-    public function postAuth(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): void;
+    public function postAuth(OauthResponseTransfer $oauthResponseTransfer): void;
 }

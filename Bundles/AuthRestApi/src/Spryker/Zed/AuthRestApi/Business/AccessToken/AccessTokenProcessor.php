@@ -37,6 +37,7 @@ class AccessTokenProcessor implements AccessTokenProcessorInterface
         $oauthResponseTransfer->setAnonymousCustomerReference($oauthRequestTransfer->getCustomerReference());
         // execute
 
+
         return $oauthResponseTransfer;
     }
 }
