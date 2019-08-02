@@ -21,17 +21,17 @@ use Symfony\Component\Routing\Router;
 class Application implements HttpKernelInterface, TerminableInterface
 {
     /**
-     * @uses \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
      */
     public const SERVICE_ROUTER = 'routers';
 
     /**
-     * @uses \Symfony\Component\HttpFoundation\Request
+     * @see \Symfony\Component\HttpFoundation\Request
      */
     public const SERVICE_REQUEST = 'request';
 
     /**
-     * @uses \Symfony\Component\HttpFoundation\RequestStack
+     * @see \Symfony\Component\HttpFoundation\RequestStack
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
@@ -125,7 +125,7 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * @deprecated Will be removed without replacement. This method was only used for Silex Controller.
+     * @deprecated Will be removed without replacement. This method was only used for Silex Controller. Once a project moved to using Application Plugins instead of Silex Service Providers it can stop using it.
      *
      * @return void
      */

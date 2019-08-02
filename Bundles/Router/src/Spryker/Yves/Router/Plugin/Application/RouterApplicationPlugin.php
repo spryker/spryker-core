@@ -21,6 +21,10 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      * @see \Spryker\Shared\Application\Application::SERVICE_REQUEST_STACK
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     */
     public const SERVICE_ROUTER = 'routers';
     public const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
     public const SERVICE_ARGUMENT_RESOLVER = 'argument-resolver';

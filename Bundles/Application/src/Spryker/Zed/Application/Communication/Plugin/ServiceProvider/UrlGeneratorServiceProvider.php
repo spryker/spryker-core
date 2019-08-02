@@ -15,9 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin` instead.
  *
- * Requesting the `url_generator` from the container returned an instance of the ChainRouter. Instead of using several keys
- * pointing to the ChainRouter we only use `routers` from now on.
- *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()

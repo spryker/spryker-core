@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 abstract class AbstractController
 {
     use RepositoryResolverAwareTrait;
+    protected const SERVICE_MESSENGER = 'messenger';
 
     /**
      * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
@@ -284,7 +285,7 @@ abstract class AbstractController
      */
     protected function getMessenger()
     {
-        $messenger = ($this->getApplication()->has('messenger')) ? $this->getApplication()->get('messenger') : new NullMessenger();
+        $messenger = ($this->getApplication()->has(static::SERVICE_MESSENGER)) ? $this->getApplication()->get(static::SERVICE_MESSENGER) : new NullMessenger();
         $kernelToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $kernelToMessengerBridge;

@@ -19,7 +19,7 @@ use Symfony\Component\Routing\RouterInterface;
 class ZedRouterPlugin extends AbstractPlugin implements RouterPluginInterface
 {
     /**
-     * Specification:
+     * {@inheritDoc}
      * - Returns a Router which makes use of caching.
      *
      * @api

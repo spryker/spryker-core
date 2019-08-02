@@ -23,6 +23,11 @@ class BackwardsCompatibleUrlRouterEnhancerPlugin extends AbstractRouterEnhancerP
     protected $filter;
 
     /**
+     * {@inheritDoc}
+     * - Returns a "normalized" URL for backward compatibility.
+     *
+     * @example Incoming URL `/fooBar/zipZap` will be converted to `/foo-bar/zip/zap`.
+     *
      * @api
      *
      * @param string $pathinfo

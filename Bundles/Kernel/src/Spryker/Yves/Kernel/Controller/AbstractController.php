@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class AbstractController
 {
+    protected const SERVICE_LOCALE = 'locale';
+    protected const SERVICE_FLASH_MESSENGER = 'flash_messenger';
+
     /**
      * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
@@ -79,7 +82,7 @@ abstract class AbstractController
      */
     protected function getLocale()
     {
-        return $this->getApplication()->get('locale');
+        return $this->getApplication()->get(static::SERVICE_LOCALE);
     }
 
     /**
@@ -233,7 +236,7 @@ abstract class AbstractController
      */
     private function getMessenger()
     {
-        $messenger = ($this->getApplication()->has('flash_messenger')) ? $$this->getApplication()->get('flash_messenger') : new NullMessenger();
+        $messenger = ($this->getApplication()->has(static::SERVICE_FLASH_MESSENGER)) ? $this->getApplication()->get(static::SERVICE_FLASH_MESSENGER) : new NullMessenger();
         $applicationToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $applicationToMessengerBridge;

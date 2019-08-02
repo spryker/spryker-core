@@ -14,6 +14,7 @@ interface PostAddRouteManipulatorPluginInterface
     /**
      * Specification:
      * - Returns a manipulated Route.
+     * - Provides an ability to manipulate a route after it's registration in a route collection.
      *
      * @api
      *

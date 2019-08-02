@@ -18,6 +18,8 @@ class RouterConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a Router configuration which makes use of a Router cache.
      *
+     * @see \Symfony\Component\Routing\Router::setOptions()
+     *
      * @api
      *
      * @return array
@@ -36,6 +38,8 @@ class RouterConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a Router configuration which does not make use of a Router cache.
      * - Fallback for development which is executed when the cached Router is not able to match.
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
      *
      * @api
      *
@@ -94,6 +98,11 @@ class RouterConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns a list of supported languages for Route manipulation.
+     * - Will be used to strip of language information from a route before a route is matched.
+     *
+     * @example Incoming URL `/en/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
+     *
+     * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
      * @api
      *
@@ -110,6 +119,11 @@ class RouterConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Returns a list of supported stores for Route manipulation.
+     * - Will be used to strip of store information from a route before a route is matched.
+     *
+     * @example Incoming URL `/DE/home` will be manipulated to `/home` because the router only knows URL's without any optional pre/suffix.
+     *
+     * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin
      *
      * @return string[]
      */

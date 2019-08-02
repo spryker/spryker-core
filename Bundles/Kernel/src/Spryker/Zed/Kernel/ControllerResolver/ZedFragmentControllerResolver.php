@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
 
+/**
+ * @deprecated Use `spryker/router` instead. This will be removed without direct replacement as it will not be needed with the new Router anymore.
+ */
 class ZedFragmentControllerResolver extends SilexControllerResolver
 {
     /**

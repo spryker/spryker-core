@@ -14,6 +14,9 @@ use Silex\Application\UrlGeneratorTrait;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Deprecated: Please use `\Spryker\Shared\Application\Application` instead.
+ */
 class Application extends SilexApplication
 {
     use TranslationTrait;
