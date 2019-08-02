@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @deprecated Use `\Spryker\Zed\Form\Communication\Plugin\Form\DoubleSubmitProtectionFormPlugin` instead.
- * @deprecated Use `\Spryker\Yves\Form\Plugin\Form\DoubleSubmitProtectionFormPlugin` instead.
  */
 class DoubleSubmitProtectionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {

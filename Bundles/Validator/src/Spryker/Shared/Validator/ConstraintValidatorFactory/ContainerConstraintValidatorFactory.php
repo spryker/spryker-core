@@ -20,7 +20,7 @@ class ContainerConstraintValidatorFactory extends SymfonyConstraintValidatorFact
     protected $container;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $serviceNames;
 

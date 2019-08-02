@@ -87,7 +87,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function getFormPlugins(): array
     {
-        return array_merge($this->getFactory()->getCoreFormPlugins(), $this->getFormPlugins());
+        return array_merge($this->getFactory()->getCoreFormPlugins(), $this->getFactory()->getFormPlugins());
     }
 
     /**
