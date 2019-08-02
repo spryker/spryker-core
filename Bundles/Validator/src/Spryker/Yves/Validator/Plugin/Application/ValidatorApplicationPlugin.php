@@ -46,7 +46,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     protected function addServiceValidatorIds(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_VALIDATOR_SERVICE_IDS, function () {
+        $container->setGlobal(static::SERVICE_VALIDATOR_SERVICE_IDS, function () {
             return [];
         });
 

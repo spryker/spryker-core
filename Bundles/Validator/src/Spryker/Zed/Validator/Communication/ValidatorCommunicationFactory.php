@@ -60,4 +60,20 @@ class ValidatorCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ValidatorDependencyProvider::PLUGINS_CORE_VALIDATOR);
     }
+
+    /**
+     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
+     */
+    public function getConstraintPlugins(): array
+    {
+        return $this->getProvidedDependency(ValidatorDependencyProvider::PLUGINS_CONSTRAINT);
+    }
+
+    /**
+     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
+     */
+    public function getCoreConstraintPlugins(): array
+    {
+        return $this->getProvidedDependency(ValidatorDependencyProvider::PLUGINS_CORE_CONSTRAINT);
+    }
 }

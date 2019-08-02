@@ -1,21 +1,23 @@
 {
-  "name": "spryker/validator",
+  "name": "spryker/security",
   "type": "library",
-  "description": "Validator module",
+  "description": "Security module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/application-extension": "^1.0.0",
-    "spryker/container": "^1.4.0",
-    "spryker/form-extension": "^1.0.0",
-    "spryker/kernel": "^3.32.0",
-    "spryker/security": "^1.0.0",
-    "spryker/symfony": "^3.2.2",
     "spryker/validator-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/kernel": "*",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "ADD SUGGEST DESCRIPTION",
+    "spryker/kernel": "ADD SUGGEST DESCRIPTION",
+    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
   },
   "autoload": {
     "psr-4": {

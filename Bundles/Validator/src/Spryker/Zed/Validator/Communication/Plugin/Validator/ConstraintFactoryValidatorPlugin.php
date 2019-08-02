@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Validator\Communication\Plugin\Validator;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Validator\ConstraintValidatorFactory\ContainerConstraintValidatorFactory;
+use Spryker\Shared\Validator\ConstraintValidatorFactory\ConstraintValidatorFactory;
 use Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\ConstraintValidatorFactoryInterface;
@@ -46,6 +46,14 @@ class ConstraintFactoryValidatorPlugin extends AbstractPlugin implements Validat
      */
     protected function createConstraintValidationFactory(ContainerInterface $container): ConstraintValidatorFactoryInterface
     {
-        return new ContainerConstraintValidatorFactory($container, $container->get(static::SERVICE_VALIDATOR_SERVICE_IDS));
+        return new ConstraintValidatorFactory($container, $this->getConstraintPlugins());
+    }
+
+    /**
+     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
+     */
+    protected function getConstraintPlugins(): array
+    {
+        return array_merge($this->getFactory()->getCoreConstraintPlugins(), $this->getFactory()->getConstraintPlugins());
     }
 }
