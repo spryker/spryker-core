@@ -81,6 +81,13 @@ $(document).ready(function() {
         e.preventDefault();
 
         $(this).prop('disabled', true).addClass('disabled');
+
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
+        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
+
+        $form.attr('action', finalUrl);
+
         $(this).parents('form').first().submit();
     });
 
