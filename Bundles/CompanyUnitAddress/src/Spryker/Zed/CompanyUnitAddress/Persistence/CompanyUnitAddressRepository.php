@@ -50,7 +50,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use `getPaginatedAddress()` instead.
+     * @deprecated Use `getPaginatedAddress()` and `getRelationToBusinessUnit()` instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *

@@ -29,7 +29,7 @@ interface CompanyUnitAddressRepositoryInterface
      * Specification:
      * - Returns the business units for the given company and filters.
      *
-     * @deprecated Use `getPaginatedAddress()` instead.
+     * @deprecated Use `getPaginatedAddress()` and `getRelationToBusinessUnit()` instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
