@@ -12,9 +12,23 @@ use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface;
 
 class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
 {
+    /**
+     * @var \Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface
+     */
+    protected $configuredBundlePriceCalculation;
+
+    /**
+     * @param \Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface $configuredBundlePriceCalculation
+     */
+    public function __construct(ConfiguredBundlePriceCalculationInterface $configuredBundlePriceCalculation)
+    {
+        $this->configuredBundlePriceCalculation = $configuredBundlePriceCalculation;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -29,6 +43,8 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
                 $configuredBundleTransfers = $this->mapConfiguredBundle($itemTransfer, $configuredBundleTransfers);
             }
         }
+
+        $configuredBundleTransfers = $this->expandConfiguredBundlesWithPrices($configuredBundleTransfers);
 
         return (new ConfiguredBundleCollectionTransfer())
             ->setConfiguredBundles(new ArrayObject(array_values($configuredBundleTransfers)));
@@ -60,11 +76,26 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
 
         if (!isset($configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()])) {
             $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = (new ConfiguredBundleTransfer())
-                ->setTemplate($configuredBundleTransfer->getTemplate())
-                ->setQuantity($configuredBundleTransfer->getQuantity());
+                ->fromArray($configuredBundleTransfer->toArray());
         }
 
         $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()]->addItem($itemTransfer);
+
+        return $configuredBundleTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer[] $configuredBundleTransfers
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer[]
+     */
+    protected function expandConfiguredBundlesWithPrices(array $configuredBundleTransfers): array
+    {
+        foreach ($configuredBundleTransfers as $configuredBundleTransfer) {
+            $configuredBundleTransfer->setPrice(
+                $this->configuredBundlePriceCalculation->calculateConfiguredBundlePrice($configuredBundleTransfer)
+            );
+        }
 
         return $configuredBundleTransfers;
     }

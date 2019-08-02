@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ConfigurableBundle;
 
+use Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculation;
+use Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface;
 use Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReader;
 use Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -21,6 +23,16 @@ class ConfigurableBundleFactory extends AbstractFactory
      */
     public function createConfiguredBundleReader(): ConfiguredBundleReaderInterface
     {
-        return new ConfiguredBundleReader();
+        return new ConfiguredBundleReader(
+            $this->createConfiguredBundlePriceCalculation()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface
+     */
+    public function createConfiguredBundlePriceCalculation(): ConfiguredBundlePriceCalculationInterface
+    {
+        return new ConfiguredBundlePriceCalculation();
     }
 }
