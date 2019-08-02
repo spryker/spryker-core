@@ -20,11 +20,11 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductBundleBusinessTester extends Actor
+class ProductBundleCommunicationTester extends Actor
 {
-    use _generated\ProductBundleBusinessTesterActions;
+    use _generated\ProductBundleCommunicationTesterActions;
 }
