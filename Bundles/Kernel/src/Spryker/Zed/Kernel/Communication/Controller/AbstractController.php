@@ -25,6 +25,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 abstract class AbstractController
 {
     use RepositoryResolverAwareTrait;
+
+    /**
+     * @uses \Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationPlugin::SERVICE_MESSENGER
+     */
     protected const SERVICE_MESSENGER = 'messenger';
 
     /**
