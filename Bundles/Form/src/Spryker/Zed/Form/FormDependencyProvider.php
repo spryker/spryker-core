@@ -54,7 +54,7 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCoreFormPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_FORM, function () {
+        $container->set(static::PLUGINS_CORE_FORM, function () {
             return $this->getCoreFormPlugins();
         });
 
