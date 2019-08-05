@@ -113,6 +113,7 @@ class PriceProductMapper
             ->getSpyProducts();
 
         foreach ($concreateProductEntities as $concreateProductEntitity) {
+            // Added due to propel entity cache system
             if (!in_array($concreateProductEntitity->getSku(), $allowedProductSkus)) {
                 continue;
             }
