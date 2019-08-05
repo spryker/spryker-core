@@ -29,11 +29,31 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->useSpyProductRelatedByFkProductQuery()
                 ->filterBySku($sku)
             ->endUse()
-            ->find();
+            ->find()
+            ->getData();
 
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities->getArrayCopy());
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    public function findBundledProductsByIdProductConcrete(int $idProductConcrete): array
+    {
+        $productBundleEntities = $this->getFactory()
+            ->createProductBundleQuery()
+            ->filterByFkProduct($idProductConcrete)
+            ->joinWithSpyProductRelatedByFkBundledProduct()
+            ->find()
+            ->getData();
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductBundleEntitiesToProductForBundleTransfers($productBundleEntities);
     }
 
     /**

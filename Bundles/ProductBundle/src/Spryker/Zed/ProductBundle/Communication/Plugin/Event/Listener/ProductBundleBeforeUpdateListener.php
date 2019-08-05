@@ -39,7 +39,7 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
             return;
         }
 
-        $this->deactivateProductBundleIfAllBundledProductsAreDeactivated($productConcreteTransfer);
+        $this->deactivateProductBundleIfAnyBundledProductsWereInactive($productConcreteTransfer);
         $this->updateBundleAvailability($productConcreteTransfer);
     }
 
@@ -48,24 +48,21 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      *
      * @return void
      */
-    protected function deactivateProductBundleIfAllBundledProductsAreDeactivated(ProductConcreteTransfer $productConcreteTransfer): void
+    protected function deactivateProductBundleIfAnyBundledProductsWereInactive(ProductConcreteTransfer $productConcreteTransfer): void
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
             return;
         }
 
         $bundledProducts = $this->getFacade()
-            ->findBundledProductsByIdProductConcrete(
-                $productConcreteTransfer->getIdProductConcrete()
-            );
+            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
 
-        $AllInactive = true;
         foreach ($bundledProducts as $forBundleTransfer) {
-            $AllInactive = !$forBundleTransfer->getIsActive() && $AllInactive;
-        }
+            if (!$forBundleTransfer->getIsActive()) {
+                $productConcreteTransfer->setIsActive(false);
 
-        if ($AllInactive) {
-            $productConcreteTransfer->setIsActive(false);
+                return;
+            }
         }
     }
 

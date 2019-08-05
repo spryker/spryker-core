@@ -16,14 +16,14 @@ interface ProductBundleAvailabilityHandlerInterface
      *
      * @return void
      */
-    public function updateAffectedBundlesAvailability(string $bundledProductSku): void;
+    public function updateAffectedBundlesAvailability($bundledProductSku);
 
     /**
      * @param string $bundleProductSku
      *
      * @return void
      */
-    public function updateBundleAvailability(string $bundleProductSku): void;
+    public function updateBundleAvailability($bundleProductSku);
 
     /**
      * @param string $bundleProductSku
@@ -31,5 +31,5 @@ interface ProductBundleAvailabilityHandlerInterface
      *
      * @return void
      */
-    public function removeBundleAvailability(string $bundleProductSku, StoreTransfer $storeTransfer): void;
+    public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer);
 }

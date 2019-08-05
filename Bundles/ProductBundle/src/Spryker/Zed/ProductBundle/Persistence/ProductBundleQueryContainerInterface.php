@@ -50,6 +50,8 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int $idProductBundle
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
@@ -58,6 +60,8 @@ interface ProductBundleQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int $idProductConcrete
      *
