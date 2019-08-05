@@ -392,11 +392,11 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductStoreEntities = $priceProductStoreQuery
             ->joinWithCurrency()
             ->addAsColumn('product_sku', 'spy_product.sku')
-            ->rightJoinWithPriceProduct()
+            ->innerJoinWithPriceProduct()
             ->usePriceProductQuery()
-                ->rightJoinWithSpyProductAbstract()
+                ->innerJoinWithSpyProductAbstract()
                 ->useSpyProductAbstractQuery()
-                    ->rightJoinWithSpyProduct()
+                    ->innerJoinWithSpyProduct()
                     ->useSpyProductQuery()
                         ->filterBySku_In($concreteSkus)
                     ->endUse()
@@ -408,7 +408,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             return [];
         }
 
-        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
@@ -450,39 +452,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $mapper = $this->getFactory()->createPriceProductMapper();
         $priceProductTransfers = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $priceProductTransfer = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
-            $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
-                ->getSpyProductAbstract();
-            $concreateProductEntities = $abstractProductEntity ? $abstractProductEntity->getSpyProducts(): [];
-
-            if (!$concreateProductEntities || $concreateProductEntities->count() === 1) {
-                $priceProductTransfers[] = $priceProductTransfer;
-
-                continue;
-            }
-
-            return array_merge(
-                $priceProductTransfers,
-                $this->duplicatePriceProductTransferPerProductEntity($priceProductTransfer, $concreateProductEntities)
-            );
-        }
-
-        return $priceProductTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransferTemplate
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProduct[] $concreateProductEntities
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected function duplicatePriceProductTransferPerProductEntity(PriceProductTransfer $priceProductTransferTemplate, ObjectCollection $concreateProductEntities): array
-    {
-        $priceProductTransfers = [];
-
-        foreach ($concreateProductEntities as $concreateProductEntitity) {
-            $priceProductTransfers[] = (clone $priceProductTransferTemplate)
-                ->setSkuProduct($concreateProductEntitity->getSku());
+            $priceProductTransfers[] = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
         }
 
         return $priceProductTransfers;
