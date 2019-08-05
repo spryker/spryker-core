@@ -14,6 +14,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class TemplateListTable extends AbstractTable
 {
+    protected const TABLE_IDENTIFIER = 'template-list-table';
+
     /**
      * @var \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery
      */
@@ -34,6 +36,8 @@ class TemplateListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
+
         $config = $this->setHeader($config);
 
         $config->setSortable([
@@ -76,14 +80,14 @@ class TemplateListTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $contents = $this->runQuery($this->cmsSlotTemplateQuery, $config);
+        $templates = $this->runQuery($this->cmsSlotTemplateQuery, $config);
         $results = [];
 
-        foreach ($contents as $key => $content) {
+        foreach ($templates as $key => $template) {
             $results[] = [
-                TemplateListConstants::COL_ID => $content[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE],
-                TemplateListConstants::COL_NAME => $content[SpyCmsSlotTemplateTableMap::COL_NAME],
-                TemplateListConstants::COL_DESCRIPTION => $content[SpyCmsSlotTemplateTableMap::COL_DESCRIPTION],
+                TemplateListConstants::COL_ID => $template[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE],
+                TemplateListConstants::COL_NAME => $template[SpyCmsSlotTemplateTableMap::COL_NAME],
+                TemplateListConstants::COL_DESCRIPTION => $template[SpyCmsSlotTemplateTableMap::COL_DESCRIPTION],
             ];
         }
 

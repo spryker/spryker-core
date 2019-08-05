@@ -17,3 +17,8 @@
         {% endblock %}
     {% endembed %}
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-slot-gui-main.js"></script>
+{% endblock %}
