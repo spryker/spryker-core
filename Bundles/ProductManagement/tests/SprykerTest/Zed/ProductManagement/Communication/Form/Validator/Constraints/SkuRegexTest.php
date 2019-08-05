@@ -37,7 +37,7 @@ class SkuRegexTest extends Unit
      *
      * @return void
      */
-    public function testSkuValidation(string $sku, int $violationsExpectedCount)
+    public function testSkuValidation(string $sku, int $violationsExpectedCount): void
     {
         // Assign
         $constraint = new SkuRegex();
@@ -47,13 +47,13 @@ class SkuRegexTest extends Unit
         $violations = $validator->validate($sku, $constraint);
 
         // Assert
-        $this->assertEquals($violationsExpectedCount, count($violations));
+        $this->assertCount($violationsExpectedCount, $violations);
     }
 
     /**
      * @return array
      */
-    public function getSkuValidationTestData()
+    public function getSkuValidationTestData(): array
     {
         return [
             ['abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.', 0],
@@ -63,7 +63,6 @@ class SkuRegexTest extends Unit
             ['b_2_2', 0],
             ['c.3', 0],
             ['c.3.3', 0],
-            // invalid SKU
             ['d 66', 1],
         ];
     }
