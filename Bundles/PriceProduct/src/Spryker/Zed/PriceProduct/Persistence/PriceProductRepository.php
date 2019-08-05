@@ -451,20 +451,38 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductTransfers = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
             $priceProductTransfer = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
-            $concreateProductEntities = $priceProductStoreEntity->getPriceProduct()
-                ->getSpyProductAbstract()
-                ->getSpyProducts();
+            $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+                ->getSpyProductAbstract();
+            $concreateProductEntities = $abstractProductEntity ? $abstractProductEntity->getSpyProducts(): [];
 
-            if ($concreateProductEntities->count() === 1) {
+            if (!$concreateProductEntities || $concreateProductEntities->count() === 1) {
                 $priceProductTransfers[] = $priceProductTransfer;
 
                 continue;
             }
 
-            foreach ($concreateProductEntities as $concreateProductEntitity) {
-                $priceProductTransferTemplate = clone $priceProductTransfer;
-                $priceProductTransfers[] = $priceProductTransferTemplate->setSkuProduct($concreateProductEntitity->getSku());
-            }
+            return array_merge(
+                $priceProductTransfers,
+                $this->duplicatePriceProductTransferPerProductEntity($priceProductTransfer, $concreateProductEntities)
+            );
+        }
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransferTemplate
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProduct[] $concreateProductEntities
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function duplicatePriceProductTransferPerProductEntity(PriceProductTransfer $priceProductTransferTemplate, ObjectCollection $concreateProductEntities): array
+    {
+        $priceProductTransfers = [];
+
+        foreach ($concreateProductEntities as $concreateProductEntitity) {
+            $priceProductTransfers[] = (clone $priceProductTransferTemplate)
+                ->setSkuProduct($concreateProductEntitity->getSku());
         }
 
         return $priceProductTransfers;
