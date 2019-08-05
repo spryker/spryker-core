@@ -1,0 +1,19 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Overview of Slots' | trans %}
+{% endif %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Store Page Templates' | trans }}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ templates | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
