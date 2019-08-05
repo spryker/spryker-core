@@ -410,7 +410,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 
         return $this->getFactory()
             ->createPriceProductMapper()
-            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities, $concreteSkus);
     }
 
     /**
