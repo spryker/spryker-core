@@ -81,30 +81,30 @@ class PriceProductMapper
     protected function hasSeveralConcretesInSameAbstract(SpyPriceProductStore $priceProductStoreEntity): bool
     {
         $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
-            ->getSpyProductAbstract();
-        $concreateProductEntities = $abstractProductEntity ? $abstractProductEntity->getSpyProducts() : new ObjectCollection();
-
-        return $concreateProductEntities->count() !== 1;
+            ->getSpyProductAbstract()
+            ->getSpyProducts()
+            ->count() !== 1;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransferTemplate
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function duplicatePriceProductTransferPerProductEntity(
         array $priceProductTransfers,
         SpyPriceProductStore $priceProductStoreEntity,
-        PriceProductTransfer $priceProductTransferTemplate
+        PriceProductTransfer $priceProductTransfer
     ): array {
         $concreateProductEntities = $priceProductStoreEntity->getPriceProduct()
             ->getSpyProductAbstract()
             ->getSpyProducts();
 
         foreach ($concreateProductEntities as $concreateProductEntitity) {
-            $priceProductTransfers[] = (clone $priceProductTransferTemplate)
+            $priceProductTransfers[] = (new PriceProductTransfer())
+                ->fromArray($priceProductTransfer->toArray())
                 ->setSkuProduct($concreateProductEntitity->getSku());
         }
 
