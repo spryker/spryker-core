@@ -11,9 +11,10 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 
 /**
+ * @deprecated Use `Spryker\Client\StorageRedis\Plugin\StorageRedisScanPlugin` which replaces `KEYS` with `SCAN` command instead.
+ *
  * - The methods `getKeys()` and `getCountItems()` uses Redis `KEYS` command which should only be used in production environments with extreme care.
- * - Use `Spryker\Client\StorageRedis\Plugin\StorageRedisScanPlugin` which replaces `KEYS` with `SCAN` command instead
- * - Be aware that `SCAN` offers limited guarantees about the returned elements.
+ * - Be aware that `SCAN` offers limited guarantees about the returned elements because it's non-blocking command.
  *
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()
  * @method \Spryker\Client\StorageRedis\StorageRedisConfig getConfig()
@@ -149,19 +150,12 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      * @api
      *
      * @param string $pattern
-     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys(string $pattern, ?int $limit = null): array
+    public function getKeys(string $pattern): array
     {
-        $keys = $this->getClient()->getKeys($pattern);
-
-        if ($limit !== null) {
-            return array_slice($keys, 0, $limit);
-        }
-
-        return $keys;
+        return $this->getClient()->getKeys($pattern);
     }
 
     /**

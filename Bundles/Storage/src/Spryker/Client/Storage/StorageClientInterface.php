@@ -95,11 +95,21 @@ interface StorageClientInterface
      * @api
      *
      * @param string $pattern
-     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys($pattern = '*', ?int $limit = null);
+    public function getKeys($pattern);
+
+    /**
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int|null $cursor
+     *
+     * @return array [int, string[]]
+     */
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array;
 
     /**
      * @api

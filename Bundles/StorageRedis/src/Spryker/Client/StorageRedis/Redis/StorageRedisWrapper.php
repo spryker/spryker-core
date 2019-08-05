@@ -172,7 +172,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      * @param int $limit
      * @param int $cursor
      *
-     * @return array [string, string[]]
+     * @return array [int, string[]]
      */
     public function scanKeys(string $pattern, int $limit, int $cursor): array
     {
@@ -183,7 +183,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $result = array_merge($result, $keys);
         } while ($nextCursor > 0 && count($result) < $limit);
 
-        return [$cursor, array_unique($result)];
+        return [(int)$nextCursor, array_unique($result)];
     }
 
     /**

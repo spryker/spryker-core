@@ -95,11 +95,10 @@ interface ServiceInterface
      * @api
      *
      * @param string $pattern
-     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys($pattern, ?int $limit = null);
+    public function getKeys($pattern);
 
     /**
      * @api

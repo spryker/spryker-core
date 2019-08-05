@@ -9,6 +9,7 @@ namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,14 +48,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedDecodedValues;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface|null
      */
     public static $service;
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface $service
      */
     public function getService()
     {
@@ -374,13 +375,30 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      * @api
      *
      * @param string $pattern
-     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys($pattern = '*', ?int $limit = null)
+    public function getKeys($pattern = '*')
     {
-        return $this->getService()->getKeys($pattern, $limit);
+        return $this->getService()->getKeys($pattern);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int|null $cursor
+     *
+     * @return array [int, string[]]
+     */
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array
+    {
+        if ($this->getService() instanceof StorageScanPluginInterface) {
+            return $this->getService()->scanKeys($pattern, $limit, $cursor);
+        }
+
+        return [0, array_slice($this->getKeys($pattern), 0, $limit)];
     }
 
     /**

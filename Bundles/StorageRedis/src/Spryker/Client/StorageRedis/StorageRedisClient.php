@@ -159,7 +159,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      * @param int $limit
      * @param int $cursor
      *
-     * @return array [string, string[]]
+     * @return array [int, string[]]
      */
     public function scanKeys(string $pattern, int $limit, int $cursor): array
     {

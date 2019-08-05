@@ -120,16 +120,14 @@ interface StoragePluginInterface
     /**
      * Specification:
      * - Gets all keys filtered by pattern.
-     * - Limit the results (optional).
      *
      * @api
      *
      * @param string $pattern
-     * @param int|null $limit
      *
      * @return array
      */
-    public function getKeys(string $pattern, ?int $limit = null): array;
+    public function getKeys(string $pattern): array;
 
     /**
      * Specification:
