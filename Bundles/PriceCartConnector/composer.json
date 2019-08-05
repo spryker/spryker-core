@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cart": "^7.2.0",
     "spryker/cart-extension": "^2.4.0 || ^4.0.0",
     "spryker/currency": "^3.0.0",
     "spryker/kernel": "^3.30.0",
@@ -15,10 +14,14 @@
   },
   "require-dev": {
     "spryker/calculation": "*",
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins."
   },
   "autoload": {
     "psr-4": {
