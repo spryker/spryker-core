@@ -23,7 +23,7 @@ class CatalogSearchRequestParametersIntegerRestRequestValidatorPlugin extends Ab
      * - Validates Rest API request with type catalog search.
      * - Gets parameter names to validate from module config file.
      * - Parameter names specified in dot notation (e.g rating.min checks rating[min] parameter from http request).
-     * - Validates parameters to be an integers.
+     * - Validates parameters to be integers.
      *
      * @api
      *

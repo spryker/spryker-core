@@ -49,15 +49,15 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
 
         $requestParameters = $restRequest->getHttpRequest()->query->all();
         $restErrorCollectionTransfer = new RestErrorCollectionTransfer();
-        foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $dotNotatedIntegerRequestParameterKey) {
+        foreach ($this->catalogSearchRestApiConfig->getIntegerRequestParameterNames() as $integerRequestParameterName) {
             $requestParameterValue = $this->getArrayElementByDotNotation(
-                $dotNotatedIntegerRequestParameterKey,
+                $integerRequestParameterName,
                 $requestParameters
             );
 
             if (!$this->isValidInteger($requestParameterValue)) {
                 $restErrorCollectionTransfer->addRestError(
-                    $this->createErrorMessageTransfer($dotNotatedIntegerRequestParameterKey)
+                    $this->createErrorMessageTransfer($integerRequestParameterName)
                 );
             }
         }
