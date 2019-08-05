@@ -80,8 +80,14 @@ class PriceProductMapper
      */
     protected function hasSeveralConcretesInSameAbstract(SpyPriceProductStore $priceProductStoreEntity): bool
     {
-        return $priceProductStoreEntity->getPriceProduct()
-            ->getSpyProductAbstract()
+        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract();
+
+        if (!$abstractProductEntity) {
+            return false;
+        }
+
+        return $abstractProductEntity
             ->getSpyProducts()
             ->count() !== 1;
     }
