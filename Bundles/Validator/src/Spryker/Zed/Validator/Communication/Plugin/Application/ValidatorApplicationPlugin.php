@@ -18,12 +18,10 @@ use Symfony\Component\Validator\ValidatorBuilderInterface;
 class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_VALIDATOR = 'validator';
-    protected const SERVICE_VALIDATOR_SERVICE_IDS = 'validator.validator_service_ids';
 
     /**
      * {@inheritdoc}
      * - Adds `validator` service.
-     * - Adds `validator.validator_service_ids` service.
      *
      * @api
      *
@@ -33,22 +31,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        //$container = $this->addServiceValidatorIds($container);
         $container = $this->addValidatorService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
-    protected function addServiceValidatorIds(ContainerInterface $container): ContainerInterface
-    {
-        $container->set(static::SERVICE_VALIDATOR_SERVICE_IDS, function () {
-            return [];
-        });
 
         return $container;
     }
