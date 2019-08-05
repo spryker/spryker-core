@@ -22,7 +22,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
 
     /**
      * {@inheritdoc}
-     * - Adds global `validator` service.
+     * - Adds `validator` service.
      * - Adds `validator.validator_service_ids` service.
      *
      * @api
@@ -33,7 +33,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container = $this->addServiceValidatorIds($container);
+        //$container = $this->addServiceValidatorIds($container);
         $container = $this->addValidatorService($container);
 
         return $container;
@@ -46,7 +46,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     protected function addServiceValidatorIds(ContainerInterface $container): ContainerInterface
     {
-        $container->setGlobal(static::SERVICE_VALIDATOR_SERVICE_IDS, function () {
+        $container->set(static::SERVICE_VALIDATOR_SERVICE_IDS, function () {
             return [];
         });
 
@@ -60,7 +60,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     protected function addValidatorService(ContainerInterface $container): ContainerInterface
     {
-        $container->setGlobal(static::SERVICE_VALIDATOR, function (ContainerInterface $container) {
+        $container->set(static::SERVICE_VALIDATOR, function (ContainerInterface $container) {
             $validatorBuilder = $this->getFactory()->createValidatorBuilder();
 
             $validatorBuilder = $this->extendValidator($validatorBuilder, $container);

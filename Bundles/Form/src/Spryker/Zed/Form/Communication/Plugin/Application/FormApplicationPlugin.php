@@ -54,7 +54,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function addFormFactory(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_FORM_FACTORY, function (ContainerInterface $container) {
+        $container->set(static::SERVICE_FORM_FACTORY, function () use ($container) {
             $formFactoryBuilder = $this->getFactory()
                 ->createFormFactoryBuilder();
 
@@ -75,7 +75,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function addFormCsrfProvider(ContainerInterface $container): ContainerInterface
     {
-        $container->setGlobal(static::SERVICE_FORM_CSRF_PROVIDER, function (ContainerInterface $container) {
+        $container->set(static::SERVICE_FORM_CSRF_PROVIDER, function (ContainerInterface $container) {
             return $this->createCsrfTokenManager($container);
         });
 

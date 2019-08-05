@@ -42,8 +42,6 @@ class TranslatorApplicationPlugin extends AbstractPlugin implements ApplicationP
             return $this->getFactory()->getTranslatorPlugin();
         });
 
-        $container->configure(static::SERVICE_TRANSLATOR, ['isGlobal' => true]);
-
         return $container;
     }
 }
