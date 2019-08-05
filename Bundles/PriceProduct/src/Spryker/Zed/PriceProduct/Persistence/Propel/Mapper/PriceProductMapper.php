@@ -47,7 +47,7 @@ class PriceProductMapper
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     * @param int[] $allowedProductSkus
+     * @param string[] $allowedProductSkus
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -98,7 +98,7 @@ class PriceProductMapper
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param int[] $allowedProductSkus
+     * @param string[] $allowedProductSkus
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
