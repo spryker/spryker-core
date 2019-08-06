@@ -120,7 +120,11 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
     protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): QuoteTransfer
     {
         if (!count($targetQuoteTransfer->getItems())) {
-            return $sourceQuoteTransfer;
+            $quoteTransfer = (new QuoteTransfer())
+                ->fromArray($targetQuoteTransfer->modifiedToArray(), true)
+                ->fromArray($sourceQuoteTransfer->modifiedToArray(), true);
+
+            return $quoteTransfer;
         }
         $quoteMergeRequestTransfer = new QuoteMergeRequestTransfer();
         $quoteMergeRequestTransfer
