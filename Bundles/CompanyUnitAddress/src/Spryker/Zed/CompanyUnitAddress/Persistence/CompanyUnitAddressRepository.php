@@ -50,7 +50,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use `getPaginatedAddress()` and `getRelationToBusinessUnit()` instead.
+     * @deprecated Use `getPaginatedUnitAddress()` and `getRelationToBusinessUnit()` instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -104,7 +104,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    public function getPaginatedAddress(
+    public function getPaginatedUnitAddress(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
         $companyUnitAddressQuery = $this->getFactory()
@@ -115,15 +115,27 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
             $companyUnitAddressQuery->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
         }
 
+        if ($criteriaFilterTransfer->getIdCompanyBusinessUnit() !== null) {
+            $companyUnitAddressQuery->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
+                ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
+                ->endUse();
+        }
+
         $companyUnitAddressCollection = $this->buildQueryFromCriteria($companyUnitAddressQuery, $criteriaFilterTransfer->getFilter());
         /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
         $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($companyUnitAddressCollection, $criteriaFilterTransfer->getPagination());
 
-        $companyUnitAddressCollectionTransfer = $this->getFactory()
-            ->createCompanyUnitAddressMapper()
-            ->mapCompanyUnitAddressEntityTransfersToCompanyUnitAddressCollectionTransfer(
-                $companyUnitAddressEntityTransfers
-            );
+        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
+        foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
+            $unitAddressTransfer = $this->getFactory()
+                ->createCompanyUnitAddressMapper()
+                ->mapEntityTransferToCompanyUnitAddressTransfer(
+                    $companyUnitAddressEntityTransfer,
+                    new CompanyUnitAddressTransfer()
+                );
+
+            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($unitAddressTransfer);
+        }
 
         $companyUnitAddressCollectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
@@ -131,41 +143,27 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param array $companyUnitAddressIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @return array
      */
     public function getRelationToBusinessUnit(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer,
-        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUnitAddressCollectionTransfer {
-        $companyUnitAddressQuery = $this->getFactory()
-            ->createCompanyUnitAddressQuery()
-            ->innerJoinWithCountry()
-            ->filterByIdCompanyUnitAddress_In(
-                $this->getCompanyUnitAddressIds($companyUnitAddressCollectionTransfer)
+        array $companyUnitAddressIds
+    ): array {
+        $companyBusinessUnitQuery = $this->getFactory()
+            ->createCompanyUnitAddressToCompanyBusinessUnitQuery()
+            ->filterByFkCompanyUnitAddress_In(
+                $companyUnitAddressIds
             )
-            ->leftJoinWithSpyCompanyUnitAddressToCompanyBusinessUnit()
-                ->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-            ->leftJoinWithCompanyBusinessUnit()
-            ->endUse();
+            ->leftJoinWithCompanyBusinessUnit();
 
-        if ($criteriaFilterTransfer->getIdCompanyBusinessUnit() !== null) {
-            $companyUnitAddressQuery->useSpyCompanyUnitAddressToCompanyBusinessUnitQuery()
-                ->filterByFkCompanyBusinessUnit($criteriaFilterTransfer->getIdCompanyBusinessUnit())
-                ->endUse();
-        }
+        $companyBusinessUnitEntity = $this->buildQueryFromCriteria($companyBusinessUnitQuery)->find();
 
-        $companyUnitAddressEntityTransfers = $this->buildQueryFromCriteria($companyUnitAddressQuery)->find();
-
-        $companyUnitAddressCollectionTransfer = $this->getFactory()
+        $companyBusinessUnitArray = $this->getFactory()
             ->createCompanyUnitAddressMapper()
-            ->mapCompanyUnitAddressEntityTransfersToCompanyUnitAddressCollectionTransfer(
-                $companyUnitAddressEntityTransfers
-            );
+            ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitArray($companyBusinessUnitEntity);
 
-        return $companyUnitAddressCollectionTransfer;
+        return $companyBusinessUnitArray;
     }
 
     /**
@@ -263,21 +261,5 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         return $query->find();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCompanyUnitAddressIds(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
-    ): array {
-        $companyUnitAddressIds = [];
-        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
-            $companyUnitAddressIds[] = $companyUnitAddress->getIdCompanyUnitAddress();
-        }
-
-        return $companyUnitAddressIds;
     }
 }

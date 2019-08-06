@@ -29,7 +29,7 @@ interface CompanyUnitAddressRepositoryInterface
      * Specification:
      * - Returns the business units for the given company and filters.
      *
-     * @deprecated Use `getPaginatedAddress()` and `getRelationToBusinessUnit()` instead.
+     * @deprecated Use `getPaginatedUnitAddress()` and `getRelationToBusinessUnit()` instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -44,20 +44,18 @@ interface CompanyUnitAddressRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    public function getPaginatedAddress(
+    public function getPaginatedUnitAddress(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $collectionTransfer
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param array $companyUnitAddressIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @return array
      */
     public function getRelationToBusinessUnit(
-        CompanyUnitAddressCollectionTransfer $collectionTransfer,
-        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUnitAddressCollectionTransfer;
+        array $companyUnitAddressIds
+    ): array;
 
     /**
      * @param int $idCompanyUnitAddress

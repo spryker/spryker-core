@@ -96,7 +96,7 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
 
         return $this->getFactory()
             ->createCompanyBusinessUnitAddressReader()
-            ->getCompanyBusinessUnitAddressesByFilter($criteriaFilterTransfer);
+            ->getCompanyBusinessUnitAddressesByСriteriaFilter($criteriaFilterTransfer);
     }
 
     /**

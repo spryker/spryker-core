@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
@@ -59,11 +58,11 @@ interface CompanyUnitAddressMapperInterface
     ): SpyCompanyUnitAddress;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers
+     * @param array $companyBusinessUnitEntity
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @return array
      */
-    public function mapCompanyUnitAddressEntityTransfersToCompanyUnitAddressCollectionTransfer(
-        array $companyUnitAddressEntityTransfers
-    ): CompanyUnitAddressCollectionTransfer;
+    public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitArray(
+        array $companyBusinessUnitEntity
+    ): array;
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
@@ -115,22 +114,24 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers
+     * @param array $companyBusinessUnitEntity
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     * @return array
      */
-    public function mapCompanyUnitAddressEntityTransfersToCompanyUnitAddressCollectionTransfer(
-        array $companyUnitAddressEntityTransfers
-    ): CompanyUnitAddressCollectionTransfer {
-        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
-        foreach ($companyUnitAddressEntityTransfers as $companyUnitAddressEntityTransfer) {
-            $companyUnitAddressTransfer = $this->mapEntityTransferToCompanyUnitAddressTransfer(
-                $companyUnitAddressEntityTransfer,
-                new CompanyUnitAddressTransfer()
-            );
-            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress($companyUnitAddressTransfer);
+    public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitArray(
+        array $companyBusinessUnitEntity
+    ): array {
+        $companyBusinessUnitArray = [];
+        foreach ($companyBusinessUnitEntity as $companyBusinessUnit) {
+            $idCompanyUnitAddress = $companyBusinessUnit->getFkCompanyUnitAddress();
+            if (empty($companyBusinessUnitArray[$idCompanyUnitAddress])) {
+                $companyBusinessUnitArray[$idCompanyUnitAddress] = new CompanyBusinessUnitCollectionTransfer();
+            }
+            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())
+                ->fromArray($companyBusinessUnit->toArray(), true);
+            $companyBusinessUnitArray[$idCompanyUnitAddress]->addCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
-        return $companyUnitAddressCollectionTransfer;
+        return $companyBusinessUnitArray;
     }
 }
