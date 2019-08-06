@@ -49,9 +49,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      */
     public function getSalesOrderItemsBySkuAndStatesNames(array $states, string $sku, ?StoreTransfer $storeTransfer): array
     {
-        $stateNames = array_unique(array_map(function (State $state) {
-            return $state->getName();
-        }, $states));
+        $stateNames = array_unique($this->mapStatesToStateNames($states));
 
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
@@ -85,5 +83,17 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\State[] $states
+     *
+     * @return string[]
+     */
+    protected function mapStatesToStateNames(array $states): array
+    {
+        return array_map(function (State $state) {
+            return $state->getName();
+        }, $states);
     }
 }
