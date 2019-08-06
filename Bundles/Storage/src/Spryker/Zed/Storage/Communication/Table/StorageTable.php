@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Storage\Communication\Table;
 
+use Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException;
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -68,7 +69,12 @@ class StorageTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        [$_cursor, $keys] = $this->storageClient->scanKeys($this->getSearchTerm(), static::DEFAULT_PAGE_LENGTH);
+        try {
+            $keys = $this->storageClient->scanKeys($this->getSearchTerm(), static::DEFAULT_PAGE_LENGTH)->getKeys();
+        } catch (InvalidStorageScanPluginInterfaceException $exception) {
+            $keys = array_slice($this->storageClient->getKeys($this->getSearchTerm()), 0, static::DEFAULT_PAGE_LENGTH);
+        }
+
         $keys = array_map(function (string $key) {
             return str_replace(static::KV_PREFIX, '', $key);
         }, $keys);

@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\StorageExtension\Dependency\Plugin;
 
-interface StorageScanPluginInterface
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+
+interface StorageScanPluginInterface extends StoragePluginInterface
 {
     /**
      * Specification:
@@ -21,7 +23,7 @@ interface StorageScanPluginInterface
      * @param int $limit
      * @param int|null $cursor
      *
-     * @return array [int, string[]]
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
      */
-    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array;
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer;
 }

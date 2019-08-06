@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\StorageRedis\Redis;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+
 interface StorageRedisWrapperInterface
 {
     /**
@@ -84,9 +86,9 @@ interface StorageRedisWrapperInterface
      * @param int $limit
      * @param int $cursor
      *
-     * @return array [int, string[]]
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
      */
-    public function scanKeys(string $pattern, int $limit, int $cursor): array;
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer;
 
     /**
      * @return void

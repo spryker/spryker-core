@@ -8,6 +8,7 @@
 namespace Spryker\Client\StorageRedis\Redis;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
 use Spryker\Client\StorageRedis\Exception\StorageRedisException;
 use Spryker\Client\StorageRedis\StorageRedisConfig;
@@ -172,9 +173,9 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      * @param int $limit
      * @param int $cursor
      *
-     * @return array [int, string[]]
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
      */
-    public function scanKeys(string $pattern, int $limit, int $cursor): array
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer
     {
         $result = [];
         $nextCursor = null;
@@ -183,7 +184,9 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
             $result = array_merge($result, $keys);
         } while ($nextCursor > 0 && count($result) < $limit);
 
-        return [(int)$nextCursor, array_unique($result)];
+        return (new StorageScanResultTransfer())
+            ->setCursor((int)$nextCursor)
+            ->setKeys(array_unique($result));
     }
 
     /**

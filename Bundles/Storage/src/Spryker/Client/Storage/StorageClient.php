@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\Storage;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface;
 use Spryker\Shared\Storage\StorageConstants;
@@ -390,15 +392,17 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      * @param int $limit
      * @param int|null $cursor
      *
-     * @return array [int, string[]]
+     * @throws \Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
      */
-    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer
     {
-        if ($this->getService() instanceof StorageScanPluginInterface) {
-            return $this->getService()->scanKeys($pattern, $limit, $cursor);
+        if (!$this->getService() instanceof StorageScanPluginInterface) {
+            throw new InvalidStorageScanPluginInterfaceException();
         }
 
-        return [0, array_slice($this->getKeys($pattern), 0, $limit)];
+        return $this->getService()->scanKeys($pattern, $limit, $cursor);
     }
 
     /**

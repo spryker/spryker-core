@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Storage;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+
 /**
  * @method void persistCacheForRequest(\Symfony\Component\HttpFoundation\Request $request, $storageCacheStrategyName = \Spryker\Shared\Storage\StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE)
  */
@@ -107,9 +109,9 @@ interface StorageClientInterface
      * @param int $limit
      * @param int|null $cursor
      *
-     * @return array [int, string[]]
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
      */
-    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): array;
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer;
 
     /**
      * @api
