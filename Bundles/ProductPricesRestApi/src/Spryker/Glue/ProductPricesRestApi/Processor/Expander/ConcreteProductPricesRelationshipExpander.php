@@ -8,10 +8,13 @@
 namespace Spryker\Glue\ProductPricesRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\PermissionAwareTrait;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface;
 
 class ConcreteProductPricesRelationshipExpander implements ConcreteProductPricesRelationshipExpanderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface
      */
@@ -33,6 +36,10 @@ class ConcreteProductPricesRelationshipExpander implements ConcreteProductPrices
      */
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
+        if (!$this->can('SeePricePermissionPlugin')) {
+            return $resources;
+        }
+
         foreach ($resources as $resource) {
             $concreteProductPricesResource = $this->concreteProductPricesReader
                 ->findConcreteProductPricesBySku($resource->getId(), $restRequest);
