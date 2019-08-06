@@ -24,7 +24,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
-     * - Returns an array of event subscribers
+     * - Returns an array of event subscribers.
      *
      * @api
      *
@@ -34,7 +34,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification:
-     * - Returns an array of ApplicationPlugins
+     * - Returns an array of ApplicationPlugins.
      *
      * @api
      *
@@ -44,7 +44,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification:
-     * - Returns an array of ServiceProviders
+     * - Returns an array of ServiceProviders.
      *
      * @api
      *
@@ -56,7 +56,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
-     * - Executes pre-run plugins which provided in ConsoleDependencyProvider
+     * - Executes pre-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api
      *
@@ -69,7 +69,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
-     * - Executes pos-run plugins which provided in ConsoleDependencyProvider
+     * - Executes pos-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api
      *
