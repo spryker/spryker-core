@@ -104,6 +104,9 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     {
         $productConcreteProductListStorageTransfers = [];
         foreach ($productConcreteProductListStorageData as $data) {
+            if (!$data) {
+                continue;
+            }
             $productConcreteProductListStorageTransfers[] = $this->mapProductConcreteProductListStorage(json_decode($data, true));
         }
 

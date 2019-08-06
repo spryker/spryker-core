@@ -116,6 +116,9 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     {
         $productAbstractProductListStorageTransfers = [];
         foreach ($productAbstractProductListStorageData as $data) {
+            if (!$data) {
+                continue;
+            }
             $productAbstractProductListStorageTransfers[] = $this->mapProductAbstractProductListStorage(json_decode($data, true));
         }
 
