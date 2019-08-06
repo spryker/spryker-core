@@ -179,6 +179,7 @@ class Reservation implements ReservationInterface
                 continue;
             }
 
+            $itemTransfer->requireQuantity();
             $sumQuantity += $itemTransfer->getQuantity();
         }
 
@@ -210,7 +211,6 @@ class Reservation implements ReservationInterface
         $itemTransfer
             ->requireProcess()
             ->requireState()
-            ->requireQuantity()
             ->getState()
                 ->requireName();
     }
