@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotGui\Communication;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Spryker\Zed\CmsSlotGui\CmsSlotGuiDependencyProvider;
+use Spryker\Zed\CmsSlotGui\Communication\Dependency\CmsSlotGuiToCmsSlotFacadeInterface;
 use Spryker\Zed\CmsSlotGui\Communication\Table\SlotListTable;
 use Spryker\Zed\CmsSlotGui\Communication\Table\TemplateListTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -37,6 +38,14 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsSlotQuery(),
             $idSlotTemplate
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotGui\Communication\Dependency\CmsSlotGuiToCmsSlotFacadeInterface
+     */
+    public function getCmsSlotFacade(): CmsSlotGuiToCmsSlotFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsSlotGuiDependencyProvider::FACADE_CMS_SLOT);
     }
 
     /**

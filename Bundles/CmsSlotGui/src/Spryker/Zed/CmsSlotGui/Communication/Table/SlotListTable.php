@@ -52,7 +52,7 @@ class SlotListTable extends AbstractTable
             SlotListConstants::COL_KEY,
             SlotListConstants::COL_NAME,
             SlotListConstants::COL_OWNERSHIP,
-            SlotListConstants::COL_STATUS,
+//            SlotListConstants::COL_STATUS,
         ]);
 
         $config->setDefaultSortField(SlotListConstants::COL_KEY, TableConfiguration::SORT_ASC);
@@ -85,8 +85,8 @@ class SlotListTable extends AbstractTable
             SlotListConstants::COL_NAME => 'Name',
             SlotListConstants::COL_DESCRIPTION => 'Description',
             SlotListConstants::COL_OWNERSHIP => 'Ownership',
-            SlotListConstants::COL_STATUS => 'Status',
-            SlotListConstants::COL_ACTIONS => 'Actions',
+//            SlotListConstants::COL_STATUS => 'Status',
+//            SlotListConstants::COL_ACTIONS => 'Actions',
         ];
 
         $config->setHeader($header);
@@ -119,8 +119,8 @@ class SlotListTable extends AbstractTable
                 SlotListConstants::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
                 SlotListConstants::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
                 SlotListConstants::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
-                SlotListConstants::COL_STATUS => $this->getStatus($slot),
-                SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
+//                SlotListConstants::COL_STATUS => $this->getStatus($slot),
+//                SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
             ];
         }
 
@@ -139,10 +139,18 @@ class SlotListTable extends AbstractTable
             'Edit'
         );
 
-        $activateButton = $this->generateViewButton('#', 'Activate');
+        $activateButton = $this->generateButton(
+            '/cms-slot-gui/activate-slot/activate?id-cms-slot=' . $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
+            'Activate',
+            ['class' => 'btn-view slot-activation']
+        );
 
         if ($slot[SlotListConstants::COL_STATUS]) {
-            $activateButton = $this->generateRemoveButton('#', 'Deactivate');
+            $activateButton = $this->generateButton(
+                '/cms-slot-gui/activate-slot/deactivate?id-cms-slot=' . $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
+                'Deactivate',
+                ['class' => 'btn-danger slot-activation']
+            );
         }
 
         $buttons[] = $activateButton;
