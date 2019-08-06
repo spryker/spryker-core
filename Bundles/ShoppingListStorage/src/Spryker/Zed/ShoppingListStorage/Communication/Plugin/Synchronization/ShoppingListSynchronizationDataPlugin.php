@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -61,12 +62,7 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
         $shoppingListCustomerStorageEntities = $this->getRepository()->findShoppingListCustomerStorageEntitiesByIds($ids);
 
         foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $shoppingListCustomerStorageEntity->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($shoppingListCustomerStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($shoppingListCustomerStorageEntity);
         }
 
         return $synchronizationDataTransfers;
@@ -106,5 +102,21 @@ class ShoppingListSynchronizationDataPlugin extends AbstractPlugin implements Sy
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getShoppingListSynchronizationPoolName();
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    protected function createSynchronizationDataTransfer(
+        SpyShoppingListCustomerStorage $shoppingListCustomerStorageEntity
+    ): SynchronizationDataTransfer {
+        /** @var string $shoppingListCustomerStorageData */
+        $shoppingListCustomerStorageData = $shoppingListCustomerStorageEntity->getData();
+
+        return (new SynchronizationDataTransfer())
+            ->setData($shoppingListCustomerStorageData)
+            ->setKey($shoppingListCustomerStorageEntity->getKey());
     }
 }
