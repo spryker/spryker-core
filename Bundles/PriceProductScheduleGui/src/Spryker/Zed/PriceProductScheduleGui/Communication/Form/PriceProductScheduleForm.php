@@ -9,8 +9,12 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 
-use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -19,8 +23,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PriceProductScheduleForm extends AbstractType
 {
-    protected const FIELD_PRICE_TYPE = 'priceProduct';
-    protected const FIELD_STORE = 'store';
+    public const FIELD_PRICE_PRODUCT = 'priceProduct';
+    public const FIELD_STORE = 'store';
+    public const FIELD_CURRENCY = 'currency';
+    public const FIELD_SUBMIT = 'submit';
+    public const FIELD_ACTIVE_FROM = 'activeFrom';
+    public const FIELD_ACTIVE_TO = 'activeTo';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -29,18 +38,20 @@ class PriceProductScheduleForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addPriceType($builder)
-            ->addStore($builder);
+        $this->addStore($builder)
+            ->addCurrency($builder)
+            ->addPriceProduct($builder)
+            ->addCurrency($builder)
+            ->addActiveFrom($builder)
+            ->addActiveTo($builder)
+            ->addSubmitField($builder);
     }
 
-    protected function addPriceType(FormBuilderInterface $builder)
+    protected function addPriceProduct(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PRICE_TYPE, Select2ComboBoxType::class, [
-            'label' => 'Price type',
-            'choices' => array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getPriceTypeValues()),
-            'constraints' => [
-                new NotBlank(),
-            ],
+        $builder->add(static::FIELD_PRICE_PRODUCT, PriceProductSubForm::class, [
+            'data_class' => PriceProductTransfer::class,
+            'label' => false,
         ]);
 
         return $this;
@@ -48,12 +59,80 @@ class PriceProductScheduleForm extends AbstractType
 
     protected function addStore(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_STORE, Select2ComboBoxType::class, [
-            'label' => 'Store',
-            'choices' => array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getStoreValues()),
+        $builder->add(static::FIELD_STORE, StoreSubForm::class, [
+            'data_class' => StoreTransfer::class,
+            'label' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSubmitField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_SUBMIT, SubmitType::class, [
+                'label' => 'Save',
+                'attr' => [
+                    'class' => 'btn btn-info',
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCurrency(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CURRENCY, CurrencySubForm::class, [
+            'data_class' => CurrencyTransfer::class,
+            'label' => false
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addActiveFrom(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ACTIVE_FROM, DateTimeType::class, [
+            'date_widget' => 'single_text',
+            'date_format' => 'yyyy-mm-dd',
+            'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
-            ],
+            ]
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addActiveTo(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ACTIVE_TO, DateTimeType::class, [
+            'date_widget' => 'single_text',
+            'date_format' => 'yyyy-mm-dd',
+            'time_widget' => 'choice',
+            'constraints' => [
+                new NotBlank(),
+            ]
         ]);
 
         return $this;

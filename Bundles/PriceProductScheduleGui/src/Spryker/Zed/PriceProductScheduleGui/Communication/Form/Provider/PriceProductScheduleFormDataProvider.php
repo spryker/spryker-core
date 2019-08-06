@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider;
 
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
@@ -25,18 +27,29 @@ class PriceProductScheduleFormDataProvider
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
-        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
+        PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
     )
     {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
+        $this->currencyFacade = $currencyFacade;
     }
 
+    /**
+     * @return array
+     */
     public function getPriceTypeValues(): array
     {
         $priceTypes = $this->priceProductFacade->getPriceTypeValues();
@@ -49,7 +62,10 @@ class PriceProductScheduleFormDataProvider
         return $result;
     }
 
-    public function getStoreValues()
+    /**
+     * @return array
+     */
+    public function getStoreValues(): array
     {
         $storeCollection = $this->storeFacade->getAllStores();
         $result = [];
@@ -61,8 +77,44 @@ class PriceProductScheduleFormDataProvider
         return $result;
     }
 
+    /**
+     * @param int|null $idSTore
+     *
+     * @return array
+     */
+    public function getCurrencyValues(?int $idStore): array
+    {
+
+        if ($idStore === null) {
+            return [];
+        }
+
+        $result = [];
+        $storeWithCurrenciesCollection = $this->currencyFacade->getAllStoresWithCurrencies();
+        foreach ($storeWithCurrenciesCollection as $storeWithCurrencyTransfer) {
+            if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
+                continue;
+            }
+            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
+                $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getName();
+            }
+        }
+
+        return $result;
+    }
+
     public function getData(): PriceProductScheduleTransfer
     {
         return new PriceProductScheduleTransfer();
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return [
+            'data_class' => PriceProductScheduleTransfer::class,
+        ];
     }
 }

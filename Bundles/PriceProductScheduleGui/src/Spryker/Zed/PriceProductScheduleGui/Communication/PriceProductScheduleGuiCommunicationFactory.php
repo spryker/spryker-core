@@ -34,6 +34,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ViewExpanderTableFactoryInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
@@ -200,7 +201,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleFormDataProvider(
             $this->getPriceProductFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade()
         );
     }
 
@@ -209,9 +211,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return $this->getFormFactory()->create(
             PriceProductScheduleForm::class,
             $formDataProvider->getData(),
-            [
-                'data_class' => PriceProductScheduleTransfer::class,
-            ]
+            $formDataProvider->getOptions()
         );
     }
 
@@ -261,5 +261,13 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface
+     */
+    public function getCurrencyFacade(): PriceProductScheduleGuiToCurrencyFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_CURRENCY);
     }
 }

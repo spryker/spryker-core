@@ -1,21 +1,47 @@
-
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Create price product schedule' | trans %}
+{% block section_title title | trans %}
 
 {% block action %}
-    {{ backActionButton(url(app.request.headers.get('referer')~'#tab-content-scheduled_prices'), 'Back to price product schedules' | trans) }}
+    {{ backActionButton(url(app.request.headers.get('referer')~'#tab-content-scheduled_prices'), "Back to the product's scheduled prices" | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price product schedule details' | trans } %}
-
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Scheduled price information' | trans } %}
         {% block widget_content %}
-            {{ form(form, {'method': 'POST'}) }}
+            {{ form_start(form, {'method': 'POST'}) }}
+            {{ form_row(form.store) }}
+            {{ form_row(form.currency) }}
+            {{ form_row(form.priceProduct) }}
+
+            {{ form_label(form.activeFrom) }}
+            <br>
+            {{ form_widget(form.activeFrom) }}
+            <label id="active_from_timezone"></label>
+            {{ form_errors(form.activeFrom) }}
+            <br><br>
+
+            {{ form_label(form.activeTo) }}
+            <br>
+            {{ form_widget(form.activeTo) }}
+            <label id="active_to_timezone"></label>
+            {{ form_errors(form.activeTo) }}
+            <br><br>
+            {{ form_row(form.submit) }}
+
+
+            {{ form_end(form) }}
         {% endblock %}
-
     {% endembed %}
+{% endblock %}
 
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-price-product-schedule-gui-main.js"></script>
+{% endblock %}
 
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-price-product-schedule-gui-main.css"/>
 {% endblock %}

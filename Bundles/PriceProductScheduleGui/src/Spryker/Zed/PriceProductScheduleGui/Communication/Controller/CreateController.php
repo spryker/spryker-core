@@ -21,10 +21,33 @@ class CreateController extends AbstractController
     {
         $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
 
-        $priceProductScheduleForm = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+        $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($form->getData());
+        }
 
         return $this->viewResponse([
-            'form' => $priceProductScheduleForm->createView(),
+            'form' => $form->createView(),
+            'title' => $this->getTitleFromRequest($request),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function getTitleFromRequest(Request $request): string
+    {
+        $idProductAbstract = $request->query->get('idProductAbstract');
+        if ($request->query->get('idProductAbstract') !== null) {
+            return 'Edit Product Abstract: ' . $idProductAbstract;
+        }
+
+        $idProductConcrete = $request->query->get('idProduct');
+
+        return 'Edit Product Concrete: ' . $idProductConcrete;
     }
 }

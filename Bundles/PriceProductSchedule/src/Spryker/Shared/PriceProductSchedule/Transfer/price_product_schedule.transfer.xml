@@ -10,6 +10,8 @@
         <property name="activeTo" type="string"/>
         <property name="isCurrent" type="bool"/>
         <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="PriceProductScheduleCriteriaFilter">
