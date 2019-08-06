@@ -58,11 +58,11 @@ interface CompanyUnitAddressMapperInterface
     ): SpyCompanyUnitAddress;
 
     /**
-     * @param array $companyBusinessUnitEntity
+     * @param array $companyUnitAddressToCompanyBusinessUnitEntities
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[][]
      */
-    public function mapCompanyBusinessUnitEntityToCompanyBusinessUnitArray(
-        array $companyBusinessUnitEntity
+    public function mapEntitiesToCompanyBusinessUnitTransfers(
+        array $companyUnitAddressToCompanyBusinessUnitEntities
     ): array;
 }

@@ -62,15 +62,15 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     public function getCompanyBusinessUnitAddressesByСriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-        $companyUnitAddressCollectionTransfer = $this->repository->getPaginatedUnitAddress($criteriaFilterTransfer);
+        $companyUnitAddressCollectionTransfer = $this->repository->getCompanyBusinessUnitAddressesByСriteriaFilter($criteriaFilterTransfer);
         $companyUnitAddressIds = $this->getCompanyUnitAddressIds($companyUnitAddressCollectionTransfer);
-        $relationToBusinessUnit = $this->repository->getRelationToBusinessUnit($companyUnitAddressIds);
+        $addressRelationsToBusinessUnit = $this->repository->getCompanyBusinessUnitAddressToBusinessUnitRelations($companyUnitAddressIds);
 
         foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
             $idCompanyUnitAddress = $companyUnitAddress->getIdCompanyUnitAddress();
 
-            if (isset($relationToBusinessUnit[$idCompanyUnitAddress])) {
-                $companyUnitAddress->setCompanyBusinessUnits($relationToBusinessUnit[$idCompanyUnitAddress]);
+            if (isset($addressRelationsToBusinessUnit[$idCompanyUnitAddress])) {
+                $companyUnitAddress->setCompanyBusinessUnits($addressRelationsToBusinessUnit[$idCompanyUnitAddress]);
             }
         }
 
@@ -137,7 +137,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
      *
      * @return array
      */
-    public function getCompanyUnitAddressIds(
+    protected function getCompanyUnitAddressIds(
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
     ): array {
         $companyUnitAddressIds = [];
