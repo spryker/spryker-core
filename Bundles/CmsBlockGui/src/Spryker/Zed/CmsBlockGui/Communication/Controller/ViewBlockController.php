@@ -23,7 +23,8 @@ class ViewBlockController extends AbstractCmsBlockController
      */
     public function indexAction(Request $request)
     {
-        $cmsBlockTransfer = $this->findCmsBlockById($request);
+        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
+        $cmsBlockTransfer = $this->findCmsBlockById($idCmsBlock);
 
         if ($cmsBlockTransfer === null) {
             $this->addErrorMessage(static::MESSAGE_CMS_BLOCK_INVALID_ID_ERROR);

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductBundle\Persistence;
 
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+
 interface ProductBundleRepositoryInterface
 {
     /**
@@ -15,4 +18,11 @@ interface ProductBundleRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
     public function findBundledProductsBySku(string $sku): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer): ProductBundleCollectionTransfer;
 }

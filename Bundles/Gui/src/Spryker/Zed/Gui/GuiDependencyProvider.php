@@ -26,6 +26,9 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ */
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';

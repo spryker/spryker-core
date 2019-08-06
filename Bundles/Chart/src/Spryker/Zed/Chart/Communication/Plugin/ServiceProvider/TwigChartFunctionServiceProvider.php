@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Chart\Communication\Plugin\Twig\ChartTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
  * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
  * @method \Spryker\Zed\Chart\ChartConfig getConfig()

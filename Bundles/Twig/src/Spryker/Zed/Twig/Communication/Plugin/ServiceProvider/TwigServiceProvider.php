@@ -25,6 +25,8 @@ use Twig\Loader\FilesystemLoader;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
+ * @deprecated Use \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin instead.
+ *
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()

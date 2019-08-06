@@ -18,6 +18,7 @@ ID,ID
 Name,Name
 "Overview of Product lists","Overview of Product lists"
 "Owner Type","Owner Type"
+"Product label #%d successfully created.","Product label #%d successfully created."
 "Product List ""%s"" has been successfully created.","Product List ""%s"" has been successfully created."
 "Product List ""%s"" has been successfully updated.","Product List ""%s"" has been successfully updated."
 "Product List has been successfully removed.","Product List has been successfully removed."
@@ -30,4 +31,3 @@ Selected,Selected
 SKU,SKU
 Type,Type
 Whitelist,Whitelist
-"Product label #%d successfully created.","Product label #%d successfully created."

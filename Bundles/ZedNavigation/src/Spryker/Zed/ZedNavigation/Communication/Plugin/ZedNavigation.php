@@ -10,6 +10,8 @@ namespace Spryker\Zed\ZedNavigation\Communication\Plugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()

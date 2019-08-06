@@ -29,9 +29,9 @@ interface DiscountFormDataProviderExpanderPluginInterface
      *
      * @api
      *
-     * @param array $data
+     * @param array|null $data
      *
-     * @return array
+     * @return array|null
      */
-    public function expandDataProviderData(array $data);
+    public function expandDataProviderData(?array $data);
 }

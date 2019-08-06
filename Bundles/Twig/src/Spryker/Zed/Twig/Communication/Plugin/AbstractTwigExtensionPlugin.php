@@ -7,16 +7,35 @@
 
 namespace Spryker\Zed\Twig\Communication\Plugin;
 
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Twig\TwigExtensionInterface;
+use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
-use Twig\Extension\ExtensionInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
-abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements ExtensionInterface
+abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements TwigPluginInterface, TwigExtensionInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Twig\Environment
+     */
+    public function extend(Environment $twig, ContainerInterface $container): Environment
+    {
+        $twig->addExtension($this);
+
+        return $twig;
+    }
+
     /**
      * Initializes the runtime environment.
      *
@@ -114,5 +133,17 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Ext
     public function getGlobals()
     {
         return [];
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated since 1.26 (to be removed in 2.0), not used anymore internally
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return static::class;
     }
 }

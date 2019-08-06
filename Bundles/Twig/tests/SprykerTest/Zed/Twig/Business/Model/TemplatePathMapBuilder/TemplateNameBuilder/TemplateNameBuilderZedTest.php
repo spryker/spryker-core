@@ -45,9 +45,36 @@ class TemplateNameBuilderZedTest extends Unit
     public function pathDataProvider()
     {
         return [
-            ['vendor/spryker/spryker/Bundles/Bundle/src/Namespace/Zed/Bundle/Presentation/Controller/index.twig', '@Bundle/Controller/index.twig'],
-            ['vendor/spryker/bundle/src/Namespace/Zed/Bundle/Presentation/Controller/index.twig', '@Bundle/Controller/index.twig'],
-            ['vendor/spryker/bundle/src/Namespace/Zed/Bundle/Presentation/Controller/SubDirectory/index.twig', '@Bundle/Controller/SubDirectory/index.twig'],
+            ['vendor/spryker/spryker/Modules/Module/src/Organization/Zed/Module/Presentation/Controller/index.twig', '@Module/Controller/index.twig'],
+            ['vendor/spryker/bundle/src/Organization/Zed/Module/Presentation/Controller/index.twig', '@Module/Controller/index.twig'],
+            ['vendor/spryker/bundle/src/Organization/Zed/Module/Presentation/Controller/SubDirectory/index.twig', '@Module/Controller/SubDirectory/index.twig'],
+        ];
+    }
+
+    /**
+     * @dataProvider namespacedPathDataProvider
+     *
+     * @param string $path
+     * @param string $expectedTemplateName
+     *
+     * @return void
+     */
+    public function testBuildNamespacedTemplateName($path, $expectedTemplateName)
+    {
+        $templateNameBuilder = new TemplateNameBuilderZed();
+
+        $this->assertSame($expectedTemplateName, $templateNameBuilder->buildNamespacedTemplateName($path));
+    }
+
+    /**
+     * @return array
+     */
+    public function namespacedPathDataProvider()
+    {
+        return [
+            ['vendor/spryker/spryker/Modules/Module/src/Organization/Zed/Module/Presentation/Controller/index.twig', '@Organization:Module/Controller/index.twig'],
+            ['vendor/spryker/bundle/src/Organization/Zed/Module/Presentation/Controller/index.twig', '@Organization:Module/Controller/index.twig'],
+            ['vendor/spryker/bundle/src/Organization/Zed/Module/Presentation/Controller/SubDirectory/index.twig', '@Organization:Module/Controller/SubDirectory/index.twig'],
         ];
     }
 }

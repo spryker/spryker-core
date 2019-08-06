@@ -16,6 +16,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedNavigation\Communication\ZedNavigationCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedNavigation\ZedNavigationConfig getConfig()

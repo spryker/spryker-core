@@ -17,5 +17,10 @@
         <property name="priceDimension"/>
     </transfer>
 
+    <transfer name="PriceType">
+        <property name="idPriceType"/>
+        <property name="name" type="string" dataBuilderRule="unique()->sentence(2)"/>
+    </transfer>
+
 </transfers>
 

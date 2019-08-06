@@ -124,7 +124,6 @@ class AddressForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
         ]);
 
         return $this;
@@ -261,7 +260,6 @@ class AddressForm extends AbstractType
             'label' => 'Country',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'preferred_choices' => $preferredChoices,
             'constraints' => [
                 new NotBlank(),

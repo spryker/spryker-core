@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -45,9 +45,9 @@ class ProductAbstractEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function queryData(array $ids = []): ?ModelCriteria
     {
-        $query = $this->getQueryContainer()->queryProductAbstractByIds($ids);
+        $query = $this->getQueryContainer()->queryProductAbstractByProductAbstractIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
@@ -75,6 +75,6 @@ class ProductAbstractEventResourceQueryContainerPlugin extends AbstractPlugin im
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT;
+        return SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT;
     }
 }

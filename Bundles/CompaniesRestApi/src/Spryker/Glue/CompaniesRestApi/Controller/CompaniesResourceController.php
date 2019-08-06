@@ -7,12 +7,9 @@
 
 namespace Spryker\Glue\CompaniesRestApi\Controller;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\CompaniesRestApi\CompaniesRestApiFactory getFactory()
@@ -25,8 +22,13 @@ class CompaniesResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves a company by id."
      *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
      *          "responses": {
-     *             "501": "Not implemented."
+     *              "400": "Company id is missing.",
+     *              "404": "Company not found."
      *          }
      *     },
      *     "getCollection": {
@@ -45,10 +47,12 @@ class CompaniesResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_NOT_IMPLEMENTED)
-            ->setDetail(CompaniesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED);
+        if (!$restRequest->getResource()->getId()) {
+            return $this->getFactory()
+                ->createCompanyRestResponseBuilder()
+                ->createResourceNotImplementedError();
+        }
 
-        return $this->getFactory()->getResourceBuilder()->createRestResponse()->addError($restErrorMessageTransfer);
+        return $this->getFactory()->createCompanyReader()->getCurrentUserCompany($restRequest);
     }
 }

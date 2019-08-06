@@ -17,6 +17,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
+     * @deprecated Method will be removed without replacement.
+     *
      * @param array $roles
      *
      * @return string
@@ -29,6 +31,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     /**
      * @api
      *
+     * @deprecated Method will be removed without replacement.
+     *
      * @return string
      */
     public function enableJenkins()
@@ -38,6 +42,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Method will be removed without replacement.
      *
      * @return string
      */

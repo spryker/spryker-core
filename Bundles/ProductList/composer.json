@@ -5,12 +5,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cart-extension": "^1.5.0 || ^2.1.0",
+    "spryker/cart-extension": "^1.5.0 || ^2.1.0 || ^4.0.0",
     "spryker/category": "^3.0.0 || ^4.0.0",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/product": "^5.7.0 || ^6.11.0",
     "spryker/product-category": "^4.0.0",
+    "spryker/product-list-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/util-text": "^1.0.0"
   },

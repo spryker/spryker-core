@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SchedulerJob">
+        <property name="name" type="string" />
+        <property name="enable" type="bool" />
+        <property name="command" type="string" />
+        <property name="repeatPattern" type="string" />
+        <property name="store" type="string" />
+        <property name="payload" type="array" />
+    </transfer>
+
+    <transfer name="SchedulerSchedule">
+        <property name="idScheduler" type="string" />
+        <property name="jobs" type="SchedulerJob[]" singular="job" />
+    </transfer>
+
+    <transfer name="SchedulerFilter">
+        <property name="schedulers" type="string[]" singular="scheduler"/>
+        <property name="jobs" type="string[]" singular="job"/>
+        <property name="roles" type="string[]" singular="role"/>
+        <property name="store" type="string" />
+    </transfer>
+
+    <transfer name="SchedulerRequest">
+        <property name="schedule" type="SchedulerSchedule" />
+        <property name="filter" type="SchedulerFilter" />
+    </transfer>
+
+    <transfer name="SchedulerResponseCollection">
+        <property name="status" type="bool" />
+        <property name="responses" type="SchedulerResponse[]" singular="response" />
+    </transfer>
+
+    <transfer name="SchedulerResponse">
+        <property name="schedule" type="SchedulerSchedule" />
+        <property name="status" type="bool" />
+        <property name="message" type="string" />
+    </transfer>
+
+</transfers>

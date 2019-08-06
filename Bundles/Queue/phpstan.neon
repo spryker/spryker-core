@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
     - '#Method .+QueueQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
-    - '#Casting to int something that.+s already int#'

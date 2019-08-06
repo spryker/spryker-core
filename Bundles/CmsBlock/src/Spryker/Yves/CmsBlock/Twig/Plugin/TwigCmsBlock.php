@@ -16,6 +16,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Use `SprykerShop\Yves\CmsBlockWidget\Plugin\Twig\TwigCmsBlockWidgetPlugin` instead.
+ *
  * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
  */
 class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface

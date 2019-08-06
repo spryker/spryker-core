@@ -90,7 +90,6 @@ class GlobalThresholdType extends AbstractType
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store and Currency',
             'choices' => $options[static::OPTION_STORE_CURRENCY_ARRAY],
-            'choices_as_values' => true,
             'placeholder' => false,
             'multiple' => false,
             'required' => true,

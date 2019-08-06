@@ -9,13 +9,14 @@
     "spryker/company-user": "^1.4.0 || ^2.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.37.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/shopping-list": "^1.2.0 || ^2.0.0",
+    "spryker/shopping-list": "^1.2.0 || ^2.0.0 || ^4.0.0",
     "spryker/shopping-list-session-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

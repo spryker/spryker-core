@@ -1,6 +1,24 @@
 {% block content %}
     {% for localizedContentForm in contentForm.localizedContents %}
         {% if localizedContentForm.vars.data.fkLocale == tab.name %}
+            {% if not localizedContentForm.parameters.vars.valid %}
+                <div class="form-group has-error">
+                    {{ form_errors(localizedContentForm.parameters) }}
+                </div>
+            {% endif %}
+            {% if not tab.name %}
+                <div class="locale-header-info">
+                    <span class="overwrite-default-message">
+                        {{ 'Overwrite default by specifying different content elements per specific locale' | trans }}
+                    </span>
+                    <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-outline btn-view clear-fields pull-right clear-button-margin" value="{{ 'Clear locale' | trans }}" />
+                </div>
+            {% endif %}
+            {% if tab.name %}
+                <div class="locale-header-info">
+                    <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-outline btn-view clear-fields pull-right clear-button-margin" value="{{ 'Clear locale' | trans }}" />
+                </div>
+            {% endif %}
             {{ form_row(localizedContentForm.fk_locale) }}
             {{ form_row(localizedContentForm.locale_name) }}
             <div id="localized-content-block-{{ localizedContentForm.vars.name }}">
@@ -9,7 +27,6 @@
                 {% else %}
                     {{ form_widget(localizedContentForm.parameters) }}
                 {% endif %}
-                <input type="button" data-tab="#localized-content-block-{{ localizedContentForm.vars.name }}" class="btn btn-outline btn-view clear-fields pull-right" value="{{ 'Clear locale' | trans }}" />
             </div>
         {% endif %}
     {% endfor %}

@@ -20,6 +20,7 @@ use Spryker\Zed\Product\Business\Product\Observer\AbstractProductConcreteManager
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
+use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
@@ -206,6 +207,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -272,6 +275,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()` instead.
+     *
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -371,6 +376,16 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->productRepository->findProductConcreteIdsByAbstractProductId($idProductAbstract);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->productRepository->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
     }
 
     /**
@@ -503,8 +518,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     protected function loadRawProductData(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
     {
         $this->loadLocalizedAttributes($productTransfer);
-
-        $this->triggerProductConcreteReadEvent($productTransfer);
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productTransfer);
 
         return $productTransfer;
     }
@@ -590,7 +604,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array
     {
@@ -605,5 +619,15 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function getProductConcreteSkusByConcreteIds(array $productIds): array
     {
         return $this->productRepository->getProductConcreteSkusByConcreteIds($productIds);
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
+    {
+        return $this->productRepository->getProductConcretesByConcreteSkus($productConcreteSkus);
     }
 }

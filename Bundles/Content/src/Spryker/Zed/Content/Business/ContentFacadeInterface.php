@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Content\Business;
 
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 
 interface ContentFacadeInterface
 {
@@ -26,6 +27,19 @@ interface ContentFacadeInterface
 
     /**
      * Specification:
+     * - Finds content by content key.
+     * - Returns ContentTransfer if found, otherwise it returns NULL.
+     *
+     * @api
+     *
+     * @param string $contentKey
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
+     */
+    public function findContentByKey(string $contentKey): ?ContentTransfer;
+
+    /**
+     * Specification:
      * - Creates a new content entity.
      * - Uses incoming transfer to set entity fields.
      * - Persists the entity to DB.
@@ -34,6 +48,8 @@ interface ContentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @throws \Spryker\Zed\Content\Business\Exception\ContentKeyNotCreatedException
      *
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
@@ -56,4 +72,17 @@ interface ContentFacadeInterface
      * @return \Generated\Shared\Transfer\ContentTransfer
      */
     public function update(ContentTransfer $contentTransfer): ContentTransfer;
+
+    /**
+     * Specification:
+     * - Validates content transfer.
+     * - Returns ContentValidationResponseTransfer with status and messages in case of fail.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentValidationResponseTransfer
+     */
+    public function validateContent(ContentTransfer $contentTransfer): ContentValidationResponseTransfer;
 }

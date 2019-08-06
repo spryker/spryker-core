@@ -42,10 +42,6 @@ class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
             return null;
         }
 
-        if ($companyBusinessUnit->getMerchantRelationships()->count() === 0) {
-            return null;
-        }
-
         return $companyBusinessUnit->getIdCompanyBusinessUnit();
     }
 }

@@ -1,0 +1,35 @@
+{
+  "name": "spryker/navigations-category-nodes-resource-relationship",
+  "type": "library",
+  "description": "NavigationsCategoryNodesResourceRelationship module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/categories-rest-api": "^1.1.0",
+    "spryker/glue-application": "^1.0.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/navigations-rest-api": "If you want to expand navigation resource with category nodes relationship."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -91,7 +91,7 @@ class EditController extends AbstractController
     {
         $aggregateForm->handleRequest($request);
 
-        if (!$aggregateForm->isValid()) {
+        if ($aggregateForm->isSubmitted() === false || $aggregateForm->isValid() === false) {
             return;
         }
 

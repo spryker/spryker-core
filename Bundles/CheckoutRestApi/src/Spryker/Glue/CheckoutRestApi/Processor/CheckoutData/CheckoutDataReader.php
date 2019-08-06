@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface;
 use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
+use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -49,24 +50,32 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $checkoutRequestValidator;
 
     /**
+     * @var \Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface
+     */
+    protected $restCheckoutErrorMapper;
+
+    /**
      * @param \Spryker\Client\CheckoutRestApi\CheckoutRestApiClientInterface $checkoutRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataMapperInterface $checkoutDataMapper
      * @param \Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface $checkoutRequestValidator
+     * @param \Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterface $restCheckoutErrorMapper
      */
     public function __construct(
         CheckoutRestApiClientInterface $checkoutRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         CheckoutDataMapperInterface $checkoutDataMapper,
         CheckoutRequestAttributesExpanderInterface $checkoutRequestAttributesExpander,
-        CheckoutRequestValidatorInterface $checkoutRequestValidator
+        CheckoutRequestValidatorInterface $checkoutRequestValidator,
+        RestCheckoutErrorMapperInterface $restCheckoutErrorMapper
     ) {
         $this->checkoutRestApiClient = $checkoutRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->checkoutDataMapper = $checkoutDataMapper;
         $this->checkoutRequestAttributesExpander = $checkoutRequestAttributesExpander;
         $this->checkoutRequestValidator = $checkoutRequestValidator;
+        $this->restCheckoutErrorMapper = $restCheckoutErrorMapper;
     }
 
     /**
@@ -127,8 +136,10 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         foreach ($restCheckoutDataResponseTransfer->getErrors() as $restCheckoutErrorTransfer) {
             $restResponse->addError(
-                (new RestErrorMessageTransfer())
-                    ->fromArray($restCheckoutErrorTransfer->toArray(), true)
+                $this->restCheckoutErrorMapper->mapRestCheckoutErrorTransferToRestErrorTransfer(
+                    $restCheckoutErrorTransfer,
+                    new RestErrorMessageTransfer()
+                )
             );
         }
 

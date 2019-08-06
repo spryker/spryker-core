@@ -19,6 +19,10 @@ class GuestCartUpdateCustomerSessionSetPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritdoc}
+     * - Executed if quote storage strategy is set to database, customer quote parameters customer and customer reference are empty.
+     * - Makes zed call.
+     * - Synchronizes customer session quote and customer quote from DB.
+     * - Executes QuoteUpdatePluginExecutorInterface plugins.
      *
      * @api
      *
