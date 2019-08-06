@@ -34,11 +34,17 @@
                 <th>{{ 'Trigger event' | trans }}</th>
             </tr>
             </thead>
-            {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
-              {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
-            {% else %}
-              {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
-            {% endif %}
+            <tbody>
+                {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
+                    {% embed '@Sales/Detail/boxes/configured-bundle.twig' with {order: order} %}{% endembed %}
+                {% endif %}
+
+                {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
+                  {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
+                {% else %}
+                  {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
+                {% endif %}
+            </tbody>
         </table>
 
     {% endblock %}
