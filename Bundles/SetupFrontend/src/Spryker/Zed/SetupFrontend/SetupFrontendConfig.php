@@ -27,11 +27,16 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getProjectInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**
-     * @return array
+     * Specification:
+     * - Returns the public directory for Yves assets.
+     *
+     * @api
+     *
+     * @return string[]
      */
     public function getYvesAssetsDirectories()
     {
@@ -53,10 +58,15 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getYvesInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**
+     * Specification:
+     * - Returns the command to build Yves assets.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesBuildCommand()
@@ -87,7 +97,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getZedInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**

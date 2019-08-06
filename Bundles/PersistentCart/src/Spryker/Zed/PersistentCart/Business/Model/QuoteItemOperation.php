@@ -90,9 +90,10 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         foreach ($itemTransferList as $itemTransfer) {
             $cartChangeTransfer->addItem($itemTransfer);
         }
-        $quoteTransfer = $this->cartFacade->add($cartChangeTransfer);
 
-        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
+        $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
+
+        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer()));
     }
 
     /**

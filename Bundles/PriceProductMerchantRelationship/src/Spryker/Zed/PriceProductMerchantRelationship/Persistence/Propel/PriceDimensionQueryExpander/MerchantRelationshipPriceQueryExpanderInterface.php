@@ -18,4 +18,9 @@ interface MerchantRelationshipPriceQueryExpanderInterface
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
     public function buildMerchantRelationshipPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria(): QueryCriteriaTransfer;
 }

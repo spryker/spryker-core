@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
@@ -354,5 +355,21 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
         return $this->getFactory()
             ->createResourceShareQuoteShare()
             ->shareCartByResourceShareRequest($resourceShareRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByQuote(QuoteTransfer $quoteTransfer): CustomerCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteShareDetailsReader()
+            ->getCustomerCollectionByQuote($quoteTransfer);
     }
 }

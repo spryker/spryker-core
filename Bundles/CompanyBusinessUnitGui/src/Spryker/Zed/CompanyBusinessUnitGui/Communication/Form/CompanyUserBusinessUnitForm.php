@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConfig getConfig()
@@ -63,8 +64,10 @@ class CompanyUserBusinessUnitForm extends AbstractType
             'placeholder' => 'Business Unit name',
             'choices' => $options[static::OPTION_VALUES_BUSINESS_UNITS_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES],
-            'choices_as_values' => true,
             'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
             'attr' => [
                 'template_path' => $this->getTemplatePath(),
             ],
