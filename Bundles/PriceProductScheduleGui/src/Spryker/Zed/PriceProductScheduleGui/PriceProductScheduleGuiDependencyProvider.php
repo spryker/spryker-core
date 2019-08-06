@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui;
 
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -28,6 +29,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     public const FACADE_PRICE_PRODUCT_SCHEDULE = 'FACADE_PRICE_PRODUCT_SCHEDULE';
 
     public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE';
+    public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +44,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container = $this->addMoneyFacade($container);
         $container = $this->addPriceProductScheduleFacade($container);
         $container = $this->addPriceProductScheduleQuery($container);
+        $container = $this->addPriceProductScheduleListQuery($container);
 
         return $container;
     }
@@ -135,6 +138,20 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     {
         $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE, function () {
             return SpyPriceProductScheduleQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductScheduleListQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST, function () {
+            return SpyPriceProductScheduleListQuery::create();
         });
 
         return $container;

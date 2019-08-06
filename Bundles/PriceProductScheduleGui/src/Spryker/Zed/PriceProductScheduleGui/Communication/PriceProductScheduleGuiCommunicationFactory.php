@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication;
 
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
@@ -26,6 +27,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportErrorListTable
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportSuccessListTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleListTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
@@ -191,6 +193,17 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleListTable
+     */
+    public function createPriceProductScheduleListTable(): PriceProductScheduleListTable
+    {
+        return new PriceProductScheduleListTable(
+            $this->getPriceProductScheduleListQuery(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
      */
     public function getPriceProductFacade(): PriceProductScheduleGuiToPriceProductFacadeInterface
@@ -236,5 +249,13 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getPriceProductScheduleQuery(): SpyPriceProductScheduleQuery
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE);
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
+     */
+    public function getPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST);
     }
 }

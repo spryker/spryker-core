@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -19,12 +20,24 @@ class ImportController extends AbstractController
      */
     public function indexAction()
     {
-        $priceProductScheduleImportForm = $this
-            ->getFactory()
-            ->getPriceProductScheduleImportForm();
+        $priceProductScheduleImportForm = $this->getFactory()->getPriceProductScheduleImportForm();
+        $priceProductScheduleListTable = $this->getFactory()->createPriceProductScheduleListTable();
 
         return $this->viewResponse([
             'importForm' => $priceProductScheduleImportForm->createView(),
+            'priceProductScheduleListTableView' => $priceProductScheduleListTable->render(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(): JsonResponse
+    {
+        $priceProductScheduleTable = $this->getFactory()->createPriceProductScheduleListTable();
+
+        return $this->jsonResponse(
+            $priceProductScheduleTable->fetchData()
+        );
     }
 }
