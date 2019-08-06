@@ -53,11 +53,11 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
      */
     public function getCustomerAccess(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $customerAccessContentTypeResourceType = $this->customerAccessRestApiConfig->getCustomerAccessContentTypeResourceType();
-        $customerAccessContentTypeResourceType = $this->filterOutUnrestrictedCustomerAccessContentTypes($customerAccessContentTypeResourceType);
+        $customerAccessContentTypeToResourceTypeMapping = $this->customerAccessRestApiConfig->getCustomerAccessContentTypeToResourceTypeMapping();
+        $customerAccessContentTypeToResourceTypeMapping = $this->filterOutUnrestrictedCustomerAccessContentTypes($customerAccessContentTypeToResourceTypeMapping);
 
         return $this->customerAccessRestResponseBuilder
-            ->createCustomerAccessResponse($customerAccessContentTypeResourceType);
+            ->createCustomerAccessResponse($customerAccessContentTypeToResourceTypeMapping);
     }
 
     /**
