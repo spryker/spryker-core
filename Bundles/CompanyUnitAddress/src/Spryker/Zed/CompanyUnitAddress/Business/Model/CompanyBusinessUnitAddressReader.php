@@ -51,7 +51,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
         );
 
-        return $this->getCompanyBusinessUnitAddressesByСriteriaFilter($criteriaFilterTransfer);
+        return $this->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
     }
 
     /**
@@ -62,7 +62,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     public function getCompanyBusinessUnitAddressesByCriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-        $companyUnitAddressCollectionTransfer = $this->repository->getCompanyBusinessUnitAddressesByСriteriaFilter($criteriaFilterTransfer);
+        $companyUnitAddressCollectionTransfer = $this->repository->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
         $companyUnitAddressIds = $this->getCompanyUnitAddressIds($companyUnitAddressCollectionTransfer);
         $addressRelationsToBusinessUnit = $this->repository->getCompanyBusinessUnitAddressToBusinessUnitRelations($companyUnitAddressIds);
 

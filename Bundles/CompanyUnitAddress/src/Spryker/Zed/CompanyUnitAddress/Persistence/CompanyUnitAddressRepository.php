@@ -50,7 +50,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use `getCompanyBusinessUnitAddressesByСriteriaFilter()` and `getCompanyBusinessUnitAddressToBusinessUnitRelations()` instead.
+     * @deprecated Use `getCompanyBusinessUnitAddressesByCriteriaFilter()` and `getCompanyBusinessUnitAddressToBusinessUnitRelations()` instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -104,7 +104,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    public function getCompanyBusinessUnitAddressesByСriteriaFilter(
+    public function getCompanyBusinessUnitAddressesByCriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
         $companyUnitAddressQuery = $this->getFactory()
