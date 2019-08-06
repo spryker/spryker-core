@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
+use DateTime;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -18,6 +19,9 @@ use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryI
 class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterface
 {
     use TransactionTrait;
+
+    protected const PATTERN_MINUS_ONE_DAY = '-1 day';
+    protected const PATTERN_FORMAT_DATE = 'Y-m-d H:i:s';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface
@@ -71,6 +75,40 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
     public function disableNotActiveScheduledPrices(): void
     {
         $productSchedulePricesForDisable = $this->priceProductScheduleRepository->findPriceProductSchedulesToDisable();
+
+        foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
+                $this->executeExitLogicTransaction($priceProductScheduleTransfer);
+            });
+        }
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    public function disableNotActiveScheduledPricesByIdProductAbstract(int $idProductAbstract): void
+    {
+        $productSchedulePricesForDisable = $this->priceProductScheduleRepository
+            ->findPriceProductSchedulesToDisableByIdProductAbstract($idProductAbstract);
+
+        foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
+                $this->executeExitLogicTransaction($priceProductScheduleTransfer);
+            });
+        }
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function disableNotActiveScheduledPricesByIdProductConcrete(int $idProductConcrete): void
+    {
+        $productSchedulePricesForDisable = $this->priceProductScheduleRepository
+            ->findPriceProductSchedulesToDisableByIdProductConcrete($idProductConcrete);
 
         foreach ($productSchedulePricesForDisable as $priceProductScheduleTransfer) {
             $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): void {
@@ -148,5 +186,18 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
         }
 
         $this->priceProductFacade->removePriceProductDefaultForPriceProduct($currentPriceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function disablePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
+    {
+        $dateInThePast = new DateTime(static::PATTERN_MINUS_ONE_DAY);
+        $priceProductScheduleTransfer->setActiveTo($dateInThePast->format(static::PATTERN_FORMAT_DATE));
+
+        return $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
     }
 }

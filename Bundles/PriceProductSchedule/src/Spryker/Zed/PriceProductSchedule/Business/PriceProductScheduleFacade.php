@@ -159,9 +159,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * Specification:
-     * - Creates scheduled price.
-     * - Apply scheduled prices for product, related to given scheduled price.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -172,5 +170,21 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
         return new PriceProductScheduleResponseTransfer();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void
+    {
+        $this->getFactory()
+            ->createPriceProductScheduleRemover()
+            ->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
     }
 }
