@@ -9,14 +9,14 @@ namespace Spryker\Client\SearchElasticsearch\Plugin;
 
 use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\ClientAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchClientInterface getClient()
  */
-class ElasticsearchClientAdapterPlugin extends AbstractPlugin implements ClientAdapterPluginInterface
+class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
 {
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery

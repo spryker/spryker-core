@@ -10,7 +10,7 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 use Elastica\ResultSet;
 use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
-interface ClientAdapterPluginInterface
+interface SearchAdapterPluginInterface
 {
     /**
      * Specification:

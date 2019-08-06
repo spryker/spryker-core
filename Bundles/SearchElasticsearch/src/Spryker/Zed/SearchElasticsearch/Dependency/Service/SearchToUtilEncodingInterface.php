@@ -17,5 +17,5 @@ interface SearchToUtilEncodingInterface
      *
      * @return array
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): array;
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }
