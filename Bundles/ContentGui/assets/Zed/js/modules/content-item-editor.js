@@ -123,12 +123,28 @@ var ContentItemEditor = function(options) {
 
         var $editor = $(this);
         var $editorRange = $editor.summernote('editor.createRange');
-        var $contentItem = $($editorRange.sc).find('.js-content-item-editor');
+        var widgetClassName = 'js-content-item-editor';
+        var isWidgetWrapper = $($editorRange.sc).find('.' + widgetClassName).length;
+        var isWidget = $($editorRange.sc).hasClass(widgetClassName);
 
-        if ($contentItem.length) {
-            $editorRange.deleteContents();
-            $editor.summernote('pasteHTML', ' ');
+        var addNewLineAfterWidget = function (target) {
+            event.preventDefault();
+            $('<p><br></p>').insertAfter($(target));
+            var range = document.createRange();
+            range.selectNode(target.nextElementSibling.childNodes[0]);
+            var selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        };
+
+        if (isWidgetWrapper) {
+            addNewLineAfterWidget($editorRange.sc);
         }
+
+        if (isWidget) {
+            addNewLineAfterWidget($editorRange.sc.parentNode);
+        }
+
     };
 
     this.onChangeHandler = function ($editor, self) {

@@ -206,10 +206,6 @@ class UrlStorageWriter implements UrlStorageWriterInterface
      */
     protected function createUrlStorageTransfer(SpyUrl $urlEntity, array $urlEntities): UrlStorageTransfer
     {
-        $urlEntities = array_filter($urlEntities, function (SpyUrl $otherUrlEntity) use ($urlEntity) {
-            return $urlEntity->getIdUrl() <> $otherUrlEntity->getIdUrl();
-        });
-
         $urlStorageTransfer = (new UrlStorageTransfer())
             ->fromArray($urlEntity->toArray(), true)
             ->setLocaleName($urlEntity->getSpyLocale()->getLocaleName());

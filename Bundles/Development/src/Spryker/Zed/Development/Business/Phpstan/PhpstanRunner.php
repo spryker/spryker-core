@@ -155,14 +155,30 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return static::CODE_SUCCESS;
         }
 
-        $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
+        if ($output->isVerbose()) {
+            $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
+        }
 
         $process = $this->getProcess($command);
-        $process->run(function ($type, $buffer) use ($output) {
+
+        $processOutputBuffer = '';
+
+        $process->run(function ($type, $buffer) use ($output, &$processOutputBuffer) {
             $this->addErrors($buffer);
 
-            $output->write($buffer);
+            preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
+            if (!$matches && !$output->isVeryVerbose()) {
+                $processOutputBuffer .= $buffer;
+
+                return;
+            }
+
+            $processOutputBuffer .= $buffer;
+            $output->write($processOutputBuffer);
+            $processOutputBuffer = '';
         });
+
+        $processOutputBuffer = '';
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);
@@ -178,7 +194,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command, null, null, null, 0);
+        return new Process(explode(' ', $command), null, null, null, 0);
     }
 
     /**

@@ -46,6 +46,23 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return (new QueryCriteriaTransfer())
+            ->setWithColumns([
+                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
+            ])
+            ->addJoin(
+                (new QueryJoinTransfer())
+                    ->setLeft([static::COL_ID_PRICE_PRODUCT_STORE])
+                    ->setRight([SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE])
+                    ->setJoinType(Criteria::LEFT_JOIN)
+            );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return array

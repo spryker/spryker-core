@@ -8,6 +8,8 @@
 namespace Spryker\Zed\QuoteRequest\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\QuoteRequest\Business\Cleaner\QuoteRequestCleaner;
+use Spryker\Zed\QuoteRequest\Business\Cleaner\QuoteRequestCleanerInterface;
 use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReader;
 use Spryker\Zed\QuoteRequest\Business\Reader\QuoteRequestReaderInterface;
 use Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGenerator;
@@ -181,6 +183,17 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
         return new QuoteRequestVersionSanitizer(
             $this->getCartFacade(),
             $this->getCalculationFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Cleaner\QuoteRequestCleanerInterface
+     */
+    public function createQuoteRequestCleaner(): QuoteRequestCleanerInterface
+    {
+        return new QuoteRequestCleaner(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 
