@@ -50,6 +50,7 @@ class TemplateListTable extends AbstractTable
         $config->setSearchable([
             TemplateListConstants::COL_ID,
             TemplateListConstants::COL_NAME,
+            TemplateListConstants::COL_DESCRIPTION,
         ]);
 
         return $config;

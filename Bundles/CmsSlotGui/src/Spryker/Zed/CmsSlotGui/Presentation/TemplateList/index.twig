@@ -10,10 +10,19 @@
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_title -%}
-            <h5>{{ 'List of Store Page Templates' | trans }}</h5>
+            <h5>{{ 'List of Templates' | trans }}</h5>
         {%- endblock %}
         {% block widget_content %}
-            {{ templates | raw }}
+            {{ templateListTable | raw }}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Slots' | trans }}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ slotListTable | raw }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

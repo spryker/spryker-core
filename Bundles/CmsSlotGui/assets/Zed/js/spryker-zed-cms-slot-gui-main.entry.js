@@ -5,4 +5,4 @@
 
 'use strict';
 
-require('./modules/template-list/main');
+require('./modules/main');

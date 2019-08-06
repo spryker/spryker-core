@@ -14,28 +14,21 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\CmsSlotGui\Communication\CmsSlotGuiCommunicationFactory getFactory()
  */
-class TemplateListController extends AbstractController
+class SlotListController extends AbstractController
 {
+    public const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
-     */
-    public function indexAction(Request $request): array
-    {
-        return $this->viewResponse([
-            'templateListTable' => $this->getFactory()->createTemplateListTable()->render(),
-            'slotListTable' => $this->getFactory()->createSlotListTable()->render(),
-        ]);
-    }
-
-    /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(): JsonResponse
+    public function tableAction(Request $request): JsonResponse
     {
+        $idCmsSlotTemplate = $this->castId($request->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
+
         return $this->jsonResponse(
-            $this->getFactory()->createTemplateListTable()->fetchData()
+            $this->getFactory()->createSlotListTable($idCmsSlotTemplate)->fetchData()
         );
     }
 }

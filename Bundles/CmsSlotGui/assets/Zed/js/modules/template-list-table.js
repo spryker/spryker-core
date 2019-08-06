@@ -5,6 +5,7 @@
 
 'use strict';
 
+var slotListTable = require('./slot-list-table');
 var templateListTable;
 
 /**
@@ -15,6 +16,7 @@ function initialize(selector) {
 
     $(selector).find('tbody').on('click', 'tr', tableRowSelect);
     templateListTable.on('draw', selectFirstRow);
+    templateListTable.on('select', loadSlotTable);
 }
 
 /**
@@ -36,6 +38,14 @@ function tableRowSelect(e) {
  */
 function selectFirstRow(e, settings) {
     getDataTableApi(settings).row(0).select();
+}
+
+/**
+ * @return {void}
+ */
+function loadSlotTable(e, api, type, indexes) {
+    var rowData = api.row(indexes[0]).data();
+    slotListTable.load(rowData[0]);
 }
 
 /**
