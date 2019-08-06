@@ -20,12 +20,17 @@ use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 
 class PriceProductScheduleListTable extends AbstractTable
 {
-    protected const DATE_FORMAT = 'Y-m-d H:i:s';
+    protected const PATTERN_DATE_TIME = 'Y-m-d H:i:s';
+
+    protected const TEMPLATE_FULL_NAME = '%s %s';
+    protected const TEMPLATE_IMPORTED_BY = '%s <br/> %s';
+
+    protected const EXPRESSION_COUNT = 'COUNT(%s)';
+    protected const EXPRESSION_DISTINCT_COUNT_ADDITION = 'COUNT(DISTINCT %s) + COUNT(DISTINCT %s)';
 
     protected const COL_IMPORT_ID = 'id_price_product_schedule_list';
     protected const COL_NAME = 'name';
     protected const COL_IMPORTED_BY = 'imported_by';
-    protected const COL_IMPORTED_ON_THE = 'imported_on_the';
     protected const COL_STATUS = 'status';
     protected const COL_NUMBER_OF_PRICES = 'number_of_prices';
     protected const COL_NUMBER_OF_PRODUCTS = 'number_of_products';
@@ -36,8 +41,7 @@ class PriceProductScheduleListTable extends AbstractTable
 
     protected const HEADER_IMPORT_ID = 'Import ID';
     protected const HEADER_NAME = 'Name';
-    protected const HEADER_IMPORTED_BY = 'Imported by';
-    protected const HEADER_IMPORTED_ON_THE = 'Imported on the';
+    protected const HEADER_IMPORTED_BY = 'Imported by and on the';
     protected const HEADER_STATUS = 'Status';
     protected const HEADER_NUMBER_OF_PRICES = 'Number of prices';
     protected const HEADER_NUMBER_OF_PRODUCTS = 'Number of products';
@@ -83,7 +87,6 @@ class PriceProductScheduleListTable extends AbstractTable
             static::COL_IMPORT_ID => static::HEADER_IMPORT_ID,
             static::COL_NAME => static::HEADER_NAME,
             static::COL_IMPORTED_BY => static::HEADER_IMPORTED_BY,
-            static::COL_IMPORTED_ON_THE => static::HEADER_IMPORTED_ON_THE,
             static::COL_STATUS => static::HEADER_STATUS,
             static::COL_NUMBER_OF_PRICES => static::HEADER_NUMBER_OF_PRICES,
             static::COL_NUMBER_OF_PRODUCTS => static::HEADER_NUMBER_OF_PRODUCTS,
@@ -96,17 +99,19 @@ class PriceProductScheduleListTable extends AbstractTable
 
         $config->setRawColumns([
             static::COL_ACTIONS,
+            static::COL_IMPORTED_BY,
         ]);
 
         $config->setSortable([
             static::COL_IMPORT_ID,
             static::COL_NAME,
             static::COL_IMPORTED_BY,
-            static::COL_IMPORTED_ON_THE,
             static::COL_STATUS,
             static::COL_NUMBER_OF_PRICES,
             static::COL_NUMBER_OF_PRODUCTS,
         ]);
+
+        $config->setDefaultSortField(static::COL_IMPORT_ID, TableConfiguration::SORT_DESC);
 
         return $config;
     }
@@ -123,24 +128,21 @@ class PriceProductScheduleListTable extends AbstractTable
         /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[] $priceProductScheduleListCollection */
         $priceProductScheduleListCollection = $this->runQuery($query, $config, true);
 
-        return $this->mapPriceProductScheduleListCollection($priceProductScheduleListCollection);
+        return $this->mapPriceProductScheduleListCollectionToTableDataArray($priceProductScheduleListCollection, []);
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductScheduleListCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList[] $priceProductScheduleListCollection
+     * @param array $priceProductScheduleList
      *
      * @return array
      */
-    protected function mapPriceProductScheduleListCollection(ObjectCollection $priceProductScheduleListCollection): array
-    {
-        $priceProductScheduleList = [];
-
+    protected function mapPriceProductScheduleListCollectionToTableDataArray(
+        ObjectCollection $priceProductScheduleListCollection,
+        array $priceProductScheduleList
+    ): array {
         foreach ($priceProductScheduleListCollection as $priceProductScheduleListEntity) {
-            $priceProductScheduleList[$priceProductScheduleListEntity->getIdPriceProductScheduleList()] = $priceProductScheduleListEntity->toArray();
-            $priceProductScheduleList[$priceProductScheduleListEntity->getIdPriceProductScheduleList()][static::COL_STATUS] = $this->prepareStatusField($priceProductScheduleListEntity);
-            $priceProductScheduleList[$priceProductScheduleListEntity->getIdPriceProductScheduleList()][static::COL_IMPORTED_BY] = $this->prepareImportedByField($priceProductScheduleListEntity);
-            $priceProductScheduleList[$priceProductScheduleListEntity->getIdPriceProductScheduleList()][static::COL_IMPORTED_ON_THE] = $this->prepareImportedOnTheField($priceProductScheduleListEntity);
-            $priceProductScheduleList[$priceProductScheduleListEntity->getIdPriceProductScheduleList()][static::COL_ACTIONS] = $this->buildLinks($priceProductScheduleListEntity);
+            $priceProductScheduleList[$priceProductScheduleListEntity->getIdPriceProductScheduleList()] = $this->mapPriceProductScheduleListEntityToTableDataArray($priceProductScheduleListEntity);
         }
 
         return $priceProductScheduleList;
@@ -149,11 +151,17 @@ class PriceProductScheduleListTable extends AbstractTable
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
      *
-     * @return string
+     * @return array
      */
-    protected function prepareImportedOnTheField(SpyPriceProductScheduleList $priceProductScheduleListEntity): string
-    {
-        return $priceProductScheduleListEntity->getCreatedAt()->format(static::DATE_FORMAT);
+    protected function mapPriceProductScheduleListEntityToTableDataArray(
+        SpyPriceProductScheduleList $priceProductScheduleListEntity
+    ): array {
+        $priceProductScheduleListTableDataArray = $priceProductScheduleListEntity->toArray();
+        $priceProductScheduleListTableDataArray[static::COL_STATUS] = $this->prepareStatusField($priceProductScheduleListEntity);
+        $priceProductScheduleListTableDataArray[static::COL_IMPORTED_BY] = $this->prepareImportedByField($priceProductScheduleListEntity);
+        $priceProductScheduleListTableDataArray[static::COL_ACTIONS] = $this->buildLinks($priceProductScheduleListEntity);
+
+        return $priceProductScheduleListTableDataArray;
     }
 
     /**
@@ -173,11 +181,18 @@ class PriceProductScheduleListTable extends AbstractTable
      */
     protected function prepareImportedByField(SpyPriceProductScheduleList $priceProductScheduleListEntity): string
     {
-        if ($priceProductScheduleListEntity->getUser() === null) {
-            return static::DEFAULT_IMPORTED_BY_VALUE;
+        $createdAt = $priceProductScheduleListEntity->getCreatedAt()->format(static::PATTERN_DATE_TIME);
+        $userFullName = static::DEFAULT_IMPORTED_BY_VALUE;
+
+        if ($priceProductScheduleListEntity->getUser() !== null) {
+            $userFullName = sprintf(
+                static::TEMPLATE_FULL_NAME,
+                $priceProductScheduleListEntity->getUser()->getFirstName(),
+                $priceProductScheduleListEntity->getUser()->getLastName()
+            );
         }
 
-        return $priceProductScheduleListEntity->getUser()->getFirstName() . ' ' . $priceProductScheduleListEntity->getUser()->getLastName();
+        return sprintf(static::TEMPLATE_IMPORTED_BY, $userFullName, $createdAt);
     }
 
     /**
@@ -188,8 +203,18 @@ class PriceProductScheduleListTable extends AbstractTable
         return $this->priceProductScheduleListQuery
             ->joinUser()
             ->usePriceProductScheduleQuery()
-                ->withColumn(sprintf('COUNT(%s)', SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE), static::COL_NUMBER_OF_PRICES)
-                ->withColumn(sprintf('COUNT(DISTINCT %s) + COUNT(DISTINCT %s)', SpyPriceProductScheduleTableMap::COL_FK_PRODUCT, SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT), static::COL_NUMBER_OF_PRODUCTS)
+                ->withColumn(
+                    sprintf(static::EXPRESSION_COUNT, SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE),
+                    static::COL_NUMBER_OF_PRICES
+                )
+                ->withColumn(
+                    sprintf(
+                        static::EXPRESSION_DISTINCT_COUNT_ADDITION,
+                        SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
+                        SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT
+                    ),
+                    static::COL_NUMBER_OF_PRODUCTS
+                )
             ->endUse()
             ->groupBy(SpyPriceProductScheduleListTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE_LIST);
     }
