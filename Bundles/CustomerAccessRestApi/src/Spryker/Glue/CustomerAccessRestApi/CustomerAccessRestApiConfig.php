@@ -17,26 +17,26 @@ class CustomerAccessRestApiConfig extends AbstractBundleConfig
     protected const CUSTOMER_ACCESS_CONTENT_TYPE_RESOURCE_TYPE = [];
 
     /**
+     * Specification:
+     *  - Returns array that provides mapping between rest resource names and permission plugin keys.
+     *
+     * @api
+     *
      * @param string $resourceType
      *
-     * @return bool
+     * @return string|null
      */
-    public function hasPluginNameByResourceType(string $resourceType): bool
+    public function findPermissionPluginNameByResourceType(string $resourceType): ?string
     {
-        return array_key_exists($resourceType, static::RESOURCE_TYPE_PERMISSION_PLUGIN);
+        return static::RESOURCE_TYPE_PERMISSION_PLUGIN[$resourceType] ?? null;
     }
 
     /**
-     * @param string $resourceType
+     * Specification:
+     *  - Returns array that provides mapping between customer access content types and rest resource names.
      *
-     * @return string
-     */
-    public function getPluginNameByResourceType(string $resourceType): string
-    {
-        return static::RESOURCE_TYPE_PERMISSION_PLUGIN[$resourceType];
-    }
-
-    /**
+     * @api
+     *
      * @return array
      */
     public function getCustomerAccessContentTypeResourceType(): array

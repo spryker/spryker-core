@@ -38,12 +38,14 @@ class CustomerAccessRequestValidator implements CustomerAccessRequestValidatorIn
      */
     public function validate(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        $resourceType = $restRequest->getResource()->getType();
-        if (!$this->customerAccessRestApiConfig->hasPluginNameByResourceType($resourceType)) {
+        $permissionPluginName = $this->customerAccessRestApiConfig->findPermissionPluginNameByResourceType(
+            $restRequest->getResource()->getType()
+        );
+        if (!$permissionPluginName) {
             return null;
         }
 
-        if ($this->can($this->customerAccessRestApiConfig->getPluginNameByResourceType($resourceType))) {
+        if ($this->can($permissionPluginName)) {
             return null;
         }
 

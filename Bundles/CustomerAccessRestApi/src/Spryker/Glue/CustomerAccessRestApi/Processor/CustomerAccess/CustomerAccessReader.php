@@ -54,7 +54,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     public function getCustomerAccess(RestRequestInterface $restRequest): RestResponseInterface
     {
         $customerAccessContentTypeResourceType = $this->customerAccessRestApiConfig->getCustomerAccessContentTypeResourceType();
-        $customerAccessContentTypeResourceType = $this->filterOutUnrestrictedCustomerAccessResources($customerAccessContentTypeResourceType);
+        $customerAccessContentTypeResourceType = $this->filterOutUnrestrictedCustomerAccessContentTypes($customerAccessContentTypeResourceType);
 
         return $this->customerAccessRestResponseBuilder
             ->createCustomerAccessResponse($customerAccessContentTypeResourceType);
@@ -65,11 +65,11 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
      *
      * @return array
      */
-    protected function filterOutUnrestrictedCustomerAccessResources(array $customerAccessContentTypeResourceType): array
+    protected function filterOutUnrestrictedCustomerAccessContentTypes(array $customerAccessContentTypeResourceType): array
     {
-        $authenticatedCustomerAccess = $this->customerAccessStorageClient->getAuthenticatedCustomerAccess();
-        foreach ($authenticatedCustomerAccess->getContentTypeAccess() as $contentTypeAccessTransfer) {
-            if ($this->isCustomerAccessResourceUnrestricted($contentTypeAccessTransfer, $customerAccessContentTypeResourceType)) {
+        $authenticatedCustomerAccessTransfer = $this->customerAccessStorageClient->getAuthenticatedCustomerAccess();
+        foreach ($authenticatedCustomerAccessTransfer->getContentTypeAccess() as $contentTypeAccessTransfer) {
+            if ($this->isCustomerAccessContentTypeUnrestricted($contentTypeAccessTransfer, $customerAccessContentTypeResourceType)) {
                 unset($customerAccessContentTypeResourceType[$contentTypeAccessTransfer->getContentType()]);
             }
         }
@@ -83,7 +83,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
      *
      * @return bool
      */
-    protected function isCustomerAccessResourceUnrestricted(ContentTypeAccessTransfer $contentTypeAccessTransfer, array $customerAccessContentTypeResourceType): bool
+    protected function isCustomerAccessContentTypeUnrestricted(ContentTypeAccessTransfer $contentTypeAccessTransfer, array $customerAccessContentTypeResourceType): bool
     {
         return !array_key_exists($contentTypeAccessTransfer->getContentType(), $customerAccessContentTypeResourceType) || !$contentTypeAccessTransfer->getIsRestricted();
     }
