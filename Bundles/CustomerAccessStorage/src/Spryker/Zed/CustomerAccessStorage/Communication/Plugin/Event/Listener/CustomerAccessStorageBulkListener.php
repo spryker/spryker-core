@@ -21,6 +21,7 @@ class CustomerAccessStorageBulkListener extends AbstractPlugin implements EventB
 {
     /**
      * {@inheritDoc}
+     *  - Publishes all customer access types as json in storage table.
      *
      * @api
      *
