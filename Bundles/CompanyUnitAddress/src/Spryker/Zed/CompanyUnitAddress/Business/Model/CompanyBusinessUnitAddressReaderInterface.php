@@ -29,7 +29,7 @@ interface CompanyBusinessUnitAddressReaderInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
-    public function getCompanyBusinessUnitAddressesByСriteriaFilter(
+    public function getCompanyBusinessUnitAddressesByCriteriaFilter(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
 
