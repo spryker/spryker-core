@@ -7,8 +7,6 @@
 
 namespace Spryker\Yves\Form;
 
-use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface;
-use Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\Form\FormFactoryBuilder;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
@@ -26,14 +24,6 @@ class FormFactory extends AbstractFactory
     public function createFormFactoryBuilder(): FormFactoryBuilderInterface
     {
         return new FormFactoryBuilder();
-    }
-
-    /**
-     * @return \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
-     */
-    public function createTokenGenerator(): TokenGeneratorInterface
-    {
-        return new TokenHashGenerator();
     }
 
     /**

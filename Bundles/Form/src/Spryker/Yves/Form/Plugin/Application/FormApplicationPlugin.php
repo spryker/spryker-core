@@ -22,10 +22,10 @@ use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
  */
 class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    public const SERVICE_FORM_FACTORY = 'form.factory';
-    public const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
-    public const SERVICE_SESSION = 'session';
-    public const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
+    protected const SERVICE_FORM_FACTORY = 'form.factory';
+    protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+    protected const SERVICE_SESSION = 'session';
+    protected const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
 
     /**
      * {@inheritdoc}

@@ -20,8 +20,8 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
-    public const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
-    public const SERVICE_TRANSLATOR = 'translator';
+    protected const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
+    protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
      * {@inheritdoc}

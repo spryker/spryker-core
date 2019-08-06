@@ -19,8 +19,6 @@ use Symfony\Component\Validator\ValidatorBuilderInterface;
  */
 class ConstraintFactoryValidatorPlugin extends AbstractPlugin implements ValidatorPluginInterface
 {
-    protected const SERVICE_VALIDATOR_SERVICE_IDS = 'validator.validator_service_ids';
-
     /**
      * {@inheritDoc}
      * - Adds `Spryker\Shared\Validator\ConstraintValidatorFactory\ContainerConstraintValidatorFactory` as constraint validator factory.

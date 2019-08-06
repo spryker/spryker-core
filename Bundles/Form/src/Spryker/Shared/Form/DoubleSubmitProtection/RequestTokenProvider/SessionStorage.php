@@ -11,17 +11,12 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorage implements StorageInterface
 {
-    public const SESSION_KEY_PREFIX = 'req_';
+    protected const SESSION_KEY_PREFIX = 'req_';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
-
-    /**
-     * @var string
-     */
-    protected $keyPrefix = self::SESSION_KEY_PREFIX;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
@@ -38,7 +33,7 @@ class SessionStorage implements StorageInterface
      */
     public function getToken(string $formName): ?string
     {
-        return $this->session->get($this->keyPrefix . $formName);
+        return $this->session->get($this->buildSessionKey($formName));
     }
 
     /**
@@ -48,7 +43,7 @@ class SessionStorage implements StorageInterface
      */
     public function deleteToken(string $formName): void
     {
-        $this->session->remove($this->keyPrefix . $formName);
+        $this->session->remove($this->buildSessionKey($formName));
     }
 
     /**
@@ -59,6 +54,16 @@ class SessionStorage implements StorageInterface
      */
     public function setToken(string $formName, string $token): void
     {
-        $this->session->set($this->keyPrefix . $formName, $token);
+        $this->session->set($this->buildSessionKey($formName), $token);
+    }
+
+    /**
+     * @param string $formName
+     *
+     * @return string
+     */
+    protected function buildSessionKey(string $formName): string
+    {
+        return sprintf('%s%s', static::SESSION_KEY_PREFIX, $formName);
     }
 }
