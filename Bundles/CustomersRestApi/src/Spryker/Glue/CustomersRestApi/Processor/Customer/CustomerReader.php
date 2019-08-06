@@ -82,8 +82,6 @@ class CustomerReader implements CustomerReaderInterface
             if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
                 return $this->restApiError->addCustomerNotFoundError($restResponse);
             }
-
-            $customerResponseTransfer = $this->findCustomer($restRequest);
         }
 
         if (!$customerResponseTransfer->getHasCustomer()) {
@@ -127,7 +125,7 @@ class CustomerReader implements CustomerReaderInterface
      */
     public function getCurrentCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
     {
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         return $this->customerClient->findCustomerByReference($customerTransfer);
     }
