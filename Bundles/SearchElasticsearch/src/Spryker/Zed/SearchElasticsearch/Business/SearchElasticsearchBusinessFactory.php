@@ -42,7 +42,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
- * @method \Spryker\Zed\SearchElasticsearch\SearchConfig getConfig()
+ * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  */
 class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
 {

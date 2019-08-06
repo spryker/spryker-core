@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 /**
  * @method \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig getSharedConfig()
  */
-class SearchConfig extends AbstractBundleConfig
+class SearchElasticsearchConfig extends AbstractBundleConfig
 {
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
@@ -69,15 +69,16 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * TODO We need to extend this on project level for spryker/spryker.
-     *
      * @return array
      */
     public function getJsonIndexDefinitionDirectories(): array
     {
-        $directories = [
-            sprintf('%s/vendor/spryker/*/src/*/Shared/*/IndexMap/', APPLICATION_ROOT_DIR),
-        ];
+        $directories = [];
+
+        $directory = sprintf('%s/vendor/spryker/*/src/*/Shared/*/IndexMap/', APPLICATION_ROOT_DIR);
+        if (glob($directory, GLOB_NOSORT | GLOB_ONLYDIR)) {
+            $directories[] = $directory;
+        }
 
         $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/IndexMap/';
         if (glob($applicationTransferGlobPattern, GLOB_NOSORT | GLOB_ONLYDIR)) {

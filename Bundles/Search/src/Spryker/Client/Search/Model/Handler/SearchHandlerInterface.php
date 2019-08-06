@@ -9,9 +9,6 @@ namespace Spryker\Client\Search\Model\Handler;
 
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\Search\Search\SearcherInterface` instead.
- */
 interface SearchHandlerInterface
 {
     /**

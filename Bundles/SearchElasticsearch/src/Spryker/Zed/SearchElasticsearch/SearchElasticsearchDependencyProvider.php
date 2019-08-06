@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
 
 /**
- * @method \Spryker\Zed\SearchElasticsearch\SearchConfig getConfig()
+ * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  */
 class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProvider
 {

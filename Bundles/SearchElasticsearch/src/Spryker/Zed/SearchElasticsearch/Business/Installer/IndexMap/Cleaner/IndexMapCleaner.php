@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner;
 
-use Spryker\Zed\SearchElasticsearch\SearchConfig;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
 class IndexMapCleaner implements IndexMapCleanerInterface
 {
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\SearchConfig
+     * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
      */
     protected $config;
 
     /**
-     * @param \Spryker\Zed\SearchElasticsearch\SearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      */
-    public function __construct(SearchConfig $config)
+    public function __construct(SearchElasticsearchConfig $config)
     {
         $this->config = $config;
     }

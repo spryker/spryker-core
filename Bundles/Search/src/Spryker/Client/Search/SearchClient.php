@@ -107,7 +107,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|array
+     * @return mixed
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {

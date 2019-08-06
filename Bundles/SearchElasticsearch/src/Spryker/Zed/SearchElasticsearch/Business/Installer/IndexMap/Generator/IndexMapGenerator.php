@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator;
 
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
-use Spryker\Zed\SearchElasticsearch\SearchConfig;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Twig\Environment;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -23,7 +23,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     public const TEMPLATE_VARIABLE_METADATA = 'metadata';
 
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\SearchConfig
+     * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
      */
     protected $config;
 
@@ -33,10 +33,10 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     protected $twig;
 
     /**
-     * @param \Spryker\Zed\SearchElasticsearch\SearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      * @param \Twig\Environment $twig
      */
-    public function __construct(SearchConfig $config, Environment $twig)
+    public function __construct(SearchElasticsearchConfig $config, Environment $twig)
     {
         $this->config = $config;
         $this->twig = $twig;
@@ -194,14 +194,14 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     }
 
     /**
-     * @param string $path
+     * @param string|null $path
      * @param array $propertyData
      * @param string $propertyName
      * @param array $metadata
      *
      * @return array
      */
-    protected function getChildMetadata(string $path, array $propertyData, string $propertyName, array $metadata): array
+    protected function getChildMetadata(?string $path, array $propertyData, string $propertyName, array $metadata): array
     {
         if (!isset($propertyData[static::PROPERTIES])) {
             return $metadata;
@@ -217,14 +217,14 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     }
 
     /**
-     * @param string $path
+     * @param string|null $path
      * @param array $propertyData
      * @param string $propertyName
      * @param array $constants
      *
      * @return array
      */
-    protected function getChildConstants(string $path, array $propertyData, string $propertyName, array $constants): array
+    protected function getChildConstants(?string $path, array $propertyData, string $propertyName, array $constants): array
     {
         if (!isset($propertyData[static::PROPERTIES])) {
             return $constants;

@@ -12,19 +12,19 @@ use Elastica\ResultSet;
 use Exception;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\Search\Response\Response;
-use Spryker\Client\SearchExtension\Dependency\Plugin\ClientAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 class SearchDelegator implements SearchDelegatorInterface
 {
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ClientAdapterPluginInterface[]
+     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
      */
     protected $searchAdapterPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ClientAdapterPluginInterface[] $searchAdapter
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapter
      */
     public function __construct(array $searchAdapter)
     {
@@ -151,9 +151,9 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @throws \Spryker\Client\Search\Exception\SearchDelegatorException
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ClientAdapterPluginInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface
      */
-    protected function getSearchAdapterByIndexName(string $indexName): ClientAdapterPluginInterface
+    protected function getSearchAdapterByIndexName(string $indexName): SearchAdapterPluginInterface
     {
         foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
             if ($searchAdapterPlugin->isApplicable($indexName)) {
@@ -163,7 +163,7 @@ class SearchDelegator implements SearchDelegatorInterface
 
         throw new SearchDelegatorException(sprintf(
             'None of the applied "%s"s is applicable. Please add one which is able to use the index "%s"',
-            ClientAdapterPluginInterface::class,
+            SearchAdapterPluginInterface::class,
             $indexName
         ));
     }

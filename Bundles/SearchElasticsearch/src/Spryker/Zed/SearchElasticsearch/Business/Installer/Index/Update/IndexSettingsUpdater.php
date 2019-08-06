@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Exception\MissingIndexStateException;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface;
-use Spryker\Zed\SearchElasticsearch\SearchConfig;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexSettingsUpdater implements InstallerInterface
 {
@@ -25,15 +25,15 @@ class IndexSettingsUpdater implements InstallerInterface
     protected $client;
 
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\SearchConfig
+     * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
      */
     protected $config;
 
     /**
      * @param \Elastica\Client $client
-     * @param \Spryker\Zed\SearchElasticsearch\SearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      */
-    public function __construct(Client $client, SearchConfig $config)
+    public function __construct(Client $client, SearchElasticsearchConfig $config)
     {
         $this->client = $client;
         $this->config = $config;
@@ -114,12 +114,12 @@ class IndexSettingsUpdater implements InstallerInterface
     {
         $notUpdatableIndexSettings = [];
 
-        if ($indexState === SearchConfig::INDEX_OPEN_STATE) {
+        if ($indexState === SearchElasticsearchConfig::INDEX_OPEN_STATE) {
             $notUpdatableIndexSettings = $this->config->getStaticIndexSettings();
             $logger->info('Index is open, updating dynamic settings.');
         }
 
-        if ($indexState === SearchConfig::INDEX_CLOSE_STATE) {
+        if ($indexState === SearchElasticsearchConfig::INDEX_CLOSE_STATE) {
             $notUpdatableIndexSettings = $this->config->getDynamicIndexSettings();
             $logger->info('Index is closed, updating static settings.');
         }
