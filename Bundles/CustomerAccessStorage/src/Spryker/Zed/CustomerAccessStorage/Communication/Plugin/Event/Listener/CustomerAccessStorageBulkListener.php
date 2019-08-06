@@ -11,7 +11,6 @@ use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface getFacade()
@@ -20,9 +19,9 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class CustomerAccessStorageBulkListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers

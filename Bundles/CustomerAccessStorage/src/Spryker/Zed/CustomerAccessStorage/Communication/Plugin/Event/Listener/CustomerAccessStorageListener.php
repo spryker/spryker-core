@@ -12,7 +12,6 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @deprecated Use `Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Event\Listener\CustomerAccessStorageBulkListener` instead.
@@ -23,9 +22,9 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class CustomerAccessStorageListener extends AbstractPlugin implements EventHandlerInterface
 {
-    use TransactionTrait;
-
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
