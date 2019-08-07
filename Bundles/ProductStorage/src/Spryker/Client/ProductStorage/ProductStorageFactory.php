@@ -94,7 +94,7 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductAbstractViewTransferFinder(
             $this->createProductAbstractStorageReader(),
-            $this->createProductAbstractStorageDataMapper()
+            $this->createProductStorageDataMapper()
         );
     }
 
