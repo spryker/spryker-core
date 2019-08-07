@@ -34,8 +34,8 @@ $(document).ready(function() {
                 $.each(data.currencies, function(key, currency) {
                     $currency.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
                 });
-                $('#active_from_timezone').text(data.timezoneText);
-                $('#active_to_timezone').text(data.timezoneText);
+                $('#active_from_timezone').html(data.timezoneText);
+                $('#active_to_timezone').html(data.timezoneText);
             }
         });
     });

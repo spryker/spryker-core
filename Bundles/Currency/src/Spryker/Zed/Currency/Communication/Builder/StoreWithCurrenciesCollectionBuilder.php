@@ -12,7 +12,7 @@ use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
 class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollectionBuilderInterface
 {
-    protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be %s as defined on the store selected';
+    protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be <b>%s</b> as defined on the store selected';
     protected const KEY_CURRENCIES = 'currencies';
     protected const KEY_STORE = 'store';
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';

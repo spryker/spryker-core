@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
+use Closure;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -77,7 +80,7 @@ class MoneyValueSubForm extends AbstractType
      */
     protected function addNetPrice(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_NET_AMOUNT, IntegerType::class, [
+        $builder->add(static::FIELD_NET_AMOUNT, NumberType::class, [
             'label' => 'Net price',
             'constraints' => [
                 new NotBlank(),
@@ -87,7 +90,41 @@ class MoneyValueSubForm extends AbstractType
             ],
         ]);
 
+        $builder->get(static::FIELD_NET_AMOUNT)
+            ->addModelTransformer($this->createModelTransformer());
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    protected function createModelTransformer(): DataTransformerInterface
+    {
+        return new CallbackTransformer(
+            $this->createTransformCallback(),
+            $this->createReverseTransformCallback()
+        );
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createTransformCallback(): Closure
+    {
+        return function ($amount) {
+            return $amount / 100;
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createReverseTransformCallback(): Closure
+    {
+        return function ($amount) {
+            return (int)($amount * 100);
+        };
     }
 
     /**
@@ -97,7 +134,7 @@ class MoneyValueSubForm extends AbstractType
      */
     protected function addGrossPrice(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_GROSS_AMOUNT, IntegerType::class, [
+        $builder->add(static::FIELD_GROSS_AMOUNT, NumberType::class, [
             'label' => 'Gross price',
             'constraints' => [
                 new NotBlank(),
@@ -106,6 +143,9 @@ class MoneyValueSubForm extends AbstractType
                 ]),
             ],
         ]);
+
+        $builder->get(static::FIELD_GROSS_AMOUNT)
+            ->addModelTransformer($this->createModelTransformer());
 
         return $this;
     }
