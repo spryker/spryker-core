@@ -100,6 +100,8 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @module Country
+     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
@@ -143,6 +145,8 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @module CompanyBusinessUnit
+     *
      * @param int[] $companyUnitAddressIds
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[][]
