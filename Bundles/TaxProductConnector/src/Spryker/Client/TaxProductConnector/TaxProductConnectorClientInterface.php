@@ -18,7 +18,7 @@ interface TaxProductConnectorClientInterface
      *
      * @api
      *
-     * @deprecated Use TaxProductStorageClient::findTaxProductStorageByProductAbstractSku() instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
