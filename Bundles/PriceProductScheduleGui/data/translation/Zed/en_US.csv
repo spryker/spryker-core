@@ -38,3 +38,4 @@ Prices,Prices
 "Are you sure about deleting this scheduled price?","Are you sure about deleting this scheduled price?"
 "No, I want to keep this price","No, I want to keep this price"
 "Yes, delete this price","Yes, delete this price"
+"The timezone used for the scheduled price will be %s as defined on the store selected","The timezone used for the scheduled price will be %s as defined on the store selected"

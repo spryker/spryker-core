@@ -32,11 +32,10 @@ $(document).ready(function() {
             data: data,
             success: function(data) {
                 $.each(data.currencies, function(key, currency) {
-                    $currency.append($('<option value="'+ currency.id_currency +'" selected="selected">'+ currency.code +'</option>'));
+                    $currency.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
                 });
-                var timezoneText = "The timezone used for the scheduled price will be "+ data.store.timezone +" as defined on the store selected";
-                $('#active_from_timezone').text(timezoneText);
-                $('#active_to_timezone').text(timezoneText);
+                $('#active_from_timezone').text(data.timezoneText);
+                $('#active_to_timezone').text(data.timezoneText);
             }
         });
     });

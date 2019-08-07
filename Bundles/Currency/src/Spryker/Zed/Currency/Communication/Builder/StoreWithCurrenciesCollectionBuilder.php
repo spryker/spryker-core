@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\Currency\Communication\Builder;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
 class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollectionBuilderInterface
 {
+    protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be %s as defined on the store selected';
+    protected const KEY_CURRENCIES = 'currencies';
+    protected const KEY_STORE = 'store';
+    protected const KEY_TIMEZONE_TEXT = 'timezoneText';
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -34,6 +39,7 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
         $storeWithCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
 
         $currencies = [];
+        $timezoneText = '';
         $store = [];
 
         foreach ($storeWithCurrencyCollection as $storeWithCurrencyTransfer) {
@@ -41,7 +47,9 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
             if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
                 continue;
             }
-            $store = $storeWithCurrencyTransfer->getStore()->toArray();
+            $storeTransfer = $storeWithCurrencyTransfer->getStore();
+            $timezoneText = $this->buildTimezoneText($storeTransfer);
+            $store = $storeTransfer->toArray();
 
             $currencyCollection = $storeWithCurrencyTransfer->getCurrencies();
             foreach ($currencyCollection as $currencyTransfer) {
@@ -50,8 +58,19 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
         }
 
         return [
-            'currencies' => $currencies,
-            'store' => $store,
+            static::KEY_CURRENCIES => $currencies,
+            static::KEY_STORE => $store,
+            static::KEY_TIMEZONE_TEXT => $timezoneText,
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return string
+     */
+    protected function buildTimezoneText(StoreTransfer $storeTransfer): string
+    {
+        return sprintf(static::TIMEZONE_TEXT_PATTERN, $storeTransfer->getTimezone());
     }
 }
