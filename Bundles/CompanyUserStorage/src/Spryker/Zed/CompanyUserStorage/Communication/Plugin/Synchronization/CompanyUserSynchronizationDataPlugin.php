@@ -14,7 +14,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 /**
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()
- * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository getRepository()
+ * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyUserStorage\Communication\CompanyUserStorageCommunicationFactory getFactory()
  */
@@ -115,10 +115,10 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
      */
     protected function findCompanyUserStorageEntities(array $ids): array
     {
-        if (count($ids)) {
-            return $this->getRepository()->findCompanyUserStorageEntities($ids);
+        if ($ids === []) {
+            return $this->getRepository()->findAllCompanyUserStorageEntities();
         }
 
-        return $this->getRepository()->findAllCompanyUserStorageEntities();
+        return $this->getRepository()->findCompanyUserStorageEntities($ids);
     }
 }

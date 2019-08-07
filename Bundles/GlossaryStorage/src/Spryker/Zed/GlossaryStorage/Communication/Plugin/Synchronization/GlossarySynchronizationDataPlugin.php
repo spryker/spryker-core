@@ -57,11 +57,11 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
     {
         $query = $this->getQueryContainer()->queryGlossaryStorageByGlossaryIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdGlossaryStorage();
     }
 
     /**

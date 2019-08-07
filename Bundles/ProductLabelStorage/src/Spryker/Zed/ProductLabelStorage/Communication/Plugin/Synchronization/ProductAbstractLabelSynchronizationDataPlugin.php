@@ -57,11 +57,11 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryProductAbstractLabelStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductAbstractLabelStorage();
     }
 
     /**

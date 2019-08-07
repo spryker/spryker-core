@@ -47,11 +47,11 @@ class RedirectEventResourceQueryContainerPlugin extends AbstractPlugin implement
     {
         $query = $this->getQueryContainer()->queryRedirects($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

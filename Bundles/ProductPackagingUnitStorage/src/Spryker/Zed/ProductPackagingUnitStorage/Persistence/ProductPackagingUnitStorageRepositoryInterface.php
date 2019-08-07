@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
@@ -29,7 +31,17 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findAllProductAbstractPackagingStorageEntities(): array;
 
     /**
-     * @return int[]
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function findProductAbstractIdsWithProductPackagingUnit(): array;
+    public function getProductPackagingLeadProductEntityTransfersByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function findFilteredProductAbstractPackagingUnitStorages(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
 }

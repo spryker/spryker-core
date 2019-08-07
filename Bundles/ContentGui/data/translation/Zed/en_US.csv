@@ -1,8 +1,26 @@
-"Cancel","Cancel"
-"Save","Save"
-"Create Content Item","Create Content Item"
-"Back to Content Items","Back to Content Items"
-"Edit Content Item","Edit Content Item"
-"Overview of Content Items","Overview of Content Items"
 "Add Content Item","Add Content Item"
+"Back to Content Items","Back to Content Items"
+Cancel,Cancel
+"Content Item","Content Item"
+"Content Item ID","Content Item ID"
+"Content Item Key","Content Item Key"
+"Content Items","Content Items"
+"Content Type","Content Type"
+"Create Content Item","Create Content Item"
+Default,Default
+"Edit Content Item","Edit Content Item"
+"Edit Widget","Edit Widget"
+Insert,Insert
+"Insert a Content Item","Insert a Content Item"
+"Invalid data provided","Invalid data provided"
 "List of Content Items","List of Content Items"
+Name,Name
+"Overview of Content Items","Overview of Content Items"
+"Overwrite default by specifying a different list per specific locale","Overwrite default by specifying different content elements per specific locale"
+"Overwrite default by specifying different content elements per specific locale","Overwrite default by specifying different content elements per specific locale"
+"Please select a content item","Please select a content item"
+"Please select a template","Please select a template"
+Save,Save
+"Select a content item","Select a content item"
+"Select a template","Select a template"
+Updated,Updated

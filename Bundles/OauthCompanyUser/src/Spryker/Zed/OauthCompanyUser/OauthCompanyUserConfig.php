@@ -19,26 +19,6 @@ class OauthCompanyUserConfig extends AbstractBundleConfig
     public const GRANT_TYPE_ID_COMPANY_USER = 'idCompanyUser';
 
     /**
-     * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
-     *
-     * @return string
-     */
-    public function getClientSecret(): string
-    {
-        return $this->getSharedConfig()->getClientSecret();
-    }
-
-    /**
-     * The client id as is store in spy_oauth_client database table
-     *
-     * @return string
-     */
-    public function getClientId(): string
-    {
-        return $this->getSharedConfig()->getClientId();
-    }
-
-    /**
      * @return array
      */
     public function getCompanyUserScopes(): array

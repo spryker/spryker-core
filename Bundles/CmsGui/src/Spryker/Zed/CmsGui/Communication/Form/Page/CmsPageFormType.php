@@ -112,7 +112,6 @@ class CmsPageFormType extends AbstractType
         $builder->add(static::FIELD_FK_TEMPLATE, ChoiceType::class, [
             'label' => 'Template',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
         ]);
 
         return $this;
@@ -273,6 +272,7 @@ class CmsPageFormType extends AbstractType
                 if ($cmsPageTransfer->getValidFrom()) {
                     $context->addViolation('This field should be selected if "Valid from" is filled.');
                 }
+
                 return;
             }
 

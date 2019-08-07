@@ -12,6 +12,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CategoryImageBuilder;
 use Generated\Shared\DataBuilder\CategoryImageSetBuilder;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
+use Generated\Shared\Transfer\CategoryImageTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
@@ -37,7 +38,7 @@ class CategoryImageDataHelper extends Module
     public function haveCategoryImageSetForCategory(CategoryTransfer $categoryTransfer, array $seedData = []): CategoryImageSetTransfer
     {
         $seedData = $seedData + [
-                'idCategory' => $categoryTransfer->getIdCategory(),
+                CategoryImageSetTransfer::ID_CATEGORY => $categoryTransfer->getIdCategory(),
             ];
         $categoryImageSetTransfer = $this->buildCategoryImageSetTransfer($seedData);
         $categoryTransfer->addImageSet($categoryImageSetTransfer);
@@ -88,6 +89,23 @@ class CategoryImageDataHelper extends Module
     }
 
     /**
+     * @param int[] $sortOrders
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
+     */
+    public function createCategoryImageSetWithOrderedImages(array $sortOrders): CategoryImageSetTransfer
+    {
+        $categoryImages = new ArrayObject();
+        foreach ($sortOrders as $sortOrder) {
+            $categoryImages->append($this->buildCategoryImageTransfer([CategoryImageTransfer::SORT_ORDER => $sortOrder]));
+        }
+
+        $categoryImageSetTransfer = $this->buildCategoryImageSetTransfer()->setCategoryImages($categoryImages);
+
+        return $categoryImageSetTransfer;
+    }
+
+    /**
      * @return \Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface
      */
     protected function getCategoryImageFacade(): CategoryImageFacadeInterface
@@ -113,7 +131,7 @@ class CategoryImageDataHelper extends Module
             ->delete();
 
         SpyCategoryImageQuery::create()
-            ->filterByIdCategoryImage($idCategoryImageCollection)
+            ->filterByIdCategoryImage_In($idCategoryImageCollection)
             ->delete();
 
         SpyCategoryImageSetQuery::create()

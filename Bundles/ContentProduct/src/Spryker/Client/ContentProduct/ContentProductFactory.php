@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\ContentProduct\ContentProductConfig;
 
 /**
- * @method \Spryker\Client\ContentProduct\ContentProductConfig getConfig()
+ * @method \Spryker\Shared\ContentProduct\ContentProductConfig getConfig()
  */
 class ContentProductFactory extends AbstractFactory
 {

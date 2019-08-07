@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 /**
@@ -62,6 +64,19 @@ interface StoreFacadeInterface
     public function getStoreByName($storeName);
 
     /**
+     *
+     * Specification:
+     *  - Retrieves store by store name
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer;
+
+    /**
      * Specification:
      *  - Reads all shared store from Store transfer and populates data from configuration.
      *  - The list of stores with which this store shares database, the value is store name.
@@ -83,4 +98,31 @@ interface StoreFacadeInterface
      * @return string[]
      */
     public function getCountries();
+
+    /**
+     * Specification
+     * - Validates store transfer in quote
+     * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not exist
+     * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not have a name
+     * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store has a store that does not exist
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuoteStore(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets array of StoreTransfer by array of store names.
+     *
+     * @api
+     *
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array;
 }

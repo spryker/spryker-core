@@ -18,6 +18,9 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
+/**
+ * @deprecated not used any more
+ */
 function createTriggerUrl(idOrder, idReclamation, eventName) {
     var url = '/oms/trigger/trigger-event-for-order';
     var parameters = {
@@ -49,6 +52,9 @@ function expandParametersWithClaimedOrderItems(parameters) {
     return parameters;
 }
 
+/**
+ * @deprecated not used any more
+ */
 function createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName) {
     var url = '/oms/trigger/trigger-event-for-order-items';
     var parameters = {
@@ -71,32 +77,18 @@ function disableTrigger($item) {
 }
 
 $(document).ready(function() {
-    $('.trigger-order-single-event').click(function(e) {
-        e.preventDefault();
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var idReclamation = $item.data('id-reclamation');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, idReclamation, eventName);
-    });
-
-    $('.trigger-order-event').click(function(e) {
+    $('.trigger-event').click(function (e) {
         e.preventDefault();
 
-        var $item = $(this);
+        $(this).prop('disabled', true).addClass('disabled');
 
-        disableTrigger($item);
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
+        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
 
-        var idOrder = $item.data('id-sales-order');
-        var idReclamation = $item.data('id-sales-reclamation');
-        var eventName = $item.data('event');
+        $form.attr('action', finalUrl);
 
-        window.location = createTriggerUrl(idOrder, idReclamation, eventName);
+        $(this).parents('form').first().submit();
     });
 
     $('.more-history').click(function(e) {

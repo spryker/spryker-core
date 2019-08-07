@@ -6,8 +6,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/cart-note-extension": "^1.0.0",
-    "spryker/kernel": "^3.0.0",
-    "spryker/product-bundle": "^4.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-bundle": "^4.0.0 || ^6.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {

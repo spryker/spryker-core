@@ -46,10 +46,6 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param array $productIds
      *
      * @return bool
@@ -60,6 +56,19 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
                 ->createProductDiscontinuedQuery()
                 ->filterByFkProduct_In($productIds)
                 ->count() === count($productIds));
+    }
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function isAnyProductConcreteDiscontinued(array $productIds): bool
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->filterByFkProduct_In($productIds)
+            ->exists();
     }
 
     /**

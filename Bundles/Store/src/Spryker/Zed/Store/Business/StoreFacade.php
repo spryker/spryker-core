@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreBusinessFactory getFactory()
+ * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  */
 class StoreFacade extends AbstractFacade implements StoreFacadeInterface
 {
@@ -73,6 +76,23 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     }
 
     /**
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->findStoreByName($storeName);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -100,5 +120,37 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getCountries();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuoteStore(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStoreValidator()
+            ->validateQuoteStore($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoreTransfersByStoreNames($storeNames);
     }
 }

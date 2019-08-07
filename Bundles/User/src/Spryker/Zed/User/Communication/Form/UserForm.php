@@ -226,7 +226,6 @@ class UserForm extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => array_flip($choices),
-                'choices_as_values' => true,
             ]);
 
         return $this;

@@ -156,6 +156,7 @@ class AbstractTouchUpdaterTest extends Unit
     {
         $this->bulkTouchUpdateQuery = $this->createBulkTouchQueryBuilder()
             ->createBulkTouchUpdateQuery();
+
         return $this->bulkTouchUpdateQuery;
     }
 
@@ -166,6 +167,7 @@ class AbstractTouchUpdaterTest extends Unit
     {
         $this->bulkTouchDeleteQuery = $this->createBulkTouchQueryBuilder()
             ->createBulkTouchDeleteQuery();
+
         return $this->bulkTouchDeleteQuery;
     }
 

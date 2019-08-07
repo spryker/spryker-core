@@ -7,14 +7,20 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -87,7 +93,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->select([
                 static::KEY_FILTERED_PRODUCTS_RESULT,
                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
-            ]);
+            ])->addAscendingOrderByColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME);
 
         return $this->collectFilteredResults(
             $productAbstractQuery->find()->toArray()
@@ -149,6 +155,24 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $productConcrete->getFkProductAbstract();
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT]);
+
+        return $productQuery
+            ->filterByIdProduct_In($productConcreteIds)
+            ->find()
+            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
 
     /**
@@ -306,6 +330,70 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param string $search
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
+     */
+    public function getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
+        string $search,
+        PaginationTransfer $paginationTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductAbstractSuggestionCollectionTransfer {
+        $criteria = new Criteria();
+        $skuLikeCriteria = $criteria->getNewCriterion(
+            SpyProductAbstractTableMap::COL_SKU,
+            '%' . $search . '%',
+            Criteria::LIKE
+        );
+
+        $productAbstractQuery = $this->getFactory()
+            ->createProductAbstractQuery()
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+                ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->endUse()
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME)
+            ->where('lower(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($search) . '%')
+            ->addOr($skuLikeCriteria)
+            ->addAscendingOrderByColumn(SpyProductAbstractTableMap::COL_SKU);
+
+        $paginationModel = $this->getPaginationModelFromQuery($productAbstractQuery, $paginationTransfer);
+        $paginationTransfer->setLastPage($paginationModel->getLastPage());
+        $productAbstractQuery = $paginationModel->getQuery();
+
+        $productAbstractEntities = $productAbstractQuery->find();
+
+        return (new ProductAbstractSuggestionCollectionTransfer())
+            ->setPagination($paginationTransfer)
+            ->setProductAbstracts(
+                $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractEntities)
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $spyProductAbstractQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\Util\PropelModelPager
+     */
+    protected function getPaginationModelFromQuery(
+        SpyProductAbstractQuery $spyProductAbstractQuery,
+        PaginationTransfer $paginationTransfer
+    ): PropelModelPager {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        return $spyProductAbstractQuery->paginate($page, $maxPerPage);
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productConcreteEntities
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -323,5 +411,64 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $productConcreteTransfers;
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
+    {
+        $productConcreteEntities = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->filterBySku_In($productConcreteSkus)
+            ->find();
+
+        if ($productConcreteEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapProductEntitiesToProductConcreteTransfersWithoutStores($productConcreteEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function mapProductEntitiesToProductConcreteTransfersWithoutStores(ObjectCollection $productEntities): array
+    {
+        $productConcreteTransfers = [];
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productEntities as $productEntity) {
+            $productConcreteTransfers[] = $productMapper
+                ->mapProductEntityToProductConcreteTransferWithoutStores($productEntity, new ProductConcreteTransfer());
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    protected function getProductAbstractTransfersMappedFromProductAbstractEntities(ObjectCollection $productAbstractEntities): ArrayObject
+    {
+        $productAbstractTransfers = new ArrayObject();
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfers[] = $productMapper->mapProductAbstractEntityToProductAbstractTransferForSuggestion(
+                $productAbstractEntity,
+                new ProductAbstractTransfer()
+            );
+        }
+
+        return $productAbstractTransfers;
     }
 }

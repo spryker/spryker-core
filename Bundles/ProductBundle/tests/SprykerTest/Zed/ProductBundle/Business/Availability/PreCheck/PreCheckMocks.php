@@ -62,6 +62,7 @@ class PreCheckMocks extends Unit
         $itemTransfer->setSku($this->fixtures['bundle-sku']);
 
         $quoteTransfer->addBundleItem($itemTransfer);
+
         return $quoteTransfer;
     }
 
@@ -88,8 +89,16 @@ class PreCheckMocks extends Unit
         $productEntity = new SpyProduct();
         $productEntity->setIdProduct($fixtures['fkBundledProduct']);
         $productEntity->setSku($fixtures['bundledProductSku']);
+        $productEntity->setIsActive(true);
 
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
+
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity->setIdProduct($fixtures['fkBundledProduct']);
+        $productConcreteEntity->setSku($fixtures['bundledProductSku']);
+        $productConcreteEntity->setIsActive(true);
+
+        $productBundleEntity->setSpyProductRelatedByFkProduct($productConcreteEntity);
 
         $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
 

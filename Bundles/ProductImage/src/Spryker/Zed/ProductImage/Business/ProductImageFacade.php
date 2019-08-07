@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductImage\Business\ProductImageBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageRepositoryInterface getRepository()
  */
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
@@ -87,6 +88,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->getProductImagesSetCollectionByProductId($idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
+    {
+        return $this->getFactory()
+            ->createProductImageReader()
+            ->getProductImagesSetCollectionByProductIdForCurrentLocale($idProduct);
     }
 
     /**
@@ -260,5 +277,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageReader()
             ->findProductImagesSetCollectionById($idProductImageSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     * @param string $productImageSetName
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     */
+    public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
+    {
+        return $this->getFactory()
+            ->createProductImageBulkReader()
+            ->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
     }
 }

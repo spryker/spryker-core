@@ -47,14 +47,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedDecodedValues;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface|null
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
      */
     public static $service;
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface $service
      */
     public function getService()
     {
@@ -481,6 +481,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         ksort($allowedGetParameters);
+
         return '?' . http_build_query($allowedGetParameters);
     }
 

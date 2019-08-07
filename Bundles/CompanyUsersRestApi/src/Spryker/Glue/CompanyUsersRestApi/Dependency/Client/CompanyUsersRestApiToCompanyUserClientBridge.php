@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CompanyUsersRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 class CompanyUsersRestApiToCompanyUserClientBridge implements CompanyUsersRestApiToCompanyUserClientInterface
@@ -34,5 +35,15 @@ class CompanyUsersRestApiToCompanyUserClientBridge implements CompanyUsersRestAp
         CustomerTransfer $customerTransfer
     ): CompanyUserCollectionTransfer {
         return $this->companyUserClient->getActiveCompanyUsersByCustomerReference($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        return $this->companyUserClient->getCompanyUserById($companyUserTransfer);
     }
 }

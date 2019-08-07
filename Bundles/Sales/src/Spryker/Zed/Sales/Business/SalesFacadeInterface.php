@@ -60,10 +60,11 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * - Saves order and items to Persistence.
+     * - Sets "is test" flag.
+     * - Updates checkout response with saved order data.
+     * - Sets initial state for state machine.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
      *
      * @api
      *
@@ -78,10 +79,11 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Saves order and items to database
-     * - Sets "is test" flag
-     * - Updates checkout response with saved order data
-     * - Sets initial state for state machine
+     * - Saves order and items to Persistence.
+     * - Sets "is test" flag.
+     * - Updates checkout response with saved order data.
+     * - Sets initial state for state machine.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
      *
      * @api
      *

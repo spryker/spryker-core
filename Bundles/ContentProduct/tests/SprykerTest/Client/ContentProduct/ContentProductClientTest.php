@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Spryker\Client\ContentProduct\ContentProductClient;
+use Spryker\Client\ContentProduct\ContentProductClientInterface;
 use Spryker\Client\ContentProduct\ContentProductDependencyProvider;
 use Spryker\Client\ContentProduct\Dependency\Client\ContentProductToContentStorageClientInterface;
 use Spryker\Client\ContentProduct\Exception\InvalidProductAbstractListTermException;
@@ -39,6 +40,11 @@ class ContentProductClientTest extends Unit
     /**
      * @var string
      */
+    public const CONTENT_KEY = 'test-key';
+
+    /**
+     * @var string
+     */
     public const WRONG_TERM = 'TERM';
 
     /**
@@ -54,11 +60,12 @@ class ContentProductClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindContentProductValidTransfer()
+    public function testFindContentProductValidTransfer(): void
     {
         // Arrange
         $contentTypeContextTransfer = new ContentTypeContextTransfer();
         $contentTypeContextTransfer->setIdContent(static::ID_CONTENT_ITEM);
+        $contentTypeContextTransfer->setKey(static::CONTENT_KEY);
         $contentTypeContextTransfer->setTerm(ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST);
         $contentTypeContextTransfer->setParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
@@ -66,7 +73,7 @@ class ContentProductClientTest extends Unit
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->executeProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->executeProductAbstractListTypeByKey(static::CONTENT_KEY, static::LOCALE);
 
         // Assert
         $this->assertEquals(ContentProductAbstractListTypeTransfer::class, get_class($systemUnderTest));
@@ -75,11 +82,12 @@ class ContentProductClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindContentItemWithWrongTermThrowsException()
+    public function testFindContentItemWithWrongTermThrowsException(): void
     {
         // Arrange
         $contentTypeContextTransfer = (new ContentTypeContextTransfer())
             ->setIdContent(static::ID_CONTENT_ITEM)
+            ->setKey(static::CONTENT_KEY)
             ->setTerm(static::WRONG_TERM)
             ->setParameters(['id_product_abstracts' => [static::ID_PRODUCT_ABSTRACT]]);
 
@@ -89,20 +97,20 @@ class ContentProductClientTest extends Unit
         $this->expectException(InvalidProductAbstractListTermException::class);
 
         // Act
-        $this->createContentProductClient()->executeProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
+        $this->createContentProductClient()->executeProductAbstractListTypeByKey(static::CONTENT_KEY, static::LOCALE);
     }
 
     /**
      * @return void
      */
-    public function testFindNotExistingContentProduct()
+    public function testFindNotExistingContentProduct(): void
     {
         // Arrange
         $this->setProductStorageClientReturn(null);
 
         // Act
         $systemUnderTest = $this->createContentProductClient()
-            ->executeProductAbstractListTypeById(static::ID_CONTENT_ITEM, static::LOCALE);
+            ->executeProductAbstractListTypeByKey(static::CONTENT_KEY, static::LOCALE);
 
         // Assert
         $this->assertNull($systemUnderTest);
@@ -113,17 +121,17 @@ class ContentProductClientTest extends Unit
      *
      * @return void
      */
-    protected function setProductStorageClientReturn(?ContentTypeContextTransfer $contentTypeContextTransfer)
+    protected function setProductStorageClientReturn(?ContentTypeContextTransfer $contentTypeContextTransfer): void
     {
         $contentProductToContentStorageClientBridge = $this->getMockBuilder(ContentProductToContentStorageClientInterface::class)->getMock();
-        $contentProductToContentStorageClientBridge->method('findContentTypeContext')->willReturn($contentTypeContextTransfer);
+        $contentProductToContentStorageClientBridge->method('findContentTypeContextByKey')->willReturn($contentTypeContextTransfer);
         $this->tester->setDependency(ContentProductDependencyProvider::CLIENT_CONTENT_STORAGE, $contentProductToContentStorageClientBridge);
     }
 
     /**
      * @return \Spryker\Client\ContentProduct\ContentProductClientInterface
      */
-    protected function createContentProductClient()
+    protected function createContentProductClient(): ContentProductClientInterface
     {
         return new ContentProductClient();
     }

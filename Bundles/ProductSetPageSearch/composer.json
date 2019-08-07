@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.21.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product-image": "^3.5.0",
     "spryker/product-set": "^1.3.3",
     "spryker/product-set-storage": "^0.1.0 || ^0.2.0 || ^1.0.0",
@@ -21,6 +21,8 @@
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

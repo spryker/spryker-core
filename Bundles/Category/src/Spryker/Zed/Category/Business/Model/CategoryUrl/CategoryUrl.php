@@ -95,6 +95,7 @@ class CategoryUrl implements CategoryUrlInterface
 
         if ($urlTransfer->getIdUrl()) {
             $this->urlFacade->updateUrl($urlTransfer);
+
             return;
         }
 

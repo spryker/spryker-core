@@ -10,6 +10,7 @@
 
     <transfer name="CompanyRole">
         <property name="uuid" type="string" />
+        <property name="fkCompany" type="int" />
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -18,6 +19,20 @@
 
     <transfer name="CompanyUser">
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+    </transfer>
+
+    <transfer name="CompanyRoleResponse">
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompany" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
     </transfer>
 
 </transfers>
