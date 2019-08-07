@@ -121,7 +121,7 @@ EOM
     protected function runCommand($command)
     {
         $this->info('Run command: ' . $command);
-        $process = new Process($command, APPLICATION_ROOT_DIR);
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
         $process->setTimeout(null);
         $process->run(function ($type, $buffer) {
             echo $buffer;

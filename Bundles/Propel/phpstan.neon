@@ -1,3 +1,5 @@
 parameters:
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
+        - "#Call to function method_exists\\(\\) .+ 'fromShellCommandline'#"
+        - '#Parameter \#1 \$command of class Symfony\\Component\\Process\\Process constructor expects array, string given.#'
