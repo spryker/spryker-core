@@ -60,7 +60,7 @@ interface CompanyUnitAddressMapperInterface
     /**
      * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer[] $companyUnitAddressToCompanyBusinessUnitEntities
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[][]
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
      */
     public function mapEntitiesToCompanyBusinessUnitTransfers(
         array $companyUnitAddressToCompanyBusinessUnitEntities

@@ -149,7 +149,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      *
      * @param int[] $companyUnitAddressIds
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[][]
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
      */
     public function getCompanyBusinessUnitAddressToBusinessUnitRelations(
         array $companyUnitAddressIds
