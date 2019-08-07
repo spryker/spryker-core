@@ -3,7 +3,7 @@
 {% block section_title title | trans %}
 
 {% block action %}
-    {{ backActionButton(url(app.request.headers.get('referer')~'#tab-content-scheduled_prices'), "Back to the product's scheduled prices" | trans) }}
+    {{ backActionButton(url(app.request.headers.get('referer')~'#tab-content-scheduled_prices'), 'Back to the product\'s scheduled prices' | trans) }}
 {% endblock %}
 
 {% block content %}

@@ -24,14 +24,14 @@ $(document).ready(function() {
 
     $store.change(function() {
         let data = {};
-        data.idStore= $store.val();
+        data.idStore = $store.val();
         $currency.find('option:gt(0)').remove();
         $.ajax({
             url: '/currency/currencies-for-store',
             type: 'POST',
             data: data,
             success: function(data) {
-                $.each(data.currencies, function (key, currency) {
+                $.each(data.currencies, function(key, currency) {
                     $currency.append($('<option value="'+ currency.id_currency +'" selected="selected">'+ currency.code +'</option>'));
                 });
                 var timezoneText = "The timezone used for the scheduled price will be "+ data.store.timezone +" as defined on the store selected";
