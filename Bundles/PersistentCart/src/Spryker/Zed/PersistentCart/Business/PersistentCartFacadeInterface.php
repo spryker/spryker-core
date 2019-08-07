@@ -153,10 +153,10 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     * - If items is not in quote then it create a new empty quote and merge it with provided quote and with the quote
-     *   from DB for provided customer, if items is in quote then it merge provided quote with quote from DB for provided customer
-     * - Saves quote to DB
-     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used
+     * - If items is not in quote then it create a new empty quote and merge it with provided quote and with the quote from DB for provided customer.
+     * - If items is in quote then it merge provided quote with quote from DB for provided customer.
+     * - Saves quote to DB.
+     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used.
      *
      * @api
      *
