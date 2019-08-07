@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundle\Calculation;
+namespace Spryker\Client\ConfigurableBundle\Calculator;
 
 use Generated\Shared\Transfer\ConfiguredBundlePriceTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 
-interface ConfiguredBundlePriceCalculationInterface
+interface ConfiguredBundlePriceCalculatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer

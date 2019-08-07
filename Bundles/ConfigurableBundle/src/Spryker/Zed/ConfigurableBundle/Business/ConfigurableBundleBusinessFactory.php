@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
-use Spryker\Zed\ConfigurableBundle\Business\Calculation\ConfiguredBundlePriceCalculation;
-use Spryker\Zed\ConfigurableBundle\Business\Calculation\ConfiguredBundlePriceCalculationInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculator;
+use Spryker\Zed\ConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
@@ -40,15 +40,15 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new SalesOrderConfiguredBundleExpander(
             $this->getRepository(),
-            $this->createConfiguredBundlePriceCalculation()
+            $this->createConfiguredBundlePriceCalculator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Calculation\ConfiguredBundlePriceCalculationInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface
      */
-    public function createConfiguredBundlePriceCalculation(): ConfiguredBundlePriceCalculationInterface
+    public function createConfiguredBundlePriceCalculator(): ConfiguredBundlePriceCalculatorInterface
     {
-        return new ConfiguredBundlePriceCalculation();
+        return new ConfiguredBundlePriceCalculator();
     }
 }

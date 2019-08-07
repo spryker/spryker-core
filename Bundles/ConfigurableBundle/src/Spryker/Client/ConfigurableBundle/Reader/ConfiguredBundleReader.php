@@ -12,21 +12,21 @@ use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface;
+use Spryker\Client\ConfigurableBundle\Calculator\ConfiguredBundlePriceCalculatorInterface;
 
 class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
 {
     /**
-     * @var \Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface
+     * @var \Spryker\Client\ConfigurableBundle\Calculator\ConfiguredBundlePriceCalculatorInterface
      */
-    protected $configuredBundlePriceCalculation;
+    protected $configuredBundlePriceCalculator;
 
     /**
-     * @param \Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface $configuredBundlePriceCalculation
+     * @param \Spryker\Client\ConfigurableBundle\Calculator\ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator
      */
-    public function __construct(ConfiguredBundlePriceCalculationInterface $configuredBundlePriceCalculation)
+    public function __construct(ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator)
     {
-        $this->configuredBundlePriceCalculation = $configuredBundlePriceCalculation;
+        $this->configuredBundlePriceCalculator = $configuredBundlePriceCalculator;
     }
 
     /**
@@ -93,7 +93,7 @@ class ConfiguredBundleReader implements ConfiguredBundleReaderInterface
     {
         foreach ($configuredBundleTransfers as $configuredBundleTransfer) {
             $configuredBundleTransfer->setPrice(
-                $this->configuredBundlePriceCalculation->calculateConfiguredBundlePrice($configuredBundleTransfer)
+                $this->configuredBundlePriceCalculator->calculateConfiguredBundlePrice($configuredBundleTransfer)
             );
         }
 

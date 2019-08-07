@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Calculation;
+namespace Spryker\Zed\ConfigurableBundle\Business\Calculator;
 
 use Generated\Shared\Transfer\ConfiguredBundlePriceTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 
-interface ConfiguredBundlePriceCalculationInterface
+interface ConfiguredBundlePriceCalculatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
-use Spryker\Zed\ConfigurableBundle\Business\Calculation\ConfiguredBundlePriceCalculationInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface
@@ -21,20 +21,20 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     protected $configurableBundleRepository;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Calculation\ConfiguredBundlePriceCalculationInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface
      */
-    protected $configuredBundlePriceCalculation;
+    protected $configuredBundlePriceCalculator;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Calculation\ConfiguredBundlePriceCalculationInterface $configuredBundlePriceCalculation
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
-        ConfiguredBundlePriceCalculationInterface $configuredBundlePriceCalculation
+        ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
-        $this->configuredBundlePriceCalculation = $configuredBundlePriceCalculation;
+        $this->configuredBundlePriceCalculator = $configuredBundlePriceCalculator;
     }
 
     /**
@@ -72,7 +72,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
 
         foreach ($orderTransfer->getSalesOrderConfiguredBundles() as $salesOrderConfiguredBundleTransfer) {
             $salesOrderConfiguredBundleTransfer->setPrice(
-                $this->configuredBundlePriceCalculation->calculateSalesOrderConfiguredBundlePrice($salesOrderConfiguredBundleTransfer, $itemTransfers)
+                $this->configuredBundlePriceCalculator->calculateSalesOrderConfiguredBundlePrice($salesOrderConfiguredBundleTransfer, $itemTransfers)
             );
         }
 

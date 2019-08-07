@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ConfigurableBundle;
 
-use Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculation;
-use Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface;
+use Spryker\Client\ConfigurableBundle\Calculator\ConfiguredBundlePriceCalculator;
+use Spryker\Client\ConfigurableBundle\Calculator\ConfiguredBundlePriceCalculatorInterface;
 use Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReader;
 use Spryker\Client\ConfigurableBundle\Reader\ConfiguredBundleReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -24,15 +24,15 @@ class ConfigurableBundleFactory extends AbstractFactory
     public function createConfiguredBundleReader(): ConfiguredBundleReaderInterface
     {
         return new ConfiguredBundleReader(
-            $this->createConfiguredBundlePriceCalculation()
+            $this->createConfiguredBundlePriceCalculator()
         );
     }
 
     /**
-     * @return \Spryker\Client\ConfigurableBundle\Calculation\ConfiguredBundlePriceCalculationInterface
+     * @return \Spryker\Client\ConfigurableBundle\Calculator\ConfiguredBundlePriceCalculatorInterface
      */
-    public function createConfiguredBundlePriceCalculation(): ConfiguredBundlePriceCalculationInterface
+    public function createConfiguredBundlePriceCalculator(): ConfiguredBundlePriceCalculatorInterface
     {
-        return new ConfiguredBundlePriceCalculation();
+        return new ConfiguredBundlePriceCalculator();
     }
 }

@@ -5,33 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Calculation;
+namespace Spryker\Client\ConfigurableBundle\Calculator;
 
 use Generated\Shared\Transfer\ConfiguredBundlePriceTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 
-class ConfiguredBundlePriceCalculation implements ConfiguredBundlePriceCalculationInterface
+class ConfiguredBundlePriceCalculator implements ConfiguredBundlePriceCalculatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundlePriceTransfer
      */
-    public function calculateSalesOrderConfiguredBundlePrice(
-        SalesOrderConfiguredBundleTransfer $salesOrderConfiguredBundleTransfer,
-        array $itemTransfers
-    ): ConfiguredBundlePriceTransfer {
+    public function calculateConfiguredBundlePrice(ConfiguredBundleTransfer $configuredBundleTransfer): ConfiguredBundlePriceTransfer
+    {
         $configuredBundlePriceTransfer = new ConfiguredBundlePriceTransfer();
 
-        foreach ($salesOrderConfiguredBundleTransfer->getSalesOrderConfiguredBundleItems() as $salesOrderConfiguredBundleItemTransfer) {
-            if (isset($itemTransfers[$salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItem()])) {
-                $configuredBundlePriceTransfer = $this->calculateAmounts(
-                    $configuredBundlePriceTransfer,
-                    $itemTransfers[$salesOrderConfiguredBundleItemTransfer->getIdSalesOrderItem()]
-                );
-            }
+        foreach ($configuredBundleTransfer->getItems() as $itemTransfer) {
+            $configuredBundlePriceTransfer = $this->addItemPriceToConfigurableBundlePrice($configuredBundlePriceTransfer, $itemTransfer);
         }
 
         return $configuredBundlePriceTransfer;
@@ -43,8 +35,10 @@ class ConfiguredBundlePriceCalculation implements ConfiguredBundlePriceCalculati
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundlePriceTransfer
      */
-    protected function calculateAmounts(ConfiguredBundlePriceTransfer $configuredBundlePriceTransfer, ItemTransfer $itemTransfer): ConfiguredBundlePriceTransfer
-    {
+    protected function addItemPriceToConfigurableBundlePrice(
+        ConfiguredBundlePriceTransfer $configuredBundlePriceTransfer,
+        ItemTransfer $itemTransfer
+    ): ConfiguredBundlePriceTransfer {
         $configuredBundlePriceTransfer->setUnitPrice(
             $configuredBundlePriceTransfer->getUnitPrice() + $itemTransfer->getUnitPrice()
         );
