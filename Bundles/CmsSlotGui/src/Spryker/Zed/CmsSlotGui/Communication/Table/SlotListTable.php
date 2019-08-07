@@ -85,8 +85,8 @@ class SlotListTable extends AbstractTable
             SlotListConstants::COL_NAME => 'Name',
             SlotListConstants::COL_DESCRIPTION => 'Description',
             SlotListConstants::COL_OWNERSHIP => 'Ownership',
-//            SlotListConstants::COL_STATUS => 'Status',
-//            SlotListConstants::COL_ACTIONS => 'Actions',
+            SlotListConstants::COL_STATUS => 'Status',
+            SlotListConstants::COL_ACTIONS => 'Actions',
         ];
 
         $config->setHeader($header);
@@ -119,8 +119,8 @@ class SlotListTable extends AbstractTable
                 SlotListConstants::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
                 SlotListConstants::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
                 SlotListConstants::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
-//                SlotListConstants::COL_STATUS => $this->getStatus($slot),
-//                SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
+                SlotListConstants::COL_STATUS => $this->getStatus($slot),
+                SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
             ];
         }
 
