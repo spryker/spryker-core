@@ -30,7 +30,7 @@ class ProductBundleEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addProductBundleBeforeUpdateListener($eventCollection);
+        $eventCollection = $this->addProductBundleBeforeUpdateListener($eventCollection);
 
         return $eventCollection;
     }
@@ -38,10 +38,12 @@ class ProductBundleEventSubscriber extends AbstractPlugin implements EventSubscr
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function addProductBundleBeforeUpdateListener(EventCollectionInterface $eventCollection): void
+    protected function addProductBundleBeforeUpdateListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $eventCollection->addListener(ProductEvents::PRODUCT_CONCRETE_BEFORE_UPDATE, new ProductBundleBeforeUpdateListener());
+
+        return $eventCollection;
     }
 }
