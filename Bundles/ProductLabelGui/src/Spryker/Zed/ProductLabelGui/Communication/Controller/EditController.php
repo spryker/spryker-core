@@ -33,10 +33,7 @@ class EditController extends AbstractController
         $productLabelTransfer = $this->findProductLabelById($idProductLabel);
 
         $productLabelAggregateForm = $this->createProductLabelAggregateForm($productLabelTransfer);
-        $this->handleProductLabelAggregateForm(
-            $request,
-            $productLabelAggregateForm
-        );
+        $this->handleProductLabelAggregateForm($request, $productLabelAggregateForm);
 
         return $this->viewResponse([
             'productLabelTransfer' => $productLabelTransfer,
@@ -87,7 +84,7 @@ class EditController extends AbstractController
      *
      * @return void
      */
-    protected function handleProductLabelAggregateForm(Request $request, FormInterface $aggregateForm)
+    protected function handleProductLabelAggregateForm(Request $request, FormInterface $aggregateForm): void
     {
         $aggregateForm->handleRequest($request);
 
