@@ -40,11 +40,9 @@ class SchedulerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @api
-     *
      * @return \Twig\TwigFunction
      */
-    public function getEnvironmentVariableValueByNameFunction(): TwigFunction
+    protected function getEnvironmentVariableValueByNameFunction(): TwigFunction
     {
         return new TwigFunction(static::GET_ENV_FUNCTION_NAME, function (string $which) {
             return $this->getEnvironmentVariableValueByName($which);
@@ -52,13 +50,11 @@ class SchedulerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @api
-     *
      * @param string $which
      *
      * @return string|false
      */
-    public function getEnvironmentVariableValueByName(string $which)
+    protected function getEnvironmentVariableValueByName(string $which)
     {
         return getenv($which);
     }
