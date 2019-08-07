@@ -8,11 +8,11 @@
 namespace Spryker\Zed\CmsSlot\Business\ConstraintsProvider;
 
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
 {
@@ -89,9 +89,8 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
         return [
             new Required(),
             new NotBlank(),
-            new Choice([
-                'choices' => [0, 1, '0', '1', false, true],
-                'message' => 'This value is not a valid boolean value.',
+            new Type([
+                'type' => 'boolean',
             ]),
         ];
     }
