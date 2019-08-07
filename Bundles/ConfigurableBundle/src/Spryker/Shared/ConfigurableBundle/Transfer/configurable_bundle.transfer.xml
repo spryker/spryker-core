@@ -7,6 +7,9 @@
         <property name="configuredBundleItem" type="ConfiguredBundleItem" />
         <property name="configuredBundle" type="ConfiguredBundle" />
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem" />
+        <property name="unitPrice" type="int" />
+        <property name="sumSubtotalAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
     </transfer>
 
     <transfer name="Order">
@@ -17,7 +20,15 @@
         <property name="template" type="ConfigurableBundleTemplate" />
         <property name="quantity" type="int" />
         <property name="groupKey" type="string" />
+        <property name="price" type="ConfiguredBundlePrice" />
         <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="ConfiguredBundlePrice">
+        <property name="unitPrice" type="int" />
+        <property name="sumPrice" type="int" />
+        <property name="sumSubtotalAggregation" type="int" />
+        <property name="sumPriceToPayAggregation" type="int" />
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
@@ -54,6 +65,7 @@
         <property name="configurableBundleTemplateUuid" type="string" />
         <property name="name" type="string" />
         <property name="quantity" type="int" />
+        <property name="price" type="ConfiguredBundlePrice" />
         <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
     </transfer>
 
