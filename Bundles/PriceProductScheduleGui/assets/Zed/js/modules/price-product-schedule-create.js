@@ -6,8 +6,10 @@
 'use strict';
 
 $(document).ready(function() {
-    let $activeFrom = $('#price_product_schedule_activeFrom_date');
-    let $activeTo = $('#price_product_schedule_activeTo_date');
+    var $activeFrom = $('#price_product_schedule_activeFrom_date');
+    var $activeTo = $('#price_product_schedule_activeTo_date');
+    var $store = $('#price_product_schedule_priceProduct_moneyValue_store_idStore');
+    var $currency = $('#price_product_schedule_priceProduct_moneyValue_currency_idCurrency');
     $activeFrom.datepicker({
         altFormat: "yy-mm-dd",
         dateFormat: 'yy-mm-dd',
@@ -19,23 +21,20 @@ $(document).ready(function() {
         changeMonth: true,
         defaultData: 0,
     });
-    let $store = $('#price_product_schedule_priceProduct_moneyValue_store_idStore');
-    let $currency = $('#price_product_schedule_priceProduct_moneyValue_currency_idCurrency');
+
     $store.change(function() {
         let data = {};
         data.idStore= $store.val();
         $currency.find('option:gt(0)').remove();
         $.ajax({
-            url : '/currency/currencies-for-store',
+            url: '/currency/currencies-for-store',
             type: 'POST',
-            data : data,
+            data: data,
             success: function(data) {
                 $.each(data.currencies, function (key, currency) {
-                    $currency.append($('<option value="" selected="selected">Choose currency</option>')
-                        .attr('value', currency.id_currency)
-                        .text(currency.code));
+                    $currency.append($('<option value="'+ currency.id_currency +'" selected="selected">'+ currency.code +'</option>'));
                 });
-                let timezoneText = "The timezone used for the scheduled price will be "+ data.store.timezone +" as defined on the store selected";
+                var timezoneText = "The timezone used for the scheduled price will be "+ data.store.timezone +" as defined on the store selected";
                 $('#active_from_timezone').text(timezoneText);
                 $('#active_to_timezone').text(timezoneText);
             }
