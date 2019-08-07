@@ -5,7 +5,7 @@
             {{ bundle.name | trans }}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
-        <td>{% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: 10000, priceToPay: 1000} %} {% endembed %}</td>
+        <td>{% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundle.price.sumSubtotalAggregation, priceToPay: bundle.price.sumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
     {% for item in bundle.salesOrderConfiguredBundleItems %}
