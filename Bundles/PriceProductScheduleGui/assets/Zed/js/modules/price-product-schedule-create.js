@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
 
     $store.change(function() {
-        let data = {};
+        var data = {};
         data.idStore = $store.val();
         $currency.find('option:gt(0)').remove();
         $.ajax({
