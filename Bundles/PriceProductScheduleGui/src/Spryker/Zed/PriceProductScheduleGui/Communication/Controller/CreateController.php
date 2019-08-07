@@ -59,9 +59,7 @@ class CreateController extends AbstractController
      */
     protected function handleSubmitForm(FormInterface $form, string $redirectUrl, Request $request): RedirectResponse
     {
-        /**
-         * @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
-         */
+        /** @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer */
         $priceProductScheduleTransfer = $form->getData();
         $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest($request, $priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer = $this->getFactory()

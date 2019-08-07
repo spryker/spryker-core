@@ -44,7 +44,7 @@ class PriceProductScheduleDateConstraintValidator extends ConstraintValidator
      */
     protected function assertValueType($value): void
     {
-        if (!($value instanceof PriceProductScheduleTransfer)) {
+        if (!$value instanceof PriceProductScheduleTransfer) {
             throw new UnexpectedTypeException($value, PriceProductScheduleTransfer::class);
         }
     }

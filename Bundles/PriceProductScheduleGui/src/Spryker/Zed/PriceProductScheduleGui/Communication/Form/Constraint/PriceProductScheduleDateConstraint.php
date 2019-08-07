@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Constraint;
 
 class PriceProductScheduleDateConstraint extends Constraint
 {
+    protected const VALIDATION_MESSAGE = 'Active to must be greater than active from';
+
     /**
      * @return string
      */
@@ -24,6 +26,6 @@ class PriceProductScheduleDateConstraint extends Constraint
      */
     public function getMessage(): string
     {
-        return 'Active to must be greater than active from';
+        return static::VALIDATION_MESSAGE;
     }
 }

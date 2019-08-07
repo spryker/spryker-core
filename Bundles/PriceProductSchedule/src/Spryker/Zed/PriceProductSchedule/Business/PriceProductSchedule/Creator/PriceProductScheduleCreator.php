@@ -19,6 +19,8 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
 {
     use TransactionTrait;
 
+    protected const MESSAGE_ERROR_CREATE_SCHEDULED_PRICE = 'Schedule price haven not been saved';
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface
      */
@@ -103,7 +105,7 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
     protected function addErrorMessage(PriceProductScheduleResponseTransfer $priceProductScheduleResponseTransfer): PriceProductScheduleResponseTransfer
     {
         $priceProductScheduleErrorTransfer = (new PriceProductScheduleErrorTransfer())
-            ->setMessage('Schedule price haven not been saved');
+            ->setMessage(static::MESSAGE_ERROR_CREATE_SCHEDULED_PRICE);
 
         return $priceProductScheduleResponseTransfer->addError($priceProductScheduleErrorTransfer);
     }

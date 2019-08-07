@@ -38,10 +38,20 @@ class CurrencySubForm extends AbstractType
      */
     protected function addIdCurrency(FormBuilderInterface $builder)
     {
+        $idStore = null;
+        $formData = $builder->getData();
+        if ($formData !== null) {
+            $idStore = $formData->getIdStore();
+        }
+        $currencyChoices = array_flip(
+            $this->getFactory()
+                ->createPriceProductScheduleFormDataProvider()
+                ->getCurrencyValues($idStore)
+        );
         $builder->add(static::FIELD_ID_CURRENCY, ChoiceType::class, [
             'label' => 'Currency',
             'placeholder' => 'Choose currency',
-            'choices' => array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getCurrencyValues($builder->getData()->getIdStore ?? null)),
+            'choices' => $currencyChoices,
             'constraints' => [
                 new NotBlank(),
             ],

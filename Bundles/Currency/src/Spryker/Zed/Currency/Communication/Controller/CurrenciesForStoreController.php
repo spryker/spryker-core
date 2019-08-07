@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CurrenciesForStoreController extends AbstractController
 {
+    protected const KEY_ID_STORE = 'idStore';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,7 +28,7 @@ class CurrenciesForStoreController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $idStore = $this->castId($request->request->get('idStore'));
+        $idStore = $this->castId($request->request->get(static::KEY_ID_STORE));
         $storeWithCurrenciesCollection = $this->getFactory()
             ->createStoreWithCurrenciesCollectionBuilder()
             ->buildStoreWithCurrenciesCollectionByStoreId($idStore);
