@@ -158,7 +158,7 @@ class PhpMdRunner
             return static::CODE_SUCCESS;
         }
 
-        $process = new Process($command, $this->config->getPathToRoot(), null, null, 4800);
+        $process = new Process(explode(' ', $command), $this->config->getPathToRoot(), null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
