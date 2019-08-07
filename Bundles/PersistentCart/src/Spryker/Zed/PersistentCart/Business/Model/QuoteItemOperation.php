@@ -238,16 +238,16 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteNewResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $newQuoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     protected function mergeQuoteResponseTransfers(
         QuoteResponseTransfer $quoteResponseTransfer,
-        QuoteResponseTransfer $quoteNewResponseTransfer
+        QuoteResponseTransfer $newQuoteResponseTransfer
     ): QuoteResponseTransfer {
-        $quoteResponseTransfer->setIsSuccessful($quoteNewResponseTransfer->getIsSuccessful() && $quoteResponseTransfer->getIsSuccessful());
-        foreach ($quoteNewResponseTransfer->getErrors() as $quoteErrorTransfer) {
+        $quoteResponseTransfer->setIsSuccessful($newQuoteResponseTransfer->getIsSuccessful() && $quoteResponseTransfer->getIsSuccessful());
+        foreach ($newQuoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $quoteResponseTransfer->addError($quoteErrorTransfer);
         }
 
