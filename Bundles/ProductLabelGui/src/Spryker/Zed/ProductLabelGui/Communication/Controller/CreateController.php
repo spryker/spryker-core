@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    protected const ROUTE_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
     protected const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
 
     /**
@@ -35,7 +36,7 @@ class CreateController extends AbstractController
 
         if ($productLabelTransfer) {
             $redirectUrl = Url::generate(
-                '/product-label-gui/edit',
+                static::ROUTE_PRODUCT_LABEL_EDIT,
                 [static::PARAM_ID_PRODUCT_LABEL => $productLabelTransfer->getIdProductLabel()]
             )->build();
 
