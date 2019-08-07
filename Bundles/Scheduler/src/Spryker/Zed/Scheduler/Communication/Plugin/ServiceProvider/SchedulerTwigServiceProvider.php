@@ -14,7 +14,7 @@ use Spryker\Zed\Scheduler\Communication\Twig\SchedulerTwigPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Will be removed without replacement.
+ * @deprecated Use `Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin instead`.
  *
  * @method \Spryker\Zed\Scheduler\SchedulerConfig getConfig()
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()

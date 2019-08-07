@@ -20,10 +20,11 @@ use Twig\TwigFunction;
  */
 class SchedulerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
-    public const GET_ENV_FUNCTION_NAME = 'getenv';
+    public const FUNCTION_NAME_GET_ENV = 'getenv';
 
     /**
      * {@inheritdoc}
+     * - Extends twig with "getenv" function to get the value of an environment variable.
      *
      * @api
      *
@@ -44,7 +45,7 @@ class SchedulerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     protected function getEnvironmentVariableValueByNameFunction(): TwigFunction
     {
-        return new TwigFunction(static::GET_ENV_FUNCTION_NAME, function (string $which) {
+        return new TwigFunction(static::FUNCTION_NAME_GET_ENV, function (string $which) {
             return $this->getEnvironmentVariableValueByName($which);
         });
     }
