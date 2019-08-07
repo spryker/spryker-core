@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundleStorage\Business\ConfigurableBundle;
+namespace Spryker\Zed\ConfigurableBundleStorage\Business\Publisher;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
@@ -46,12 +46,12 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
      */
     public function publishConfigurableBundleTemplates(array $configurableBundleIds): void
     {
-        $configurableBundleTemplateEntities = $this->configurableBundleStorageRepository->getIndexedConfigurableBundleTemplateEntities($configurableBundleIds);
-        $configurableBundleTemplateStorageEntities = $this->configurableBundleStorageRepository->getIndexedConfigurableBundleTemplateStorageEntities($configurableBundleIds);
+        $configurableBundleTemplateEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateEntityMap($configurableBundleIds);
+        $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleIds);
 
-        foreach ($configurableBundleTemplateEntities as $configurableBundleTemplateEntity) {
+        foreach ($configurableBundleTemplateEntityMap as $configurableBundleTemplateEntity) {
             $idConfigurableBundleTemplate = $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate();
-            $configurableBundleTemplateStorageEntity = $configurableBundleTemplateStorageEntities[$idConfigurableBundleTemplate]
+            $configurableBundleTemplateStorageEntity = $configurableBundleTemplateStorageEntityMap[$idConfigurableBundleTemplate]
                 ?? new SpyConfigurableBundleTemplateStorage();
 
             $configurableBundleTemplateStorageEntity = $this->mapConfigurableBundleTemplateEntityToConfigurableBundleTemplateStorageEntity(
@@ -60,11 +60,7 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
             );
 
             $this->saveStorageEntity($configurableBundleTemplateStorageEntity);
-
-            unset($configurableBundleTemplateStorageEntities[$idConfigurableBundleTemplate]);
         }
-
-        $this->deleteStorageEntities($configurableBundleTemplateStorageEntities);
     }
 
     /**
@@ -82,7 +78,7 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
         foreach ($configurableBundleTemplateEntity->getSpyConfigurableBundleTemplateSlots() as $configurableBundleTemplateSlotEntity) {
             $configurableBundleTemplateSlotStorageTransfers[] = (new ConfigurableBundleTemplateSlotStorageTransfer())
                 ->setUuid($configurableBundleTemplateSlotEntity->getUuid())
-                ->setProductList($configurableBundleTemplateSlotEntity->getFkProductList());
+                ->setProductListId($configurableBundleTemplateSlotEntity->getFkProductList());
         }
 
         $configurableBundleTemplateStorageTransfer = (new ConfigurableBundleTemplateStorageTransfer())
@@ -94,18 +90,6 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
             ->setData($configurableBundleTemplateStorageTransfer->toArray());
 
         return $configurableBundleTemplateStorageEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage[] $configurableBundleTemplateStorageEntities
-     *
-     * @return void
-     */
-    protected function deleteStorageEntities(array $configurableBundleTemplateStorageEntities): void
-    {
-        foreach ($configurableBundleTemplateStorageEntities as $configurableBundleTemplateStorageEntity) {
-            $this->configurableBundleStorageEntityManager->deleteConfigurableBundleTemplateStorageEntity($configurableBundleTemplateStorageEntity);
-        }
     }
 
     /**

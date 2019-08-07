@@ -43,7 +43,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
      */
     public function hasStore(): bool
     {
-        return true;
+        return false;
     }
 
     /**

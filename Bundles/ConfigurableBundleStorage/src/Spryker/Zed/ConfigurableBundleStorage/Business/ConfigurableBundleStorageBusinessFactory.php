@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Business;
 
-use Spryker\Zed\ConfigurableBundleStorage\Business\ConfigurableBundle\ConfigurableBundleStoragePublisher;
-use Spryker\Zed\ConfigurableBundleStorage\Business\ConfigurableBundle\ConfigurableBundleStoragePublisherInterface;
+use Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisher;
+use Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisherInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ConfigurableBundleStorage\Business\ConfigurableBundle\ConfigurableBundleStoragePublisherInterface
+     * @return \Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisherInterface
      */
     public function createConfigurableBundleStoragePublisher(): ConfigurableBundleStoragePublisherInterface
     {

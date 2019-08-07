@@ -48,7 +48,7 @@ class ConfigurableBundleTemplateEventResourceBulkRepositoryPlugin extends Abstra
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getRepository()->getConfigurableBundlesTemplatesByFilter($filterTransfer);
+        return $this->getRepository()->getConfigurableBundleTemplatesByFilter($filterTransfer);
     }
 
     /**

@@ -17,7 +17,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const CONFIGURABLE_BUNDLE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
+    public const CONFIGURABLE_BUNDLE_SYNC_STORAGE_QUEUE = 'sync.storage.configurable_bundle';
 
     /**
      * Specification:
@@ -25,7 +25,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const CONFIGURABLE_BUNDLE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+    public const CONFIGURABLE_BUNDLE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.configurable_bundle.error';
 
     /**
      * Specification:

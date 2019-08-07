@@ -6,12 +6,12 @@
     <transfer name="ConfigurableBundleTemplateStorage">
         <property name="uuid" type="string" />
         <property name="name" type="string" />
-        <property name="slots" type="ConfigurableBundleTemplateSlotStorage[]" />
+        <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">
         <property name="uuid" type="string" />
-        <property name="productList" type="int" />
+        <property name="productListId" type="int" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">

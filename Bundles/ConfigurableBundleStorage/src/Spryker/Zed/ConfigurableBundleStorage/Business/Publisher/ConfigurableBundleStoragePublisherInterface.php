@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundleStorage\Business\ConfigurableBundle;
+namespace Spryker\Zed\ConfigurableBundleStorage\Business\Publisher;
 
 interface ConfigurableBundleStoragePublisherInterface
 {

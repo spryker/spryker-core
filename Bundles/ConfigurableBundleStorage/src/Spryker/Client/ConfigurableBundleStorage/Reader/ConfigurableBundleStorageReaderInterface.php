@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundleStorage\Storage;
+namespace Spryker\Client\ConfigurableBundleStorage\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 

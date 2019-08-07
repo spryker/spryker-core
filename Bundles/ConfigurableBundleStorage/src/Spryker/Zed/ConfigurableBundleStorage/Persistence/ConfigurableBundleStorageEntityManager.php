@@ -24,14 +24,4 @@ class ConfigurableBundleStorageEntityManager extends AbstractEntityManager imple
     {
         $configurableBundleTemplateStorageEntity->save();
     }
-
-    /**
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage $configurableBundleTemplateStorageEntity
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateStorageEntity(SpyConfigurableBundleTemplateStorage $configurableBundleTemplateStorageEntity): void
-    {
-        $configurableBundleTemplateStorageEntity->delete();
-    }
 }

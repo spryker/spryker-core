@@ -20,7 +20,7 @@
         <behavior name="synchronization">
             <parameter name="resource" value="configurable_bundle_template"/>
             <parameter name="key_suffix_column" value="fk_configurable_bundle_template"/>
-            <parameter name="queue_group" value="sync.storage.product"/>
+            <parameter name="queue_group" value="sync.storage.configurable_bundle"/>
         </behavior>
 
         <behavior name="timestampable"/>

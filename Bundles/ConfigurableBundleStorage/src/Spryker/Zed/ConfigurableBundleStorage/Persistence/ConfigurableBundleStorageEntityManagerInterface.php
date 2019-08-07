@@ -17,11 +17,4 @@ interface ConfigurableBundleStorageEntityManagerInterface
      * @return void
      */
     public function saveConfigurableBundleTemplateStorageEntity(SpyConfigurableBundleTemplateStorage $configurableBundleTemplateStorageEntity): void;
-
-    /**
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage $configurableBundleTemplateStorageEntity
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateStorageEntity(SpyConfigurableBundleTemplateStorage $configurableBundleTemplateStorageEntity): void;
 }

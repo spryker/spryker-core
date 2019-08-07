@@ -23,7 +23,7 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
      *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[]
      */
-    public function getIndexedConfigurableBundleTemplateEntities(array $configurableBundleTemplateIds): array
+    public function getConfigurableBundleTemplateEntityMap(array $configurableBundleTemplateIds): array
     {
         $configurableBundleTemplateEntities = $this->getFactory()
             ->getConfigurableBundleTemplatePropelQuery()
@@ -31,14 +31,14 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
             ->filterByIdConfigurableBundleTemplate_In($configurableBundleTemplateIds)
             ->find();
 
-        $indexedConfigurableBundleTemplateEntities = [];
+        $configurableBundleTemplateEntityMap = [];
 
         foreach ($configurableBundleTemplateEntities as $configurableBundleTemplateEntity) {
-            $indexedConfigurableBundleTemplateEntities[$configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()]
+            $configurableBundleTemplateEntityMap[$configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()]
                 = $configurableBundleTemplateEntity;
         }
 
-        return $indexedConfigurableBundleTemplateEntities;
+        return $configurableBundleTemplateEntityMap;
     }
 
     /**
@@ -46,21 +46,21 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
      *
      * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage[]
      */
-    public function getIndexedConfigurableBundleTemplateStorageEntities(array $configurableBundleTemplateIds): array
+    public function getConfigurableBundleTemplateStorageEntityMap(array $configurableBundleTemplateIds): array
     {
         $configurableBundleTemplateStorageEntities = $this->getFactory()
             ->getConfigurableBundleTemplateStoragePropelQuery()
             ->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds)
             ->find();
 
-        $indexedConfigurableBundleTemplateStorageEntities = [];
+        $configurableBundleTemplateStorageEntityMap = [];
 
         foreach ($configurableBundleTemplateStorageEntities as $configurableBundleTemplateStorageEntity) {
-            $indexedConfigurableBundleTemplateStorageEntities[$configurableBundleTemplateStorageEntity->getFkConfigurableBundleTemplate()]
+            $configurableBundleTemplateStorageEntityMap[$configurableBundleTemplateStorageEntity->getFkConfigurableBundleTemplate()]
                 = $configurableBundleTemplateStorageEntity;
         }
 
-        return $indexedConfigurableBundleTemplateStorageEntities;
+        return $configurableBundleTemplateStorageEntityMap;
     }
 
     /**
@@ -87,7 +87,7 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
      */
-    public function getConfigurableBundlesTemplatesByFilter(FilterTransfer $filterTransfer): array
+    public function getConfigurableBundleTemplatesByFilter(FilterTransfer $filterTransfer): array
     {
         $configurableBundleTemplatePropelQuery = $this->getFactory()
             ->getConfigurableBundleTemplatePropelQuery()

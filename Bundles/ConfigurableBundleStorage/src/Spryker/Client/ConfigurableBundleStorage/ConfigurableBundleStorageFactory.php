@@ -9,14 +9,14 @@ namespace Spryker\Client\ConfigurableBundleStorage;
 
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
-use Spryker\Client\ConfigurableBundleStorage\Storage\ConfigurableBundleStorageReader;
-use Spryker\Client\ConfigurableBundleStorage\Storage\ConfigurableBundleStorageReaderInterface;
+use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReader;
+use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ConfigurableBundleStorageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ConfigurableBundleStorage\Storage\ConfigurableBundleStorageReaderInterface
+     * @return \Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReaderInterface
      */
     public function createConfigurableBundleStorageReader(): ConfigurableBundleStorageReaderInterface
     {
