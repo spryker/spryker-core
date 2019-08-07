@@ -9,8 +9,6 @@ namespace Spryker\Zed\CmsSlotGui\Communication\Table;
 
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
-use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CmsSlotGui\Communication\Controller\SlotListController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -43,7 +41,6 @@ class SlotListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $this->baseUrl = $this->getBaseUrl();
         $this->tableClass = SlotListConstants::TABLE_CLASS;
 
         $config = $this->setHeader($config);
@@ -52,7 +49,7 @@ class SlotListTable extends AbstractTable
             SlotListConstants::COL_KEY,
             SlotListConstants::COL_NAME,
             SlotListConstants::COL_OWNERSHIP,
-//            SlotListConstants::COL_STATUS,
+            SlotListConstants::COL_STATUS,
         ]);
 
         $config->setDefaultSortField(SlotListConstants::COL_KEY, TableConfiguration::SORT_ASC);
@@ -67,8 +64,6 @@ class SlotListTable extends AbstractTable
         $config->addRawColumn(SlotListConstants::COL_ACTIONS);
         $config->addRawColumn(SlotListConstants::COL_STATUS);
         $config->setPageLength(3);
-
-        $config->setUrl($this->getTableUrl());
 
         return $config;
     }
@@ -170,25 +165,5 @@ class SlotListTable extends AbstractTable
         }
 
         return $this->generateLabel('Inactive', 'label-danger');
-    }
-
-    /**
-     * @return string
-     */
-    protected function getBaseUrl(): string
-    {
-        return Url::generate(SlotListConstants::BASE_URL)->build();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTableUrl(): string
-    {
-        if (!$this->idCmsSlotTemplate) {
-            return $this->defaultUrl;
-        }
-
-        return Url::generate($this->defaultUrl, [SlotListController::PARAM_ID_CMS_SLOT_TEMPLATE => $this->idCmsSlotTemplate])->build();
     }
 }
