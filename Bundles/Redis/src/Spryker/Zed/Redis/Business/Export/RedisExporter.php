@@ -27,7 +27,7 @@ class RedisExporter implements RedisExporterInterface
         }
 
         $command = $this->buildExportCliCommand($destination, $redisPort);
-        $process = new Process($command, APPLICATION_ROOT_DIR);
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
         $process->run();
 
         return $process->isSuccessful();
