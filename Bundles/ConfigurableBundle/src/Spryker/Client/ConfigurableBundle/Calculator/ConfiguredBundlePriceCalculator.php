@@ -43,6 +43,10 @@ class ConfiguredBundlePriceCalculator implements ConfiguredBundlePriceCalculator
             $configuredBundlePriceTransfer->getUnitPrice() + $itemTransfer->getUnitPrice()
         );
 
+        $configuredBundlePriceTransfer->setSumPrice(
+            $configuredBundlePriceTransfer->getSumPrice() + $itemTransfer->getSumPrice()
+        );
+
         $configuredBundlePriceTransfer->setSumSubtotalAggregation(
             $configuredBundlePriceTransfer->getSumSubtotalAggregation() + $itemTransfer->getSumSubtotalAggregation()
         );
