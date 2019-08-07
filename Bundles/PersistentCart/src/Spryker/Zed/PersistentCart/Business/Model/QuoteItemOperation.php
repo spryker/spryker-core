@@ -78,21 +78,20 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function addItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->createQuoteResponseTransfer($quoteTransfer);
+        $addQuoteResponseTransfer = $this->createQuoteResponseTransfer($quoteTransfer);
 
         if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+            return $this->quoteResponseExpander->expand($addQuoteResponseTransfer);
         }
 
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
-        $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
+        $addQuoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
+        $updateQuoteResponseTransfer = $this->quoteFacade->updateQuote($addQuoteResponseTransfer->getQuoteTransfer());
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-        }
+        $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($updateQuoteResponseTransfer, $addQuoteResponseTransfer);
 
-        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer()));
+        return $this->quoteResponseExpander->expand($mergedQuoteResponseTransfer);
     }
 
     /**
@@ -235,5 +234,23 @@ class QuoteItemOperation implements QuoteItemOperationInterface
             ->setIsSuccessful(false)
             ->setQuoteTransfer($quoteTransfer)
             ->setCustomer($quoteTransfer->getCustomer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteNewResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function mergeQuoteResponseTransfers(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        QuoteResponseTransfer $quoteNewResponseTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer->setIsSuccessful($quoteNewResponseTransfer->getIsSuccessful() && $quoteResponseTransfer->getIsSuccessful());
+        foreach ($quoteNewResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $quoteResponseTransfer->addError($quoteErrorTransfer);
+        }
+
+        return $quoteResponseTransfer;
     }
 }
