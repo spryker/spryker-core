@@ -21,6 +21,8 @@ class TaxProductConnectorClient extends AbstractClient implements TaxProductConn
      *
      * @api
      *
+     * @deprecated Use TaxProductStorageClient::findTaxProductStorageByProductAbstractSku() instead.
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\TaxSetResponseTransfer
