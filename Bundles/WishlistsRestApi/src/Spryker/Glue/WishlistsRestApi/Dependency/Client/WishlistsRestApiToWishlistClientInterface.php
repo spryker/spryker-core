@@ -23,6 +23,13 @@ interface WishlistsRestApiToWishlistClientInterface
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer);
+
+    /**
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection();

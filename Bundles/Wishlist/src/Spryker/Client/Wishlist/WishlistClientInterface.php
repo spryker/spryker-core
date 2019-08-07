@@ -147,6 +147,17 @@ interface WishlistClientInterface
     public function getCustomerWishlistCollection();
 
     /**
+     * - Specification: Retrieving wishlist by wishlist transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer);
+
+    /**
      * - Specification: Retrieving wishlist collection by customer transfer.
      *
      * @api

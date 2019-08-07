@@ -226,6 +226,20 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->getZedStub()->getCustomerWishlistByUuid($wishlistTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer

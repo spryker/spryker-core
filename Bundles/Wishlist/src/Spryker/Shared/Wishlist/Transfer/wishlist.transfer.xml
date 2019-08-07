@@ -72,6 +72,7 @@
 
     <transfer name="WishlistResponse">
         <property name="wishlist" type="Wishlist" />
+        <property name="wishlistItems" type="WishlistItem[]" />
         <property name="isSuccess" type="bool" />
         <property name="errors" type="array" singular="error" />
     </transfer>

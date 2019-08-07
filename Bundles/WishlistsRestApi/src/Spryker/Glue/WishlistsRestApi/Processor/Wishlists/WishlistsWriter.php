@@ -117,12 +117,18 @@ class WishlistsWriter implements WishlistsWriterInterface
         if (!$restRequest->getResource()->getId()) {
             return $this->createWishlistNotFoundError($restResponse);
         }
+        $wishlistTransferForRequest = (new WishlistTransfer())
+            ->setUuid($restRequest->getResource()->getId())
+            ->setFkCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+        $wishlistResponseTransfer = $this->wishlistClient->getCustomerWishlistByUuid($wishlistTransferForRequest);
 
-        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($restRequest->getResource()->getId());
-        if ($wishlistTransfer === null) {
+        if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->createWishlistNotFoundError($restResponse);
         }
-        $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer($wishlistTransfer, $attributesTransfer);
+        $wishlistTransfer = $this->wishlistsResourceMapper->mapWishlistAttributesToWishlistTransfer(
+            $wishlistResponseTransfer->getWishlist(),
+            $attributesTransfer
+        );
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndUpdateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -133,11 +139,10 @@ class WishlistsWriter implements WishlistsWriterInterface
             );
         }
 
-        $wishlistOverviewTransfer = $this->wishlistsReader->findWishlistOverviewByUuid($wishlistResponseTransfer->getWishlist()->getUuid());
         $wishlistResource = $this->restResourceBuilder->createRestResource(
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistTransfer->getUuid(),
-            $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistOverviewTransfer->getWishlist())
+            $this->wishlistsResourceMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistResponseTransfer->getWishlist())
         );
 
         return $restResponse->addResource($wishlistResource);

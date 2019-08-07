@@ -47,6 +47,16 @@ class WishlistsRestApiToWishlistClientBridge implements WishlistsRestApiToWishli
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer)
+    {
+        return $this->wishlistClient->getCustomerWishlistByUuid($wishlistTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer

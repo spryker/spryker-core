@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
@@ -407,6 +408,40 @@ class Reader implements ReaderInterface
             ->getIdCustomer();
 
         return $this->getCollectionByIdCustomer($idCustomer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer): WishlistResponseTransfer
+    {
+        $wishlistTransfer
+            ->requireUuid()
+            ->requireFkCustomer();
+
+        $wishlistResponseTransfer = (new WishlistResponseTransfer())
+            ->setIsSuccess(false);
+
+        $wishlistEntity = $this->queryContainer
+            ->queryWishlistByCustomerIdAndUuid($wishlistTransfer->getFkCustomer(), $wishlistTransfer->getUuid())
+            ->findOne();
+
+        if (!$wishlistEntity) {
+            return $wishlistResponseTransfer;
+        }
+
+        $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
+        $wishlistItemsTransfers = new ArrayObject(
+            $this->transferMapper->convertWishlistItemCollection($wishlistEntity->getSpyWishlistItems())
+        );
+
+        $wishlistResponseTransfer
+            ->setWishlist($wishlistTransfer)
+            ->setWishlistItems($wishlistItemsTransfers);
+
+        return $wishlistResponseTransfer->setIsSuccess(true);
     }
 
     /**

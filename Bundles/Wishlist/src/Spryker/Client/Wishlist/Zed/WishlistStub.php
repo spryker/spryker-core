@@ -184,4 +184,17 @@ class WishlistStub implements WishlistStubInterface
 
         return $wishlistCollectionTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer)
+    {
+        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
+        $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-by-uuid', $wishlistTransfer);
+
+        return $wishlistResponseTransfer;
+    }
 }
