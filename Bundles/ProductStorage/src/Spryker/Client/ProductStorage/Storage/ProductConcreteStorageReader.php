@@ -98,6 +98,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function findProductConcreteStorageData($idProductConcrete, $localeName): ?array
     {
+        if (!$idProductConcrete) {
+            return null;
+        }
+
         if ($this->hasProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName)) {
             return $this->getProductConcreteDataCacheByIdProductConcreteAndLocaleName($idProductConcrete, $localeName);
         }
