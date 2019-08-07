@@ -24,6 +24,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
 

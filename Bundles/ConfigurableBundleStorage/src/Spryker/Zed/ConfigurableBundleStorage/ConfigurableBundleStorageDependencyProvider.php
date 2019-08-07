@@ -41,7 +41,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        parent::provideCommunicationLayerDependencies($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;
