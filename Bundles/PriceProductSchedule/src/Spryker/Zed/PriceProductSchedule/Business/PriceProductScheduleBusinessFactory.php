@@ -18,6 +18,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\Abstr
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplierInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Creator\PriceProductScheduleCreator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Creator\PriceProductScheduleCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferMoneyValueDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
@@ -25,6 +27,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutor;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\CurrencyDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\DateDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ImportDataValidatorInterface;
@@ -344,7 +348,8 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListFinder(): PriceProductScheduleListFinderInterface
     {
         return new PriceProductScheduleListFinder(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 
@@ -456,6 +461,26 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
             $this->createPriceProductScheduleDisabler()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Creator\PriceProductScheduleCreatorInterface
+     */
+    public function createPriceProductScheduleCreator(): PriceProductScheduleCreatorInterface
+    {
+        return new PriceProductScheduleCreator(
+            $this->createPriceProductScheduleWriter(),
+            $this->createPriceProductScheduleApplierByProductTypeResolver(),
+            $this->createPriceProductScheduleExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface
+     */
+    public function createPriceProductScheduleExpander(): PriceProductScheduleExpanderInterface
+    {
+        return new PriceProductScheduleExpander($this->createPriceProductScheduleListFinder());
     }
 
     /**

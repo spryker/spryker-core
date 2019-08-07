@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-08-01
- * Time: 10:43
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
@@ -35,18 +34,22 @@ class PriceProductScheduleCreateAndApplyTest extends Unit
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
     protected $tester;
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface
      */
     protected $priceProductScheduleFacade;
+
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
     protected $currencyFacade;
+
     /**
      * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
      */
     protected $storeFacade;
+
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
      */
@@ -74,7 +77,7 @@ class PriceProductScheduleCreateAndApplyTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->storeFacade->getCurrentStore();
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
+        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'cur1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
@@ -130,7 +133,7 @@ class PriceProductScheduleCreateAndApplyTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->storeFacade->getCurrentStore();
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test2']);
+        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'cur2']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),

@@ -9,9 +9,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication;
 
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
-use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
@@ -19,6 +19,8 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapperInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReader;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReaderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreator;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProductTabCreator;
@@ -206,13 +208,34 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         );
     }
 
-    public function createPriceProductScheduleForm(PriceProductScheduleFormDataProvider $formDataProvider)
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider $formDataProvider
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPriceProductScheduleForm(PriceProductScheduleFormDataProvider $formDataProvider): FormInterface
     {
         return $this->getFormFactory()->create(
             PriceProductScheduleForm::class,
             $formDataProvider->getData(),
             $formDataProvider->getOptions()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint
+     */
+    public function createPriceProductScheduleDateConstraint(): PriceProductScheduleDateConstraint
+    {
+        return new PriceProductScheduleDateConstraint();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReaderInterface
+     */
+    public function createRequestReader(): RequestReaderInterface
+    {
+        return new RequestReader();
     }
 
     /**

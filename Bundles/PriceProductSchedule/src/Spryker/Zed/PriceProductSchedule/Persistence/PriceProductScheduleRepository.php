@@ -572,4 +572,28 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->createPriceProductScheduleMapper()
             ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer($priceProductScheduleEntity, new PriceProductScheduleTransfer());
     }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findPriceProductScheduleListByName(string $name): ?PriceProductScheduleListTransfer
+    {
+        $priceProductScheduleListEntity = $this->getFactory()
+            ->createPriceProductScheduleListQuery()
+            ->filterByName($name)
+            ->findOne();
+
+        if ($priceProductScheduleListEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPriceProductScheduleListMapper()
+            ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
+                $priceProductScheduleListEntity,
+                new PriceProductScheduleListTransfer()
+            );
+    }
 }

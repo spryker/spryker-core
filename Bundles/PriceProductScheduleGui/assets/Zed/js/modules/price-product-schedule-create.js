@@ -19,8 +19,8 @@ $(document).ready(function() {
         changeMonth: true,
         defaultData: 0,
     });
-    let $store = $('#price_product_schedule_store_idStore');
-    let $currency = $('#price_product_schedule_currency_idCurrency');
+    let $store = $('#price_product_schedule_priceProduct_moneyValue_store_idStore');
+    let $currency = $('#price_product_schedule_priceProduct_moneyValue_currency_idCurrency');
     $store.change(function() {
         let data = {};
         data.idStore= $store.val();

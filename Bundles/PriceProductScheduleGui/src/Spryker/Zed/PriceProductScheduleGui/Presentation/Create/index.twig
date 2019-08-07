@@ -11,8 +11,6 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Scheduled price information' | trans } %}
         {% block widget_content %}
             {{ form_start(form, {'method': 'POST'}) }}
-            {{ form_row(form.store) }}
-            {{ form_row(form.currency) }}
             {{ form_row(form.priceProduct) }}
 
             {{ form_label(form.activeFrom) }}

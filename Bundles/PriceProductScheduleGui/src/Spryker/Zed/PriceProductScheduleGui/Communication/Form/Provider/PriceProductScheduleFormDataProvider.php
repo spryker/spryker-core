@@ -1,16 +1,13 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-08-01
- * Time: 15:10
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider;
 
-
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
@@ -21,6 +18,7 @@ class PriceProductScheduleFormDataProvider
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
+
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
      */
@@ -40,8 +38,7 @@ class PriceProductScheduleFormDataProvider
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
         PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
-    )
-    {
+    ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
         $this->currencyFacade = $currencyFacade;
@@ -78,7 +75,7 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
-     * @param int|null $idSTore
+     * @param int|null $idStore
      *
      * @return array
      */
@@ -92,17 +89,23 @@ class PriceProductScheduleFormDataProvider
         $result = [];
         $storeWithCurrenciesCollection = $this->currencyFacade->getAllStoresWithCurrencies();
         foreach ($storeWithCurrenciesCollection as $storeWithCurrencyTransfer) {
+            if ($storeWithCurrencyTransfer->getStore() === null) {
+                continue;
+            }
             if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
                 continue;
             }
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getName();
+                $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
             }
         }
 
         return $result;
     }
 
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
     public function getData(): PriceProductScheduleTransfer
     {
         return new PriceProductScheduleTransfer();

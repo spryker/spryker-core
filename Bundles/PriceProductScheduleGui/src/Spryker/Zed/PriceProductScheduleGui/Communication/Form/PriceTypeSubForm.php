@@ -16,9 +16,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
-class CurrencySubForm extends AbstractType
+class PriceTypeSubForm extends AbstractType
 {
-    public const FIELD_ID_CURRENCY = 'idCurrency';
+    public const FIELD_ID_PRICE_TYPE = 'idPriceType';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -26,9 +26,9 @@ class CurrencySubForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addIdCurrency($builder);
+        $this->addFkPriceType($builder);
     }
 
     /**
@@ -36,12 +36,12 @@ class CurrencySubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCurrency(FormBuilderInterface $builder)
+    protected function addFkPriceType(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_CURRENCY, ChoiceType::class, [
-            'label' => 'Currency',
-            'placeholder' => 'Choose currency',
-            'choices' => array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getCurrencyValues($builder->getData()->getIdStore ?? null)),
+        $builder->add(static::FIELD_ID_PRICE_TYPE, ChoiceType::class, [
+            'label' => 'Price type',
+            'placeholder' => 'Choose price type',
+            'choices' => array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getPriceTypeValues()),
             'constraints' => [
                 new NotBlank(),
             ],

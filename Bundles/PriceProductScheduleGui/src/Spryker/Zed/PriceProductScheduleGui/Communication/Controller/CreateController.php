@@ -1,15 +1,16 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-08-01
- * Time: 15:25
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
-
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,37 +18,81 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-    public function indexAction(Request $request)
-    {
-        $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
-
-        $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
-        }
-
-        return $this->viewResponse([
-            'form' => $form->createView(),
-            'title' => $this->getTitleFromRequest($request),
-        ]);
-    }
+    protected const PARAM_ID_PRODUCT = 'idProduct';
+    protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
+    protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
+    protected const REDIRECT_URL_PRODUCT_CONCRETE_PATTERN = '/product-management/edit/variant?id-product=%s&id-product-abstract=%s#tab-content-scheduled_prices';
+    protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
+    protected const PARAM_REQUEST_REFERER = 'referer';
+    protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function getTitleFromRequest(Request $request): string
+    public function indexAction(Request $request)
     {
-        $idProductAbstract = $request->query->get('idProductAbstract');
-        if ($request->query->get('idProductAbstract') !== null) {
-            return 'Edit Product Abstract: ' . $idProductAbstract;
+        $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
+        $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+        $form->handleRequest($request);
+        $requestReader = $this->getFactory()->createRequestReader();
+        $redirectUrl = $requestReader->getRedirectUrlFromRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->handleSubmitForm($form, $redirectUrl, $request);
         }
 
-        $idProductConcrete = $request->query->get('idProduct');
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'title' => $requestReader->getTitleFromRequest($request),
+        ]);
+    }
 
-        return 'Edit Product Concrete: ' . $idProductConcrete;
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param string $redirectUrl
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubmitForm(FormInterface $form, string $redirectUrl, Request $request): RedirectResponse
+    {
+        /**
+         * @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+         */
+        $priceProductScheduleTransfer = $form->getData();
+        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest($request, $priceProductScheduleTransfer);
+        $priceProductScheduleResponseTransfer = $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+
+        if ($priceProductScheduleResponseTransfer->getIsSuccess()) {
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        foreach ($priceProductScheduleResponseTransfer->getErrors() as $priceProductScheduleErrorTransfer) {
+            $this->addErrorMessage($priceProductScheduleErrorTransfer->getMessage());
+        }
+
+        return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    protected function setProductIdentifierFromRequest(Request $request, PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
+    {
+        $priceProductScheduleTransfer->requirePriceProduct();
+        $requestParams = $this->getFactory()->createRequestReader()->getQueryParamsFromRequest($request);
+        $priceProductScheduleTransfer->getPriceProduct()->fromArray($requestParams, true);
+
+        return $priceProductScheduleTransfer;
     }
 }

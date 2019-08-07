@@ -1,26 +1,25 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-08-05
- * Time: 10:18
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
 class PriceProductSubForm extends AbstractType
 {
-    protected const FIELD_FK_PRICE_TYPE = 'fk_price_type';
-    protected const FIELD_MONEY_VALUE = 'moneyValue';
+    public const FIELD_PRICE_TYPE = 'priceType';
+    public const FIELD_MONEY_VALUE = 'moneyValue';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -28,10 +27,10 @@ class PriceProductSubForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addFkPriceType($builder)
-            ->addMoneyValue($builder);
+        $this->addMoneyValue($builder)
+            ->addPriceType($builder);
     }
 
     /**
@@ -39,15 +38,11 @@ class PriceProductSubForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkPriceType(FormBuilderInterface $builder)
+    protected function addPriceType(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_FK_PRICE_TYPE, ChoiceType::class, [
-            'label' => 'Price type',
-            'placeholder' => 'Choose price type',
-            'choices' => array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getPriceTypeValues()),
-            'constraints' => [
-                new NotBlank(),
-            ]
+        $builder->add(static::FIELD_PRICE_TYPE, PriceTypeSubForm::class, [
+            'label' => false,
+            'data_class' => PriceTypeTransfer::class,
         ]);
 
         return $this;
