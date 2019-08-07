@@ -12,9 +12,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
+ * @method \Spryker\Zed\Currency\Communication\CurrencyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
 class CurrenciesForStoreController extends AbstractController
 {
@@ -26,28 +27,10 @@ class CurrenciesForStoreController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $idStore = $this->castId($request->request->get('idStore'));
-        $storeWithCurrencyCollection = $this->getFacade()->getAllStoresWithCurrencies();
+        $storeWithCurrenciesCollection = $this->getFactory()
+            ->createStoreWithCurrenciesCollectionBuilder()
+            ->buildStoreWithCurrenciesCollectionByStoreId($idStore);
 
-        $currencies = [];
-        $store = [];
-
-        foreach ($storeWithCurrencyCollection as $storeWithCurrencyTransfer) {
-            $storeWithCurrencyTransfer->requireStore();
-            if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
-                continue;
-            }
-            $store = $storeWithCurrencyTransfer->getStore()->toArray();
-
-            $currencyCollection = $storeWithCurrencyTransfer->getCurrencies();
-            foreach ($currencyCollection as $currencyTransfer) {
-                $currencies[] = $currencyTransfer->toArray();
-            }
-        }
-        $result = [
-            'currencies' => $currencies,
-            'store' => $store,
-        ];
-
-        return $this->jsonResponse($result);
+        return $this->jsonResponse($storeWithCurrenciesCollection);
     }
 }
