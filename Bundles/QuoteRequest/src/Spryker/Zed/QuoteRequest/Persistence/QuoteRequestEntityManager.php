@@ -128,4 +128,30 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
             ->filterByStatus($fromStatus)
             ->update([static::COLUMN_STATUS => $toStatus]);
     }
+
+    /**
+     * @param int[] $quoteRequestIds
+     *
+     * @return void
+     */
+    public function deleteQuoteRequestsByIds(array $quoteRequestIds): void
+    {
+        $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByIdQuoteRequest_In($quoteRequestIds)
+            ->delete();
+    }
+
+    /**
+     * @param int[] $quoteRequestIds
+     *
+     * @return void
+     */
+    public function deleteQuoteRequestVersionsByQuoteRequestIds(array $quoteRequestIds): void
+    {
+        $this->getFactory()
+            ->getQuoteRequestVersionPropelQuery()
+            ->filterByFkQuoteRequest_In($quoteRequestIds)
+            ->delete();
+    }
 }

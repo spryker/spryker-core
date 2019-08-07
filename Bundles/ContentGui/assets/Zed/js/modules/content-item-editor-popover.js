@@ -7,6 +7,7 @@ var ContentItemEditorPopover = function () {
             this.$range = $.summernote.range;
             this.contentItemEditorSelector = '.js-content-item-editor';
             this.$clickedNode = [];
+            this.isPopoverVisible = false;
 
             this.events = {
                 'summernote.keyup summernote.mouseup summernote.change': function() {
@@ -17,7 +18,9 @@ var ContentItemEditorPopover = function () {
                     this.hidePopover();
                 }.bind(this),
                 'summernote.scroll': function (event) {
-                    this.scrollHandler(event);
+                    if (this.isPopoverVisible) {
+                        this.scrollHandler(event);
+                    }
                 }.bind(this)
             };
 
@@ -40,6 +43,7 @@ var ContentItemEditorPopover = function () {
                     return;
                 }
 
+                this.isPopoverVisible = true;
                 this.updatePopoverButtons(clickedContentItemEditor);
                 this.putCarretInTheBegining(clickedContentItemEditor);
 
@@ -54,6 +58,7 @@ var ContentItemEditorPopover = function () {
 
             this.hidePopover = function() {
                 this.$contentItemPopover.hide();
+                this.isPopoverVisible = false;
             };
 
             this.scrollHandler = function (event) {

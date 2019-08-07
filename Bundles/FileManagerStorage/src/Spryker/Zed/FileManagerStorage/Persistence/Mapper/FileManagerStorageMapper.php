@@ -16,6 +16,7 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class FileManagerStorageMapper implements FileManagerStorageMapperInterface
 {
@@ -75,6 +76,24 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
         $fileStorage->setData($fileStorageTransfer->getData()->toArray());
 
         return $fileStorage;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage[] $fileStorageEntities
+     *
+     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
+     */
+    public function mapFileStorageEntityCollectionToTransferCollection(ObjectCollection $fileStorageEntities): array
+    {
+        $fileStorageTransfers = [];
+        foreach ($fileStorageEntities as $fileStorageEntity) {
+            $fileStorageTransfers[] = $this->mapFileStorageEntityToTransfer(
+                $fileStorageEntity,
+                new FileStorageTransfer()
+            );
+        }
+
+        return $fileStorageTransfers;
     }
 
     /**
