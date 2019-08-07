@@ -83,7 +83,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     {
         $this->exportPostgresPassword();
 
-        $process = new Process($command);
+        $process = $this->getProcess($command);
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -93,6 +93,20 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess(string $command): Process
+    {
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command);
+        }
+
+        return new Process($command);
     }
 
     /**

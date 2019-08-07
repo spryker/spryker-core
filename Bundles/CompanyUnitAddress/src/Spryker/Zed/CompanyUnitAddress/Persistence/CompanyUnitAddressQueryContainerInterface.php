@@ -21,6 +21,13 @@ interface CompanyUnitAddressQueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
+     */
+    public function queryCompanyUnitAddressWithCompanyAndCountry(): SpyCompanyUnitAddressQuery;
+
+    /**
+     * @api
+     *
      * @param int $idCompanyUnitAddress
      *
      * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
