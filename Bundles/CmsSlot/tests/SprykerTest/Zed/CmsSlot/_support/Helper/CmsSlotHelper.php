@@ -30,7 +30,7 @@ class CmsSlotHelper extends Module
             CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerTestBlock',
             CmsSlotTransfer::NAME => 'Test Name',
             CmsSlotTransfer::DESCRIPTION => 'Test description.',
-            CmsSlotTransfer::IS_ACTIVE => 1,
+            CmsSlotTransfer::IS_ACTIVE => true,
         ];
 
         $cmsSlotTransfer = (new CmsSlotBuilder(array_merge($data, $override)))->build();
