@@ -48,6 +48,8 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     }
 
     /**
+     * @module ConfigurableBundle
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
