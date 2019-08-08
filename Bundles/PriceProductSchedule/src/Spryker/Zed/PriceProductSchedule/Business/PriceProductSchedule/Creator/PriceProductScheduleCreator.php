@@ -83,8 +83,7 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
 
         $priceProductScheduleTransfer = $this->priceProductScheduleWriter
             ->createPriceProductSchedule($priceProductScheduleTransfer);
-        $priceProductScheduleResponseTransfer = (new PriceProductScheduleResponseTransfer())
-            ->setPriceProductSchedule($priceProductScheduleTransfer);
+        $priceProductScheduleResponseTransfer->setPriceProductSchedule($priceProductScheduleTransfer);
         $this->priceProductScheduleApplierByProductTypeResolver
             ->applyPriceProductScheduleByProductType($priceProductScheduleTransfer);
 
