@@ -99,7 +99,7 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getProductImageSynchronizationPoolName();
+        return $this->getFactory()->getConfig()->getCategoryImageSynchronizationPoolName();
     }
 
     /**
