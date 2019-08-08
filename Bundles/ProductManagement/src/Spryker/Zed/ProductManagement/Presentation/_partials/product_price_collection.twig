@@ -1,11 +1,10 @@
-
-{% set numberOfGrossPriceTypes = moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE|length %}
-{% set numberOfNetPriceTypes = moneyValueFormViewCollection.vars.priceTypes.NET_MODE|length %}
 {% set currencies = moneyValueFormViewCollection.vars.currencies %}
 
 {% set priceModeGross = 'GROSS_MODE' %}
 {% set priceModeNet = 'NET_MODE' %}
 {% set priceModeBoth = 'BOTH' %}
+
+{% set priceModeCollection = moneyValueFormViewCollection.vars.priceTable | first | first %}
 
 {% set hasPriceFieldsError = false %}
 {% if moneyValueFormViewCollection.parent.vars.errors|length %}
@@ -22,23 +21,30 @@
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-bottom: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF;  border-bottom: 1px solid #FFF;border-left:1px solid #FFF;"></th>
 
-            {% if numberOfGrossPriceTypes > 0 %}
-                <th colspan="{{ numberOfGrossPriceTypes }}" style="text-align:center;">{{ 'Gross price' | trans }}</th>
-            {% endif %}
+            {% for priceMode, priceTypes in priceModeCollection %}
+                {% set priceTypesLength = priceTypes|length %}
 
-            {%  if numberOfNetPriceTypes > 0 %}
-                <th colspan="{{ numberOfNetPriceTypes }}" style="text-align:center;">{{ 'Net price' | trans }}</th>
-            {% endif %}
+                {% if priceTypesLength > 0 %}
+                    <th colspan="{{ priceTypesLength }}" style="text-align:center;">
+                        {% if priceModeGross == priceMode %}
+                            {{ 'Gross price' | trans }}
+                        {% endif %}
+
+                        {% if priceModeNet == priceMode %}
+                            {{ 'Net price' | trans }}
+                        {% endif %}
+                    </th>
+                {% endif %}
+            {% endfor %}
         </tr>
         <tr>
             <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></td>
             <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></td>
-            {% for priceType in moneyValueFormViewCollection.vars.priceTypes.GROSS_MODE %}
-                <td>{{ priceType.name }}</td>
-            {% endfor %}
 
-            {% for priceType in moneyValueFormViewCollection.vars.priceTypes.NET_MODE %}
-                <td>{{ priceType.name }}</td>
+            {% for priceTypes in priceModeCollection %}
+                {% for priceType in priceTypes | keys %}
+                    <td>{{ priceType }}</td>
+                {% endfor %}
             {% endfor %}
         </tr>
     </thead>
