@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Currency\Communication\Builder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
@@ -16,6 +17,7 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
     protected const KEY_CURRENCIES = 'currencies';
     protected const KEY_STORE = 'store';
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';
+
     /**
      * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
      */
@@ -44,17 +46,17 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
 
         foreach ($storeWithCurrencyCollection as $storeWithCurrencyTransfer) {
             $storeWithCurrencyTransfer->requireStore();
+
             if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
                 continue;
             }
+
             $storeTransfer = $storeWithCurrencyTransfer->getStore();
             $timezoneText = $this->buildTimezoneText($storeTransfer);
             $store = $storeTransfer->toArray();
+            $currencies = $this->collectCurrencies($storeWithCurrencyTransfer->getCurrencies());
 
-            $currencyCollection = $storeWithCurrencyTransfer->getCurrencies();
-            foreach ($currencyCollection as $currencyTransfer) {
-                $currencies[] = $currencyTransfer->toArray();
-            }
+            break;
         }
 
         return [
@@ -62,6 +64,22 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
             static::KEY_STORE => $store,
             static::KEY_TIMEZONE_TEXT => $timezoneText,
         ];
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CurrencyTransfer[] $currencyCollection
+     *
+     * @return array
+     */
+    protected function collectCurrencies(ArrayObject $currencyCollection): array
+    {
+        $currencies = [];
+
+        foreach ($currencyCollection as $currencyTransfer) {
+            $currencies[] = $currencyTransfer->toArray();
+        }
+
+        return $currencies;
     }
 
     /**

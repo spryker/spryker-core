@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,16 +39,9 @@ class CurrencySubForm extends AbstractType
      */
     protected function addIdCurrency(FormBuilderInterface $builder)
     {
-        $idStore = null;
-        $formData = $builder->getData();
-        if ($formData !== null) {
-            $idStore = $formData->getIdStore();
-        }
-        $currencyChoices = array_flip(
-            $this->getFactory()
-                ->createPriceProductScheduleFormDataProvider()
-                ->getCurrencyValues($idStore)
-        );
+        $idStore = $this->findIdStoreFromFormData($builder->getData());
+        $currencyChoices = $this->getCurrencyChoices($idStore);
+
         $builder->add(static::FIELD_ID_CURRENCY, ChoiceType::class, [
             'label' => 'Currency',
             'placeholder' => 'Choose currency',
@@ -58,5 +52,37 @@ class CurrencySubForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param int|null $idStore
+     *
+     * @return array
+     */
+    protected function getCurrencyChoices(?int $idStore): array
+    {
+        if ($idStore === null) {
+            return [];
+        }
+
+        return array_flip(
+            $this->getFactory()
+                ->createPriceProductScheduleFormDataProvider()
+                ->getCurrencyValues($idStore)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $formData
+     *
+     * @return int|null
+     */
+    protected function findIdStoreFromFormData(?StoreTransfer $formData): ?int
+    {
+        if ($formData === null) {
+            return null;
+        }
+
+        return $formData->getIdStore();
     }
 }

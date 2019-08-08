@@ -75,17 +75,12 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
-     * @param int|null $idStore
+     * @param int $idStore
      *
      * @return array
      */
-    public function getCurrencyValues(?int $idStore): array
+    public function getCurrencyValues(int $idStore): array
     {
-
-        if ($idStore === null) {
-            return [];
-        }
-
         $result = [];
         $storeWithCurrenciesCollection = $this->currencyFacade->getAllStoresWithCurrencies();
         foreach ($storeWithCurrenciesCollection as $storeWithCurrencyTransfer) {
