@@ -29,4 +29,9 @@ interface CmsBlockCategoryConnectorToCategoryQueryContainerInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
      */
     public function queryCategoryTemplateById($idCategoryTemplate);
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplate();
 }
