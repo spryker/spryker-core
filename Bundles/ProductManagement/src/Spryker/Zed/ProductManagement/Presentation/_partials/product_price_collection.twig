@@ -7,8 +7,17 @@
 {% set priceModeNet = 'NET_MODE' %}
 {% set priceModeBoth = 'BOTH' %}
 
+{% set hasPriceFieldsError = false %}
+{% if moneyValueFormViewCollection.parent.vars.errors|length %}
+    {% for error in moneyValueFormViewCollection.parent.vars.errors %}
+        {% if error.origin.getName == 'prices' %}
+            {% set hasPriceFieldsError = true %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 <table id="price-table-collection" class="table table-bordered">
-    <thead>
+    <thead class="{% if hasPriceFieldsError %}has-error{% endif %}">
         <tr>
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-bottom: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
             <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF;  border-bottom: 1px solid #FFF;border-left:1px solid #FFF;"></th>
