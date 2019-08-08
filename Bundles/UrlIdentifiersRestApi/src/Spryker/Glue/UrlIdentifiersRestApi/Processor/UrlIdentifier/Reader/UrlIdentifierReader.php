@@ -37,7 +37,7 @@ class UrlIdentifierReader implements UrlIdentifierReaderInterface
     /**
      * @param \Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient
      * @param \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface $urlIdentifierResponseBuilder
-     * @param array $resourceIdentifierProviderPlugins
+     * @param \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[] $resourceIdentifierProviderPlugins
      */
     public function __construct(
         UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient,
