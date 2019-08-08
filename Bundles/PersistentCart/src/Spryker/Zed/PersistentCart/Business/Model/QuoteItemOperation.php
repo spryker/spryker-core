@@ -215,9 +215,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         foreach ($itemTransferList as $itemTransfer) {
-            if (!empty($itemTransfer)) {
-                $cartChangeTransfer->addItem($itemTransfer);
-            }
+            $cartChangeTransfer->addItem($itemTransfer);
         }
 
         return $cartChangeTransfer;
