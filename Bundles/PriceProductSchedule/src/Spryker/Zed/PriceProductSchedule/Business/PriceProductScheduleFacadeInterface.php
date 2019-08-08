@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
@@ -153,9 +154,9 @@ interface PriceProductScheduleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
      */
-    public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer;
+    public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer;
 
     /**
      * Specification:
