@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
@@ -170,5 +171,35 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
         $this->getFactory()
             ->createPriceProductScheduleRemover()
             ->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
+    {
+        return new PriceProductScheduleTransfer();
+    }
+
+    /**
+     * Specification:
+     * - Finds scheduled price by given id.
+     * - Returns PriceProductScheduleTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleById(int $id): ?PriceProductScheduleTransfer
+    {
+        return $this->getRepository()->findPriceProductScheduleById($id);
     }
 }
