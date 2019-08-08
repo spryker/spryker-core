@@ -46,12 +46,12 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
 
         foreach ($storeWithCurrencyCollection as $storeWithCurrencyTransfer) {
             $storeWithCurrencyTransfer->requireStore();
+            $storeTransfer = $storeWithCurrencyTransfer->getStore();
 
-            if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
+            if ($storeTransfer->getIdStore() !== $idStore) {
                 continue;
             }
 
-            $storeTransfer = $storeWithCurrencyTransfer->getStore();
             $timezoneText = $this->buildTimezoneText($storeTransfer);
             $store = $storeTransfer->toArray();
             $currencies = $this->collectCurrencies($storeWithCurrencyTransfer->getCurrencies());
