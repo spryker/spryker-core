@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSetStorage\Persistence;
 
+use Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductSetStorageQueryContainerInterface extends QueryContainerInterface
@@ -14,11 +15,22 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
+     * @deprecated Use queryProductSetDataByProductSetIds() instead.
+     *
      * @param array $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
     public function queryProductSetDataByIds(array $productSetIds);
+
+    /**
+     * @api
+     *
+     * @param int[] $productSetIds
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
+     */
+    public function queryProductSetDataByProductSetIds(array $productSetIds): SpyProductSetDataQuery;
 
     /**
      * @api
