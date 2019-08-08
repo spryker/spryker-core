@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontinuedCheckoutPreConditionCheckerInterface
 {
-    protected const MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED = 'place_order.pre_check.product_discontinued';
-    protected const MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED_PARAM_NAME = '%name%';
+    protected const GLOSSARY_KEY_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED = 'place_order.pre_check.product_discontinued';
+    protected const GLOSSARY_PARAM_NAME = '%name%';
 
     /**
      * @var \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface
@@ -45,7 +45,7 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
                 continue;
             }
 
-            $this->addDiscontinuedErrorToCheckoutResponse($checkoutResponseTransfer, $itemTransfer);
+            $checkoutResponseTransfer = $this->addDiscontinuedErrorToCheckoutResponse($checkoutResponseTransfer, $itemTransfer);
             $isPassed = false;
         }
 
@@ -66,15 +66,19 @@ class ProductDiscontinuedCheckoutPreConditionChecker implements ProductDiscontin
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function addDiscontinuedErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponseTransfer, ItemTransfer $itemTransfer): void
-    {
+    protected function addDiscontinuedErrorToCheckoutResponse(
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        ItemTransfer $itemTransfer
+    ): CheckoutResponseTransfer {
         $checkoutErrorTransfer = (new CheckoutErrorTransfer())
-            ->setMessage(static::MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED)
-            ->setParameters([static::MESSAGE_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED_PARAM_NAME => $itemTransfer->getName()]);
+            ->setMessage(static::GLOSSARY_KEY_PLACE_ORDER_PRE_CHECK_PRODUCT_DISCONTINUED)
+            ->setParameters([
+                static::GLOSSARY_PARAM_NAME => $itemTransfer->getName(),
+            ]);
 
-        $checkoutResponseTransfer
+        return $checkoutResponseTransfer
             ->addError($checkoutErrorTransfer)
             ->setIsSuccess(false);
     }
