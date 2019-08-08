@@ -57,11 +57,14 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     {
         $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
 
-        if (empty($extractedPrices) && !empty($priceProductTransfers)) {
+        if (empty($extractedPrices)
+            && !empty($priceProductTransfers[0])
+            && $priceProductTransfers[0]->getSkuProduct() !== null) {
             $abstractProductPrices = $this->priceProductReader->getPriceProductAbstractFromPriceProduct(
                 $priceProductTransfers[0]
             );
             $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($abstractProductPrices);
+            $extractedPrices = $this->mapConcretePriceDataToExtractedPrice($extractedPrices, $priceProductTransfers[0]);
         }
 
         return array_merge($extractedPrices, $priceProductTransfers);
@@ -122,11 +125,55 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
         $volumePriceTransfer = (new PriceProductTransfer())
             ->fromArray($priceProductTransfer->toArray(), true)
             ->setVolumeQuantity($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
-        $volumePriceTransfer->getMoneyValue()
+
+        $volumePriceTransfer
+            ->setGroupKey(
+                sprintf(
+                    '%s-%s',
+                    $volumePriceTransfer->getGroupKey(),
+                    $volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]
+                )
+            )
+            ->setIsMergeable(false)
+            ->getMoneyValue()
             ->setGrossAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE])
-            ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE])
+            ->setNetAmount($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE]);
+
+        $volumePriceTransfer = $this->setPriceData($volumePriceTransfer);
+
+        return $volumePriceTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed with next major release.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function setPriceData(PriceProductTransfer $volumePriceTransfer): PriceProductTransfer
+    {
+        $volumePriceTransfer->getMoneyValue()
             ->setPriceData($this->utilEncoding->encodeJson([]));
 
         return $volumePriceTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $concretePriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function mapConcretePriceDataToExtractedPrice(
+        array $priceProductTransfers,
+        PriceProductTransfer $concretePriceProductTransfer
+    ): array {
+        $concretePriceProductSku = $concretePriceProductTransfer->getSkuProduct();
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfer->setSkuProduct($concretePriceProductSku);
+        }
+
+        return $priceProductTransfers;
     }
 }

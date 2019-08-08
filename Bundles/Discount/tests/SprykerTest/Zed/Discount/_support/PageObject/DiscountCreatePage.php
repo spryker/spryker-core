@@ -76,15 +76,15 @@ class DiscountCreatePage
     }
 
     /**
-     * @param string $tabName
+     * @param string $dataTabId
      *
      * @return $this
      */
-    public function tab($tabName)
+    public function tab(string $dataTabId)
     {
-        $xpath = sprintf('//div[@class="tabs-container"]/ul/li/a[contains(., "%s")]', $tabName);
+        $xpath = sprintf('//div[@class="tabs-container"]/ul/li[@data-tab-content-id="%s"]/a', $dataTabId);
 
-        $this->tester->comment("At [$tabName] Tab");
+        $this->tester->comment("At [$dataTabId] Tab");
         $this->tester->click($xpath);
 
         return $this;
@@ -130,13 +130,13 @@ class DiscountCreatePage
         !$data['validFrom'] ?: $i->fillField('#discount_discountGeneral_valid_from', $data['validFrom']);
         !$data['validTo'] ?: $i->fillField('#discount_discountGeneral_valid_to', $data['validTo']);
 
-        $this->tab('Discount calculation');
+        $this->tab('tab-content-discount');
         !$data['calcType'] ?: $i->selectOption('#discount_discountCalculator_calculator_plugin', $data['calcType']);
         !$data['amount'] ?: $i->fillField('#discount_discountCalculator_moneyValueCollection_0_gross_amount', $data['amount']);
         $i->click(self::BTN_CALCULATION_GET);
         !$data['applyTo'] ?: $i->fillField(self::FIELD_DISCOUNT_QUERY, $data['applyTo']);
 
-        $this->tab('Conditions');
+        $this->tab('tab-content-conditions');
         $i->click('#btn-condition-get');
         $i->fillField('#discount_discountCondition_decision_rule_query_string', $data['applyWhen']);
         $i->click('#create-discount-button');

@@ -69,6 +69,7 @@ class SchemaRenderer implements SchemaRendererInterface
     {
         $schemaPropertyComponentTransfer = new SchemaPropertyComponentTransfer();
         $schemaPropertyComponentTransfer->setName($property->getName());
+        $schemaPropertyComponentTransfer->setIsNullable($property->getIsNullable());
         if ($property->getType()) {
             $schemaPropertyComponentTransfer->setType($property->getType());
         }
@@ -77,6 +78,9 @@ class SchemaRenderer implements SchemaRendererInterface
         }
         if ($property->getItemsReference()) {
             $schemaPropertyComponentTransfer->setItemsSchemaReference($property->getItemsReference());
+        }
+        if ($property->getItemsType()) {
+            $schemaPropertyComponentTransfer->setItemsType($property->getItemsType());
         }
 
         $this->schemaPropertySpecificationComponent->setSchemaPropertyComponentTransfer($schemaPropertyComponentTransfer);

@@ -9,7 +9,6 @@ namespace Spryker\Shared\Session\Business\Model;
 
 use Predis\Client;
 use Spryker\Shared\Config\Config;
-use Spryker\Shared\Config\Environment;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisLockKeyGenerator;
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGenerator;
@@ -68,48 +67,58 @@ abstract class SessionFactory
     }
 
     /**
-     * @param string $savePath
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
-    public function registerRedisSessionHandler($savePath)
+    public function registerRedisSessionHandler($connectionParameters, array $connectionOptions = [])
     {
-        $handler = $this->createSessionHandlerRedis($savePath);
-        $this->setSessionSaveHandler($this->createSessionHandlerRedis($savePath));
+        $handler = $this->createSessionHandlerRedis($connectionParameters, $connectionOptions);
+        $this->setSessionSaveHandler($this->createSessionHandlerRedis($connectionParameters, $connectionOptions));
 
         return $handler;
     }
 
     /**
-     * @param string $savePath
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis
      */
-    public function createSessionHandlerRedis($savePath)
+    public function createSessionHandlerRedis($connectionParameters, array $connectionOptions = [])
     {
         $lifetime = $this->getSessionLifetime();
 
-        return new SessionHandlerRedis($savePath, $lifetime, $this->getMonitoringService());
+        return new SessionHandlerRedis($connectionParameters, $lifetime, $this->getMonitoringService(), $connectionOptions);
     }
 
     /**
-     * @param string $dsn
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return void
      */
-    public function registerRedisLockingSessionHandler($dsn)
+    public function registerRedisLockingSessionHandler($connectionParameters, array $connectionOptions = [])
     {
-        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($dsn));
+        $this->setSessionSaveHandler($this->createRedisLockingSessionHandler($connectionParameters, $connectionOptions));
     }
 
     /**
-     * @param string $dsn
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking
      */
-    public function createRedisLockingSessionHandler($dsn)
+    public function createRedisLockingSessionHandler($connectionParameters, array $connectionOptions = [])
     {
-        $redisClient = $this->createRedisClient($dsn);
+        $redisClient = $this->createRedisClient($connectionParameters, $connectionOptions);
 
         return new SessionHandlerRedisLocking(
             $redisClient,
@@ -120,16 +129,21 @@ abstract class SessionFactory
     }
 
     /**
-     * @param string $dsn
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
+     * @param array|string $connectionParameters
+     * @param array $connectionOptions
      *
      * @return \Predis\Client
      */
-    public function createRedisClient($dsn)
+    public function createRedisClient($connectionParameters, array $connectionOptions = [])
     {
-        return new Client($dsn);
+        return new Client($connectionParameters, $connectionOptions);
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @param \Predis\Client $redisClient
      *
      * @return \Spryker\Shared\Session\Business\Handler\Lock\SessionLockerInterface
@@ -146,6 +160,8 @@ abstract class SessionFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterface
      */
     public function createRedisLockKeyGenerator()
@@ -156,6 +172,8 @@ abstract class SessionFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @return \Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface
      */
     protected function createRedisSessionKeyGenerator()
@@ -177,6 +195,8 @@ abstract class SessionFactory
     }
 
     /**
+     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     *
      * @param string $savePath
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerFile
@@ -221,7 +241,7 @@ abstract class SessionFactory
     protected function getBucketName()
     {
         $storeName = Store::getInstance()->getStoreName();
-        $environment = Environment::getInstance()->getEnvironment();
+        $environment = $this->getEnvironmentName();
 
         return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
     }
@@ -270,5 +290,15 @@ abstract class SessionFactory
         }
 
         return $hosts;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return string
+     */
+    protected function getEnvironmentName(): string
+    {
+        return APPLICATION_ENV;
     }
 }

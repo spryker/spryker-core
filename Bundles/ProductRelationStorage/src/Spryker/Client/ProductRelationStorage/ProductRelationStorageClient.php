@@ -48,4 +48,36 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
             ->createUpSellingProductReader()
             ->findUpSellingProducts($quoteTransfer, $localeName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findRelatedAbstractProductIds(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createRelatedProductReader()
+            ->findRelatedAbstractProductIds($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int[]
+     */
+    public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()
+            ->createUpSellingProductReader()
+            ->findUpSellingAbstractProductIds($quoteTransfer);
+    }
 }

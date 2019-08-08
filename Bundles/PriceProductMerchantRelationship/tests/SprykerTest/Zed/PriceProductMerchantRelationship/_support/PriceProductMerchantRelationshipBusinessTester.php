@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceProductMerchantRelationship;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
@@ -50,7 +51,12 @@ class PriceProductMerchantRelationshipBusinessTester extends Actor
     ): MerchantRelationshipTransfer {
         $merchant = $this->haveMerchant();
 
-        $companyBusinessUnitSeed = $companyBusinessUnitOwnerKey ? ['key' => $companyBusinessUnitOwnerKey] : [];
+        $companyBusinessUnitSeed = [
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ];
+        if ($companyBusinessUnitOwnerKey) {
+            $companyBusinessUnitSeed[CompanyBusinessUnitTransfer::KEY] = $companyBusinessUnitOwnerKey;
+        }
         $companyBusinessUnitOwner = $this->haveCompanyBusinessUnit($companyBusinessUnitSeed);
 
         return $this->haveMerchantRelationship([

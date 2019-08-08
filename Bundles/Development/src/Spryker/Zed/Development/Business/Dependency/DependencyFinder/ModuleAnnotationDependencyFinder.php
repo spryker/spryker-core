@@ -63,12 +63,13 @@ class ModuleAnnotationDependencyFinder implements DependencyFinderInterface
      */
     protected function isAcceptedFile(DependencyFinderContextInterface $context): bool
     {
-        $isAccepted = false;
         foreach ($this->acceptedFileNames as $fileName) {
-            $isAccepted = substr($context->getFileInfo()->getFilename(), - strlen($fileName)) === $fileName;
+            if (substr($context->getFileInfo()->getFilename(), - strlen($fileName)) === $fileName) {
+                return true;
+            }
         }
 
-        return $isAccepted;
+        return false;
     }
 
     /**

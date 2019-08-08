@@ -30,17 +30,17 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
 class ElasticsearchWriterTest extends Unit
 {
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
     protected $client;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index
      */
     protected $index;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|\Elastica\Type
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Elastica\Type
      */
     protected $type;
 
@@ -113,7 +113,7 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Client
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
     protected function getMockClient()
     {
@@ -127,7 +127,7 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Index
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index
      */
     protected function getMockIndex()
     {
@@ -142,7 +142,7 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Type
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Type
      */
     protected function getMockType()
     {
@@ -156,7 +156,7 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Elastica\Response
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Response
      */
     protected function getResponse()
     {
@@ -165,6 +165,7 @@ class ElasticsearchWriterTest extends Unit
             ->getMock();
 
         $mockResponse->method('isOk')->willReturn(true);
+
         return $mockResponse;
     }
 }

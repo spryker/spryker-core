@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var navigationTree = require('./navigation-tree');
 var navigationTable;
 

@@ -127,6 +127,7 @@ class IndexInstaller implements SearchInstallerInterface
             $mapping = $this->createMappingByName($mappingData, $mappingName, $index);
             $mappings = array_merge($mappings, $mapping->toArray());
         }
+
         return $mappings;
     }
 
@@ -145,6 +146,7 @@ class IndexInstaller implements SearchInstallerInterface
         foreach ($mappingData as $key => $value) {
             $mapping->setParam($key, $value);
         }
+
         return $mapping;
     }
 
@@ -326,6 +328,7 @@ class IndexInstaller implements SearchInstallerInterface
     protected function getLastPathNumber(array $settingPathArray): int
     {
         end($settingPathArray);
+
         return key($settingPathArray);
     }
 }

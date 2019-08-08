@@ -69,13 +69,12 @@ class CompanyUserRoleForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyRoleCollectionField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COMPANY_ROLE_COLLECTION, ChoiceType::class, [
             'choices' => $options[static::OPTION_VALUES_ROLES_CHOICES],
             'choice_attr' => $options[static::OPTION_ATTRIBUTES_ROLES_CHOICES],
             'constraints' => $this->createCompanyRoleCollectionConstraints(),
-            'choices_as_values' => true,
             'label' => false,
             'expanded' => true,
             'required' => true,

@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var filters = require('./filters');
 var idCategory = $('#idCategory').val();
 var addButton = $('#addButton');
@@ -63,7 +62,10 @@ $(document).ready(function() {
             return;
         }
 
-        obj.autocomplete('destroy');
+        if (obj.hasClass('ui-autocomplete')) {
+            obj.autocomplete('destroy');
+        }
+
         obj.autocomplete({
             source: function(request, response) {
                 $.get(

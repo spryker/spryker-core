@@ -21,4 +21,17 @@
         <property name="key" type="string" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="idProductAbstract" type="int"/>
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="quantity" type="int"/>
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="amount" type="int"/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int" />
+    </transfer>
+
 </transfers>

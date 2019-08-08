@@ -12,7 +12,7 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    client:
+    Client:
         path: .
         class_name: StorageClientTester
         modules:

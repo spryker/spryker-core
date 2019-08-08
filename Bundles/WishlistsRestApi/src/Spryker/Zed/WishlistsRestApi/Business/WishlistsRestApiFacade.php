@@ -20,6 +20,8 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function updateWishlistsUuid(): void

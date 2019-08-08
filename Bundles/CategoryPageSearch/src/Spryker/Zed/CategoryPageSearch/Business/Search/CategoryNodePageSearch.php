@@ -196,19 +196,20 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      *
      * @return array
      */
-    protected function getCategoryTrees(array $categoryNodeIds)
+    protected function getCategoryTrees(array $categoryNodeIds): array
     {
-        $localeNames = $this->store->getLocales();
+        $localeNames = $this->getSharedPersistenceLocaleNames();
         $locales = $this->queryContainer->queryLocalesWithLocaleNames($localeNames)->find();
 
         $categoryNodeTree = [];
         $this->disableInstancePooling();
         foreach ($locales as $locale) {
-            $categoryNodes = $this->queryContainer->queryCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
+            $categoryNodes = $this->queryContainer->queryWholeCategoryNodeTree($categoryNodeIds, $locale->getIdLocale())->find()->toKeyIndex();
+
             foreach ($categoryNodeIds as $categoryNodeId) {
                 if (isset($categoryNodes[$categoryNodeId])) {
                     $categoryNodeTree[$categoryNodeId][$locale->getLocaleName()] = $categoryNodes[$categoryNodeId];
@@ -218,5 +219,20 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
         $this->enableInstancePooling();
 
         return $categoryNodeTree;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSharedPersistenceLocaleNames(): array
+    {
+        $localeNames = $this->store->getLocales();
+        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
+            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+                $localeNames[] = $localeName;
+            }
+        }
+
+        return array_unique($localeNames);
     }
 }

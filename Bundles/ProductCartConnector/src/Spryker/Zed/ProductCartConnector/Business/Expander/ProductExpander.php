@@ -44,8 +44,13 @@ class ProductExpander implements ProductExpanderInterface
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
+        $productConcreteTransfers = $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($this->getConcreteSkus($cartChangeTransfer));
+        $productConcreteTransfers = $this->indexProductConcretesBySku($productConcreteTransfers);
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($itemTransfer->getSku());
+            $productConcreteTransfer = $productConcreteTransfers[$itemTransfer->getSku()] ?? null;
+            if (!$productConcreteTransfer) {
+                continue;
+            }
 
             $this->assertProductConcreteTransfer($productConcreteTransfer);
 
@@ -53,6 +58,21 @@ class ProductExpander implements ProductExpanderInterface
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function indexProductConcretesBySku(array $productConcreteTransfers): array
+    {
+        $indexedProductConcreteTransfers = [];
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $indexedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
+
+        return $indexedProductConcreteTransfers;
     }
 
     /**
@@ -87,5 +107,22 @@ class ProductExpander implements ProductExpanderInterface
             ->setAbstractSku($productConcreteTransfer->getAbstractSku())
             ->setConcreteAttributes($productConcreteTransfer->getAttributes())
             ->setName($localizedProductName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[]
+     */
+    protected function getConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $productConcreteSkus = array_map(
+            function (ItemTransfer $itemTransfer) {
+                return $itemTransfer->getSku();
+            },
+            $cartChangeTransfer->getItems()->getArrayCopy()
+        );
+
+        return $productConcreteSkus;
     }
 }

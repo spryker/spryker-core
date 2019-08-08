@@ -7,19 +7,12 @@
 
 namespace Spryker\Zed\AuthMailConnector\Communication;
 
-use Spryker\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig getConfig()
+ * @method \Spryker\Zed\AuthMailConnector\Business\AuthMailConnectorFacadeInterface getFacade()
  */
 class AuthMailConnectorCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\AuthMailConnector\Dependency\Facade\AuthMailConnectorToMailInterface
-     */
-    public function getMailFacade()
-    {
-        return $this->getProvidedDependency(AuthMailConnectorDependencyProvider::FACADE_MAIL);
-    }
 }

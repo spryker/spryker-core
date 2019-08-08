@@ -138,6 +138,7 @@ function setListeners() {
     $('#category-tree').on('select_node.jstree', function(e, data) {
         if(data.node.data.rootNode) {
             $('#category-tree').jstree(true).deselect_node(data.node);
+            currentlySelectedNodeId = data.node.data.idCategory;
             resetForm();
             return;
         }
@@ -149,7 +150,6 @@ function setListeners() {
         for(var i=0; i < nodesWithSameCategoryId.length; i++) {
             nodeIds.push(nodesWithSameCategoryId[i].id)
         }
-
 
         $('#category-tree').jstree(true).select_node(nodeIds, true);
         if(currentlySelectedNodeId === idCategory) {

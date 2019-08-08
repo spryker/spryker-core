@@ -50,6 +50,7 @@ abstract class AbstractFactory
     protected function createContainer()
     {
         $containerGlobals = $this->createContainerGlobals();
+
         return new Container($containerGlobals->getContainerGlobals());
     }
 
@@ -74,11 +75,11 @@ abstract class AbstractFactory
             $this->container = $this->createContainerWithProvidedDependencies();
         }
 
-        if ($this->container->offsetExists($key) === false) {
+        if ($this->container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container[$key];
+        return $this->container->get($key);
     }
 
     /**

@@ -50,6 +50,13 @@ interface CompanyRoleRepositoryInterface
     public function findCompanyRolePermissions(int $idCompanyRole): PermissionCollectionTransfer;
 
     /**
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array;
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $companyRoleCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
@@ -78,4 +85,18 @@ interface CompanyRoleRepositoryInterface
      * @return bool
      */
     public function hasUsers(int $idCompanyRole): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer;
+
+    /**
+     * @param string $companyRoleUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleByUuid(string $companyRoleUuid): ?CompanyRoleTransfer;
 }

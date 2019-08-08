@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer;
+use Spryker\Zed\Cms\Business\Exception\MissingPageException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -20,10 +21,15 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageDataAction(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer)
+    public function getFlattenedLocaleCmsPageDataAction(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer
     {
-        $cmsVersionDataTransfer = $this->getFacade()
-            ->getCmsVersionData($flattenedLocaleCmsPageDataRequestTransfer->getIdCmsPage());
+        try {
+            $cmsVersionDataTransfer = $this->getFacade()
+                ->getCmsVersionData($flattenedLocaleCmsPageDataRequestTransfer->getIdCmsPage());
+        } catch (MissingPageException $e) {
+            return $flattenedLocaleCmsPageDataRequestTransfer;
+        }
+
         $localeCmsPageDataTransfer = $this->getFacade()
             ->extractLocaleCmsPageDataTransfer($cmsVersionDataTransfer, $flattenedLocaleCmsPageDataRequestTransfer->getLocale());
         $flattenedLocaleCmsPageData = $this->getFacade()

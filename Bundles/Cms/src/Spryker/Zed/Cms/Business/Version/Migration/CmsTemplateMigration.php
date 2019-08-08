@@ -10,11 +10,11 @@ namespace Spryker\Zed\Cms\Business\Version\Migration;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CmsTemplateMigration implements MigrationInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Template\TemplateManagerInterface
@@ -42,9 +42,9 @@ class CmsTemplateMigration implements MigrationInterface
      *
      * @return void
      */
-    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer)
+    public function migrate(CmsVersionDataTransfer $originVersionDataTransfer, CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
-        $this->handleDatabaseTransaction(function () use ($targetVersionDataTransfer) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($targetVersionDataTransfer) {
             $this->executeMigrateTransaction($targetVersionDataTransfer);
         });
     }
@@ -54,7 +54,7 @@ class CmsTemplateMigration implements MigrationInterface
      *
      * @return void
      */
-    protected function executeMigrateTransaction(CmsVersionDataTransfer $targetVersionDataTransfer)
+    protected function executeMigrateTransaction(CmsVersionDataTransfer $targetVersionDataTransfer): void
     {
         $templatePath = $targetVersionDataTransfer->getCmsTemplate()->getTemplatePath();
         $templateName = $targetVersionDataTransfer->getCmsTemplate()->getTemplateName();

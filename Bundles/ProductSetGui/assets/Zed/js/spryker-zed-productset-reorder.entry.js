@@ -6,5 +6,4 @@
 'use strict';
 
 require('../sass/main.scss');
-require('./modules/main');
 require('./modules/reorder-product-sets');

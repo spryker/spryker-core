@@ -17,16 +17,6 @@ class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
     protected const ORGANIZATION = 'Spryker';
 
     /**
-     * @var string
-     */
-    protected $basePath;
-
-    public function __construct()
-    {
-        $this->basePath = APPLICATION_VENDOR_DIR . '/spryker/';
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
      * @return array
@@ -34,7 +24,11 @@ class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
     public function buildPaths(ModuleTransfer $moduleTransfer): array
     {
         $paths = [
-            sprintf('%s%s/', $this->basePath, $moduleTransfer->getNameDashed()),
+            sprintf(
+                '%s%s/',
+                APPLICATION_VENDOR_DIR . '/spryker/',
+                $this->getModuleName($moduleTransfer)
+            ),
         ];
 
         return $paths;
@@ -43,10 +37,10 @@ class SprykerStandaloneModulePathBuilder extends AbstractPathBuilder
     /**
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      *
-     * @return bool
+     * @return string
      */
-    public function accept(ModuleTransfer $moduleTransfer): bool
+    protected function getModuleName(ModuleTransfer $moduleTransfer): string
     {
-        return ($moduleTransfer->getOrganization()->getName() === static::ORGANIZATION);
+        return $moduleTransfer->getNameDashed();
     }
 }

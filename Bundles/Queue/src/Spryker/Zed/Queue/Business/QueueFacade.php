@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Queue\Business;
 
+use Generated\Shared\Transfer\QueueDumpRequestTransfer;
+use Generated\Shared\Transfer\QueueDumpResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -47,5 +49,21 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
         $this->getFactory()
             ->createWorker($output)
             ->start($command);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueDumpRequestTransfer $queueNameRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueueDumpResponseTransfer
+     */
+    public function queueDump(QueueDumpRequestTransfer $queueNameRequestTransfer): QueueDumpResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQueueDumper()
+            ->dumpQueue($queueNameRequestTransfer);
     }
 }

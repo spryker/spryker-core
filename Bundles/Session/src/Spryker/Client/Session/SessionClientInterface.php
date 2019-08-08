@@ -12,11 +12,14 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 interface SessionClientInterface extends SessionInterface
 {
     /**
+     * Specification:
+     * - Sets the container for the session.
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $container
      *
-     * @return \Spryker\Client\Session\SessionClientInterface
+     * @return void
      */
     public function setContainer(SessionInterface $container);
 }

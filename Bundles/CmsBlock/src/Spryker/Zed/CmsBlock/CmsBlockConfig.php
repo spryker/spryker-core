@@ -15,6 +15,7 @@ class CmsBlockConfig extends AbstractBundleConfig
     public const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
     public const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
     public const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    protected const THEME_NAME_DEFAULT = 'default';
 
     /**
      * @return string
@@ -39,18 +40,23 @@ class CmsBlockConfig extends AbstractBundleConfig
      */
     public function getTemplateRealPaths($templateRelativePath)
     {
-        return [
-            $this->getAbsolutePath($templateRelativePath, 'Shared'),
-        ];
+        $templatePaths = [];
+
+        foreach ($this->getThemeNames() as $themeName) {
+            $templatePaths[] = $this->getAbsolutePath($templateRelativePath, 'Shared', $themeName);
+        }
+
+        return $templatePaths;
     }
 
     /**
      * @param string $templateRelativePath
      * @param string $twigLayer
+     * @param string $themeName
      *
      * @return string
      */
-    protected function getAbsolutePath($templateRelativePath, $twigLayer)
+    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer, string $themeName = self::THEME_NAME_DEFAULT): string
     {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 
@@ -59,8 +65,41 @@ class CmsBlockConfig extends AbstractBundleConfig
             APPLICATION_SOURCE_DIR,
             $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
             $twigLayer,
-            $this->get(CmsBlockConstants::YVES_THEME),
+            $themeName,
             $templateRelativePath
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getThemeNames(): array
+    {
+        if ($this->getThemeName() === '' || $this->getThemeName() === $this->getThemeNameDefault()) {
+            return [
+                $this->getThemeNameDefault(),
+            ];
+        }
+
+        return [
+            $this->getThemeName(),
+            $this->getThemeNameDefault(),
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getThemeName(): string
+    {
+        return $this->get(CmsBlockConstants::YVES_THEME, '');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getThemeNameDefault(): string
+    {
+        return static::THEME_NAME_DEFAULT;
     }
 }

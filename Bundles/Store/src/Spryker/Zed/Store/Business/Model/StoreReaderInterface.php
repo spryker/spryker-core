@@ -40,6 +40,13 @@ interface StoreReaderInterface
     public function getStoreByName($storeName);
 
     /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
@@ -47,7 +54,14 @@ interface StoreReaderInterface
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries();
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array;
 }

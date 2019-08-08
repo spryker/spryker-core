@@ -117,7 +117,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Validator\Context\ExecutionContextInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Validator\Context\ExecutionContextInterface
      */
     protected function createExecutionContextMock()
     {
@@ -131,7 +131,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface
      */
     protected function createConstraintViolationBuilderMock()
     {
@@ -168,6 +168,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
             UniqueUrl::OPTION_CMS_FACADE => $this->createCmsFacade(),
             UniqueUrl::OPTION_URL_FACADE => $this->createUrlFacade(),
         ]);
+
         return $uniqueUrlConstraint;
     }
 

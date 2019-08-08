@@ -1,0 +1,43 @@
+Activate,Aktivieren
+"Add option","Option hinzufügen"
+"All products","Alle Produkte"
+"Assigned products","Zugeordnete Produkte"
+"Could not activate option.","Option konnte nicht aktiviert werden."
+"Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.","Produktoption erstellen durch das Festlegen von Optionswerten mit Übersetzungsschlüssel, SKU und Preis. Wird mehr als 1 Optionswert hinzugefügt, wird eine Optionengruppe erstellt. Bei einer Optionengruppe kann Ihr Kunde eine Option dieser Gruppe auswählen."
+"Create product option","Produktoption erstellen"
+"Created at","Erstellt am"
+Deactivate,Deaktivieren
+"Deselect all on the page","Alle Markierungen auf der Seite aufheben"
+Edit,Bearbeiten
+"Edit product option","Produktoption bearbeiten"
+"General information","Allgemeine Informationen"
+"Gross Price",Bruttopreis
+"Group name",Gruppenname
+"Group name translation key","Übersetzungs-key für den Gruppennamen"
+ID,ID
+"List of product options","Liste der Produktoptionen"
+Name,Name
+"Net Price",Nettopreis
+"Option group ID","ID der Optionengruppe"
+"Option name",Optionsname
+"Option name translation key","Übersetzungs-Key für Optionsnamen"
+"Option successfully activated.","Option erfolgreich aktiviert."
+"Option successfully deactivated.","Option erfolgreich deaktiviert."
+"Option Values",Optionswerte
+"Product option group created.","Gruppe der Produktoptionen erstellt."
+"Product option group modified.","Gruppe der Produktoptionen geändert."
+"Product option list",Produktoptionenliste
+Products,Produkte
+"Products to be assigned","Zuzuordnende Produkte"
+"Products to be deassigned","Zu entfernende Produkte"
+"Products with this option","Produkte mit dieser Option"
+Save,Speichern
+"Select all on the page","Alle auf der Seite auswählen"
+Selected,Ausgewählt
+SKU,SKU
+Sku,SKU
+"Tax set",Steuer-Set
+Translation,Übersetzung
+"Translation key",Übersetzungs-Key
+"Updated at","Aktualisiert am"
+"View product option","Produktoption anzeigen"

@@ -32,6 +32,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
  */
 class CalculatorForm extends AbstractType
 {
@@ -78,6 +79,7 @@ class CalculatorForm extends AbstractType
                 if (!$formData) {
                     return [Constraint::DEFAULT_GROUP];
                 }
+
                 return [
                     Constraint::DEFAULT_GROUP,
                     $formData->getCollectorStrategyType(),
@@ -195,7 +197,6 @@ class CalculatorForm extends AbstractType
             'multiple' => false,
             'label' => 'Discount collection type',
             'choices' => array_flip($this->getFactory()->createCalculatorFormDataProvider()->getOptions()[static::OPTION_COLLECTOR_TYPE_CHOICES]),
-            'choices_as_values' => true,
             'attr' => [
                 'class' => 'inline-radio',
             ],
@@ -215,7 +216,6 @@ class CalculatorForm extends AbstractType
             'label' => 'Calculator type',
             'placeholder' => 'Select one',
             'choices' => array_flip($this->getFactory()->createCalculatorFormDataProvider()->getData()[static::FIELD_CALCULATOR_PLUGIN]),
-            'choices_as_values' => true,
             'required' => true,
             'choice_attr' => function ($pluginName) {
                 return [

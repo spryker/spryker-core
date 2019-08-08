@@ -7,19 +7,11 @@
 
 namespace Spryker\Zed\Category\Dependency\Plugin;
 
-use Symfony\Component\Form\FormBuilderInterface;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface as CategoryExtensionFormPluginInterface;
 
-interface CategoryFormPluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormPluginInterface instead
+ */
+interface CategoryFormPluginInterface extends CategoryExtensionFormPluginInterface
 {
-    /**
-     * Specification:
-     * - Add form parts to the main form builder
-     *
-     * @api
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return void
-     */
-    public function buildForm(FormBuilderInterface $builder);
 }

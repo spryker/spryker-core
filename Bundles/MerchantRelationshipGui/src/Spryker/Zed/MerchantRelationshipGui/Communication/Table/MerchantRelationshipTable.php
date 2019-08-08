@@ -55,7 +55,6 @@ class MerchantRelationshipTable extends AbstractTable
 
         $config->setUrl($url->build());
         $config = $this->setHeader($config);
-        $config = $this->setHeader($config);
 
         $config->setSortable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,
@@ -134,6 +133,10 @@ class MerchantRelationshipTable extends AbstractTable
         $buttons[] = $this->generateEditButton(
             Url::generate(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_EDIT, $urlParams),
             'Edit'
+        );
+        $buttons[] = $this->generateRemoveButton(
+            Url::generate(MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_DELETE, $urlParams),
+            'Delete'
         );
 
         return implode(' ', $buttons);

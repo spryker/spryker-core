@@ -11,8 +11,10 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Url\Dependency\UrlEvents;
-use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStorageListener;
-use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageListener;
+use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStoragePublishListener;
+use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStorageUnpublishListener;
+use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStoragePublishListener;
+use Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageUnpublishListener;
 
 /**
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
@@ -36,6 +38,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
         $this->addUrlCreateStorageListener($eventCollection);
         $this->addUrlUpdateStorageListener($eventCollection);
         $this->addUrlDeleteStorageListener($eventCollection);
+
         $this->addRedirectCreateStorageListener($eventCollection);
         $this->addRedirectUpdateStorageListener($eventCollection);
         $this->addRedirectDeleteStorageListener($eventCollection);
@@ -50,7 +53,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStoragePublishListener());
     }
 
     /**
@@ -60,7 +63,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageUnpublishListener());
     }
 
     /**
@@ -70,7 +73,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStoragePublishListener());
     }
 
     /**
@@ -80,7 +83,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStoragePublishListener());
     }
 
     /**
@@ -90,7 +93,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageUnpublishListener());
     }
 
     /**
@@ -100,7 +103,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addRedirectCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStoragePublishListener());
     }
 
     /**
@@ -110,7 +113,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addRedirectUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE, new RedirectStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE, new RedirectStoragePublishListener());
     }
 
     /**
@@ -120,6 +123,6 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addRedirectDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE, new RedirectStorageListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE, new RedirectStorageUnpublishListener());
     }
 }

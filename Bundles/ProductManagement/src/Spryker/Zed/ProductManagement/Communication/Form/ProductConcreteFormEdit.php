@@ -382,7 +382,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      *
      * @return $this
      */
-    protected function executeProductConcreteEditFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeProductConcreteEditFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
         foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {
@@ -422,7 +422,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      *
      * @return $this
      */
-    protected function executeProductConcreteFormExpanderPlugins(FormBuilderInterface $builder, array $options): self
+    protected function executeProductConcreteFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
         foreach ($this->getFactory()->getProductConcreteFormExpanderPlugins() as $concreteFormExpanderPlugin) {
             $builder = $concreteFormExpanderPlugin->expand($builder, $options);

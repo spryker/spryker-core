@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
+use Spryker\Zed\Store\Persistence\StoreRepositoryInterface;
 
 class StoreReader implements StoreReaderInterface
 {
@@ -32,6 +33,11 @@ class StoreReader implements StoreReaderInterface
     protected $storeQueryContainer;
 
     /**
+     * @var \Spryker\Zed\Store\Persistence\StoreRepositoryInterface
+     */
+    protected $storeRepository;
+
+    /**
      * @var \Spryker\Zed\Store\Business\Model\StoreMapperInterface
      */
     protected $storeMapper;
@@ -44,16 +50,19 @@ class StoreReader implements StoreReaderInterface
     /**
      * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
+     * @param \Spryker\Zed\Store\Persistence\StoreRepositoryInterface $storeRepository
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      */
     public function __construct(
         StoreToStoreInterface $store,
         StoreQueryContainerInterface $storeQueryContainer,
+        StoreRepositoryInterface $storeRepository,
         StoreMapperInterface $storeMapper
     ) {
         $this->store = $store;
         $this->storeConfigurationProvider = $store;
         $this->storeQueryContainer = $storeQueryContainer;
+        $this->storeRepository = $storeRepository;
         $this->storeMapper = $storeMapper;
     }
 
@@ -157,6 +166,20 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer
+    {
+        if (!$this->storeRepository->storeExists($storeName)) {
+            return null;
+        }
+
+        return $this->getStoreByName($storeName);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
@@ -172,10 +195,20 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {
         return $this->store->getCountries();
+    }
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        return $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
     }
 }

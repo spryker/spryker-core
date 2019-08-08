@@ -49,6 +49,8 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      *
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @return void
      */
     public function installCustomerOauthData(): void
@@ -61,6 +63,22 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      *
      * @api
      *
+     * @return void
+     */
+    public function installOauthCustomerScope(): void
+    {
+        $this->getFactory()
+            ->createOauthCustomerScopeInstaller()
+            ->install();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getCustomerOauthClientSecret(): string
@@ -72,6 +90,8 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @return string
      */

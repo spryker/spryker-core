@@ -88,7 +88,7 @@ class MerchantRelationshipCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $options): self
+    protected function addCompanyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_FK_COMPANY, Select2ComboBoxType::class, [
             'label' => static::COMPANY_FIELD_LABEL,
@@ -96,7 +96,6 @@ class MerchantRelationshipCreateForm extends AbstractType
             'choices' => array_flip($options[static::OPTION_COMPANY_CHOICES]),
             'mapped' => false,
             'data' => $options[static::OPTION_SELECTED_COMPANY],
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -111,13 +110,12 @@ class MerchantRelationshipCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMerchantField(FormBuilderInterface $builder, array $choices): self
+    protected function addMerchantField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_FK_MERCHANT, Select2ComboBoxType::class, [
             'label' => static::MERCHANT_FIELD_LABEL,
             'placeholder' => static::MERCHANT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -132,7 +130,7 @@ class MerchantRelationshipCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addOwnerCompanyBusinessUnitField(FormBuilderInterface $builder, array $options): self
+    protected function addOwnerCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
         $constraints = [];
         if ($options[static::OPTION_IS_PERSISTENCE_FORM]) {
@@ -143,7 +141,6 @@ class MerchantRelationshipCreateForm extends AbstractType
             'label' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
             'placeholder' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]),
-            'choices_as_values' => true,
             'required' => $options[static::OPTION_IS_PERSISTENCE_FORM],
             'constraints' => $constraints,
         ]);
@@ -157,13 +154,12 @@ class MerchantRelationshipCreateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addAssignedCompanyBusinessUnitField(FormBuilderInterface $builder, array $choices): self
+    protected function addAssignedCompanyBusinessUnitField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT, Select2ComboBoxType::class, [
             'label' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
             'placeholder' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => false,
             'multiple' => 'true',
         ]);

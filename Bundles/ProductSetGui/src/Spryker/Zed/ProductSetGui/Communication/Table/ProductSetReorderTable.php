@@ -62,7 +62,7 @@ class ProductSetReorderTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PRODUCT_SET => 'ID',
             static::COL_NAME => 'Name',
-            static::COL_PRODUCT_COUNT => '# of Products',
+            static::COL_PRODUCT_COUNT => 'Number of Products',
             static::COL_WEIGHT => 'Weight',
             static::COL_IS_ACTIVE => 'Status',
         ]);
@@ -132,10 +132,10 @@ class ProductSetReorderTable extends AbstractTable
     protected function getStatusLabel($status)
     {
         if (!$status) {
-            return '<span class="label label-danger">Inactive</span>';
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return '<span class="label label-info">Active</span>';
+        return $this->generateLabel('Active', 'label-info');
     }
 
     /**

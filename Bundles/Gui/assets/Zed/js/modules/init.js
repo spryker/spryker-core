@@ -5,16 +5,55 @@
 
 'use strict';
 
-var editor = require('ZedGuiEditorConfiguration');
+var editorConfig = require('ZedGuiEditorConfiguration');
 var Tabs = require('./libs/tabs');
 var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
 
+var dataTablesSearchDelay = function() {
+    var dataTablesWrapper = $('.dataTables_wrapper');
+    dataTablesWrapper.each(function(index, wrapper) {
+        var searchInput = $(wrapper).find('input[type="search"]');
+        var dataTable = $(wrapper).find('.gui-table-data');
+        var dataTableApi = dataTable.dataTable().api();
+        var timeOutId = 0;
+
+        if(searchInput.length && dataTable.length) {
+            searchInput
+            .unbind()
+            .bind("input", function(e) {
+                var self = this;
+
+                clearTimeout(timeOutId);
+                timeOutId = setTimeout(function() {
+                    dataTableApi.search(self.value).draw();
+                }, 1000);
+                return;
+            });
+        }
+    });
+}
+
+var editorInit = function() {
+    $('.html-editor').each(function() {
+        var $textarea = $(this);
+        var textareaConfigName = $textarea.data('editor-config');
+
+        var config = editorConfig.getGlobalConfig(textareaConfigName);
+
+        if (!config) {
+            config = editorConfig.getConfig();
+        }
+
+        $textarea.summernote(config);
+    });
+};
+
 $(document).ready(function() {
     // editor
-    $('.html-editor').summernote(editor.getConfig());
+    editorInit();
 
     /* Data tables custom error handling */
     dataTable.setTableErrorMode('none');
@@ -33,12 +72,17 @@ $(document).ready(function() {
     $('.fix-height').sprykerFixHeight();
 
     $('.spryker-form-autocomplete').each(function(key, value) {
-        var obj = $(value);
-        if (obj.data('url') === 'undefined') {
+        var autoCompletedField = $(value);
+        if (autoCompletedField.data('url') === 'undefined') {
             return;
         }
-        obj.autocomplete({
-            source: obj.data('url'),
+
+        if (autoCompletedField.hasClass('ui-autocomplete')) {
+            autoCompletedField.autocomplete('destroy');
+        }
+
+        autoCompletedField.autocomplete({
+            source: autoCompletedField.data('url'),
             minLength: 3
         });
     });
@@ -63,7 +107,39 @@ $(document).ready(function() {
     );
 
     $('.dropdown-toggle').dropdown();
-    $('.spryker-form-select2combobox').select2();
+
+    $('.spryker-form-select2combobox').each(function(index, element) {
+        var select2InitOptions = {};
+        var selectElement = $(element);
+
+        if (selectElement.data('autocomplete-url')) {
+            select2InitOptions = {
+                ajax: {
+                    url: selectElement.data('autocomplete-url'),
+                    dataType: 'json',
+                    delay: 500,
+                    cache: true,
+                    data: function(params) {
+                        params.page = params.page || 1;
+
+                        return params;
+                    }
+                },
+                minimumInputLength: 3
+            };
+
+            selectElement.on('select2:unselecting', function(e) {
+                var idSelected = e.params.args.data.id;
+                var selectedValues = selectElement.val();
+
+                selectElement.val(selectedValues.filter(function(value) {
+                    return value !== ('' + idSelected);
+                })).trigger('change');
+            });
+        }
+
+        selectElement.select2(select2InitOptions);
+    });
 
     /* Init tabs */
     $('.tabs-container').each(function(index, item){
@@ -78,4 +154,8 @@ $(document).ready(function() {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
+});
+
+$(window).on('load', function() {
+    dataTablesSearchDelay();
 });

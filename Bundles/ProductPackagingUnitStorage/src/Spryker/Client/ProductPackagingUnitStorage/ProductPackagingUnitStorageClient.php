@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -47,5 +48,21 @@ class ProductPackagingUnitStorageClient extends AbstractClient implements Produc
         return $this->getFactory()
             ->createProductPackagingUnitStorageReader()
             ->findProductConcretePackagingById($idProductAbstract, $idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function expandItemTransferWithDefaultPackagingUnit(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        return $this->getFactory()
+            ->createItemTransferExpander()
+            ->expandWithDefaultPackagingUnit($itemTransfer);
     }
 }

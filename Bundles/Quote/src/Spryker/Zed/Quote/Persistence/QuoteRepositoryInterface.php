@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,8 +18,6 @@ interface QuoteRepositoryInterface
     /**
      * Specification:
      * - Find quote by customer reference.
-     *
-     * @api
      *
      * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
      *
@@ -32,8 +31,6 @@ interface QuoteRepositoryInterface
      * Specification:
      * - Find quote by customer reference and ID store.
      *
-     * @api
-     *
      * @param string $customerReference
      * @param int $idStore
      *
@@ -45,8 +42,6 @@ interface QuoteRepositoryInterface
      * Specification:
      * - Find quote by quote id.
      *
-     * @api
-     *
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
@@ -56,8 +51,6 @@ interface QuoteRepositoryInterface
     /**
      * Specification:
      * - Get quote collection filtered by criteria
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
@@ -71,6 +64,14 @@ interface QuoteRepositoryInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function mapQuoteTransfer(SpyQuoteEntityTransfer $quoteEntityTransfer): QuoteTransfer;
+
+    /**
+     * @param \DateTime $lifetimeLimitDate
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function findExpiredGuestQuotes(DateTime $lifetimeLimitDate, int $limit): QuoteCollectionTransfer;
 
     /**
      * @param string $uuidQuote

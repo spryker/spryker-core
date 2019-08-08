@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use `Spryker\Zed\User\Communication\Plugin\Twig\UserTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  * @method \Spryker\Zed\User\UserConfig getConfig()

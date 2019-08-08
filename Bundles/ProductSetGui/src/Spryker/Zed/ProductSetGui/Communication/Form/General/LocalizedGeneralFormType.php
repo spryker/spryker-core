@@ -102,7 +102,7 @@ class LocalizedGeneralFormType extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'Name *',
+            'label' => 'Name',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -120,7 +120,7 @@ class LocalizedGeneralFormType extends AbstractType
     protected function addUrlField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_URL, TextType::class, [
-            'label' => 'URL *',
+            'label' => 'URL',
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -198,9 +198,9 @@ class LocalizedGeneralFormType extends AbstractType
         }
 
         $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
+        $urlTransfer->setUrl(explode('?', $url)[0]);
 
-        if ($this->getFactory()->getUrlFacade()->hasUrl($urlTransfer)) {
+        if ($this->getFactory()->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer)) {
             $context
                 ->buildViolation('URL is already used.')
                 ->atPath('[' . static::FIELD_URL . ']')

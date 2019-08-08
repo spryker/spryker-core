@@ -65,17 +65,15 @@ class EditController extends AbstractProductPackagingUnitGuiController
                 ->getProductPackagingUnitFacade()
                 ->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
         } catch (Throwable $throwable) {
-            $this->addErrorMessage(sprintf(
-                static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_UPDATE,
-                $productPackagingUnitTypeTransfer->getName()
-            ));
+            $this->addErrorMessage(static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_UPDATE, [
+                '%s' => $productPackagingUnitTypeTransfer->getName(),
+            ]);
 
             return;
         }
 
-        $this->addSuccessMessage(sprintf(
-            static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_UPDATE,
-            $productPackagingUnitTypeTransfer->getName()
-        ));
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_UPDATE, [
+            '%s' => $productPackagingUnitTypeTransfer->getName(),
+        ]);
     }
 }

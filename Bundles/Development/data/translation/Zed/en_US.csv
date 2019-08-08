@@ -1,0 +1,60 @@
+adjacency,adjacency
+"Adjacency Matrix","Adjacency Matrix"
+Application,Application
+"Architecture Sniffer","Architecture Sniffer"
+"Architecture sniffer results","Architecture sniffer results"
+Back,Back
+"Check for violations","Check for violations"
+"Composer dependencies","Composer dependencies"
+"Composer dev only dependencies","Composer dev only dependencies"
+"Core module","Core module"
+Count,Count
+"Declared in composer.json","Declared in composer.json"
+"Declared in composer.json (dev)","Declared in composer.json (dev)"
+Dependency,Dependency
+"Dependency graphs of all core modules","Dependency graphs of all core modules"
+detailed,detailed
+"Dev only dependencies","Dev only dependencies"
+Development,Development
+"Display all architecture rules","Display all architecture rules"
+"Download CSV","Download CSV"
+"Found in src","Found in src"
+"Found in test","Found in test"
+From,From
+in,in
+"in src","in src"
+"in tests","in tests"
+Incoming,Incoming
+"Incoming dependencies of the","Incoming dependencies of the"
+"Indirect Incoming","Indirect Incoming"
+"Indirect Outgoing","Indirect Outgoing"
+"Indirect Stability","Indirect Stability"
+"List all used plugins","List all used plugins"
+module,module
+Module,module
+"Module name","Module name"
+"Module overview","Module overview"
+Namespace,Namespace
+"No architecture violations detected","No architecture violations detected"
+"No plugins used in this Module","No plugins used in this Module"
+out,out
+Outgoing,Outgoing
+"Outgoing dependencies of the","Outgoing dependencies of the"
+"Plugins used in Projects DependencyProvider","Plugins used in Projects DependencyProvider"
+Priority:,Priority:
+"Project module","Project module"
+Reload,Reload
+require,require
+require-dev,require-dev
+"show all used plugins","show all used plugins"
+"Simple Dependency Graph","Simple Dependency Graph"
+"Spryker Stability","Spryker Stability"
+Stability,Stability
+"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)"
+"Stability of all core modules","Stability of all core modules"
+"Suggested dependencies","Suggested dependencies"
+SUM,SUM
+To,To
+"Used Plugins","Used Plugins"
+"You must specify a bundle for which the graph should be build","You must specify a bundle for which the graph should be build"
+"You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles."

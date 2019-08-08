@@ -50,7 +50,7 @@ class ToggleStatusController extends AbstractController
                 sprintf(static::MESSAGE_MAP_UPDATE_SUCCESS[$navigationTransfer->getIsActive()], $idNavigation)
             );
         } else {
-            $this->addErrorMessage(sprintf('Navigation element %d was not found.', $idNavigation));
+            $this->addErrorMessage('Navigation element %d was not found.', ['%d' => $idNavigation]);
         }
 
         return $this->redirectResponse('/navigation-gui');

@@ -26,9 +26,11 @@ class RefreshTokensResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
      *              "401": "Failed to authenticate user."
-     *          }
+     *          },
+     *          "isIdNullable": true
      *     }
      * })
      *
@@ -42,5 +44,15 @@ class RefreshTokensResourceController extends AbstractController
         return $this->getFactory()
             ->createRefreshTokensReader()
             ->processAccessTokenRequest($restRefreshTokensAttributesTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->getResourceBuilder()->createRestResponse();
     }
 }

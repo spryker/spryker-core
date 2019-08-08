@@ -1,4 +1,5 @@
 namespace: SprykerTest\Zed\Transfer
+actor: Tester
 
 paths:
     tests: .
@@ -9,7 +10,7 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*', '../../../../tests/SprykerTest/Zed/Transfer/Business/Model/Fixtures/GeneratedTest/*' ] }
+    whitelist: { include: ['../../../../src/*', '../../../../tests/_data/GeneratedTest/*' ] }
 
 suites:
     Business:
@@ -22,4 +23,5 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper

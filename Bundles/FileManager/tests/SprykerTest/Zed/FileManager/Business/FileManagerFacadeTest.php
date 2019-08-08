@@ -251,7 +251,7 @@ class FileManagerFacadeTest extends Unit
         $fileDirectoryTransfer->setIsActive(true);
         $fileDirectoryTransfer->setPosition(1);
         $fileDirectoryId = $this->facade->saveDirectory($fileDirectoryTransfer);
-        $this->assertInternalType('int', $fileDirectoryId);
+        $this->assertIsInt($fileDirectoryId);
 
         $file = new FileTransfer();
         $file->setFileContent('big directory file');
@@ -272,7 +272,7 @@ class FileManagerFacadeTest extends Unit
         $fileManagerDataTransfer->setFileInfo($fileInfo);
 
         $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
-        $this->assertInternalType('int', $fileManagerDataTransfer->getFile()->getIdFile());
+        $this->assertIsInt($fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertFileExists(
             $this->tester->getDocumentFullFileName(
                 $fileDirectoryId . DIRECTORY_SEPARATOR . $fileManagerDataTransfer->getFile()->getIdFile() . '-v.1.txt'
@@ -395,6 +395,28 @@ class FileManagerFacadeTest extends Unit
         $this->assertInstanceOf(MimeTypeResponseTransfer::class, $mimeTypeResponseTransfer);
         $this->assertTrue($mimeTypeResponseTransfer->getIsSuccessful());
         $this->assertNull($this->findMimeTypeById(1)->getIdMimeType());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilesByIds(): void
+    {
+        // Arrange
+        $idFiles = $this->tester->insertFilesCollection();
+
+        // Act
+        $fileManagerDataTransfers = $this->facade->getFilesByIds($idFiles);
+
+        // Assert
+        $this->assertCount(9, $fileManagerDataTransfers);
+
+        foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
+            $this->assertInstanceOf(FileManagerDataTransfer::class, $fileManagerDataTransfer);
+            $this->assertInstanceOf(FileTransfer::class, $fileManagerDataTransfer->getFile());
+            $this->assertInstanceOf(FileInfoTransfer::class, $fileManagerDataTransfer->getFileInfo());
+            $this->assertContains($fileManagerDataTransfer->getFile()->getIdFile(), $idFiles);
+        }
     }
 
     /**

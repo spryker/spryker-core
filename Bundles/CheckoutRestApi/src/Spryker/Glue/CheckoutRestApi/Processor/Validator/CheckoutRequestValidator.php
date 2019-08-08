@@ -66,7 +66,7 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestErrorCollectionTransfer $restErrorCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
     protected function validateCustomer(RestRequestInterface $restRequest, RestErrorCollectionTransfer $restErrorCollectionTransfer): ?RestErrorCollectionTransfer
     {
@@ -105,6 +105,7 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
                 $restErrorCollectionTransfer->addRestError($resErrorMessageTransfer);
             }
         }
+
         return $restErrorCollectionTransfer;
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -34,7 +35,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
                 new PriceProductCriteriaTransfer()
             );
 
-        if ($priceProductStoreQuery->getAsColumns() === 0) {
+        if (!$priceProductStoreQuery->getAsColumns()) {
             return;
         }
 
@@ -64,5 +65,95 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         SpyPriceProductDefaultEntityTransfer $spyPriceProductDefaultEntityTransfer
     ): SpyPriceProductDefaultEntityTransfer {
         return $this->save($spyPriceProductDefaultEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function deletePriceProductStoreByPriceProductTransfer(PriceProductTransfer $priceProductTransfer): void
+    {
+        $priceProductTransfer
+            ->requireMoneyValue();
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+
+        $moneyValueTransfer
+            ->requireCurrency();
+
+        $this->getFactory()
+            ->createPriceProductStoreQuery()
+            ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
+            ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
+            ->filterByFkStore($moneyValueTransfer->getFkStore())
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProduct
+     *
+     * @return void
+     */
+    public function deletePriceProductById(int $idPriceProduct): void
+    {
+        $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByIdPriceProduct($idPriceProduct)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStore): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->filterByFkPriceProductStore($idPriceProductStore)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): int
+    {
+        $priceProductTransfer
+            ->requireFkPriceType()
+            ->requireIdProduct();
+
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFKProduct($priceProductTransfer->getIdProduct())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOneOrCreate()
+            ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): int
+    {
+        $priceProductTransfer
+            ->requireFkPriceType()
+            ->requireIdProductAbstract();
+
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOneOrCreate()
+            ->save();
     }
 }

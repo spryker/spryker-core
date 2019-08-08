@@ -39,27 +39,27 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 class DiscountTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Discount\Business\Calculator\CalculatorInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $calculatorMock;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $storeFacadeMock;
 
     /**
-     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $discountQueryContainerMock;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $discountEntityMapperMock;
 
     /**
-     * @var \Spryker\Zed\Discount\Business\Calculator\DiscountInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\Discount\Business\Calculator\DiscountInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $discountMock;
 

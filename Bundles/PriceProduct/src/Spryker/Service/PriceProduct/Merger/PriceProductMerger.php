@@ -21,8 +21,12 @@ class PriceProductMerger implements PriceProductMergerInterface
         array $abstractPriceProductTransfers,
         array $concretePriceProductTransfers
     ): array {
-        $abstractPriceProductTransfers = $this->prefillPriceProductTransferKeys($abstractPriceProductTransfers);
-        $concretePriceProductTransfers = $this->prefillPriceProductTransferKeys($concretePriceProductTransfers);
+        $abstractPriceProductTransfers = $this->groupPriceProductTransfers($abstractPriceProductTransfers);
+        $concretePriceProductTransfers = $this->groupPriceProductTransfers($concretePriceProductTransfers);
+
+        if (!$this->isAllProductPricesMergeable($concretePriceProductTransfers)) {
+            $abstractPriceProductTransfers = $this->filterNotMergeableProductPrices($abstractPriceProductTransfers);
+        }
 
         $priceProductTransfers = [];
 
@@ -82,51 +86,42 @@ class PriceProductMerger implements PriceProductMergerInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function prefillPriceProductTransferKeys(array $priceProductTransfers): array
+    protected function groupPriceProductTransfers(array $priceProductTransfers): array
     {
         $priceProductTransfersResult = [];
+
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfersResult[$this->buildPriceProductIdentifier($priceProductTransfer)] = $priceProductTransfer;
+            $priceProductTransfersResult[$priceProductTransfer->requireGroupKey()->getGroupKey()] = $priceProductTransfer;
         }
 
         return $priceProductTransfersResult;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return string
+     * @return bool
      */
-    protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
+    protected function isAllProductPricesMergeable(array $priceProductTransfers): bool
     {
-        $priceProductTransfer->requireMoneyValue();
-        $priceProductTransfer->requirePriceTypeName();
-        $priceProductTransfer->getMoneyValue()->requireCurrency();
-        $priceProductTransfer->getMoneyValue()->getCurrency()->requireCode();
-        $priceProductTransfer->requirePriceDimension();
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if (!$priceProductTransfer->getIsMergeable()) {
+                return false;
+            }
+        }
 
-        return implode('-', array_filter($this->getIdentifiersPath($priceProductTransfer)));
+        return true;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getIdentifiersPath(PriceProductTransfer $priceProductTransfer): array
+    protected function filterNotMergeableProductPrices(array $priceProductTransfers): array
     {
-        $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
-
-        $identifierPaths = [
-            $priceProductTransfer->getMoneyValue()->getCurrency()->getCode(),
-            $priceProductTransfer->getPriceTypeName(),
-            $priceProductTransfer->getMoneyValue()->getFkStore(),
-        ];
-
-        if ($priceProductTransfer->getPriceType()) {
-            $identifierPaths[] = $priceProductTransfer->getPriceType()->getPriceModeConfiguration();
-        }
-
-        return array_merge($identifierPaths, array_values($priceDimensionTransfer->toArray()));
+        return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getIsMergeable();
+        });
     }
 }

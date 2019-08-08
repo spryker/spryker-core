@@ -1,10 +1,8 @@
-{{ form_errors(form) }}
-
 <div class="well">
     {% filter trans|raw %}
-        <h3>Price & Tax</h3>
-        <p>Below you can choose between your predefined tax sets and edit the price of your product.</p>
-        <p><i>Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)</i></p>
+        <h3>{{ 'Price & Tax' | trans }}</h3>
+        <p>{{ 'Below you can choose between your predefined tax sets and edit the price of your product.' | trans }}</p>
+        <p><i>{{ 'Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)' | trans }}</i></p>
     {% endfilter %}
 </div>
 

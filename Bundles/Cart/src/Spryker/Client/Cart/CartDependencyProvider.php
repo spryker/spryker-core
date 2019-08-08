@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Cart;
 
+use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientBridge;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge;
 use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
@@ -17,6 +18,7 @@ use Spryker\Client\Kernel\Container;
 class CartDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_QUOTE = 'quote client';
+    public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
     public const CLIENT_ZED_REQUEST = 'zed request client';
     public const PLUGIN_ITEM_COUNT = 'item count plugin';
     public const PLUGINS_QUOTE_STORAGE_STRATEGY = 'PLUGINS_QUOTE_STORAGE_STRATEGY';
@@ -32,6 +34,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addQuoteClient($container);
+        $container = $this->addMessengerClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addItemCountPlugin($container);
         $container = $this->addQuoteStorageStrategyPlugins($container);
@@ -51,6 +54,20 @@ class CartDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new CartToQuoteBridge($container->getLocator()->quote()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addMessengerClient(Container $container): Container
+    {
+        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+            return new CartToMessengerClientBridge($container->getLocator()->messenger()->client());
         };
 
         return $container;

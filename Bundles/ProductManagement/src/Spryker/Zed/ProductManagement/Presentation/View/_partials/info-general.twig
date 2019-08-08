@@ -3,7 +3,7 @@
 
         {% if relatedStoreNames is defined %}
             <div class="row">
-                <div class="col-xs-2"><b>Store relation</b></div>
+                <div class="col-xs-2"><b>{{ 'Store relation' | trans }}</b></div>
                 <div class="col-xs-10">
                     {% for storeName in relatedStoreNames %}
                         <span class="label label-info">{{ storeName }}</span>
@@ -24,13 +24,13 @@
         {% endif %}
 
         <div class="row">
-            <div class="col-xs-2"><b>Sku</b></div>
+            <div class="col-xs-2"><b>{{ 'Sku' | trans }}</b></div>
             <div class="col-xs-10">{{ currentProduct.sku }}</div>
         </div>
 
         <div class="row">
-            <div class="col-xs-2"><b>Type</b></div>
-            <div class="col-xs-10">{{ productType }}</div>
+            <div class="col-xs-2"><b>{{ 'Type' | trans }}</b></div>
+            <div class="col-xs-10">{{ productType | trans }}</div>
         </div>
 
         <div class="m-t">
@@ -41,12 +41,12 @@
                         {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.parent.loop.first), 'localeName': localeTransfer.localeName} %}
                             {% block content %}
                                 <div class="row">
-                                    <div class="col-xs-2"><b>Name</b></div>
+                                    <div class="col-xs-2"><b>{{ 'Name' | trans }}</b></div>
                                     <div class="col-xs-10">{{ localizedData.name }}</div>
                                 </div>
                                 <div class="hr-line-dashed"></div>
                                 <div class="row">
-                                    <div class="col-xs-2"><b>Description</b></div>
+                                    <div class="col-xs-2"><b>{{ 'Description' | trans }}</b></div>
                                     <div class="col-xs-10">
                                         {{ localizedData.description }}
                                     </div>
@@ -61,11 +61,11 @@
 
         {% if currentProduct.id_product_concrete is defined %}
             <div class="row">
-                <div class="col-xs-2"><b>Valid From</b></div>
+                <div class="col-xs-2"><b>{{ 'Valid From' | trans }}</b></div>
                 <div class="col-xs-4">{{ currentProduct.valid_from }}</div>
             </div>
             <div class="row">
-                <div class="col-xs-2"><b>Valid To</b></div>
+                <div class="col-xs-2"><b>{{ 'Valid To' | trans }}</b></div>
                 <div class="col-xs-4">{{ currentProduct.valid_to }}</div>
             </div>
         {% endif %}

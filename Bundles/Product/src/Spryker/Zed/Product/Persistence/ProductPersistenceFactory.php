@@ -14,6 +14,9 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
+use Spryker\Zed\Product\Persistence\Mapper\ProductMapper;
+use Spryker\Zed\Product\Persistence\Mapper\ProductMapperInterface;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -72,10 +75,26 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
+     */
+    public function getUtilEncodingService(): ProductToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
      */
     public function createProductAbstractStoreQuery()
     {
         return SpyProductAbstractStoreQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Persistence\Mapper\ProductMapperInterface
+     */
+    public function createProductMapper(): ProductMapperInterface
+    {
+        return new ProductMapper($this->getUtilEncodingService());
     }
 }

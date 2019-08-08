@@ -41,4 +41,37 @@
         <property name="prices" type="array" />
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="idProductConcretePageSearch" type="int" />
+        <property name="fkProduct" type="int" />
+        <property name="fkProductAbstract" type="int" />
+        <property name="abstractSku" type="int" />
+        <property name="name" type="string" />
+        <property name="sku" type="string" />
+        <property name="locale" type="string" />
+        <property name="store" type="string" />
+        <property name="type" type="string" />
+        <property name="isActive" type="bool" />
+        <property name="data" type="array" />
+        <property name="structuredData" type="string" />
+        <property name="key" type="string" />
+    </transfer>
+
+    <transfer name="ProductConcreteCriteriaFilter">
+        <property name="searchString" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="requestParams" type="array"/>
+    </transfer>
+
+    <transfer name="PageMap">
+        <property name="type" type="string" />
+        <property name="store" type="string" />
+        <property name="locale" type="string" />
+        <property name="isActive" type="bool" />
+    </transfer>
+
 </transfers>

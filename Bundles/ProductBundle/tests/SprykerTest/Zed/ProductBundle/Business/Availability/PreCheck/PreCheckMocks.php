@@ -36,7 +36,7 @@ class PreCheckMocks extends Unit
     ];
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
      */
     protected function createAvailabilityFacadeMock()
     {
@@ -62,11 +62,12 @@ class PreCheckMocks extends Unit
         $itemTransfer->setSku($this->fixtures['bundle-sku']);
 
         $quoteTransfer->addBundleItem($itemTransfer);
+
         return $quoteTransfer;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
     protected function createAvailabilityQueryContainerMock()
     {
@@ -75,7 +76,7 @@ class PreCheckMocks extends Unit
 
     /**
      * @param array $fixtures
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck|\PHPUnit_Framework_MockObject_MockObject $productBundleAvailabilityCheckMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\BasePreCheck|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityCheckMock
      *
      * @return void
      */
@@ -88,8 +89,16 @@ class PreCheckMocks extends Unit
         $productEntity = new SpyProduct();
         $productEntity->setIdProduct($fixtures['fkBundledProduct']);
         $productEntity->setSku($fixtures['bundledProductSku']);
+        $productEntity->setIsActive(true);
 
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
+
+        $productConcreteEntity = new SpyProduct();
+        $productConcreteEntity->setIdProduct($fixtures['fkBundledProduct']);
+        $productConcreteEntity->setSku($fixtures['bundledProductSku']);
+        $productConcreteEntity->setIsActive(true);
+
+        $productBundleEntity->setSpyProductRelatedByFkProduct($productConcreteEntity);
 
         $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
 
@@ -103,7 +112,7 @@ class PreCheckMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
     protected function createStoreFacadeMock()
     {
@@ -111,7 +120,7 @@ class PreCheckMocks extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
      */
     protected function buildStoreFacadeMock()
     {

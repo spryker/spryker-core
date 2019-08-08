@@ -63,7 +63,7 @@ class AddressSelectionType extends AddressType
      *
      * @return $this
      */
-    protected function addAddressSelectField(FormBuilderInterface $builder, array $options): self
+    protected function addAddressSelectField(FormBuilderInterface $builder, array $options)
     {
         if (count($options[static::OPTION_ADDRESS_CHOICES]) === 0) {
             return $this;

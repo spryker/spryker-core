@@ -79,7 +79,6 @@ class TaxSetForm extends AbstractType
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tax rates',
-            'choices_as_values' => true,
             'choices' => $this->getFactory()->createTaxSetFormDataProvider()->getOptions()[self::FIELD_TAX_RATES],
             'choice_label' => 'name',
             'choice_value' => 'idTaxRate',
@@ -161,6 +160,10 @@ class TaxSetForm extends AbstractType
     {
         return new Callback([
             'callback' => function ($name, ExecutionContextInterface $context) {
+                if (empty($name)) {
+                    return;
+                }
+
                 /** @var \Symfony\Component\Form\Form $form */
                 $form = $context->getObject();
                 $idTaxSet = $form->getParent()->getData()->getIdTaxSet();

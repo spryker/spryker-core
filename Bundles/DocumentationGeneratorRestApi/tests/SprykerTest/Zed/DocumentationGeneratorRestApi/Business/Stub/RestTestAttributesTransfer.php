@@ -45,6 +45,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'no',
+            'is_nullable' => false,
         ],
         self::ATTRIBUTE2 => [
             'type' => 'string',
@@ -52,11 +53,12 @@ class RestTestAttributesTransfer extends AbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
             'rest_request_parameter' => 'required',
+            'is_nullable' => false,
         ],
     ];
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAttribute1(): ?string
     {
@@ -68,7 +70,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setAttribute1(string $attribute1): self
+    public function setAttribute1(string $attribute1)
     {
         $this->attribute1 = $attribute1;
         $this->modifiedProperties[self::ATTRIBUTE1] = true;
@@ -77,7 +79,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAttribute2(): ?string
     {
@@ -89,7 +91,7 @@ class RestTestAttributesTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setAttribute2(string $attribute2): self
+    public function setAttribute2(string $attribute2)
     {
         $this->attribute2 = $attribute2;
         $this->modifiedProperties[self::ATTRIBUTE2] = true;

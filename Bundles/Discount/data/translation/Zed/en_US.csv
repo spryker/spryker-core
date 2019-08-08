@@ -1,0 +1,71 @@
+Activate,Activate
+"Add group","Add group"
+"Add Random Generated Code Length","Add Random Generated Code Length"
+"Add rule","Add rule"
+Amount:,Amount:
+"Apply to query:","Apply to query:"
+"Batch Value","Batch Value"
+"Calculator type","Calculator type"
+"Cart Rules","Cart Rules"
+Conditions,Conditions
+"Could not change discount visibility.","Could not change discount visibility."
+"Create new discount","Create new discount"
+"Create new Discount","Create new discount"
+"Create voucher codes for the discount","Create voucher codes for the discount"
+Deactivate,Deactivate
+"Define what to apply the discount to","Define what to apply the discount to"
+"Define when to apply the discount","Define when to apply the discount"
+"Delete codes","Delete codes"
+Description,Description
+Description:,Description:
+"Discount calculation","Discount calculation"
+"Discount collection type","Discount application type"
+"Discount List","Discount List"
+"Discount successfully activated","Discount successfully activated"
+"Discount successfully created, but not activated.","Discount successfully created, but not activated."
+"Discount successfully deactivated","Discount successfully deactivated"
+"Discount successfully updated.","Discount successfully updated."
+"Discount Type:","Discount Type:"
+"Discount with id %s doesn't exist","Discount with id %s doesn't exist"
+"Discount with this name is already used.","Discount with this name is already used."
+Edit,Edit
+"Edit discount","Edit discount"
+"Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated.","Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated."""
+Examples,Examples
+Exclusive:,Exclusive:
+Explanation,Explanation
+Export,Export
+Field,Field
+"Fill in the general discount information","Fill in the general discount information"
+"General Information","General Information"
+"Generated Discount Codes","Generated Discount Codes"
+"List of Discounts","List of discounts"
+"Matches all elements which have a ""width"" attribute defined, but with any ""width"" value","Matches all elements which have a ""width"" attribute defined, but with any ""width"" value"
+"Matches elements with the exact same SKU: ""SKU-1""","Matches elements with the exact same SKU: ""SKU-1"""
+"Max nr. of uses","Maximum number of uses"
+"Max number of uses (0 = Infinite usage)","Max number of uses (0 = Infinite usage)"
+N/A,n/a
+Name,Name
+"Name (A unique name that will be displayed to your customers)","Name (A unique name that will be displayed to your customers)"
+Name:,Name:
+No,No
+"No additional random characters","No additional random characters"
+"No conditions, discount always applied.","No conditions, discount always applied."
+"No voucher codes were deleted.","No voucher codes were deleted."
+Operation,Operation
+Overview,Overview
+"Plain query","Plain query"
+"Please fill all required fields.","Please fill all required fields."
+"Query builder","Query builder"
+"Query String","Query String"
+Save,Save
+"Store relation:","Store relation:"
+"Successfully deleted ""%d"" vouchers.","Successfully deleted ""%d"" vouchers."
+Type:,Type:
+Used,Used
+"Valid from:","Valid from (included):"
+"Valid until:","Valid to (excluded):"
+Value,Value
+Voucher,Voucher
+"Voucher Code","Voucher Code"
+Yes,Yes

@@ -5,7 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
 var navigationTable = require('./navigation-table');
 
 $(document).ready(function() {

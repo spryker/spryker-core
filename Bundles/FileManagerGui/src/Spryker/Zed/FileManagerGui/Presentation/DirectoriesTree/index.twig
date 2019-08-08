@@ -1,7 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'File Directories' %}
-{% block section_title 'Overview of File Tree' %}
+{% block section_title %}
+    {{ 'Overview of File Tree' | trans }}
+{% endblock %}
 
 {% block action %}
     <a id="delete-directory-link" class="btn btn-sm btn-outline btn-remove"

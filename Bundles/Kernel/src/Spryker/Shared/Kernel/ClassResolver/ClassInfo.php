@@ -48,12 +48,22 @@ class ClassInfo
 
         if ($this->isFullyQualifiedClassName($callerClass)) {
             $callerClassParts = explode('\\', ltrim($callerClass, '\\'));
-            $callerClassParts = $this->adjustTestNamespace($callerClassParts);
+            if ($this->shouldTestNamespaceBeAdjusted()) {
+                $callerClassParts = $this->adjustTestNamespace($callerClassParts);
+            }
         }
 
         $this->callerClassParts = $callerClassParts;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function shouldTestNamespaceBeAdjusted(): bool
+    {
+        return APPLICATION_ENV === 'devtest';
     }
 
     /**

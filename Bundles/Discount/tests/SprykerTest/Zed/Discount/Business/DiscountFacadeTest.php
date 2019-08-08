@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Discount\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -30,6 +31,7 @@ use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
+use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -358,6 +360,204 @@ class DiscountFacadeTest extends Unit
         $errors = $discountFacade->validateQueryStringByType(MetaProviderFactory::TYPE_DECISION_RULE, 'invalid =');
 
         $this->assertCount(1, $errors);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenUsageLimitIsNotReached()
+    {
+        // Arrange
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 5,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ]);
+        $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReached()
+    {
+        // Arrange
+        $maxNumberOfUses = 5;
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => $maxNumberOfUses,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ]);
+        $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer, $maxNumberOfUses);
+        $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorTransferCollection */
+        $checkoutErrorTransferCollection = $checkoutResponseTransfer->getErrors();
+        $checkoutErrorTransfer = reset($checkoutErrorTransferCollection);
+
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+        $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());
+        $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
+        $this->assertFalse($result);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReachedForTwoVouchers()
+    {
+        // Arrange
+        $maxNumberOfUses = 5;
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => $maxNumberOfUses,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ]);
+        $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer, $maxNumberOfUses);
+        $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
+
+        $discountVoucherTransfer2 = $this->getDiscountVoucher([
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => $maxNumberOfUses,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ]);
+        $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer2, $maxNumberOfUses);
+        $quoteTransfer->addVoucherDiscount(
+            (new DiscountTransfer())->setVoucherCode($discountVoucherTransfer2->getCode())
+        );
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertCount(2, $checkoutResponseTransfer->getErrors());
+        foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
+            $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());
+            $this->assertEquals(VoucherValidator::REASON_VOUCHER_CODE_LIMIT_REACHED, $checkoutErrorTransfer->getMessage());
+        }
+        $this->assertFalse($result);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndNotUsed()
+    {
+        // Arrange
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 0,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ]);
+        $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndUsed()
+    {
+        // Arrange
+        $discountVoucherTransfer = $this->getDiscountVoucher([
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 0,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::QUANTITY => 1,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ]);
+        $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer, 5);
+        $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
+
+        // Act
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertCount(0, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function getDiscountVoucher(array $override = [])
+    {
+        $discountGeneralTransfer = $this->tester->haveDiscount([
+            'discountType' => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $override['idDiscount'] = $discountGeneralTransfer->getIdDiscount();
+        $discountVoucherTransfer = $this->tester->haveGeneratedVoucherCodes($override);
+
+        return $discountVoucherTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getQuoteWithVoucherDiscount(DiscountVoucherTransfer $discountVoucherTransfer): QuoteTransfer
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku('123');
+        $quoteTransfer->addItem($itemTransfer);
+
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setVoucherCode($discountVoucherTransfer->getCode());
+        $quoteTransfer->addVoucherDiscount($discountTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     * @param int $numberOfUses
+     *
+     * @return void
+     */
+    protected function updateVoucherCodesWithNumberOfUses(DiscountVoucherTransfer $discountVoucherTransfer, int $numberOfUses): void
+    {
+        $voucherCodeEntities = SpyDiscountQuery::create()
+            ->findOneByIdDiscount($discountVoucherTransfer->getIdDiscount())
+            ->getVoucherPool()
+            ->getDiscountVouchers();
+
+        foreach ($voucherCodeEntities as $voucherCodeEntity) {
+            $voucherCodeEntity
+                ->setNumberOfUses($numberOfUses)
+                ->save();
+        }
     }
 
     /**
@@ -836,7 +1036,7 @@ class DiscountFacadeTest extends Unit
 
     /**
      * @param string $dependencyType
-     * @param \PHPUnit_Framework_MockObject_MockObject $discountRulePluginMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $discountRulePluginMock
      *
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
@@ -845,11 +1045,11 @@ class DiscountFacadeTest extends Unit
         $discountFacade = $this->createDiscountFacade();
         $factory = new DiscountBusinessFactory();
         $container = new Container();
-        $container[$dependencyType] = function () use ($discountRulePluginMock) {
+        $container->set($dependencyType, function () use ($discountRulePluginMock) {
             return [
                 $discountRulePluginMock,
             ];
-        };
+        });
         $factory->setContainer($container);
         $discountFacade->setFactory($factory);
 
@@ -857,7 +1057,7 @@ class DiscountFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createDiscountRuleWithValueOptionsPluginMock()
     {

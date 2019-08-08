@@ -44,6 +44,8 @@ interface PropelFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return void
      */
     public function convertConfig();
@@ -145,6 +147,8 @@ interface PropelFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $backupPath
      *
      * @return void
@@ -156,6 +160,8 @@ interface PropelFacadeInterface
      * - Imports database backup for configured driver from `$backupPath`.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $backupPath
      *
@@ -184,4 +190,14 @@ interface PropelFacadeInterface
      * @return \Generated\Shared\Transfer\SchemaValidationTransfer
      */
     public function validateSchemaXmlFiles(): SchemaValidationTransfer;
+
+    /**
+     * Specification:
+     * - Runs raw SQL script for dropping all database tables, without dropping the database.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function dropDatabaseTables(): void;
 }

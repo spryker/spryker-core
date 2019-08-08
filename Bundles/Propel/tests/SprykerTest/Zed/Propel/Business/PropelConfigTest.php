@@ -43,7 +43,7 @@ class PropelConfigTest extends Unit
      */
     public function getPropelConfig()
     {
-        $this->assertInternalType('array', $this->getConfig()->getPropelConfig());
+        $this->assertIsArray($this->getConfig()->getPropelConfig());
     }
 
     /**
@@ -68,7 +68,7 @@ class PropelConfigTest extends Unit
      */
     public function testGetLogPath()
     {
-        $this->assertInternalType('string', $this->getConfig()->getLogPath());
+        $this->assertIsString($this->getConfig()->getLogPath());
     }
 
     /**
@@ -76,7 +76,7 @@ class PropelConfigTest extends Unit
      */
     public function testGetCurrentDatabaseEngine()
     {
-        $this->assertInternalType('string', $this->getConfig()->getCurrentDatabaseEngine());
+        $this->assertIsString($this->getConfig()->getCurrentDatabaseEngine());
     }
 
     /**
@@ -84,7 +84,7 @@ class PropelConfigTest extends Unit
      */
     public function testGetCurrentDatabaseEngineName()
     {
-        $this->assertInternalType('string', $this->getConfig()->getCurrentDatabaseEngineName());
+        $this->assertIsString($this->getConfig()->getCurrentDatabaseEngineName());
     }
 
     /**
@@ -99,12 +99,13 @@ class PropelConfigTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Propel\PropelConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\PropelConfig
      */
     protected function getPropelConfigMock()
     {
         $propelConfigMock = $this->getMockBuilder(PropelConfig::class)->setMethods(['getCurrentDatabaseEngine'])->getMock();
         $propelConfigMock->expects($this->once())->method('getCurrentDatabaseEngine')->willReturn('Un supported database engine');
+
         return $propelConfigMock;
     }
 }

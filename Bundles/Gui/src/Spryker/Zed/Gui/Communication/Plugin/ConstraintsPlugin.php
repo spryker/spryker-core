@@ -58,6 +58,7 @@ use Symfony\Component\Validator\Constraints\Valid;
  * @deprecated This class will be removed.
  *
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class ConstraintsPlugin extends AbstractPlugin
 {

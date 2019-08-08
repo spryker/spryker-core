@@ -5,8 +5,6 @@
 
 'use strict';
 
-require('ZedGui');
-
 $(document).ready(function() {
     $('.spryker-form-select2combobox').select2();
 });

@@ -2,8 +2,12 @@
 
 {% set widget_title = 'Edit Customer' %}
 
-{% block head_title widget_title %}
-{% block section_title widget_title %}
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title | trans }}
+{% endblock %}
 
 {% block action %}
     {{ removeActionButton(url('/customer/delete', {'id-customer': idCustomer}), 'Delete' | trans) }}

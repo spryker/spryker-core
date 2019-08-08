@@ -37,6 +37,7 @@ class CurrencyMapper implements CurrencyMapperInterface
         $currencyTransfer->setFractionDigits(
             $this->currencyRepository->getFractionDigits($currencyEntity->getCode())
         );
+
         return $currencyTransfer->fromArray($currencyEntity->toArray(), true);
     }
 

@@ -55,7 +55,8 @@ class VoucherValidator implements VoucherValidatorInterface
             ->findOne();
 
         if (!$discountVoucherEntity) {
-            $this->addErrorMessage(self::REASON_VOUCHER_CODE_NOT_FOUND);
+            $this->addErrorMessage(static::REASON_VOUCHER_CODE_NOT_FOUND);
+
             return false;
         }
 
@@ -70,24 +71,31 @@ class VoucherValidator implements VoucherValidatorInterface
     protected function validateDiscountVoucher(SpyDiscountVoucher $discountVoucherEntity)
     {
         if (!$discountVoucherEntity->getIsActive()) {
-            $this->addErrorMessage(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
+            $this->addErrorMessage(static::REASON_VOUCHER_CODE_NOT_ACTIVE);
+
             return false;
         }
 
         /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool|null $voucherPoolEntity */
         $voucherPoolEntity = $discountVoucherEntity->getVoucherPool();
         if (!$voucherPoolEntity) {
-            $this->addErrorMessage(self::REASON_VOUCHER_CODE_POOL_MISSING);
+            $this->addErrorMessage(static::REASON_VOUCHER_CODE_POOL_MISSING);
+
             return false;
         }
 
         if (!$voucherPoolEntity->getIsActive()) {
-            $this->addErrorMessage(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
+            $this->addErrorMessage(static::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
+
             return false;
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
-            $this->addInfoMessage(self::REASON_VOUCHER_CODE_LIMIT_REACHED);
+            $this->addInfoMessage(
+                static::REASON_VOUCHER_CODE_LIMIT_REACHED,
+                ['%code%' => $discountVoucherEntity->getCode()]
+            );
+
             return false;
         }
 
@@ -108,24 +116,26 @@ class VoucherValidator implements VoucherValidatorInterface
 
     /**
      * @param string $message
+     * @param array $data
      *
      * @return void
      */
-    protected function addErrorMessage(string $message): void
+    protected function addErrorMessage(string $message, array $data = []): void
     {
-        $messageTransfer = $this->createMessageTransfer($message);
+        $messageTransfer = $this->createMessageTransfer($message, $data);
 
         $this->messengerFacade->addErrorMessage($messageTransfer);
     }
 
     /**
      * @param string $message
+     * @param array $data
      *
      * @return void
      */
-    protected function addInfoMessage(string $message): void
+    protected function addInfoMessage(string $message, array $data = []): void
     {
-        $messageTransfer = $this->createMessageTransfer($message);
+        $messageTransfer = $this->createMessageTransfer($message, $data);
 
         $this->messengerFacade->addInfoMessage($messageTransfer);
     }
@@ -136,7 +146,7 @@ class VoucherValidator implements VoucherValidatorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageTransfer(string $message, array $data = []): MessageTransfer
+    protected function createMessageTransfer(string $message, array $data): MessageTransfer
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($message);

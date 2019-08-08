@@ -10,11 +10,13 @@ namespace Spryker\Zed\UrlStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\UrlStorage\Business\Storage\RedirectStorageWriter;
 use Spryker\Zed\UrlStorage\Business\Storage\UrlStorageWriter;
+use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\UrlStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\UrlStorage\UrlStorageConfig getConfig()
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface getRepository()
  */
 class UrlStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -25,7 +27,8 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new UrlStorageWriter(
             $this->getUtilSanitizeService(),
-            $this->getQueryContainer(),
+            $this->getRepository(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -48,5 +51,13 @@ class UrlStorageBusinessFactory extends AbstractBusinessFactory
     protected function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): UrlStorageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(UrlStorageDependencyProvider::FACADE_STORE);
     }
 }

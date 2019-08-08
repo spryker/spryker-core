@@ -1,0 +1,77 @@
+Activate,Aktivieren
+"Add General Information","Allgemeine Informationen hinzufügen"
+"Add image","Bild hinzufügen"
+"Add image set","Bilderset hinzufügen"
+"Add Product Concrete","Konkretes Produkt hinzufügen"
+"Add Variant","Variante hinzufügen"
+"Assigned products","Zugeordnete Produkte"
+Attributes,Attribute
+"Available in stores","Im Store erhältlich"
+"Below are the product variants listed. Each variant may be edited independent from the others.","Im Folgenden sind die Produktvarianten aufgelistet. Jede Variante kann unabhängig von den anderen bearbeitet werden."
+"Below the name and description for your product can be edited for different locales (in different languages).","Im Folgenden kann der Name und die Beschreibung Ihres Produktes für verschiedene Regionen (in verschiedenen Sprachen) angepasst werden."
+"Below you can choose between your predefined tax sets and edit the price of your product.","Im Folgenden können Sie zwischen Ihren vorausgewählten Steuersets wählen und den Preis Ihres Produktes ändern."
+"Bundle availability based on assigned products:","Verfügbarkeit des Bündels auf Basis der zugeordneten Produkte:"
+Categories,Kategorien
+"CMS Block list","CMS Blockliste"
+"Configurable Product Attributes","Konfigurierbare Produktattribute"
+"Contains bundles","Enthält Bündelprodukte"
+"Create a Product","Produkt erstellen"
+"Create Bundle Product","Bundle-Produkt erstellen"
+"Create Product","Produkt erstellen"
+Deactivate,Deaktivieren
+Default,Standard
+"Delete image","Lösche Bild"
+"Delete image set","Bilderset löschen"
+Edit,Bearbeiten
+"Edit Product Abstract","Abstraktes Produkt bearbeiten"
+"Edit Product Concrete","Konkretes Produkt bearbeiten"
+"Enter price.","Preis angeben."
+"Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Bestandswert eingeben. Wenn mehrere Varianten erstellt werden, kann der Bestand unter ""Produktvarianten"" verwaltet werden und dieses Eingabefeld wird ignoriert."
+General,Allgemein
+"Gross price",Bruttopreis
+"Image Set",Bildersets
+"Image Sets",Bildersets
+Large,Groß
+"List Products","Liste der Produkte"
+"Manage Attributes","Attribute verwalten"
+"Merchant Price Dimension","Preisdimension des Händlers"
+"Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image","Mehrere Bilder können zu einem Bilderset zusammengefasst werden. Ein Bilderset hat einen Namen zur Identifikation und kann eine kleine und eine große Version jedes Bildes enthalten."
+n/a,k.A.
+"Net price",Nettopreis
+"Never out of stock","Immer auf Lager"
+"No categories found.","Keine Kategorien gefunden."
+"No records","Keine Einträge"
+"Note: Deactivated product variants are not available in the shop anymore.","Hinweis: Deaktivierte Produktvarianten sind nicht mehr im Shop verfügbar."
+"Note: Image sets can be used for different purposes such as being displayed in the catalog or the product detail page or elsewhere.","Hinweis: Bildersets können zu verschiedenen Zwecken benutzt werden, wie etwa zur Anzeige im Katalog, in der Detailansicht des Produkts oder an anderen Orten."
+"Note: Meta data are snippets of text describing a page’s content. The meta data appear only in the page’s code, not in its content.","Hinweis: Metadaten sind Textausschnitte, die den Inhalt einer Seite beschreiben. Die Metadaten erscheinen nur im Code der Seite, nicht in ihrem Seiteninhalt."
+"Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Hinweis: Der Preis, den Sie hier bearbeiten, wird nur im Shop-Katalog und in der Detailansicht des nicht konfigurierten Produkts (nicht der Produktvariante) angezeigt."
+"Note: The SKU is not editable after saving anymore.","Hinweis: Die SKU kann nach dem Speichern nicht mehr bearbeitet werden."
+"Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Hinweis: Das SKU-Präfix kann, genau wie die SKUs Ihrer Produktvarianten, nach dem Speichern nicht mehr bearbeitet werden."
+"Price & Tax","Preis und Steuer"
+"Price & Taxes","Preis und Steuern"
+"Product bundle does not have variants!","Bündelprodukt hat keine Varianten!"
+"Product Group ID",Produktgruppe-ID
+"Product Groups",Produktgruppen
+"Product has been activated.","Produkt wurde aktiviert."
+"Product has been deactivated.","Produkt wurde deaktiviert."
+"Product ID",Produkt-ID
+"Product Image(s)",Produktbild(er)
+"Product type",Produktart
+"Product variants",Produktvarianten
+Quantity,Menge
+Save,Speichern
+"Search engine optimization (SEO) is the process of affecting the visibility of a website or a web page in a web search engine's unpaid results — often referred to as ""natural,"" ""organic,"" or ""earned"" results.","Suchmaschinenoptimierung (SEO) bezeichnet einen Vorgang, bei dem die Sichtbarkeit einer Webseite oder Webpräsenz in den unbezahlten Suchergebnissen einer Internetsuchmaschine beeinflusst wird. Diese werden oft als ""natürliche"", ""organische"" oder ""verdiente"" Ergebnisse bezeichnet."
+"Select attributes and corresponding values.","Attribute und entsprechende Werte auswählen."
+"SEO (Meta Information)","SEO (Metainformation)"
+Small,Klein
+"Stock Type",Bestandsart
+"Store relation","Store relation"
+"Tax Set",Steuer-Set
+"The product [%s] does not exist.","Das Produkt [%s] existiert nicht."
+"The product [%s] was saved successfully.","Das Produkt [%s] wurde erfolgreich gespeichert."
+"The product [%s] you are trying to edit, does not exist.","Das Produkt [%s], das Sie zu bearbeiten versuchen, existiert nicht."
+"There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","Es ist kein Superattribut definiert. <a href=""%url%"">Definieren Sie Super-Attribute</a>, um Varianten anlegen zu können."
+Type,Typ
+Variants,Varianten
+"View Product Abstract","Abstraktes Produkt anzeigen"
+"View Product Concrete","Konkretes Produkt anzeigen"

@@ -199,6 +199,20 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @api
      *
+     * @param string $permissionKey
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array
+    {
+        return $this->getRepository()->getCompanyUserIdsByPermissionKey($permissionKey);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyRoleCollectionTransfer
@@ -251,5 +265,36 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
     {
         return $this->getRepository()
             ->findDefaultCompanyRoleByIdCompany($idCompany);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleById(CompanyRoleTransfer $companyRoleTransfer): ?CompanyRoleTransfer
+    {
+        return $this->getRepository()
+            ->findCompanyRoleById($companyRoleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleResponseTransfer
+     */
+    public function findCompanyRoleByUuid(CompanyRoleTransfer $companyRoleTransfer): CompanyRoleResponseTransfer
+    {
+        return $this->getFactory()->createCompanyRoleReader()->findCompanyRoleByUuid($companyRoleTransfer);
     }
 }

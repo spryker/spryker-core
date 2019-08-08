@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductListStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToEventBehaviourFacadeInterface;
+use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 
 /**
@@ -19,9 +19,9 @@ use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 class ProductListStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToEventBehaviourFacadeInterface
+     * @return \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToEventBehaviorFacadeInterface
      */
-    public function getEventBehaviorFacade(): ProductListStorageToEventBehaviourFacadeInterface
+    public function getEventBehaviorFacade(): ProductListStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(ProductListStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }

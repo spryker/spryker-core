@@ -1,0 +1,39 @@
+{
+  "name": "spryker/company-business-units-rest-api",
+  "type": "library",
+  "description": "CompanyBusinessUnitsRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company-business-unit": "^2.10.0",
+    "spryker/company-business-units-rest-api-extension": "^1.0.0",
+    "spryker/customers-rest-api-extension": "^1.1.0",
+    "spryker/glue-application": "^1.15.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/uuid-behavior": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

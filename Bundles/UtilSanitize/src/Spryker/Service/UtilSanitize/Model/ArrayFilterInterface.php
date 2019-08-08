@@ -15,4 +15,11 @@ interface ArrayFilterInterface
      * @return array
      */
     public function arrayFilterRecursive(array $array);
+
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function filterOutBlankValuesRecursively(array $array): array;
 }

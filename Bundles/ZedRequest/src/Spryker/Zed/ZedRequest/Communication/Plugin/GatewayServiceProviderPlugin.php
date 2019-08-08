@@ -11,6 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -51,13 +52,17 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
      */
     public function register(Application $app)
     {
-        $this->getEventDispatcher($app)->addListener(
-            KernelEvents::CONTROLLER,
-            [
-                $this->getControllerListener(),
-                'onKernelController',
-            ]
-        );
+        $app->extend('dispatcher', function (EventDispatcher $eventDispatcher) {
+            $eventDispatcher->addListener(
+                KernelEvents::CONTROLLER,
+                [
+                    $this->getControllerListener(),
+                    'onKernelController',
+                ]
+            );
+
+            return $eventDispatcher;
+        });
     }
 
     /**
@@ -84,15 +89,5 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
         $app->before(function (Request $request) {
             TransferServer::getInstance()->setRequest($request);
         });
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
-     */
-    protected function getEventDispatcher(Application $app)
-    {
-        return $app['dispatcher'];
     }
 }

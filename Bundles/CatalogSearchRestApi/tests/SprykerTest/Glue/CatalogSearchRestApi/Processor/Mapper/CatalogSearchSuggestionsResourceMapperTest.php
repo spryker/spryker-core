@@ -163,7 +163,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    public function createRestSearchSuggestionsResponse(): self
+    public function createRestSearchSuggestionsResponse()
     {
         $this->restSearchSuggestionsResponseMock = [];
 
@@ -173,7 +173,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    protected function addCompletionData(): self
+    protected function addCompletionData()
     {
         $this->restSearchSuggestionsResponseMock['completion'] = [
             'hp pro tablet 608 g1',
@@ -187,7 +187,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    protected function addProductsAbstractData(): self
+    protected function addProductsAbstractData()
     {
         $this->restSearchSuggestionsResponseMock['suggestionByType']['product_abstract'] = [
             [
@@ -223,7 +223,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    protected function addCategoriesData(): self
+    protected function addCategoriesData()
     {
         $this->restSearchSuggestionsResponseMock['suggestionByType']['category'] = [
             [
@@ -240,7 +240,7 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     /**
      * @return $this
      */
-    protected function addCmsPagesData(): self
+    protected function addCmsPagesData()
     {
         $this->restSearchSuggestionsResponseMock['suggestionByType']['cms_page'] = [
             [

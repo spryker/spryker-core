@@ -42,7 +42,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addStrategyField(FormBuilderInterface $builder, array $choices): self
+    protected function addStrategyField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_STRATEGY, ChoiceType::class, [
             'label' => false,
@@ -60,7 +60,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addThresholdValueField(FormBuilderInterface $builder, array $options): self
+    protected function addThresholdValueField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_THRESHOLD, MoneyType::class, [
             'label' => 'Enter threshold value',
@@ -68,6 +68,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
             'divisor' => 100,
             'constraints' => [
                 new Range(['min' => 0]),
+                $this->getFactory()->createThresholdStrategyConstraint(),
             ],
             'required' => false,
         ]);
@@ -80,7 +81,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addLocalizedForms(FormBuilderInterface $builder): self
+    protected function addLocalizedForms(FormBuilderInterface $builder)
     {
         $localeCollection = $this->getFactory()
             ->getLocaleFacade()
@@ -100,7 +101,7 @@ abstract class AbstractGlobalThresholdType extends AbstractType
      *
      * @return $this
      */
-    protected function addLocalizedForm(FormBuilderInterface $builder, string $name, array $options = []): self
+    protected function addLocalizedForm(FormBuilderInterface $builder, string $name, array $options = [])
     {
         $builder->add($name, LocalizedMessagesType::class, [
             'label' => false,

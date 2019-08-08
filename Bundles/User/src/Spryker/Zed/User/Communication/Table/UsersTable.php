@@ -22,6 +22,12 @@ class UsersTable extends AbstractTable
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
     public const DELETE_USER_URL = '/user/edit/delete';
+
+    /**
+     * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     */
+    public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
+
     public const PARAM_ID_USER = 'id-user';
 
     /**
@@ -154,9 +160,11 @@ class UsersTable extends AbstractTable
 
         $urls[] = $this->createStatusButton($user);
 
-        $urls[] = $this->generateRemoveButton(self::DELETE_USER_URL, 'Delete', [
+        $deleteUrl = Url::generate(static::CONFIRM_DELETE_USER_URL, [
             self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
         ]);
+
+        $urls[] = $this->generateRemoveButton($deleteUrl, 'Delete');
 
         return $urls;
     }
@@ -168,20 +176,14 @@ class UsersTable extends AbstractTable
      */
     public function createStatusLabel(array $user)
     {
-        $statusLabel = '';
         switch ($user[SpyUserTableMap::COL_STATUS]) {
             case SpyUserTableMap::COL_STATUS_ACTIVE:
-                $statusLabel = '<span class="label label-success" title="Active">Active</span>';
-                break;
+                return $this->generateLabel('Active', 'label-success');
             case SpyUserTableMap::COL_STATUS_BLOCKED:
-                $statusLabel = '<span class="label label-danger" title="Deactivated">Deactivated</span>';
-                break;
+                return $this->generateLabel('Deactivated', 'label-danger');
             case SpyUserTableMap::COL_STATUS_DELETED:
-                $statusLabel = '<span class="label label-default" title="Deleted">Deleted</span>';
-                break;
+                return $this->generateLabel('Deleted', 'label-default');
         }
-
-        return $statusLabel;
     }
 
     /**

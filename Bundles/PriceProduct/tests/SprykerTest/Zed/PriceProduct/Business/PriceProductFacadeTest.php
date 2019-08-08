@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
@@ -45,6 +46,9 @@ class PriceProductFacadeTest extends Unit
 {
     public const EUR_ISO_CODE = 'EUR';
     public const USD_ISO_CODE = 'USD';
+
+    protected const COUNT_PRODUCT_WITH_PRICES = 5;
+
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
@@ -463,6 +467,30 @@ class PriceProductFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGroupPriceProductCollectionDoesNotOverwritePriceDataByNull(): void
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $expectedPriceData = 'dummy price data';
+
+        $priceProductWithPriceData = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
+        $priceProductWithPriceData->getMoneyValue()->setPriceData($expectedPriceData);
+
+        $priceProductCollection = [];
+        $priceProductCollection[] = $priceProductWithPriceData;
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
+
+        // Act
+        $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
+
+        // Assert
+        $this->assertEquals($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetPriceModeIdentifierForBothType()
     {
         $priceProductFacade = $this->getPriceProductFacade();
@@ -673,6 +701,14 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    protected function getPriceProductQuery(): SpyPriceProductQuery
+    {
+        return new SpyPriceProductQuery();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      * @param int $netPrice
@@ -726,6 +762,7 @@ class PriceProductFacadeTest extends Unit
         if (!$currencyIsoCode) {
             return $this->createCurrencyFacade()->getDefaultCurrencyForCurrentStore();
         }
+
         return $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
     }
 
@@ -779,5 +816,113 @@ class PriceProductFacadeTest extends Unit
 
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension($priceProductDimensionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemovePriceProductStoreShouldDeletePriceFromDatabase(): void
+    {
+        // Assign
+        /** @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface $priceProductFacade */
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(
+            100,
+            90,
+            '',
+            '',
+            self::EUR_ISO_CODE
+        );
+
+        // Act
+        $priceProductFacade->removePriceProductStore($priceProductTransfer);
+
+        // Assert
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+            ->setSku($priceProductTransfer->getSkuProduct());
+
+        $priceProduct = $priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        $this->assertNull($priceProduct, 'Price product should be removed from db');
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindPriceTypeByName()
+    {
+        $priceTypeTransfer = $this->tester->havePriceType();
+
+        $findedPriceTypeTransfer = $this->getPriceProductFacade()->findPriceTypeByName($priceTypeTransfer->getName());
+
+        $this->assertEquals($priceTypeTransfer->getIdPriceType(), $findedPriceTypeTransfer->getIdPriceType());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsCollectionOfValidTransfers(): void
+    {
+        //Arrange
+        $priceProductTransfers = [];
+        for ($i = 0; $i < static::COUNT_PRODUCT_WITH_PRICES; $i++) {
+            $grossPrice = rand(10, 100);
+            $netPrice = $grossPrice - rand(1, 9);
+            $priceProductTransfers[] = $this->createProductWithAmount(
+                $grossPrice,
+                $netPrice,
+                '',
+                '',
+                static::EUR_ISO_CODE
+            );
+        }
+        $priceProductFilterTransfers = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
+                ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+                ->setSku($priceProductTransfer->getSkuProduct());
+        }
+
+        //Act
+        $resultPriceProductPrices = $this->getPriceProductFacade()->getValidPrices($priceProductFilterTransfers);
+
+        //Assert
+        $this->assertCount(count($priceProductTransfers), $resultPriceProductPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetValidPricesReturnsCollectionOfValidTransfersWithNumericSKUs(): void
+    {
+        //Arrange
+        $priceProductTransfers = [];
+        for ($i = 1; $i <= static::COUNT_PRODUCT_WITH_PRICES; $i++) {
+            $grossPrice = rand(10, 100);
+            $netPrice = $grossPrice - rand(1, 9);
+            $skuAbstract = $i . '9000';
+            $productConcreteTransfer = $this->tester->haveProduct([], ['sku' => $skuAbstract]);
+            $priceProductTransfers[] = $this->createProductWithAmount(
+                $grossPrice,
+                $netPrice,
+                $productConcreteTransfer->getAbstractSku(),
+                '',
+                static::EUR_ISO_CODE
+            );
+        }
+        $priceProductFilterTransfers = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductFilterTransfers[] = (new PriceProductFilterTransfer())
+                ->setCurrencyIsoCode(self::EUR_ISO_CODE)
+                ->setSku($priceProductTransfer->getSkuProduct());
+        }
+
+        //Act
+        $resultPriceProductPrices = $this->getPriceProductFacade()->getValidPrices($priceProductFilterTransfers);
+
+        //Assert
+        $this->assertCount(count($priceProductTransfers), $resultPriceProductPrices);
     }
 }

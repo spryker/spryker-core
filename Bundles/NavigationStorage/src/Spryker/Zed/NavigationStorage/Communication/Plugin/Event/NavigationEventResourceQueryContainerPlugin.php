@@ -47,11 +47,11 @@ class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin impleme
     {
         $query = $this->getQueryContainer()->queryNavigation($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderBy($this->getIdColumnName());
     }
 
     /**

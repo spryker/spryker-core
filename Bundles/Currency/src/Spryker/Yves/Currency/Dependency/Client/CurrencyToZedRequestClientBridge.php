@@ -37,4 +37,20 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     {
         return $this->zedRequestClient->getLastResponseSuccessMessages();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesErrorMessages(): array
+    {
+        return $this->zedRequestClient->getResponsesErrorMessages();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getResponsesSuccessMessages(): array
+    {
+        return $this->zedRequestClient->getResponsesSuccessMessages();
+    }
 }

@@ -1,0 +1,42 @@
+"Add Customer","Add Customer"
+"Add new Address","Add new Address"
+"Address Line 1","Address Line 1"
+"Address Line 2","Address Line 2"
+"Address Line 3","Address Line 3"
+Back,Back
+"Back to Customer View","Back to Customer View"
+"Back to Customers","Back to Customers"
+"Back to Manage Addresses","Back to Manage Addresses"
+City,City
+Company,Company
+Country,Country
+"Customer deletion confirmation","Customer deletion confirmation"
+"Customer does not exist","Customer does not exist"
+"Customer Reference","Customer Reference"
+"Customer successfully deleted","Customer successfully deleted"
+"Customer was created successfully.","Customer was created successfully."
+"Customer was not created.","Customer was not created."
+"Customer was not updated.","Customer was not updated."
+"Customer was updated successfully.","Customer was updated successfully."
+"Date of birth","Date of birth"
+Delete,Delete
+"Delete account","Delete account"
+"Edit Address","Edit Address"
+"Edit Customer","Edit Customer"
+Email,Email
+"First Name","First Name"
+"First name","First Name"
+Gender,Gender
+"Last name","Last name"
+"List Customers","List of customers"
+Locale,Locale
+Phone,Phone
+"Registered at","Registered at"
+Salutation,Salutation
+Save,Save
+"Select one","Select one"
+"Send password token through email","Send password token through email"
+View,View
+"View Customer","View Customer"
+"Zed Account Reference","Zed Account Reference"
+ZipCode,ZipCode

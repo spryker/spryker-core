@@ -6,6 +6,5 @@
 'use strict';
 
 require('../sass/main.scss');
-require('./modules/main');
 require('./modules/product-image');
 require('./modules/assign');

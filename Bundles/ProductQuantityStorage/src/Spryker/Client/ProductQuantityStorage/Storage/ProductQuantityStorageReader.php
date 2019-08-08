@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductQuantityStorage\Storage;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
@@ -55,6 +56,23 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer|null
+     */
+    public function findProductQuantityStorageMappedToProductQuantityTransfer(int $idProduct): ?ProductQuantityTransfer
+    {
+        $key = $this->generateKey($idProduct);
+        $productQuantityStorageData = $this->storageClient->get($key);
+
+        if (!$productQuantityStorageData) {
+            return null;
+        }
+
+        return $this->mapToProductQuantityTransfer($productQuantityStorageData);
+    }
+
+    /**
      * @param array $productQuantityStorageData
      *
      * @return \Generated\Shared\Transfer\ProductQuantityStorageTransfer
@@ -63,6 +81,17 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
     {
         return (new ProductQuantityStorageTransfer())
             ->fromArray($productQuantityStorageData, true);
+    }
+
+    /**
+     * @param array $productQuantityData
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer
+     */
+    protected function mapToProductQuantityTransfer(array $productQuantityData): ProductQuantityTransfer
+    {
+        return (new ProductQuantityTransfer())
+            ->fromArray($productQuantityData, true);
     }
 
     /**
