@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'

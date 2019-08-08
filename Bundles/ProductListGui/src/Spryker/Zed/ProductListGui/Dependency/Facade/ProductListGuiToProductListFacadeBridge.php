@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
 class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProductListFacadeInterface
@@ -47,10 +48,20 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    public function createProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->productListFacade->saveProductList($productListTransfer);
+        return $this->productListFacade->createProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->productListFacade->updateProductList($productListTransfer);
     }
 }

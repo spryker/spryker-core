@@ -31,6 +31,10 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapper;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByCompanyUserResourceRelationshipExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilder;
+use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreator;
 use Spryker\Glue\CustomersRestApi\Processor\Session\SessionCreatorInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiError;
@@ -67,7 +71,7 @@ class CustomersRestApiFactory extends AbstractFactory
             $this->createCustomerResourceMapper(),
             $this->createRestApiError(),
             $this->createRestApiValidator(),
-            $this->getCustomerPostRegisterPlugins()
+            $this->getCustomerPostCreatePlugins()
         );
     }
 
@@ -138,6 +142,17 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface
+     */
+    public function createCustomerByCompanyUserResourceRelationshipExpander(): CustomerResourceRelationshipExpanderInterface
+    {
+        return new CustomerByCompanyUserResourceRelationshipExpander(
+            $this->createCustomerRestResponseBuilder(),
+            $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerForgottenPasswordResourceMapperInterface
      */
     public function createCustomerForgottenPasswordResourceMapper(): CustomerForgottenPasswordResourceMapperInterface
@@ -197,6 +212,16 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\CustomerRestResponseBuilderInterface
+     */
+    public function createCustomerRestResponseBuilder(): CustomerRestResponseBuilderInterface
+    {
+        return new CustomerRestResponseBuilder(
+            $this->getResourceBuilder()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface
      */
     public function getCustomerClient(): CustomersRestApiToCustomerClientInterface
@@ -215,18 +240,18 @@ class CustomersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostRegisterPluginInterface[]
-     */
-    public function getCustomerPostRegisterPlugins(): array
-    {
-        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_REGISTER);
-    }
-
-    /**
      * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     public function getCustomerExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     */
+    public function getCustomerPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::PLUGINS_CUSTOMER_POST_CREATE);
     }
 }

@@ -33,15 +33,7 @@ class CustomerOauthUserProviderPlugin extends AbstractPlugin implements OauthUse
             return false;
         }
 
-        if (!$oauthUserTransfer->getClientId()) {
-            return false;
-        }
-
-        if ($oauthUserTransfer->getClientId() === $this->getConfig()->getClientId()) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**

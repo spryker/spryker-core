@@ -163,6 +163,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         foreach ($glossaryKeyMappingCollection as $glossaryKeyMappingEntity) {
             $placeholderMap[$glossaryKeyMappingEntity->getPlaceholder()] = $glossaryKeyMappingEntity;
         }
+
         return $placeholderMap;
     }
 
@@ -178,8 +179,10 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             if ($glossaryTranslationEntity->getFkLocale() !== $idLocale) {
                 continue;
             }
+
             return $glossaryTranslationEntity->getValue();
         }
+
         return null;
     }
 

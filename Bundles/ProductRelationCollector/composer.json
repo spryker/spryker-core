@@ -6,8 +6,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/collector": "^5.1.1 || ^6.0.0",
-    "spryker/kernel": "^3.0.0",
-    "spryker/price-product": "^1.0.0 || ^2.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-image": "^3.0.0",
     "spryker/product-relation": "^1.0.0 || ^2.0.0",

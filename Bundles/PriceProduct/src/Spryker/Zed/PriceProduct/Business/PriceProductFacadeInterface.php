@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
@@ -90,6 +91,18 @@ interface PriceProductFacadeInterface
      * @return int
      */
     public function createPriceType($name);
+
+    /**
+     * Specification:
+     * - Finds a price type by given name.
+     *
+     * @api
+     *
+     * @param string $priceTypeName
+     *
+     * @return \Generated\Shared\Transfer\PriceTypeTransfer|null
+     */
+    public function findPriceTypeByName(string $priceTypeName): ?PriceTypeTransfer;
 
     /**
      * Specification:
@@ -490,4 +503,47 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+
+    /**
+     * Specification:
+     * - Removes price product.
+     * - Calls price product store before delete plugins.
+     * - Removes price product store.
+     * - Adds log message about removing price product.
+     *
+     * @api
+     *
+     * @deprecated Please try to avoid removing price product store. Use removePriceProductDefaultForPriceProduct.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductStore(PriceProductTransfer $priceProductTransfer): void;
+
+    /**
+     * Specification:
+     * - Reads price product stores filtered by currency, store and price product.
+     * - Removes price product default for founded price product stores.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return void
+     */
+    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
+
+    /**
+     * Specification:
+     * - Filters product prices using provided filters.
+     * - Returns valid price products for given price filter configurations.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array;
 }

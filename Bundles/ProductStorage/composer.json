@@ -5,14 +5,16 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/event-behavior": "^1.1.0",
-    "spryker/kernel": "^3.21.0",
+    "spryker/event-behavior": "^1.10.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.1.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
-    "spryker/product-storage-extension": "^1.1.0",
+    "spryker/product-storage-extension": "^1.2.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
+    "spryker/store": "^1.7.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/url": "^3.3.0",
     "spryker/zend": "^2.0.0"
@@ -23,7 +25,6 @@
     "spryker/product-attribute": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
-    "spryker/store": "*",
     "spryker/testify": "*",
     "spryker/url-storage": "*"
   },

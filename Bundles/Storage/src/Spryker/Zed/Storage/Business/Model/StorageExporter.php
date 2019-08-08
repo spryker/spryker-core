@@ -9,6 +9,9 @@ namespace Spryker\Zed\Storage\Business\Model;
 
 use Symfony\Component\Process\Process;
 
+/**
+ * @deprecated Use `Spryker\Zed\Redis\Business\Export\RedisExporter` instead.
+ */
 class StorageExporter implements StorageExporterInterface
 {
     /**
@@ -32,7 +35,7 @@ class StorageExporter implements StorageExporterInterface
     public function export($destination)
     {
         $command = sprintf('redis-cli -p %s --rdb %s', $this->redisPort, $destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR);
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
         $process->run();
 
         if ($process->isSuccessful()) {

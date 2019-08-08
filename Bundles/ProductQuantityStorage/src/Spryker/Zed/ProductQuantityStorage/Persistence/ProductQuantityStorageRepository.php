@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -38,6 +39,41 @@ class ProductQuantityStorageRepository extends AbstractRepository implements Pro
     public function findAllProductQuantityStorageEntities(): array
     {
         $query = $this->getFactory()->createProductQuantityStorageQuery();
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     */
+    public function findFilteredProductQuantityStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array
+    {
+        $query = $this->getFactory()->createProductQuantityStorageQuery();
+
+        if ($productIds) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+    }
+
+    /**
+     * @module ProductQuantity
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     */
+    public function getProductQuantityEntityTransfersByProductIds(array $productIds): array
+    {
+        $query = $this->getFactory()->getProductQuantityQuery();
+
+        if ($productIds !== []) {
+            $query->filterByFkProduct_In($productIds);
+        }
 
         return $this->buildQueryFromCriteria($query)->find();
     }

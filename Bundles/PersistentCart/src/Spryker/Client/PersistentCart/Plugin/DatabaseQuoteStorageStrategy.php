@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -25,7 +26,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  */
-class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
+class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -39,6 +40,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with item and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Adds item to quote.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -67,6 +69,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Adds items to quote.
      *  - Recalculates quote totals.
      *  - Saves updated quote to database.
@@ -99,6 +102,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Adds only items, that passed validation.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -132,6 +136,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Removes single item from quote.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -160,6 +165,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from session.
      *  - Removes items from quote.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.
@@ -307,6 +313,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
         return $quoteResponseTransfer;
     }
 
@@ -334,17 +341,45 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
         $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
         $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Loads customer quote from database.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Save updated quote to database.
+     * - Stores quote in session internally after zed request.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->getZedStub()
+            ->resetQuoteLock($this->getQuoteClient()->getQuote());
+
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
         return $quoteResponseTransfer;
     }
 
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    protected function createPersistentCartChangeTransfer()
+    protected function createPersistentCartChangeTransfer(): PersistentCartChangeTransfer
     {
         $persistentQuoteChange = new PersistentCartChangeTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }
@@ -352,11 +387,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer
      */
-    protected function createPersistentCartChangeQuantityTransfer()
+    protected function createPersistentCartChangeQuantityTransfer(): PersistentCartChangeQuantityTransfer
     {
         $persistentQuoteChange = new PersistentCartChangeQuantityTransfer();
         $persistentQuoteChange->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $persistentQuoteChange->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+
+        $sessionQuoteTransfer = $this->getQuoteClient()->getQuote();
+        $persistentQuoteChange->setIdQuote($sessionQuoteTransfer->getIdQuote());
+        $persistentQuoteChange->setQuote($sessionQuoteTransfer);
 
         return $persistentQuoteChange;
     }

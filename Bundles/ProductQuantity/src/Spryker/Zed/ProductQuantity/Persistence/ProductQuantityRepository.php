@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantity\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -37,14 +38,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
 
         $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $productQuantityTransfers = [];
-        foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
-            $productQuantityTransfers[] = $this->getFactory()
-                ->createProductQuantityMapper()
-                ->mapProductQuantityTransfer($productQuantityEntityTransfer, new ProductQuantityTransfer());
-        }
-
-        return $productQuantityTransfers;
+        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);
     }
 
     /**
@@ -64,14 +58,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
 
         $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $productQuantityTransfers = [];
-        foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
-            $productQuantityTransfers[] = $this->getFactory()
-                ->createProductQuantityMapper()
-                ->mapProductQuantityTransfer($productQuantityEntityTransfer, new ProductQuantityTransfer());
-        }
-
-        return $productQuantityTransfers;
+        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);
     }
 
     /**
@@ -79,16 +66,42 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
      */
     public function findProductQuantityTransfers(): array
     {
-        $query = $this->getFactory()
-            ->createProductQuantityQuery();
-
+        $query = $this->getFactory()->createProductQuantityQuery();
         $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
+        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
+    {
+        $productQuantityEntityTransfers = $this->buildQueryFromCriteria(
+            $this->getFactory()->createProductQuantityQuery(),
+            $filterTransfer
+        )->find();
+
+        return $this->getMappedProductQuantityTransfers($productQuantityEntityTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] $productQuantityEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    protected function getMappedProductQuantityTransfers(array $productQuantityEntityTransfers): array
+    {
         $productQuantityTransfers = [];
+        $mapper = $this->getFactory()->createProductQuantityMapper();
+
         foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
-            $productQuantityTransfers[] = $this->getFactory()
-                ->createProductQuantityMapper()
-                ->mapProductQuantityTransfer($productQuantityEntityTransfer, new ProductQuantityTransfer());
+            $productQuantityTransfers[] = $mapper->mapProductQuantityTransfer(
+                $productQuantityEntityTransfer,
+                new ProductQuantityTransfer()
+            );
         }
 
         return $productQuantityTransfers;

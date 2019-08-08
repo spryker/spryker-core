@@ -37,7 +37,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
-        $spyCategories = SpyCategoryQuery::create()
+        $categoryQuery = SpyCategoryQuery::create();
+        $spyCategories = $categoryQuery
             ->joinWithAttribute()
             ->leftJoinNode()
             ->addAnd(
@@ -116,7 +117,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         int $idLocale,
         ?int $depth = self::NODE_PATH_NULL_DEPTH
     ): SpyCategoryNodeQuery {
-        return $this->getFactory()->createCategoryNodeQuery()
+        $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
+        $categoryNodeQuery
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
                 ->orderByDepth(Criteria::DESC)
@@ -124,11 +126,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
             ->endUse()
             ->setFormatter(new PropelArraySetFormatter());
+
+        return $categoryNodeQuery;
     }
 
     /**

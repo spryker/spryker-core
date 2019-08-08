@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackaging
 interface ProductPackagingUnitStorageMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[] $productAbstractPackagingStorageEntities
+     * @param \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[] $productAbstractPackagingStorageEntities
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */

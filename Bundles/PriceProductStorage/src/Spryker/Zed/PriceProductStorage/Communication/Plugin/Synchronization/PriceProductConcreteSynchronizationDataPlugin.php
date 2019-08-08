@@ -57,11 +57,11 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryPriceConcreteStorageByProductIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdPriceProductConcreteStorage();
     }
 
     /**

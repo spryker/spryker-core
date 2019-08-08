@@ -27,11 +27,38 @@
 
     <transfer name="RestCompanyUserAttributes">
         <property name="isActive" type="bool" />
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="RestUser">
         <property name="idCompanyUser" type="int"/>
         <property name="idCompany" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="idCompany" type="int"/>
+        <property name="filter" type="Filter"/>
+        <property name="companyUserIds" type="array"/>
+        <property name="companyBusinessUnitUuids" type="string[]"/>
+        <property name="companyRolesUuids" type="string[]"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="filter" type="Filter" />
+        <property name="total" type="int" />
+    </transfer>
+
+    <transfer name="CustomerCollection">
+        <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int" />
+        <property name="offset" type="int" />
+    </transfer>
+
+    <transfer name="ShareDetail">
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
 </transfers>

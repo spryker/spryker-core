@@ -9,6 +9,9 @@ namespace Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis;
 
 use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInterface;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilder` instead.
+ */
 class RedisSessionKeyGenerator implements SessionKeyGeneratorInterface
 {
     public const KEY_PREFIX = 'session:';

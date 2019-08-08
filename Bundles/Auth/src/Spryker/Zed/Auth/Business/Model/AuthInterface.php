@@ -27,7 +27,7 @@ interface AuthInterface
     public function generateToken(UserTransfer $user);
 
     /**
-     * @return bool
+     * @return void
      */
     public function logout();
 

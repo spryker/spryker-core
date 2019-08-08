@@ -62,7 +62,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface[]
+     * @return array
      */
     public function exportSearch(OutputInterface $output)
     {

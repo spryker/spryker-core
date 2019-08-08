@@ -1,4 +1,8 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION
+        - APPLICATION_ENV
+        - APPLICATION_STORE
     ignoreErrors:
     - '#Class .+HttpClient constructor invoked with 3 parameters, 5-7 required.#'
     - '#Call to an undefined method .+AbstractBundleConfig::getYvesRequestRepeatDataFileName\(\).#'

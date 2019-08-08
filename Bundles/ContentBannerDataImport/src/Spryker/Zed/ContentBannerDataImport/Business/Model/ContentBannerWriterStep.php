@@ -15,7 +15,6 @@ use Spryker\Shared\ContentBanner\ContentBannerConfig;
 use Spryker\Zed\Content\Dependency\ContentEvents;
 use Spryker\Zed\ContentBannerDataImport\Business\Model\DataSet\ContentBannerDataSetInterface;
 use Spryker\Zed\ContentBannerDataImport\Dependency\Service\ContentBannerDataImportToUtilEncodingInterface;
-use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -79,8 +78,6 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
      * @param array $localizedBannerTerms
      * @param int $idContentBannerTerm
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
      * @return void
      */
     protected function saveContentLocalizedBannerTerms(array $localizedBannerTerms, int $idContentBannerTerm): void
@@ -90,27 +87,20 @@ class ContentBannerWriterStep extends PublishAwareStep implements DataImportStep
             ->find()
             ->delete();
 
-        $defaultLocaleIsPresent = false;
         foreach ($localizedBannerTerms as $idLocale => $localizedBannerTerm) {
             if (!$idLocale) {
                 $idLocale = null;
-                $defaultLocaleIsPresent = true;
             }
 
             $localizedContentBannerEntity = SpyContentLocalizedQuery::create()
                 ->filterByFkContent($idContentBannerTerm)
                 ->filterByFkLocale($idLocale)
                 ->findOneOrCreate();
-
             $localizedContentBannerEntity->setParameters(
                 $this->getEncodedParameters($localizedBannerTerm)
             );
 
             $localizedContentBannerEntity->save();
-        }
-
-        if (!$defaultLocaleIsPresent) {
-            throw new InvalidDataException('Default locale is absent');
         }
     }
 

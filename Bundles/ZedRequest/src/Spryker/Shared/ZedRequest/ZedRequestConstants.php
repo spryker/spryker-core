@@ -36,7 +36,13 @@ interface ZedRequestConstants
 
     public const TRANSFER_DEBUG_SESSION_FORWARD_ENABLED = 'TRANSFER_DEBUG_SESSION_FORWARD_ENABLED';
     public const TRANSFER_DEBUG_SESSION_NAME = 'TRANSFER_DEBUG_SESSION_NAME';
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const TRANSFER_PASSWORD = 'TRANSFER_PASSWORD';
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const TRANSFER_USERNAME = 'TRANSFER_USERNAME';
 
     public const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
@@ -60,4 +66,12 @@ interface ZedRequestConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'ZED_REQUEST:DIRECTORY_PERMISSION';
+
+    /**
+     * Specification:
+     * - Enables the mode when a request to Zed can be repeated with the same data for debugging/testing needs.
+     *
+     * @api
+     */
+    public const ENABLE_REPEAT = 'ZED_REQUEST:ENABLE_REPEAT';
 }
