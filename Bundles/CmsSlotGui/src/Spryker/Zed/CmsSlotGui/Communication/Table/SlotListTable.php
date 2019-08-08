@@ -107,6 +107,7 @@ class SlotListTable extends AbstractTable
 
         $slots = $this->runQuery($this->cmsSlotQuery, $config);
         $results = [];
+        $ownerships = [];
 
         foreach ($slots as $key => $slot) {
             $results[] = [
@@ -117,6 +118,16 @@ class SlotListTable extends AbstractTable
                 SlotListConstants::COL_STATUS => $this->getStatus($slot),
                 SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
             ];
+
+            if (!in_array($slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE], $ownerships, true)) {
+                $ownerships[] = $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE];
+            }
+        }
+
+        if (count($ownerships) < 2) {
+            foreach ($results as $key => $result) {
+                $results[$key][SlotListConstants::COL_OWNERSHIP] = null;
+            }
         }
 
         return $results;

@@ -14,17 +14,28 @@ var config = {
 
 function load(rowIndex) {
     var ajaxUrl = config.ajaxBaseUrl + '?' + config.paramIdCmsSlotTemplate + '=' + rowIndex;
-    slotListTable.DataTable().destroy();
     slotListTable.data('ajax', ajaxUrl);
 
     slotListTable.DataTable({
-        'ajax': ajaxUrl,
+        'destroy': true,
+        'ajax': {
+            "cache": false
+        },
         'lengthChange': false,
         'language': dataTable.defaultConfiguration.language,
-    });
+        "drawCallback": function() {
+            var api = this.api();
 
-    slotListTable.on('draw.dt', function () {
-        activationHandler();
+            api.table().columns().every(function () {
+                this.visible(true);
+
+                if (this.data()[0] === null) {
+                    this.visible(false);
+                }
+            });
+
+            activationHandler();
+        },
     });
 }
 
@@ -36,6 +47,7 @@ function activationHandler() {
         $.get(url, function (response) {
             if (response.success) {
                 slotListTable.DataTable().ajax.reload(null, false);
+                slotListTable.DataTable().columns.adjust().draw();
             }
         });
 
