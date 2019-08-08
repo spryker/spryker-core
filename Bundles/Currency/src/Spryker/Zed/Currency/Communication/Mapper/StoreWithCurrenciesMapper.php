@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Currency\Communication\Builder;
+namespace Spryker\Zed\Currency\Communication\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
-class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollectionBuilderInterface
+class StoreWithCurrenciesMapper implements StoreWithCurrenciesMapperInterface
 {
     protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be <b>%s</b> as defined on the store selected';
     protected const KEY_CURRENCIES = 'currencies';
@@ -32,36 +33,21 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
     }
 
     /**
-     * @param int $idStore
+     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer
      *
      * @return array
      */
-    public function buildStoreWithCurrenciesCollectionByStoreId(int $idStore): array
+    public function mapStoreWithCurrencyTransferToArrayWithTimezoneText(StoreWithCurrencyTransfer $storeWithCurrencyTransfer): array
     {
-        $storeWithCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
+        $storeWithCurrencyTransfer->requireStore();
+        $storeTransfer = $storeWithCurrencyTransfer->getStore();
 
-        $currencies = [];
-        $timezoneText = '';
-        $store = [];
-
-        foreach ($storeWithCurrencyCollection as $storeWithCurrencyTransfer) {
-            $storeWithCurrencyTransfer->requireStore();
-            $storeTransfer = $storeWithCurrencyTransfer->getStore();
-
-            if ($storeTransfer->getIdStore() !== $idStore) {
-                continue;
-            }
-
-            $timezoneText = $this->buildTimezoneText($storeTransfer);
-            $store = $storeTransfer->toArray();
-            $currencies = $this->collectCurrencies($storeWithCurrencyTransfer->getCurrencies());
-
-            break;
-        }
+        $currencies = $this->collectCurrencies($storeWithCurrencyTransfer->getCurrencies());
+        $timezoneText = $this->buildTimezoneText($storeTransfer);
 
         return [
             static::KEY_CURRENCIES => $currencies,
-            static::KEY_STORE => $store,
+            static::KEY_STORE => $storeTransfer->toArray(),
             static::KEY_TIMEZONE_TEXT => $timezoneText,
         ];
     }
@@ -89,6 +75,8 @@ class StoreWithCurrenciesCollectionBuilder implements StoreWithCurrenciesCollect
      */
     protected function buildTimezoneText(StoreTransfer $storeTransfer): string
     {
+        $storeTransfer->requireTimezone();
+
         return sprintf(static::TIMEZONE_TEXT_PATTERN, $storeTransfer->getTimezone());
     }
 }

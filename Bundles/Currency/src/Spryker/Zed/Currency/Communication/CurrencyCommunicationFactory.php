@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Currency\Communication;
 
-use Spryker\Zed\Currency\Communication\Builder\StoreWithCurrenciesCollectionBuilder;
-use Spryker\Zed\Currency\Communication\Builder\StoreWithCurrenciesCollectionBuilderInterface;
+use Spryker\Zed\Currency\Communication\Mapper\StoreWithCurrenciesMapper;
+use Spryker\Zed\Currency\Communication\Mapper\StoreWithCurrenciesMapperInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -20,10 +20,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CurrencyCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\Currency\Communication\Builder\StoreWithCurrenciesCollectionBuilderInterface
+     * @return \Spryker\Zed\Currency\Communication\Mapper\StoreWithCurrenciesMapperInterface
      */
-    public function createStoreWithCurrenciesCollectionBuilder(): StoreWithCurrenciesCollectionBuilderInterface
+    public function createStoreWithCurrenciesMapper(): StoreWithCurrenciesMapperInterface
     {
-        return new StoreWithCurrenciesCollectionBuilder($this->getFacade());
+        return new StoreWithCurrenciesMapper($this->getFacade());
     }
 }
