@@ -1,9 +1,15 @@
 {% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
 {% set image = image %}
 
-<td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
+<td class="item-checker">
+    <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
+</td>
 {% if displayImage %}
-    <td> <div class="image-wrap"><img class="product-image product-image--small product-image--borderless" src="{{ image }}"></div></td>
+    <td>
+        <div class="image-wrap">
+            <img class="product-image product-image--small product-image--borderless" src="{{ image }}">
+        </div>
+    </td>
 {% endif %}
 <td>
     <div>
@@ -29,26 +35,29 @@
                     {% endfor %}
                 </div>
 
-                <a id="attribute-details-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
+                <button id="attribute-details-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" type="button" data-id="{{ orderItem.IdSalesOrderItem }}">
+                    <span class="show-more">{{ 'Show more' | trans }}</span>
+                    <span class="show-less">{{ 'Show less' | trans }}</span>
+                </button>
             {% endif %}
         </div>
     {% endif %}
-    {% embed '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+    {% include '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}
 </td>
 <td>
     {{ orderItem.quantity }}
-    {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+    {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}
 </td>
 <td>
     <div>
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}
     </div>
     <div class="tax-info">incl. {{ orderItem.taxRate|default(0) }} % tax </div>
 </td>
 
 {% if displayTotals %}
     <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %} {% endembed %}
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}
     </td>
 {% else %}
     <td></td>
@@ -64,13 +73,16 @@
             {% endfor %}
         </div>
 
-        <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show history' | trans }}</span><span class="show-less">{{ 'Hide history' | trans }}</span></a>
+        <button id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" type="button" data-id="{{ orderItem.IdSalesOrderItem }}">
+            <span class="show-more">{{ 'Show history' | trans }}</span>
+            <span class="show-less">{{ 'Hide history' | trans }}</span>
+        </button>
     {% endif %}
 </td>
 <td rowspan="{{ numberOfItemAdditions }}">
     {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] | length > 0 %}
         {% for event in eventsGroupedByItem[orderItem.IdSalesOrderItem] %}
-            <a class="btn btn-primary btn-sm trigger-order-single-event" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.fkSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
+            <button class="btn btn-primary btn-sm trigger-order-single-event" type="button" data-id-item="{{ orderItem.idSalesOrderItem }}" data-id-sales-order="{{ orderItem.fkSalesOrder }}" data-event="{{ event }}">{{ event }}</button>
         {% endfor %}
     {% else -%}
         -

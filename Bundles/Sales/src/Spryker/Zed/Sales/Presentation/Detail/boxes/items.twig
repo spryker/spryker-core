@@ -36,13 +36,13 @@
             </thead>
             <tbody>
                 {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
-                    {% embed '@Sales/Detail/boxes/configured-bundle.twig' with {order: order} %}{% endembed %}
+                    {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order} %}
                 {% endif %}
 
                 {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
-                  {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
+                  {% include '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}
                 {% else %}
-                  {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
+                  {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}
                 {% endif %}
             </tbody>
         </table>
