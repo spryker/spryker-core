@@ -19,18 +19,18 @@ abstract class AbstractTransferValidator
 {
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
-     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface $validationAdapter
+     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface $validatorAdapter
      * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     protected function validate(
         AbstractTransfer $transfer,
-        CmsSlotToSymfonyValidatorAdapterInterface $validationAdapter,
+        CmsSlotToSymfonyValidatorAdapterInterface $validatorAdapter,
         ConstraintsProviderInterface $constraintsProvider
     ): ValidationResponseTransfer {
         $isSuccess = true;
-        $validator = $validationAdapter->createValidator();
+        $validator = $validatorAdapter->createValidator();
         $properties = $transfer->toArray(true, true);
         $validationResponseTransfer = new ValidationResponseTransfer();
 

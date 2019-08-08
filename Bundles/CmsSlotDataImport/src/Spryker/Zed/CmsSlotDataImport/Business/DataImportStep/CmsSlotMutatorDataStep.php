@@ -30,18 +30,9 @@ class CmsSlotMutatorDataStep implements DataImportStepInterface
      */
     protected function mutateIsActiveDataSetValue(DataSetInterface $dataSet): void
     {
-        $isActiveDataSetValue = $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE];
-
-        if ($isActiveDataSetValue === '1' || $isActiveDataSetValue === 'true') {
-            $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE] = true;
-
-            return;
-        }
-
-        if ($isActiveDataSetValue === '0' || $isActiveDataSetValue === 'false') {
-            $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE] = false;
-
-            return;
-        }
+        $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE] = filter_var(
+            $dataSet[CmsSlotDataSetInterface::CMS_SLOT_IS_ACTIVE],
+            FILTER_VALIDATE_BOOLEAN
+        );
     }
 }

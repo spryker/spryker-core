@@ -25,7 +25,7 @@ class CmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addValidationAdapter($container);
+        $container = $this->addValidatorAdapter($container);
 
         return $container;
     }
@@ -35,7 +35,7 @@ class CmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addValidationAdapter(Container $container): Container
+    protected function addValidatorAdapter(Container $container): Container
     {
         $container->set(static::CMS_SLOT_VALIDATOR, function () {
             return new CmsSlotToSymfonyValidatorAdapter();
