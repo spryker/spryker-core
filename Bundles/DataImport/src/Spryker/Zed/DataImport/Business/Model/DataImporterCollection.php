@@ -227,7 +227,9 @@ class DataImporterCollection implements
         }
 
         foreach ($dataImporters as $dataImporter) {
-            if (!in_array($dataImporter->getImportType(), $this->config->getFullImportTypes())) {
+            if (!empty($this->config->getFullImportTypes())
+                && !in_array($dataImporter->getImportType(), $this->config->getFullImportTypes())
+            ) {
                 continue;
             }
 
