@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -134,7 +135,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuidAction(WishlistTransfer $wishlistTransfer)
+    public function getCustomerWishlistByUuidAction(WishlistTransfer $wishlistTransfer): WishlistResponseTransfer
     {
         return $this->getFacade()->getCustomerWishlistByUuid($wishlistTransfer);
     }

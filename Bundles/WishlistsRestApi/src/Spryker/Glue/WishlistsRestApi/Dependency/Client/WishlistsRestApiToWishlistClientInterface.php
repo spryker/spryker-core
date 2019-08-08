@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistsRestApiToWishlistClientInterface
@@ -27,7 +28,7 @@ interface WishlistsRestApiToWishlistClientInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer);
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer): WishlistResponseTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer

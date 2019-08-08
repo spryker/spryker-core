@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -190,7 +191,7 @@ class WishlistStub implements WishlistStubInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer)
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer): WishlistResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
         $wishlistResponseTransfer = $this->zedStub->call('/wishlist/gateway/get-customer-wishlist-by-uuid', $wishlistTransfer);

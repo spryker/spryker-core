@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 class WishlistsRestApiToWishlistClientBridge implements WishlistsRestApiToWishlistClientInterface
@@ -51,7 +52,7 @@ class WishlistsRestApiToWishlistClientBridge implements WishlistsRestApiToWishli
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer)
+    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer): WishlistResponseTransfer
     {
         return $this->wishlistClient->getCustomerWishlistByUuid($wishlistTransfer);
     }

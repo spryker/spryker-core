@@ -159,7 +159,7 @@ class WishlistsReader implements WishlistsReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistResponseTransfer
+     * @param \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
