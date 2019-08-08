@@ -51,6 +51,7 @@ class ConfigurableBundleDataImportCommunicationTester extends Actor
     {
         (new SpyConfigurableBundleTemplate())
             ->setKey($key)
+            ->setName($key)
             ->save();
     }
 

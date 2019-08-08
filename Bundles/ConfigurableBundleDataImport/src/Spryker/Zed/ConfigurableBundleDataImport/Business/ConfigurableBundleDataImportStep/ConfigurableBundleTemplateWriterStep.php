@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep;
 
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
 use Spryker\Zed\ConfigurableBundleDataImport\Business\DataSet\ConfigurableBundleTemplateDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class ConfigurableBundleTemplateWriterStep implements DataImportStepInterface
+class ConfigurableBundleTemplateWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -29,6 +31,11 @@ class ConfigurableBundleTemplateWriterStep implements DataImportStepInterface
             ->setUuid($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_UUID] ?: null)
             ->setName($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_NAME])
             ->save();
+
+        $this->addPublishEvents(
+            ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH,
+            $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()
+        );
     }
 
     /**
