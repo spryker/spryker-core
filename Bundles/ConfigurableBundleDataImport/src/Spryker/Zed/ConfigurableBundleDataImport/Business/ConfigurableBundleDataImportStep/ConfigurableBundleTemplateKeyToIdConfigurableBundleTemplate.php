@@ -48,6 +48,8 @@ class ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate implements Dat
     }
 
     /**
+     * @module ConfigurableBundle
+     *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
      */
     protected function createConfigurableBundleTemplateQuery(): SpyConfigurableBundleTemplateQuery

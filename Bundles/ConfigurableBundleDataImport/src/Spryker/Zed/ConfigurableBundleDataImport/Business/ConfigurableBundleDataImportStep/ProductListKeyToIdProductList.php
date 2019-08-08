@@ -48,6 +48,8 @@ class ProductListKeyToIdProductList implements DataImportStepInterface
     }
 
     /**
+     * @module ProductList
+     *
      * @return \Orm\Zed\ProductList\Persistence\SpyProductListQuery
      */
     protected function createProductListQuery(): SpyProductListQuery
