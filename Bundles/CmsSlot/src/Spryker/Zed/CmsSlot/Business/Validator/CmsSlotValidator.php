@@ -10,12 +10,12 @@ namespace Spryker\Zed\CmsSlot\Business\Validator;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
-use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
+use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface;
 
 class CmsSlotValidator extends AbstractTransferValidator implements CmsSlotValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface
+     * @var \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface
      */
     protected $validationAdapter;
 
@@ -25,11 +25,11 @@ class CmsSlotValidator extends AbstractTransferValidator implements CmsSlotValid
     protected $constraintsProvider;
 
     /**
-     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface $validationAdapter
+     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface $validationAdapter
      * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      */
     public function __construct(
-        CmsSlotToValidationAdapterInterface $validationAdapter,
+        CmsSlotToSymfonyValidatorAdapterInterface $validationAdapter,
         ConstraintsProviderInterface $constraintsProvider
     ) {
         $this->validationAdapter = $validationAdapter;

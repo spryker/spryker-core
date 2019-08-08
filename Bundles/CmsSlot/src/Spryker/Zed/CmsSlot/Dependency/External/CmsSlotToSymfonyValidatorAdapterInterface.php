@@ -7,16 +7,12 @@
 
 namespace Spryker\Zed\CmsSlot\Dependency\External;
 
-use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class CmsSlotToValidationAdapter implements CmsSlotToValidationAdapterInterface
+interface CmsSlotToSymfonyValidatorAdapterInterface
 {
     /**
      * @return \Symfony\Component\Validator\Validator\ValidatorInterface
      */
-    public function createValidator(): ValidatorInterface
-    {
-        return Validation::createValidator();
-    }
+    public function createValidator(): ValidatorInterface;
 }

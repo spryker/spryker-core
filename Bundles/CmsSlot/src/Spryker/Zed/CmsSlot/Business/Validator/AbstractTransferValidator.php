@@ -12,21 +12,21 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
-use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
+use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 abstract class AbstractTransferValidator
 {
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
-     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface $validationAdapter
+     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface $validationAdapter
      * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     protected function validate(
         AbstractTransfer $transfer,
-        CmsSlotToValidationAdapterInterface $validationAdapter,
+        CmsSlotToSymfonyValidatorAdapterInterface $validationAdapter,
         ConstraintsProviderInterface $constraintsProvider
     ): ValidationResponseTransfer {
         $isSuccess = true;
