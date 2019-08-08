@@ -7,6 +7,7 @@
 
 var dataTable = require('ZedGuiModules/libs/data-table');
 var slotListTable = $('table.cms-slot-list-table');
+var ownershipColumnId = 'spy_cms_slot.content_provider_type';
 var config = {
     ajaxBaseUrl: '/cms-slot-gui/slot-list/table',
     paramIdCmsSlotTemplate: 'id-cms-slot-template'
@@ -22,21 +23,40 @@ function load(rowIndex) {
             "cache": false
         },
         'lengthChange': false,
+        "autoWidth": false,
         'language': dataTable.defaultConfiguration.language,
-        "drawCallback": function() {
+        'drawCallback': function() {
             var api = this.api();
 
-            api.table().columns().every(function () {
-                this.visible(true);
-
-                if (this.data()[0] === null) {
-                    this.visible(false);
-                }
-            });
-
+            displayOwnershipColumn(api);
             activationHandler();
         },
     });
+}
+
+function displayOwnershipColumn(api) {
+    var ownershipColumnIndex = null;
+    var ownerships = [];
+    var ownershipColumn = null;
+
+    api.columns().header().each(function (e, i) {
+        if ($(e).attr("id") === ownershipColumnId) {
+            ownershipColumnIndex = i;
+        }
+    });
+
+    if (ownershipColumnIndex !== null) {
+        ownershipColumn = api.table().columns(ownershipColumnIndex);
+        ownershipColumn.visible(true);
+
+        ownerships = ownershipColumn.data()[0].filter(function (value, index, self) {
+            return self.indexOf(value) === index;
+        });
+
+        if (ownerships.length === 1) {
+            ownershipColumn.visible(false);
+        }
+    }
 }
 
 function activationHandler() {
@@ -47,7 +67,6 @@ function activationHandler() {
         $.get(url, function (response) {
             if (response.success) {
                 slotListTable.DataTable().ajax.reload(null, false);
-                slotListTable.DataTable().columns.adjust().draw();
             }
         });
 

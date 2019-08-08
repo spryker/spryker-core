@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsSlotGui\Communication\Table;
 
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CmsSlotGui\Communication\Controller\ActivateSlotController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -107,7 +109,6 @@ class SlotListTable extends AbstractTable
 
         $slots = $this->runQuery($this->cmsSlotQuery, $config);
         $results = [];
-        $ownerships = [];
 
         foreach ($slots as $key => $slot) {
             $results[] = [
@@ -118,16 +119,6 @@ class SlotListTable extends AbstractTable
                 SlotListConstants::COL_STATUS => $this->getStatus($slot),
                 SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
             ];
-
-            if (!in_array($slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE], $ownerships, true)) {
-                $ownerships[] = $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE];
-            }
-        }
-
-        if (count($ownerships) < 2) {
-            foreach ($results as $key => $result) {
-                $results[$key][SlotListConstants::COL_OWNERSHIP] = null;
-            }
         }
 
         return $results;
@@ -146,16 +137,16 @@ class SlotListTable extends AbstractTable
         );
 
         $activateButton = $this->generateButton(
-            '/cms-slot-gui/activate-slot/activate?id-cms-slot=' . $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
+            $this->getUrlActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
             'Activate',
-            ['class' => 'btn-view slot-activation']
+            ['class' => SlotListConstants::CLASS_ACTIVATE_BUTTON]
         );
 
         if ($slot[SlotListConstants::COL_STATUS]) {
             $activateButton = $this->generateButton(
-                '/cms-slot-gui/activate-slot/deactivate?id-cms-slot=' . $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
+                $this->getUrlDeActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
-                ['class' => 'btn-danger slot-activation']
+                ['class' => SlotListConstants::CLASS_DEACTIVATE_BUTTON]
             );
         }
 
@@ -169,12 +160,32 @@ class SlotListTable extends AbstractTable
      *
      * @return string
      */
-    protected function getStatus(array $slot)
+    protected function getStatus(array $slot): string
     {
         if ($slot[SpyCmsSlotTableMap::COL_IS_ACTIVE]) {
             return $this->generateLabel('Active', 'label-info');
         }
 
         return $this->generateLabel('Inactive', 'label-danger');
+    }
+
+    /**
+     * @param int $idCmsSlot
+     *
+     * @return string
+     */
+    protected function getUrlActivate(int $idCmsSlot): string
+    {
+        return Url::generate(SlotListConstants::URL_ACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
+    }
+
+    /**
+     * @param int $idCmsSlot
+     *
+     * @return string
+     */
+    protected function getUrlDeactivate(int $idCmsSlot): string
+    {
+        return Url::generate(SlotListConstants::URL_DEACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
     }
 }
