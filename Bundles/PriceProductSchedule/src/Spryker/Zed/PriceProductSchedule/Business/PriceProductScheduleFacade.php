@@ -163,6 +163,22 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleCreator()
+            ->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idPriceProductSchedule
      *
      * @return void

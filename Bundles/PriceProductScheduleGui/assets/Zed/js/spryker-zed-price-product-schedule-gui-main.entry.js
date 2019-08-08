@@ -6,3 +6,5 @@
 'use strict';
 
 require('./modules/scheduled-prices-errors-form');
+require('./modules/price-product-schedule-create');
+require('../sass/main.scss');

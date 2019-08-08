@@ -134,6 +134,18 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
+     * - Creates scheduled price.
+     * - Apply scheduled prices for product, related to given scheduled price.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer;
+
+    /**
      * - Removes scheduled price with given id.
      * - Applies scheduled price for product, related to given scheduled price.
      *

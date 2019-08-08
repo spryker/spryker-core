@@ -32,6 +32,15 @@ interface PriceProductScheduleEntityManagerInterface
     ): PriceProductScheduleTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function createPriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer

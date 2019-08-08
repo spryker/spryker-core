@@ -39,4 +39,16 @@ class PriceProductScheduleWriter implements PriceProductScheduleWriterInterface
         return $this->priceProductScheduleEntityManager
             ->savePriceProductSchedule($priceProductScheduleTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function createPriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
+        return $this->priceProductScheduleEntityManager
+            ->createPriceProductSchedule($priceProductScheduleTransfer);
+    }
 }

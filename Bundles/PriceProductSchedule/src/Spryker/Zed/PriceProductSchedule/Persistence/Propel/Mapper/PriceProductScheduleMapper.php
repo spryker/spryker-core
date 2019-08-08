@@ -92,6 +92,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             return $priceProductScheduleEntity;
         }
 
+        $idStore = $moneyValueTransfer->getFkStore();
+        $idCurrency = $moneyValueTransfer->getFkCurrency();
+
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
             $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
@@ -100,9 +103,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
         }
 
+        if ($idStore === null && $moneyValueTransfer->getStore() !== null) {
+            $idStore = $moneyValueTransfer->getStore()->getIdStore();
+        }
+
+        if ($idCurrency === null && $moneyValueTransfer->getCurrency() !== null) {
+            $idCurrency = $moneyValueTransfer->getCurrency()->getIdCurrency();
+        }
+
         return $priceProductScheduleEntity
-            ->setFkCurrency($moneyValueTransfer->getFkCurrency())
-            ->setFkStore($moneyValueTransfer->getFkStore())
+            ->setFkCurrency($idCurrency)
+            ->setFkStore($idStore)
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
             ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
