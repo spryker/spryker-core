@@ -10,7 +10,6 @@ namespace Spryker\Zed\Currency\Communication\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
-use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 
 class StoreWithCurrenciesMapper implements StoreWithCurrenciesMapperInterface
 {
@@ -18,19 +17,6 @@ class StoreWithCurrenciesMapper implements StoreWithCurrenciesMapperInterface
     protected const KEY_CURRENCIES = 'currencies';
     protected const KEY_STORE = 'store';
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';
-
-    /**
-     * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    /**
-     * @param \Spryker\Zed\Currency\Business\CurrencyFacadeInterface $currencyFacade
-     */
-    public function __construct(CurrencyFacadeInterface $currencyFacade)
-    {
-        $this->currencyFacade = $currencyFacade;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer

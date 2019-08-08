@@ -24,6 +24,6 @@ class CurrencyCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createStoreWithCurrenciesMapper(): StoreWithCurrenciesMapperInterface
     {
-        return new StoreWithCurrenciesMapper($this->getFacade());
+        return new StoreWithCurrenciesMapper();
     }
 }
