@@ -52,11 +52,11 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     /**
      * @param int[] $ids
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     protected function findProductAbstractPackagingStorageEntities(array $ids): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductAbstractPackagingStorageEntities();
         }
 

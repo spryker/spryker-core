@@ -14,8 +14,10 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Silex\Application;
+use Spryker\Service\Container\Container;
 use Spryker\Zed\Category\Business\CategoryFacade;
 use Spryker\Zed\Locale\Business\LocaleFacade;
+use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\Category\PageObject\CategoryCreatePage;
 
@@ -25,6 +27,23 @@ class CategoryHelper extends Module
      * @return void
      */
     public function _initialize()
+    {
+        if (class_exists(PropelApplicationPlugin::class)) {
+            $propelApplicationPlugin = new PropelApplicationPlugin();
+            $propelApplicationPlugin->provide(new Container());
+
+            return;
+        }
+
+        $this->addBackwardCompatibleServiceProvider();
+    }
+
+    /**
+     * @deprecated Will be removed in favor of `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin`.
+     *
+     * @return void
+     */
+    protected function addBackwardCompatibleServiceProvider(): void
     {
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());

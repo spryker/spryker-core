@@ -57,11 +57,11 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
     {
         $query = $this->getQueryContainer()->queryCmsBlockCategoryStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCmsBlockCategoryStorage();
     }
 
     /**

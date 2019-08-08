@@ -90,6 +90,7 @@ class AddressResourceController extends AbstractController
     /**
      * @Glue({
      *     "patch": {
+     *          "path": "/customers/{customerId}/addresses/{addressId}",
      *          "summary": [
      *              "Updates customer address."
      *          ],
@@ -119,6 +120,7 @@ class AddressResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
+     *          "path": "/customers/{customerId}/addresses/{addressId}",
      *          "summary": [
      *              "Deletes customer address."
      *          ],

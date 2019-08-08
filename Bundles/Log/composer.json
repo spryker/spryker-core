@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "psr/log": "^1.0.0",
     "spryker/config": "^3.0.0",
-    "spryker/kernel": "^3.8.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/monolog": "^2.0.0",
     "spryker/queue": "^0.3.0 || ^1.0.0",
     "spryker/symfony": "^3.0.0",

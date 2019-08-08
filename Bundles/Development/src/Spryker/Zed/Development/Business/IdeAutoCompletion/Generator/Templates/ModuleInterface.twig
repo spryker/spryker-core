@@ -1,0 +1,11 @@
+<?php
+
+namespace {{ namespace }};
+
+/**
+{% for methodTransfer in moduleTransfer.getMethods() %}
+ * @method \{{ methodTransfer.getNamespaceName() }}\{{ methodTransfer.getClassName() }} {{ methodTransfer.getName() }}()
+{% endfor %}
+ */
+interface {{ moduleTransfer.getName() }}
+{}

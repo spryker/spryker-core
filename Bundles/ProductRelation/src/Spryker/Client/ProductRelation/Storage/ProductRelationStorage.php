@@ -139,6 +139,7 @@ class ProductRelationStorage implements ProductRelationStorageInterface
             $this->addAbstractProducts($typeRelations, $storageProductRelationsTransfer);
             $relations[$type] = $storageProductRelationsTransfer;
         }
+
         return $relations;
     }
 }

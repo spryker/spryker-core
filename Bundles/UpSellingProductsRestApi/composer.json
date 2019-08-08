@@ -5,10 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/carts-rest-api": "^2.3.0",
+    "spryker/carts-rest-api": "^2.3.0 || ^3.0.0 || ^5.0.0",
     "spryker/glue-application": "^1.9.0",
     "spryker/glue-application-extension": "^1.0.0",
-    "spryker/kernel": "^3.22.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/product-relation-storage": "^1.4.0",
     "spryker/product-storage": "^1.2.0",
     "spryker/products-rest-api": "^2.3.0",

@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Casting to int something that.+s already int#'
     - '#Parameter \#1 \$query of method .+AbstractTable::runQuery\(\) expects .+ModelCriteria, .+Criteria given#'
     - '#Parameter .+ of function strnatcmp expects string, int|null given#'

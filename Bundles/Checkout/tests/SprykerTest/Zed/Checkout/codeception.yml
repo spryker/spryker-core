@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper

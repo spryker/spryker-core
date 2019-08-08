@@ -20,6 +20,8 @@
 
     {{ form_start(form, { 'attr': {'class': 'kv_autocomplete_form'} }) }}
 
+        {{ form_errors(form) }}
+
         {{ tabs(productFormEditTabs, {
             'form': form,
             'currentLocale': currentLocale,
@@ -31,7 +33,9 @@
             'variantTable': variantTable,
             'idProduct': null,
             'idProductAbstract': idProductAbstract,
-            'priceDimension': priceDimension
+            'priceDimension': priceDimension,
+            'priceTypeTabs': priceTypeTabs | default(null),
+            'tablesByPriceType': tablesByPriceType | default([]),
         }) }}
 
     {{ form_end(form) }}

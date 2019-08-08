@@ -20,6 +20,8 @@ Categories,Kategorien
 "Create Product","Produkt erstellen"
 Deactivate,Deaktivieren
 Default,Standard
+"Delete image","Lösche Bild"
+"Delete image set","Bilderset löschen"
 Edit,Bearbeiten
 "Edit Product Abstract","Abstraktes Produkt bearbeiten"
 "Edit Product Concrete","Konkretes Produkt bearbeiten"
@@ -27,6 +29,7 @@ Edit,Bearbeiten
 "Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Bestandswert eingeben. Wenn mehrere Varianten erstellt werden, kann der Bestand unter ""Produktvarianten"" verwaltet werden und dieses Eingabefeld wird ignoriert."
 General,Allgemein
 "Gross price",Bruttopreis
+"Image Set",Bildersets
 "Image Sets",Bildersets
 Large,Groß
 "List Products","Liste der Produkte"
@@ -44,7 +47,6 @@ n/a,k.A.
 "Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Hinweis: Der Preis, den Sie hier bearbeiten, wird nur im Shop-Katalog und in der Detailansicht des nicht konfigurierten Produkts (nicht der Produktvariante) angezeigt."
 "Note: The SKU is not editable after saving anymore.","Hinweis: Die SKU kann nach dem Speichern nicht mehr bearbeitet werden."
 "Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Hinweis: Das SKU-Präfix kann, genau wie die SKUs Ihrer Produktvarianten, nach dem Speichern nicht mehr bearbeitet werden."
-"Price & Tax","Preis und Steuer"
 "Price & Tax","Preis und Steuer"
 "Price & Taxes","Preis und Steuern"
 "Product bundle does not have variants!","Bündelprodukt hat keine Varianten!"
@@ -67,12 +69,9 @@ Small,Klein
 "Tax Set",Steuer-Set
 "The product [%s] does not exist.","Das Produkt [%s] existiert nicht."
 "The product [%s] was saved successfully.","Das Produkt [%s] wurde erfolgreich gespeichert."
-"The product [%s] was saved successfully.","Das Produkt [%s] wurde erfolgreich gespeichert."
-"The product [%s] you are trying to edit, does not exist.","Das Produkt [%s], das Sie zu bearbeiten versuchen, existiert nicht."
 "The product [%s] you are trying to edit, does not exist.","Das Produkt [%s], das Sie zu bearbeiten versuchen, existiert nicht."
 "There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","Es ist kein Superattribut definiert. <a href=""%url%"">Definieren Sie Super-Attribute</a>, um Varianten anlegen zu können."
 Type,Typ
-Variants,Varianten
 Variants,Varianten
 "View Product Abstract","Abstraktes Produkt anzeigen"
 "View Product Concrete","Konkretes Produkt anzeigen"

@@ -319,4 +319,17 @@ interface ShoppingListClientInterface
      * @return void
      */
     public function updateCustomerPermission(): void;
+
+    /**
+     * Specification:
+     * - Requires ProductViewTransfer::CurrentProductPrice.
+     * - Returns calculated subtotal.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     *
+     * @return int
+     */
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int;
 }

@@ -57,11 +57,11 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     {
         $query = $this->getQueryContainer()->queryCmsPageStorageEntities($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdCmsPageStorage();
     }
 
     /**
