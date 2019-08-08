@@ -17,7 +17,7 @@ use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidatorInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotValidator;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotValidatorInterface;
 use Spryker\Zed\CmsSlot\CmsSlotDependencyProvider;
-use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
+use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -77,10 +77,10 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface
+     * @return \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface
      */
-    public function getValidatorAdapter(): CmsSlotToValidationAdapterInterface
+    public function getValidatorAdapter(): CmsSlotToSymfonyValidatorAdapterInterface
     {
-        return $this->getProvidedDependency(CmsSlotDependencyProvider::ADAPTER_VALIDATION);
+        return $this->getProvidedDependency(CmsSlotDependencyProvider::CMS_SLOT_VALIDATOR);
     }
 }

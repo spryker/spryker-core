@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot;
 
-use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapter;
+use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapter;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+    public const CMS_SLOT_VALIDATOR = 'CMS_SLOT_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,8 +25,7 @@ class CmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addValidationAdapter($container);
+        $container = $this->addValidatorAdapter($container);
 
         return $container;
     }
@@ -36,10 +35,10 @@ class CmsSlotDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addValidationAdapter(Container $container): Container
+    protected function addValidatorAdapter(Container $container): Container
     {
-        $container->set(static::ADAPTER_VALIDATION, function () {
-            return new CmsSlotToValidationAdapter();
+        $container->set(static::CMS_SLOT_VALIDATOR, function () {
+            return new CmsSlotToSymfonyValidatorAdapter();
         });
 
         return $container;

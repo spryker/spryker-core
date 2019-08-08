@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlotDataImport\Business;
 
 use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\CheckCmsSlotDataStep;
 use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\CheckCmsSlotTemplateDataStep;
+use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\CmsSlotMutatorDataStep;
 use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\CmsSlotTemplateWriterStep;
 use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\CmsSlotWriterStep;
 use Spryker\Zed\CmsSlotDataImport\Business\DataImportStep\TemplatePathToCmsSlotTemplateIdStep;
@@ -31,6 +32,7 @@ class CmsSlotDataImportBusinessFactory extends DataImportBusinessFactory
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCmsSlotDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep($this->createCmsSlotMutatorDataStep());
         $dataSetStepBroker->addStep($this->createCheckCmsSlotDataStep());
         $dataSetStepBroker->addStep($this->createTemplatePathToCmsSlotTemplateIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotWriterStep());
@@ -70,6 +72,14 @@ class CmsSlotDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCmsSlotTemplateWriterStep(): DataImportStepInterface
     {
         return new CmsSlotTemplateWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createCmsSlotMutatorDataStep(): DataImportStepInterface
+    {
+        return new CmsSlotMutatorDataStep();
     }
 
     /**

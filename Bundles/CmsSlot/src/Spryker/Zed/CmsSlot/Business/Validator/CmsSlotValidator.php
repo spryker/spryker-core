@@ -10,14 +10,14 @@ namespace Spryker\Zed\CmsSlot\Business\Validator;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
-use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface;
+use Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface;
 
 class CmsSlotValidator extends AbstractTransferValidator implements CmsSlotValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface
+     * @var \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface
      */
-    protected $validationAdapter;
+    protected $validatorAdapter;
 
     /**
      * @var \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface
@@ -25,14 +25,14 @@ class CmsSlotValidator extends AbstractTransferValidator implements CmsSlotValid
     protected $constraintsProvider;
 
     /**
-     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToValidationAdapterInterface $validationAdapter
+     * @param \Spryker\Zed\CmsSlot\Dependency\External\CmsSlotToSymfonyValidatorAdapterInterface $validatorAdapter
      * @param \Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface $constraintsProvider
      */
     public function __construct(
-        CmsSlotToValidationAdapterInterface $validationAdapter,
+        CmsSlotToSymfonyValidatorAdapterInterface $validatorAdapter,
         ConstraintsProviderInterface $constraintsProvider
     ) {
-        $this->validationAdapter = $validationAdapter;
+        $this->validatorAdapter = $validatorAdapter;
         $this->constraintsProvider = $constraintsProvider;
     }
 
@@ -43,6 +43,6 @@ class CmsSlotValidator extends AbstractTransferValidator implements CmsSlotValid
      */
     public function validateCmsSlot(CmsSlotTransfer $cmsSlotTransfer): ValidationResponseTransfer
     {
-        return $this->validate($cmsSlotTransfer, $this->validationAdapter, $this->constraintsProvider);
+        return $this->validate($cmsSlotTransfer, $this->validatorAdapter, $this->constraintsProvider);
     }
 }
