@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ConfigurableBundleStorage\Communication\ConfigurableBundleStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig getConfig()
  */
-class ConfigurableBundleTemplateSlotStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ConfigurableBundleTemplateSlotStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * @api

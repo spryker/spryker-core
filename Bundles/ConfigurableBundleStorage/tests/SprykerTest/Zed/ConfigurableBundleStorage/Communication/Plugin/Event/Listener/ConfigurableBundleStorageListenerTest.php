@@ -13,8 +13,8 @@ use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlot
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStorageListener;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStorageListener;
+use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStoragePublishListener;
+use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStoragePublishListener;
 
 /**
  * Auto-generated group annotations
@@ -52,12 +52,12 @@ class ConfigurableBundleStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplateStorageListenerStoresData()
+    public function testConfigurableBundleTemplateStoragePublishListenerStoresData()
     {
         // Arrange
         $configurableBundleTemplateEntity = $this->tester->createConfigurableBundleTemplate();
 
-        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateStorageListener();
+        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateStoragePublishListener();
         $configurableBundleTemplateStorageListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
@@ -76,12 +76,12 @@ class ConfigurableBundleStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplateSlotStorageListenerStoresData()
+    public function testConfigurableBundleTemplateSlotStoragePublishListenerStoresData()
     {
         // Arrange
         $configurableBundleTemplateEntity = $this->tester->createConfigurableBundleTemplate();
 
-        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateSlotStorageListener();
+        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateSlotStoragePublishListener();
         $configurableBundleTemplateStorageListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [

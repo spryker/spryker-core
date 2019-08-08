@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStorageListener;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStorageListener;
+use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStoragePublishListener;
+use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStoragePublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -33,10 +33,8 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
         $this->addConfigurableBundleTemplatePublishListener($eventCollection)
             ->addConfigurableBundleTemplateCreateListener($eventCollection)
             ->addConfigurableBundleTemplateUpdateListener($eventCollection)
-            ->addConfigurableBundleTemplateDeleteListener($eventCollection)
             ->addConfigurableBundleTemplateSlotCreateListener($eventCollection)
-            ->addConfigurableBundleTemplateSlotUpdateListener($eventCollection)
-            ->addConfigurableBundleTemplateSlotDeleteListener($eventCollection);
+            ->addConfigurableBundleTemplateSlotUpdateListener($eventCollection);
 
         return $eventCollection;
     }
@@ -49,7 +47,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplatePublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateStorageListener());
+            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateStoragePublishListener());
 
         return $this;
     }
@@ -62,7 +60,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateStorageListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateStoragePublishListener());
 
         return $this;
     }
@@ -75,20 +73,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStorageListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateDeleteListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateStorageListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStoragePublishListener());
 
         return $this;
     }
@@ -101,7 +86,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateSlotCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_CREATE, new ConfigurableBundleTemplateSlotStorageListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_CREATE, new ConfigurableBundleTemplateSlotStoragePublishListener());
 
         return $this;
     }
@@ -114,20 +99,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateSlotUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UPDATE, new ConfigurableBundleTemplateSlotStorageListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateSlotDeleteListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_DELETE, new ConfigurableBundleTemplateSlotStorageListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UPDATE, new ConfigurableBundleTemplateSlotStoragePublishListener());
 
         return $this;
     }
