@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetRepository getRepository()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
  * @method \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  */

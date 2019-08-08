@@ -16,6 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNavigationStorageClientInterface;
 use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
+use Spryker\Glue\NavigationsRestApi\Processor\Expander\NavigationNodeExpanderInterface;
 use Spryker\Glue\NavigationsRestApi\Processor\Mapper\NavigationMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -37,18 +38,26 @@ class NavigationReader implements NavigationReaderInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\NavigationsRestApi\Processor\Expander\NavigationNodeExpanderInterface
+     */
+    protected $navigationNodeExpander;
+
+    /**
      * @param \Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToNavigationStorageClientInterface $navigationStorageClient
      * @param \Spryker\Glue\NavigationsRestApi\Processor\Mapper\NavigationMapperInterface $navigationMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\NavigationsRestApi\Processor\Expander\NavigationNodeExpanderInterface $navigationNodeExpander
      */
     public function __construct(
         NavigationsRestApiToNavigationStorageClientInterface $navigationStorageClient,
         NavigationMapperInterface $navigationMapper,
-        RestResourceBuilderInterface $restResourceBuilder
+        RestResourceBuilderInterface $restResourceBuilder,
+        NavigationNodeExpanderInterface $navigationNodeExpander
     ) {
         $this->navigationStorageClient = $navigationStorageClient;
         $this->navigationMapper = $navigationMapper;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->navigationNodeExpander = $navigationNodeExpander;
     }
 
     /**
@@ -104,6 +113,7 @@ class NavigationReader implements NavigationReaderInterface
                 $navigationStorageTransfer,
                 new RestNavigationAttributesTransfer()
             );
+        $restNavigationAttributesTransfer = $this->navigationNodeExpander->expand($restNavigationAttributesTransfer);
 
         return $this->restResourceBuilder->createRestResource(
             NavigationsRestApiConfig::RESOURCE_NAVIGATIONS,

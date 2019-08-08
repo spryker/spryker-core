@@ -7,11 +7,9 @@
 
 namespace Spryker\Shared\WebProfiler\Plugin\ServiceProvider;
 
-use LogicException;
 use ReflectionClass;
 use Silex\Application;
 use Silex\ControllerProviderInterface;
-use Silex\ServiceControllerResolver;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Store;
@@ -157,7 +155,7 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
         }
 
         $app['web_profiler.controller.profiler'] = $app->share(function ($app) {
-            return new ProfilerController($app['url_generator'], $app['profiler'], $app['twig'], $app['data_collector.templates'], $app['web_profiler.debug_toolbar.position']);
+            return new ProfilerController($app['url_generator'], $app['profiler'], $app['twig'], $app['data_collector.templates']);
         });
 
         $app['web_profiler.controller.router'] = $app->share(function ($app) {
@@ -239,17 +237,10 @@ class WebProfilerServiceProvider implements ServiceProviderInterface, Controller
     /**
      * @param \Silex\Application $app
      *
-     * @throws \LogicException
-     *
-     * @return mixed|\Silex\ControllerCollection
+     * @return \Silex\ControllerCollection
      */
     public function connect(Application $app)
     {
-        if (!$app['resolver'] instanceof ServiceControllerResolver) {
-            // using RuntimeException crashes PHP?!
-            throw new LogicException('You must enable the ServiceController service provider to be able to use the WebProfiler.');
-        }
-
         $controllers = $app['controllers_factory'];
 
         $controllers->get('/router/{token}', 'web_profiler.controller.router:panelAction')->bind('_profiler_router');

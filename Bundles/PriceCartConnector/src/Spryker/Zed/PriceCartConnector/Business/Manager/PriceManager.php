@@ -206,6 +206,7 @@ class PriceManager implements PriceManagerInterface
             $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
             $itemTransfer->setOriginUnitGrossPrice(0);
             $itemTransfer->setSumGrossPrice(0);
+
             return;
         }
 

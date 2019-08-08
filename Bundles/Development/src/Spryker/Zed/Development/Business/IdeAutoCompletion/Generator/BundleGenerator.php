@@ -12,7 +12,7 @@ class BundleGenerator extends AbstractGenerator
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'AutoCompletion';
     }

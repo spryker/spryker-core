@@ -8,6 +8,8 @@
 namespace Spryker\Zed\OauthCustomerConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthCustomerConnector\Business\Installer\OauthCustomerScopeInstaller;
+use Spryker\Zed\OauthCustomerConnector\Business\Installer\OauthCustomerScopeInstallerInterface;
 use Spryker\Zed\OauthCustomerConnector\Business\Model\CustomerProvider;
 use Spryker\Zed\OauthCustomerConnector\Business\Model\CustomerProviderInterface;
 use Spryker\Zed\OauthCustomerConnector\Business\Model\Installer;
@@ -46,11 +48,24 @@ class OauthCustomerConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return \Spryker\Zed\OauthCustomerConnector\Business\Model\InstallerInterface
      */
     public function createInstaller(): InstallerInterface
     {
         return new Installer($this->getOauthFacade(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthCustomerConnector\Business\Installer\OauthCustomerScopeInstallerInterface
+     */
+    public function createOauthCustomerScopeInstaller(): OauthCustomerScopeInstallerInterface
+    {
+        return new OauthCustomerScopeInstaller(
+            $this->getOauthFacade(),
+            $this->getConfig()
+        );
     }
 
     /**

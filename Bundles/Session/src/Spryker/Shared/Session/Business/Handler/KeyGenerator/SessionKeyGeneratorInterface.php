@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Session\Business\Handler\KeyGenerator;
 
+/**
+ * @deprecated Use `Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface` instead.
+ */
 interface SessionKeyGeneratorInterface
 {
     /**

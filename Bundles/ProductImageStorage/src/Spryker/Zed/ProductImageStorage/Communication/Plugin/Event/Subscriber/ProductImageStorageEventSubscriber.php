@@ -49,7 +49,9 @@ class ProductImageStorageEventSubscriber extends AbstractPlugin implements Event
         $this->addProductImageAbstractUnpublishStorageListener($eventCollection);
         $this->addProductImageConcretePublishStorageListener($eventCollection);
         $this->addProductImageConcreteUnpublishStorageListener($eventCollection);
+        $this->addProductAbstractImageCreateStorageListener($eventCollection);
         $this->addProductAbstractImageUpdateStorageListener($eventCollection);
+        $this->addProductConcreteImageCreateStorageListener($eventCollection);
         $this->addProductConcreteImageUpdateStorageListener($eventCollection);
         $this->addProductAbstractImageDeleteStorageListener($eventCollection);
         $this->addProductConcreteImageDeleteStorageListener($eventCollection);
@@ -112,6 +114,16 @@ class ProductImageStorageEventSubscriber extends AbstractPlugin implements Event
      *
      * @return void
      */
+    protected function addProductAbstractImageCreateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE, new ProductAbstractImageStoragePublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addProductAbstractImageUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductAbstractImageStoragePublishListener());
@@ -125,6 +137,16 @@ class ProductImageStorageEventSubscriber extends AbstractPlugin implements Event
     protected function addProductAbstractImageDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_DELETE, new ProductAbstractImageStorageUnpublishListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcreteImageCreateStorageListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE, new ProductConcreteImageStoragePublishListener());
     }
 
     /**

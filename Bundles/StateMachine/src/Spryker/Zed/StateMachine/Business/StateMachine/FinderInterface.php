@@ -29,39 +29,41 @@ interface FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      *
-     * @return array
+     * @return string[][]
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
      */
-    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag);
+    public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC');
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      * @param string $flag
+     * @param string $sort
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
      */
-    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag);
+    public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC');
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param array $sourceStates
+     * @param string[] $sourceStates
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,

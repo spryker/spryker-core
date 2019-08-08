@@ -24,23 +24,24 @@ class ProductSetToTouchBridge implements ProductSetToTouchInterface
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
+     * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId)
+    public function touchActive($itemType, $idItem, $keyChange = false)
     {
-        return $this->touchFacade->touchActive($itemType, $itemId);
+        return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }
 
     /**
      * @param string $itemType
-     * @param int $itemId
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId)
+    public function touchDeleted($itemType, $idItem)
     {
-        return $this->touchFacade->touchDeleted($itemType, $itemId);
+        return $this->touchFacade->touchDeleted($itemType, $idItem);
     }
 }

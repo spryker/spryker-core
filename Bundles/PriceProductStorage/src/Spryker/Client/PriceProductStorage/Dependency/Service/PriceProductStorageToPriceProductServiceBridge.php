@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProductStorage\Dependency\Service;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
+
 class PriceProductStorageToPriceProductServiceBridge implements PriceProductStorageToPriceProductServiceInterface
 {
     /**
@@ -20,6 +22,16 @@ class PriceProductStorageToPriceProductServiceBridge implements PriceProductStor
     public function __construct($priceProductService)
     {
         $this->priceProductService = $priceProductService;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    public function buildPriceProductGroupKey(PriceProductTransfer $priceProductTransfer): string
+    {
+        return $this->priceProductService->buildPriceProductGroupKey($priceProductTransfer);
     }
 
     /**

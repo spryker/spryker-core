@@ -10,7 +10,7 @@ namespace Spryker\Yves\ProductLabel\Plugin\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\ProductLabel\ProductLabelFactory getFactory()
@@ -32,7 +32,7 @@ class ProductLabelTwigServiceProvider extends AbstractPlugin implements ServiceP
         $app['twig'] = $app->share(
             $app->extend(
                 'twig',
-                function (Twig_Environment $twig) use ($twigExtension) {
+                function (Environment $twig) use ($twigExtension) {
                     $twig->addExtension($twigExtension);
 
                     return $twig;

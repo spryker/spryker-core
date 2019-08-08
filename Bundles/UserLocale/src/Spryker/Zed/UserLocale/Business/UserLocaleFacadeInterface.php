@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UserLocale\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface UserLocaleFacadeInterface
@@ -22,4 +23,14 @@ interface UserLocaleFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function expandUserTransferWithLocale(UserTransfer $userTransfer): UserTransfer;
+
+    /**
+     * Specification:
+     * - Returns locale transfer for current user.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentUserLocale(): LocaleTransfer;
 }

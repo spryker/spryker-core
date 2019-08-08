@@ -179,7 +179,9 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setPriceType($priceTypeTransfer)
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setMoneyValue($moneyValueTransfer)
-            ->setPriceDimension($priceProductDimensionTransfer);
+            ->setPriceDimension($priceProductDimensionTransfer)
+            ->setIsMergeable(true)
+            ->setSkuProduct($this->findProductSku($priceProductEntity));
     }
 
     /**
@@ -198,5 +200,20 @@ class PriceProductMapper implements PriceProductMapperInterface
             );
 
         return $priceProductDimensionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity
+     *
+     * @return string|null
+     */
+    protected function findProductSku(SpyPriceProduct $priceProductEntity): ?string
+    {
+        $productEntity = $priceProductEntity->getProduct();
+        if ($productEntity === null) {
+            return null;
+        }
+
+        return $productEntity->getSku();
     }
 }

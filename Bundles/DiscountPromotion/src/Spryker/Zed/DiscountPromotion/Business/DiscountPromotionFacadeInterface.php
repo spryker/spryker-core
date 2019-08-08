@@ -56,6 +56,18 @@ interface DiscountPromotionFacadeInterface
 
     /**
      * Specification:
+     *  - Removes discount promotion from persistence by given discount id if exists.
+     *
+     * @api
+     *
+     * @param int $idDiscount
+     *
+     * @return void
+     */
+    public function removePromotionByIdDiscount(int $idDiscount): void;
+
+    /**
+     * Specification:
      *  - Read discount promotion from persistence by given promotion id
      *
      * @api

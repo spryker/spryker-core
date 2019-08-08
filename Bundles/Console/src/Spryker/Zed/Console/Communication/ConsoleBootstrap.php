@@ -9,6 +9,7 @@ namespace Spryker\Zed\Console\Communication;
 
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Symfony\Component\Console\Application;
@@ -17,8 +18,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
+/**
+ * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
+ */
 class ConsoleBootstrap extends Application
 {
+    use BundleConfigResolverAwareTrait;
+
     /**
      * @var \Spryker\Zed\Console\Business\ConsoleFacadeInterface
      */
@@ -38,12 +44,13 @@ class ConsoleBootstrap extends Application
         Environment::initialize();
 
         parent::__construct($name, $version);
-        $this->setCatchExceptions(false);
+        $this->setCatchExceptions($this->getConfig()->shouldCatchExceptions());
         $this->addEventDispatcher();
 
         $this->application = new SprykerApplication();
 
         $this->registerServiceProviders();
+        $this->provideApplicationPlugins();
 
         Pimple::setApplication($this->application);
     }
@@ -62,6 +69,20 @@ class ConsoleBootstrap extends Application
     }
 
     /**
+     * @return void
+     */
+    private function provideApplicationPlugins(): void
+    {
+        $applicationPlugins = $this->getFacade()->getApplicationPlugins();
+
+        foreach ($applicationPlugins as $applicationPlugin) {
+            $applicationPlugin->provide($this->application);
+        }
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()` instead.
+     *
      * @return void
      */
     private function registerServiceProviders()
@@ -143,13 +164,16 @@ class ConsoleBootstrap extends Application
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->setDecorated($output);
-        $output->writeln($this->getInfoText());
+        if (!$input->hasParameterOption(['--format'], true)) {
+            $output->writeln($this->getInfoText());
+        }
 
         $this->application->boot();
 
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFacade()->preRun($input, $output);
         }
+
         $response = parent::doRun($input, $output);
 
         if (!$input->hasParameterOption(['--no-post'], true)) {

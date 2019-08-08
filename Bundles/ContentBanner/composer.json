@@ -5,8 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/content-storage-extension": "^1.0.0",
-    "spryker/kernel": "^3.8.0"
+    "spryker/content-storage": "^2.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -15,6 +16,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

@@ -257,7 +257,7 @@ interface OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
@@ -444,7 +444,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return string[][]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -457,7 +457,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return array
+     * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 

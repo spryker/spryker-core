@@ -59,16 +59,6 @@ class ProductSetToUrlBridge implements ProductSetToUrlInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer|string $urlTransfer Deprecated: String format is accepted for BC reasons only.
-     *
-     * @return bool
-     */
-    public function hasUrl($urlTransfer)
-    {
-        return $this->urlFacade->hasUrl($urlTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
      *
      * @return void

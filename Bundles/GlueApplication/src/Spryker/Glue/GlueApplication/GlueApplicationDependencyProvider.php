@@ -30,6 +30,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CONTROLLER_BEFORE_ACTION = 'PLUGIN_CONTROLLER_BEFORE_ACTION';
     public const PLUGIN_CONTROLLER_AFTER_ACTION = 'PLUGIN_CONTROLLER_AFTER_ACTION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    public const PLUGINS_REST_USER_FINDER = 'PLUGINS_REST_USER_FINDER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const CLIENT_STORE = 'CLIENT_STORE';
@@ -57,6 +58,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addControllerBeforeActionPlugins($container);
         $container = $this->addControllerAfterActionPlugins($container);
         $container = $this->addApplicationPlugins($container);
+        $container = $this->addRestUserFinderPlugins($container);
 
         return $container;
     }
@@ -258,6 +260,20 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestUserFinderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_REST_USER_FINDER] = function (Container $container) {
+            return $this->getRestUserFinderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected function getApplicationPlugins(): array
@@ -360,6 +376,14 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface[]
      */
     protected function getControllerAfterActionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
+     */
+    protected function getRestUserFinderPlugins(): array
     {
         return [];
     }

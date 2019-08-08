@@ -21,6 +21,8 @@ interface CmsBlockConstants
     public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
 
     /**
+     * @deprecated Use `\Spryker\Zed\CmsBlock\CmsBlockConfig::getThemeName()` instead.
+     *
      * Specification
      * - Defines the name of constant of default Yves template theme
      *

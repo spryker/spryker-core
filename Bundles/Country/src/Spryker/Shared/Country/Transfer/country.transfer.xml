@@ -24,5 +24,23 @@
         <property name="iso2Code" type="string" />
     </transfer>
 
+    <transfer name="CheckoutData">
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="iso2Code" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string" />
+    </transfer>
+
 </transfers>
 

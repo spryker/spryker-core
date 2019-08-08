@@ -11,14 +11,6 @@ interface ContentEvents
 {
     /**
      * Specification
-     * - This events will be used for spy_content publishing.
-     *
-     * @api
-     */
-    public const ENTITY_SPY_CONTENT_PUBLISH = 'Entity.spy_content.publish';
-
-    /**
-     * Specification
      * - This events will be used for spy_content un-publishing.
      *
      * @api
@@ -40,4 +32,12 @@ interface ContentEvents
      * @api
      */
     public const ENTITY_SPY_CONTENT_CREATE = 'Entity.spy_content.create';
+
+    /**
+     * Specification
+     * - This events will be used for content publishing.
+     *
+     * @api
+     */
+    public const CONTENT_PUBLISH = 'Content.content.publish';
 }

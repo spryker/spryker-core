@@ -180,7 +180,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
+            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
             $this->tester->assertTouchActive(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
@@ -203,7 +203,7 @@ class UrlHandlingTest extends FacadeTestAbstract
         foreach ($productUrlTransfer->getUrls() as $localizedUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setUrl($localizedUrlTransfer->getUrl());
-            $urlTransfer = $this->urlFacade->findUrl($urlTransfer);
+            $urlTransfer = $this->urlFacade->findUrlCaseInsensitive($urlTransfer);
 
             $this->tester->assertTouchDeleted(UrlConfig::RESOURCE_TYPE_URL, $urlTransfer->getIdUrl());
         }
@@ -215,7 +215,7 @@ class UrlHandlingTest extends FacadeTestAbstract
      *
      * @return void
      */
-    protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl)
+    protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl): void
     {
         $this->assertEquals($productUrl->getAbstractSku(), $productUrl->getAbstractSku());
 

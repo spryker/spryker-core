@@ -25,6 +25,8 @@ use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
 use Spryker\Zed\CmsGui\Communication\Tabs\GlossaryTabs;
 use Spryker\Zed\CmsGui\Communication\Tabs\PageTabs;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdater;
+use Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Symfony\Component\Form\FormInterface;
@@ -172,9 +174,12 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider
      */
-    public function createCmsGlossaryFormTypeDataProvider()
+    public function createCmsGlossaryFormTypeDataProvider(): CmsGlossaryFormTypeDataProvider
     {
-        return new CmsGlossaryFormTypeDataProvider($this->getCmsFacade());
+        return new CmsGlossaryFormTypeDataProvider(
+            $this->getCmsFacade(),
+            $this->createCmsGlossaryUpdater()
+        );
     }
 
     /**
@@ -238,7 +243,15 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig_Environment
+     * @return \Spryker\Zed\CmsGui\Communication\Updater\CmsGlossaryUpdaterInterface
+     */
+    public function createCmsGlossaryUpdater(): CmsGlossaryUpdaterInterface
+    {
+        return new CmsGlossaryUpdater($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+    }
+
+    /**
+     * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
     {
@@ -315,5 +328,21 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryAfterFindPluginInterface[]
+     */
+    public function getCmsGlossaryAfterFindPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_AFTER_FIND);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInterface[]
+     */
+    public function getCmsGlossaryBeforeSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CmsGuiDependencyProvider::PLUGINS_CMS_GLOSSARY_BEFORE_SAVE);
     }
 }

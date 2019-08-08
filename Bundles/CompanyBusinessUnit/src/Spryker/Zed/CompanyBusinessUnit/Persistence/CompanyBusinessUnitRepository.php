@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -170,6 +171,29 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     }
 
     /**
+     * @param string $companyBusinessUnitUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitByUuid(string $companyBusinessUnitUuid): ?CompanyBusinessUnitTransfer
+    {
+        $companyBusinessUnitEntity = $this->getSpyCompanyBusinessUnitQuery()
+            ->filterByUuid($companyBusinessUnitUuid)
+            ->findOne();
+
+        if (!$companyBusinessUnitEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyBusinessUnitMapper()
+            ->mapCompanyBusinessUnitEntityToCompanyBusinessUnitTransfer(
+                $companyBusinessUnitEntity,
+                new CompanyBusinessUnitTransfer()
+            );
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
@@ -247,8 +271,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     {
         $companyUserTransfer
             ->requireFkCompanyBusinessUnit()
-            ->getCustomer()
-                ->requireIdCustomer();
+            ->requireFkCustomer();
 
         $companyUserQuery = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
@@ -256,6 +279,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
 
         if (!$companyUserQuery->getTableMap()->hasColumn(static::COL_FK_CUSTOMER)) {
             return false;
+        }
+
+        if ($companyUserTransfer->getIdCompanyUser()) {
+            $companyUserQuery
+                ->filterByIdCompanyUser($companyUserTransfer->getIdCompanyUser(), Criteria::NOT_EQUAL);
         }
 
         return $companyUserQuery

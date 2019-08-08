@@ -165,6 +165,7 @@ class ElasticsearchWriterTest extends Unit
             ->getMock();
 
         $mockResponse->method('isOk')->willReturn(true);
+
         return $mockResponse;
     }
 }

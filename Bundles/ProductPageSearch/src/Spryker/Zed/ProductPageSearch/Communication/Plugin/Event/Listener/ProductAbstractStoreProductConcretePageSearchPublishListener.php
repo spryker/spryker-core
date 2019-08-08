@@ -11,7 +11,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()()
  */
 class ProductAbstractStoreProductConcretePageSearchPublishListener extends AbstractProductConcretePageSearchListener
 {

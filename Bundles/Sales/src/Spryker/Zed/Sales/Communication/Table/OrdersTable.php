@@ -28,6 +28,8 @@ class OrdersTable extends AbstractTable
     public const GRAND_TOTAL = 'GrandTotal';
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COLUMN_SEPARATOR = ' ';
+    protected const FULL_NAME_SEARCHABLE_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**
      * @var \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface
@@ -153,7 +155,7 @@ class OrdersTable extends AbstractTable
         $customer = $this->sanitizeService->escapeHtml($customer);
 
         if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $customerTransfer = $this->customerFacade->findCustomerByReference(
+            $customerTransfer = $this->customerFacade->findByReference(
                 $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
             );
 
@@ -281,7 +283,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             static::ITEM_STATE_NAMES_CSV => 'Order State',
-            static::GRAND_TOTAL => 'GrandTotal',
+            static::GRAND_TOTAL => 'Grand Total',
             static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
             static::URL => 'Actions',
         ];
@@ -297,6 +299,7 @@ class OrdersTable extends AbstractTable
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             SpySalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
+            $this->getFullNameSearchableField(),
         ];
     }
 
@@ -365,5 +368,18 @@ class OrdersTable extends AbstractTable
     public function buttonGeneratorCallable($url, $title, array $options)
     {
         return $this->generateButton($url, $title, $options);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getFullNameSearchableField(): string
+    {
+        return sprintf(
+            static::FULL_NAME_SEARCHABLE_FIELD_PATTERN,
+            SpySalesOrderTableMap::COL_FIRST_NAME,
+            static::COLUMN_SEPARATOR,
+            SpySalesOrderTableMap::COL_LAST_NAME
+        );
     }
 }

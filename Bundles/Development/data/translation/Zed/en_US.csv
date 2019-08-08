@@ -50,7 +50,6 @@ require-dev,require-dev
 "Simple Dependency Graph","Simple Dependency Graph"
 "Spryker Stability","Spryker Stability"
 Stability,Stability
-Stability,Stability
 "Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)"
 "Stability of all core modules","Stability of all core modules"
 "Suggested dependencies","Suggested dependencies"
