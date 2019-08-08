@@ -11,6 +11,7 @@
     "spryker/checkout-extension": "^1.2.0",
     "spryker/company": "^1.0.0",
     "spryker/company-user": "^1.0.0 || ^2.0.0",
+    "spryker/company-user-extension": "^1.1.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/persistent-cart": "^1.8.0 || ^3.0.0",
