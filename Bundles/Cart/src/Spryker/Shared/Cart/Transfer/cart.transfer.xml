@@ -11,6 +11,7 @@
     </transfer>
 
     <transfer name="CartChange">
+        <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
     </transfer>
