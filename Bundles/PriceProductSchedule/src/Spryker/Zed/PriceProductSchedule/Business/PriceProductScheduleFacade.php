@@ -185,7 +185,9 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      */
     public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
-        return new PriceProductScheduleResponseTransfer();
+        return $this->getFactory()
+            ->createPriceProductScheduleUpdater()
+            ->updateAndApplyPriceProductSchedule($priceProductScheduleTransfer);
     }
 
     /**
