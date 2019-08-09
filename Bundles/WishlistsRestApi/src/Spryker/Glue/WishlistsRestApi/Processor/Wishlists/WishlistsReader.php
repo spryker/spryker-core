@@ -155,7 +155,7 @@ class WishlistsReader implements WishlistsReaderInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
-            ->setFkCustomer($customerId)
+            ->setIdCustomer($customerId)
             ->setUuid($idWishlist);
         $wishlistResponseTransfer = $this->wishlistRestApiClient->getCustomerWishlistByUuid($wishlistRequestTransfer);
 

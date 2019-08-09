@@ -53,23 +53,6 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @api
      *
-     * @param int $idCustomer
-     * @param string $uuidWishlist
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
-     */
-    public function queryWishlistByCustomerIdAndUuid($idCustomer, $uuidWishlist)
-    {
-        return $this->getFactory()
-            ->createWishlistQuery()
-            ->filterByFkCustomer($idCustomer)
-            ->filterByUuid($uuidWishlist)
-            ->orderByName(Criteria::ASC);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idWishlist
      *
      * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery

@@ -420,29 +420,22 @@ class Reader implements ReaderInterface
     {
         $wishlistRequestTransfer
             ->requireUuid()
-            ->requireFkCustomer();
+            ->requireIdCustomer();
 
         $wishlistResponseTransfer = (new WishlistResponseTransfer())
             ->setIsSuccess(false);
 
-        $wishlistEntity = $this->queryContainer
-            ->queryWishlistByCustomerIdAndUuid($wishlistRequestTransfer->getFkCustomer(), $wishlistRequestTransfer->getUuid())
-            ->findOne();
+        $wishlistTransfer = $this->wishlistRepository
+            ->getWishlistByCustomerIdAndUuid($wishlistRequestTransfer->getIdCustomer(), $wishlistRequestTransfer->getUuid());
 
-        if (!$wishlistEntity) {
+        if (!$wishlistTransfer) {
             return $wishlistResponseTransfer;
         }
 
-        $wishlistRequestTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
-        $wishlistItemsTransfers = new ArrayObject(
-            $this->transferMapper->convertWishlistItemCollection($wishlistEntity->getSpyWishlistItems())
-        );
-
-        $wishlistResponseTransfer
-            ->setWishlist($wishlistRequestTransfer)
-            ->setWishlistItems($wishlistItemsTransfers);
-
-        return $wishlistResponseTransfer->setIsSuccess(true);
+        return $wishlistResponseTransfer
+            ->setWishlist($wishlistTransfer)
+            ->setWishlistItems($wishlistTransfer->getWishlistItems())
+            ->setIsSuccess(true);
     }
 
     /**

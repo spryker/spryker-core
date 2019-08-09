@@ -10,7 +10,6 @@ namespace Spryker\Zed\Wishlist\Business\Model;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
-use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
@@ -102,11 +101,11 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $wishlistResponseTransfer = new WishlistResponseTransfer();
+        $wishlistResponseTransfer = new WishlistTransfer();
 
         if (!$this->checkWishlistUniqueName($wishlistTransfer)) {
             return $wishlistResponseTransfer
@@ -158,11 +157,11 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
     {
-        $wishlistResponseTransfer = new WishlistResponseTransfer();
+        $wishlistResponseTransfer = new WishlistTransfer();
 
         if (!$this->checkWishlistUniqueNameWhenUpdating($wishlistTransfer)) {
             return $wishlistResponseTransfer

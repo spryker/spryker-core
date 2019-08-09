@@ -25,8 +25,8 @@ interface WishlistsRestApiFacadeInterface
     public function updateWishlistsUuid(): void;
 
     /**
-     *  Specification:
-     *  - Finds one wishlist by uuid and fkCustomer.
+     * Specification:
+     *  - Finds one wishlist by uuid and customer id.
      *  - Returns wishlist response with wishlist.
      *  - If error occurred returns wishlist response with errors.
      *
@@ -39,7 +39,7 @@ interface WishlistsRestApiFacadeInterface
     public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
-     *  Specification:
+     * Specification:
      *  - Updates existing wishlist records in DB.
      *  - Required properties: uuid, fkCustomer.
      *  - Returns wishlist response with updated wishlist.
@@ -54,7 +54,7 @@ interface WishlistsRestApiFacadeInterface
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
-     *  Specification:
+     * Specification:
      *  - Deletes existing wishlist from DB.
      *  - If error occurred returns wishlist response with errors.
      *

@@ -47,4 +47,30 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
 
         return $wishlistCollection;
     }
+
+    /**
+     * @api
+     *
+     * @param int $idCustomer
+     * @param string $uuidWishlist
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function getWishlistByCustomerIdAndUuid($idCustomer, $uuidWishlist): ?WishlistTransfer
+    {
+        $wishlistEntity = $this->getFactory()
+            ->createWishlistQuery()
+            ->filterByFkCustomer($idCustomer)
+            ->filterByUuid($uuidWishlist)
+            ->leftJoinSpyWishlistItem()
+            ->findOne();
+
+        if (!$wishlistEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createWishlistMapper()
+            ->mapWishlistEntityToWishlistTransferWithItems($wishlistEntity, new WishlistTransfer());
+    }
 }

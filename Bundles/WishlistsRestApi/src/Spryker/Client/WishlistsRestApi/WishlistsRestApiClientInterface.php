@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\WishlistResponseTransfer;
 interface WishlistsRestApiClientInterface
 {
     /**
-     *  Specification:
-     *  - Finds one wishlist by uuid and fkCustomer.
+     * Specification:
+     *  - Finds one wishlist by uuid and customer id.
      *  - Returns wishlist response with wishlist.
      *  - If error occurred returns wishlist response with errors.
      *
@@ -27,9 +27,9 @@ interface WishlistsRestApiClientInterface
     public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
-     *  Specification:
+     * Specification:
      *  - Updates existing wishlist records in DB.
-     *  - Required properties: uuid, fkCustomer.
+     *  - Required properties: uuid, idCustomer.
      *  - Returns wishlist response with updated wishlist.
      *  - If error occurred returns wishlist response with errors.
      *

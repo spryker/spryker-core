@@ -9,21 +9,21 @@ namespace Spryker\Client\WishlistsRestApi\Zed;
 
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
-use Spryker\Client\ZedRequest\ZedRequestClient;
+use Spryker\Client\WishlistsRestApi\Dependency\Client\WishlistsRestApiToZedRequestClientInterface;
 
 class WishlistsRestApiStub implements WishlistsRestApiStubInterface
 {
     /**
-     * @var \Spryker\Client\ZedRequest\ZedRequestClient
+     * @var \Spryker\Client\WishlistsRestApi\Dependency\Client\WishlistsRestApiToZedRequestClientInterface
      */
-    protected $zedStub;
+    protected $zedStubClient;
 
     /**
-     * @param \Spryker\Client\ZedRequest\ZedRequestClient $zedStub
+     * @param \Spryker\Client\WishlistsRestApi\Dependency\Client\WishlistsRestApiToZedRequestClientInterface $zedStubClient
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(WishlistsRestApiToZedRequestClientInterface $zedStubClient)
     {
-        $this->zedStub = $zedStub;
+        $this->zedStubClient = $zedStubClient;
     }
 
     /**
@@ -34,7 +34,7 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
-        $wishlistResponseTransfer = $this->zedStub->call(
+        $wishlistResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/get-customer-wishlist-by-uuid',
             $wishlistRequestTransfer
         );
@@ -50,7 +50,7 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
-        $wishlistResponseTransfer = $this->zedStub->call(
+        $wishlistResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/update-wishlist',
             $wishlistRequestTransfer
         );
@@ -66,7 +66,7 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
-        $wishlistResponseTransfer = $this->zedStub->call(
+        $wishlistResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/delete-wishlist',
             $wishlistRequestTransfer
         );

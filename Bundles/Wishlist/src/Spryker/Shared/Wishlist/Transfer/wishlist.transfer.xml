@@ -6,6 +6,7 @@
     <transfer name="Wishlist">
         <property name="idWishlist" type="int" />
         <property name="fkCustomer" type="int" />
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
         <property name="name" type="string" />
         <property name="numberOfItems" type="int" />
         <property name="createdAt" type="string" />
@@ -72,9 +73,14 @@
 
     <transfer name="WishlistResponse">
         <property name="wishlist" type="Wishlist" />
-        <property name="wishlistItems" type="WishlistItem[]" />
+        <property name="wishlistItems" type="WishlistItem[]" singular="WishlistItem" />
         <property name="isSuccess" type="bool" />
         <property name="errors" type="array" singular="error" />
+    </transfer>
+
+    <transfer name="WishlistRequest">
+        <property name="uuid" type="string"/>
+        <property name="idCustomer" type="int"/>
     </transfer>
 
     <transfer name="WishlistOverviewMeta">
