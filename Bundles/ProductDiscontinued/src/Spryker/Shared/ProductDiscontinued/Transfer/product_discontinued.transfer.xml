@@ -67,6 +67,11 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
     <transfer name="CheckoutResponse">
         <property name="isSuccess" type="bool" />
         <property name="errors" type="CheckoutError[]" singular="error" />
