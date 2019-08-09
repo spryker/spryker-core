@@ -26,6 +26,9 @@ class CreateController extends AbstractController
     protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
     protected const PARAM_REQUEST_REFERER = 'referer';
     protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
+    protected const KEY_TITLE = 'title';
+    protected const KEY_FORM = 'form';
+    protected const KEY_REDIRECT_URL = 'redirectUrl';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -45,8 +48,9 @@ class CreateController extends AbstractController
         }
 
         return $this->viewResponse([
-            'form' => $form->createView(),
-            'title' => $requestReader->getTitleFromRequest($request),
+            static::KEY_FORM => $form->createView(),
+            static::KEY_TITLE => $requestReader->getTitleFromRequest($request),
+            static::KEY_REDIRECT_URL => $redirectUrl,
         ]);
     }
 
