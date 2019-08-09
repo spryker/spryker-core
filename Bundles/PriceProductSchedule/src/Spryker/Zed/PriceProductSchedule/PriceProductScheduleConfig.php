@@ -40,7 +40,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     protected const KEY_FROM_INCLUDED = 'from_included';
     protected const KEY_TO_INCLUDED = 'to_included';
 
-    protected const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'price schedule data import';
+    protected const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'Default list';
 
     /**
      * @return array

@@ -19,8 +19,6 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapperInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReader;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReaderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreator;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProductTabCreator;
@@ -228,14 +226,6 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleDateConstraint(): PriceProductScheduleDateConstraint
     {
         return new PriceProductScheduleDateConstraint();
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReaderInterface
-     */
-    public function createRequestReader(): RequestReaderInterface
-    {
-        return new RequestReader();
     }
 
     /**

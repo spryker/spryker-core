@@ -27,8 +27,6 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferProductDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutor;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpander;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\CurrencyDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\DateDataValidator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\ImportDataValidator\ImportDataValidatorInterface;
@@ -211,7 +209,8 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListCreator(): PriceProductScheduleListCreatorInterface
     {
         return new PriceProductScheduleListCreator(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -471,16 +470,9 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
         return new PriceProductScheduleCreator(
             $this->createPriceProductScheduleWriter(),
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
-            $this->createPriceProductScheduleExpander()
+            $this->createPriceProductScheduleListFinder(),
+            $this->createPriceProductScheduleListCreator()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface
-     */
-    public function createPriceProductScheduleExpander(): PriceProductScheduleExpanderInterface
-    {
-        return new PriceProductScheduleExpander($this->createPriceProductScheduleListFinder());
     }
 
     /**

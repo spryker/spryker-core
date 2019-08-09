@@ -11,15 +11,16 @@ use Generated\Shared\Transfer\PriceProductScheduleErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinderInterface;
 
 class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterface
 {
     use TransactionTrait;
 
-    protected const MESSAGE_ERROR_CREATE_SCHEDULED_PRICE = 'Schedule price haven not been saved';
+    protected const MESSAGE_ERROR_CREATE_SCHEDULED_PRICE = 'Scheduled price creation failed';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface
@@ -32,23 +33,31 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
     protected $priceProductScheduleApplierByProductTypeResolver;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinderInterface
      */
-    protected $priceProductScheduleExpander;
+    protected $priceProductScheduleListFinder;
+
+    /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface
+     */
+    protected $priceProductScheduleListCreator;
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Expander\PriceProductScheduleExpanderInterface $priceProductScheduleExpander
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinderInterface $priceProductScheduleListFinder
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator
      */
     public function __construct(
         PriceProductScheduleWriterInterface $priceProductScheduleWriter,
         PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver,
-        PriceProductScheduleExpanderInterface $priceProductScheduleExpander
+        PriceProductScheduleListFinderInterface $priceProductScheduleListFinder,
+        PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator
     ) {
         $this->priceProductScheduleWriter = $priceProductScheduleWriter;
         $this->priceProductScheduleApplierByProductTypeResolver = $priceProductScheduleApplierByProductTypeResolver;
-        $this->priceProductScheduleExpander = $priceProductScheduleExpander;
+        $this->priceProductScheduleListFinder = $priceProductScheduleListFinder;
+        $this->priceProductScheduleListCreator = $priceProductScheduleListCreator;
     }
 
     /**
@@ -58,12 +67,31 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
      */
     public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
-        $priceProductScheduleTransfer = $this->priceProductScheduleExpander
+        $priceProductScheduleTransfer = $this
             ->expandPriceProductScheduleTransferWithPriceProductScheduleList($priceProductScheduleTransfer);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): PriceProductScheduleResponseTransfer {
             return $this->executeCreateLogicTransaction($priceProductScheduleTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    protected function expandPriceProductScheduleTransferWithPriceProductScheduleList(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
+        $priceProductScheduleListTransfer = $this->priceProductScheduleListFinder
+            ->findDefaultPriceProductScheduleList();
+
+        if ($priceProductScheduleListTransfer === null) {
+            $priceProductScheduleListTransfer = $this->priceProductScheduleListCreator
+                ->createDefaultPriceProductScheduleList();
+        }
+
+        return $priceProductScheduleTransfer->setPriceProductScheduleList($priceProductScheduleListTransfer);
     }
 
     /**

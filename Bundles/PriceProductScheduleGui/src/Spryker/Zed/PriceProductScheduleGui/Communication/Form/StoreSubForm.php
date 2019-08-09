@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -34,17 +35,19 @@ class StoreSubForm extends AbstractType
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
             /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
             $storeTransfer = $event->getData();
+            $currencyChoices = array_flip(
+                $this->getFactory()
+                    ->createPriceProductScheduleFormDataProvider()
+                    ->getOptions($storeTransfer->getIdStore())[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+            );
+
             $event->getForm()
                 ->getParent()
                 ->get(MoneyValueSubForm::FIELD_CURRENCY)
                 ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
                     'label' => 'Currency',
                     'placeholder' => 'Choose currency',
-                    'choices' => array_flip(
-                        $this->getFactory()
-                            ->createPriceProductScheduleFormDataProvider()
-                            ->getCurrencyValues($storeTransfer->getIdStore())
-                    ),
+                    'choices' => $currencyChoices,
                     'constraints' => [
                         new NotBlank(),
                     ],
@@ -59,7 +62,12 @@ class StoreSubForm extends AbstractType
      */
     protected function addIdStore(FormBuilderInterface $builder)
     {
-        $storeValues = array_flip($this->getFactory()->createPriceProductScheduleFormDataProvider()->getStoreValues());
+        $storeValues = array_flip(
+            $this->getFactory()
+                ->createPriceProductScheduleFormDataProvider()
+            ->getOptions()[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES]
+        );
+
         $builder->add(static::FIELD_ID_STORE, ChoiceType::class, [
             'label' => 'Store',
             'choices' => $storeValues,
