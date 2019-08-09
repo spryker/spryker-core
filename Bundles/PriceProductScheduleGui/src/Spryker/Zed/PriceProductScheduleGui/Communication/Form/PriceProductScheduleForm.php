@@ -105,7 +105,7 @@ class PriceProductScheduleForm extends AbstractType
         $builder->add(static::FIELD_ACTIVE_FROM, DateTimeType::class, [
             'label' => 'Start from (included)',
             'date_widget' => 'single_text',
-            'date_format' => 'yyyy-mm-dd',
+            'format' => 'Y-m-d H:i:s',
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
@@ -128,7 +128,7 @@ class PriceProductScheduleForm extends AbstractType
         $builder->add(static::FIELD_ACTIVE_TO, DateTimeType::class, [
             'label' => 'Finish at (included)',
             'date_widget' => 'single_text',
-            'date_format' => 'yyyy-mm-dd',
+            'format' => 'Y-m-d H:i:s',
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
@@ -161,9 +161,6 @@ class PriceProductScheduleForm extends AbstractType
             if ($time === null) {
                 return null;
             }
-            if ($time instanceof DateTime) {
-                return $time;
-            }
 
             return new DateTime($time);
         };
@@ -174,15 +171,12 @@ class PriceProductScheduleForm extends AbstractType
      */
     protected function createReverseTransformCallback(): Closure
     {
-        return function ($time) {
+        return function (?DateTime $time) {
             if ($time === null) {
                 return null;
             }
-            if ($time instanceof DateTime) {
-                return $time;
-            }
 
-            return new DateTime($time);
+            return $time->format('Y-m-d H:i:s');
         };
     }
 

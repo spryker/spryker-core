@@ -25,6 +25,7 @@ class EditController extends AbstractController
     protected const KEY_FORM = 'form';
     protected const KEY_TITLE = 'title';
     protected const KEY_REDIRECT_URL = 'redirectUrl';
+    protected const KEY_TIMEZONE_TEXT = 'timezoneText';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -57,11 +58,14 @@ class EditController extends AbstractController
 
         $title = $dataExtractor
             ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
+        $timezoneText = $dataExtractor
+            ->extractTimezoneTextFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
 
         return $this->viewResponse([
             static::KEY_FORM => $form->createView(),
             static::KEY_TITLE => $title,
             static::KEY_REDIRECT_URL => $redirectUrl,
+            static::KEY_TIMEZONE_TEXT => $timezoneText,
         ]);
     }
 

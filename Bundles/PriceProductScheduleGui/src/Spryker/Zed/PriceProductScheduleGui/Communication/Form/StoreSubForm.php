@@ -45,17 +45,21 @@ class StoreSubForm extends AbstractType
     {
         /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = $event->getData();
+        $choices = [];
+        if ($storeTransfer !== null) {
+            $choices = array_flip(
+                $this->getFactory()
+                    ->createPriceProductScheduleFormDataProvider()
+                    ->getCurrencyValues($storeTransfer->getIdStore())
+            );
+        }
         $event->getForm()
             ->getParent()
             ->get(MoneyValueSubForm::FIELD_CURRENCY)
             ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
                 'label' => 'Currency',
                 'placeholder' => 'Choose currency',
-                'choices' => array_flip(
-                    $this->getFactory()
-                        ->createPriceProductScheduleFormDataProvider()
-                        ->getCurrencyValues($storeTransfer->getIdStore())
-                ),
+                'choices' => $choices,
                 'constraints' => [
                     new NotBlank(),
                 ],

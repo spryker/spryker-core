@@ -66,8 +66,12 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 new PriceProductScheduleListTransfer()
             );
 
+        $storeTransfer = (new StoreTransfer())
+            ->fromArray($priceProductScheduleEntity->getStore()->toArray(), true);
+
         return $priceProductScheduleTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
+            ->setStore($storeTransfer)
             ->setPriceProduct($priceProductTransfer)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
     }

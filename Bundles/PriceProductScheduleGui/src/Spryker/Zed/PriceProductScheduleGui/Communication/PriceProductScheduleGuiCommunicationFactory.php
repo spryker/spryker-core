@@ -249,7 +249,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceProductScheduleDataExtractor(): PriceProductScheduleDataExtractorInterface
     {
-        return new PriceProductScheduleDataExtractor();
+        return new PriceProductScheduleDataExtractor($this->getStoreFacade());
     }
 
     /**
