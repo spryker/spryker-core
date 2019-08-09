@@ -59,4 +59,21 @@ class CompanyUnitAddressBusinessTester extends Actor
 
         return $companyUnitAddressIds;
     }
+
+    /**
+     * @param int $addressesAmount
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function createCompanyUnitAddressesCollection(int $addressesAmount): CompanyUnitAddressCollectionTransfer
+    {
+        $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
+        for ($i = 0; $i < $addressesAmount; $i++) {
+            $companyUnitAddressCollectionTransfer->addCompanyUnitAddress(
+                $this->haveCompanyUnitAddress()
+            );
+        }
+
+        return $companyUnitAddressCollectionTransfer;
+    }
 }
