@@ -111,7 +111,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command);
+        $process = $this->getProcess($command);
         $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
@@ -121,6 +121,20 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess(string $command): Process
+    {
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command);
+        }
+
+        return new Process($command);
     }
 
     /**

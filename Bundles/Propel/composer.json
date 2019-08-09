@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/log": "^3.0.0",
@@ -17,10 +18,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/container": "If you want to use the PropelApplicationPlugin.",
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {

@@ -375,6 +375,7 @@ class DiscountFacadeCalculateTest extends Unit
         $messengerFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
         $decisionRulePlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::DECISION_RULE_PLUGINS);
         $collectorStrategyPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS);
+        $collectedDiscountGroupingPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::COLLECTED_DISCOUNT_GROUPING_PLUGINS);
         $applicableFilterPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS);
         $currencyFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_CURRENCY);
         $storeFacade = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
@@ -382,47 +383,51 @@ class DiscountFacadeCalculateTest extends Unit
 
         $container = new Container();
 
-        $container[DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS] = function () use ($collectorStrategyPlugins) {
+        $container->set(DiscountDependencyProvider::PLUGIN_COLLECTOR_STRATEGY_PLUGINS, function () use ($collectorStrategyPlugins) {
             return $collectorStrategyPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::DECISION_RULE_PLUGINS] = function () use ($decisionRulePlugins) {
+        $container->set(DiscountDependencyProvider::DECISION_RULE_PLUGINS, function () use ($decisionRulePlugins) {
             return $decisionRulePlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::FACADE_MESSENGER] = function () use ($messengerFacade) {
+        $container->set(DiscountDependencyProvider::FACADE_MESSENGER, function () use ($messengerFacade) {
             return $messengerFacade;
-        };
+        });
 
-        $container[DiscountDependencyProvider::FACADE_STORE] = function () use ($storeFacade) {
+        $container->set(DiscountDependencyProvider::FACADE_STORE, function () use ($storeFacade) {
             return $storeFacade;
-        };
+        });
 
-        $container[DiscountDependencyProvider::COLLECTOR_PLUGINS] = function () use ($collectorPlugins) {
+        $container->set(DiscountDependencyProvider::COLLECTOR_PLUGINS, function () use ($collectorPlugins) {
             return $collectorPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::CALCULATOR_PLUGINS] = function () use ($calculatorPlugins) {
+        $container->set(DiscountDependencyProvider::COLLECTED_DISCOUNT_GROUPING_PLUGINS, function () use ($collectedDiscountGroupingPlugins) {
+            return $collectedDiscountGroupingPlugins;
+        });
+
+        $container->set(DiscountDependencyProvider::CALCULATOR_PLUGINS, function () use ($calculatorPlugins) {
             return $calculatorPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER] = function () use ($filterPluginMock) {
+        $container->set(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_FILTER, function () use ($filterPluginMock) {
             return [
                 $filterPluginMock,
             ];
-        };
+        });
 
-        $container[DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS] = function () use ($applicableFilterPlugins) {
+        $container->set(DiscountDependencyProvider::PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS, function () use ($applicableFilterPlugins) {
             return $applicableFilterPlugins;
-        };
+        });
 
-        $container[DiscountDependencyProvider::FACADE_CURRENCY] = function () use ($currencyFacade) {
+        $container->set(DiscountDependencyProvider::FACADE_CURRENCY, function () use ($currencyFacade) {
             return $currencyFacade;
-        };
+        });
 
-        $container[DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY] = function () use ($discountableItemTransformerStrategyPlugins) {
+        $container->set(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY, function () use ($discountableItemTransformerStrategyPlugins) {
             return $discountableItemTransformerStrategyPlugins;
-        };
+        });
 
         $discountBusinessFactory->setContainer($container);
 
