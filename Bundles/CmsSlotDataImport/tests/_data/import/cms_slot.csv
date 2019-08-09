@@ -1,0 +1,2 @@
+template_path,slot_key,content_provider,name,description,is_active
+"@CatalogPage/views/catalog/search.twig","footer-center","SprykerCmsBlock","Footer Center","After links block.",1
