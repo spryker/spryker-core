@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
-use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,9 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends AbstractController
 {
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
-    protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
-    protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
+
     protected const KEY_HEADER_REFERER = 'referer';
+    protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
+
+    protected const KEY_FORM = 'form';
+    protected const KEY_TITLE = 'title';
+    protected const KEY_REDIRECT_URL = 'redirectUrl';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -41,30 +46,49 @@ class EditController extends AbstractController
         $priceProductScheduleFormDataProvider = $this->getFactory()
             ->createPriceProductScheduleFormDataProvider($priceProductScheduleTransfer);
         $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+        $form->handleRequest($request);
+        $dataExtractor = $this->getFactory()
+            ->createPriceProductScheduleDataExtractor();
+        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->handleSubmitForm($form, $redirectUrl);
+        }
+
+        $title = $dataExtractor
+            ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
 
         return $this->viewResponse([
-            'form' => $form->createView(),
-            'title' => $this->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer),
+            static::KEY_FORM => $form->createView(),
+            static::KEY_TITLE => $title,
+            static::KEY_REDIRECT_URL => $redirectUrl,
         ]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param string $redirectUrl
      *
-     * @return string
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function extractTitleFromPriceProductScheduleTransfer(
-        PriceProductScheduleTransfer $priceProductScheduleTransfer
-    ): string {
-        $priceProductScheduleTransfer->requirePriceProduct();
-        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
-        $idProductAbstract = $priceProductTransfer->getIdProductAbstract();
-        if ($idProductAbstract !== null) {
-            return sprintf(static::TITLE_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
+    protected function handleSubmitForm(FormInterface $form, string $redirectUrl): RedirectResponse
+    {
+        /** @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer */
+        $priceProductScheduleTransfer = $form->getData();
+        $priceProductScheduleResponseTransfer = $this->getFactory()
+            ->getPriceProductScheduleFacade()
+            ->updateAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+
+        if ($priceProductScheduleResponseTransfer->getIsSuccess()) {
+            $this->addSuccessMessage(static::MESSAGE_SUCCESS);
+
+            return $this->redirectResponse($redirectUrl);
         }
 
-        $idProductConcrete = $priceProductTransfer->getIdProduct();
+        foreach ($priceProductScheduleResponseTransfer->getErrors() as $errorTransfer) {
+            $this->addErrorMessage($errorTransfer->getMessage());
+        }
 
-        return sprintf(static::TITLE_PRODUCT_CONCRETE_PATTERN, $idProductConcrete);
+        return $this->redirectResponse($redirectUrl);
     }
 }

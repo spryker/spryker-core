@@ -31,25 +31,35 @@ class StoreSubForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdStore($builder);
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
-            /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
-            $storeTransfer = $event->getData();
-            $event->getForm()
-                ->getParent()
-                ->get(MoneyValueSubForm::FIELD_CURRENCY)
-                ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
-                    'label' => 'Currency',
-                    'placeholder' => 'Choose currency',
-                    'choices' => array_flip(
-                        $this->getFactory()
-                            ->createPriceProductScheduleFormDataProvider()
-                            ->getCurrencyValues($storeTransfer->getIdStore())
-                    ),
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                ]);
-        });
+        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'initializeCurrencySubForm']);
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'initializeCurrencySubForm']);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    public function initializeCurrencySubForm(FormEvent $event): void
+    {
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $event->getData();
+        $event->getForm()
+            ->getParent()
+            ->get(MoneyValueSubForm::FIELD_CURRENCY)
+            ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
+                'label' => 'Currency',
+                'placeholder' => 'Choose currency',
+                'choices' => array_flip(
+                    $this->getFactory()
+                        ->createPriceProductScheduleFormDataProvider()
+                        ->getCurrencyValues($storeTransfer->getIdStore())
+                ),
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
     }
 
     /**
