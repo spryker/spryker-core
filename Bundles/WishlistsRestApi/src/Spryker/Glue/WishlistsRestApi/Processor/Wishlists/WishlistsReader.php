@@ -11,8 +11,10 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -46,21 +48,29 @@ class WishlistsReader implements WishlistsReaderInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface
+     */
+    protected $wishlistRestApiClient;
+
+    /**
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface $wishlistsResourceMapper
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper
+     * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistRestApiClient
      */
     public function __construct(
         WishlistsRestApiToWishlistClientInterface $wishlistClient,
         RestResourceBuilderInterface $restResourceBuilder,
         WishlistsResourceMapperInterface $wishlistsResourceMapper,
-        WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper
+        WishlistItemsResourceMapperInterface $wishlistsItemResourceMapper,
+        WishlistsRestApiClientInterface $wishlistRestApiClient
     ) {
         $this->wishlistClient = $wishlistClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->wishlistsResourceMapper = $wishlistsResourceMapper;
         $this->wishlistsItemResourceMapper = $wishlistsItemResourceMapper;
+        $this->wishlistRestApiClient = $wishlistRestApiClient;
     }
 
     /**
@@ -144,10 +154,10 @@ class WishlistsReader implements WishlistsReaderInterface
     public function getCustomerWishlistByUuid(int $customerId, string $idWishlist): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $wishlistTransfer = (new WishlistTransfer())
+        $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setFkCustomer($customerId)
             ->setUuid($idWishlist);
-        $wishlistResponseTransfer = $this->wishlistClient->getCustomerWishlistByUuid($wishlistTransfer);
+        $wishlistResponseTransfer = $this->wishlistRestApiClient->getCustomerWishlistByUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->createWishlistNotFoundError($restResponse);

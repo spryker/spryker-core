@@ -5,25 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\WishlistsRestApi\Business;
+namespace Spryker\Client\WishlistsRestApi;
 
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 
-interface WishlistsRestApiFacadeInterface
+interface WishlistsRestApiClientInterface
 {
-    /**
-     * Specification:
-     *  - Updates existing wishlist records in DB with generated UUID value.
-     *
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @return void
-     */
-    public function updateWishlistsUuid(): void;
-
     /**
      *  Specification:
      *  - Finds one wishlist by uuid and fkCustomer.
@@ -32,7 +20,7 @@ interface WishlistsRestApiFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
@@ -54,7 +42,7 @@ interface WishlistsRestApiFacadeInterface
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
-     *  Specification:
+     * Specification:
      *  - Deletes existing wishlist from DB.
      *  - If error occurred returns wishlist response with errors.
      *

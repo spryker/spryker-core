@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
+use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -411,13 +412,13 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistTransfer $wishlistTransfer): WishlistResponseTransfer
+    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        $wishlistTransfer
+        $wishlistRequestTransfer
             ->requireUuid()
             ->requireFkCustomer();
 
@@ -425,20 +426,20 @@ class Reader implements ReaderInterface
             ->setIsSuccess(false);
 
         $wishlistEntity = $this->queryContainer
-            ->queryWishlistByCustomerIdAndUuid($wishlistTransfer->getFkCustomer(), $wishlistTransfer->getUuid())
+            ->queryWishlistByCustomerIdAndUuid($wishlistRequestTransfer->getFkCustomer(), $wishlistRequestTransfer->getUuid())
             ->findOne();
 
         if (!$wishlistEntity) {
             return $wishlistResponseTransfer;
         }
 
-        $wishlistTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
+        $wishlistRequestTransfer = $this->transferMapper->convertWishlist($wishlistEntity);
         $wishlistItemsTransfers = new ArrayObject(
             $this->transferMapper->convertWishlistItemCollection($wishlistEntity->getSpyWishlistItems())
         );
 
         $wishlistResponseTransfer
-            ->setWishlist($wishlistTransfer)
+            ->setWishlist($wishlistRequestTransfer)
             ->setWishlistItems($wishlistItemsTransfers);
 
         return $wishlistResponseTransfer->setIsSuccess(true);

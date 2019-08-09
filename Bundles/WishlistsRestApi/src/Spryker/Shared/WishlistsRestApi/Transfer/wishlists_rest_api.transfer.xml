@@ -15,7 +15,13 @@
     </transfer>
 
     <transfer name="Wishlist">
-        <property name="uuid" type="string" />
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistRequest">
+        <property name="uuid" type="string"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="restWishlistsAttributes" type="RestWishlistsAttributes"/>
     </transfer>
 
 </transfers>

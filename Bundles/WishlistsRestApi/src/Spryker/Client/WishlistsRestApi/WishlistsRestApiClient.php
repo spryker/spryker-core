@@ -5,34 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\WishlistsRestApi\Business;
+namespace Spryker\Client\WishlistsRestApi;
 
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiBusinessFactory getFactory()
- * @method \Spryker\Zed\WishlistsRestApi\Persistence\WishlistsRestApiEntityManagerInterface getEntityManager()
+ * @method \Spryker\Client\WishlistsRestApi\WishlistsRestApiFactory getFactory()
  */
-class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiFacadeInterface
+class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiClientInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @return void
-     */
-    public function updateWishlistsUuid(): void
-    {
-        $this->getFactory()
-            ->createWishlistUuidWriter()
-            ->updateWishlistsUuid();
-    }
-
     /**
      * {@inheritdoc}
      *
@@ -44,7 +27,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      */
     public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createReader()->getCustomerWishlistByUuid($wishlistRequestTransfer);
+        return $this->getFactory()->createZedStub()->getCustomerWishlistByUuid($wishlistRequestTransfer);
     }
 
     /**
@@ -58,7 +41,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createWriter()->updateWishlist($wishlistRequestTransfer);
+        return $this->getFactory()->createZedStub()->updateWishlist($wishlistRequestTransfer);
     }
 
     /**
@@ -72,6 +55,6 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      */
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createWriter()->deleteWishlist($wishlistRequestTransfer);
+        return $this->getFactory()->createZedStub()->deleteWishlist($wishlistRequestTransfer);
     }
 }
