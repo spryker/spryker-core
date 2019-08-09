@@ -34,7 +34,7 @@ class CmsBlockStorageUnpublishListener extends AbstractPlugin implements EventBu
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsBlockIds = $this->getFactory()->getEventBehaviourFacade()->getEventTransferIds($eventTransfers);
+        $cmsBlockIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->unpublish($cmsBlockIds);
     }
