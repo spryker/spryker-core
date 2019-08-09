@@ -24,7 +24,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
-     * - Returns an array of event subscribers
+     * - Returns an array of event subscribers.
      *
      * @api
      *
@@ -33,10 +33,22 @@ interface ConsoleFacadeInterface
     public function getEventSubscriber();
 
     /**
-     * Specification
-     * - Returns an array of ServiceProviders
+     * Specification:
+     * - Returns an array of ApplicationPlugins.
      *
      * @api
+     *
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array;
+
+    /**
+     * Specification:
+     * - Returns an array of ServiceProviders.
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacadeInterface::getApplicationPlugins()` instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */
@@ -44,7 +56,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
-     * - Executes pre-run plugins which provided in ConsoleDependencyProvider
+     * - Executes pre-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api
      *
@@ -57,7 +69,7 @@ interface ConsoleFacadeInterface
 
     /**
      * Specification
-     * - Executes pos-run plugins which provided in ConsoleDependencyProvider
+     * - Executes pos-run plugins which provided in ConsoleDependencyProvider.
      *
      * @api
      *

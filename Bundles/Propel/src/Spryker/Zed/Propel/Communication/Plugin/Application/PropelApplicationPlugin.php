@@ -5,67 +5,61 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Propel\Communication\Plugin\Application;
 
 use Exception;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
-use Silex\Application;
-use Silex\ServiceProviderInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin` instead.
- *
  * @method \Spryker\Zed\Propel\Communication\PropelCommunicationFactory getFactory()
  * @method \Spryker\Zed\Propel\Business\PropelFacadeInterface getFacade()
  * @method \Spryker\Zed\Propel\PropelConfig getConfig()
  */
-class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    public const BUNDLE = 'Propel';
+    protected const DATA_SOURCE_NAME = 'zed';
 
     /**
-     * @param \Silex\Application $app
+     * {@inheritdoc}
+     * - Initializes PropelOrm to be used within Zed.
      *
-     * @return void
-     */
-    public function register(Application $app)
-    {
-    }
-
-    /**
-     * @param \Silex\Application $app
+     * @api
      *
-     * @return void
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function boot(Application $app)
+    public function provide(ContainerInterface $container): ContainerInterface
     {
         $manager = new ConnectionManagerSingle();
         $manager->setConfiguration($this->getPropelConfig());
-        $manager->setName('zed');
+        $manager->setName(static::DATA_SOURCE_NAME);
 
         $serviceContainer = $this->getServiceContainer();
-        $serviceContainer->setAdapterClass('zed', Config::get(PropelConstants::ZED_DB_ENGINE));
-        $serviceContainer->setConnectionManager('zed', $manager);
-        $serviceContainer->setDefaultDatasource('zed');
+        $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
+        $serviceContainer->setConnectionManager(static::DATA_SOURCE_NAME, $manager);
+        $serviceContainer->setDefaultDatasource(static::DATA_SOURCE_NAME);
 
         $this->addLogger($serviceContainer);
 
-        if (Config::get(PropelConstants::PROPEL_DEBUG, false) && $this->hasConnection()) {
+        if ($this->getConfig()->isDebugEnabled() && $this->hasConnection()) {
             /** @var \Propel\Runtime\Connection\ConnectionWrapper $connection */
             $connection = Propel::getConnection();
             $connection->useDebug(true);
         }
+
+        return $container;
     }
 
     /**
      * @return \Propel\Runtime\ServiceContainer\StandardServiceContainer
      */
-    protected function getServiceContainer()
+    protected function getServiceContainer(): StandardServiceContainer
     {
         /** @var \Propel\Runtime\ServiceContainer\StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
@@ -74,12 +68,9 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     }
 
     /**
-     * Allowed try/catch. If we have no database setup, getConnection throws an Exception
-     * ServiceProvider is called more then once and after setup of database we can enable debug
-     *
      * @return bool
      */
-    private function hasConnection()
+    private function hasConnection(): bool
     {
         try {
             Propel::getConnection();
@@ -93,12 +84,12 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     /**
      * @return array
      */
-    private function getPropelConfig()
+    private function getPropelConfig(): array
     {
-        $propelConfig = Config::get(PropelConstants::PROPEL)['database']['connections']['default'];
-        $propelConfig['user'] = Config::get(PropelConstants::ZED_DB_USERNAME);
-        $propelConfig['password'] = Config::get(PropelConstants::ZED_DB_PASSWORD);
-        $propelConfig['dsn'] = Config::get(PropelConstants::PROPEL)['database']['connections']['default']['dsn'];
+        $propelConfig = $this->getConfig()->getPropelConfig()['database']['connections']['default'];
+        $propelConfig['user'] = $this->getConfig()->getUsername();
+        $propelConfig['password'] = $this->getConfig()->getPassword();
+        $propelConfig['dsn'] = $this->getConfig()->getPropelConfig()['database']['connections']['default']['dsn'];
 
         return $propelConfig;
     }
@@ -108,7 +99,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
      *
      * @return void
      */
-    private function addLogger(StandardServiceContainer $serviceContainer)
+    private function addLogger(StandardServiceContainer $serviceContainer): void
     {
         $loggerCollection = $this->getFactory()->createLogger();
 
