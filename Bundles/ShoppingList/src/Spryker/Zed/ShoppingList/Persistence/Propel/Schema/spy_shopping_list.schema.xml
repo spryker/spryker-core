@@ -12,7 +12,7 @@
 
     <table name="spy_shopping_list_item" phpName="SpyShoppingListItem">
         <column name="id_shopping_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_shopping_list" requird="true" type="INTEGER"/>
+        <column name="fk_shopping_list" required="true" type="INTEGER"/>
         <column name="sku" type="VARCHAR" size="255"/>
         <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true"/>
 
@@ -27,7 +27,7 @@
     <table name="spy_shopping_list_company_user">
         <column name="id_shopping_list_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
-        <column name="fk_shopping_list" required="true" type="INTEGER"/>
+        <column name="fk_shopping_list" requird="true" type="INTEGER"/>
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
 
         <foreign-key name="spy_shopping_list_company_user-fk_company_user" foreignTable="spy_company_user">
