@@ -285,7 +285,7 @@ abstract class AbstractController
      */
     protected function getMessenger()
     {
-        $messenger = ($this->application->offsetExists('messenger')) ? $this->application['messenger'] : new NullMessenger();
+        $messenger = ($this->application->has('messenger')) ? $this->application->get('messenger') : new NullMessenger();
         $kernelToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $kernelToMessengerBridge;

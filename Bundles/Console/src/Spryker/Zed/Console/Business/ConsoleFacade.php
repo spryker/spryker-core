@@ -45,6 +45,20 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
      *
      * @api
      *
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array
+    {
+        return $this->getFactory()->getApplicationPlugins();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacade::getApplicationPlugins()` instead.
+     *
+     * @api
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getServiceProviders()
