@@ -412,7 +412,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
