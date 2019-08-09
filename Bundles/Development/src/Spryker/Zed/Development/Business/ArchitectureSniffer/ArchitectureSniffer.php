@@ -147,7 +147,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function runCommand($directory, array $options = [])
     {
-        $command = [str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command)];
+        $command = explode(' ', str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command));
         $command[] = '--minimumpriority';
         $command[] = $options[static::OPTION_PRIORITY];
 

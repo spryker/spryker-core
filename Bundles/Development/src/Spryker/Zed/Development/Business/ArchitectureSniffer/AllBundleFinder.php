@@ -53,11 +53,11 @@ class AllBundleFinder implements AllBundleFinderInterface
     public function find()
     {
         $allBundles = [];
-        $allBundles = $this->loadProjectBundles($allBundles);
-        $allBundles = $this->loadCoreDevelopmentBundles($allBundles);
-        $allBundles = $this->loadOtherCoreBundles($allBundles);
+        $allBundles[] = $this->loadProjectBundles();
+        $allBundles[] = $this->loadCoreDevelopmentBundles();
+        $allBundles[] = $this->loadOtherCoreBundles();
 
-        $allBundles = $this->addApplication($allBundles);
+        $allBundles = $this->addApplication(array_merge(...$allBundles));
 
         return $allBundles;
     }
@@ -65,11 +65,10 @@ class AllBundleFinder implements AllBundleFinderInterface
     /**
      * @param string $path
      * @param string $namespace
-     * @param array $allBundles
      *
      * @return array
      */
-    protected function findBundles($path, $namespace, array $allBundles)
+    protected function findBundles($path, $namespace): array
     {
         $directories = [];
 
@@ -82,62 +81,66 @@ class AllBundleFinder implements AllBundleFinderInterface
             // ~ Directory does not exist. It's not an error.
         }
 
+        if (!$directories) {
+            return [];
+        }
+
+        $bundles = [];
         foreach ($directories as $dir) {
-            $allBundles[] = [
+            $bundles[] = [
                 'bundle' => $dir->getFileName(),
                 'namespace' => $namespace,
                 'directory' => $dir->getPathName(),
             ];
         }
 
-        return $allBundles;
+        return $bundles;
     }
 
     /**
-     * @param array $allBundles
-     *
      * @return array
      */
-    protected function loadProjectBundles(array $allBundles)
+    protected function loadProjectBundles(): array
     {
+        $bundles = [];
         foreach ($this->projectNamespaces as $projectNamespace) {
             $path = APPLICATION_SOURCE_DIR . '/' . $projectNamespace . '/*';
-            $allBundles = $this->findBundles($path, $projectNamespace, $allBundles);
+            $bundles = $this->findBundles($path, $projectNamespace);
         }
 
-        return $allBundles;
+        return $bundles;
     }
 
     /**
-     * @param array $allBundles
-     *
      * @return array
      */
-    protected function loadCoreDevelopmentBundles(array $allBundles)
+    protected function loadCoreDevelopmentBundles(): array
     {
-        $path = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/Spryker/*';
-        $namespace = 'Spryker';
-        $allBundles = $this->findBundles($path, $namespace, $allBundles);
+        $bundles = [];
+        foreach (range('A', 'Z') as $letter) {
+            $path = sprintf('%s/spryker/spryker/Bundles/%s*/src/Spryker/*', APPLICATION_VENDOR_DIR, $letter);
+            $namespace = 'Spryker';
+            $bundles[] = $this->findBundles($path, $namespace);
+        }
 
-        return $allBundles;
+        return array_merge(...$bundles);
     }
 
     /**
-     * @param array $allBundles
-     *
      * @return array
      */
-    protected function loadOtherCoreBundles(array $allBundles)
+    protected function loadOtherCoreBundles(): array
     {
+        $bundles = [];
         foreach ($this->coreNamespaces as $coreNamespace) {
             $namespaceDir = $this->filter->filter($coreNamespace);
             $namespaceDir = strtolower($namespaceDir);
 
             $path = APPLICATION_VENDOR_DIR . '/' . $namespaceDir . '/*/src/*/*';
-            $allBundles = $this->findBundles($path, $coreNamespace, $allBundles);
+            $bundles = $this->findBundles($path, $coreNamespace);
         }
 
-        return $allBundles;
+        return $bundles;
     }
 
     /**
