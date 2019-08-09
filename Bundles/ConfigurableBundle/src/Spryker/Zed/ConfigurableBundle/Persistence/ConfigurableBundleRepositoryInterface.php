@@ -7,17 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
-
 interface ConfigurableBundleRepositoryInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
-     */
-    public function getSalesOrderConfiguredBundleCollectionByFilter(
-        SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
-    ): SalesOrderConfiguredBundleCollectionTransfer;
 }

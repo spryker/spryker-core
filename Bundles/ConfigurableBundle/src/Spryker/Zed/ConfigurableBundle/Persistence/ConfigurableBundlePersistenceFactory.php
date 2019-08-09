@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
-use Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleQuery;
-use Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\SalesOrderConfiguredBundleMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -18,19 +16,4 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpySalesOrderConfiguredBundleQuery
-     */
-    public function getSalesOrderConfiguredBundlePropelQuery(): SpySalesOrderConfiguredBundleQuery
-    {
-        return SpySalesOrderConfiguredBundleQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\SalesOrderConfiguredBundleMapper
-     */
-    public function createSalesOrderConfiguredBundleMapper(): SalesOrderConfiguredBundleMapper
-    {
-        return new SalesOrderConfiguredBundleMapper();
-    }
 }

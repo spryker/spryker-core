@@ -6,37 +6,16 @@
     <transfer name="Item">
         <property name="configuredBundleItem" type="ConfiguredBundleItem" />
         <property name="configuredBundle" type="ConfiguredBundle" />
-        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem" />
-        <property name="unitPrice" type="int" />
-        <property name="sumSubtotalAggregation" type="int" />
-        <property name="sumPriceToPayAggregation" type="int" />
-    </transfer>
-
-    <transfer name="Order">
-        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
     </transfer>
 
     <transfer name="ConfiguredBundle">
         <property name="template" type="ConfigurableBundleTemplate" />
         <property name="quantity" type="int" />
         <property name="groupKey" type="string" />
-        <property name="price" type="ConfiguredBundlePrice" />
-        <property name="items" type="Item[]" singular="item" />
-    </transfer>
-
-    <transfer name="ConfiguredBundlePrice">
-        <property name="unitPrice" type="int" />
-        <property name="sumPrice" type="int" />
-        <property name="sumSubtotalAggregation" type="int" />
-        <property name="sumPriceToPayAggregation" type="int" />
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
         <property name="slot" type="ConfigurableBundleTemplateSlot" />
-    </transfer>
-
-    <transfer name="ConfiguredBundleCollection">
-        <property name="configuredBundles" type="ConfiguredBundle[]" singular="configuredBundle" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
@@ -48,32 +27,6 @@
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int" />
         <property name="uuid" type="string" />
-    </transfer>
-
-    <transfer name="SalesOrderConfiguredBundleFilter">
-        <property name="configurableBundleTemplateUuid" type="string" />
-        <property name="configurableBundleTemplateSlotUuid" type="string" />
-        <property name="salesOrderItemIds" type="array" />
-    </transfer>
-
-    <transfer name="SalesOrderConfiguredBundleCollection">
-        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
-    </transfer>
-
-    <transfer name="SalesOrderConfiguredBundle">
-        <property name="idSalesOrderConfiguredBundle" type="int" />
-        <property name="configurableBundleTemplateUuid" type="string" />
-        <property name="name" type="string" />
-        <property name="quantity" type="int" />
-        <property name="price" type="ConfiguredBundlePrice" />
-        <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
-    </transfer>
-
-    <transfer name="SalesOrderConfiguredBundleItem">
-        <property name="idSalesOrderConfiguredBundleItem" type="int" />
-        <property name="idSalesOrderConfiguredBundle" type="int" />
-        <property name="idSalesOrderItem" type="int" />
-        <property name="configurableBundleTemplateSlotUuid" type="string" />
     </transfer>
 
 </transfers>

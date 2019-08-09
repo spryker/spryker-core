@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,51 +16,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBundleFacadeInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer
-     */
-    public function getSalesOrderConfiguredBundleCollectionByFilter(
-        SalesOrderConfiguredBundleFilterTransfer $salesOrderConfiguredBundleFilterTransfer
-    ): SalesOrderConfiguredBundleCollectionTransfer {
-        return $this->getRepository()
-            ->getSalesOrderConfiguredBundleCollectionByFilter($salesOrderConfiguredBundleFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function saveSalesOrderConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): void
-    {
-        $this->getFactory()
-            ->createSalesOrderConfiguredBundleWriter()
-            ->saveSalesOrderConfiguredBundlesFromQuote($quoteTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function expandOrderWithConfiguredBundles(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        return $this->getFactory()
-            ->createSalesOrderConfiguredBundleExpander()
-            ->expandOrderWithConfiguredBundles($orderTransfer);
-    }
 }

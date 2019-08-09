@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ConfigurableBundle;
 
-use Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -16,19 +14,4 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ConfigurableBundleClient extends AbstractClient implements ConfigurableBundleClientInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfiguredBundleCollectionTransfer
-     */
-    public function getConfiguredBundlesFromQuote(QuoteTransfer $quoteTransfer): ConfiguredBundleCollectionTransfer
-    {
-        return $this->getFactory()
-            ->createConfiguredBundleReader()
-            ->getConfiguredBundlesFromQuote($quoteTransfer);
-    }
 }

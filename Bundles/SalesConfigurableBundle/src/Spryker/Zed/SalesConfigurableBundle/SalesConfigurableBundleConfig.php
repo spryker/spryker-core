@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Persistence;
+namespace Spryker\Zed\SalesConfigurableBundle;
 
-interface ConfigurableBundleEntityManagerInterface
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+
+class SalesConfigurableBundleConfig extends AbstractBundleConfig
 {
 }
