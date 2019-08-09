@@ -48,6 +48,22 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getUsername(): string
+    {
+        return $this->get(PropelConstants::ZED_DB_USERNAME);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->get(PropelConstants::ZED_DB_PASSWORD);
+    }
+
+    /**
+     * @return string
+     */
     public function getSchemaDirectory()
     {
         $config = $this->getPropelConfig();
@@ -152,6 +168,14 @@ class PropelConfig extends AbstractBundleConfig
             'id-method-parameter',
             'behavior',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebugEnabled(): bool
+    {
+        return $this->get(PropelConstants::PROPEL_DEBUG, false);
     }
 
     /**

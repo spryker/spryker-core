@@ -195,6 +195,6 @@ class ProcessManager implements ProcessManagerInterface
      */
     protected function createProcess($command)
     {
-        return new Process($command, null, null, null, $this->config->getProcessTimeout());
+        return new Process(explode(' ', $command), null, null, null, $this->config->getProcessTimeout());
     }
 }

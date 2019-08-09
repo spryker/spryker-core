@@ -68,16 +68,16 @@ $(document).ready(function () {
         e.preventDefault();
 
         $(this).prop('disabled', true).addClass('disabled');
+
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
+        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
+
+        $form.attr('action', finalUrl);
+
         $(this).parents('form').first().submit();
-        var $item = $(this);
 
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
+        disableTrigger($(this));
     });
 
     $('.trigger-order-event').click(function(e){
@@ -86,11 +86,6 @@ $(document).ready(function () {
         var $item = $(this);
 
         disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, eventName);
     });
 
     $('.item-check').click(function(){

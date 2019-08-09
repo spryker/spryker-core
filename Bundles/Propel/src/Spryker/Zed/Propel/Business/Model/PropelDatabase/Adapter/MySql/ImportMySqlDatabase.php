@@ -50,7 +50,7 @@ class ImportMySqlDatabase implements ImportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, null, null, null, $this->config->getProcessTimeout());
+        $process = new Process(explode(' ', $command), null, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {

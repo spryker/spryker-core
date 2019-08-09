@@ -91,7 +91,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command, null, $this->getEnvironmentVariables(), null, $this->config->getProcessTimeout());
+        $process = $this->getProcess($command);
         $process->inheritEnvironmentVariables(true);
         $process->run();
 
@@ -102,6 +102,20 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess($command)
+    {
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command, null, $this->getEnvironmentVariables(), null, $this->config->getProcessTimeout());
+        }
+
+        return new Process($command, null, $this->getEnvironmentVariables(), null, $this->config->getProcessTimeout());
     }
 
     /**

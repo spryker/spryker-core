@@ -36,7 +36,7 @@ class StorageExporter implements StorageExporterInterface
     public function export($destination)
     {
         $command = sprintf('redis-cli -p %s --rdb %s', $this->config->getRedisPort(), $destination);
-        $process = new Process($command, APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
         $process->run();
 
         if ($process->isSuccessful()) {

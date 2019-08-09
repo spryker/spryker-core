@@ -135,9 +135,11 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
      */
     protected function getProcess($command)
     {
-        $process = new Process($command, null, null, null, $this->config->getProcessTimeout());
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command, null, null, null, $this->config->getProcessTimeout());
+        }
 
-        return $process;
+        return new Process($command, null, null, null, $this->config->getProcessTimeout());
     }
 
     /**
