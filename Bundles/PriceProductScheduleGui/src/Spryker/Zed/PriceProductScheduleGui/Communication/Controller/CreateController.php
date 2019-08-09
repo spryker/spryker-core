@@ -18,13 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
-    protected const PARAM_ID_PRODUCT = 'idProduct';
-    protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
-    protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
-    protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
-    protected const REDIRECT_URL_PRODUCT_CONCRETE_PATTERN = '/product-management/edit/variant?id-product=%s&id-product-abstract=%s#tab-content-scheduled_prices';
-    protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
-    protected const PARAM_REQUEST_REFERER = 'referer';
     protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
     protected const KEY_TITLE = 'title';
     protected const KEY_FORM = 'form';
