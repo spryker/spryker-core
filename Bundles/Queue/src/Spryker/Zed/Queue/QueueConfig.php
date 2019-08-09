@@ -17,7 +17,7 @@ class QueueConfig extends AbstractBundleConfig
     public const DEFAULT_PROCESS_TRIGGER_INTERVAL_MICROSECONDS = 1000;
     public const DEFAULT_THRESHOLD = 59;
 
-    protected const PROCESS_TIMEOUT = 60;
+    protected const PROCESS_TIMEOUT = 3600;
 
     /**
      * @return array|null
