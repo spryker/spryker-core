@@ -213,12 +213,12 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
-     * @param int $id
+     * @param int $idPriceProductSchedule
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
-    public function findPriceProductScheduleById(int $id): ?PriceProductScheduleTransfer
+    public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer
     {
-        return $this->getRepository()->findPriceProductScheduleById($id);
+        return $this->getRepository()->findPriceProductScheduleById($idPriceProductSchedule);
     }
 }

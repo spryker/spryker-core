@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication;
 
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
@@ -197,14 +198,17 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer|null $priceProductScheduleTransfer
+     *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider
      */
-    public function createPriceProductScheduleFormDataProvider(): PriceProductScheduleFormDataProvider
+    public function createPriceProductScheduleFormDataProvider(?PriceProductScheduleTransfer $priceProductScheduleTransfer = null): PriceProductScheduleFormDataProvider
     {
         return new PriceProductScheduleFormDataProvider(
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
-            $this->getCurrencyFacade()
+            $this->getCurrencyFacade(),
+            $priceProductScheduleTransfer
         );
     }
 

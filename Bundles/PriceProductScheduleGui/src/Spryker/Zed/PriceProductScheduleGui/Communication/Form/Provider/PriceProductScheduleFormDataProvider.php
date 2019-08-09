@@ -30,18 +30,26 @@ class PriceProductScheduleFormDataProvider
     protected $currencyFacade;
 
     /**
+     * @var \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    protected $priceProductScheduleTransfer;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer|null $priceProductScheduleTransfer
      */
     public function __construct(
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
+        PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade,
+        ?PriceProductScheduleTransfer $priceProductScheduleTransfer
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
         $this->currencyFacade = $currencyFacade;
+        $this->priceProductScheduleTransfer = $priceProductScheduleTransfer;
     }
 
     /**
@@ -103,7 +111,11 @@ class PriceProductScheduleFormDataProvider
      */
     public function getData(): PriceProductScheduleTransfer
     {
-        return new PriceProductScheduleTransfer();
+        if ($this->priceProductScheduleTransfer === null) {
+            return new PriceProductScheduleTransfer();
+        }
+
+        return $this->priceProductScheduleTransfer;
     }
 
     /**

@@ -177,9 +177,9 @@ interface PriceProductScheduleFacadeInterface
      *
      * @api
      *
-     * @param int $id
+     * @param int $idPriceProductSchedule
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
-    public function findPriceProductScheduleById(int $id): ?PriceProductScheduleTransfer;
+    public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer;
 }
