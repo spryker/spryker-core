@@ -97,14 +97,14 @@ class SetupHelper extends Module
     /**
      * @param string $argument
      *
-     * @return string
+     * @return array
      */
-    protected function buildCommandToExecute($argument)
+    protected function buildCommandToExecute($argument): array
     {
         if ($this->hasSprykerSetup()) {
-            return sprintf(static::SPRYKER_DEPLOY . ' %s', $argument);
+            return [sprintf(static::SPRYKER_DEPLOY . ' %s', $argument)];
         }
 
-        return sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument);
+        return [sprintf(static::TEST_ENV_SCRIPT . ' %s', $argument)];
     }
 }

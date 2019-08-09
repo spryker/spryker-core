@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class PriceProductMapper
 {
@@ -42,6 +43,87 @@ class PriceProductMapper
             $priceProductDimensionTransfer,
             $priceProductStoreEntityData
         );
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     * @param string[] $allowedProductSkus
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function mapPriceProductStoreEntitiesToPriceProductTransfers(ObjectCollection $priceProductStoreEntities, array $allowedProductSkus): array
+    {
+        $priceProductTransfers = [];
+
+        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
+            $priceProductTransfer = $this->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
+
+            if (!$this->hasSeveralConcretesInSameAbstract($priceProductStoreEntity)) {
+                $priceProductTransfers[] = $priceProductTransfer;
+
+                continue;
+            }
+
+            $priceProductTransfers = $this->duplicatePriceProductTransferPerProductEntity(
+                $priceProductTransfers,
+                $priceProductStoreEntity,
+                $priceProductTransfer,
+                $allowedProductSkus
+            );
+        }
+
+        return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     *
+     * @return bool
+     */
+    protected function hasSeveralConcretesInSameAbstract(SpyPriceProductStore $priceProductStoreEntity): bool
+    {
+        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract();
+
+        if (!$abstractProductEntity) {
+            return false;
+        }
+
+        return $abstractProductEntity
+            ->getSpyProducts()
+            ->count() !== 1;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param string[] $allowedProductSkus
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function duplicatePriceProductTransferPerProductEntity(
+        array $priceProductTransfers,
+        SpyPriceProductStore $priceProductStoreEntity,
+        PriceProductTransfer $priceProductTransfer,
+        array $allowedProductSkus
+    ): array {
+        $concreateProductEntities = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract()
+            ->getSpyProducts();
+
+        foreach ($concreateProductEntities as $concreateProductEntitity) {
+            // Added due to propel entity cache system
+            if (!in_array($concreateProductEntitity->getSku(), $allowedProductSkus)) {
+                continue;
+            }
+
+            $priceProductTransfers[] = (new PriceProductTransfer())
+                ->fromArray($priceProductTransfer->toArray())
+                ->setSkuProduct($concreateProductEntitity->getSku());
+        }
+
+        return $priceProductTransfers;
     }
 
     /**

@@ -88,6 +88,9 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * {@inheritdoc}
      *
      * @api
@@ -102,6 +105,9 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * {@inheritdoc}
      *
      * @api

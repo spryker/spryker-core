@@ -53,6 +53,9 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * {@inheritdoc}
      *
      * @api
@@ -67,6 +70,9 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * {@inheritdoc}
      *
      * @api

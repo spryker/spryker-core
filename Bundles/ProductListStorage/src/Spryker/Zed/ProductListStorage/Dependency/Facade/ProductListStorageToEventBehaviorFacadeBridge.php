@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductListStorage\Dependency\Facade;
 
-class ProductListStorageToEventBehaviourFacadeBridge implements ProductListStorageToEventBehaviourFacadeInterface
+class ProductListStorageToEventBehaviorFacadeBridge implements ProductListStorageToEventBehaviorFacadeInterface
 {
     /**
      * @var \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface
