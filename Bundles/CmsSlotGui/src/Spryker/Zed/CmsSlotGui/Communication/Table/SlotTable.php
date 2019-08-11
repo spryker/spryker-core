@@ -14,8 +14,27 @@ use Spryker\Zed\CmsSlotGui\Communication\Controller\ActivateSlotController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class SlotListTable extends AbstractTable
+class SlotTable extends AbstractTable
 {
+    public const TABLE_CLASS = 'js-cms-slot-list-table';
+
+    protected const COL_KEY = SpyCmsSlotTableMap::COL_KEY;
+    protected const COL_NAME = SpyCmsSlotTableMap::COL_NAME;
+    protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
+    protected const COL_OWNERSHIP = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
+    protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
+    protected const COL_ACTIONS = 'actions';
+
+    protected const VALUE_COL_KEY = 'Slot key';
+    protected const VALUE_COL_NAME = 'Name';
+    protected const VALUE_COL_DESCRIPTION = 'Description';
+    protected const VALUE_COL_OWNERSHIP = 'Ownership';
+    protected const VALUE_COL_STATUS = 'Status';
+    protected const VALUE_COL_ACTIONS = 'Actions';
+
+    protected const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
+    protected const URL_DEACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/deactivate';
+
     /**
      * @var \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
      */
@@ -43,29 +62,28 @@ class SlotListTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $this->tableClass = SlotListConstants::TABLE_CLASS;
+        $this->tableClass = static::TABLE_CLASS;
 
         $config = $this->setHeader($config);
 
         $config->setSortable([
-            SlotListConstants::COL_KEY,
-            SlotListConstants::COL_NAME,
-            SlotListConstants::COL_OWNERSHIP,
-            SlotListConstants::COL_STATUS,
+            static::COL_KEY,
+            static::COL_NAME,
+            static::COL_OWNERSHIP,
+            static::COL_STATUS,
         ]);
 
-        $config->setDefaultSortField(SlotListConstants::COL_KEY, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_KEY, TableConfiguration::SORT_ASC);
 
         $config->setSearchable([
-            SlotListConstants::COL_KEY,
-            SlotListConstants::COL_NAME,
-            SlotListConstants::COL_DESCRIPTION,
-            SlotListConstants::COL_OWNERSHIP,
+            static::COL_KEY,
+            static::COL_NAME,
+            static::COL_DESCRIPTION,
+            static::COL_OWNERSHIP,
         ]);
 
-        $config->addRawColumn(SlotListConstants::COL_ACTIONS);
-        $config->addRawColumn(SlotListConstants::COL_STATUS);
-        $config->setPageLength(3);
+        $config->addRawColumn(static::COL_ACTIONS);
+        $config->addRawColumn(static::COL_STATUS);
 
         return $config;
     }
@@ -78,12 +96,12 @@ class SlotListTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            SlotListConstants::COL_KEY => 'Slot key',
-            SlotListConstants::COL_NAME => 'Name',
-            SlotListConstants::COL_DESCRIPTION => 'Description',
-            SlotListConstants::COL_OWNERSHIP => 'Ownership',
-            SlotListConstants::COL_STATUS => 'Status',
-            SlotListConstants::COL_ACTIONS => 'Actions',
+            static::COL_KEY => static::VALUE_COL_KEY,
+            static::COL_NAME => static::VALUE_COL_NAME,
+            static::COL_DESCRIPTION => static::VALUE_COL_DESCRIPTION,
+            static::COL_OWNERSHIP => static::VALUE_COL_OWNERSHIP,
+            static::COL_STATUS => static::VALUE_COL_STATUS,
+            static::COL_ACTIONS => static::VALUE_COL_ACTIONS,
         ];
 
         $config->setHeader($header);
@@ -96,7 +114,7 @@ class SlotListTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         if (!$this->idCmsSlotTemplate) {
             return [];
@@ -107,17 +125,17 @@ class SlotListTable extends AbstractTable
                 ->filterByFkCmsSlotTemplate($this->idCmsSlotTemplate)
             ->endUse();
 
-        $slots = $this->runQuery($this->cmsSlotQuery, $config);
+        $slotResults = $this->runQuery($this->cmsSlotQuery, $config);
         $results = [];
 
-        foreach ($slots as $key => $slot) {
+        foreach ($slotResults as $key => $slot) {
             $results[] = [
-                SlotListConstants::COL_KEY => $slot[SpyCmsSlotTableMap::COL_KEY],
-                SlotListConstants::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
-                SlotListConstants::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
-                SlotListConstants::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
-                SlotListConstants::COL_STATUS => $this->getStatus($slot),
-                SlotListConstants::COL_ACTIONS => $this->buildLinks($slot),
+                static::COL_KEY => $slot[SpyCmsSlotTableMap::COL_KEY],
+                static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
+                static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
+                static::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
+                static::COL_STATUS => $this->getStatus($slot),
+                static::COL_ACTIONS => $this->buildLinks($slot),
             ];
         }
 
@@ -136,21 +154,21 @@ class SlotListTable extends AbstractTable
             'Edit'
         );
 
-        $activateButton = $this->generateButton(
+        $statusToggleButton = $this->generateButton(
             $this->getUrlActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
             'Activate',
-            ['class' => SlotListConstants::CLASS_ACTIVATE_BUTTON]
+            ['class' => 'btn-view js-slot-activation']
         );
 
-        if ($slot[SlotListConstants::COL_STATUS]) {
-            $activateButton = $this->generateButton(
-                $this->getUrlDeActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
+        if ($slot[static::COL_STATUS]) {
+            $statusToggleButton = $this->generateButton(
+                $this->getUrldeActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
-                ['class' => SlotListConstants::CLASS_DEACTIVATE_BUTTON]
+                ['class' => 'btn-danger js-slot-activation']
             );
         }
 
-        $buttons[] = $activateButton;
+        $buttons[] = $statusToggleButton;
 
         return implode(' ', $buttons);
     }
@@ -176,7 +194,7 @@ class SlotListTable extends AbstractTable
      */
     protected function getUrlActivate(int $idCmsSlot): string
     {
-        return Url::generate(SlotListConstants::URL_ACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
+        return Url::generate(static::URL_ACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
     }
 
     /**
@@ -186,6 +204,6 @@ class SlotListTable extends AbstractTable
      */
     protected function getUrlDeactivate(int $idCmsSlot): string
     {
-        return Url::generate(SlotListConstants::URL_DEACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
+        return Url::generate(static::URL_DEACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
     }
 }

@@ -11,18 +11,18 @@ use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Spryker\Zed\CmsSlotGui\CmsSlotGuiDependencyProvider;
 use Spryker\Zed\CmsSlotGui\Communication\Dependency\CmsSlotGuiToCmsSlotFacadeInterface;
-use Spryker\Zed\CmsSlotGui\Communication\Table\SlotListTable;
-use Spryker\Zed\CmsSlotGui\Communication\Table\TemplateListTable;
+use Spryker\Zed\CmsSlotGui\Communication\Table\SlotTable;
+use Spryker\Zed\CmsSlotGui\Communication\Table\TemplateTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CmsSlotGui\Communication\Table\TemplateListTable
+     * @return \Spryker\Zed\CmsSlotGui\Communication\Table\TemplateTable
      */
-    public function createTemplateListTable(): TemplateListTable
+    public function createTemplateListTable(): TemplateTable
     {
-        return new TemplateListTable(
+        return new TemplateTable(
             $this->getCmsSlotTemplateQuery()
         );
     }
@@ -30,11 +30,11 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param int|null $idSlotTemplate
      *
-     * @return \Spryker\Zed\CmsSlotGui\Communication\Table\SlotListTable
+     * @return \Spryker\Zed\CmsSlotGui\Communication\Table\SlotTable
      */
-    public function createSlotListTable(?int $idSlotTemplate = null): SlotListTable
+    public function createSlotListTable(?int $idSlotTemplate = null): SlotTable
     {
-        return new SlotListTable(
+        return new SlotTable(
             $this->getCmsSlotQuery(),
             $idSlotTemplate
         );

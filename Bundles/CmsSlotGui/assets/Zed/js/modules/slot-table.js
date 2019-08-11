@@ -42,7 +42,7 @@ var SlotTable = function (options) {
 
     this.displayOwnershipColumn = function (api) {
         var ownershipColumnIndex = null;
-        var ownerships = [];
+        var ownershipValues = [];
         var ownershipColumn = null;
 
         api.columns().header().each(function (element, index) {
@@ -56,11 +56,11 @@ var SlotTable = function (options) {
             ownershipColumn.visible(true);
             var ownershipsArray = ownershipColumn.data()[0];
 
-            ownerships = ownershipsArray.filter(function (value, index, self) {
+            ownershipValues = ownershipsArray.filter(function (value, index, self) {
                 return self.indexOf(value) === index;
             });
 
-            if (ownerships.length === 1) {
+            if (ownershipValues.length === 1) {
                 ownershipColumn.visible(false);
             }
         }

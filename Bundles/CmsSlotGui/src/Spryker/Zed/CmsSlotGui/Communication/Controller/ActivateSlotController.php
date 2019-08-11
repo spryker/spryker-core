@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ActivateSlotController extends AbstractController
 {
     public const PARAM_ID_CMS_SLOT = 'id-cms-slot';
+    protected const RESPONSE_SUCCESS_KEY = 'success';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -28,7 +29,7 @@ class ActivateSlotController extends AbstractController
 
         $this->getFactory()->getCmsSlotFacade()->activateByIdCmsSlot($idCmsSlot);
 
-        return $this->jsonResponse(['success' => true]);
+        return $this->jsonResponse([static::RESPONSE_SUCCESS_KEY => true]);
     }
 
     /**

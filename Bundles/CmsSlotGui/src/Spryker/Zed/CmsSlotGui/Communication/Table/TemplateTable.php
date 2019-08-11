@@ -12,8 +12,12 @@ use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class TemplateListTable extends AbstractTable
+class TemplateTable extends AbstractTable
 {
+    protected const COL_ID = SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE;
+    protected const COL_NAME = SpyCmsSlotTemplateTableMap::COL_NAME;
+    protected const COL_DESCRIPTION = SpyCmsSlotTemplateTableMap::COL_DESCRIPTION;
+
     protected const TABLE_IDENTIFIER = 'template-list-table';
 
     /**
@@ -41,16 +45,16 @@ class TemplateListTable extends AbstractTable
         $config = $this->setHeader($config);
 
         $config->setSortable([
-            TemplateListConstants::COL_ID,
-            TemplateListConstants::COL_NAME,
+            static::COL_ID,
+            static::COL_NAME,
         ]);
 
-        $config->setDefaultSortField(TemplateListConstants::COL_ID, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_ID, TableConfiguration::SORT_ASC);
 
         $config->setSearchable([
-            TemplateListConstants::COL_ID,
-            TemplateListConstants::COL_NAME,
-            TemplateListConstants::COL_DESCRIPTION,
+            static::COL_ID,
+            static::COL_NAME,
+            static::COL_DESCRIPTION,
         ]);
 
         return $config;
@@ -64,9 +68,9 @@ class TemplateListTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            TemplateListConstants::COL_ID => 'ID',
-            TemplateListConstants::COL_NAME => 'Name',
-            TemplateListConstants::COL_DESCRIPTION => 'Description',
+            static::COL_ID => 'ID',
+            static::COL_NAME => 'Name',
+            static::COL_DESCRIPTION => 'Description',
         ];
 
         $config->setHeader($header);
@@ -81,14 +85,14 @@ class TemplateListTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $templates = $this->runQuery($this->cmsSlotTemplateQuery, $config);
+        $templateResults = $this->runQuery($this->cmsSlotTemplateQuery, $config);
         $results = [];
 
-        foreach ($templates as $key => $template) {
+        foreach ($templateResults as $key => $template) {
             $results[] = [
-                TemplateListConstants::COL_ID => $template[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE],
-                TemplateListConstants::COL_NAME => $template[SpyCmsSlotTemplateTableMap::COL_NAME],
-                TemplateListConstants::COL_DESCRIPTION => $template[SpyCmsSlotTemplateTableMap::COL_DESCRIPTION],
+                static::COL_ID => $template[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE],
+                static::COL_NAME => $template[SpyCmsSlotTemplateTableMap::COL_NAME],
+                static::COL_DESCRIPTION => $template[SpyCmsSlotTemplateTableMap::COL_DESCRIPTION],
             ];
         }
 
