@@ -5,8 +5,19 @@
 
 'use strict';
 
-var templateListTable = require('./template-list-table');
+var TemplateTable = require('./template-table');
+var SlotTable = require('./slot-table');
 
 $(document).ready(function() {
-    templateListTable.initialize('#template-list-table');
+    var slotTable = new SlotTable({
+        ajaxBaseUrl: '/cms-slot-gui/slot-list/table',
+        paramIdCmsSlotTemplate: 'id-cms-slot-template',
+        ownershipColumnId: 'spy_cms_slot.content_provider_type',
+        slotTableClass: '.js-cms-slot-list-table',
+    }).init();
+
+    new TemplateTable({
+        templateTableId: '#template-list-table',
+        slotTable: slotTable
+    }).init();
 });

@@ -18,9 +18,9 @@ interface SlotListConstants
     public const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
     public const COL_ACTIONS = 'actions';
     public const BASE_URL = '/cms-slot-gui/slot-list/';
-    public const TABLE_CLASS = 'cms-slot-list-table';
-    public const CLASS_ACTIVATE_BUTTON = 'btn-view slot-activation';
-    public const CLASS_DEACTIVATE_BUTTON = 'btn-danger slot-activation';
+    public const TABLE_CLASS = 'js-cms-slot-list-table';
+    public const CLASS_ACTIVATE_BUTTON = 'btn-view js-slot-activation';
+    public const CLASS_DEACTIVATE_BUTTON = 'btn-danger js-slot-activation';
     public const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
     public const URL_DEACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/deactivate';
 }
