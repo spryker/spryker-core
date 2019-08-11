@@ -43,6 +43,6 @@ class ActivateSlotController extends AbstractController
 
         $this->getFactory()->getCmsSlotFacade()->deactivateByIdCmsSlot($idCmsSlot);
 
-        return $this->jsonResponse(['success' => true]);
+        return $this->jsonResponse([static::RESPONSE_SUCCESS_KEY => true]);
     }
 }
