@@ -10,7 +10,6 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
-use Spryker\Zed\SalesConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
 class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface
@@ -21,20 +20,12 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     protected $salesConfigurableBundleRepository;
 
     /**
-     * @var \Spryker\Zed\SalesConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface
-     */
-    protected $configuredBundlePriceCalculator;
-
-    /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
-     * @param \Spryker\Zed\SalesConfigurableBundle\Business\Calculator\ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator
      */
     public function __construct(
-        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository,
-        ConfiguredBundlePriceCalculatorInterface $configuredBundlePriceCalculator
+        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
     ) {
         $this->salesConfigurableBundleRepository = $salesConfigurableBundleRepository;
-        $this->configuredBundlePriceCalculator = $configuredBundlePriceCalculator;
     }
 
     /**
@@ -56,25 +47,6 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
         $orderTransfer->setSalesOrderConfiguredBundles($salesOrderConfiguredBundleTransfers);
 
         $orderTransfer = $this->expandOrderItemsWithSalesOrderConfiguredBundleItems($orderTransfer, $salesOrderConfiguredBundleTransfers);
-        $orderTransfer = $this->expandSalesOrderConfiguredBundlesWithPrices($orderTransfer);
-
-        return $orderTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function expandSalesOrderConfiguredBundlesWithPrices(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        $itemTransfers = $this->extractSalesOrderItems($orderTransfer);
-
-        foreach ($orderTransfer->getSalesOrderConfiguredBundles() as $salesOrderConfiguredBundleTransfer) {
-            $salesOrderConfiguredBundleTransfer->setPrice(
-                $this->configuredBundlePriceCalculator->calculateSalesOrderConfiguredBundlePrice($salesOrderConfiguredBundleTransfer, $itemTransfers)
-            );
-        }
 
         return $orderTransfer;
     }
@@ -119,22 +91,6 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
         }
 
         return $salesOrderConfiguredBundleItemTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function extractSalesOrderItems(OrderTransfer $orderTransfer): array
-    {
-        $itemTransfers = [];
-
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemTransfers[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
-        }
-
-        return $itemTransfers;
     }
 
     /**

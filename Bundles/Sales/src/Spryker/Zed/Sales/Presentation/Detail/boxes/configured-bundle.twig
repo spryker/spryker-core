@@ -5,7 +5,17 @@
             {{ bundle.name | trans }}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
-        <td>{% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundle.price.sumSubtotalAggregation, priceToPay: bundle.price.sumPriceToPayAggregation} %} {% endembed %}</td>
+        <td>
+            {% set bundleSumSubtotalAggregation = 0 %}
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for item in bundle.salesOrderConfiguredBundleItems %}
+                {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
+                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + product.sumSubtotalAggregation %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
     {% for item in bundle.salesOrderConfiguredBundleItems %}
