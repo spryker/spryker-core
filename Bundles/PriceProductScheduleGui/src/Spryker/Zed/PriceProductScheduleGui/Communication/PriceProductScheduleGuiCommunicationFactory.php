@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductSchedulePriceConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
@@ -226,6 +227,14 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleDateConstraint(): PriceProductScheduleDateConstraint
     {
         return new PriceProductScheduleDateConstraint();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductSchedulePriceConstraint
+     */
+    public function createPriceProductSchedulePriceConstraint(): PriceProductSchedulePriceConstraint
+    {
+        return new PriceProductSchedulePriceConstraint();
     }
 
     /**

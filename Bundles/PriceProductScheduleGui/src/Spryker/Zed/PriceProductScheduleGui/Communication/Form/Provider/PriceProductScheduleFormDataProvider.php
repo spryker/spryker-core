@@ -15,8 +15,8 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 class PriceProductScheduleFormDataProvider
 {
     public const OPTION_DATA_CLASS = 'data_class';
-    public const OPTION_STORE_CHOICES = 'store_choices';
-    public const OPTION_CURRENCY_CHOICES = 'currency_choices';
+    public const OPTION_STORE_CHOICES = 'option_store_choices';
+    public const OPTION_CURRENCY_CHOICES = 'option_currency_choices';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
@@ -79,11 +79,11 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
-     * @param int $idStore
+     * @param int|null $idStore
      *
      * @return array
      */
-    protected function getCurrencyValues(int $idStore): array
+    protected function getCurrencyValues(?int $idStore): array
     {
         $result = [];
         $storeWithCurrenciesCollection = $this->currencyFacade->getAllStoresWithCurrencies();

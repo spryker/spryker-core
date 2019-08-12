@@ -15,8 +15,6 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -82,11 +80,9 @@ class MoneyValueSubForm extends AbstractType
     {
         $builder->add(static::FIELD_NET_AMOUNT, NumberType::class, [
             'label' => 'Net price',
-            'constraints' => [
-                new NotBlank(),
-                new GreaterThan([
-                    'value' => 0,
-                ]),
+            'required' => false,
+            'attr' => [
+                'value' => null,
             ],
         ]);
 
@@ -113,6 +109,10 @@ class MoneyValueSubForm extends AbstractType
     protected function createTransformCallback(): Closure
     {
         return function ($amount) {
+            if ($amount === null) {
+                return null;
+            }
+
             return $amount / 100;
         };
     }
@@ -123,6 +123,10 @@ class MoneyValueSubForm extends AbstractType
     protected function createReverseTransformCallback(): Closure
     {
         return function ($amount) {
+            if ($amount === null) {
+                return null;
+            }
+
             return (int)($amount * 100);
         };
     }
@@ -136,11 +140,9 @@ class MoneyValueSubForm extends AbstractType
     {
         $builder->add(static::FIELD_GROSS_AMOUNT, NumberType::class, [
             'label' => 'Gross price',
-            'constraints' => [
-                new NotBlank(),
-                new GreaterThan([
-                    'value' => 0,
-                ]),
+            'required' => false,
+            'attr' => [
+                'value' => null,
             ],
         ]);
 
