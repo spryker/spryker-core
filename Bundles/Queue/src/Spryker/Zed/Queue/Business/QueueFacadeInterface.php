@@ -34,7 +34,7 @@ interface QueueFacadeInterface
      *
      * @param string $command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string[] $options
+     * @param array $options
      *
      * @return void
      */
