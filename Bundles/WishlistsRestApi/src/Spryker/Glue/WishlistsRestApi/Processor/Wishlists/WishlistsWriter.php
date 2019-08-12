@@ -155,10 +155,6 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        if (!$restRequest->getResource()->getId()) {
-            return $this->createWishlistNotFoundError($restResponse);
-        }
-
         $wishlistResponseTransfer = $this->wishlistsRestApiClient->deleteWishlist(
             $this->createWishlistRequestTransferFromRequest($restRequest)
         );
