@@ -93,7 +93,8 @@ class Worker implements WorkerInterface
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
 
-            if (count($pendingProcesses) === 0 && $options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY]) {
+            if (count($pendingProcesses) === 0 &&
+                (isset($options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY]) && $options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY])) {
                 return;
             }
 
