@@ -142,11 +142,7 @@ class MethodForm extends AbstractType
                 new Required(),
                 new Callback([
                     'callback' => function ($name, ExecutionContextInterface $contextInterface) use ($shipmentMethodTransfer) {
-                        $count = $this->getQueryContainer()
-                            ->queryUniqueMethodName($name, $shipmentMethodTransfer->getIdShipmentMethod(), $shipmentMethodTransfer->getFkShipmentCarrier())
-                            ->count();
-
-                        if ($count > 0) {
+                        if ($this->isUniqueMethodName($name, $shipmentMethodTransfer)) {
                             $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
                         }
                     },
@@ -155,6 +151,21 @@ class MethodForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    protected function isUniqueMethodName(string $name, ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    {
+        $count = $this->getQueryContainer()
+            ->queryUniqueMethodName($name, $shipmentMethodTransfer->getIdShipmentMethod(), $shipmentMethodTransfer->getFkShipmentCarrier())
+            ->count();
+
+        return $count > 0;
     }
 
     /**
