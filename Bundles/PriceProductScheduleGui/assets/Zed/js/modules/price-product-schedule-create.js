@@ -26,43 +26,10 @@ $(document).ready(function() {
         defaultData: 0,
     });
 
-    // $store.on('change', function() {
-        // var data = {};
-        //
-        // data.idStore = $(this).val();
-        // $currency.find('option:gt(0)').remove();
-
-        new DependentSelectBox(
-            // successCallback(data),
-            $store,
-            $currency,
-            '/currency/currencies-for-store',
-            'idStore'
-        );
-
-
-
-
-//         var data = {};
-//         data.idStore = $store.val();
-//         $currency.find('option:gt(0)').remove();
-//         $.ajax({
-//             url: '/currency/currencies-for-store',
-//             type: 'POST',
-//             data: data,
-//             success: function(data) {
-//                 $.each(data.currencies, function(key, currency) {
-//                     $currency.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
-//                 });
-//                 $('#active_from_timezone').html(data.timezoneText);
-//                 $('#active_to_timezone').html(data.timezoneText);
-//             }
-//         });
-//     });
-
-    // function successCallback(data) {
-    //     $.each(data.currencies, function(key, currency) {
-    //         $currency.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
-    //     });
-    // }
+    new DependentSelectBox(
+        $store,
+        $currency,
+        '/currency/currencies-for-store',
+        'idStore'
+    );
 });

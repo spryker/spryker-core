@@ -44,6 +44,7 @@ class CurrencySubForm extends AbstractType
 
         $builder->add(static::FIELD_ID_CURRENCY, ChoiceType::class, [
             'label' => 'Currency',
+            'disabled' => true,
             'placeholder' => 'Choose currency',
             'choices' => $currencyChoices,
             'constraints' => [
