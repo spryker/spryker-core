@@ -159,7 +159,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testActivateByIdCmsSlotSuccess(): void
     {
-        $cmsSlotTransfer = $this->tester->haveCmsSlotToDb([
+        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::IS_ACTIVE => false,
         ]);
 
@@ -173,7 +173,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testDeactivateByIdCmsSlotSuccess(): void
     {
-        $cmsSlotTransfer = $this->tester->haveCmsSlotToDb([
+        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::IS_ACTIVE => true,
         ]);
 

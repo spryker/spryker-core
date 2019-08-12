@@ -25,7 +25,7 @@ class SlotTable extends AbstractTable
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
     protected const COL_ACTIONS = 'actions';
 
-    protected const VALUE_COL_KEY = 'Slot key';
+    protected const VALUE_COL_KEY = 'Slot Key';
     protected const VALUE_COL_NAME = 'Name';
     protected const VALUE_COL_DESCRIPTION = 'Description';
     protected const VALUE_COL_OWNERSHIP = 'Ownership';
