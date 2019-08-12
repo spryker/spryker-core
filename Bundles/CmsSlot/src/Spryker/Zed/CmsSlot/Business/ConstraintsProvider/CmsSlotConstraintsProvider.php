@@ -88,7 +88,6 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     {
         return [
             new Required(),
-            new NotBlank(),
             new Type([
                 'type' => 'boolean',
             ]),
