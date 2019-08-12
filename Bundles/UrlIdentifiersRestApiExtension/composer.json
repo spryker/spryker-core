@@ -1,5 +1,6 @@
 {
   "name": "spryker/url-identifiers-rest-api-extension",
+  "type": "library",
   "description": "UrlIdentifiersRestApiExtension module",
   "license": "proprietary",
   "require": {
