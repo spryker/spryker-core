@@ -13,6 +13,8 @@ use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider;
 use Spryker\Shared\Config\Config;
 
 /**
+ * @deprecated Use `Spryker\Yves\Http\Plugin\EventDispatcher\HstsHeaderEventDispatcherPlugin` instead.
+ *
  * HTTP Strict Transport Security support as a ServiceProvider
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security

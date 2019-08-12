@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Http\Communication\Plugin\EventDispatcher;
+namespace Spryker\Yves\Http\Plugin\EventDispatcher;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method \Spryker\Zed\Http\Communication\HttpCommunicationFactory getFactory()
- * @method \Spryker\Zed\Http\HttpConfig getConfig()
+ * @method \Spryker\Yves\Http\HttpConfig getConfig()
+ * @method \Spryker\Yves\Http\HttpFactory getFactory()
  */
 class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
@@ -54,11 +54,11 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
 
         $response = $event->getResponse();
 
-        $localeFacade = $this->getFactory()->getLocaleFacade();
+        $localeClient = $this->getFactory()->getLocaleClient();
 
         $response->headers->set('X-Store', APPLICATION_STORE);
         $response->headers->set('X-Env', APPLICATION_ENV);
-        $response->headers->set('X-Locale', $localeFacade->getCurrentLocale()->getLocaleName());
+        $response->headers->set('X-Locale', $localeClient->getCurrentLocale());
 
         $response->setPrivate()->setMaxAge(0);
 

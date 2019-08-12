@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Http\Communication\Plugin\EventDispatcher;
+namespace Spryker\Yves\Http\Plugin\EventDispatcher;
 
 use ArrayObject;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method \Spryker\Zed\Http\Communication\HttpCommunicationFactory getFactory()
- * @method \Spryker\Zed\Http\HttpConfig getConfig()
+ * @method \Spryker\Yves\Http\HttpConfig getConfig()
+ * @method \Spryker\Yves\Http\HttpFactory getFactory()
  */
 class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
