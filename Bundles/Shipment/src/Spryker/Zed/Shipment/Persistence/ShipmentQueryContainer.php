@@ -261,7 +261,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
             ->filterByName($methodName);
 
         if ($idMethod) {
-            $query->filterByIdShipmentMethod($idMethod);
+            $query->filterByIdShipmentMethod($idMethod, Criteria::NOT_EQUAL);
         }
 
         if ($idCarrier) {
