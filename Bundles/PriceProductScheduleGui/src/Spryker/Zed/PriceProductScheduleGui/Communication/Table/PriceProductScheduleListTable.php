@@ -125,7 +125,6 @@ class PriceProductScheduleListTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[] $priceProductScheduleListCollection */
         $priceProductScheduleListCollection = $this->runQuery($query, $config, true);
 
         return $this->mapPriceProductScheduleListCollectionToTableDataArray($priceProductScheduleListCollection, []);
@@ -198,7 +197,7 @@ class PriceProductScheduleListTable extends AbstractTable
     /**
      * @module User
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function prepareQuery(): ModelCriteria
     {
