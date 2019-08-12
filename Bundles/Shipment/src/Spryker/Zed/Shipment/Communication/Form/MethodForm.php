@@ -48,6 +48,8 @@ class MethodForm extends AbstractType
     public const OPTION_DATA_CLASS = 'data_class';
     public const OPTION_DATA = 'data';
 
+    public const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
+
     /**
      * @return string
      */
@@ -75,7 +77,7 @@ class MethodForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCarrierField($builder, $options)
-            ->addNameField($builder, $options[self::OPTION_DATA])
+            ->addNameField($builder, $options[static::OPTION_DATA])
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -145,7 +147,7 @@ class MethodForm extends AbstractType
                             ->count();
 
                         if ($count > 0) {
-                            $contextInterface->addViolation('Shipment method with such name already exists for selected shipment provider');
+                            $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
                         }
                     },
                 ]),
