@@ -196,6 +196,8 @@ class PriceProductScheduleListTable extends AbstractTable
     }
 
     /**
+     * @module User
+     *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function prepareQuery(): ModelCriteria
