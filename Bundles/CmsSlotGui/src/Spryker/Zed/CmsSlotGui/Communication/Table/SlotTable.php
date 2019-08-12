@@ -128,7 +128,7 @@ class SlotTable extends AbstractTable
         $slotResults = $this->runQuery($this->cmsSlotQuery, $config);
         $results = [];
 
-        foreach ($slotResults as $key => $slot) {
+        foreach ($slotResults as $slot) {
             $results[] = [
                 static::COL_KEY => $slot[SpyCmsSlotTableMap::COL_KEY],
                 static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],

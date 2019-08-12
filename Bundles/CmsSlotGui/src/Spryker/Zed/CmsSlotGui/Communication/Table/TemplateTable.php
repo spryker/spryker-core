@@ -92,7 +92,7 @@ class TemplateTable extends AbstractTable
         $templateResults = $this->runQuery($this->cmsSlotTemplateQuery, $config);
         $results = [];
 
-        foreach ($templateResults as $key => $template) {
+        foreach ($templateResults as $template) {
             $results[] = [
                 static::COL_ID => $template[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE],
                 static::COL_NAME => $template[SpyCmsSlotTemplateTableMap::COL_NAME],
