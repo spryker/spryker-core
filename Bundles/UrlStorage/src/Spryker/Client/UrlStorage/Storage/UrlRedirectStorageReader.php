@@ -52,7 +52,7 @@ class UrlRedirectStorageReader implements UrlRedirectStorageReaderInterface
             return null;
         }
 
-        return (new UrlRedirectStorageTransfer())->fromArray($data);
+        return (new UrlRedirectStorageTransfer())->fromArray($data, true);
     }
 
     /**
