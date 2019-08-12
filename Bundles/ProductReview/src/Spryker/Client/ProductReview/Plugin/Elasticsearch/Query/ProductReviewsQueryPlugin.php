@@ -15,13 +15,14 @@ use Elastica\Query\Type;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewConfig getFactory()
  */
-class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
+class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, NamedQueryInterface
 {
     /**
      * @var \Elastica\Query
@@ -43,6 +44,10 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery()
@@ -51,6 +56,10 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getIndexName(): string

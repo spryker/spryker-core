@@ -12,11 +12,12 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
-class SearchKeysQuery implements QueryInterface
+class SearchKeysQuery implements QueryInterface, NamedQueryInterface
 {
     /**
      * @var string
@@ -46,6 +47,10 @@ class SearchKeysQuery implements QueryInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()
@@ -66,6 +71,18 @@ class SearchKeysQuery implements QueryInterface
         $baseQuery->setExplain(true);
 
         return $baseQuery;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexName(): string
+    {
+        return 'page';
     }
 
     /**

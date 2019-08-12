@@ -15,14 +15,15 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
- * @method \Spryker\Client\ProductPageSearch\CatalogConfig getConfig()
+ * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
  */
-class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface
+class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, NamedQueryInterface, SearchStringSetterInterface
 {
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
@@ -49,6 +50,10 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery(): Query
@@ -70,6 +75,18 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     {
         $this->searchString = $searchString;
         $this->createQuery();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexName(): string
+    {
+        return 'page';
     }
 
     /**

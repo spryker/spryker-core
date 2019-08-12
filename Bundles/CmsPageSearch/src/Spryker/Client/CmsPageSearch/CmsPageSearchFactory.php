@@ -26,7 +26,7 @@ class CmsPageSearchFactory extends AbstractFactory
      * @param array $requestParameters
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $queryExpanderPlugins
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createCmsPageSearchQuery(
         string $searchString,
@@ -53,7 +53,7 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getCmsPageSearchQueryPlugin(): QueryInterface
     {

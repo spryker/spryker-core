@@ -23,7 +23,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createCatalogSearchQuery($searchString)
     {
@@ -39,7 +39,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createSuggestSearchQuery($searchString)
     {
@@ -102,7 +102,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getCatalogSearchQueryPlugin()
     {
@@ -126,7 +126,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getSuggestionQueryPlugin()
     {
@@ -174,7 +174,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getProductConcretePageSearchQueryPlugin(): QueryInterface
     {

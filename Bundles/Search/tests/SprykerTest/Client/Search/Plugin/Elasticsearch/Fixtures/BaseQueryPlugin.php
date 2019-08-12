@@ -9,11 +9,12 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
-class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+class BaseQueryPlugin implements QueryInterface, NamedQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
     /**
      * @var \Elastica\Query
@@ -32,6 +33,10 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery()
@@ -55,5 +60,17 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     public function getSearchString()
     {
         return $this->searchString;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexName(): string
+    {
+        return 'page';
     }
 }

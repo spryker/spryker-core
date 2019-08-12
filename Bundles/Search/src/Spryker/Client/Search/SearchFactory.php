@@ -117,8 +117,7 @@ class SearchFactory extends AbstractFactory
      */
     public function createElasticsearchSearchHandler()
     {
-        $searchPlugins = $this->getSearchPlugins();
-        if (count($searchPlugins) > 0) {
+        if (count($this->getClientAdapterPlugins()) > 0) {
             return $this->createSearchDelegator();
         }
 
@@ -248,7 +247,7 @@ class SearchFactory extends AbstractFactory
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createSearchKeysQuery($searchString, $limit = null, $offset = null)
     {
@@ -260,7 +259,7 @@ class SearchFactory extends AbstractFactory
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createSearchStringQuery($searchString, $limit = null, $offset = null)
     {

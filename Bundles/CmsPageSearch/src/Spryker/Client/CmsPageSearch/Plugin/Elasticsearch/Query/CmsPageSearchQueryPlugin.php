@@ -18,11 +18,12 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
-class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, NamedQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
     protected const TYPE = 'cms_page';
 
@@ -42,6 +43,10 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery(): Query
@@ -50,6 +55,10 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getIndexName(): string

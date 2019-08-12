@@ -10,9 +10,10 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\Query;
 use Elastica\Query;
 use Elastica\Query\MatchAll;
 use Elastica\Query\QueryString;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
-class SearchStringQuery implements QueryInterface
+class SearchStringQuery implements QueryInterface, NamedQueryInterface
 {
     /**
      * @var string
@@ -42,6 +43,10 @@ class SearchStringQuery implements QueryInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()
@@ -62,6 +67,18 @@ class SearchStringQuery implements QueryInterface
         $baseQuery->setExplain(true);
 
         return $baseQuery;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexName(): string
+    {
+        return 'page';
     }
 
     /**

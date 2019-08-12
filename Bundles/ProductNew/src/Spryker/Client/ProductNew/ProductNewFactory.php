@@ -14,7 +14,7 @@ class ProductNewFactory extends AbstractFactory
     /**
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function getNewProductsQueryPlugin(array $requestParameters = [])
     {

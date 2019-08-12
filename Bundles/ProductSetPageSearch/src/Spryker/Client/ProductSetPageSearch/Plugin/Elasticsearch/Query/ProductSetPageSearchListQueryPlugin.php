@@ -13,10 +13,11 @@ use Elastica\Query\Match;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ProductSetDataStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\ProductSetPageSearch\ProductSetPageSearchConstants;
 
-class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements QueryInterface
+class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements QueryInterface, NamedQueryInterface
 {
     /**
      * @var int|null
@@ -46,11 +47,27 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query
      */
     public function getSearchQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getIndexName(): string
+    {
+        return 'page';
     }
 
     /**

@@ -26,7 +26,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $searchClient;
 
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     protected $productConcretePageSearchQueryPlugin;
 
@@ -43,7 +43,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     /**
      * @param \Spryker\Client\Catalog\CatalogConfig $config
      * @param \Spryker\Client\Search\SearchClientInterface $searchClient
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $productConcretePageSearchQueryPlugin
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $productConcretePageSearchQueryPlugin
      * @param array $productConcretePageSearchQueryExpanderPlugins
      * @param array $productConcretePageSearchResultFormatterPlugins
      */
