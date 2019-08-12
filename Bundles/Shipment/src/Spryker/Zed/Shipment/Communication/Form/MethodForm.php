@@ -77,7 +77,7 @@ class MethodForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCarrierField($builder, $options)
-            ->addNameField($builder, $options[static::OPTION_DATA])
+            ->addNameField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -129,11 +129,11 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder, ShipmentMethodTransfer $shipmentMethodTransfer)
+    protected function addNameField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
             'label' => 'Name',
@@ -141,8 +141,8 @@ class MethodForm extends AbstractType
                 new NotBlank(),
                 new Required(),
                 new Callback([
-                    'callback' => function ($name, ExecutionContextInterface $contextInterface) use ($shipmentMethodTransfer) {
-                        if ($this->isUniqueMethodName($name, $shipmentMethodTransfer)) {
+                    'callback' => function ($name, ExecutionContextInterface $contextInterface) use ($options) {
+                        if ($this->isUniqueMethodName($name, $options[static::OPTION_DATA])) {
                             $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
                         }
                     },
