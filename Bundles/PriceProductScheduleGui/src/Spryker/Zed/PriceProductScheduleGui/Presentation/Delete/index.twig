@@ -11,10 +11,6 @@
 
 {% set redirectUrl = app.request.headers.get('referer')~'#tab-content-scheduled_prices' %}
 
-{% block action %}
-    {{ backActionButton(redirectUrl, 'Back' | trans) }}
-{% endblock %}
-
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}

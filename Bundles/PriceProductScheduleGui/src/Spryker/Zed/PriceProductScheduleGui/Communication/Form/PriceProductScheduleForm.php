@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,11 +36,16 @@ class PriceProductScheduleForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
+        $resolver->setRequired([
+            PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+        ]);
 
         $resolver->setDefaults([
             'data_class' => PriceProductScheduleTransfer::class,
             'constraints' => [
                 $this->getFactory()->createPriceProductScheduleDateConstraint(),
+                $this->getFactory()->createPriceProductSchedulePriceConstraint(),
             ],
         ]);
     }

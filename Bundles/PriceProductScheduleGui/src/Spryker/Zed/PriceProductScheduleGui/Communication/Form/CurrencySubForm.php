@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -69,7 +70,7 @@ class CurrencySubForm extends AbstractType
         return array_flip(
             $this->getFactory()
                 ->createPriceProductScheduleFormDataProvider()
-                ->getCurrencyValues($idStore)
+                ->getOptions($idStore)[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
         );
     }
 

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductSchedulePriceConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
@@ -19,8 +20,6 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapperInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReader;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReaderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreator;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProductTabCreator;
@@ -231,11 +230,11 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Reader\RequestReaderInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductSchedulePriceConstraint
      */
-    public function createRequestReader(): RequestReaderInterface
+    public function createPriceProductSchedulePriceConstraint(): PriceProductSchedulePriceConstraint
     {
-        return new RequestReader();
+        return new PriceProductSchedulePriceConstraint();
     }
 
     /**
