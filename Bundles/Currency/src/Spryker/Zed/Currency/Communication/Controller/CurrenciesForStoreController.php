@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Currency\Communication\CurrencyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface getRepository()
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
@@ -30,8 +29,7 @@ class CurrenciesForStoreController extends AbstractController
     {
         $idStore = $this->castId($request->request->get(static::KEY_ID_STORE));
         $storeWithCurrencyTransfer = $this->getFacade()->getStoreWithCurrenciesByIdStore($idStore);
-        $responseData = $this->getFactory()->createStoreWithCurrenciesMapper()->mapStoreWithCurrencyTransferToArrayWithTimezoneText($storeWithCurrencyTransfer);
 
-        return $this->jsonResponse($responseData);
+        return $this->jsonResponse($storeWithCurrencyTransfer->toArray());
     }
 }
