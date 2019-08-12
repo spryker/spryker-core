@@ -162,7 +162,7 @@ class SlotTable extends AbstractTable
 
         if ($slot[static::COL_STATUS]) {
             $statusToggleButton = $this->generateButton(
-                $this->getUrldeActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
+                $this->getUrlDeactivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
                 ['class' => 'btn-danger js-slot-activation']
             );

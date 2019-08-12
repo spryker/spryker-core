@@ -21,8 +21,8 @@ var SlotTable = function (options) {
         _self.slotTable = $(_self.slotTableClass);
     };
 
-    this.load = function (rowIndex) {
-        var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=' + rowIndex;
+    this.loadSlotTableByIdTemplate = function (idTemplate) {
+        var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=' + idTemplate;
         _self.slotTable.data('ajax', ajaxUrl);
 
         _self.slotTable.DataTable({
@@ -36,13 +36,13 @@ var SlotTable = function (options) {
             drawCallback: function() {
                 var api = this.api();
 
-                _self.displayOwnershipColumn(api);
+                _self.toggleOwnershipColumn(api);
                 _self.activationHandler();
             },
         });
     };
 
-    this.displayOwnershipColumn = function (api) {
+    this.toggleOwnershipColumn = function (api) {
         var ownershipColumnIndex = null;
         var ownershipValues = [];
         var ownershipColumn = null;

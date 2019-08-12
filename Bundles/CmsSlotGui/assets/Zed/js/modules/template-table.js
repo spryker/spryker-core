@@ -39,7 +39,7 @@ var TemplateTable = function (options) {
 
     this.loadSlotTable = function (element, api, type, indexes) {
         var rowData = api.row(indexes[0]).data();
-        _self.slotTable.load(rowData[0]);
+        _self.slotTable.loadSlotTableByIdTemplate(rowData[0]);
     };
 
     this.getDataTableApi = function (settings) {
