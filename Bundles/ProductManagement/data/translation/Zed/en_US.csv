@@ -19,6 +19,7 @@ Categories,Categories
 "Create Bundle Product","Create Bundle Product"
 "Create Product","Create Product"
 Deactivate,Deactivate
+Deactivated,Deactivated
 Default,Default
 "Delete image","Delete image"
 "Delete image set","Delete image set"
@@ -75,4 +76,3 @@ Type,Type
 Variants,Variants
 "View Product Abstract","View Product Abstract"
 "View Product Concrete","View Product Concrete"
-Deactivated,Deactivated
