@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 
-use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 
-class Writer implements WriterInterface
+class Updater implements UpdaterInterface
 {
     /**
      * @var \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface
@@ -37,44 +36,28 @@ class Writer implements WriterInterface
     {
         $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
 
-        //ToDo: Check if wishlist was found, and add error
+        if (!$wishlistResponseTransfer->getIsSuccess()) {
+            return $wishlistResponseTransfer;
+        }
 
-        $wishlistTransfer = $this->mapWishlistAttributesToWishlistTransfer(
+        $wishlistTransfer = $this->mergeWishlistTransfers(
             $wishlistResponseTransfer->getWishlist(),
-            $wishlistRequestTransfer->getRestWishlistsAttributes()
+            $wishlistRequestTransfer->getWishlist()
         );
 
         return $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
-    {
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
-
-        if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $wishlistResponseTransfer;
-        }
-
-        $this->wishlistFacade->removeWishlist($wishlistResponseTransfer->getWishlist());
-
-        return $wishlistResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $originalWishlistTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $updatedWishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    protected function mapWishlistAttributesToWishlistTransfer(
-        WishlistTransfer $wishlistTransfer,
-        RestWishlistsAttributesTransfer $attributesTransfer
+    protected function mergeWishlistTransfers(
+        WishlistTransfer $originalWishlistTransfer,
+        WishlistTransfer $updatedWishlistTransfer
     ): WishlistTransfer {
-        return $wishlistTransfer->fromArray($attributesTransfer->modifiedToArray(), true);
+        return $originalWishlistTransfer->setName($updatedWishlistTransfer->getName());
     }
 }

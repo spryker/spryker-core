@@ -10,7 +10,7 @@ namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 
-interface WriterInterface
+interface UpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
@@ -18,11 +18,4 @@ interface WriterInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 }

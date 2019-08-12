@@ -8,12 +8,14 @@
 namespace Spryker\Zed\WishlistsRestApi\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\WishlistsRestApi\Business\Wishlist\Deleter;
+use Spryker\Zed\WishlistsRestApi\Business\Wishlist\DeleterInterface;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\Reader;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\ReaderInterface;
+use Spryker\Zed\WishlistsRestApi\Business\Wishlist\Updater;
+use Spryker\Zed\WishlistsRestApi\Business\Wishlist\UpdaterInterface;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WishlistUuidWriter;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WishlistUuidWriterInterface;
-use Spryker\Zed\WishlistsRestApi\Business\Wishlist\Writer;
-use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WriterInterface;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 use Spryker\Zed\WishlistsRestApi\WishlistsRestApiDependencyProvider;
 
@@ -42,11 +44,21 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\WishlistsRestApi\Business\Wishlist\WriterInterface
+     * @return \Spryker\Zed\WishlistsRestApi\Business\Wishlist\UpdaterInterface
      */
-    public function createWriter(): WriterInterface
+    public function createUpdater(): UpdaterInterface
     {
-        return new Writer(
+        return new Updater(
+            $this->getWishlistFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistsRestApi\Business\Wishlist\DeleterInterface
+     */
+    public function createDeleter(): DeleterInterface
+    {
+        return new Deleter(
             $this->getWishlistFacade()
         );
     }

@@ -58,7 +58,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createWriter()->updateWishlist($wishlistRequestTransfer);
+        return $this->getFactory()->createUpdater()->updateWishlist($wishlistRequestTransfer);
     }
 
     /**
@@ -72,6 +72,6 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      */
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createWriter()->deleteWishlist($wishlistRequestTransfer);
+        return $this->getFactory()->createDeleter()->deleteWishlist($wishlistRequestTransfer);
     }
 }

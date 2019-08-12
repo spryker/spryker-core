@@ -124,12 +124,9 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        if (!$restRequest->getResource()->getId()) {
-            return $this->createWishlistNotFoundError($restResponse);
-        }
-
+        $wishlistTransfer = (new WishlistTransfer())->fromArray($attributesTransfer->toArray(), true);
         $wishlistRequestTransfer = $this->createWishlistRequestTransferFromRequest($restRequest)
-            ->setRestWishlistsAttributes($attributesTransfer);
+            ->setWishlist($wishlistTransfer);
 
         $wishlistResponseTransfer = $this->wishlistsRestApiClient->updateWishlist($wishlistRequestTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -182,7 +179,7 @@ class WishlistsWriter implements WishlistsWriterInterface
     {
         return (new WishlistRequestTransfer())
             ->setUuid($restRequest->getResource()->getId())
-            ->setFkCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
     }
 
     /**
