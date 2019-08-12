@@ -22,6 +22,11 @@ $(document).ready(function() {
         defaultData: 0,
     });
 
+    if (!$store.val()) {
+        $('#active_from_timezone_text').hide();
+        $('#active_to_timezone_text').hide();
+    }
+
     $store.change(function() {
         var data = {};
         data.idStore = $store.val();
@@ -34,8 +39,9 @@ $(document).ready(function() {
                 $.each(data.currencies, function(key, currency) {
                     $currency.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
                 });
-                $('#active_from_timezone').html(data.timezoneText);
-                $('#active_to_timezone').html(data.timezoneText);
+                $('.timezone').html(data.store.timezone);
+                $('#active_from_timezone_text').show();
+                $('#active_to_timezone_text').show();
             }
         });
     });

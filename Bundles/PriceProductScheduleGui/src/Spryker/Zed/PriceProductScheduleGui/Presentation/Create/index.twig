@@ -16,14 +16,14 @@
             {{ form_label(form.activeFrom) }}
             <br>
             {{ form_widget(form.activeFrom) }}
-            <span style="display: none" id="active_from_timezone_text">{{ 'The timezone used for the scheduled price will be <b class="timezone"></b> as defined on the store selected' |trans|raw }}</span>
+            <span style="display: inline-block" id="active_from_timezone_text">{{ 'The timezone used for the scheduled price will be <b class="timezone"></b> as defined on the store selected' |trans|raw }}</span>
             {{ form_errors(form.activeFrom) }}
             <br><br>
 
             {{ form_label(form.activeTo) }}
             <br>
             {{ form_widget(form.activeTo) }}
-            <span style="display: none" id="active_to_timezone_text">{{ 'The timezone used for the scheduled price will be <b class="timezone"></b> as defined on the store selected' |trans|raw }}</span>
+            <span style="display: inline-block" id="active_to_timezone_text">{{ 'The timezone used for the scheduled price will be <b class="timezone"></b> as defined on the store selected' |trans|raw }}</span>
             {{ form_errors(form.activeTo) }}
             <br><br>
             {{ form_row(form.submit) }}
