@@ -144,4 +144,15 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
+
+    /**
+     * @api
+     *
+     * @param string $methodName
+     * @param int|null $idMethod
+     * @param int|null $idCarrier
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function queryUniqueMethodName($methodName, $idMethod = null, $idCarrier = null);
 }

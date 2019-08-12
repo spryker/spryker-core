@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -15,8 +16,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
@@ -43,6 +46,7 @@ class MethodForm extends AbstractType
     public const OPTION_TAX_SETS = 'option_tax_sets';
     public const OPTION_MONEY_FACADE = 'money facade';
     public const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_DATA = 'data';
 
     /**
      * @return string
@@ -71,7 +75,7 @@ class MethodForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCarrierField($builder, $options)
-            ->addNameField($builder)
+            ->addNameField($builder, $options[self::OPTION_DATA])
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -123,16 +127,28 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder, ShipmentMethodTransfer $shipmentMethodTransfer)
     {
         $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
                 new Required(),
+                new Callback([
+                    'callback' => function ($name, ExecutionContextInterface $contextInterface) use ($shipmentMethodTransfer) {
+                        $count = $this->getQueryContainer()
+                            ->queryUniqueMethodName($name, $shipmentMethodTransfer->getIdShipmentMethod(), $shipmentMethodTransfer->getFkShipmentCarrier())
+                            ->count();
+
+                        if ($count > 0) {
+                            $contextInterface->addViolation('Shipment method with such name already exists for selected shipment provider');
+                        }
+                    },
+                ]),
             ],
         ]);
 
