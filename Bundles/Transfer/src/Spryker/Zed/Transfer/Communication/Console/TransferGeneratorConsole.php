@@ -12,16 +12,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\Transfer\Communication\Console\TransferGeneratorConsole` instead to generate data transfers.
- * @deprecated Use `Spryker\Zed\Propel\Communication\Console\EntityTransferGeneratorConsole` instead to generate entity transfers.
- *
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
  * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()
  */
-class GeneratorConsole extends Console
+class TransferGeneratorConsole extends Console
 {
     public const COMMAND_NAME = 'transfer:generate';
-    public const COMMAND_DESCRIPTION = 'Generates data and entity transfer objects from transfer XML definition files and Propel schema definition files';
+    public const COMMAND_DESCRIPTION = 'Generates data transfer objects from transfer XML definition files';
 
     /**
      * @return void
@@ -41,14 +38,13 @@ class GeneratorConsole extends Console
      *
      * @return int|null
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $facade = $this->getFacade();
+        $transferFacade = $this->getFacade();
         $messenger = $this->getMessenger();
 
-        $facade->deleteGeneratedTransferObjects();
-        $facade->generateEntityTransferObjects($messenger);
-        $facade->generateTransferObjects($messenger);
+        $transferFacade->deleteGeneratedDataTransferObjects();
+        $transferFacade->generateTransferObjects($messenger);
 
         return null;
     }
