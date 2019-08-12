@@ -18,6 +18,10 @@ class TemplateTable extends AbstractTable
     protected const COL_NAME = SpyCmsSlotTemplateTableMap::COL_NAME;
     protected const COL_DESCRIPTION = SpyCmsSlotTemplateTableMap::COL_DESCRIPTION;
 
+    protected const VALUE_COL_ID = 'ID';
+    protected const VALUE_COL_NAME = 'Name';
+    protected const VALUE_COL_DESCRIPTION = 'Description';
+
     protected const TABLE_IDENTIFIER = 'template-list-table';
 
     /**
@@ -68,9 +72,9 @@ class TemplateTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            static::COL_ID => 'ID',
-            static::COL_NAME => 'Name',
-            static::COL_DESCRIPTION => 'Description',
+            static::COL_ID => static::VALUE_COL_ID,
+            static::COL_NAME => static::VALUE_COL_NAME,
+            static::COL_DESCRIPTION => static::VALUE_COL_DESCRIPTION,
         ];
 
         $config->setHeader($header);

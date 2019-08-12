@@ -15,15 +15,17 @@ var SlotTable = function (options) {
     this.slotTableClass = '';
     this.slotTable = {};
 
+    $.extend(this, options);
+
     this.init = function () {
-        this.slotTable = $(this.slotTableClass);
+        _self.slotTable = $(_self.slotTableClass);
     };
 
     this.load = function (rowIndex) {
-        var ajaxUrl = this.ajaxBaseUrl + '?' + this.paramIdCmsSlotTemplate + '=' + rowIndex;
-        this.slotTable.data('ajax', ajaxUrl);
+        var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=' + rowIndex;
+        _self.slotTable.data('ajax', ajaxUrl);
 
-        this.slotTable.DataTable({
+        _self.slotTable.DataTable({
             destroy: true,
             ajax: {
                 cache: false

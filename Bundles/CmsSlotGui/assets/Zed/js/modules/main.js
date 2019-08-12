@@ -14,10 +14,14 @@ $(document).ready(function() {
         paramIdCmsSlotTemplate: 'id-cms-slot-template',
         ownershipColumnId: 'spy_cms_slot.content_provider_type',
         slotTableClass: '.js-cms-slot-list-table',
-    }).init();
+    });
 
-    new TemplateTable({
+    slotTable.init();
+
+    var templateTable = new TemplateTable({
         templateTableId: '#template-list-table',
         slotTable: slotTable
-    }).init();
+    });
+
+    templateTable.init();
 });
