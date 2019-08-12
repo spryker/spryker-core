@@ -63,7 +63,7 @@ class CmsSlotHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
-    public function haveCmsSlotToDb(array $override): CmsSlotTransfer
+    public function haveCmsSlotInDb(array $override): CmsSlotTransfer
     {
         $data = [
             CmsSlotTransfer::KEY => 'test-center',
@@ -75,11 +75,11 @@ class CmsSlotHelper extends Module
 
         $cmsSlotTransfer = (new CmsSlotBuilder(array_merge($data, $override)))->build();
 
-        $cmsSlot = new SpyCmsSlot();
-        $cmsSlot->fromArray($cmsSlotTransfer->toArray());
-        $cmsSlot->save();
+        $cmsSlotEntity = new SpyCmsSlot();
+        $cmsSlotEntity->fromArray($cmsSlotTransfer->toArray());
+        $cmsSlotEntity->save();
 
-        $cmsSlotTransfer->setIdCmsSlot($cmsSlot->getIdCmsSlot());
+        $cmsSlotTransfer->setIdCmsSlot($cmsSlotEntity->getIdCmsSlot());
 
         return $cmsSlotTransfer;
     }
