@@ -49,9 +49,17 @@ $(document).ready(function() {
     );
 
     function successCallback(data) {
+        if (!data.store) {
+            $activeFromTimezoneText.hide();
+            $activeToTimezoneText.hide();
+
+            return;
+        }
+
         $timezone.each(function (index, value) {
             $(value).text(data.store.timezone);
         });
+
         $activeFromTimezoneText.show();
         $activeToTimezoneText.show();
     }
