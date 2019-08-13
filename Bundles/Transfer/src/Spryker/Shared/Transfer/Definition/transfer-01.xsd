@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xsd:schema
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="spryker:transfer-01"
+    elementFormDefault="qualified">
+
+    <xsd:element name="transfers">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="transfer" maxOccurs="unbounded" minOccurs="0">
+                    <xsd:complexType>
+
+                        <xsd:sequence>
+                            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                                <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
+                                    <xsd:complexType mixed="true">
+                                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                                        <xsd:attribute type="xsd:string" name="type" use="required" />
+                                        <xsd:attribute type="xsd:string" name="singular" use="optional"/>
+                                        <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+                                        <xsd:attribute type="restRequestParameterType" name="restRequestParameter" use="optional"/>
+                                    </xsd:complexType>
+                                </xsd:element>
+                            </xsd:choice>
+                        </xsd:sequence>
+
+                        <xsd:attribute type="xsd:string" name="name" use="required"/>
+                        <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:simpleType name="restRequestParameterType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="no"/>
+            <xsd:enumeration value="required"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>
