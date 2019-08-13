@@ -7,10 +7,19 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
+
 interface PriceProductScheduleGuiToCurrencyFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies();
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrenciesByIdStore(int $idStore): StoreWithCurrencyTransfer;
 }
