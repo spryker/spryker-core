@@ -35,6 +35,13 @@ class SlotTable extends AbstractTable
     protected const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
     protected const URL_DEACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/deactivate';
 
+    protected const MIN_CONTENT_PROVIDER_TYPES_TO_DISPLAY_OWNERSHIP_COLUMN = 1;
+
+    /**
+     * @var int|null
+     */
+    protected $contentProviderTypes = null;
+
     /**
      * @var \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
      */
@@ -65,22 +72,10 @@ class SlotTable extends AbstractTable
         $this->tableClass = static::TABLE_CLASS;
 
         $config = $this->setHeader($config);
-
-        $config->setSortable([
-            static::COL_KEY,
-            static::COL_NAME,
-            static::COL_OWNERSHIP,
-            static::COL_STATUS,
-        ]);
+        $config = $this->setSortable($config);
+        $config = $this->setSearchable($config);
 
         $config->setDefaultSortField(static::COL_KEY, TableConfiguration::SORT_ASC);
-
-        $config->setSearchable([
-            static::COL_KEY,
-            static::COL_NAME,
-            static::COL_DESCRIPTION,
-            static::COL_OWNERSHIP,
-        ]);
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_STATUS);
@@ -104,9 +99,72 @@ class SlotTable extends AbstractTable
             static::COL_ACTIONS => static::VALUE_COL_ACTIONS,
         ];
 
+        if (!$this->isOwnershipColumnVisible()) {
+            unset($header[static::COL_OWNERSHIP]);
+        }
+
         $config->setHeader($header);
 
         return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function setSortable(TableConfiguration $config): TableConfiguration
+    {
+        $sortable = [
+            static::COL_KEY,
+            static::COL_NAME,
+            static::COL_STATUS,
+        ];
+
+        if ($this->isOwnershipColumnVisible()) {
+            $sortable[] = static::COL_OWNERSHIP;
+        }
+
+        $config->setSortable($sortable);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function setSearchable(TableConfiguration $config): TableConfiguration
+    {
+        $searchable = [
+            static::COL_KEY,
+            static::COL_NAME,
+            static::COL_DESCRIPTION,
+        ];
+
+        if ($this->isOwnershipColumnVisible()) {
+            $searchable[] = static::COL_OWNERSHIP;
+        }
+
+        $config->setSearchable($searchable);
+
+        return $config;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isOwnershipColumnVisible(): bool
+    {
+        if ($this->contentProviderTypes === null) {
+            $this->contentProviderTypes = $this->cmsSlotQuery
+                ->select(self::COL_OWNERSHIP)
+                ->distinct()
+                ->count();
+        }
+
+        return $this->contentProviderTypes > self::MIN_CONTENT_PROVIDER_TYPES_TO_DISPLAY_OWNERSHIP_COLUMN ? true : false;
     }
 
     /**
@@ -121,6 +179,7 @@ class SlotTable extends AbstractTable
         }
 
         $this->cmsSlotQuery
+            ->clear()
             ->useSpyCmsSlotToCmsSlotTemplateQuery()
                 ->filterByFkCmsSlotTemplate($this->idCmsSlotTemplate)
             ->endUse();
@@ -137,6 +196,10 @@ class SlotTable extends AbstractTable
                 static::COL_STATUS => $this->getStatus($slot),
                 static::COL_ACTIONS => $this->buildLinks($slot),
             ];
+
+            if (!$this->isOwnershipColumnVisible()) {
+                unset($results[static::COL_OWNERSHIP]);
+            }
         }
 
         return $results;

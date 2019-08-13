@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-gui",
+  "type": "library",
   "description": "CmsSlotGui module",
   "license": "proprietary",
   "require": {
