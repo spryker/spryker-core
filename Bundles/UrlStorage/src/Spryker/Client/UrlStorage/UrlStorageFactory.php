@@ -8,6 +8,8 @@
 namespace Spryker\Client\UrlStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapper;
+use Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface;
 use Spryker\Client\UrlStorage\Storage\UrlRedirectStorageReader;
 use Spryker\Client\UrlStorage\Storage\UrlRedirectStorageReaderInterface;
 use Spryker\Client\UrlStorage\Storage\UrlStorageReader;
@@ -27,13 +29,22 @@ class UrlStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface
+     */
+    public function createUrlRedirectStorageMapper(): UrlRedirectStorageMapperInterface
+    {
+        return new UrlRedirectStorageMapper();
+    }
+
+    /**
      * @return \Spryker\Client\UrlStorage\Storage\UrlRedirectStorageReaderInterface
      */
     public function createUrlRedirectStorageReader(): UrlRedirectStorageReaderInterface
     {
         return new UrlRedirectStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->createUrlRedirectStorageMapper()
         );
     }
 
