@@ -21,7 +21,7 @@
     {% for item in bundle.salesOrderConfiguredBundleItems %}
         <tr>
             {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
-            {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image, displayTotals: false} %}{% endembed %}
+            {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image} %}{% endembed %}
         </tr>
     {% endfor %}
     <tr>

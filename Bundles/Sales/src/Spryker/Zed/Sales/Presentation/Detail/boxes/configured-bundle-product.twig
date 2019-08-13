@@ -55,13 +55,10 @@
     <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': orderItem.taxRate|default(0)}) }}</div>
 </td>
 
-{% if displayTotals %}
-    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
-        {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}
-    </td>
-{% else %}
-    <td></td>
-{% endif %}
+<td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
+    {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}
+</td>
+
 <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
     <div>
         <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
