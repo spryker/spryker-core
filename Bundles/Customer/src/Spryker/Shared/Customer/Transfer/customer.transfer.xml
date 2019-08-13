@@ -75,8 +75,13 @@
     </transfer>
 
     <transfer name="CustomerError">
-        <property name="message" type="string" />
-        <property name="params" type="array" />
+        <property name="message" type="string" deprecated="Use translatableMessage instead."/>
+        <property name="translatableMessage" type="Message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="CustomerResponse">

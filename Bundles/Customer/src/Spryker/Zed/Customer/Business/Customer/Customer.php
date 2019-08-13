@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -37,6 +38,10 @@ class Customer implements CustomerInterface
 {
     protected const BCRYPT_FACTOR = 12;
     protected const BCRYPT_SALT = '';
+
+    protected const KEY_VALIDATION_LENGTH = '{{ limit }}';
+    protected const GLOSSARY_KEY_VALIDATION_MIN_LENGTH = 'validation.min_length';
+    protected const GLOSSARY_KEY_VALIDATION_MAX_LENGTH = 'validation.max_length.singular';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -173,6 +178,11 @@ class Customer implements CustomerInterface
      */
     public function add($customerTransfer)
     {
+        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer);
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
+        }
+
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerEntity = new SpyCustomer();
@@ -885,5 +895,59 @@ class Customer implements CustomerInterface
         );
 
         return $customerResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    protected function validateCustomerPassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        $customerResponseTransfer = new CustomerResponseTransfer();
+
+        $customerPasswordLength = mb_strlen($customerTransfer->getPassword());
+        $minLength = $this->customerConfig->getCustomerPasswordMinLength();
+        $maxLength = $this->customerConfig->getCustomerPasswordMaxLength();
+
+        if ($customerPasswordLength < $minLength) {
+            $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
+                static::GLOSSARY_KEY_VALIDATION_MIN_LENGTH,
+                [
+                    static::KEY_VALIDATION_LENGTH => $minLength,
+                ]
+            );
+
+            return $customerResponseTransfer->addError($customerErrorTransfer);
+        }
+
+        if ($customerPasswordLength > $maxLength) {
+            $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
+                static::GLOSSARY_KEY_VALIDATION_MAX_LENGTH,
+                [
+                    static::KEY_VALIDATION_LENGTH => $maxLength,
+                ]
+            );
+
+            return $customerResponseTransfer->addError($customerErrorTransfer);
+        }
+
+        return $customerResponseTransfer;
+    }
+
+    /**
+     * @param string $message
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\CustomerErrorTransfer
+     */
+    protected function createCustomerErrorTransferWithTranslatableMessage(string $message, array $params): CustomerErrorTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message)
+            ->setParameters($params);
+
+        return (new CustomerErrorTransfer())
+            ->setTranslatableMessage($messageTransfer);
     }
 }
