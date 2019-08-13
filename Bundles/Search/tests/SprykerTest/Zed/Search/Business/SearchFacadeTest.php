@@ -39,6 +39,8 @@ class SearchFacadeTest extends Unit
      */
     public function testCreateSnapshotRepository(): void
     {
+        $this->skipIfCi();
+
         //Arrange
         $searchFactory = $this->createSearchFactoryMock();
         $searchFacade = $this->getSearchFacade($searchFactory);
@@ -48,6 +50,16 @@ class SearchFacadeTest extends Unit
 
         //Assert
         $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfCi(): void
+    {
+        if (getenv('CIRCLECI') || getenv('TRAVIS')) {
+            $this->markTestSkipped('CircleCi/Travis not set up properly');
+        }
     }
 
     /**
