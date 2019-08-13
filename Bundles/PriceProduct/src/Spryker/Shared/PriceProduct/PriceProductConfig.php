@@ -101,4 +101,12 @@ class PriceProductConfig extends AbstractSharedConfig
     {
         return static::PRICE_DIMENSION_DEFAULT_NAME;
     }
+
+    /**
+     * @return bool
+     */
+    public function getDeleteOrphanPricesModeEnabled(): bool
+    {
+        return $this->get(PriceProductConstants::DELETE_ORPHAN_PRICES_MODE_ENABLED);
+    }
 }

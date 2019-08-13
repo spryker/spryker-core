@@ -45,4 +45,12 @@ class PriceProductConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getPriceDimensionDefaultName();
     }
+
+    /**
+     * @return bool
+     */
+    public function getDeleteOrphanPricesModeEnabled(): bool
+    {
+        return $this->getSharedConfig()->getDeleteOrphanPricesModeEnabled();
+    }
 }
