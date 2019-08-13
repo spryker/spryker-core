@@ -85,18 +85,15 @@ class PriceProductScheduleFormDataProvider
      */
     protected function getCurrencyValues(?int $idStore): array
     {
+        if ($idStore === null) {
+            return [];
+        }
+
         $result = [];
-        $storeWithCurrenciesCollection = $this->currencyFacade->getAllStoresWithCurrencies();
-        foreach ($storeWithCurrenciesCollection as $storeWithCurrencyTransfer) {
-            if ($storeWithCurrencyTransfer->getStore() === null) {
-                continue;
-            }
-            if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
-                continue;
-            }
-            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
-            }
+        $storeWithCurrenciesTransfer = $this->currencyFacade->getStoreWithCurrenciesByIdStore($idStore);
+
+        foreach ($storeWithCurrenciesTransfer->getCurrencies() as $currencyTransfer) {
+            $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
         }
 
         return $result;

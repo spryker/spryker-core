@@ -27,7 +27,13 @@ class CurrenciesForStoreController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $idStore = $this->castId($request->request->get(static::KEY_ID_STORE));
+        $idStore = $request->request->get(static::KEY_ID_STORE);
+
+        if (!$idStore) {
+            return $this->jsonResponse([]);
+        }
+
+        $idStore = $this->castId($idStore);
         $storeWithCurrencyTransfer = $this->getFacade()->getStoreWithCurrenciesByIdStore($idStore);
 
         return $this->jsonResponse($storeWithCurrencyTransfer->toArray());
