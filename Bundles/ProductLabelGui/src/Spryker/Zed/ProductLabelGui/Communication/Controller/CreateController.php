@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    protected const ROUTE_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
+    protected const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -28,13 +32,15 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $productLabelAggregateForm = $this->createProductLabelAggregateForm();
-        $isFormSuccessfullyHandled = $this->handleProductLabelAggregateForm(
-            $request,
-            $productLabelAggregateForm
-        );
+        $productLabelTransfer = $this->handleProductLabelAggregateForm($request, $productLabelAggregateForm);
 
-        if ($isFormSuccessfullyHandled) {
-            return $this->redirectResponse('/product-label-gui');
+        if ($productLabelTransfer) {
+            $redirectUrl = Url::generate(
+                static::ROUTE_PRODUCT_LABEL_EDIT,
+                [static::PARAM_ID_PRODUCT_LABEL => $productLabelTransfer->getIdProductLabel()]
+            )->build();
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
@@ -68,14 +74,14 @@ class CreateController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $aggregateForm
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    protected function handleProductLabelAggregateForm(Request $request, FormInterface $aggregateForm)
+    protected function handleProductLabelAggregateForm(Request $request, FormInterface $aggregateForm): ?ProductLabelTransfer
     {
         $aggregateForm->handleRequest($request);
 
         if ($aggregateForm->isSubmitted() === false || $aggregateForm->isValid() === false) {
-            return false;
+            return null;
         }
 
         /** @var \Generated\Shared\Transfer\ProductLabelAggregateFormTransfer $aggregateFormTransfer */
@@ -93,7 +99,7 @@ class CreateController extends AbstractController
             '%d' => $productLabelTransfer->getIdProductLabel(),
         ]);
 
-        return true;
+        return $productLabelTransfer;
     }
 
     /**
