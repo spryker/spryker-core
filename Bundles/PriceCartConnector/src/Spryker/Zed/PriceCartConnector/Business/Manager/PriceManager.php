@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
+use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 
@@ -41,15 +42,23 @@ class PriceManager implements PriceManagerInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
+     */
+    protected $priceProductFilter;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
+     * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
-        PriceCartToPriceInterface $priceFacade
+        PriceCartToPriceInterface $priceFacade,
+        PriceProductFilterInterface $priceProductFilter
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
+        $this->priceProductFilter = $priceProductFilter;
     }
 
     /**
@@ -68,9 +77,11 @@ class PriceManager implements PriceManagerInterface
         $priceProductTransfers = $this->getIndexedPriceProductTransfersByPriceProductFilterTransfers($priceProductFilterTransfers);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductTransfer = $this->getPriceProductTransferBySku($priceProductTransfers, $itemTransfer->getSku());
+            $this->setOriginUnitPrices($itemTransfer, $cartChangeTransfer);
 
-            $itemTransfer = $this->setOriginUnitPrices($itemTransfer, $priceProductTransfer, $priceMode);
+            if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
+                continue;
+            }
 
             if ($this->hasSourceUnitPrices($itemTransfer)) {
                 $itemTransfer = $this->applySourceUnitPrices($itemTransfer);
@@ -149,48 +160,14 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param string $priceMode
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer, string $priceMode): ItemTransfer
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, CartChangeTransfer $cartChangeTransfer)
     {
-        $itemTransfer->setPriceProduct($priceProductTransfer);
-
-        if ($priceMode === $this->getNetPriceModeIdentifier()) {
-            return $this->setOriginUnitNetPrice($itemTransfer, $priceProductTransfer);
-        }
-
-        return $this->setOriginUnitGrossPrice($itemTransfer, $priceProductTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function setOriginUnitNetPrice(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer): ItemTransfer
-    {
-        $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
-        $itemTransfer->setOriginUnitGrossPrice(0);
-        $itemTransfer->setSumGrossPrice(0);
-
-        return $itemTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function setOriginUnitGrossPrice(ItemTransfer $itemTransfer, PriceProductTransfer $priceProductTransfer): ItemTransfer
-    {
-        $itemTransfer->setOriginUnitNetPrice(0);
-        $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
-        $itemTransfer->setSumNetPrice(0);
+        $priceProductFilterTransfer = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+        $this->setPrice($itemTransfer, $priceProductFilterTransfer, $cartChangeTransfer->getQuote()->getPriceMode());
 
         return $itemTransfer;
     }
@@ -247,6 +224,22 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
+     * @deprecated Will be removed with a next major release
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasForcedUnitGrossPrice(ItemTransfer $itemTransfer)
+    {
+        if ($itemTransfer->getForcedUnitGrossPrice() && $itemTransfer->getUnitGrossPrice() !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -261,80 +254,42 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @return string
-     */
-    protected function getNetPriceModeIdentifier()
-    {
-        if (!static::$netPriceModeIdentifier) {
-            static::$netPriceModeIdentifier = $this->priceFacade->getNetPriceModeIdentifier();
-        }
-
-        return static::$netPriceModeIdentifier;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param string|null $priceMode
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
+     *
+     * @return void
      */
-    protected function createPriceProductFilter(
+    protected function setPrice(
         ItemTransfer $itemTransfer,
-        QuoteTransfer $quoteTransfer
-    ): PriceProductFilterTransfer {
-        $priceProductFilterTransfer =
-            $this->mapItemTransferToPriceProductFilterTransfer(
-                new PriceProductFilterTransfer(),
-                $itemTransfer
-            )
-            ->setStoreName($this->findStoreName($quoteTransfer))
-            ->setPriceMode($quoteTransfer->getPriceMode())
-            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
-            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
-
-        if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
-            $priceProductFilterTransfer->setQuote($quoteTransfer);
-        }
-
-        return $priceProductFilterTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
-     */
-    protected function mapItemTransferToPriceProductFilterTransfer(
         PriceProductFilterTransfer $priceProductFilterTransfer,
-        ItemTransfer $itemTransfer
-    ): PriceProductFilterTransfer {
-        $priceProductFilterTransfer->fromArray($itemTransfer->toArray(), true);
+        ?string $priceMode
+    ) {
+        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
 
-        return $priceProductFilterTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return bool
-     */
-    protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
-    {
-        return property_exists($priceProductFilterTransfer, 'quote');
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return string|null
-     */
-    protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
-    {
-        if ($quoteTransfer->getStore() === null) {
-            return null;
+        if ($priceProductTransfer === null) {
+            throw new PriceMissingException(
+                sprintf(
+                    'Cart item "%s" can not be priced.',
+                    $itemTransfer->getSku()
+                )
+            );
         }
 
-        return $quoteTransfer->getStore()->getName();
+        $itemTransfer->setPriceProduct($priceProductTransfer);
+
+        if ($priceMode === $this->priceFacade->getNetPriceModeIdentifier()) {
+            $itemTransfer->setOriginUnitNetPrice($priceProductTransfer->getMoneyValue()->getNetAmount());
+            $itemTransfer->setOriginUnitGrossPrice(0);
+            $itemTransfer->setSumGrossPrice(0);
+
+            return;
+        }
+
+        $itemTransfer->setOriginUnitNetPrice(0);
+        $itemTransfer->setOriginUnitGrossPrice($priceProductTransfer->getMoneyValue()->getGrossAmount());
+        $itemTransfer->setSumNetPrice(0);
     }
 }
