@@ -1,3 +1,6 @@
 {{ 'availability_notification_subscription.mail.unsubscribed.body'|trans({'%name%': mail.availabilityNotificationSubscriptionMailData.productName}) }}
 
-{{ 'availability_notification_subscription.mail.footer'|trans({'%link%': mail.availabilityNotificationSubscriptionMailData.availabilityUnsubscriptionLink})|raw }}
+{{ 'availability_notification_subscription.mail.copyright'|trans|raw }}
+{% if mail.type != constant('Spryker\\Zed\\AvailabilityNotification\\Communication\\Plugin\\Mail\\AvailabilityNotificationUnsubscribedMailTypePlugin::AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL') %}
+    {{ 'availability_notification_subscription.mail.unsubscribe_text'|trans({'%link%': mail.availabilityNotificationSubscriptionMailData.availabilityUnsubscriptionLink})|raw }}
+{% endif %}
