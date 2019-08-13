@@ -47,7 +47,7 @@ class ProductAbstractResourceIdentifierReader implements ProductAbstractStorageR
             $localeName
         );
 
-        if (!$data || !$data[static::KEY_SKU]) {
+        if (!$data) {
             return null;
         }
 

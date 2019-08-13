@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface;
+use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Mapper\UrlIdentifierMapperInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface;
 
 class UrlIdentifierReader implements UrlIdentifierReaderInterface
@@ -30,6 +31,11 @@ class UrlIdentifierReader implements UrlIdentifierReaderInterface
     protected $urlIdentifierResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Mapper\UrlIdentifierMapperInterface
+     */
+    protected $urlIdentifierMapper;
+
+    /**
      * @var \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[]
      */
     protected $resourceIdentifierProviderPlugins;
@@ -37,15 +43,18 @@ class UrlIdentifierReader implements UrlIdentifierReaderInterface
     /**
      * @param \Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient
      * @param \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilderInterface $urlIdentifierResponseBuilder
+     * @param \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Mapper\UrlIdentifierMapperInterface $urlIdentifierMapper
      * @param \Spryker\Glue\UrlIdentifiersRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[] $resourceIdentifierProviderPlugins
      */
     public function __construct(
         UrlIdentifiersRestApiToUrlStorageClientInterface $urlStorageClient,
         UrlIdentifierResponseBuilderInterface $urlIdentifierResponseBuilder,
+        UrlIdentifierMapperInterface $urlIdentifierMapper,
         array $resourceIdentifierProviderPlugins
     ) {
         $this->urlStorageClient = $urlStorageClient;
         $this->urlIdentifierResponseBuilder = $urlIdentifierResponseBuilder;
+        $this->urlIdentifierMapper = $urlIdentifierMapper;
         $this->resourceIdentifierProviderPlugins = $resourceIdentifierProviderPlugins;
     }
 
@@ -73,7 +82,7 @@ class UrlIdentifierReader implements UrlIdentifierReaderInterface
             return $this->urlIdentifierResponseBuilder->createUrlNotFoundErrorResponse();
         }
 
-        $restUrlIdentifiersAttributesTransfer = $this->mapResourceIdentifierTransferToRestUrlIdentifiersAttributesTransfer(
+        $restUrlIdentifiersAttributesTransfer = $this->urlIdentifierMapper->mapResourceIdentifierTransferToRestUrlIdentifiersAttributesTransfer(
             $resourceIdentifierTransfer,
             new RestUrlIdentifiersAttributesTransfer()
         );
@@ -124,18 +133,5 @@ class UrlIdentifierReader implements UrlIdentifierReaderInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ResourceIdentifierTransfer $resourceIdentifierTransfer
-     * @param \Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer $restUrlIdentifiersAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestUrlIdentifiersAttributesTransfer
-     */
-    protected function mapResourceIdentifierTransferToRestUrlIdentifiersAttributesTransfer(
-        ResourceIdentifierTransfer $resourceIdentifierTransfer,
-        RestUrlIdentifiersAttributesTransfer $restUrlIdentifiersAttributesTransfer
-    ): RestUrlIdentifiersAttributesTransfer {
-        return $restUrlIdentifiersAttributesTransfer->fromArray($resourceIdentifierTransfer->toArray(), true);
     }
 }

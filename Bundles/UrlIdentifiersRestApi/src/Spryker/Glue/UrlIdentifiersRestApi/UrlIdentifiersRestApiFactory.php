@@ -9,6 +9,8 @@ namespace Spryker\Glue\UrlIdentifiersRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\UrlIdentifiersRestApi\Dependency\Client\UrlIdentifiersRestApiToUrlStorageClientInterface;
+use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Mapper\UrlIdentifierMapper;
+use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Mapper\UrlIdentifierMapperInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifierReader;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Reader\UrlIdentifierReaderInterface;
 use Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\ResponseBuilder\UrlIdentifierResponseBuilder;
@@ -24,6 +26,7 @@ class UrlIdentifiersRestApiFactory extends AbstractFactory
         return new UrlIdentifierReader(
             $this->getUrlStorageClient(),
             $this->createUrlIdentifierResponseBuilder(),
+            $this->createUrlIdentifierMapper(),
             $this->getResourceIdentifierProviderPlugins()
         );
     }
@@ -34,6 +37,14 @@ class UrlIdentifiersRestApiFactory extends AbstractFactory
     public function createUrlIdentifierResponseBuilder(): UrlIdentifierResponseBuilderInterface
     {
         return new UrlIdentifierResponseBuilder($this->getResourceBuilder());
+    }
+
+    /**
+     * @return \Spryker\Glue\UrlIdentifiersRestApi\Processor\UrlIdentifier\Mapper\UrlIdentifierMapperInterface
+     */
+    public function createUrlIdentifierMapper(): UrlIdentifierMapperInterface
+    {
+        return new UrlIdentifierMapper();
     }
 
     /**
