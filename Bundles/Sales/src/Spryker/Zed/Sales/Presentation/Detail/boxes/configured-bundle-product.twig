@@ -52,7 +52,7 @@
     <div>
         {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %}
     </div>
-    <div class="tax-info">{{ 'incl.' | trans }} {{ orderItem.taxRate|default(0) }} % {{ 'tax' | trans }} </div>
+    <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': orderItem.taxRate|default(0)}) }}</div>
 </td>
 
 {% if displayTotals %}

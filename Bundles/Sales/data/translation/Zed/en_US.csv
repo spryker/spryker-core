@@ -12,7 +12,7 @@ Discount,Discount
 "GRAND TOTAL","Grand Total"
 "Grand Total","Grand Total"
 "Hide history","Hide history"
-"incl.","incl."
+"incl. %tax_amount% % tax","incl. %tax_amount% % tax"
 "Included tax amount","Included tax amount"
 "Item total","Item Total"
 Legend,Legend
@@ -39,7 +39,6 @@ Shipment,Shipment
 Sku,SKU
 State,State
 "Sub total","Sub Total"
-"tax","tax"
 Totals,Totals
 "Trigger all matching states","Trigger all matching states"
 "Trigger event","Trigger event"
