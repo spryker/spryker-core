@@ -33,38 +33,9 @@ var SlotTable = function (options) {
             autoWidth: false,
             language: dataTable.defaultConfiguration.language,
             drawCallback: function() {
-                var api = this.api();
-
-                _self.toggleOwnershipColumn(api);
                 _self.activationHandler();
             },
         });
-    };
-
-    this.toggleOwnershipColumn = function (api) {
-        var ownershipColumnIndex = null;
-        var ownershipValues = [];
-        var ownershipColumn = null;
-
-        api.columns().header().each(function (element, index) {
-            if ($(element).attr("id") === _self.ownershipColumnId) {
-                ownershipColumnIndex = index;
-            }
-        });
-
-        if (ownershipColumnIndex !== null) {
-            ownershipColumn = api.table().columns(ownershipColumnIndex);
-            ownershipColumn.visible(true);
-            var ownershipsArray = ownershipColumn.data()[0];
-
-            ownershipValues = ownershipsArray.filter(function (value, index, self) {
-                return self.indexOf(value) === index;
-            });
-
-            if (ownershipValues.length === 1) {
-                ownershipColumn.visible(false);
-            }
-        }
     };
 
     this.activationHandler = function () {
