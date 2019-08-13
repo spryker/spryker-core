@@ -15,7 +15,7 @@ interface CatalogSearchRestApiToCatalogClientInterface
      *
      * @return array
      */
-    public function catalogSearch(string $searchString, array $requestParameters);
+    public function catalogSearch($searchString, array $requestParameters);
 
     /**
      * @param string $searchString
@@ -23,5 +23,5 @@ interface CatalogSearchRestApiToCatalogClientInterface
      *
      * @return array
      */
-    public function catalogSuggestSearch(string $searchString, array $requestParameters = []);
+    public function catalogSuggestSearch($searchString, array $requestParameters = []);
 }

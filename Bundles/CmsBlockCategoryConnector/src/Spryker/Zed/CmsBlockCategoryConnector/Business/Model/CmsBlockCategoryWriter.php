@@ -131,14 +131,16 @@ class CmsBlockCategoryWriter implements CmsBlockCategoryWriterInterface
     {
         $categoryTransfer->requireIdCategory();
 
-        foreach ($categoryTransfer->getIdCmsBlocks() as $idCmsBlockCategoryPosition => $idCmsBlocks) {
-            $this->createRelations(
-                $idCmsBlocks,
-                [$categoryTransfer->getIdCategory()],
-                $idCmsBlockCategoryPosition,
-                $categoryTransfer->getFkCategoryTemplate()
-            );
-            $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()]);
+        foreach ($categoryTransfer->getIdCmsBlocks() as $idCategoryTemplate => $cmsBlockData) {
+            foreach ($cmsBlockData as $idCmsBlockCategoryPosition => $idCmsBlocks) {
+                $this->createRelations(
+                    $idCmsBlocks,
+                    [$categoryTransfer->getIdCategory()],
+                    $idCmsBlockCategoryPosition,
+                    $idCategoryTemplate
+                );
+                $this->touchActiveCategoryCmsBlockRelation([$categoryTransfer->getIdCategory()]);
+            }
         }
     }
 
