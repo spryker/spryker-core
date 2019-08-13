@@ -60,7 +60,8 @@ class WishlistMapper implements WishlistMapperInterface
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistItemTransfer {
         $wishlistItemTransfer = $wishlistItemTransfer->fromArray(
-            $wishlistItemEntity->toArray(), true
+            $wishlistItemEntity->toArray(),
+            true
         );
 
         return $wishlistItemTransfer;

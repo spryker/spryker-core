@@ -25,7 +25,7 @@ interface WishlistRepositoryInterface
      * @param int $idCustomer
      * @param string $uuidWishlist
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistTransfer|null
      */
     public function getWishlistByCustomerIdAndUuid($idCustomer, $uuidWishlist): ?WishlistTransfer;
 }
