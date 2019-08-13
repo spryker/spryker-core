@@ -26,6 +26,7 @@ use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsWriterInterface;
 
 /**
  * @method \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface getClient()
+ * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig getConfig()
  */
 class WishlistsRestApiFactory extends AbstractFactory
 {
@@ -51,11 +52,9 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistsWriter(
             $this->getWishlistClient(),
-            $this->getResourceBuilder(),
             $this->createWishlistsResourceMapper(),
-            $this->createWishlistItemsResourceMapper(),
-            $this->createWishlistsReader(),
-            $this->getClient()
+            $this->getClient(),
+            $this->createWishlistRestResponseBuilder()
         );
     }
 
@@ -77,7 +76,11 @@ class WishlistsRestApiFactory extends AbstractFactory
      */
     public function createWishlistRestResponseBuilder(): WishlistsRestResponseBuilderInterface
     {
-        return new WishlistsRestResponseBuilder();
+        return new WishlistsRestResponseBuilder(
+            $this->getConfig(),
+            $this->getResourceBuilder(),
+            $this->createWishlistsResourceMapper()
+        );
     }
 
     /**

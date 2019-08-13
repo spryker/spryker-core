@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
+use Spryker\Shared\Wishlist\WishlistConfig;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
 use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface;
@@ -429,7 +430,7 @@ class Reader implements ReaderInterface
             ->getWishlistByCustomerIdAndUuid($wishlistRequestTransfer->getIdCustomer(), $wishlistRequestTransfer->getUuid());
 
         if (!$wishlistTransfer) {
-            return $wishlistResponseTransfer;
+            return $wishlistResponseTransfer->setErrorIdentifier(WishlistConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND);
         }
 
         return $wishlistResponseTransfer
