@@ -35,12 +35,10 @@ class SlotTable extends AbstractTable
     protected const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
     protected const URL_DEACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/deactivate';
 
-    protected const MIN_CONTENT_PROVIDER_TYPES_TO_DISPLAY_OWNERSHIP_COLUMN = 1;
-
     /**
      * @var int|null
      */
-    protected $contentProviderTypes = null;
+    protected $contentProviderTypesNumber = null;
 
     /**
      * @var \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
@@ -157,14 +155,14 @@ class SlotTable extends AbstractTable
      */
     protected function isOwnershipColumnVisible(): bool
     {
-        if ($this->contentProviderTypes === null) {
-            $this->contentProviderTypes = $this->cmsSlotQuery
-                ->select(self::COL_OWNERSHIP)
+        if ($this->contentProviderTypesNumber === null) {
+            $this->contentProviderTypesNumber = $this->cmsSlotQuery
+                ->select(static::COL_OWNERSHIP)
                 ->distinct()
                 ->count();
         }
 
-        return $this->contentProviderTypes > self::MIN_CONTENT_PROVIDER_TYPES_TO_DISPLAY_OWNERSHIP_COLUMN ? true : false;
+        return $this->contentProviderTypesNumber > 1 ? true : false;
     }
 
     /**
