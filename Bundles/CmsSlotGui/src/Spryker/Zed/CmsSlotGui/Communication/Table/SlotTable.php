@@ -162,7 +162,7 @@ class SlotTable extends AbstractTable
                 ->count();
         }
 
-        return $this->contentProviderTypesNumber > 1 ? true : false;
+        return $this->contentProviderTypesNumber > 1;
     }
 
     /**
