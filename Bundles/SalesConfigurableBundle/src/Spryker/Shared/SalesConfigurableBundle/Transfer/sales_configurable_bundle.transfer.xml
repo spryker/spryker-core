@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Item">
+        <property name="configuredBundleItem" type="ConfiguredBundleItem" />
+        <property name="configuredBundle" type="ConfiguredBundle" />
+        <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
+    </transfer>
+
+    <transfer name="ConfiguredBundle">
+        <property name="template" type="ConfigurableBundleTemplate" />
+        <property name="quantity" type="int" />
+        <property name="groupKey" type="string" />
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
+        <property name="slot" type="ConfigurableBundleTemplateSlot" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplate">
+        <property name="idConfigurableBundleTemplate" type="int" />
+        <property name="uuid" type="string" />
+        <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlot">
+        <property name="idConfigurableBundleTemplateSlot" type="int" />
+        <property name="uuid" type="string" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleFilter">
+        <property name="configurableBundleTemplateUuid" type="string" />
+        <property name="configurableBundleTemplateSlotUuid" type="string" />
+        <property name="salesOrderItemIds" type="array" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleCollection">
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
+        <property name="idSalesOrderConfiguredBundle" type="int" />
+        <property name="configurableBundleTemplateUuid" type="string" />
+        <property name="name" type="string" />
+        <property name="quantity" type="int" description="The quantity of the configuration in the Order" />
+        <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundleItem">
+        <property name="idSalesOrderConfiguredBundleItem" type="int" />
+        <property name="idSalesOrderConfiguredBundle" type="int" />
+        <property name="idSalesOrderItem" type="int" />
+        <property name="configurableBundleTemplateSlotUuid" type="string" />
+    </transfer>
+
+</transfers>

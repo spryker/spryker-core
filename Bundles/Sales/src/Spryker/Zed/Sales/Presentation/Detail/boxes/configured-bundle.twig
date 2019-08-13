@@ -1,0 +1,27 @@
+{% set mappedItems = order.items | reduce((collection, item) => collection | merge({('_' ~ item.idSalesOrderItem): (item)}), {}) %}
+{% for bundle in order.salesOrderConfiguredBundles %}
+    <tr>
+        <td colspan="5">
+            {{ bundle.name | trans }}
+            ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
+        </td>
+        <td>
+            {% set bundleSumSubtotalAggregation = 0 %}
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for item in bundle.salesOrderConfiguredBundleItems %}
+                {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
+                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + product.sumSubtotalAggregation %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
+        <td colspan="2"></td>
+    </tr>
+    {% for item in bundle.salesOrderConfiguredBundleItems %}
+        <tr>
+            {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
+            {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image, displayTotals: false} %}{% endembed %}
+        </tr>
+    {% endfor %}
+{% endfor %}
