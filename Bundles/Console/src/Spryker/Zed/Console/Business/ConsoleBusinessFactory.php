@@ -44,6 +44,16 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ConsoleDependencyProvider::PLUGINS_APPLICATION);
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleBusinessFactory::getApplicationPlugins()` instead.
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getServiceProviders()

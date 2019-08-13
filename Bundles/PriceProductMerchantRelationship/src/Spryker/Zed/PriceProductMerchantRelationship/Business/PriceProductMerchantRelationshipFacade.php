@@ -85,6 +85,8 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
      *
      * @api
      *
+     * @deprecated will be removed without replacement.
+     *
      * @param int $idPriceProductStore
      *
      * @return void

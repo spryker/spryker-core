@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductSet\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
+use Generated\Shared\Transfer\ProductSetTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductSetDataHelper extends Module
@@ -23,6 +24,9 @@ class ProductSetDataHelper extends Module
     public function haveProductSet(array $productSetOverwrite = [])
     {
         $productSetTransfer = (new ProductSetBuilder($productSetOverwrite))->build();
+        if (isset($productSetOverwrite[ProductSetTransfer::LOCALIZED_DATA])) {
+            $productSetTransfer->setLocalizedData($productSetOverwrite[ProductSetTransfer::LOCALIZED_DATA]);
+        }
 
         return $this->getProductSetFacade()->createProductSet($productSetTransfer);
     }

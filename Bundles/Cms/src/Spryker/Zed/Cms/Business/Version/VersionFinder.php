@@ -147,7 +147,7 @@ class VersionFinder implements VersionFinderInterface
         if ($cmsPageCollection->count() === 0) {
             throw new MissingPageException(
                 sprintf(
-                    'There is no valid Cms page with this id: %d . If the page exists. please check the placeholders',
+                    'There is no valid Cms page with this id: %d .',
                     $idCmsPage
                 )
             );

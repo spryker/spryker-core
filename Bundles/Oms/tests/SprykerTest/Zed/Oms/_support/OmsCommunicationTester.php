@@ -27,8 +27,4 @@ use Codeception\Actor;
 class OmsCommunicationTester extends Actor
 {
     use _generated\OmsCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

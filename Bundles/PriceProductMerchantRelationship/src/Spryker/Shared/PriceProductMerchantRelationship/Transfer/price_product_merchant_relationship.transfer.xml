@@ -8,4 +8,14 @@
         <property name="name" type="string" />
     </transfer>
 
+    <transfer name="QueryCriteria">
+        <property name="joins" type="QueryJoin[]" singular="join" />
+        <property name="withColumns" type="array" singular="withColumn" />
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="left" type="array" />
+        <property name="right" type="array" />
+        <property name="joinType" type="string" />
+    </transfer>
 </transfers>
