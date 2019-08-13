@@ -115,10 +115,10 @@ class CompanyUserSynchronizationDataPlugin extends AbstractPlugin implements Syn
      */
     protected function findCompanyUserStorageEntities(array $ids): array
     {
-        if (count($ids)) {
-            return $this->getRepository()->findCompanyUserStorageEntities($ids);
+        if ($ids === []) {
+            return $this->getRepository()->findAllCompanyUserStorageEntities();
         }
 
-        return $this->getRepository()->findAllCompanyUserStorageEntities();
+        return $this->getRepository()->findCompanyUserStorageEntities($ids);
     }
 }

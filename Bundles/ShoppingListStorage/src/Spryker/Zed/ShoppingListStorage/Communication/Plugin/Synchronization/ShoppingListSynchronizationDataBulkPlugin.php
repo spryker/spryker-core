@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Orm\Zed\ShoppingListStorage\Persistence\Map\SpyShoppingListCustomerStorageTableMap;
 use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -60,14 +62,10 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
     {
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $shoppingListCustomerStorageEntityTransfers = $this->getRepository()->findFilteredShoppingListCustomerStorageEntities($filterTransfer, $ids);
 
-        $shoppingListCustomerStorageEntities = $this->getRepository()->findFilteredProductConcreteProductListStorageEntities($filterTransfer, $ids);
-
-        foreach ($shoppingListCustomerStorageEntities as $shoppingListCustomerStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData(json_encode($shoppingListCustomerStorageEntity->getData()));
-            $synchronizationDataTransfer->setKey($shoppingListCustomerStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+        foreach ($shoppingListCustomerStorageEntityTransfers as $shoppingListCustomerStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($shoppingListCustomerStorageEntityTransfer);
         }
 
         return $synchronizationDataTransfers;
@@ -118,7 +116,24 @@ class ShoppingListSynchronizationDataBulkPlugin extends AbstractPlugin implement
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyShoppingListCustomerStorageTableMap::COL_ID_SHOPPING_LIST_CUSTOMER_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer $shoppingListCustomerStorageEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    protected function createSynchronizationDataTransfer(
+        SpyShoppingListCustomerStorageEntityTransfer $shoppingListCustomerStorageEntityTransfer
+    ): SynchronizationDataTransfer {
+        /** @var string $shoppingListCustomerStorageData */
+        $shoppingListCustomerStorageData = $shoppingListCustomerStorageEntityTransfer->getData();
+
+        return (new SynchronizationDataTransfer())
+            ->setData($shoppingListCustomerStorageData)
+            ->setKey($shoppingListCustomerStorageEntityTransfer->getKey());
     }
 }

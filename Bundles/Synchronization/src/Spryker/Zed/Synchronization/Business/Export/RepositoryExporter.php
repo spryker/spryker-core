@@ -9,6 +9,9 @@ namespace Spryker\Zed\Synchronization\Business\Export;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
+use Iterator;
+use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataBulkRepositoryPluginIterator;
+use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataRepositoryPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -80,16 +83,20 @@ class RepositoryExporter implements ExporterInterface
      */
     protected function exportData(array $ids, SynchronizationDataRepositoryPluginInterface $plugin): void
     {
-        $synchronizationEntities = $plugin->getData($ids);
-        $count = count($synchronizationEntities);
-        $loops = $count / $this->chunkSize;
-        $offset = 0;
-
-        for ($i = 0; $i < $loops; $i++) {
-            $chunkOfSynchronizationEntitiesTransfers = array_slice($synchronizationEntities, $offset, $this->chunkSize);
-            $this->syncData($plugin, $chunkOfSynchronizationEntitiesTransfers);
-            $offset += $this->chunkSize;
+        foreach ($this->createSynchronizationDataRepositoryPluginIterator($ids, $plugin) as $synchronizationEntityTransfers) {
+            $this->syncData($plugin, $synchronizationEntityTransfers);
         }
+    }
+
+    /**
+     * @param array $ids
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface $plugin
+     *
+     * @return \Iterator
+     */
+    protected function createSynchronizationDataRepositoryPluginIterator(array $ids, SynchronizationDataRepositoryPluginInterface $plugin): Iterator
+    {
+        return new SynchronizationDataRepositoryPluginIterator($plugin, $this->chunkSize, $ids);
     }
 
     /**
@@ -100,19 +107,20 @@ class RepositoryExporter implements ExporterInterface
      */
     protected function exportDataBulk(SynchronizationDataBulkRepositoryPluginInterface $plugin, array $ids = []): void
     {
-        $offset = 0;
+        foreach ($this->createSynchronizationDataBulkRepositoryPluginIterator($ids, $plugin) as $synchronizationEntityTransfers) {
+            $this->syncData($plugin, $synchronizationEntityTransfers);
+        }
+    }
 
-        do {
-            $synchronizationEntities = $plugin->getData($offset, $this->chunkSize, $ids);
-
-            if (empty($synchronizationEntities)) {
-                break;
-            }
-
-            $this->syncData($plugin, $synchronizationEntities);
-
-            $offset += $this->chunkSize;
-        } while (count($synchronizationEntities) === $this->chunkSize);
+    /**
+     * @param int[] $ids
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
+     *
+     * @return \Iterator
+     */
+    protected function createSynchronizationDataBulkRepositoryPluginIterator(array $ids, SynchronizationDataBulkRepositoryPluginInterface $plugin): Iterator
+    {
+        return new SynchronizationDataBulkRepositoryPluginIterator($plugin, $this->chunkSize, $ids);
     }
 
     /**
@@ -132,7 +140,7 @@ class RepositoryExporter implements ExporterInterface
                 ->setResource($plugin->getResourceName())
                 ->setParams($plugin->getParams());
 
-            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $store, $plugin->getSynchronizationQueuePoolName());
+            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $plugin, $store);
         }
 
         $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendTransfers);

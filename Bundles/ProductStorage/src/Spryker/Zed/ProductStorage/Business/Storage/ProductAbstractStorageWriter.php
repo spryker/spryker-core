@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
 use Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface;
 use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface;
+use Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface;
 
 class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
@@ -41,6 +42,11 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @var \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -54,15 +60,18 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface $attributeMap
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
         AttributeMapInterface $attributeMap,
         ProductStorageQueryContainerInterface $queryContainer,
+        ProductStorageToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->productFacade = $productFacade;
+        $this->storeFacade = $storeFacade;
         $this->attributeMap = $attributeMap;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
@@ -220,17 +229,32 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
                 $mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName] :
                 new SpyProductAbstractStorage();
 
+            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
+
+            if (!$this->isValidStoreLocale($storeName, $localeName)) {
+                continue;
+            }
+
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_STORAGE_ENTITY => $productAbstractStorageEntity,
                 static::LOCALE_NAME => $localeName,
                 static::STORE_NAME => $storeName,
             ];
-
-            unset($mappedProductAbstractStorageEntities[$idProduct][$storeName][$localeName]);
         }
 
         return [$pairs, $mappedProductAbstractStorageEntities];
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    protected function isValidStoreLocale(string $storeName, string $localeName): bool
+    {
+        return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
     }
 
     /**

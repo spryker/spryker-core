@@ -21,6 +21,8 @@
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

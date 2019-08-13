@@ -1,8 +1,8 @@
-Title,Titel
-Subtitle,Untertitel
+Alt-text,Alt-Text
+"Click URL",Klick-URL
+content_banner.template.bottom-title,"Titel unten"
+content_banner.template.default,Standard
+content_banner.template.top-title,"Titel oben"
 "Image URL","Bild URL"
-"Click URL","Klick-URL"
-"Alt-text","Alt-Text"
-"content_banner.template.default","Standard"
-"content_banner.template.bottom-title","Titel unten"
-"content_banner.template.top-title","Titel oben"
+Subtitle,Untertitel
+Title,Titel

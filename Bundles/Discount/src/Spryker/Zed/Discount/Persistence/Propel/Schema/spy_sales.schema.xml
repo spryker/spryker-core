@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
     <table name="spy_sales_discount" phpName="SpySalesDiscount">
         <column name="id_sales_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>

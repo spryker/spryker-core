@@ -21,8 +21,6 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
@@ -33,7 +31,7 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
             ->findOneOrCreate();
 
-        $companyUnitAddressMapper = $this->getFactory()->createCompanyUniAddressMapper();
+        $companyUnitAddressMapper = $this->getFactory()->createCompanyUnitAddressMapper();
 
         $companyUnitAddressEntity = $companyUnitAddressMapper
             ->mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
@@ -51,8 +49,6 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param int $idCompanyUnitAddress
      *

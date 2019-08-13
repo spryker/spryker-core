@@ -56,4 +56,18 @@ interface QuoteRequestEntityManagerInterface
      * @return bool
      */
     public function updateQuoteRequestStatus(string $quoteRequestReference, string $fromStatus, string $toStatus): bool;
+
+    /**
+     * @param int[] $quoteRequestIds
+     *
+     * @return void
+     */
+    public function deleteQuoteRequestsByIds(array $quoteRequestIds): void;
+
+    /**
+     * @param int[] $quoteRequestIds
+     *
+     * @return void
+     */
+    public function deleteQuoteRequestVersionsByQuoteRequestIds(array $quoteRequestIds): void;
 }
