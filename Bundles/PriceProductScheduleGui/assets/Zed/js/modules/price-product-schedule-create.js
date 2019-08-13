@@ -22,8 +22,7 @@ $(document).ready(function() {
     };
 
     if (!$store.val()) {
-        $activeFromTimezoneText.hide();
-        $activeToTimezoneText.hide();
+        toggleVisibility(false);
     }
 
     $activeFrom.datepicker({
@@ -48,10 +47,14 @@ $(document).ready(function() {
         successCallback
     );
 
+    function toggleVisibility(display) {
+        $activeFromTimezoneText.toggle(display);
+        $activeToTimezoneText.toggle(display);
+    }
+
     function successCallback(data) {
         if (!data.store) {
-            $activeFromTimezoneText.hide();
-            $activeToTimezoneText.hide();
+            toggleVisibility(false);
 
             return;
         }
@@ -60,7 +63,6 @@ $(document).ready(function() {
             $(element).text(data.store.timezone);
         });
 
-        $activeFromTimezoneText.show();
-        $activeToTimezoneText.show();
+        toggleVisibility(true);
     }
 });
