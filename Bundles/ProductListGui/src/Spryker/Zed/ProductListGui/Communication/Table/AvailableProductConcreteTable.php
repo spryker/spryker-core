@@ -24,12 +24,10 @@ class AvailableProductConcreteTable extends AbstractProductConcreteTable
     {
         if ($this->getIdProductList()) {
             $spyProductQuery
-                ->useSpyProductListProductConcreteQuery(null, Criteria::LEFT_JOIN)
-                    ->filterByFkProductList($this->getIdProductList(), Criteria::NOT_IN)
-                    ->_or()
+                ->useSpyProductListProductConcreteQuery('node', Criteria::LEFT_JOIN)
                     ->filterByFkProductList(null, Criteria::ISNULL)
                 ->endUse()
-                ->distinct();
+                ->addJoinCondition('node', sprintf('node.fk_product_list = %d', $this->getIdProductList()));
         }
 
         return $spyProductQuery;
