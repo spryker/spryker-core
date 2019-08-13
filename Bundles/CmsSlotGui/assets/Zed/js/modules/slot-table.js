@@ -30,7 +30,6 @@ var SlotTable = function (options) {
             ajax: {
                 cache: false
             },
-            lengthChange: false,
             autoWidth: false,
             language: dataTable.defaultConfiguration.language,
             drawCallback: function() {
