@@ -12,6 +12,11 @@ $(document).ready(function() {
     var $activeTo = $('#price_product_schedule_activeTo_date');
     var $store = $('#price_product_schedule_priceProduct_moneyValue_store_idStore');
     var $currency = $('#price_product_schedule_priceProduct_moneyValue_currency_idCurrency');
+    var currencies = {
+        response: 'currencies',
+        value: 'id_currency',
+        text: 'code'
+    };
 
     $activeFrom.datepicker({
         altFormat: "yy-mm-dd",
@@ -26,12 +31,11 @@ $(document).ready(function() {
         defaultData: 0,
     });
 
-    $($store, $currency).find('option').eq(0).attr('disabled', true);
-
     new DependentSelectBox(
         $store,
         $currency,
         '/currency/currencies-for-store',
-        'idStore'
+        'idStore',
+        currencies
     );
 });

@@ -10,6 +10,7 @@ function DependentSelectBox(
     $target,
     requestUrl,
     dataKey,
+    responseData,
     successCallback
 ) {
     this.data = {};
@@ -17,6 +18,7 @@ function DependentSelectBox(
     this.target = $target;
     this.requestUrl = requestUrl;
     this.dataKey = dataKey;
+    this.responseData = responseData;
     this.successCallback = successCallback;
 
     this.mapEvents();
@@ -58,17 +60,21 @@ DependentSelectBox.prototype.requestData = function() {
 DependentSelectBox.prototype.setResponseData = function(data) {
     var self = this;
 
-    if (!data) {
-        this.target.attr('disabled', true);
+    if (data.length === 0) {
+        this.clearTargetSelectBox(true);
 
         return;
     }
 
-    this.target.attr('disabled', false);
-    this.target.find('option:gt(0)').remove();
-    $.each(data.currencies, function(key, value) {
-        self.target.append($('<option value="'+ value.id_currency +'">'+ value.code +'</option>'));
+    this.clearTargetSelectBox(false);
+    $.each(data[this.responseData.response], function(index, element) {
+        self.target.append($('<option value="'+ element[self.responseData.value] +'">'+ element[self.responseData.text] +'</option>'));
     });
+};
+
+DependentSelectBox.prototype.clearTargetSelectBox = function(isDisabled) {
+    this.target.attr('disabled', isDisabled);
+    this.target.find('option:gt(0)').remove();
 };
 
 module.exports = DependentSelectBox;
