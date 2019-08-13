@@ -39,21 +39,13 @@ class CartChangePreCheck implements CartChangePreCheckInterface
      */
     public function checkCartItems(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $cartPreCheckResponseTransfer = $this->createCartPreCheckResponseTransfer();
+        $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $cartPreCheckResponseTransfer = $this->addDiscontinuedErrorMessagesToCartPreCheckResponseTransfer(
             $cartPreCheckResponseTransfer,
             $cartChangeTransfer
         );
 
         return $cartPreCheckResponseTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    protected function createCartPreCheckResponseTransfer(): CartPreCheckResponseTransfer
-    {
-        return (new CartPreCheckResponseTransfer())->setIsSuccess(true);
     }
 
     /**
