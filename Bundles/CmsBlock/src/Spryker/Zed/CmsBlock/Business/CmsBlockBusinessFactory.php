@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlock\Business;
 
+use Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProvider;
+use Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryKeyGenerator;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryManager;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriter;
@@ -20,12 +22,14 @@ use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriter;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface;
+use Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
 
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
  * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface getRepository()
  */
 class CmsBlockBusinessFactory extends AbstractBusinessFactory
 {
@@ -62,7 +66,8 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->createCmsBlockStoreRelationWriter(),
             $this->getProvidedDependency(CmsBlockDependencyProvider::FACADE_TOUCH),
             $this->createCmsBlockTemplateManager(),
-            $this->getProvidedDependency(CmsBlockDependencyProvider::PLUGIN_CMS_BLOCK_UPDATE)
+            $this->getProvidedDependency(CmsBlockDependencyProvider::PLUGIN_CMS_BLOCK_UPDATE),
+            $this->createCmsBlockKeyProvider()
         );
     }
 
@@ -142,6 +147,22 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCmsBlockStoreRelationMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface
+     */
+    public function createCmsBlockKeyProvider(): CmsBlockKeyProviderInterface
+    {
+        return new CmsBlockKeyProvider($this->getUtilUuidGeneratorService(), $this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface
+     */
+    public function getUtilUuidGeneratorService(): CmsBlockToUtilUuidGeneratorServiceInterface
+    {
+        return $this->getProvidedDependency(CmsBlockDependencyProvider::SERVICE_UTIL_UUID_GENERATOR);
     }
 
     /**

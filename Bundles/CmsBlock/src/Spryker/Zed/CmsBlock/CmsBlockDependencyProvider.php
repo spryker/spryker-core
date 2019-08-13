@@ -12,6 +12,7 @@ use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryBridge;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleBridge;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchBridge;
 use Spryker\Zed\CmsBlock\Dependency\QueryContainer\CmsBlockToGlossaryQueryContainerBridge;
+use Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -24,6 +25,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT = 'FACADE_EVENT';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const SERVICE_UTIL_UUID_GENERATOR = 'SERVICE_UTIL_UUID_GENERATOR';
 
     public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
 
@@ -43,6 +45,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryQueryContainer($container);
         $container = $this->addCmsBlockUpdatePlugins($container);
+        $container = $this->addUtilUuidGenerator($container);
 
         return $container;
     }
@@ -137,5 +140,21 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCmsBlockUpdatePlugins()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilUuidGenerator(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_UUID_GENERATOR, function (Container $container) {
+            return new CmsBlockToUtilUuidGeneratorServiceBridge(
+                $container->getLocator()->utilUuidGenerator()->service()
+            );
+        });
+
+        return $container;
     }
 }

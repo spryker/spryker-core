@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
+use Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -50,6 +51,11 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected $cmsBlockUpdatePlugins;
 
     /**
+     * @var \Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface
+     */
+    protected $cmsBlockKeyProvider;
+
+    /**
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockMapperInterface $cmsBlockMapper
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockGlossaryWriterInterface $cmsBlockGlossaryWriter
@@ -57,6 +63,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface $touchFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
      * @param \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
+     * @param \Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface $cmsBlockKeyProvider
      */
     public function __construct(
         CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
@@ -65,7 +72,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         CmsBlockStoreRelationWriterInterface $cmsBlockStoreRelationWriter,
         CmsBlockToTouchInterface $touchFacade,
         CmsBlockTemplateManagerInterface $cmsBlockTemplateManager,
-        array $updatePlugins
+        array $updatePlugins,
+        CmsBlockKeyProviderInterface $cmsBlockKeyProvider
     ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->cmsBlockMapper = $cmsBlockMapper;
@@ -74,6 +82,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
         $this->touchFacade = $touchFacade;
         $this->templateManager = $cmsBlockTemplateManager;
         $this->cmsBlockUpdatePlugins = $updatePlugins;
+        $this->cmsBlockKeyProvider = $cmsBlockKeyProvider;
     }
 
     /**
@@ -133,6 +142,10 @@ class CmsBlockWriter implements CmsBlockWriterInterface
             );
         }
 
+        if (!$spyCmsBlock->getKey()) {
+            $spyCmsBlock->setKey($this->cmsBlockKeyProvider->generateKey());
+        }
+
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer, $spyCmsBlock) {
             $this->updateCmsBlockTransaction($cmsBlockTransfer, $spyCmsBlock);
             $this->updateCmsBlockPluginsTransaction($cmsBlockTransfer);
@@ -149,6 +162,10 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $cmsBlockTransfer->requireFkTemplate();
+
+        if (!$cmsBlockTransfer->getKey()) {
+            $cmsBlockTransfer->setKey($this->cmsBlockKeyProvider->generateKey());
+        }
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer) {
             $this->createCmsBlockTransaction($cmsBlockTransfer);
