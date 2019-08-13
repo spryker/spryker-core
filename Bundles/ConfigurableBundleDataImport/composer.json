@@ -2,7 +2,7 @@
   "name": "spryker/configurable-bundle-data-import",
   "type": "library",
   "description": "ConfigurableBundleDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/configurable-bundle": "^1.0.0",
