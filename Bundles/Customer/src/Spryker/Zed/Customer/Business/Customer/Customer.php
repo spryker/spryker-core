@@ -178,7 +178,7 @@ class Customer implements CustomerInterface
      */
     public function add($customerTransfer)
     {
-        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer);
+        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getNewPassword());
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
@@ -560,6 +560,11 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
+        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getNewPassword());
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
+        }
+
         $customerTransfer = $this->encryptNewPassword($customerTransfer);
 
         $customerEntity->setPassword($customerTransfer->getNewPassword());
@@ -898,15 +903,15 @@ class Customer implements CustomerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string $password
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function validateCustomerPassword(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    protected function validateCustomerPassword(string $password): CustomerResponseTransfer
     {
         $customerResponseTransfer = new CustomerResponseTransfer();
 
-        $customerPasswordLength = mb_strlen($customerTransfer->getPassword());
+        $customerPasswordLength = mb_strlen($password);
         $minLength = $this->customerConfig->getCustomerPasswordMinLength();
         $maxLength = $this->customerConfig->getCustomerPasswordMaxLength();
 
