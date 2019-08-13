@@ -147,8 +147,9 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
             throw new Exception('Could not load xml file');
         }
 
-        $simpleXmlTableElements = $simpleXmlElement->xpath('//table');
-        if ($simpleXmlTableElements === false) {
+        $simpleXmlTableElements = $this->getSimpleXmlTableElements($simpleXmlElement);
+
+        if (!$simpleXmlTableElements) {
             throw new Exception('No table found in ');
         }
 
@@ -162,6 +163,20 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
         }
 
         return $this->abstractClassesForTableExists($simpleXmlTableElements, $module, $output);
+    }
+
+    /**
+     * @param \SimpleXMLElement $simpleXmlElement
+     *
+     * @return bool
+     */
+    protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
+    {
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -248,5 +263,21 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
         $schemaModule = $namespaceFragments[2];
 
         return $schemaModule;
+    }
+
+    /**
+     * @param \SimpleXMLElement $simpleXmlElement
+     *
+     * @return \SimpleXMLElement[]
+     */
+    protected function getSimpleXmlTableElements(SimpleXMLElement $simpleXmlElement)
+    {
+        if ($this->hasNamespaceInSchema($simpleXmlElement)) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+
+            return $simpleXmlElement->xpath('//s:table');
+        }
+
+        return $simpleXmlElement->xpath('//table');
     }
 }
