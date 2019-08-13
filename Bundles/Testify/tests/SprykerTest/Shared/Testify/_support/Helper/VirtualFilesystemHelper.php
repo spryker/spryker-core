@@ -30,6 +30,23 @@ class VirtualFilesystemHelper extends Module
 
     /**
      * @param string $path
+     *
+     * @return string[]
+     */
+    public function getVirtualDirectoryContents(string $path): array
+    {
+        $contents = [];
+
+        /** @var \org\bovigo\vfs\vfsStreamContent $child */
+        foreach ($this->getVirtualRootDirectory()->getChild($path)->getChildren() as $child) {
+            $contents[] = $child->getName();
+        }
+
+        return $contents;
+    }
+
+    /**
+     * @param string $path
      * @param string $message
      *
      * @return void
@@ -37,7 +54,7 @@ class VirtualFilesystemHelper extends Module
     public function assertVirtualDirectoryIsEmpty(string $path, string $message = ''): void
     {
         $this->assertVirtualDirectoryExists($path, sprintf(static::ASSERT_EXISTS_DIR_MESSAGE, $path));
-        $this->assertEmpty($this->getVirtualRootDirectory()->getChild($path)->getChildren(), $message);
+        $this->assertEmpty($this->getVirtualDirectoryContents($path), $message);
     }
 
     /**
@@ -49,7 +66,7 @@ class VirtualFilesystemHelper extends Module
     public function assertVirtualDirectoryNotEmpty(string $path, string $message = ''): void
     {
         $this->assertVirtualDirectoryExists($path, sprintf(static::ASSERT_EXISTS_DIR_MESSAGE, $path));
-        $this->assertNotEmpty($this->getVirtualRootDirectory()->getChild($path)->getChildren(), $message);
+        $this->assertNotEmpty($this->getVirtualDirectoryContents($path), $message);
     }
 
     /**
