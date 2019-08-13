@@ -24,4 +24,7 @@
             {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image, displayTotals: false} %}{% endembed %}
         </tr>
     {% endfor %}
+    <tr>
+        <td colspan="8">&nbsp;</td>
+    </tr>
 {% endfor %}
