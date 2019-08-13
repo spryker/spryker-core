@@ -45,4 +45,24 @@ interface CompanyUnitAddressMapperInterface
         SpyCompanyUnitAddress $companyUnitAddressEntity,
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
+     *
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress
+     */
+    public function mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
+        CompanyUnitAddressTransfer $companyUnitAddressTransfer,
+        SpyCompanyUnitAddress $companyUnitAddressEntity
+    ): SpyCompanyUnitAddress;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer[] $companyUnitAddressToCompanyBusinessUnitEntities
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
+     */
+    public function mapEntitiesToCompanyBusinessUnitTransfers(
+        array $companyUnitAddressToCompanyBusinessUnitEntities
+    ): array;
 }

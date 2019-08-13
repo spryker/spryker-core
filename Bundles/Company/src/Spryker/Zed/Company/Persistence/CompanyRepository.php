@@ -21,8 +21,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idCompany
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
@@ -47,8 +45,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @param int $idCompany
      *
@@ -90,8 +86,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */
     public function getCompanies(): CompanyCollectionTransfer
@@ -105,5 +99,26 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
         $companyTypeCollection->setCompanies($spyCompanies);
 
         return $companyTypeCollection;
+    }
+
+    /**
+     * @param string $companyUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function findCompanyByUuid(string $companyUuid): ?CompanyTransfer
+    {
+        $companyEntity = $this->getFactory()
+            ->createCompanyQuery()
+            ->filterByUuid($companyUuid)
+            ->findOne();
+
+        if (!$companyEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCompanyMapper()
+            ->mapEntityToCompanyTransfer($companyEntity, new CompanyTransfer());
     }
 }

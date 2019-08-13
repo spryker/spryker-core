@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -19,6 +20,10 @@ interface QuoteFacadeInterface
 {
     /**
      * Specification:
+     * - Verifies before saving if provided store is available, sets current store as default if not provided.
+     * - Executes QuoteExpandBeforeCreatePluginInterface plugins.
+     * - Applies QuoteValidatorPluginInterface validation plugins before saving.
+     * - Reloads quote store by name if it's provided and doesn't have ID.
      * - Creates new quote entity if it does not exist.
      *
      * @api
@@ -31,6 +36,8 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
+     * - Applies QuoteValidatorPluginInterface validation plugins before saving.
+     * - Reloads quote store by name if it's provided and doesn't have ID.
      * - Updates existing quote entity from QuoteTransfer.
      *
      * @api
@@ -160,6 +167,9 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      *  - Locks quote by setting `isLocked` transfer property to true.
+     *  - Low level Quote locking (use CartFacadeInterface for features).
+     *
+     * @see CartFacadeInterface::resetQuoteLock()
      *
      * @api
      *
@@ -172,6 +182,9 @@ interface QuoteFacadeInterface
     /**
      * Specification:
      *  - Unlocks quote by setting `isLocked` transfer property to false.
+     *  - Low level Quote unlocking (use CartFacadeInterface for features).
+     *
+     * @see CartFacadeInterface::resetQuoteLock()
      *
      * @api
      *
@@ -183,7 +196,7 @@ interface QuoteFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if quote is locked.
+     * - Returns true if provided quote is locked.
      *
      * @api
      *
@@ -192,4 +205,18 @@ interface QuoteFacadeInterface
      * @return bool
      */
     public function isQuoteLocked(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Validates quote.
+     * - Returns error message when validation failed.
+     * - Returns empty transfer if validation success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
 }

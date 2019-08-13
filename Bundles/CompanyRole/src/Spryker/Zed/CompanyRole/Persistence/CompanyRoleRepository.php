@@ -253,21 +253,9 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      */
     public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
-        if (!$filterTransfer) {
-            return $criteria;
-        }
+        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
 
-        if ($filterTransfer->getLimit()) {
-            $criteria->setLimit($filterTransfer->getLimit());
-        }
-
-        if ($filterTransfer->getOffset()) {
-            $criteria->setOffset($filterTransfer->getOffset());
-        }
-
-        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
-            $criteria->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
-        }
+        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
 
         return $criteria;
     }
@@ -329,6 +317,13 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $companyRoleTransfer = $this->getFactory()
             ->createCompanyRoleCompanyUserMapper()
             ->hydrateCompanyUserCollection(
+                $spyCompanyRole,
+                $companyRoleTransfer
+            );
+
+        $companyRoleTransfer = $this->getFactory()
+            ->createCompanyRoleCompanyMapper()
+            ->mapCompanyFromCompanyRoleEntityToCompanyRoleTransfer(
                 $spyCompanyRole,
                 $companyRoleTransfer
             );
@@ -399,6 +394,28 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
         $companyRoleEntity = $this->getFactory()
             ->createCompanyRoleQuery()
             ->filterByIdCompanyRole($companyRoleTransfer->getIdCompanyRole())
+            ->findOne();
+
+        if (!$companyRoleEntity) {
+            return null;
+        }
+
+        return $this->prepareCompanyRoleTransfer($companyRoleEntity);
+    }
+
+    /**
+     * @module Company
+     *
+     * @param string $companyRoleUuid
+     *
+     * @return \Generated\Shared\Transfer\CompanyRoleTransfer|null
+     */
+    public function findCompanyRoleByUuid(string $companyRoleUuid): ?CompanyRoleTransfer
+    {
+        $companyRoleEntity = $this->getFactory()
+            ->createCompanyRoleQuery()
+            ->joinCompany()
+            ->filterByUuid($companyRoleUuid)
             ->findOne();
 
         if (!$companyRoleEntity) {

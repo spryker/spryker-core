@@ -32,7 +32,7 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface
      */
-    public function createCompanyUniAddressMapper(): CompanyUnitAddressMapperInterface
+    public function createCompanyUnitAddressMapper(): CompanyUnitAddressMapperInterface
     {
         return new CompanyUnitAddressMapper();
     }

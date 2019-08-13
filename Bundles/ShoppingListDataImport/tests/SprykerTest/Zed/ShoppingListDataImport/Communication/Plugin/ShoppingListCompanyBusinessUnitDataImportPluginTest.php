@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ShoppingListDataImport\Communication\Plugin;
 
+use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
+use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingListDataImport\Communication\Plugin\ShoppingListCompanyBusinessUnitDataImportPlugin;
 use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
@@ -64,11 +66,15 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
             new ReadShoppingListPermissionPlugin(),
             new WriteShoppingListPermissionPlugin(),
         ]);
+        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
+            new ShoppingListPermissionStoragePlugin(),
+        ]);
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
         $this->tester->getShoppingListFacade()->installShoppingListPermissions();
 
         $this->tester->ensureShoppingListCompanyBusinessUnitDatabaseTableIsEmpty();
-        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany([
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
             CompanyBusinessUnitTransfer::KEY => static::TEST_COMPANY_BUSINESS_UNIT_KEY,
         ]);
 
@@ -110,7 +116,7 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shopping_list_company_business_unit.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import/shopping_list_company_business_unit.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
@@ -135,7 +141,7 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shopping_list_company_business_unit_shopping_list_not_found.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import/shopping_list_company_business_unit_shopping_list_not_found.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
@@ -160,7 +166,7 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shopping_list_company_business_unit_not_found.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import/shopping_list_company_business_unit_not_found.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
@@ -185,7 +191,7 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
 
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shopping_list_company_business_permission_group_not_found.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(Configuration::dataDir() . 'import/shopping_list_company_business_permission_group_not_found.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)

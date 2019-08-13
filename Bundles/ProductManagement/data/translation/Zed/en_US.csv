@@ -20,6 +20,8 @@ Categories,Categories
 "Create Product","Create Product"
 Deactivate,Deactivate
 Default,Default
+"Delete image","Delete image"
+"Delete image set","Delete image set"
 Edit,Edit
 "Edit Product Abstract","Edit Product Abstract"
 "Edit Product Concrete","Edit Product Concrete"
@@ -27,6 +29,7 @@ Edit,Edit
 "Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored."
 General,General
 "Gross price","Gross price"
+"Image Set","Image Set"
 "Image Sets","Image Sets"
 Large,Large
 "List Products","List of products"
@@ -44,7 +47,6 @@ n/a,n/a
 "Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)"
 "Note: The SKU is not editable after saving anymore.","Note: The SKU is not editable after saving anymore."
 "Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore."
-"Price & Tax","Price & Tax"
 "Price & Tax","Price & Tax"
 "Price & Taxes","Price & Taxes"
 "Product bundle does not have variants!","Product bundle does not have variants!"
@@ -67,12 +69,9 @@ Small,Small
 "Tax Set","Tax Set"
 "The product [%s] does not exist.","The product [%s] does not exist."
 "The product [%s] was saved successfully.","The product [%s] was saved successfully."
-"The product [%s] was saved successfully.","The product [%s] was saved successfully."
-"The product [%s] you are trying to edit, does not exist.","The product [%s] you are trying to edit, does not exist."
 "The product [%s] you are trying to edit, does not exist.","The product [%s] you are trying to edit, does not exist."
 "There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants.","There is no super attribute defined. <a href=""%url%"">Define super attributes</a> in order to be able to create variants."
 Type,Type
-Variants,Variants
 Variants,Variants
 "View Product Abstract","View Product Abstract"
 "View Product Concrete","View Product Concrete"

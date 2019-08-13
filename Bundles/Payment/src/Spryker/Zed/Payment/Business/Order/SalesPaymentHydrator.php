@@ -82,7 +82,33 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
             $orderTransfer->addPayment($paymentTransfer);
         }
 
+        $orderTransfer->getTotals()->setPriceToPay($this->calculatePriceToPay($orderTransfer));
+
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int
+     */
+    protected function calculatePriceToPay(OrderTransfer $orderTransfer): int
+    {
+        $priceToPay = $orderTransfer->getTotals()->getGrandTotal();
+
+        foreach ($orderTransfer->getPayments() as $paymentTransfer) {
+            if (!$paymentTransfer->getIsLimitedAmount()) {
+                continue;
+            }
+
+            if ($paymentTransfer->getAvailableAmount() >= $priceToPay) {
+                return 0;
+            }
+
+            $priceToPay = $priceToPay - $paymentTransfer->getAvailableAmount();
+        }
+
+        return $priceToPay;
     }
 
     /**
@@ -95,6 +121,7 @@ class SalesPaymentHydrator implements SalesPaymentHydratorInterface
     {
         if ($this->paymentHydratePluginCollection->has($paymentTransfer->getPaymentProvider())) {
             $paymentHydratePlugin = $this->paymentHydratePluginCollection->get($paymentTransfer->getPaymentProvider());
+
             return $paymentHydratePlugin->hydrate($orderTransfer, $paymentTransfer);
         }
 

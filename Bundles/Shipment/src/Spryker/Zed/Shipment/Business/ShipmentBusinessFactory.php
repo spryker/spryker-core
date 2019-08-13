@@ -17,6 +17,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
+use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -68,6 +70,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface
+     */
+    public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
+    {
+        return new ShipmentExpenseFilter();
     }
 
     /**

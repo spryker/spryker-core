@@ -14,7 +14,7 @@ class VoucherFormDataProvider extends BaseDiscountFormDataProvider
     /**
      * @param int|null $idDiscount
      *
-     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
+     * @return mixed
      */
     public function getData($idDiscount = null)
     {

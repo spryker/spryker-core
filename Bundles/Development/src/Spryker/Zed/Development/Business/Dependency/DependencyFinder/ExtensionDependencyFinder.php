@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
-use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 
 class ExtensionDependencyFinder extends AbstractFileDependencyFinder
 {
@@ -21,16 +21,16 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
     protected $executedModules = [];
 
     /**
-     * @var \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface
+     * @var \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
      */
-    protected $moduleFinder;
+    protected $moduleFinderFacade;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface $moduleFinder
+     * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade
      */
-    public function __construct(ModuleFinderInterface $moduleFinder)
+    public function __construct(DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade)
     {
-        $this->moduleFinder = $moduleFinder;
+        $this->moduleFinderFacade = $moduleFinderFacade;
     }
 
     /**
@@ -82,7 +82,7 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
      */
     protected function hasExtensionModule(string $moduleExtensionKey): bool
     {
-        $moduleTransferCollection = $this->moduleFinder->getModules();
+        $moduleTransferCollection = $this->moduleFinderFacade->getModules();
 
         return isset($moduleTransferCollection[$moduleExtensionKey]);
     }

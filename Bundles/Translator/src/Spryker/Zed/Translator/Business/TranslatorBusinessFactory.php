@@ -101,15 +101,15 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @param string|null $localeName
      *
-     * @return \Symfony\Component\Translation\TranslatorInterface|\Symfony\Component\Translation\TranslatorBagInterface|\Spryker\Zed\Translator\Business\Translator\TranslatorInterface
+     * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
      */
     public function createTranslator(?string $localeName = null)
     {
         $localeName = $localeName ?? $this->getLocaleFacade()->getCurrentLocaleName();
-        $translator = new Translator($localeName, null, $this->getConfig()->getTranslatorCacheDirectory());
+        $translator = new Translator($this->createTranslationBuilder(), $localeName, null, $this->getConfig()->getTranslatorCacheDirectory());
         $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($localeName));
 
-        return $this->createTranslationBuilder()->buildTranslator($translator);
+        return $translator;
     }
 
     /**
@@ -160,6 +160,8 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorPreparatorInterface
      */
     public function createTranslatorPreparator(): TranslatorPreparatorInterface

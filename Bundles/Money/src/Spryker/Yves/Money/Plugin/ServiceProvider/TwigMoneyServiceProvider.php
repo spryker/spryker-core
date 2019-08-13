@@ -12,10 +12,12 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Twig_Environment;
-use Twig_SimpleFilter;
+use Twig\Environment;
+use Twig\TwigFilter;
 
 /**
+ * @deprecated Use `Spryker\Yves\Money\Plugin\Twig\MoneyTwigPlugin` instead.
+ *
  * @method \Spryker\Yves\Money\MoneyFactory getFactory()
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -28,7 +30,7 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (Twig_Environment $twig) {
+            $app->extend('twig', function (Environment $twig) {
                 $twig->addFilter($this->getMoneyFilter());
                 $twig->addFilter($this->getMoneyRawFilter());
 
@@ -47,13 +49,13 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @return \Twig_SimpleFilter
+     * @return \Twig\TwigFilter
      */
     protected function getMoneyFilter()
     {
         $moneyFactory = $this->getFactory();
 
-        $filter = new Twig_SimpleFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFactory) {
+        $filter = new TwigFilter('money', function ($money, $withSymbol = true, $isoCode = null) use ($moneyFactory) {
             if (!($money instanceof MoneyTransfer)) {
                 $money = $this->getMoneyTransfer($money, $isoCode);
             }
@@ -69,13 +71,13 @@ class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProvider
     }
 
     /**
-     * @return \Twig_SimpleFilter
+     * @return \Twig\TwigFilter
      */
     protected function getMoneyRawFilter()
     {
         $moneyFactory = $this->getFactory();
 
-        $filter = new Twig_SimpleFilter('moneyRaw', function ($money, $isoCode = null) use ($moneyFactory) {
+        $filter = new TwigFilter('moneyRaw', function ($money, $isoCode = null) use ($moneyFactory) {
             if (!($money instanceof MoneyTransfer)) {
                 $money = $this->getMoneyTransfer($money, $isoCode);
             }

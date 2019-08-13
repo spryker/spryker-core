@@ -40,6 +40,7 @@
     <transfer name="ShareDetail">
         <property name="idQuoteCompanyUser" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="companyUser" type="CompanyUser"/>
         <property name="customerName" type="string"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
@@ -50,7 +51,11 @@
 
 
     <transfer name="Quote">
+        <property name="idQuote" type="int"/>
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+        <property name="customerReference" type="string"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -74,7 +79,63 @@
     </transfer>
 
     <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int" />
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int" />
+    </transfer>
+
+    <transfer name="ResourceShare">
+        <property name="resourceType" type="string" />
+        <property name="resourceShareData" type="ResourceShareData" />
+    </transfer>
+
+    <transfer name="ResourceShareData">
+        <property name="shareOption" type="string" />
+        <property name="idQuote" type="int" />
+        <property name="ownerCompanyUserId" type="int" />
+        <property name="ownerCompanyBusinessUnitId" type="int" />
+    </transfer>
+
+    <transfer name="ResourceShareRequest">
+        <property name="customer" type="Customer" />
+        <property name="resourceShare" type="ResourceShare" />
+    </transfer>
+
+    <transfer name="ResourceShareResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="resourceShare" type="ResourceShare" />
+        <property name="messages" type="Message[]" singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string" />
+    </transfer>
+
+    <transfer name="ShareDetailCriteriaFilter">
+        <property name="idQuote" type="int"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="idQuoteCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteCompanyUser">
+        <property name="idQuoteCompanyUser" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="fkQuotePermissionGroup" type="int"/>
+        <property name="fkQuote" type="int"/>
+        <property name="quote" type="Quote"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerCollection">
+        <property name="customers" type="Customer[]" singular="customer"/>
+    </transfer>
+
+    <transfer name="ShareCartResponse">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
 </transfers>

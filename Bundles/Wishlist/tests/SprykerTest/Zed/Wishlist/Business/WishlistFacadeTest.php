@@ -77,6 +77,11 @@ class WishlistFacadeTest extends Unit
     protected $customer;
 
     /**
+     * @var \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected $customer_1;
+
+    /**
      * @var \Orm\Zed\Wishlist\Persistence\SpyWishlist
      */
     protected $wishlist;
@@ -111,13 +116,25 @@ class WishlistFacadeTest extends Unit
      */
     protected function setupCustomer()
     {
+        $this->customer = $this->createCustomer('customer_reference', 'email');
+        $this->customer_1 = $this->createCustomer('customer_reference_1', 'email_1');
+    }
+
+    /**
+     * @param string $reference
+     * @param string $email
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomer
+     */
+    protected function createCustomer(string $reference, string $email): SpyCustomer
+    {
         $customerEntity = (new SpyCustomer())
-            ->setCustomerReference('customer_reference')
-            ->setEmail('email');
+            ->setCustomerReference($reference)
+            ->setEmail($email);
 
         $customerEntity->save();
 
-        $this->customer = $customerEntity;
+        return $customerEntity;
     }
 
     /**
@@ -419,6 +436,26 @@ class WishlistFacadeTest extends Unit
         $this->assertEquals('new name', $wishlistTransfer->getName());
         $this->assertEquals($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateAndUpdateWishlistShouldFailWhenNameIsNotUnique()
+    {
+        $wishlistTransfer = new WishlistTransfer();
+
+        $newWhishListId = $this->wishlist->getIdWishlist() + 1;
+
+        $wishlistTransfer
+            ->setIdWishlist($newWhishListId)
+            ->setName($this->wishlist->getName())
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
+
+        $this->assertFalse($wishlistTransferResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
     }
 
     /**

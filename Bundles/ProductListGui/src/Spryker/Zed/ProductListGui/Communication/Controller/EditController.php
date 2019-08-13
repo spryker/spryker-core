@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,8 @@ class EditController extends ProductListAbstractController
 {
     public const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product List "%s" has been successfully updated.';
 
+    protected const ROUTE_REDIRTECT = '/product-list-gui/edit';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -26,18 +29,33 @@ class EditController extends ProductListAbstractController
     public function indexAction(Request $request)
     {
         $productListAggregateForm = $this->createProductListAggregateForm($request);
-        $productListTransfer = $this->handleProductListAggregateForm(
+        $productListTransfer = $this->findProductListTransfer(
             $request,
             $productListAggregateForm
         );
 
-        if ($productListTransfer) {
+        if ($productListTransfer === null) {
+            return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
+        }
+
+        $productListResponseTransfer = $this->getFactory()
+            ->getProductListFacade()
+            ->updateProductList($productListTransfer);
+
+        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
+
+        if ($productListResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS, [
                 '%s' => $productListTransfer->getTitle(),
             ]);
         }
 
-        return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
+        $redirectUrl = Url::generate(
+            static::ROUTE_REDIRTECT,
+            [static::URL_PARAM_ID_PRODUCT_LIST => $productListTransfer->getIdProductList()]
+        )->build();
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

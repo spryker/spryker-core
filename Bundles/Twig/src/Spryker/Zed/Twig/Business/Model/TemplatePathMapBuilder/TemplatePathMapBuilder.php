@@ -48,6 +48,11 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
         foreach ($this->getFinder() as $file) {
             $templateName = $this->templateNameBuilder->buildTemplateName($file->getRealPath());
             $templatePathMap[$templateName] = $file->getRealPath();
+
+            if ($this->templateNameBuilder instanceof NamespacedTemplateNameBuilderInterface) {
+                $namespacedTemplateName = $this->templateNameBuilder->buildNamespacedTemplateName($file->getRealPath());
+                $templatePathMap[$namespacedTemplateName] = $file->getRealPath();
+            }
         }
 
         return $templatePathMap;

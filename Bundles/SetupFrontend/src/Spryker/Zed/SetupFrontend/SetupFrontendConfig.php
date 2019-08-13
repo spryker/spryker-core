@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SetupFrontendConfig extends AbstractBundleConfig
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getProjectFrontendDependencyDirectories()
     {
@@ -27,11 +27,16 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getProjectInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**
-     * @return array
+     * Specification:
+     * - Returns the public directory for Yves assets.
+     *
+     * @api
+     *
+     * @return string[]
      */
     public function getYvesAssetsDirectories()
     {
@@ -41,6 +46,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
+     *
      * @return string
      */
     public function getYvesInstallerDirectoryPattern()
@@ -49,14 +56,29 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getYvesInstallMultiPathDirectoryPatterns(): array
+    {
+        return [
+            $this->getYvesInstallerDirectoryPattern(),
+        ];
+    }
+
+    /**
      * @return string
      */
     public function getYvesInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**
+     * Specification:
+     * - Returns the command to build Yves assets.
+     *
+     * @api
+     *
      * @return string
      */
     public function getYvesBuildCommand()
@@ -65,7 +87,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getZedAssetsDirectories()
     {
@@ -75,6 +97,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
+     *
      * @return string
      */
     public function getZedInstallerDirectoryPattern()
@@ -83,11 +107,21 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getZedInstallMultiPathDirectoryPatterns(): array
+    {
+        return [
+            $this->getZedInstallerDirectoryPattern(),
+        ];
+    }
+
+    /**
      * @return string
      */
     public function getZedInstallCommand()
     {
-        return 'npm i --prefer-offline';
+        return 'npm ci --prefer-offline';
     }
 
     /**

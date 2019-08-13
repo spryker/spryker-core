@@ -5,27 +5,33 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart-extension": "^2.4.0 || ^4.0.0",
     "spryker/checkout-extension": "^1.1.0",
     "spryker/company-role": "^1.3.0",
     "spryker/company-user": "^2.0.0",
     "spryker/customer": "^7.11.0",
-    "spryker/kernel": "^3.17.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/quote": "^2.8.0",
+    "spryker/quote-approval-extension": "^1.0.0",
     "spryker/quote-extension": "^1.2.0",
+    "spryker/quote-request-extension": "^1.0.0",
     "spryker/shared-cart": "^1.7.0",
+    "spryker/uuid-behavior": "^1.0.0",
     "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
-    "spryker/permission": "^1.0.0",
+    "spryker/permission": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "If you want to use QuoteApprovalCheckoutPreCheckPlugin."
+    "spryker/checkout": "If you want to use QuoteApprovalCheckoutPreCheckPlugin.",
+    "spryker/quote-request": "If you want to use request for quote functionality, min version 1.0.0"
   },
   "autoload": {
     "psr-4": {

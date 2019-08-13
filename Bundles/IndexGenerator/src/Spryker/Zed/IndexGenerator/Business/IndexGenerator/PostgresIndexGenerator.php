@@ -118,13 +118,16 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     }
 
     /**
-     * @param \DOMDocument $document
+     * @param \DOMDocument $domDocument
      *
      * @return bool
      */
-    protected function isDocumentEmpty(DOMDocument $document): bool
+    protected function isDocumentEmpty(DOMDocument $domDocument): bool
     {
-        return (!$document->documentElement->hasChildNodes());
+        /** @var \DOMElement $element */
+        $element = $domDocument->documentElement;
+
+        return !$element->hasChildNodes();
     }
 
     /**
@@ -189,9 +192,10 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
      */
     protected function getFileHeader(): string
     {
-        return '<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        return '<database xmlns="spryker:schema-01"
           name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="%s"
           package="%s"/>';
     }
@@ -208,7 +212,10 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
             $tableElement = $domDocument->createElement('table');
             $foreignTableName = (string)$foreignKeyTableTransfer->getTableName();
             $tableElement->setAttribute('name', $foreignTableName);
-            $domDocument->documentElement->appendChild($tableElement);
+
+            /** @var \DOMElement $element */
+            $element = $domDocument->documentElement;
+            $element->appendChild($tableElement);
 
             $this->addForeignKeyTableColumnElements($foreignKeyTableTransfer, $tableElement, $domDocument);
         }

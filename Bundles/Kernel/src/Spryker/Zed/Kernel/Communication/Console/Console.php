@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Kernel\Communication\Console;
 
 use RuntimeException;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -16,10 +17,14 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\HelperInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Terminal;
 
 /**
  * @method \Symfony\Component\Console\Application getApplication()
@@ -42,7 +47,12 @@ class Console extends SymfonyCommand
     protected $output;
 
     /**
-     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade|null
+     */
+    private $facade;
+
+    /**
+     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|null
      */
     private $factory;
 
@@ -138,11 +148,27 @@ class Console extends SymfonyCommand
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
+     *
+     * @return $this
+     */
+    public function setFacade(AbstractFacade $facade)
+    {
+        $this->facade = $facade;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()
     {
-        return $this->resolveFacade();
+        if ($this->facade === null) {
+            $this->facade = $this->resolveFacade();
+        }
+
+        return $this->facade;
     }
 
     /**
@@ -276,26 +302,11 @@ class Console extends SymfonyCommand
      */
     public function error($message)
     {
-        $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width) ?: 200;
-        $width -= strlen($message);
+        $width = $this->getTerminalWidth() - mb_strlen($message) - 1;
         $width = max(0, $width);
-        $subOne = false;
-        if ($width % 2 !== 0) {
-            $width += 1;
-            $subOne = true;
-        }
-        $halfWidth = $width / 2;
-        $message = str_repeat(' ', $halfWidth) . $message;
-        if ($subOne) {
-            $halfWidth -= 1;
-        }
-        $message .= str_repeat(' ', $halfWidth);
-        $message = '<error>' . $message . '</error>';
+        $message .= str_repeat(' ', $width);
 
-        $this->output->writeln('<error>' . str_repeat(' ', $width + strlen($message)) . '</error>');
-        $this->output->writeln($message);
-        $this->output->writeln('<error>' . str_repeat(' ', $width + strlen($message)) . '</error>');
+        $this->output->writeln(sprintf('<error> %s</error>', $message));
     }
 
     /**
@@ -305,28 +316,14 @@ class Console extends SymfonyCommand
      */
     public function warning($message)
     {
-        $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width) ?: 200;
-        $width -= strlen($message);
-        $subOne = false;
-        if ($width % 2 !== 0) {
-            $width += 1;
-            $subOne = true;
-        }
-        $halfWidth = $width / 2;
-        $message = str_repeat(' ', $halfWidth) . $message;
-        if ($subOne) {
-            $halfWidth -= 1;
-        }
-        $message .= str_repeat(' ', $halfWidth);
-        $message = '<warning>' . $message . '</warning>';
-
         $style = new OutputFormatterStyle('black', 'yellow');
         $this->output->getFormatter()->setStyle('warning', $style);
 
-        $this->output->writeln('<warning>' . str_repeat(' ', $width + strlen($message)) . '</warning>');
-        $this->output->writeln($message);
-        $this->output->writeln('<warning>' . str_repeat(' ', $width + strlen($message)) . '</warning>');
+        $width = $this->getTerminalWidth() - mb_strlen($message) - 1;
+        $width = max(0, $width);
+        $message .= str_repeat(' ', $width);
+
+        $this->output->writeln(sprintf('<warning> %s</warning>', $message));
     }
 
     /**
@@ -336,28 +333,14 @@ class Console extends SymfonyCommand
      */
     public function success($message)
     {
-        $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width) ?: 200;
-        $width -= strlen($message);
-        $subOne = false;
-        if ($width % 2 !== 0) {
-            $width += 1;
-            $subOne = true;
-        }
-        $halfWidth = $width / 2;
-        $message = str_repeat(' ', $halfWidth) . $message;
-        if ($subOne) {
-            $halfWidth -= 1;
-        }
-        $message .= str_repeat(' ', $halfWidth);
-        $message = '<success>' . $message . '</success>';
-
         $style = new OutputFormatterStyle('black', 'green');
         $this->output->getFormatter()->setStyle('success', $style);
 
-        $this->output->writeln('<success>' . str_repeat(' ', $width + strlen($message)) . '</success>');
-        $this->output->writeln($message);
-        $this->output->writeln('<success>' . str_repeat(' ', $width + strlen($message)) . '</success>');
+        $width = $this->getTerminalWidth() - mb_strlen($message) - 1;
+        $width = max(0, $width);
+        $message .= str_repeat(' ', $width);
+
+        $this->output->writeln(sprintf('<success> %s</success>', $message));
     }
 
     /**
@@ -371,7 +354,7 @@ class Console extends SymfonyCommand
     {
         $question = $question . '? <fg=green>[yes|no|abort]</fg=green> ';
 
-        $result = $this->askAbortableConfirmation($this->output, $question, false);
+        $result = $this->askAbortableConfirmation($this->output, $question);
 
         return $result;
     }
@@ -387,24 +370,24 @@ class Console extends SymfonyCommand
      *
      * @param \Symfony\Component\Console\Output\OutputInterface $output An Output instance
      * @param string $question The question to ask
-     * @param bool $default The default answer if the user enters nothing
+     * @param string|null $default The default answer if the user enters nothing
      *
      * @throws \RuntimeException
      *
      * @return bool true if the user has confirmed, false otherwise
      */
-    public function askAbortableConfirmation(OutputInterface $output, $question, $default = true)
+    public function askAbortableConfirmation(OutputInterface $output, $question, $default = null)
     {
         $answer = 'z';
         while ($answer && !in_array(strtolower($answer[0]), ['y', 'n', 'a'])) {
-            $answer = $this->ask($question, $default);
+            $answer = $this->ask($question);
         }
 
         if (strtolower($answer[0]) === 'a') {
             throw new RuntimeException('Aborted');
         }
 
-        if ($default === false) {
+        if ($default === null) {
             return $answer && strtolower($answer[0]) === 'y';
         }
 
@@ -419,10 +402,10 @@ class Console extends SymfonyCommand
      */
     public function ask($question, $default = null)
     {
-        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
-        $dialog = $this->getHelperSet()->get('dialog');
+        $questionHelper = $this->getQuestionHelper();
+        $question = new Question($question, $default);
 
-        return $dialog->ask($this->output, $question, $default);
+        return $questionHelper->ask($this->input, $this->output, $question);
     }
 
     /**
@@ -434,16 +417,22 @@ class Console extends SymfonyCommand
      */
     public function select($question, array $options, $default)
     {
-        /** @var \Symfony\Component\Console\Helper\DialogHelper $dialog */
-        $dialog = $this->getHelperSet()->get('dialog');
-        $selected = $dialog->select(
-            $this->output,
-            $question,
-            $options,
-            $default
-        );
+        $questionHelper = $this->getQuestionHelper();
 
-        return $options[$selected];
+        $choiceQuestion = new ChoiceQuestion($question, $options, $default);
+
+        return $questionHelper->ask($this->input, $this->output, $choiceQuestion);
+    }
+
+    /**
+     * @return \Symfony\Component\Console\Helper\QuestionHelper
+     */
+    protected function getQuestionHelper(): HelperInterface
+    {
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $questionHelper */
+        $questionHelper = $this->getHelperSet()->get('question');
+
+        return $questionHelper;
     }
 
     /**
@@ -453,8 +442,18 @@ class Console extends SymfonyCommand
      */
     public function printLineSeparator($wrapInInfoTags = true)
     {
-        $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width) ?: 200;
+        $width = $this->getTerminalWidth();
         $this->info(str_repeat('-', $width), $wrapInInfoTags);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getTerminalWidth(): int
+    {
+        $terminal = new Terminal();
+        $width = $terminal->getWidth();
+
+        return $width;
     }
 }

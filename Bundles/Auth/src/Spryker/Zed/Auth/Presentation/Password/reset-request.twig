@@ -7,5 +7,7 @@
     {% include '@Auth/Partial/form-message.twig' %}
 
     {{ form(form) }}
-
+    <div class="form-group text-center small">
+        <a href="/auth/login">{{ 'Login' | trans }}</a>
+    </div>
 {% endblock %}

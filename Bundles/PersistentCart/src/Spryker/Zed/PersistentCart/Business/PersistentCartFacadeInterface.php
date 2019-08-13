@@ -24,14 +24,16 @@ interface PersistentCartFacadeInterface
      *  Adds item(s) to the quote. Each item gets additional information (e.g. price).
      *
      * Specification:
-     *  - Run cart pre check plugins
-     *  - For each new item run the item expander plugins (requires a SKU for each new item)
-     *  - Add new item(s) to quote (Requires a quantity > 0 for each new item)
-     *  - Group items in quote (-> ItemGrouper)
-     *  - Recalculate quote (-> Calculation)
-     *  - Add success message to messenger (-> Messenger)
-     *  - Call quote response extend plugins.
-     *  - Return updated quote
+     *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - Runs cart pre check plugins.
+     *  - For each new item runs the item expander plugins (requires a SKU for each new item).
+     *  - Adds new item(s) to quote (Requires a quantity > 0 for each new item).
+     *  - Groups items in quote (-> ItemGrouper).
+     *  - Recalculates quote (-> Calculation).
+     *  - Adds success message to messenger (-> Messenger).
+     *  - Calls quote response extend plugins.
+     *  - Returns updated quote.
      *
      * @api
      *
@@ -45,16 +47,18 @@ interface PersistentCartFacadeInterface
      *  Adds only valid item(s) to the quote. Each item gets additional information (e.g. price).
      *
      * Specification:
-     *  - Run cart pre check plugins, per every item.
-     *  - Add to cart only valid items.
+     *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - Runs cart pre check plugins, per every item.
+     *  - Adds to cart only valid items.
      *  - If some items relay on one stock - items will be added by same order, until stock allow it.
-     *  - For each new item run the item expander plugins (requires a SKU for each new item)
-     *  - Add new item(s) to quote (requires, but not limited, a quantity > 0 for each new item)
-     *  - Group items in quote (-> ItemGrouper)
-     *  - Recalculate quote (-> Calculation)
-     *  - Add success message to messenger (-> Messenger)
-     *  - Call quote response extend plugins.
-     *  - Return updated quote
+     *  - For each new item runs the item expander plugins (requires a SKU for each new item).
+     *  - Adds new item(s) to quote (requires, but not limited, a quantity > 0 for each new item).
+     *  - Groups items in quote (-> ItemGrouper).
+     *  - Recalculates quote (-> Calculation).
+     *  - Add successs message to messenger (-> Messenger).
+     *  - Calls quote response extend plugins.
+     *  - Returns updated quote.
      *
      * @api
      *
@@ -66,12 +70,14 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - For each new item run the item expander plugins (requires a SKU for each new item)
-     *  - Decreases the given quantity for the given item(s) from the quote
-     *  - Recalculate quote (-> Calculation)
-     *  - Add success message to messenger (-> Messenger)
-     *  - Call quote response extend plugins.
-     *  - Return updated quote
+     *  - Loads customer quote from database.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - For each new item runs the item expander plugins (requires a SKU for each new item).
+     *  - Decreases the given quantity for the given item(s) from the quote.
+     *  - Recalculates quote (-> Calculation).
+     *  - Adds success message to messenger (-> Messenger).
+     *  - Calls quote response extend plugins.
+     *  - Returns updated quote.
      *
      * @api
      *
@@ -96,11 +102,12 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Load quote from db.
-     *  - Call calculate quantity to add or remove.
-     *  - Remove or add items.
+     *  - Loads quote from db.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - Calls calculate quantity to add or remove.
+     *  - Removes or add items.
      *  - Saves quote to DB.
-     *  - Call quote response extend plugins.
+     *  - Calls quote response extend plugins.
      *
      * @api
      *
@@ -112,11 +119,12 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Load quote from db.
-     *  - Call calculate quantity to remove.
-     *  - Remove items from quote.
+     *  - Loads quote from db.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - Calls calculate quantity to remove.
+     *  - Removes items from quote.
      *  - Saves quote to DB.
-     *  - Call quote response extend plugins.
+     *  - Calls quote response extend plugins.
      *
      * @api
      *
@@ -128,11 +136,12 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Load quote from db.
-     *  - Call calculate quantity to add.
-     *  - Add items to quote.
+     *  - Loads quote from db.
+     *  - Merges loaded quote with quote from change request if is provided.
+     *  - Calls calculate quantity to add.
+     *  - Adds items to quote.
      *  - Saves quote to DB.
-     *  - Call quote response extend plugins.
+     *  - Calls quote response extend plugins.
      *
      * @api
      *
@@ -144,9 +153,10 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     * - Merge provided quote with quote from DB for provided customer
-     * - Saves quote to DB
-     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used
+     * - If there are no items in the quote then it creates a new empty quote and merges it with the provided quote as well as with the quote from DB for provided customer.
+     * - If quote has items then it merges provided quote with quote from DB for provided customer.
+     * - Saves quote to DB.
+     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used.
      *
      * @api
      *
@@ -253,4 +263,33 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a quote from Persistence using the provided customer and store information.
+     * - Replaces the retrieved quote with the provided quote and stores it in Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceQuoteByCustomerAndStore(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Load quote by id.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Saves quote in database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

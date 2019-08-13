@@ -370,6 +370,7 @@ class SynchronizationFacadeTest extends Unit
 
             if (count($synchronizationPlugins) && $this->isSuiteProject()) {
                 $queueMock->expects($this->atLeastOnce())->method('sendMessages');
+
                 return $queueMock;
             }
 
@@ -381,6 +382,7 @@ class SynchronizationFacadeTest extends Unit
         $container[SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA] = function (Container $container) {
             return $this->createSynchronizationDataPlugins();
         };
+        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->executeResolvedPluginsBySources([]);

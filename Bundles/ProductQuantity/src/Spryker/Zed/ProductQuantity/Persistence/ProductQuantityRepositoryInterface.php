@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductQuantity\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductQuantityRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param string[] $productSkus
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
@@ -29,4 +29,11 @@ interface ProductQuantityRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
     public function findProductQuantityTransfers(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     */
+    public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

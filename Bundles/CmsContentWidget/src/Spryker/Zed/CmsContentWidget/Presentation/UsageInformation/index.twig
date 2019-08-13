@@ -1,10 +1,11 @@
 {% if cmsContentWidgetTemplateList is defined and cmsContentWidgetTemplateList.cmsContentWidgetConfigurationList|length > 0 %}
     <div class="col-sm-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>{{ 'Cms content widgets' }}</strong>
-            </div>
-            <div class="panel-body">
+        {% embed '@Gui/Partials/ibox.twig' with {'collapsed': true} %}
+            {% block title %}
+                {{ 'Cms content widgets usage information' | trans }}
+            {% endblock %}
+
+            {% block content %}
                 {% for cmsWidgetConfiguration in cmsContentWidgetTemplateList.cmsContentWidgetConfigurationList %}
                     <strong>{{ cmsWidgetConfiguration.functionName }}</strong> <br />
                     {{ 'Usage information:' | trans }}
@@ -17,9 +18,7 @@
                     </ul>
                     <hr />
                 {% endfor %}
-            </div>
-        </div>
+            {% endblock %}
+        {% endembed %}
     </div>
 {% endif %}
-
-<script defer src="/assets/js/spryker-zed-cms-content-widget-main.js"></script>
