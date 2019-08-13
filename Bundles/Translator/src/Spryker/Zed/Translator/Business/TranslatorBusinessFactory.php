@@ -99,6 +99,29 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
+     */
+    public function createTranslatorSet(): array
+    {
+        $translators = [];
+        $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
+
+        foreach ($availableLocales as $availableLocale) {
+            $translator = new Translator(
+                $this->createTranslationBuilder(),
+                $availableLocale,
+                null,
+                $this->getConfig()->getTranslatorCacheDirectory()
+            );
+            $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($availableLocale));
+
+            $translators[] = $translator;
+        }
+
+        return $translators;
+    }
+
+    /**
      * @param string|null $localeName
      *
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
@@ -146,7 +169,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslationCacheGenerator(): CacheGeneratorInterface
     {
         return new CacheGenerator(
-            $this->createTranslator(),
+            $this->createTranslatorSet(),
             $this->getStore()
         );
     }

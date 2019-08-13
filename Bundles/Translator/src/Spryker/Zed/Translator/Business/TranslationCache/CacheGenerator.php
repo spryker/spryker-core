@@ -13,9 +13,9 @@ use Symfony\Component\Translation\TranslatorBagInterface as SymfonyTranslatorBag
 class CacheGenerator implements CacheGeneratorInterface
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorBagInterface
+     * @var \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
      */
-    protected $translator;
+    protected $translatorSet;
 
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -23,12 +23,12 @@ class CacheGenerator implements CacheGeneratorInterface
     protected $store;
 
     /**
-     * @param \Symfony\Component\Translation\TranslatorBagInterface $translator
+     * @param \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[] $translatorSet
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(SymfonyTranslatorBagInterface $translator, Store $store)
+    public function __construct(array $translatorSet, Store $store)
     {
-        $this->translator = $translator;
+        $this->translatorSet = $translatorSet;
         $this->store = $store;
     }
 
@@ -37,8 +37,8 @@ class CacheGenerator implements CacheGeneratorInterface
      */
     public function generateTranslationCache(): void
     {
-        foreach ($this->store->getLocales() as $localeName) {
-            $this->translator->getCatalogue($localeName);
+        foreach ($this->translatorSet as $translator) {
+            $translator->getCatalogue();
         }
     }
 }
