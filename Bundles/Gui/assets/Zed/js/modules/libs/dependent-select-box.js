@@ -66,8 +66,8 @@ DependentSelectBox.prototype.setResponseData = function(data) {
 
     this.target.attr('disabled', false);
     this.target.find('option:gt(0)').remove();
-    $.each(data.currencies, function(key, currency) {
-        self.target.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
+    $.each(data.currencies, function(key, value) {
+        self.target.append($('<option value="'+ value.id_currency +'">'+ value.code +'</option>'));
     });
 };
 

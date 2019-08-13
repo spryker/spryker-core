@@ -26,6 +26,8 @@ $(document).ready(function() {
         defaultData: 0,
     });
 
+    $($store, $currency).find('option').eq(0).attr('disabled', true);
+
     new DependentSelectBox(
         $store,
         $currency,
