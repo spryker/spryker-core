@@ -56,8 +56,8 @@ $(document).ready(function() {
             return;
         }
 
-        $timezone.each(function (index, value) {
-            $(value).text(data.store.timezone);
+        $timezone.each(function (index, element) {
+            $(element).text(data.store.timezone);
         });
 
         $activeFromTimezoneText.show();
