@@ -17,6 +17,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
 {
     protected const GLOSSARY_KEY_CART_PRE_CHECK_PRODUCT_DISCONTINUED = 'cart.pre.check.product_discontinued';
     protected const GLOSSARY_PARAM_NAME = '%name%';
+    protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface
@@ -100,6 +101,7 @@ class CartChangePreCheck implements CartChangePreCheckInterface
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(static::GLOSSARY_KEY_CART_PRE_CHECK_PRODUCT_DISCONTINUED);
         $messageTransfer->setParameters([
+            static::GLOSSARY_PARAM_SKU => $itemTransfer->getSku(),
             static::GLOSSARY_PARAM_NAME => $itemTransfer->getName(),
         ]);
 
