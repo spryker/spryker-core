@@ -120,6 +120,7 @@
     </transfer>
 
     <transfer name="Annotation">
+        <property name="path" type="string" />
         <property name="summary" type="string[]" />
         <property name="parameters" singular="parameter" type="PathParameterComponent[]" />
         <property name="responseAttributesClassName" type="string" />

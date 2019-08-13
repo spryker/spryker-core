@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyRole\Persistence" package="src.Orm.Zed.CompanyRole.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyRole\Persistence" package="src.Orm.Zed.CompanyRole.Persistence">
 
     <table name="spy_company_role" idMethod="native" allowPkInsert="true" identifierQuoting="true" phpName="SpyCompanyRole">
         <column name="key" type="VARCHAR" size="255" description="Key is an identifier for existing entities. This should never be changed."/>

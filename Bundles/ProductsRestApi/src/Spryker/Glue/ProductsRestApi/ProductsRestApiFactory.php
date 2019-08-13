@@ -27,6 +27,9 @@ use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttri
 use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpander;
 use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface;
 
+/**
+ * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig getConfig()
+ */
 class ProductsRestApiFactory extends AbstractFactory
 {
     /**
@@ -47,6 +50,7 @@ class ProductsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createAbstractProductsResourceMapper(),
             $this->createConcreteProductsReader(),
+            $this->getConfig(),
             $this->createAbstractProductAttributeTranslationExpander()
         );
     }

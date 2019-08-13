@@ -72,6 +72,8 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int[] $productImageSetToProductImageIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
