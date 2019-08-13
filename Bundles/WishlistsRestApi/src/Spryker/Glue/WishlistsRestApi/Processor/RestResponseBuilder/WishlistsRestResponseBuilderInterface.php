@@ -32,7 +32,6 @@ interface WishlistsRestResponseBuilderInterface
      */
     public function createErrorResponseFromZedErrors(array $errorIdentifiers): RestResponseInterface;
 
-
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $wishlistTransfer
      *

@@ -104,6 +104,7 @@ class WishlistsRestResponseBuilder implements WishlistsRestResponseBuilderInterf
                 $this->createRestErrorMessageFromErrorIdentifier($errorIdentifier)
             );
         }
+
         return $restResponse;
     }
 
@@ -121,7 +122,7 @@ class WishlistsRestResponseBuilder implements WishlistsRestResponseBuilderInterf
 
     /**
      * @param string $wishlistUuid
-     * @param \Generated\Shared\Transfer\RestSharedCartsAttributesTransfer $restWishlistsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
