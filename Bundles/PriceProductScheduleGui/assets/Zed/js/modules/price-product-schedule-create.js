@@ -12,11 +12,19 @@ $(document).ready(function() {
     var $activeTo = $('#price_product_schedule_activeTo_date');
     var $store = $('#price_product_schedule_priceProduct_moneyValue_store_idStore');
     var $currency = $('#price_product_schedule_priceProduct_moneyValue_currency_idCurrency');
+    var $activeFromTimezoneText = $('#active_to_timezone_text');
+    var $activeToTimezoneText = $('#active_from_timezone_text');
+    var $timezone = $('.timezone');
     var currencies = {
         response: 'currencies',
         value: 'id_currency',
         text: 'code'
     };
+
+    if (!$store.val()) {
+        $activeFromTimezoneText.hide();
+        $activeToTimezoneText.hide();
+    }
 
     $activeFrom.datepicker({
         altFormat: "yy-mm-dd",
@@ -36,6 +44,15 @@ $(document).ready(function() {
         $currency,
         '/currency/currencies-for-store',
         'idStore',
-        currencies
+        currencies,
+        successCallback
     );
+
+    function successCallback(data) {
+        $timezone.each(function (index, value) {
+            $(value).text(data.store.timezone);
+        });
+        $activeFromTimezoneText.show();
+        $activeToTimezoneText.show();
+    }
 });

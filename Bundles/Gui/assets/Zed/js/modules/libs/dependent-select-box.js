@@ -52,7 +52,7 @@ DependentSelectBox.prototype.requestData = function() {
         data: this.data,
         success: function(data) {
             self.setResponseData(data);
-            self.successCallback ? self.successCallback() : null;
+            self.successCallback ? self.successCallback(data) : null;
         }
     });
 };
