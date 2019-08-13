@@ -1,4 +1,4 @@
-{% for group in groups if not group.groupItems[0].salesOrderConfiguredBundleItem %}
+{% for group in groups if not group.groupItems[0].salesOrderConfiguredBundleItem | default %}
   {% if (group.isBundle) %}
     <tr>
       <td colspan="7">
