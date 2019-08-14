@@ -40,8 +40,8 @@ class Customer implements CustomerInterface
     protected const BCRYPT_SALT = '';
 
     protected const KEY_VALIDATION_LENGTH = '{{ limit }}';
-    protected const GLOSSARY_KEY_VALIDATION_MIN_LENGTH = 'validation.min_length';
-    protected const GLOSSARY_KEY_VALIDATION_MAX_LENGTH = 'validation.max_length.singular';
+    protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
+    protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -178,7 +178,7 @@ class Customer implements CustomerInterface
      */
     public function add($customerTransfer)
     {
-        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getNewPassword());
+        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
@@ -917,7 +917,7 @@ class Customer implements CustomerInterface
 
         if ($customerPasswordLength < $minLength) {
             $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
-                static::GLOSSARY_KEY_VALIDATION_MIN_LENGTH,
+                static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
                 [
                     static::KEY_VALIDATION_LENGTH => $minLength,
                 ]
@@ -928,7 +928,7 @@ class Customer implements CustomerInterface
 
         if ($customerPasswordLength > $maxLength) {
             $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
-                static::GLOSSARY_KEY_VALIDATION_MAX_LENGTH,
+                static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
                 [
                     static::KEY_VALIDATION_LENGTH => $maxLength,
                 ]
