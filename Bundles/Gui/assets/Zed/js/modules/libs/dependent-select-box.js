@@ -17,7 +17,7 @@ function DependentSelectBox(options) {
     this.mapEvents = function() {
         var self = this;
 
-        this.$trigger.on('change', function () {
+        this.$trigger.on('change', function() {
             self.getData($(this));
             self.requestData();
         });
