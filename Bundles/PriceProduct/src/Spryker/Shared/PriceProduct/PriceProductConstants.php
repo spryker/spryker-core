@@ -16,6 +16,4 @@ interface PriceProductConstants
      * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
-
-    public const DELETE_ORPHAN_PRICES_MODE_ENABLED = 'PRICE_PRODUCT::DELETE_ORPHAN_PRICES_MODE_ENABLED';
 }
