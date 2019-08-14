@@ -7,21 +7,12 @@
 
 namespace Spryker\Zed\Discount\Persistence;
 
-use Propel\Runtime\Collection\ObjectCollection;
-
 interface DiscountRepositoryInterface
 {
     /**
      * @param string[] $codes
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return string[]
      */
-    public function findVouchersExceedingUsageLimitByCodes(array $codes): ObjectCollection;
-
-    /**
-     * @param string[] $codes
-     *
-     * @return int
-     */
-    public function getCountOfVouchersExceedingUsageLimitByCodes(array $codes): int;
+    public function findVoucherCodesExceedingUsageLimit(array $codes): array;
 }

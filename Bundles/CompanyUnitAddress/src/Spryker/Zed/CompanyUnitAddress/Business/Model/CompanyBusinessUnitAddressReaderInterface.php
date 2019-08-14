@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
@@ -21,6 +22,15 @@ interface CompanyBusinessUnitAddressReaderInterface
      */
     public function getCompanyBusinessUnitAddresses(
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyUnitAddressCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyBusinessUnitAddressesByCriteriaFilter(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
 
     /**
