@@ -28,12 +28,12 @@ DependentSelectBox.prototype.mapEvents = function() {
     var self = this;
 
     this.trigger.on('change', function () {
-        self.prepareData($(this));
+        self.getData($(this));
         self.requestData();
     });
 };
 
-DependentSelectBox.prototype.prepareData = function(trigger) {
+DependentSelectBox.prototype.getData = function(trigger) {
     if (this.dataKey.length) {
         this.data[this.dataKey] = trigger.val();
 
@@ -51,13 +51,13 @@ DependentSelectBox.prototype.requestData = function() {
         type: 'POST',
         data: this.data,
         success: function(data) {
-            self.setResponseData(data);
+            self.updateTargetSelectBox(data);
             self.successCallback ? self.successCallback() : null;
         }
     });
 };
 
-DependentSelectBox.prototype.setResponseData = function(data) {
+DependentSelectBox.prototype.updateTargetSelectBox = function(data) {
     var self = this;
 
     if (data.length === 0) {
