@@ -427,11 +427,10 @@ class Reader implements ReaderInterface
             ->setIsSuccess(false);
 
         $wishlistTransfer = $this->wishlistRepository
-            ->getWishlistByCustomerIdAndUuid($wishlistRequestTransfer->getIdCustomer(), $wishlistRequestTransfer->getUuid());
-
-        if (!$wishlistTransfer) {
-            return $wishlistResponseTransfer->setErrorIdentifier(WishlistConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND);
-        }
+            ->getWishlistByCustomerIdAndUuid(
+                $wishlistRequestTransfer->getIdCustomer(),
+                $wishlistRequestTransfer->getWishlist()->getUuid()
+            );
 
         return $wishlistResponseTransfer
             ->setWishlist($wishlistTransfer)
