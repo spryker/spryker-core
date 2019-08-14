@@ -55,11 +55,6 @@ class PriceProductConfig extends AbstractSharedConfig
     protected const PRICE_DIMENSION_DEFAULT_NAME = 'Default';
 
     /**
-     * Decides if orphan prices need to be cleared after every product price update.
-     */
-    protected const DELETE_ORPHAN_PRICES_MODE_ENABLED = true;
-
-    /**
      * @return string
      */
     public function getPriceTypeDefaultName(): string
@@ -105,13 +100,5 @@ class PriceProductConfig extends AbstractSharedConfig
     public function getPriceDimensionDefaultName(): string
     {
         return static::PRICE_DIMENSION_DEFAULT_NAME;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getDeleteOrphanPricesModeEnabled(): bool
-    {
-        return static::DELETE_ORPHAN_PRICES_MODE_ENABLED;
     }
 }
