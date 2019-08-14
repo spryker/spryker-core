@@ -22,6 +22,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     public const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
     public const COLUMN_STORE_NAME = 'name';
     public const COLUMN_CMS_BLOCK_NAME = 'name';
+    public const COLUMN_CMS_BLOCK_KEY = 'key';
     public const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
 
     public const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
@@ -133,7 +134,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 continue;
             }
 
-            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME] !== $cmsBlockStorageEntity->getName()) {
+            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY] !== $cmsBlockStorageEntity->getKey()) {
                 $this->deleteStorageEntity($cmsBlockStorageEntity);
                 $cmsBlockStorageEntity = new SpyCmsBlockStorage();
             }
@@ -183,6 +184,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $cmsBlockStorageEntity
             ->setData($cmsBlockEntity)
             ->setFkCmsBlock($cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK])
+            ->setKey($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY])
             ->setLocale($localeName)
             ->setStore($storeName)
             ->setName($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME])

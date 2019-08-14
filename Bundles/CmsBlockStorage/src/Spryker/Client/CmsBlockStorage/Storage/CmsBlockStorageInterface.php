@@ -32,4 +32,13 @@ interface CmsBlockStorageInterface
      * @return string
      */
     public function generateBlockNameKey($name);
+
+    /**
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
 }

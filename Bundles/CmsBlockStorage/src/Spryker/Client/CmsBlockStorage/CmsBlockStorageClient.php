@@ -64,4 +64,23 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
             ->createCmsBlockStorage()
             ->generateBlockNameKey($name);
     }
+
+    /**
+     * Specification:
+     * - Find blocks by provided array of keys with a single multi request to a storage
+     *
+     * @api
+     *
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
+    {
+        return $this->getFactory()
+            ->createCmsBlockStorage()
+            ->getBlocksByKeys($blockKeys, $localeName, $storeName);
+    }
 }

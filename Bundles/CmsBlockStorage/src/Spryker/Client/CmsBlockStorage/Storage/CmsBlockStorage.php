@@ -186,6 +186,8 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
+     * @deprecated Use generateStorageKey instead.
+     *
      * @param string $blockKey
      * @param string $resourceName
      * @param string|null $localeName
@@ -202,5 +204,59 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $synchronizationDataTransfer->setReference($blockName);
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param string $blockKey
+     * @param string $resourceName
+     * @param string|null $localeName
+     * @param string|null $storeName
+     *
+     * @return string
+     */
+    protected function generateStorageKey(
+        string $blockKey,
+        string $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
+        ?string $localeName = null,
+        ?string $storeName = null
+    ): string {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+        $synchronizationDataTransfer->setStore($storeName);
+        $synchronizationDataTransfer->setLocale($localeName);
+        $synchronizationDataTransfer->setReference($blockKey);
+
+        return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
+    {
+        $storageKeys = [];
+
+        foreach ($blockKeys as $blockKey) {
+            $storageKeys[] = $this->generateStorageKey(
+                $blockKey,
+                CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
+                $localeName,
+                $storeName
+            );
+        }
+
+        $resultArray = $this->storageClient->getMulti($storageKeys) ?: [];
+        $resultArray = array_filter($resultArray);
+
+        $blocks = [];
+
+        foreach ($resultArray as $key => $result) {
+            $blocks[] = json_decode($result, true);
+        }
+
+        return $blocks;
     }
 }
