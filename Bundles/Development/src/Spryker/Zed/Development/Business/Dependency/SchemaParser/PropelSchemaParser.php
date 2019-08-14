@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\SchemaParser;
 
+use SimpleXMLElement;
 use Spryker\Zed\Development\Business\Exception\Dependency\PropelSchemaParserException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
@@ -49,7 +50,11 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         $foreignReferenceColumnNames = [];
 
         $simpleXmlElement = simplexml_load_file($fileInfo->getPathname());
-        $foreignReferences = $simpleXmlElement->xpath('//table/foreign-key/reference');
+        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        if ($hasNamespace) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+        $foreignReferences = $simpleXmlElement->xpath($hasNamespace ? '//s:table/s:foreign-key/s:reference' : '//table/foreign-key/reference');
         foreach ($foreignReferences as $foreignReference) {
             $parentNode = $foreignReference->xpath('parent::*')[0];
             $foreignTableName = (string)$parentNode['foreignTable'];
@@ -162,11 +167,19 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     {
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
+        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        if ($hasNamespace) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+
         $idColumnNames = [];
 
-        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
+        foreach ($simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table') as $simpleXmlTableElement) {
             $tableName = (string)$simpleXmlTableElement['name'];
-            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/column[starts-with(@name, "id_")]');
+            if ($hasNamespace) {
+                $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
+            }
+            $idColumnSimpleXmlElements = $simpleXmlTableElement->xpath($hasNamespace ? '//s:table[@name="' . $tableName . '"]/s:column[starts-with(@name, "id_")]' : '//table[@name="' . $tableName . '"]/column[starts-with(@name, "id_")]');
             if ($idColumnSimpleXmlElements === false) {
                 continue;
             }
@@ -189,11 +202,19 @@ class PropelSchemaParser implements PropelSchemaParserInterface
     {
         $simpleXmlElement = simplexml_load_file($splFileInfo->getPathname());
 
+        $hasNamespace = $this->hasNamespaceInSchema($simpleXmlElement);
+        if ($hasNamespace) {
+            $simpleXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
+        }
+
         $uniqueColumnNames = [];
 
-        foreach ($simpleXmlElement->xpath('//table') as $simpleXmlTableElement) {
+        foreach ($simpleXmlElement->xpath($hasNamespace ? '//s:table' : '//table') as $simpleXmlTableElement) {
             $tableName = (string)$simpleXmlTableElement['name'];
-            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath('//table[@name="' . $tableName . '"]/unique/unique-column');
+            if ($hasNamespace) {
+                $simpleXmlTableElement->registerXPathNamespace('s', 'spryker:schema-01');
+            }
+            $uniqueColumnSimpleXmlElements = $simpleXmlTableElement->xpath($hasNamespace ? '//s:table[@name="' . $tableName . '"]/s:unique/s:unique-column' : '//table[@name="' . $tableName . '"]/unique/unique-column');
             if ($uniqueColumnSimpleXmlElements === false) {
                 continue;
             }
@@ -305,5 +326,19 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         }
 
         return array_filter($lookupPaths, 'glob');
+    }
+
+    /**
+     * @param \SimpleXMLElement $simpleXmlElement
+     *
+     * @return bool
+     */
+    protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
+    {
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+            return true;
+        }
+
+        return false;
     }
 }
