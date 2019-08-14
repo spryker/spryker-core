@@ -48,7 +48,7 @@
         <property name="idSalesOrderConfiguredBundle" type="int" />
         <property name="configurableBundleTemplateUuid" type="string" />
         <property name="name" type="string" />
-        <property name="quantity" type="int" description="The quantity of the configuration in the Order" />
+        <property name="quantity" type="int" />
         <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem" />
     </transfer>
 
