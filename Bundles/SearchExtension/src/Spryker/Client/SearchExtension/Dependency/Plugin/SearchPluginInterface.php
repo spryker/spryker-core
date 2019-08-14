@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
+/**
+ * @TODO can be removed when refactored to ClientAdapterPlugins.
+ */
 interface SearchPluginInterface
 {
     /**

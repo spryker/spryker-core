@@ -25,9 +25,9 @@ interface SearchElasticsearchClientInterface
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet @TODO implement ResultSet
+     * @return array|\Elastica\ResultSet @TODO implement ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []): ResultSet;
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
 
     /**
      * Specification:

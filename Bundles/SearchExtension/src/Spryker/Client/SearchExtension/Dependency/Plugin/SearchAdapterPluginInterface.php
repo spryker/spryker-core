@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
-use Elastica\ResultSet;
 use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 interface SearchAdapterPluginInterface
@@ -24,9 +23,9 @@ interface SearchAdapterPluginInterface
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet
+     * @return mixed
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []): ResultSet;
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
 
     /**
      * Specification:

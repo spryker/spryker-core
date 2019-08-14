@@ -45,7 +45,7 @@ interface AdapterPluginInterface
      *
      * @param string|null $indexName
      *
-     * @return \Elastica\Response
+     * @return mixed
      */
     public function delete(?string $indexName = null);
 
@@ -73,7 +73,7 @@ interface AdapterPluginInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet
+     * @return mixed
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
 }

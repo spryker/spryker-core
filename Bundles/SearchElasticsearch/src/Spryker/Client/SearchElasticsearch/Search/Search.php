@@ -38,7 +38,7 @@ class Search implements SearchInterface
      * @param array $resultFormatters
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet
+     * @return array|\Elastica\ResultSet
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
