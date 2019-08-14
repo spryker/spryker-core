@@ -18,7 +18,7 @@ class ContentBannersResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceByKey": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Retrieve content banner item data."
      *          ],

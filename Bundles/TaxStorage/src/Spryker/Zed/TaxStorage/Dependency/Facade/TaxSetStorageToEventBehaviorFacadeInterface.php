@@ -17,7 +17,7 @@ interface TaxSetStorageToEventBehaviorFacadeInterface
     public function getEventTransferIds(array $eventTransfers);
 
     /**
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array

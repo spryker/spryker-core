@@ -51,7 +51,30 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
         );
 
-        return $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+        return $this->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyBusinessUnitAddressesByCriteriaFilter(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        $companyUnitAddressCollectionTransfer = $this->repository->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
+        $companyUnitAddressIds = $this->getCompanyUnitAddressIds($companyUnitAddressCollectionTransfer);
+        $addressRelationsToBusinessUnit = $this->repository->getCompanyBusinessUnitAddressToBusinessUnitRelations($companyUnitAddressIds);
+
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
+            $idCompanyUnitAddress = $companyUnitAddress->getIdCompanyUnitAddress();
+
+            if (isset($addressRelationsToBusinessUnit[$idCompanyUnitAddress])) {
+                $companyUnitAddress->setCompanyBusinessUnits($addressRelationsToBusinessUnit[$idCompanyUnitAddress]);
+            }
+        }
+
+        return $companyUnitAddressCollectionTransfer;
     }
 
     /**
@@ -107,5 +130,21 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
         return $companyUnitAddressResponseTransfer
             ->setIsSuccessful(true)
             ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getCompanyUnitAddressIds(
+        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+    ): array {
+        $companyUnitAddressIds = [];
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
+            $companyUnitAddressIds[] = $companyUnitAddress->getIdCompanyUnitAddress();
+        }
+
+        return $companyUnitAddressIds;
     }
 }

@@ -56,4 +56,18 @@ interface PriceProductEntityManagerInterface
      * @return void
      */
     public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStore): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): int;
 }
