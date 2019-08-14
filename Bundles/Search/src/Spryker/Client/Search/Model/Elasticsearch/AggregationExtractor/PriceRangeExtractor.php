@@ -51,8 +51,7 @@ class PriceRangeExtractor extends RangeExtractor
      */
     protected function getActiveRangeData(array $requestParameters, $min, $max)
     {
-        $activeMin = $this->getActiveMinFromRequestParameters($requestParameters);
-        $activeMax = $this->getActiveMaxFromRequestParameters($requestParameters);
+        [$activeMin, $activeMax] = $this->getActiveRangeParameters($requestParameters);
 
         return [
             $activeMin !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMin) : $min,
@@ -63,32 +62,22 @@ class PriceRangeExtractor extends RangeExtractor
     /**
      * @param array $requestParameters
      *
-     * @return float|null
+     * @return array
      */
-    protected function getActiveMinFromRequestParameters(array $requestParameters): ?float
+    protected function getActiveRangeParameters(array $requestParameters): array
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
-        if (isset($requestParameters[$parameterName]['min']) && empty($requestParameters[$parameterName]['min']) === false) {
-            return (float)$requestParameters[$parameterName]['min'];
+        $activeMax = null;
+        if (empty($requestParameters[$parameterName]['max']) === false) {
+            $activeMax = (float)$requestParameters[$parameterName]['max'];
         }
 
-        return null;
-    }
-
-    /**
-     * @param array $requestParameters
-     *
-     * @return float|null
-     */
-    protected function getActiveMaxFromRequestParameters(array $requestParameters): ?float
-    {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
-
-        if (isset($requestParameters[$parameterName]['max']) && empty($requestParameters[$parameterName]['max']) === false) {
-            return (float)$requestParameters[$parameterName]['max'];
+        $activeMin = null;
+        if (empty($requestParameters[$parameterName]['min']) === false) {
+            $activeMin = (float)$requestParameters[$parameterName]['min'];
         }
 
-        return null;
+        return [$activeMax, $activeMin];
     }
 }
