@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface WishlistsWriterInterface
+interface WishlistCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
@@ -20,19 +20,4 @@ interface WishlistsWriterInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function create(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function update(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function delete(RestRequestInterface $restRequest): RestResponseInterface;
 }

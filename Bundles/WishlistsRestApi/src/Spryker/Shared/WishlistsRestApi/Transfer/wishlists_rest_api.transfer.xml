@@ -21,6 +21,13 @@
         <property name="name" type="string" />
     </transfer>
 
+    <transfer name="WishlistResponse">
+        <property name="wishlist" type="Wishlist" />
+        <property name="isSuccess" type="bool" />
+        <property name="errorIdentifier" type="string"/>
+        <property name="errors" type="array" singular="error" />
+    </transfer>
+
     <transfer name="WishlistRequest">
         <property name="uuid" type="string"/>
         <property name="idCustomer" type="int"/>

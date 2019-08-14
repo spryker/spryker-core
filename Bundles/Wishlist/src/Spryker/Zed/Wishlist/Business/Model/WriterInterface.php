@@ -23,7 +23,7 @@ interface WriterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
 

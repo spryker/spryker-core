@@ -64,9 +64,9 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::DETAIL => WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS,
             ],
             static::WISHLIST_VALIDATION_ERROR_NAME_WRONG_FORMAT => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_WISHLIST_NOT_FOUND,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_WISHLIST_NOT_FOUND,
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_WISHLIST_NAME_INVALID,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_WISHLIST_NAME_INVALID,
             ],
         ];
     }

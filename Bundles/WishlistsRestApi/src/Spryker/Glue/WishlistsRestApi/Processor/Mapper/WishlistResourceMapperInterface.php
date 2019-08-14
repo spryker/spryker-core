@@ -10,7 +10,7 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
-interface WishlistsResourceMapperInterface
+interface WishlistResourceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer

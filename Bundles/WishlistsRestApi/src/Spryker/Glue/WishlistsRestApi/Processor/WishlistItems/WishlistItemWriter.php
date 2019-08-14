@@ -17,12 +17,12 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class WishlistItemsWriter implements WishlistItemsWriterInterface
+class WishlistItemWriter implements WishlistItemWriterInterface
 {
     protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
 
@@ -37,31 +37,31 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface
      */
-    protected $wishlistsReader;
+    protected $wishlistReader;
 
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface
      */
-    protected $wishlistItemsResourceMapper;
+    protected $wishlistItemResourceMapper;
 
     /**
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface $wishlistItemsResourceMapper
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface $wishlistsReader
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface $wishlistItemResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface $wishlistReader
      */
     public function __construct(
         WishlistsRestApiToWishlistClientInterface $wishlistClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        WishlistItemsResourceMapperInterface $wishlistItemsResourceMapper,
-        WishlistsReaderInterface $wishlistsReader
+        WishlistItemResourceMapperInterface $wishlistItemResourceMapper,
+        WishlistReaderInterface $wishlistReader
     ) {
         $this->wishlistClient = $wishlistClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->wishlistItemsResourceMapper = $wishlistItemsResourceMapper;
-        $this->wishlistsReader = $wishlistsReader;
+        $this->wishlistItemResourceMapper = $wishlistItemResourceMapper;
+        $this->wishlistReader = $wishlistReader;
     }
 
     /**
@@ -80,7 +80,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         $wishlistUuid = $wishlistResource->getId();
-        $wishlistTransfer = $this->wishlistsReader->findWishlistByUuid($wishlistUuid);
+        $wishlistTransfer = $this->wishlistReader->findWishlistByUuid($wishlistUuid);
         if ($wishlistTransfer === null) {
             return $this->createWishlistNotFoundErrorResponse($restResponse);
         }
@@ -101,7 +101,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
             return $restResponse->addError($restErrorMessageTransfer);
         }
 
-        $restWishlistItemsAttributesTransfer = $this->wishlistItemsResourceMapper
+        $restWishlistItemsAttributesTransfer = $this->wishlistItemResourceMapper
             ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer);
 
         $wishlistItemResource = $this->restResourceBuilder->createRestResource(
@@ -137,7 +137,7 @@ class WishlistItemsWriter implements WishlistItemsWriterInterface
         }
 
         $wishlistUuid = $wishlistResource->getId();
-        $wishlistOverviewTransfer = $this->wishlistsReader->findWishlistOverviewByUuid($wishlistUuid);
+        $wishlistOverviewTransfer = $this->wishlistReader->findWishlistOverviewByUuid($wishlistUuid);
         if ($wishlistOverviewTransfer === null) {
             return $this->createWishlistNotFoundErrorResponse($restResponse);
         }

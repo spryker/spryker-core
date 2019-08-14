@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface WishlistItemsWriterInterface
+interface WishlistItemWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer

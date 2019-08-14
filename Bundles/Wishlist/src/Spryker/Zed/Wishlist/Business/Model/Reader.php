@@ -435,7 +435,6 @@ class Reader implements ReaderInterface
 
         return $wishlistResponseTransfer
             ->setWishlist($wishlistTransfer)
-            ->setWishlistItems($wishlistTransfer->getWishlistItems())
             ->setIsSuccess(true);
     }
 

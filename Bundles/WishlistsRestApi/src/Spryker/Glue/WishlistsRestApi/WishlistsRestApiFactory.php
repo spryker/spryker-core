@@ -11,18 +11,22 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceId;
 use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceIdInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapper;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapper;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistsRestResponseBuilder;
-use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistsRestResponseBuilderInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemsWriter;
-use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemsWriterInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReader;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsWriter;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsWriterInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapper;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapper;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilder;
+use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemWriter;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemWriterInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreator;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreatorInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistDeleter;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistDeleterInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReader;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistUpdater;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistUpdaterInterface;
 
 /**
  * @method \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface getClient()
@@ -31,11 +35,11 @@ use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsWriterInterface;
 class WishlistsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface
      */
-    public function createWishlistsReader(): WishlistsReaderInterface
+    public function createWishlistsReader(): WishlistReaderInterface
     {
-        return new WishlistsReader(
+        return new WishlistReader(
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
             $this->createWishlistsResourceMapper(),
@@ -46,12 +50,34 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsWriterInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreatorInterface
      */
-    public function createWishlistsWriter(): WishlistsWriterInterface
+    public function createWishlistCreator(): WishlistCreatorInterface
     {
-        return new WishlistsWriter(
+        return new WishlistCreator(
             $this->getWishlistClient(),
+            $this->createWishlistsResourceMapper(),
+            $this->createWishlistRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistDeleterInterface
+     */
+    public function createWishlistDeleter(): WishlistDeleterInterface
+    {
+        return new WishlistDeleter(
+            $this->getClient(),
+            $this->createWishlistRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistUpdaterInterface
+     */
+    public function createWishlistUpdater(): WishlistUpdaterInterface
+    {
+        return new WishlistUpdater(
             $this->createWishlistsResourceMapper(),
             $this->getClient(),
             $this->createWishlistRestResponseBuilder()
@@ -59,11 +85,11 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemsWriterInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemWriterInterface
      */
-    public function createWishlistItemsWriter(): WishlistItemsWriterInterface
+    public function createWishlistItemsWriter(): WishlistItemWriterInterface
     {
-        return new WishlistItemsWriter(
+        return new WishlistItemWriter(
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
             $this->createWishlistItemsResourceMapper(),
@@ -72,11 +98,11 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistsRestResponseBuilderInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface
      */
-    public function createWishlistRestResponseBuilder(): WishlistsRestResponseBuilderInterface
+    public function createWishlistRestResponseBuilder(): WishlistRestResponseBuilderInterface
     {
-        return new WishlistsRestResponseBuilder(
+        return new WishlistRestResponseBuilder(
             $this->getConfig(),
             $this->getResourceBuilder(),
             $this->createWishlistsResourceMapper(),
@@ -93,19 +119,19 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistsResourceMapperInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface
      */
-    public function createWishlistsResourceMapper(): WishlistsResourceMapperInterface
+    public function createWishlistsResourceMapper(): WishlistResourceMapperInterface
     {
-        return new WishlistsResourceMapper();
+        return new WishlistResourceMapper();
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemsResourceMapperInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface
      */
-    public function createWishlistItemsResourceMapper(): WishlistItemsResourceMapperInterface
+    public function createWishlistItemsResourceMapper(): WishlistItemResourceMapperInterface
     {
-        return new WishlistItemsResourceMapper();
+        return new WishlistItemResourceMapper();
     }
 
     /**
