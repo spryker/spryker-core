@@ -295,13 +295,16 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         array $cmsPageEntities,
         array $cmsPageStorageEntities
     ): array {
+        $storeTransfers = $this->indexStoresByStoreName($this->storeFacade->getAllStores());
+
         $pairs = [];
 
         foreach ($cmsPageEntities as $cmsPageEntity) {
             [$pairs, $cmsPageStorageEntities] = $this->pairCmsPageEntityWithCmsPageStorageEntitiesByLocalesAndStores(
                 $cmsPageEntity,
                 $cmsPageStorageEntities,
-                $pairs
+                $pairs,
+                $storeTransfers
             );
         }
 
@@ -314,20 +317,22 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageStorageEntities
      * @param array $pairs
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      *
      * @return array
      */
     protected function pairCmsPageEntityWithCmsPageStorageEntitiesByLocalesAndStores(
         SpyCmsPage $cmsPageEntity,
         array $cmsPageStorageEntities,
-        array $pairs
+        array $pairs,
+        array $storeTransfers
     ): array {
         $idCmsPage = $cmsPageEntity->getIdCmsPage();
         $cmsPageStores = $cmsPageEntity->getSpyCmsPageStores();
 
         foreach ($cmsPageStores as $cmsPageStore) {
             $storeName = $cmsPageStore->getSpyStore()->getName();
-            $localeNames = $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes();
+            $localeNames = $storeTransfers[$storeName]->getAvailableLocaleIsoCodes();
 
             foreach ($localeNames as $localeName) {
                 $cmsPageStorageEntity = isset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]) ?
@@ -366,5 +371,21 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         });
 
         return $pairs;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected function indexStoresByStoreName(array $storeTransfers): array
+    {
+        $storesTransfersIndexedByStoreName = [];
+
+        foreach ($storeTransfers as $storeTransfer) {
+            $storesTransfersIndexedByStoreName[$storeTransfer->getName()] = $storeTransfer;
+        }
+
+        return $storesTransfersIndexedByStoreName;
     }
 }

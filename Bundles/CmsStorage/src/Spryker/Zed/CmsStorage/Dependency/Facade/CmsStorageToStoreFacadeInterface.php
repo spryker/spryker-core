@@ -15,9 +15,7 @@ interface CmsStorageToStoreFacadeInterface
     public function getCurrentStore();
 
     /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getStoreByName($storeName);
+    public function getAllStores();
 }

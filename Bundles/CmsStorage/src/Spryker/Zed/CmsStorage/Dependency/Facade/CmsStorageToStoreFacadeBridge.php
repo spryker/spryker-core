@@ -31,12 +31,10 @@ class CmsStorageToStoreFacadeBridge implements CmsStorageToStoreFacadeInterface
     }
 
     /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getStoreByName($storeName)
+    public function getAllStores()
     {
-        return $this->storeFacade->getStoreByName($storeName);
+        return $this->storeFacade->getAllStores();
     }
 }
