@@ -268,4 +268,18 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification
+     * - Check if carrier has shipment method name.
+     *
+     * @api
+     *
+     * @param string $methodName
+     * @param int $idMethod
+     * @param int $idCarrier
+     *
+     * @return bool
+     */
+    public function hasMethodByNameAndIdCarrier(string $methodName, int $idMethod, int $idCarrier): bool;
 }

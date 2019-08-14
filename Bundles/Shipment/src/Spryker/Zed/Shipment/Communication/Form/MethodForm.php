@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class MethodForm extends AbstractType
 {
@@ -48,7 +49,7 @@ class MethodForm extends AbstractType
     public const OPTION_DATA_CLASS = 'data_class';
     public const OPTION_DATA = 'data';
 
-    public const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
+    protected const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
 
     /**
      * @return string
@@ -141,16 +142,26 @@ class MethodForm extends AbstractType
                 new NotBlank(),
                 new Required(),
                 new Callback([
-                    'callback' => function ($name, ExecutionContextInterface $contextInterface) use ($options) {
-                        if ($this->isUniqueMethodName($name, $options[static::OPTION_DATA])) {
-                            $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
-                        }
-                    },
+                    'callback' => $this->validateUniqueName($options),
                 ]),
             ],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return callable
+     */
+    protected function validateUniqueName(array $options)
+    {
+        return function ($name, ExecutionContextInterface $contextInterface) use ($options) {
+            if ($this->isUniqueMethodName($name, $options[static::OPTION_DATA])) {
+                $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
+            }
+        };
     }
 
     /**
@@ -161,11 +172,8 @@ class MethodForm extends AbstractType
      */
     protected function isUniqueMethodName(string $name, ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
-        $count = $this->getQueryContainer()
-            ->queryUniqueMethodName($name, $shipmentMethodTransfer->getIdShipmentMethod(), $shipmentMethodTransfer->getFkShipmentCarrier())
-            ->count();
-
-        return $count > 0;
+        return $this->getFacade()
+            ->hasMethodByNameAndIdCarrier($name, $shipmentMethodTransfer->getIdShipmentMethod(), $shipmentMethodTransfer->getFkShipmentCarrier());
     }
 
     /**

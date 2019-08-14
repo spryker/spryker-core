@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ShipmentQueryContainerInterface extends QueryContainerInterface
@@ -145,15 +144,4 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
-
-    /**
-     * @api
-     *
-     * @param string $methodName
-     * @param int|null $idMethod
-     * @param int|null $idCarrier
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryUniqueMethodName(string $methodName, ?int $idMethod = null, ?int $idCarrier = null): SpyShipmentMethodQuery;
 }

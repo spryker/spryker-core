@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
@@ -313,5 +314,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         $this->getFactory()
             ->createShipmentExpenseFilter()
             ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $methodName
+     * @param int $idMethod
+     * @param int $idCarrier
+     *
+     * @return bool
+     */
+    public function hasMethodByNameAndIdCarrier(string $methodName, int $idMethod, int $idCarrier): bool
+    {
+        return $this->getRepository()
+            ->hasMethodByNameAndIdCarrier($methodName, $idMethod, $idCarrier);
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -244,31 +243,5 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
     {
         return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
-    }
-
-    /**
-     * @api
-     *
-     * @param string $methodName
-     * @param int|null $idMethod
-     * @param int|null $idCarrier
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryUniqueMethodName(string $methodName, ?int $idMethod = null, ?int $idCarrier = null): SpyShipmentMethodQuery
-    {
-        $shipmentMethodQuery = $this->getFactory()
-            ->createShipmentMethodQuery()
-            ->filterByName($methodName);
-
-        if ($idMethod) {
-            $shipmentMethodQuery->filterByIdShipmentMethod($idMethod, Criteria::NOT_EQUAL);
-        }
-
-        if ($idCarrier) {
-            $shipmentMethodQuery->filterByFkShipmentCarrier($idCarrier);
-        }
-
-        return $shipmentMethodQuery;
     }
 }
