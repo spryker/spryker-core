@@ -8,16 +8,12 @@
 namespace Spryker\Zed\Translator\Business\Translator;
 
 use Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilderInterface;
+use Spryker\Zed\Translator\TranslatorConfig;
 use Symfony\Component\Translation\Formatter\MessageFormatterInterface;
 use Symfony\Component\Translation\Translator as SymfonyTranslator;
 
 class Translator extends SymfonyTranslator implements TranslatorInterface
 {
-    /**
-     * @var string
-     */
-    protected static $locale;
-
     /**
      * @var \Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilderInterface
      */
@@ -29,17 +25,30 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     protected $resourcesInitialised = false;
 
     /**
+     * @var \Spryker\Zed\Translator\TranslatorConfig
+     */
+    protected $translatorConfig;
+
+    /**
      * @param \Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilderInterface $translatorBuilder
      * @param string $locale
      * @param \Symfony\Component\Translation\Formatter\MessageFormatterInterface|null $formatter
      * @param string|null $cacheDir
      * @param bool $debug
+     * @param \Spryker\Zed\Translator\TranslatorConfig|null $translatorConfig
      */
-    public function __construct(TranslatorBuilderInterface $translatorBuilder, string $locale, ?MessageFormatterInterface $formatter = null, ?string $cacheDir = null, bool $debug = false)
-    {
+    public function __construct(
+        TranslatorBuilderInterface $translatorBuilder,
+        string $locale,
+        ?MessageFormatterInterface $formatter,
+        ?string $cacheDir,
+        bool $debug,
+        ?TranslatorConfig $translatorConfig
+    ) {
         parent::__construct($locale, $formatter, $cacheDir, $debug);
 
         $this->translatorBuilder = $translatorBuilder;
+        $this->translatorConfig = $translatorConfig;
     }
 
     /**
@@ -64,8 +73,7 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
      */
     public function setLocale($locale): void
     {
-        $this->assertValidLocale($locale);
-        static::$locale = $locale;
+        parent::setLocale($locale);
     }
 
     /**
@@ -73,7 +81,7 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
      */
     public function getLocale(): string
     {
-        return static::$locale;
+        return parent::getLocale();
     }
 
     /**
@@ -85,5 +93,18 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     public function has(string $keyName, string $locale): bool
     {
         return $this->getCatalogue($locale)->defines($keyName);
+    }
+
+    /**
+     * @param mixed $locale
+     *
+     * @return array
+     */
+    protected function computeFallbackLocales($locale): array
+    {
+        $locales = parent::computeFallbackLocales($locale);
+        $configFalbackLocales = !empty($this->translatorConfig) ? $this->translatorConfig->getFallbackLocales($locale) : [];
+
+        return array_unique(array_merge($locales, $configFalbackLocales));
     }
 }

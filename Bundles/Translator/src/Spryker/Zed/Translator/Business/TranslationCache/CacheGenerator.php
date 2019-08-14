@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Translator\Business\TranslationCache;
 
 use Spryker\Shared\Kernel\Store;
-use Symfony\Component\Translation\TranslatorBagInterface as SymfonyTranslatorBagInterface;
 
 class CacheGenerator implements CacheGeneratorInterface
 {

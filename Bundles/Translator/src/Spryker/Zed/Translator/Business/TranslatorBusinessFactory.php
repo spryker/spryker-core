@@ -103,22 +103,11 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createTranslatorSet(): array
     {
-        $translators = [];
         $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
 
-        foreach ($availableLocales as $availableLocale) {
-            $translator = new Translator(
-                $this->createTranslationBuilder(),
-                $availableLocale,
-                null,
-                $this->getConfig()->getTranslatorCacheDirectory()
-            );
-            $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($availableLocale));
-
-            $translators[] = $translator;
-        }
-
-        return $translators;
+        return array_map(function ($availableLocale) {
+            return $this->createTranslator($availableLocale);
+        }, $availableLocales);
     }
 
     /**
@@ -129,8 +118,14 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslator(?string $localeName = null)
     {
         $localeName = $localeName ?? $this->getLocaleFacade()->getCurrentLocaleName();
-        $translator = new Translator($this->createTranslationBuilder(), $localeName, null, $this->getConfig()->getTranslatorCacheDirectory());
-        $translator->setFallbackLocales($this->getConfig()->getFallbackLocales($localeName));
+        $translator = new Translator(
+            $this->createTranslationBuilder(),
+            $localeName,
+            null,
+            $this->getConfig()->getTranslatorCacheDirectory(),
+            false,
+            $this->getConfig()
+        );
 
         return $translator;
     }
