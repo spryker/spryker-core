@@ -27,6 +27,7 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addWishlistPropelQuery($container);
 
         return $container;
@@ -37,8 +38,9 @@ class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addWishlistFacade($container);
 
         return $container;
