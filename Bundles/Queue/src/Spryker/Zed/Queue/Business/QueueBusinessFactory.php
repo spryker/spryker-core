@@ -64,8 +64,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     {
         return new ProcessManager(
             $this->getQueryContainer(),
-            $this->getServerUniqueId(),
-            $this->getConfig()
+            $this->getServerUniqueId()
         );
     }
 

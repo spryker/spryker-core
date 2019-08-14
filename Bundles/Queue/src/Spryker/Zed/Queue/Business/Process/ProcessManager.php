@@ -10,7 +10,6 @@ namespace Spryker\Zed\Queue\Business\Process;
 use Generated\Shared\Transfer\QueueProcessTransfer;
 use Orm\Zed\Queue\Persistence\SpyQueueProcess;
 use Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface;
-use Spryker\Zed\Queue\QueueConfig;
 use Symfony\Component\Process\Process;
 
 class ProcessManager implements ProcessManagerInterface
@@ -26,20 +25,13 @@ class ProcessManager implements ProcessManagerInterface
     protected $serverUniqueId;
 
     /**
-     * @var \Spryker\Zed\Queue\QueueConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Zed\Queue\Persistence\QueueQueryContainerInterface $queryContainer
      * @param string $serverUniqueId
-     * @param \Spryker\Zed\Queue\QueueConfig $config
      */
-    public function __construct(QueueQueryContainerInterface $queryContainer, $serverUniqueId, QueueConfig $config)
+    public function __construct(QueueQueryContainerInterface $queryContainer, $serverUniqueId)
     {
         $this->queryContainer = $queryContainer;
         $this->serverUniqueId = $serverUniqueId;
-        $this->config = $config;
     }
 
     /**
@@ -195,6 +187,6 @@ class ProcessManager implements ProcessManagerInterface
      */
     protected function createProcess($command)
     {
-        return new Process(explode(' ', $command), null, null, null, $this->config->getProcessTimeout());
+        return new Process(explode(' ', $command));
     }
 }

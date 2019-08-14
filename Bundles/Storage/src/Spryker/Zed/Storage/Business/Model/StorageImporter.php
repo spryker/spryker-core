@@ -36,7 +36,8 @@ class StorageImporter implements StorageImporterInterface
     public function import($source)
     {
         $command = sprintf('sudo cp %s %s', $source, $this->config->getRdbDumpPath());
-        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         if ($process->isSuccessful()) {

@@ -92,6 +92,7 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     protected function runProcess($command)
     {
         $process = $this->getProcess($command);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->inheritEnvironmentVariables(true);
         $process->run();
 
@@ -112,10 +113,10 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
     protected function getProcess($command)
     {
         if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command, null, $this->getEnvironmentVariables(), null, $this->config->getProcessTimeout());
+            return Process::fromShellCommandline($command, null, $this->getEnvironmentVariables());
         }
 
-        return new Process($command, null, $this->getEnvironmentVariables(), null, $this->config->getProcessTimeout());
+        return new Process($command, null, $this->getEnvironmentVariables());
     }
 
     /**

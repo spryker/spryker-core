@@ -98,6 +98,7 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
         $this->exportPostgresPassword();
 
         $process = $this->getProcess($command);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {
@@ -117,10 +118,10 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
     protected function getProcess(string $command): Process
     {
         if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command, null, null, null, $this->config->getProcessTimeout());
+            return Process::fromShellCommandline($command);
         }
 
-        return new Process($command, null, null, null, $this->config->getProcessTimeout());
+        return new Process($command);
     }
 
     /**

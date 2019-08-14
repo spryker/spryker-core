@@ -34,7 +34,8 @@ class RedisImporter implements RedisImporterInterface
     public function import(string $source, string $destination): bool
     {
         $command = $this->buildImportCliCommand($source, $destination);
-        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR, null, null, $this->config->getProcessTimeout());
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         return $process->isSuccessful();

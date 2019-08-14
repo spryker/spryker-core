@@ -109,6 +109,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     protected function runProcess($command)
     {
         $process = $this->getProcess($command);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
@@ -136,10 +137,10 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     protected function getProcess($command)
     {
         if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command, null, null, null, $this->config->getProcessTimeout());
+            return Process::fromShellCommandline($command);
         }
 
-        return new Process($command, null, null, null, $this->config->getProcessTimeout());
+        return new Process($command);
     }
 
     /**
