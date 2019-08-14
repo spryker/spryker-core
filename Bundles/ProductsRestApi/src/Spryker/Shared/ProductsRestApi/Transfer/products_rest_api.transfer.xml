@@ -30,4 +30,19 @@
         <property name="attributeNames" type="array"/>
     </transfer>
 
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="fkResourceProductAbstract" type="int" />
+    </transfer>
+
+    <transfer name="ResourceIdentifier">
+        <property name="type" type="string" />
+        <property name="id" type="string" />
+    </transfer>
+
 </transfers>

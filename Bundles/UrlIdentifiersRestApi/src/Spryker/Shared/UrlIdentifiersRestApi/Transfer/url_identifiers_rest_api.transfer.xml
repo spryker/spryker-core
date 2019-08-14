@@ -14,4 +14,18 @@
         <property name="id" type="string" />
     </transfer>
 
+    <transfer name="UrlRedirectStorage">
+        <property name="toUrl" type="string" />
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="fkResourceRedirect" type="int" />
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
 </transfers>

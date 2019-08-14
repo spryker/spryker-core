@@ -110,11 +110,11 @@ class UrlIdentifierReader implements UrlIdentifierReaderInterface
             return $urlStorageTransfer;
         }
 
-        $urlStorageTransfer = $this->urlStorageClient->findUrlRedirectStorageById(
+        $urlRedirectStorageTransfer = $this->urlStorageClient->findUrlRedirectStorageById(
             $urlStorageTransfer->getFkResourceRedirect()
         );
 
-        return $this->getUrlStorageTransfer($urlStorageTransfer->getToUrl());
+        return $this->getUrlStorageTransfer($urlRedirectStorageTransfer->getToUrl());
     }
 
     /**
