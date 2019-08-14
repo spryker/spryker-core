@@ -13,6 +13,9 @@ use Spryker\Client\Search\Exception\SearchResponseException;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
     /**

@@ -23,9 +23,9 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      * @param array $resultFormatters
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet
+     * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []): ResultSet
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
         return $this->getClient()->search($searchQuery, $resultFormatters, $requestParameters);
     }

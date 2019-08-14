@@ -8,7 +8,6 @@
 namespace Spryker\Client\Search\Delegator;
 
 use Elastica\Response as ElasticaResponse;
-use Elastica\ResultSet;
 use Exception;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\Search\Response\Response;
@@ -38,9 +37,9 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @throws \Exception
      *
-     * @return \Elastica\ResultSet
+     * @return mixed
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []): ResultSet
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
         if (!method_exists($searchQuery, 'getIndexName')) {
             throw new Exception(sprintf('Your query class "%s" must implement a "getIndexName()" method.', get_class($searchQuery)));

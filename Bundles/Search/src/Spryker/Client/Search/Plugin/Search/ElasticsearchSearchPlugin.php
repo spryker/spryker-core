@@ -16,6 +16,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchPluginInterface;
 
 /**
+ * @TODO can be removed when refactored to ClientAdapterPlugins.
  * @method \Spryker\Client\Search\SearchClient getClient()
  */
 class ElasticsearchSearchPlugin extends AbstractPlugin implements SearchPluginInterface

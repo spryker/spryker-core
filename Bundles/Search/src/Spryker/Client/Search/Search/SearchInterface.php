@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\Search\Search;
 
-use Elastica\ResultSet;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
+/**
+ * @TODO can be removed when refactored to ClientAdapterPlugins.
+ */
 interface SearchInterface
 {
     /**
@@ -17,7 +19,7 @@ interface SearchInterface
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet
+     * @return mixed
      */
-    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []): ResultSet;
+    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
 }
