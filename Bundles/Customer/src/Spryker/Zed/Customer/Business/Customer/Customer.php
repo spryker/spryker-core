@@ -178,9 +178,11 @@ class Customer implements CustomerInterface
      */
     public function add($customerTransfer)
     {
-        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getPassword());
-        if (!$customerResponseTransfer->getIsSuccess()) {
-            return $customerResponseTransfer;
+        if ($customerTransfer->getPassword()) {
+            $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getPassword());
+            if (!$customerResponseTransfer->getIsSuccess()) {
+                return $customerResponseTransfer;
+            }
         }
 
         $customerTransfer = $this->encryptPassword($customerTransfer);
@@ -560,7 +562,7 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer;
         }
 
-        $customerResponseTransfer = $this->validateCustomerPassword($customerTransfer->getNewPassword());
+        $customerResponseTransfer = $this->validateCustomerPasswordLength($customerTransfer->getNewPassword());
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
@@ -907,9 +909,10 @@ class Customer implements CustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function validateCustomerPassword(string $password): CustomerResponseTransfer
+    protected function validateCustomerPasswordLength(string $password): CustomerResponseTransfer
     {
-        $customerResponseTransfer = new CustomerResponseTransfer();
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setIsSuccess(false);
 
         $customerPasswordLength = mb_strlen($password);
         $minLength = $this->customerConfig->getCustomerPasswordMinLength();
@@ -937,7 +940,7 @@ class Customer implements CustomerInterface
             return $customerResponseTransfer->addError($customerErrorTransfer);
         }
 
-        return $customerResponseTransfer;
+        return $customerResponseTransfer->setIsSuccess(true);
     }
 
     /**
@@ -946,8 +949,10 @@ class Customer implements CustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerErrorTransfer
      */
-    protected function createCustomerErrorTransferWithTranslatableMessage(string $message, array $params): CustomerErrorTransfer
-    {
+    protected function createCustomerErrorTransferWithTranslatableMessage(
+        string $message,
+        array $params
+    ): CustomerErrorTransfer {
         $messageTransfer = (new MessageTransfer())
             ->setValue($message)
             ->setParameters($params);
