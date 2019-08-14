@@ -3,7 +3,7 @@
   "name": "spryker-zed-discount",
   "version": "1.0.0",
   "dependencies": {
-    "dot": "^1.0.3",
+    "dot": "^1.1.2",
     "jquery-query-builder": "git+https://git@github.com/spryker/jquery-query-builder.git",
     "jquery-extendext": "git+https://git@github.com/mistic100/jQuery.extendext#0.1.1",
     "sql-parser": "git+https://git@github.com/spryker/spryker-sql-parser.git"

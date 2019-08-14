@@ -20,6 +20,7 @@ class DetailController extends AbstractController
 {
     protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
+    protected const ROUTE_REDIRECT = '/sales-reclamation-gui/detail';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,6 +37,8 @@ class DetailController extends AbstractController
             ->getSalesReclamationFacade()
             ->getReclamationById($reclamationTransfer);
 
+        $reclamationTransfer->requireOrder();
+
         $eventsGroupedByItem = $this->getFactory()
             ->getOmsFacade()
             ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());
@@ -44,11 +47,29 @@ class DetailController extends AbstractController
             ->createReclamationItemEventsFinder()
             ->getDistinctManualEventsByReclamationItems($reclamationTransfer->getReclamationItems(), $eventsGroupedByItem);
 
+        $changeStatusRedirectUrl = $this->createRedirectLink($idReclamation);
+
         return $this->viewResponse([
             'reclamation' => $reclamationTransfer,
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
+            'changeStatusRedirectUrl' => $changeStatusRedirectUrl,
+            'idSalesOrder' => $reclamationTransfer->getOrder()->getIdSalesOrder(),
         ]);
+    }
+
+    /**
+     * @param int $idReclamation
+     *
+     * @return string
+     */
+    protected function createRedirectLink(int $idReclamation): string
+    {
+        $redirectUrlParams = [
+            static::PARAM_ID_RECLAMATION => $idReclamation,
+        ];
+
+        return Url::generate(static::ROUTE_REDIRECT, $redirectUrlParams);
     }
 
     /**

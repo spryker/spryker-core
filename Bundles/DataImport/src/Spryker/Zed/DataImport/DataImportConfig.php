@@ -51,6 +51,14 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getFullImportTypes(): array
+    {
+        return [];
+    }
+
+    /**
      * @param string $file
      * @param string $importType
      *

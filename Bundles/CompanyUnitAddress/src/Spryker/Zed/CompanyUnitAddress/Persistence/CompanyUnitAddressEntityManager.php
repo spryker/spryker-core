@@ -31,7 +31,7 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
             ->filterByIdCompanyUnitAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress())
             ->findOneOrCreate();
 
-        $companyUnitAddressMapper = $this->getFactory()->createCompanyUniAddressMapper();
+        $companyUnitAddressMapper = $this->getFactory()->createCompanyUnitAddressMapper();
 
         $companyUnitAddressEntity = $companyUnitAddressMapper
             ->mapCompanyUnitAddressTransferToCompanyUnitAddressEntity(
