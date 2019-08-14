@@ -21,9 +21,8 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
     /**
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface $cmsBlockRepository
      */
-    public function __construct(
-        CmsBlockRepositoryInterface $cmsBlockRepository
-    ) {
+    public function __construct(CmsBlockRepositoryInterface $cmsBlockRepository)
+    {
         $this->cmsBlockRepository = $cmsBlockRepository;
     }
 
@@ -35,7 +34,11 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
     public function generateKey(?int $idCmsBlock = null): string
     {
         if ($idCmsBlock) {
-            return $this->suggestCandidate($idCmsBlock);
+            $keyCandidate = $this->suggestCandidate($idCmsBlock);
+
+            if (!$this->isCandidateSuitable($keyCandidate)) {
+                return $keyCandidate;
+            }
         }
 
         $index = $this->cmsBlockRepository->findMaxIdCmsBlock() + 1;

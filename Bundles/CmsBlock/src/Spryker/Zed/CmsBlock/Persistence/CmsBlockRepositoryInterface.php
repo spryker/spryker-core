@@ -19,14 +19,14 @@ interface CmsBlockRepositoryInterface
     public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer;
 
     /**
+     * @return int
+     */
+    public function findMaxIdCmsBlock(): int;
+
+    /**
      * @param string $key
      *
      * @return bool
      */
     public function hasKey(string $key): bool;
-
-    /**
-     * @return int
-     */
-    public function findMaxIdCmsBlock(): int;
 }
