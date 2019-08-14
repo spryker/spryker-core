@@ -79,7 +79,8 @@ class WishlistsRestApiFactory extends AbstractFactory
         return new WishlistsRestResponseBuilder(
             $this->getConfig(),
             $this->getResourceBuilder(),
-            $this->createWishlistsResourceMapper()
+            $this->createWishlistsResourceMapper(),
+            $this->createWishlistItemsResourceMapper()
         );
     }
 

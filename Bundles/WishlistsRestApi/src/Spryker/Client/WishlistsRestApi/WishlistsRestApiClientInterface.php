@@ -29,7 +29,7 @@ interface WishlistsRestApiClientInterface
     /**
      * Specification:
      *  - Updates existing wishlist records in DB.
-     *  - Required properties: uuid, idCustomer.
+     *  - Required properties: uuid, idCustomer and wishlist.
      *  - Returns wishlist response with updated wishlist.
      *  - If error occurred returns wishlist response with errors.
      *

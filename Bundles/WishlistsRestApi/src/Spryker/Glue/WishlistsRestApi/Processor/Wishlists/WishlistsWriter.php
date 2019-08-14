@@ -70,7 +70,7 @@ class WishlistsWriter implements WishlistsWriterInterface
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->wishlistsRestResponseBuilder->createErrorResponseFromZedErrors(
+            return $this->wishlistsRestResponseBuilder->createErrorResponseFromErrorIdentifiers(
                 $wishlistResponseTransfer->getErrors()
             );
         }
