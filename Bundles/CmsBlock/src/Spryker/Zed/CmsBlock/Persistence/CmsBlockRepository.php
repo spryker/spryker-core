@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlock\Persistence;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -15,14 +16,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositoryInterface
 {
+    protected const COL_MAX_ID_CMS_BLOCK = 'max_id_cms_block';
+
     /**
-     * @param string $name
+     * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockByName(string $name): ?CmsBlockTransfer
+    public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer
     {
-        $cmsBlockEntity = $this->getFactory()->createCmsBlockQuery()->findOneByName($name);
+        $cmsBlockEntity = $this->getFactory()->createCmsBlockQuery()->findOneByIdCmsBlock($idCmsBlock);
 
         if (!$cmsBlockEntity) {
             return null;
@@ -31,6 +34,24 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
         $cmsBlockTransfer = $this->getFactory()->createCmsBlockMapper()->mapCmsBlockEntityToTransfer($cmsBlockEntity);
 
         return $cmsBlockTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    public function findMaxIdCmsBlock(): int
+    {
+        $clause = 'MAX(' . SpyCmsBlockTableMap::COL_ID_CMS_BLOCK . ')';
+        $maxIdCmsBlock = $this->getFactory()->createCmsBlockQuery()
+            ->select(static::COL_MAX_ID_CMS_BLOCK)
+            ->addAsColumn(static::COL_MAX_ID_CMS_BLOCK, $clause)
+            ->findOne();
+
+        if (!$maxIdCmsBlock) {
+            return 0;
+        }
+
+        return $maxIdCmsBlock;
     }
 
     /**

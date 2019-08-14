@@ -22,7 +22,6 @@ use Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateMapper;
 use Spryker\Zed\CmsBlock\Business\Model\CmsBlockWriter;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToEventFacadeInterface;
-use Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Finder\Finder;
 
@@ -154,15 +153,7 @@ class CmsBlockBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsBlockKeyProvider(): CmsBlockKeyProviderInterface
     {
-        return new CmsBlockKeyProvider($this->getUtilUuidGeneratorService(), $this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface
-     */
-    public function getUtilUuidGeneratorService(): CmsBlockToUtilUuidGeneratorServiceInterface
-    {
-        return $this->getProvidedDependency(CmsBlockDependencyProvider::SERVICE_UTIL_UUID_GENERATOR);
+        return new CmsBlockKeyProvider($this->getRepository());
     }
 
     /**

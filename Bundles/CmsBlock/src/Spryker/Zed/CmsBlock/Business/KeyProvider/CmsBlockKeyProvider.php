@@ -7,19 +7,11 @@
 
 namespace Spryker\Zed\CmsBlock\Business\KeyProvider;
 
-use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockKeyNotCreatedException;
-use Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface;
 
 class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
 {
-    protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
-    protected const ERROR_CONTENT_KEY_NOT_CREATED = 'Cannot create cms block key: maximum iterations threshold met.';
-
-    /**
-     * @var \Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface
-     */
-    protected $utilUuidGeneratorService;
+    protected const KEY_GENERATOR_PREFIX = 'blck';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface
@@ -27,36 +19,44 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
     protected $cmsBlockRepository;
 
     /**
-     * @param \Spryker\Zed\CmsBlock\Dependency\Service\CmsBlockToUtilUuidGeneratorServiceInterface $utilUuidGeneratorService
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface $cmsBlockRepository
      */
     public function __construct(
-        CmsBlockToUtilUuidGeneratorServiceInterface $utilUuidGeneratorService,
         CmsBlockRepositoryInterface $cmsBlockRepository
     ) {
-        $this->utilUuidGeneratorService = $utilUuidGeneratorService;
         $this->cmsBlockRepository = $cmsBlockRepository;
     }
 
     /**
-     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockKeyNotCreatedException
+     * @param int|null $idCmsBlock
      *
      * @return string
      */
-    public function generateKey(): string
+    public function generateKey(?int $idCmsBlock = null): string
     {
-        $index = 0;
+        if ($idCmsBlock) {
+            return $this->suggestCandidate($idCmsBlock);
+        }
 
-        do {
-            if ($index >= static::KEY_GENERATOR_ITERATION_LIMIT) {
-                throw new CmsBlockKeyNotCreatedException(static::ERROR_CONTENT_KEY_NOT_CREATED);
-            }
+        $index = $this->cmsBlockRepository->findMaxIdCmsBlock() + 1;
 
-            $candidate = $this->suggestCandidate($index);
-            $index++;
-        } while ($this->isCandidateSuitable($candidate));
+        return $this->suggestCandidate($index);
+    }
 
-        return $candidate;
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return string
+     */
+    public function getKeyByIdCmsBlock(int $idCmsBlock): string
+    {
+        $cmsBlockTransfer = $this->cmsBlockRepository->findCmsBlockById($idCmsBlock);
+
+        if (!$cmsBlockTransfer || !$cmsBlockTransfer->getKey()) {
+            return $this->generateKey($idCmsBlock);
+        }
+
+        return $cmsBlockTransfer->getKey();
     }
 
     /**
@@ -66,9 +66,7 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
      */
     protected function suggestCandidate(int $index): string
     {
-        return $this->utilUuidGeneratorService->generateUuid5FromObjectId(
-            sprintf("%s-%d", microtime(true), $index)
-        );
+        return sprintf('%s-%d', static::KEY_GENERATOR_PREFIX, $index);
     }
 
     /**

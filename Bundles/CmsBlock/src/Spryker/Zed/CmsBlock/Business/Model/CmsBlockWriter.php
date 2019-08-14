@@ -142,8 +142,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
             );
         }
 
-        if (!$spyCmsBlock->getKey()) {
-            $spyCmsBlock->setKey($this->cmsBlockKeyProvider->generateKey());
+        if (!$cmsBlockTransfer->getKey()) {
+            $cmsBlockTransfer->setKey($this->cmsBlockKeyProvider->getKeyByIdCmsBlock($cmsBlockTransfer->getIdCmsBlock()));
         }
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer, $spyCmsBlock) {

@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 interface CmsBlockRepositoryInterface
 {
     /**
-     * @param string $name
+     * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockByName(string $name): ?CmsBlockTransfer;
+    public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer;
 
     /**
      * @param string $key
@@ -24,4 +24,9 @@ interface CmsBlockRepositoryInterface
      * @return bool
      */
     public function hasKey(string $key): bool;
+
+    /**
+     * @return int
+     */
+    public function findMaxIdCmsBlock(): int;
 }
