@@ -1,0 +1,9 @@
+template_path,slot_key,content_provider,name,description,is_active
+@ShopUI/templates/page-layout-main/page-layout-main.twig,slt-1,Spryker,"Header Top","A content area in the Header section, that is below the logo and search section and above main navigation. ",1
+@ShopUI/templates/page-layout-main/page-layout-main.twig,slt-2,Spryker,"Header Bottom","A content area in the Header section, that is at the bottom of the Header, below the main navigation.",1
+@ShopUI/templates/page-layout-main/page-layout-main.twig,slt-3,Spryker,Footer,"A content area in the Footer section, that is above the all the fixed content in the Footer.",1
+@HomePage/views/home/home.twig,slt-4,Spryker,"Home Page Main","Homepage is fully a content page so it has one slot to have as many blocks as needed.",1
+@CatalogPage/views/catalog/catalog.twig,slt-5,Spryker,Top,"A content area in the Header section.",1
+@CatalogPage/views/catalog/catalog.twig,slt-6,Spryker,Middle,"A content area in the Body section.",1
+@CatalogPage/views/catalog/catalog.twig,slt-7,Spryker,Bottom,"A content area in the Footer section.",1
+@ProductDetailPage/views/pdp/pdp.twig,slt-8,Spryker,Bottom,"A content area in the Footer section.",1
