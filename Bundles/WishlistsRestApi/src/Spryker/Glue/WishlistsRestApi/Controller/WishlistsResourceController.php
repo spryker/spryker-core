@@ -49,7 +49,7 @@ class WishlistsResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistsReader()
+            ->createWishlistReader()
             ->findWishlists($restRequest);
     }
 

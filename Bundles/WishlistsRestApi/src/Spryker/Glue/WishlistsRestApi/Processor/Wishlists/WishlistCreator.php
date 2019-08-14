@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 
 class WishlistCreator implements WishlistCreatorInterface
@@ -23,9 +23,9 @@ class WishlistCreator implements WishlistCreatorInterface
     protected $wishlistClient;
 
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface
      */
-    protected $wishlistResourceMapper;
+    protected $wishlistMapper;
 
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface
@@ -34,16 +34,16 @@ class WishlistCreator implements WishlistCreatorInterface
 
     /**
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface $wishlistResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface $wishlistMapper
      * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
      */
     public function __construct(
         WishlistsRestApiToWishlistClientInterface $wishlistClient,
-        WishlistResourceMapperInterface $wishlistResourceMapper,
+        WishlistMapperInterface $wishlistMapper,
         WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
     ) {
         $this->wishlistClient = $wishlistClient;
-        $this->wishlistResourceMapper = $wishlistResourceMapper;
+        $this->wishlistMapper = $wishlistMapper;
         $this->wishlistRestResponseBuilder = $wishlistRestResponseBuilder;
     }
 
@@ -55,7 +55,7 @@ class WishlistCreator implements WishlistCreatorInterface
      */
     public function create(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $wishlistTransfer = $this->wishlistResourceMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
+        $wishlistTransfer = $this->wishlistMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
         $wishlistTransfer->setFkCustomer((int)$restRequest->getRestUser()->getSurrogateIdentifier());
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);

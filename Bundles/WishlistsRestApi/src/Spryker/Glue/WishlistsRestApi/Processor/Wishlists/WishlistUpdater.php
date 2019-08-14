@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 
 class WishlistUpdater implements WishlistUpdaterInterface
 {
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface
      */
     protected $wishlistResourceMapper;
 
@@ -34,12 +34,12 @@ class WishlistUpdater implements WishlistUpdaterInterface
     protected $wishlistRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistResourceMapperInterface $wishlistResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface $wishlistResourceMapper
      * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistsRestApiClient
      * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
      */
     public function __construct(
-        WishlistResourceMapperInterface $wishlistResourceMapper,
+        WishlistMapperInterface $wishlistResourceMapper,
         WishlistsRestApiClientInterface $wishlistsRestApiClient,
         WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
     ) {

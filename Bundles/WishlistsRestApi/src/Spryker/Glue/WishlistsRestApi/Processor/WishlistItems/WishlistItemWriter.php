@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,25 +42,25 @@ class WishlistItemWriter implements WishlistItemWriterInterface
     protected $wishlistReader;
 
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface
      */
-    protected $wishlistItemResourceMapper;
+    protected $wishlistItemMapper;
 
     /**
      * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemResourceMapperInterface $wishlistItemResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface $wishlistItemMapper
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface $wishlistReader
      */
     public function __construct(
         WishlistsRestApiToWishlistClientInterface $wishlistClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        WishlistItemResourceMapperInterface $wishlistItemResourceMapper,
+        WishlistItemMapperInterface $wishlistItemMapper,
         WishlistReaderInterface $wishlistReader
     ) {
         $this->wishlistClient = $wishlistClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->wishlistItemResourceMapper = $wishlistItemResourceMapper;
+        $this->wishlistItemMapper = $wishlistItemMapper;
         $this->wishlistReader = $wishlistReader;
     }
 
@@ -101,7 +101,7 @@ class WishlistItemWriter implements WishlistItemWriterInterface
             return $restResponse->addError($restErrorMessageTransfer);
         }
 
-        $restWishlistItemsAttributesTransfer = $this->wishlistItemResourceMapper
+        $restWishlistItemsAttributesTransfer = $this->wishlistItemMapper
             ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer);
 
         $wishlistItemResource = $this->restResourceBuilder->createRestResource(

@@ -18,11 +18,11 @@ class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipEx
     protected $wishlistReader;
 
     /**
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface $wishlistsReader
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface $wishlistReader
      */
-    public function __construct(WishlistReaderInterface $wishlistsReader)
+    public function __construct(WishlistReaderInterface $wishlistReader)
     {
-        $this->wishlistReader = $wishlistsReader;
+        $this->wishlistReader = $wishlistReader;
     }
 
     /**
