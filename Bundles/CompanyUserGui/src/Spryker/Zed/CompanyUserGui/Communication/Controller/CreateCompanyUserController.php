@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -76,7 +77,12 @@ class CreateCompanyUserController extends AbstractController
                 ->create($companyUserTransfer);
 
             if (!$companyUserResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_CREATE);
+                array_map(
+                    function (ResponseMessageTransfer $responseMessageTransfer) {
+                        $this->addErrorMessage($responseMessageTransfer->getText());
+                    },
+                    $companyUserResponseTransfer->getMessages()->getArrayCopy()
+                );
             } else {
                 $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
 
