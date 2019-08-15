@@ -17,8 +17,10 @@ use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapper;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilder;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemWriter;
-use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemWriterInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemAdder;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemAdderInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemDeleter;
+use Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemDeleterInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreator;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistCreatorInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistDeleter;
@@ -85,11 +87,24 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemWriterInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemAdderInterface
      */
-    public function createWishlistItemsWriter(): WishlistItemWriterInterface
+    public function createWishlistItemAdder(): WishlistItemAdderInterface
     {
-        return new WishlistItemWriter(
+        return new WishlistItemAdder(
+            $this->getWishlistClient(),
+            $this->getResourceBuilder(),
+            $this->createWishlistItemsResourceMapper(),
+            $this->createWishlistReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\WishlistItems\WishlistItemDeleterInterface
+     */
+    public function createWishlistItemDeleter(): WishlistItemDeleterInterface
+    {
+        return new WishlistItemDeleter(
             $this->getWishlistClient(),
             $this->getResourceBuilder(),
             $this->createWishlistItemsResourceMapper(),

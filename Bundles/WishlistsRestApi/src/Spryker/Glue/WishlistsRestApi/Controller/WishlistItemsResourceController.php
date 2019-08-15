@@ -42,7 +42,7 @@ class WishlistItemsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistItemsWriter()
+            ->createWishlistDeleter()
             ->delete($restRequest);
     }
 
@@ -71,7 +71,7 @@ class WishlistItemsResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistItemsWriter()
+            ->createWishlistItemAdder()
             ->add($restWishlistItemsAttributesTransfer, $restRequest);
     }
 }
