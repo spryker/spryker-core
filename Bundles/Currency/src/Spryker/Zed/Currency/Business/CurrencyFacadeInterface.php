@@ -138,7 +138,7 @@ interface CurrencyFacadeInterface
 
     /**
      * Specification:
-     * - Gets store with currencies by given idStore
+     * - Gets store with currencies by given store id.
      *
      * @api
      *
