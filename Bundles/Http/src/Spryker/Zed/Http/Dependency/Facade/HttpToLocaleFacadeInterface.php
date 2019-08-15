@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Http\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface HttpToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 }

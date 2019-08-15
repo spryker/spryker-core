@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Http\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class HttpToLocaleFacadeBridge implements HttpToLocaleFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class HttpToLocaleFacadeBridge implements HttpToLocaleFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }

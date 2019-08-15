@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Http\Communication\Plugin\EventDispatcher;
+namespace Spryker\Yves\Http\Plugin\EventDispatcher;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;

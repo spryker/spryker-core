@@ -5,12 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Http\Dependency\Client;
+namespace Spryker\Shared\Http;
 
-interface HttpToLocaleClientInterface
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class HttpConfig extends AbstractSharedConfig
 {
     /**
      * @return string
      */
-    public function getCurrentLocale(): string;
+    public function getUriSignerSecret(): string
+    {
+        return md5(__DIR__);
+    }
 }

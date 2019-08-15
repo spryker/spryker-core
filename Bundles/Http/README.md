@@ -1,7 +1,7 @@
 # Http Module
 [![Build Status](https://travis-ci.org/spryker/http.svg)](https://travis-ci.org/spryker/http)
 
-{{ADD DESCRIPTION HERE}}
+Http module includes all Http related code.
 
 ## Installation
 

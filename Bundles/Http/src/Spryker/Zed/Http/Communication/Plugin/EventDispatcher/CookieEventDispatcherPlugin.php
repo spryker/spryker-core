@@ -37,7 +37,7 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) use ($container) {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) use ($container): void {
             $cookies = $this->getCookies($container);
             foreach ($cookies as $cookie) {
                 $event->getResponse()->headers->setCookie($cookie);

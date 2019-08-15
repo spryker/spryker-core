@@ -11,11 +11,15 @@ use Spryker\Shared\Http\HttpConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Shared\Http\HttpConfig getSharedConfig()
+ */
 class HttpConfig extends AbstractBundleConfig
 {
     protected const REQUEST_HTTP_PORT = 80;
     protected const REQUEST_HTTPS_PORT = 443;
     protected const REQUEST_TRUSTED_HEADER_SET = Request::HEADER_X_FORWARDED_ALL;
+    protected const HTTP_FRAGMENT_PATH = '/_fragment';
 
     /**
      * @return int
@@ -87,5 +91,29 @@ class HttpConfig extends AbstractBundleConfig
     public function getHstsConfig(): array
     {
         return $this->get(HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG, []);
+    }
+
+    /**
+     * @return string
+     */
+    public function getHttpFragmentPath(): string
+    {
+        return static::HTTP_FRAGMENT_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUriSignerSecret(): string
+    {
+        return $this->getSharedConfig()->getUriSignerSecret();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHIncludeRendererGlobalTemplate(): ?string
+    {
+        return null;
     }
 }

@@ -11,6 +11,9 @@ use Spryker\Shared\Http\HttpConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Shared\Http\HttpConfig getSharedConfig()
+ */
 class HttpConfig extends AbstractBundleConfig
 {
     protected const REQUEST_HTTP_PORT = 80;
@@ -88,5 +91,29 @@ class HttpConfig extends AbstractBundleConfig
     public function getHstsConfig(): array
     {
         return $this->get(HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG, []);
+    }
+
+    /**
+     * @return string
+     */
+    public function getHttpFragmentPath(): string
+    {
+        return static::HTTP_FRAGMENT_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUriSignerSecret(): string
+    {
+        return $this->getSharedConfig()->getUriSignerSecret();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getHIncludeRendererGlobalTemplate(): ?string
+    {
+        return null;
     }
 }

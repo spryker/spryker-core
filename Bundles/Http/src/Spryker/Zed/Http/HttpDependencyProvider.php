@@ -11,9 +11,13 @@ use Spryker\Zed\Http\Dependency\Facade\HttpToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\Http\HttpConfig getConfig()
+ */
 class HttpDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PLUGINS_FRAGMENT_HANDLER = 'PLUGINS_FRAGMENT_HANDLER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +27,7 @@ class HttpDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addLocaleFacade($container);
+        $container = $this->addFragmentHandlerPlugins($container);
 
         return $container;
     }
@@ -38,6 +43,28 @@ class HttpDependencyProvider extends AbstractBundleDependencyProvider
             return new HttpToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
-        return  $container;
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFragmentHandlerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_FRAGMENT_HANDLER, function () {
+            return $this->getFragmentHandlerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\HttpExtension\Dependency\Plugin\FragmentHandlerPluginInterface[]
+     */
+    protected function getFragmentHandlerPlugins(): array
+    {
+        return [];
     }
 }

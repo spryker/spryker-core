@@ -14,6 +14,10 @@ use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Twig\Environment;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
+/**
+ * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Http\Plugin\Twig\RuntimeLoaderTwigPlugin` instead.
+ */
 class RuntimeLoaderTwigPlugin implements TwigPluginInterface
 {
     protected const SERVICE_REQUEST_STACK = 'request_stack';
