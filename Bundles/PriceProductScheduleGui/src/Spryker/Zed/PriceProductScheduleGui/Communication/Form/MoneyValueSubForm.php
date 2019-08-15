@@ -7,12 +7,9 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
-use Closure;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -87,48 +84,9 @@ class MoneyValueSubForm extends AbstractType
         ]);
 
         $builder->get(static::FIELD_NET_AMOUNT)
-            ->addModelTransformer($this->createModelTransformer());
+            ->addModelTransformer($this->getFactory()->createPriceTransformer());
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
-     */
-    protected function createModelTransformer(): DataTransformerInterface
-    {
-        return new CallbackTransformer(
-            $this->createTransformCallback(),
-            $this->createReverseTransformCallback()
-        );
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function createTransformCallback(): Closure
-    {
-        return function ($amount) {
-            if ($amount === null) {
-                return null;
-            }
-
-            return $amount / 100;
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function createReverseTransformCallback(): Closure
-    {
-        return function ($amount) {
-            if ($amount === null) {
-                return null;
-            }
-
-            return (int)($amount * 100);
-        };
     }
 
     /**
@@ -147,7 +105,7 @@ class MoneyValueSubForm extends AbstractType
         ]);
 
         $builder->get(static::FIELD_GROSS_AMOUNT)
-            ->addModelTransformer($this->createModelTransformer());
+            ->addModelTransformer($this->getFactory()->createPriceTransformer());
 
         return $this;
     }
