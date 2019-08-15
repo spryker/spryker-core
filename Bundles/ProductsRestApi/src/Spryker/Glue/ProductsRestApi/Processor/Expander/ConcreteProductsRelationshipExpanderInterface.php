@@ -18,4 +18,12 @@ interface ConcreteProductsRelationshipExpanderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function addResourceRelationshipsBySku(array $resources, RestRequestInterface $restRequest): array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function addResourceRelationshipsByProductConcreteIds(array $resources, RestRequestInterface $restRequest): array;
 }
