@@ -1,4 +1,4 @@
-{% for orderItem in items %}
+{% for orderItem in items if not orderItem.salesOrderConfiguredBundleItem | default %}
   <tr>
       {% embed '@Sales/Detail/boxes/order-item.twig' with {orderItem: orderItem, displayImage: true, image: orderItem.metadata.image, displayTotals: true, group: false} %}{% endembed %}
   </tr>
