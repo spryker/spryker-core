@@ -1,27 +1,23 @@
 {
-  "name": "spryker/cms-slot",
+  "name": "spryker/cms-slot-gui",
   "type": "library",
-  "description": "CmsSlot module",
+  "description": "CmsSlotGui module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cms-slot": "^0.1.1",
+    "spryker/gui": "^3.24.0",
     "spryker/kernel": "^3.37.0",
-    "spryker/symfony": "^3.3.0"
+    "spryker/symfony": "^3.3.0",
+    "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\CmsSlot\\Helper\\": "tests/SprykerTest/Zed/CmsSlot/_support/Helper/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",
