@@ -20,6 +20,7 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
 /**
  * @method \Spryker\Zed\Touch\TouchConfig getConfig()
  * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface getEntityManager()
  */
 class TouchBusinessFactory extends AbstractBusinessFactory
 {
@@ -31,7 +32,8 @@ class TouchBusinessFactory extends AbstractBusinessFactory
         return new TouchRecord(
             $this->getUtilDataReaderService(),
             $this->getQueryContainer(),
-            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION),
+            $this->getEntityManager()
         );
     }
 

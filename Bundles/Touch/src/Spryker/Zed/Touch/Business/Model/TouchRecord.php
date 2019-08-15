@@ -13,13 +13,16 @@ use Orm\Zed\Touch\Persistence\SpyTouch;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
-use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Throwable;
 
 class TouchRecord implements TouchRecordInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
@@ -36,18 +39,26 @@ class TouchRecord implements TouchRecordInterface
     protected $connection;
 
     /**
+     * @var \Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface
+     */
+    protected $touchEntityManager;
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface $touchEntityManager
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         TouchQueryContainerInterface $queryContainer,
-        ConnectionInterface $connection
+        ConnectionInterface $connection,
+        TouchEntityManagerInterface $touchEntityManager
     ) {
         $this->utilDataReaderService = $utilDataReaderService;
         $this->touchQueryContainer = $queryContainer;
         $this->connection = $connection;
+        $this->touchEntityManager = $touchEntityManager;
     }
 
     /**
@@ -94,6 +105,16 @@ class TouchRecord implements TouchRecordInterface
         $this->connection->commit();
 
         return true;
+    }
+
+    /**
+     * @return int
+     */
+    public function cleanTouchEntitiesForDeletedItemEvent(): int
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () {
+            return $this->executeCleanTouchEntitiesForDeletedItemEventTransaction();
+        });
     }
 
     /**
@@ -283,27 +304,21 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return int
      */
-    protected function removeTouchEntries(SpyTouchQuery $query): int
+    protected function removeTouchEntries(SpyTouchQuery $query)
     {
-        $deletedTouchEntitiesCount = 0;
-        $propelBatchIterator = $this->getTouchIdsToRemovePropelBatchIterator($query);
+        $deletedCount = 0;
+        $batchCollection = $this->getTouchIdsToRemoveBatchCollection($query);
 
-        $touchIdGroupsToRemove = [];
-        foreach ($propelBatchIterator as $touchIdsToRemoveBatch) {
-            $touchIdGroupsToRemove[] = $touchIdsToRemoveBatch->toArray();
-        }
-
-        if (count($touchIdGroupsToRemove) > 0) {
-            $touchIdsToRemove = array_merge(...$touchIdGroupsToRemove);
-
-            $deletedTouchEntitiesCount += $query
+        /** @var \Propel\Runtime\Collection\ArrayCollection $batch */
+        foreach ($batchCollection as $batch) {
+            $touchIdsToRemove = $batch->toArray();
+            $this->removeTouchDataForCollectors($touchIdsToRemove);
+            $deletedCount += $query
                 ->filterByIdTouch($touchIdsToRemove, Criteria::IN)
                 ->delete();
-
-            $this->removeTouchDataForCollectors($touchIdsToRemove);
         }
 
-        return $deletedTouchEntitiesCount;
+        return $deletedCount;
     }
 
     /**
@@ -311,7 +326,7 @@ class TouchRecord implements TouchRecordInterface
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
-    protected function getTouchIdsToRemovePropelBatchIterator(SpyTouchQuery $query): CountableIteratorInterface
+    protected function getTouchIdsToRemoveBatchCollection(SpyTouchQuery $query)
     {
         $touchIdsToRemoveQuery = $query->select(SpyTouchTableMap::COL_ID_TOUCH);
 
@@ -336,5 +351,43 @@ class TouchRecord implements TouchRecordInterface
         $this->touchQueryContainer
             ->queryTouchStorageByTouchIds($touchIds)
             ->delete();
+    }
+
+    /**
+     * @return int
+     */
+    protected function executeCleanTouchEntitiesForDeletedItemEventTransaction(): int
+    {
+        $touchQuery = $this->touchQueryContainer->queryTouchListByItemEvent(
+            SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+        );
+
+        $touchEntityIds = $this->getTouchEntityIdsForDeletedItemEvent($touchQuery);
+
+        $deletedTouchEntitiesCount = $this->touchEntityManager->deleteTouchEntitiesByIds($touchEntityIds);
+        $this->removeTouchDataForCollectors($touchEntityIds);
+
+        return $deletedTouchEntitiesCount;
+    }
+
+    /**
+     * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
+     *
+     * @return int[]
+     */
+    protected function getTouchEntityIdsForDeletedItemEvent(SpyTouchQuery $touchQuery): array
+    {
+        $propelBatchIterator = $this->getTouchIdsToRemoveBatchCollection($touchQuery);
+
+        $touchIds = [];
+        foreach ($propelBatchIterator as $touchEntityIdsBatch) {
+            $touchIds[] = $touchEntityIdsBatch->toArray();
+        }
+
+        if (!$touchIds) {
+            return $touchIds;
+        }
+
+        return array_merge(...$touchIds);
     }
 }

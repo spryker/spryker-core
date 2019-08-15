@@ -31,4 +31,9 @@ interface TouchRecordInterface
      * @return int
      */
     public function removeTouchEntriesMarkedAsDeleted();
+
+    /**
+     * @return int
+     */
+    public function cleanTouchEntitiesForDeletedItemEvent(): int;
 }
