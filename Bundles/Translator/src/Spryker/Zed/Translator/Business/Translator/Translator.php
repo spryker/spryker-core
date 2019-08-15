@@ -32,14 +32,14 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     /**
      * @param \Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilderInterface $translatorBuilder
      * @param string $locale
-     * @param \Symfony\Component\Translation\Formatter\MessageFormatterInterface|null $formatter
      * @param \Spryker\Zed\Translator\TranslatorConfig $translatorConfig
+     * @param \Symfony\Component\Translation\Formatter\MessageFormatterInterface|null $formatter
      */
     public function __construct(
         TranslatorBuilderInterface $translatorBuilder,
         string $locale,
-        ?MessageFormatterInterface $formatter,
-        TranslatorConfig $translatorConfig
+        TranslatorConfig $translatorConfig,
+        ?MessageFormatterInterface $formatter
     ) {
         parent::__construct(
             $locale,
