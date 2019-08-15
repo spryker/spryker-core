@@ -1,0 +1,56 @@
+Action,Action
+"Add Group","Add group"
+"Add new Role","Add new Role"
+"Add Rule","Add rule"
+"Assigned groups","Assigned groups"
+"Assigned Roles","Assigned Roles"
+"Assigned Rules","Assigned Rules"
+Bundle,Bundle
+Controller,Controller
+"Could not modify root role node!","You are not allowed to edit the root role."
+Create,Create
+"Create Group","Create Group"
+"Create new Role","Create new Role"
+"Create Role","Create role"
+"Current password","Current password"
+"Edit Group","Edit Group"
+"Failed to add Rule.","Failed to add Rule."
+"Failed to remove rule","Failed to remove rule"
+"Group couldn't be found","Group couldn't be found"
+"Group name already in use","Group name already in use"
+"Group was created successfully.","Group was created successfully."
+"Group was updated successfully.","Group was updated successfully."
+"Interface language","Interface language"
+"List Groups","List Groups"
+"List Roles","List of roles"
+"Missing role id!","Missing role id!"
+"Missing rule id!","Missing rule id!"
+"No roles","No roles"
+Permission,Permission
+Role,Role
+"Role ""%s"" successfully added.","Role ""%s"" successfully added."
+"Role ""%s"" successfully updated.","Role ""%s"" successfully updated."
+"Role couldn't be found","Role couldn't be found"
+"Role list","Role list"
+"Role name","Role name"
+"Role was successfully removed.","Role was successfully removed."
+Roles,Roles
+roles,Roles
+"Root group","Root group"
+Rule,Rule
+"Rule successfully added.","Rule successfully added."
+Save,Save
+"Select value","Select value"
+"The password fields must match.","The password fields must match."
+"The User was removed from the group.","The User was removed from the group."
+"This action requires a DELETE request.","This action requires a DELETE request."
+"This user is an agent","This user is an agent"
+"Unable to delete because role has groups assigned.","Unable to delete because role has groups assigned."
+"Update ""%s"" Role","Update ""%s"" Role"
+"User and group are not found.","User and group are not found."
+"User was activated successfully.","User was activated successfully."
+"User was deactivated successfully.","User was deactivated successfully."
+"User was deleted successfully.","User was deleted successfully."
+"User was updated successfully.","User was updated successfully."
+Users,Users
+"Users Control","Users Control"

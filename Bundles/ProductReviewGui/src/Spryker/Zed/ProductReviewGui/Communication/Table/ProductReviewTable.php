@@ -163,18 +163,13 @@ class ProductReviewTable extends AbstractTable
     {
         switch ($status) {
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
-                $label = '<span class="label label-danger">Rejected</span>';
-                break;
+                return $this->generateLabel('Rejected', 'label-danger');
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
-                $label = '<span class="label label-info">Approved</span>';
-                break;
+                return $this->generateLabel('Approved', 'label-info');
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
-                $label = '<span class="label label-secondary">Pending</span>';
-                break;
+                return $this->generateLabel('Pending', 'label-secondary');
         }
-
-        return $label;
     }
 
     /**

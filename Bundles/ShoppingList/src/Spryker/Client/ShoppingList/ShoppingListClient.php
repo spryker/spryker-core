@@ -384,4 +384,32 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         $this->getFactory()->createPermissionUpdater()->updateCompanyUserPermissions();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function updateCustomerPermission(): void
+    {
+        $this->getFactory()->createPermissionUpdater()->updateCompanyUserPermissions();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     *
+     * @return int
+     */
+    public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int
+    {
+        return $this->getFactory()
+            ->createShoppingListSubtotalCalculator()
+            ->calculateShoppingListSubtotal($shoppingListItemProductViews);
+    }
 }

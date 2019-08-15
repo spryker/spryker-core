@@ -9,6 +9,7 @@ namespace Spryker\Glue\CustomersRestApi\Processor\Customer;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RestCustomersResponseAttributesTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface;
@@ -76,22 +77,21 @@ class CustomerReader implements CustomerReaderInterface
         $restResponse = $this->restResourceBuilder->createRestResponse();
         $customerResourceId = $restRequest->getResource()->getId();
 
-        $customerResponseTransfer = $this->getCurrentCustomer($restRequest);
-        if ($customerResourceId) {
-            if (!$this->restApiValidator->isSameCustomerReference($restRequest)) {
-                return $this->restApiError->addCustomerNotFoundError($restResponse);
-            }
-
-            $customerResponseTransfer = $this->findCustomer($restRequest);
+        if ($customerResourceId && !$this->restApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
+        $customerResponseTransfer = $this->getCurrentCustomer($restRequest);
         if (!$customerResponseTransfer->getHasCustomer()) {
             return $this->restApiError->addCustomerNotFoundError($restResponse);
         }
 
         $restCustomersResponseAttributesTransfer = $this
             ->customerResourceMapper
-            ->mapCustomerTransferToRestCustomersResponseAttributesTransfer($customerResponseTransfer->getCustomerTransfer());
+            ->mapCustomerTransferToRestCustomersResponseAttributesTransfer(
+                $customerResponseTransfer->getCustomerTransfer(),
+                new RestCustomersResponseAttributesTransfer()
+            );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             CustomersRestApiConfig::RESOURCE_CUSTOMERS,
@@ -123,7 +123,7 @@ class CustomerReader implements CustomerReaderInterface
      */
     public function getCurrentCustomer(RestRequestInterface $restRequest): CustomerResponseTransfer
     {
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         return $this->customerClient->findCustomerByReference($customerTransfer);
     }

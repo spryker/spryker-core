@@ -1,0 +1,39 @@
+{
+  "name": "spryker/user-locale",
+  "type": "library",
+  "description": "UserLocale module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/locale-extension": "^1.0.0",
+    "spryker/user": "^3.7.0",
+    "spryker/user-extension": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "If you want to use Application plugins. Minimum required version: 1.0.0",
+    "spryker/silex": "Use this module when using plugins that need Silex dependencies, minimum required version: 2.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

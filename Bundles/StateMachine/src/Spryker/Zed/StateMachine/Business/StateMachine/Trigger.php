@@ -338,7 +338,7 @@ class Trigger implements TriggerInterface
         }
         $this->eventCounter[$eventName]++;
 
-        return $this->eventCounter[$eventName] < self::MAX_EVENT_REPEATS;
+        return $this->eventCounter[$eventName] < static::MAX_EVENT_REPEATS;
     }
 
     /**
@@ -505,7 +505,7 @@ class Trigger implements TriggerInterface
         if (!isset($stateMachineHandler->getCommandPlugins()[$commandString])) {
             throw new CommandNotFoundException(
                 sprintf(
-                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins method.',
+                    'Command plugin "%s" not registered in "%s" class. Please add it to getCommandPlugins() method.',
                     $commandString,
                     get_class($stateMachineHandler)
                 )

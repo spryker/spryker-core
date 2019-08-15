@@ -2,6 +2,7 @@
     <form id="attribute_values_form" method="post" class="kv_autocomplete_form" action="{{ formActionUrl }}">
         <input type="hidden" name="attribute_values_form[hidden_product_abstract_id]" id="attribute_values_form_hidden_product_abstract_id" value="{{ idProductAbstract }}" />
         <input type="hidden" name="attribute_values_form[hidden_product_id]" id="attribute_values_form_hidden_product_id" value="{{ idProductConcrete }}" />
+        {{ form_widget(csrfForm) }}
         <thead>
         <tr>
             <th>Key</th>
@@ -21,9 +22,10 @@
                 {% set allowInput = metaAttributes[key]['allow_input'] %}
                 {% set isSuper = metaAttributes[key]['is_super'] %}
 
-                {% set readOnly = '' %}
-                {% if isSuper %}
-                    {% set readOnly = 'readonly="readonly"' %}
+                {% set isReadOnly = false %}
+                {% if isSuper or idAttribute is empty %}
+                    {% set isReadOnly = true %}
+                    {% set allowInput = false %}
                 {% endif %}
                 <tr {% if isSuper %} {{ 'style="display: none"' }} {% endif %}>
                     <td style="vertical-align: middle;">
@@ -49,7 +51,9 @@
                             {% set attributeValue = productAttributes[localeCode][key] %}
                             <td>
                                 <input
-                                        {{ readOnly }}
+                                        {% if isReadOnly %}
+                                            readonly="readonly"
+                                        {% endif %}
                                         id="{{ inputId }}"
                                         name="{{ inputName }}"
                                         type="text"
@@ -57,6 +61,7 @@
                                         value="{{ attributeValue }}"
                                         data-allow_input="{{ allowInput }}"
                                         data-is_super="{{ isSuper }}"
+                                        data-is_read_only="{{ isReadOnly }}"
                                         data-attribute_key="{{ key }}"
                                         data-is_attribute_input
                                         data-id_attribute="{{ idAttribute }}"
@@ -66,7 +71,9 @@
                         {% else %}
                             <td>
                                 <input
-                                        {{ readOnly }}
+                                        {% if isReadOnly %}
+                                            readonly="readonly"
+                                        {% endif %}
                                         id="{{ inputId }}"
                                         name="{{ inputName }}"
                                         type="text"
@@ -74,6 +81,7 @@
                                         value=""
                                         data-allow_input="{{ allowInput }}"
                                         data-is_super="{{ isSuper }}"
+                                        data-is_read_only="{{ isReadOnly }}"
                                         data-attribute_key="{{ key }}"
                                         data-is_attribute_input
                                         data-id_attribute="{{ idAttribute }}"
@@ -85,7 +93,7 @@
                     {% endfor %}
                     <td style="vertical-align: middle; text-align: left;">
                         {% if isSuper == false %}
-                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">Remove</a>
+                            <a data-key="{{ key }}" href="#" class="btn btn-xs btn-outline btn-danger remove-item">{{ 'Remove' | trans }}</a>
                         {% endif %}
                     </td>
                 </tr>

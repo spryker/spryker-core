@@ -55,10 +55,11 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     /**
      * @param array $dataSet
      *
-     * @return void
+     * @return bool
      */
     public function delete(array $dataSet)
     {
+        return false;
     }
 
     /**

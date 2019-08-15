@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -127,7 +129,30 @@ class CompanyRoleCreateForm extends AbstractType
             'required' => false,
         ]);
 
+        $this->disableIsDefaultFieldWhenChecked($builder);
+
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function disableIsDefaultFieldWhenChecked(FormBuilderInterface $builder)
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var \Generated\Shared\Transfer\CompanyRoleTransfer $companyRoleTransfer */
+            $companyRoleTransfer = $event->getData();
+            $form = $event->getForm();
+
+            if ($companyRoleTransfer->getIsDefault()) {
+                $config = $form->get(static::FIELD_IS_DEFAULT)->getConfig();
+                $options = $config->getOptions();
+                $options['disabled'] = true;
+                $form->add(static::FIELD_IS_DEFAULT, CheckboxType::class, $options);
+            }
+        });
     }
 
     /**
@@ -140,7 +165,6 @@ class CompanyRoleCreateForm extends AbstractType
     {
         $builder->add(static::FIELD_PERMISSION_COLLECTION, ChoiceType::class, [
             'choices' => $options[static::OPTION_PERMISSION_CHOICES],
-            'choices_as_values' => true,
             'label' => false,
             'expanded' => true,
             'required' => true,

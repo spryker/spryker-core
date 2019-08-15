@@ -87,11 +87,11 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Search\SearchFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\SearchFactory
      */
     protected function createSearchFactoryMockedWithSearchConfig(SearchConfigInterface $searchConfig)
     {
-        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit_Framework_MockObject_MockObject $searchFactoryMock */
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig', 'getConfig'])
             ->getMock();

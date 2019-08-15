@@ -8,6 +8,7 @@
         <property name="idQuote" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteSyncRequest">
@@ -19,6 +20,7 @@
         <property name="customer" type="Customer"/>
         <property name="idQuote" type="int"/>
         <property name="item" type="Item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteMergeRequest">
@@ -40,10 +42,39 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="store" type="Store"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
 </transfers>

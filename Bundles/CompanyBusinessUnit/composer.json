@@ -8,8 +8,10 @@
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit-extension": "^1.2.0",
     "spryker/company-extension": "^1.0.0",
-    "spryker/company-user-extension": "^1.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/company-user": "^1.0.0 || ^2.0.0",
+    "spryker/company-user-extension": "^1.2.0",
+    "spryker/customer": "^7.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
@@ -17,9 +19,6 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/company-user": "If you want to have company users management functionality: ^2.0.0"
   },
   "autoload": {
     "psr-4": {

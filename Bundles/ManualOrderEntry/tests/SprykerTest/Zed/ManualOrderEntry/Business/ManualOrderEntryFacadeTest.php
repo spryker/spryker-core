@@ -49,7 +49,7 @@ class ManualOrderEntryFacadeTest extends Test
         $orderSourceTransfers = $this->getFacade()->getAllOrderSources();
 
         $this->assertNotNull($orderSourceTransfers);
-        $this->assertInternalType('array', $orderSourceTransfers);
+        $this->assertIsArray($orderSourceTransfers);
         $orderSourceTransfer = array_pop($orderSourceTransfers);
         $this->assertTrue($orderSourceTransfer instanceof OrderSourceTransfer);
     }

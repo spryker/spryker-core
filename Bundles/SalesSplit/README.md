@@ -5,7 +5,7 @@ SalesSplit provides the functionality that allows to split order items by quanti
 ## Installation
 
 ```
-composer require spryker/availability-checkout-connector
+composer require spryker/sales-split
 ```
 
 ## Documentation

@@ -17,7 +17,7 @@ class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerC
     public const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $profileData;
 
@@ -56,5 +56,13 @@ class ConfigProfilerCollector implements DataCollectorInterface, ConfigProfilerC
         ksort($this->profileData);
 
         return $this->profileData;
+    }
+
+    /**
+     * @return void
+     */
+    public function reset(): void
+    {
+        $this->profileData = null;
     }
 }

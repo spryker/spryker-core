@@ -4,24 +4,40 @@
   "description": "Testify module",
   "license": "proprietary",
   "require": {
-    "codeception/codeception": "^2.3.5",
+    "codeception/codeception": "^2.3.5 || ^3.0.0",
     "mikey179/vfsStream": "^1.6",
     "php": ">=7.1",
+    "spryker/application": "^3.12.0",
+    "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
+    "spryker/container": "^1.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/propel": "^3.0.4",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/silex": "^2.0.0"
+    "spryker/silex": "^2.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
-    "spryker/symfony": "^3.0.0",
+    "spryker/json-path": "^1.0.0",
+    "spryker/json-schema": "^1.0.0",
     "spryker/twig": "^3.0.0"
+  },
+  "suggest": {
+    "spryker-sdk/codeception-phantoman": "If you want to use WebDriverHelper."
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Testify\\Helper\\": "tests/SprykerTest/Shared/Testify/_support/Helper/"
+      "SprykerTest\\Shared\\Testify\\Helper\\": "tests/SprykerTest/Shared/Testify/_support/Helper/",
+      "SprykerTest\\Glue\\Testify\\Helper\\": "tests/SprykerTest/Glue/Testify/_support/Helper/",
+      "SprykerTest\\Glue\\Testify\\Tester\\": "tests/SprykerTest/Glue/Testify/_support/Tester/",
+      "SprykerTest\\Yves\\Testify\\Helper\\": "tests/SprykerTest/Yves/Testify/_support/Helper/",
+      "SprykerTest\\Zed\\Testify\\Helper\\": "tests/SprykerTest/Zed/Testify/_support/Helper/",
+      "SprykerTest\\Shared\\Testify\\Fixtures\\": "tests/SprykerTest/Shared/Testify/_support/Fixtures/",
+      "SprykerTest\\Shared\\Testify\\Tester\\": "tests/SprykerTest/Shared/Testify/_support/Tester/",
+      "SprykerTest\\Shared\\Testify\\StepOverride\\": "tests/SprykerTest/Shared/Testify/_support/StepOverride/",
+      "SprykerTest\\Shared\\Testify\\Filter\\": "tests/SprykerTest/Shared/Testify/_support/Filter/"
     }
   },
   "autoload-dev": {

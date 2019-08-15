@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Quote\Persistence\Map\SpyQuoteTableMap;
+use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -24,8 +25,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
 {
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
      *
@@ -50,8 +49,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param string $customerReference
      * @param int $idStore
      *
@@ -75,8 +72,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idQuote
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
@@ -98,8 +93,6 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
@@ -110,10 +103,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
             ->createQuoteQuery()
             ->joinWithSpyStore();
 
-        if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
-            $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
-        }
-
+        $quoteQuery = $this->applyQuoteCriteriaFilters($quoteQuery, $quoteCriteriaFilterTransfer);
         $quoteEntityCollectionTransfer = $this->buildQueryFromCriteria($quoteQuery, $quoteCriteriaFilterTransfer->getFilter())->find();
 
         $quoteCollectionTransfer = new QuoteCollectionTransfer();
@@ -123,6 +113,29 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Quote\Persistence\SpyQuoteQuery $quoteQuery
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Quote\Persistence\SpyQuoteQuery
+     */
+    protected function applyQuoteCriteriaFilters(SpyQuoteQuery $quoteQuery, QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): SpyQuoteQuery
+    {
+        if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
+            $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());
+        }
+
+        if ($quoteCriteriaFilterTransfer->isPropertyModified(QuoteCriteriaFilterTransfer::QUOTE_IDS)) {
+            $quoteQuery->filterByIdQuote_In($quoteCriteriaFilterTransfer->getQuoteIds());
+        }
+
+        if ($quoteCriteriaFilterTransfer->getIdStore()) {
+            $quoteQuery->filterByFkStore($quoteCriteriaFilterTransfer->getIdStore());
+        }
+
+        return $quoteQuery;
     }
 
     /**

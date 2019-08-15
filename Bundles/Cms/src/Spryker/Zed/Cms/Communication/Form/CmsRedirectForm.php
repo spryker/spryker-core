@@ -56,6 +56,7 @@ class CmsRedirectForm extends AbstractType
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
                 }
+
                 return [Constraint::DEFAULT_GROUP];
             },
         ]);
@@ -163,7 +164,7 @@ class CmsRedirectForm extends AbstractType
                 $urlTransfer = new UrlTransfer();
                 $urlTransfer->setUrl($url);
 
-                if ($this->getFactory()->getUrlFacade()->hasUrlOrRedirectedUrl($urlTransfer)) {
+                if ($this->getFactory()->getUrlFacade()->hasUrlOrRedirectedUrlCaseInsensitive($urlTransfer)) {
                     $context->addViolation('URL is already used.');
                 }
             },

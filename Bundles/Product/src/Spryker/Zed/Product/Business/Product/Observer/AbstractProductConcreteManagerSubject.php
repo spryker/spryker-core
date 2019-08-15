@@ -174,6 +174,18 @@ abstract class AbstractProductConcreteManagerSubject
     }
 
     /**
+     * @deprecated Will be removed, please trigger the event directly.
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    public function triggerProductConcreteReadEvent(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $this->triggerEvent(ProductEvents::PRODUCT_CONCRETE_READ, $productConcreteTransfer);
+    }
+
+    /**
      * @param string $eventName
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

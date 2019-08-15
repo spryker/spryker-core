@@ -170,6 +170,7 @@ function AttributeManager() {
         var form = $('form#attribute_values_form');
         var idProductAbstract = $('#attribute_values_form_hidden_product_abstract_id').val();
         var idProduct = $('#attribute_values_form_hidden_product_id').val();
+        var csrfToken = $('#csrf-token').val();
         var formData = [];
 
         $('[data-is_attribute_input]').each(function(index, value) {
@@ -205,11 +206,18 @@ function AttributeManager() {
         var formDataJson = JSON.stringify(formData);
         var actionUrl = form.attr('action');
 
+        var actionData = {
+            'json': formDataJson,
+            'id-product-abstract': idProductAbstract,
+            'id-product': idProduct,
+            'csrf-token': csrfToken
+        };
+
         $.ajax({
             url: actionUrl,
             type: 'POST',
             dataType: 'application/json',
-            data: 'json=' + formDataJson + '&id-product-abstract=' + idProductAbstract + '&id-product=' + idProduct,
+            data: $.param(actionData),
             complete: function(jqXHR) {
                 if(jqXHR.readyState === 4) {
                     _attributeManager.resetRemovedKeysCache();
@@ -289,8 +297,9 @@ function updateAttributeInputsWithAutoComplete() {
     $('[data-allow_input=""],[data-allow_input="false"],[data-allow_input="0"]').each(function(key, value) {
         var input = $(value);
         var is_super = castToBoolean(input.attr('data-is_super'));
+        var is_read_only = castToBoolean(input.attr('data-is_read_only'));
 
-        if (!is_super) {
+        if (!is_super && !is_read_only) {
             input
                 .on('focus click', function(event, ui) {
                     $(this).autocomplete('search', '');
@@ -302,9 +311,9 @@ function updateAttributeInputsWithAutoComplete() {
         var input = $(value);
         var id = input.attr('data-id_attribute') || null;
         var locale_code = input.attr('data-locale_code') || null;
-        var is_super = castToBoolean(input.attr('data-is_super'));
+        var is_read_only = castToBoolean(input.attr('data-is_read_only'));
 
-        if (!is_super) {
+        if (!is_read_only) {
             input.on('dblclick', function(event, ui) {
                 $(this).autocomplete('search', '');
             });

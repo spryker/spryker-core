@@ -18,6 +18,9 @@ use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\Produ
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisher;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisher;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
+use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
+use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
@@ -38,7 +41,8 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductPageDataExpanderPlugins(),
             $this->getProductPageDataLoaderPlugins(),
             $this->createProductPageMapper(),
-            $this->createProductPageWriter()
+            $this->createProductPageWriter(),
+            $this->getStoreFacade()
         );
     }
 
@@ -53,7 +57,19 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getUtilEncoding(),
             $this->getSearchFacade(),
+            $this->getStoreFacade(),
             $this->getProductConcretePageDataExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface
+     */
+    public function createProductConcretePageSearchUnpublisher(): ProductConcretePageSearchUnpublisherInterface
+    {
+        return new ProductConcretePageSearchUnpublisher(
+            $this->createProductConcretePageSearchReader(),
+            $this->createProductConcretePageSearchWriter()
         );
     }
 
@@ -136,6 +152,14 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     protected function getSearchFacade()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductPageSearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_STORE);
     }
 
     /**

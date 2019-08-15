@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,32 +63,18 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @param string $command
-     * @param array $arguments
-     *
-     * @return void
-     */
-    protected function runDependingCommand($command, array $arguments = [])
-    {
-        $command = $this->getApplication()->find($command);
-        $arguments['command'] = $command;
-        $input = new ArrayInput($arguments);
-        $command->run($input, $this->output);
-    }
-
-    /**
-     * @return array
+     * @return string[]
      */
     protected function getDependingCommands()
     {
         $noDiffOption = $this->input->getOption(self::OPTION_NO_DIFF);
 
         $dependingCommands = [
-            ConvertConfigConsole::COMMAND_NAME,
             CreateDatabaseConsole::COMMAND_NAME,
             PostgresqlCompatibilityConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,
             BuildModelConsole::COMMAND_NAME,
+            EntityTransferGeneratorConsole::COMMAND_NAME,
         ];
         if ($noDiffOption === false) {
             $dependingCommands[] = DiffConsole::COMMAND_NAME;

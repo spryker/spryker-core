@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Company role deletion confirmation' %}
+{% set widget_title = 'Company role deletion confirmation' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -14,8 +14,8 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            <p>You are trying to delete company role: <b>{{ companyRoleTransfer.name }}</b></p>
-            <p>It will be deleted from everywhere</p>
+            <p>{{ 'You are trying to delete company role' | trans }}: <b>{{ companyRoleTransfer.name }}</b></p>
+            <p>{{ 'It will be deleted from everywhere' | trans }}</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
                 <a href="{{ url('/company-role-gui/delete-company-role/delete', {'id-company-role': companyRoleTransfer.idCompanyRole}) }}"

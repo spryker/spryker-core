@@ -8,6 +8,11 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
+use PDO;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -27,6 +32,32 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->filterByFkProduct_In($productIds)
             ->find();
 
+        return $this->mapProductConcretePageSearchEntities(
+            $productConcretePageSearchEntities
+        );
+    }
+
+    /**
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array
+    {
+        $productConcretePageSearchEntities = $this->getProductConcretePageSearchEntitiesByAbstractProductsAndStores($productAbstractStoreMap);
+
+        return $this->mapProductConcretePageSearchEntities(
+            $productConcretePageSearchEntities
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection $productConcretePageSearchEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    protected function mapProductConcretePageSearchEntities($productConcretePageSearchEntities): array
+    {
         $mapper = $this->getFactory()->createProductPageSearchMapper();
         $productConcretePageSearchTransfers = [];
         foreach ($productConcretePageSearchEntities as $productConcretePageSearchEntity) {
@@ -37,5 +68,96 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         }
 
         return $productConcretePageSearchTransfers;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
+    {
+        $productConcretePageSearchQuery = $this->getFactory()
+            ->createProductConcretePageSearchQuery()
+            ->addJoin(
+                SpyProductConcretePageSearchTableMap::COL_FK_PRODUCT,
+                SpyProductTableMap::COL_ID_PRODUCT,
+                Criteria::INNER_JOIN
+            );
+
+        $storesAndProductsConditions = $this->buildStoresAndProductsConditions(
+            $productConcretePageSearchQuery,
+            $productAbstractStoreMap
+        );
+
+        return $productConcretePageSearchQuery->where($storesAndProductsConditions, Criteria::LOGICAL_OR)
+            ->distinct()
+            ->find();
+    }
+
+    /**
+     * @module Product
+     *
+     * Builds related stores and products conditions in the following relation:
+     * "(store1 AND product1) OR (store2 AND product1) OR (store2 AND product2)"
+     *
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery $productConcretePageSearchQuery
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return array
+     */
+    protected function buildStoresAndProductsConditions(
+        SpyProductConcretePageSearchQuery $productConcretePageSearchQuery,
+        array $productAbstractStoreMap
+    ): array {
+        $storesAndProductsConditions = [];
+        $conditionIndex = 1;
+        foreach ($productAbstractStoreMap as $abstractId => $stores) {
+            foreach ($stores as $store) {
+                $productConcretePageSearchQuery->condition(
+                    $conditionIndex,
+                    SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
+                    $abstractId,
+                    PDO::PARAM_INT
+                );
+                $conditionIndex++;
+                $productConcretePageSearchQuery->condition(
+                    $conditionIndex,
+                    SpyProductConcretePageSearchTableMap::COL_STORE . ' = ?',
+                    $store,
+                    PDO::PARAM_STR
+                );
+                $conditionIndex++;
+                $productConcretePageSearchQuery->combine(
+                    [$conditionIndex - 2, $conditionIndex - 1],
+                    Criteria::LOGICAL_AND,
+                    $conditionIndex
+                );
+                $storesAndProductsConditions[] = $conditionIndex;
+                $conditionIndex++;
+            }
+        }
+
+        return $storesAndProductsConditions;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityTransfers(array $productIds): array
+    {
+        $query = $this->getFactory()->getProductQuery();
+
+        if ($productIds !== []) {
+            $query->filterByIdProduct_In($productIds);
+        }
+
+        return $this->buildQueryFromCriteria($query)->find();
     }
 }

@@ -34,4 +34,22 @@ interface QuickOrderClientInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function expandProductConcreteTransfers(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Populates QuickOrderItemTransfer ProductConcrete property by provided SKU property.
+     * - Skips QuickOrderItemTransfers with empty SKU property.
+     * - Sets empty ProductConcrete proeprty with error message if product was not found by SKU property.
+     * - Validates QuickOrderItemTransfer using pre-configured `ItemValidatorPluginInterface` plugins.
+     * - Sets validation error messages into QuickOrderItemTransfer messages property.
+     * - Adjusts QuickOrderItemTransfer fields based on validation suggested values.
+     * - Expands ProductConcrete with additional data using pre-configured `ProductConcreteExpanderPluginInterface` plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuickOrderTransfer
+     */
+    public function buildQuickOrderTransfer(QuickOrderTransfer $quickOrderTransfer): QuickOrderTransfer;
 }

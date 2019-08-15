@@ -5,8 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
-    "spryker/price-product": "^1.0.0 || ^2.0.0"
+    "spryker/kernel": "^3.30.0",
+    "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0"
   },
   "require-dev": {
     "spryker/propel": "^3.0.0",

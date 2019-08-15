@@ -1,0 +1,45 @@
+"Back to Tax Rates","Back to Tax Rates"
+"Back to Tax Sets","Back to Tax Sets"
+"Could not delete tax set. Is it assigned to product or shipping method?","Could not delete tax set. Is it assigned to product or shipping method?"
+Country,Country
+"Create Tax Rate","Create Tax Rate"
+"Create Tax Set","Create Tax Set"
+"Created at","Created at"
+Delete,Delete
+"Delete Tax Rate","Delete Tax Rate"
+"Delete Tax Set","Delete Tax Set"
+Edit,Edit
+"Edit Tax Rate:","Edit Tax Rate:"
+"Edit Tax Set:","Edit Tax Set:"
+"List of tax rates","List of tax rates"
+"List of tax sets","List of tax sets"
+N/A,n/a
+Name,Name
+"Overview of Tax Rates","Overview of Tax Rates"
+"Overview of Tax Sets","Overview of Tax Sets"
+Percentage,Percentage
+Save,Save
+"Select country.","Select country."
+"Tax rate %d was created successfully.","Tax rate %d was created successfully."
+"Tax rate %d was deleted successfully.","Tax rate %d was deleted successfully."
+"Tax rate %d was updated successfully.","Tax rate %d was updated successfully."
+"Tax Rate deletion confirmation","Tax Rate was successfully deleted"
+"Tax rate details","Tax rate details"
+"Tax rate ID","Tax rate ID"
+"Tax rate with id %s doesn't exist","Tax rate with id %s doesn't exist"
+"Tax rate with provided name, percentage and country already exists.","Tax rate with provided name, percentage and country already exists."
+"Tax rates","Tax rates"
+"Tax set %d was created successfully.","Tax set %d was created successfully."
+"Tax set %d was updated successfully.","Tax set %d was updated successfully."
+"Tax Set deletion confirmation","Are you sure about deleting this tax set?"
+"Tax set details","Tax set details"
+"Tax set ID","Tax set ID"
+"Tax set is not created. Please fill-in all required fields.","Tax set is not created. Please fill-in all required fields."
+"Tax set with id %s doesn't exist","Tax set with id %s doesn't exist"
+"Tax Set with name ""%name%"" already exists.","Tax Set with name ""%name%"" already exists."
+Taxes,Taxes
+"The tax set has been deleted","The tax set has been deleted"
+"Updated at","Updated at"
+"View Tax Rate:","View Tax Rate:"
+"View Tax Set:","View Tax Set:"
+"You should choose one or more tax rates","You should choose one or more tax rates"

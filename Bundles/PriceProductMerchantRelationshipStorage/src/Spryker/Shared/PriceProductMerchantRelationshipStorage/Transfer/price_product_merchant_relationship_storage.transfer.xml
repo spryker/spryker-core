@@ -3,6 +3,11 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="PriceProduct">
+        <property name="groupKey" type="string" />
+        <property name="isMergeable" type="bool" />
+    </transfer>
+
     <transfer name="PriceProductStorage">
         <property name="prices" type="array"/>
     </transfer>
@@ -24,6 +29,14 @@
         <property name="grossPrice" type="int" />
         <property name="netPrice" type="int" />
         <property name="currencyCode" type="string" />
+    </transfer>
+
+    <transfer name="PriceProductMerchantRelationship">
+        <property name="idPriceProductMerchantRelationship" type="int" />
+        <property name="fkPriceProductStore" type="int" />
+        <property name="fkMerchantRelationship" type="int" />
+        <property name="fkProduct" type="int" />
+        <property name="fkProductAbstract" type="int" />
     </transfer>
 
 </transfers>

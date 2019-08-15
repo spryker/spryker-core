@@ -7,9 +7,11 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="isLocked" type="bool"/>
     </transfer>
 
     <transfer name="CartChange">
+        <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
     </transfer>
@@ -27,6 +29,8 @@
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
+        <property name="normalizableFields" type="string[]" singular="normalizableField"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -36,6 +40,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="type" type="string"/>
         <property name="parameters" type="array"/>
     </transfer>
 

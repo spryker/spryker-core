@@ -29,6 +29,13 @@ class AuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_INVALID_REFRESH_TOKEN = '004';
 
     /**
+     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::HEADER_AUTHORIZATION
+     */
+    public const HEADER_AUTHORIZATION = 'authorization';
+
+    /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getClientSecret(): string
@@ -37,6 +44,8 @@ class AuthRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed in the next major.
+     *
      * @return string
      */
     public function getClientId(): string

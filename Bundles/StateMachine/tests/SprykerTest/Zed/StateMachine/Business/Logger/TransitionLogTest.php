@@ -92,7 +92,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @param \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      */
     protected function createTransitionLog(SpyStateMachineTransitionLog $stateMachineTransitionLogEntityMock)
     {
@@ -108,7 +108,7 @@ class TransitionLogTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\PathFinderInterface
      */
     protected function createPathFinderMock()
     {
@@ -116,7 +116,7 @@ class TransitionLogTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog
      */
     protected function createTransitionLogEntityMock()
     {
@@ -124,7 +124,7 @@ class TransitionLogTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\UtilNetwork\UtilNetworkServiceInterface
      */
     protected function createUtilNetworkServiceMock()
     {

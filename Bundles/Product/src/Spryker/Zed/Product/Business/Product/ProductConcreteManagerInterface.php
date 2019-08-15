@@ -68,6 +68,17 @@ interface ProductConcreteManagerInterface
     public function getProductConcrete($concreteSku);
 
     /**
+     * @deprecated Use `Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface::getProductConcretesByConcreteSkus()` instead.
+     *
+     * @param string $productConcreteSku
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer;
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -98,6 +109,13 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
      * @param int $idProductConcrete
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -117,7 +135,7 @@ interface ProductConcreteManagerInterface
     /**
      * @param string[] $skus
      *
-     * @return array
+     * @return int[]
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
@@ -127,4 +145,11 @@ interface ProductConcreteManagerInterface
      * @return array
      */
     public function getProductConcreteSkusByConcreteIds(array $productIds): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
 }

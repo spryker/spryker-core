@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Api;
 
+use Spryker\Shared\Api\ApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
@@ -51,6 +52,16 @@ class ApiConfig extends AbstractBundleConfig
     public function getMaxLimitPerPage()
     {
         return 100;
+    }
+
+    /**
+     * All REST API resources will not be available, routes will be disabled.
+     *
+     * @return bool
+     */
+    public function isApiEnabled(): bool
+    {
+        return false;
     }
 
     /**
@@ -150,5 +161,23 @@ class ApiConfig extends AbstractBundleConfig
         return [
             'REQUEST_URI',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isApiDebugEnabled(): bool
+    {
+        return $this->get(ApiConstants::ENABLE_API_DEBUG, $this->getApiDebugDefaultValue());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    protected function getApiDebugDefaultValue(): bool
+    {
+        return APPLICATION_ENV === 'development';
     }
 }

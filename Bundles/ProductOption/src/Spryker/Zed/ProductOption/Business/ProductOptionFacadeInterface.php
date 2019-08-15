@@ -25,14 +25,15 @@ interface ProductOptionFacadeInterface
 {
     /**
      * Specification:
-     *  - Persist new product option group, update existing group if idOptionGroup is set
-     *  - Persist option values if provided
-     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys
-     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys
-     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys
-     *  - Persists value and group name translations, add to glossary
+     *  - Persist new product option group, update existing group if idOptionGroup is set.
+     *  - Persist option values if provided.
+     *  - Adds abstract products if provided in productsToBeAssigned array of primary keys.
+     *  - Removes abstract products if provided in productsToBeDeAssigned array of primary keys.
+     *  - Executes ProductOptionValuesPreRemovePluginInterface plugins before removing product option values.
+     *  - Removes product option values if provided in productOptionValuesToBeRemoved array of primary keys.
+     *  - Persists value and group name translations, add to glossary.
      *  - Persists multi-currency value prices.
-     *  - Returns id of option group
+     *  - Returns id of option group.
      *
      * @api
      *
@@ -230,6 +231,8 @@ interface ProductOptionFacadeInterface
     /**
      * Specification:
      * - Retrieves product options by provided product option IDs.
+     * - Filters by product options group active flag using ProductOptionCriteriaTransfer::ProductOptionGroupIsActive.
+     * - Filters by product options group assignment to products using ProductOptionCriteriaTransfer::productConcreteSku.
      *
      * @api
      *
@@ -276,4 +279,17 @@ interface ProductOptionFacadeInterface
      * @return bool
      */
     public function checkProductOptionGroupExistenceByProductOptionValueId(int $idProductOptionValue): bool;
+
+    /**
+     * Specification:
+     * - Retrieves product option group name and status for all abstract products by provided IDs.
+     * - Returns ProductAbstractOptionGroupStatusTransfer[] array with 'idProductAbstract', 'isActive' and 'productOptionGroupName' values.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     */
+    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 }

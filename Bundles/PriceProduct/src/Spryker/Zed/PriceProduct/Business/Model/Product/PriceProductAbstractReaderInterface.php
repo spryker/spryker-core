@@ -45,6 +45,14 @@ interface PriceProductAbstractReaderInterface
     public function findPriceForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
 
     /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+
+    /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
@@ -97,4 +105,12 @@ interface PriceProductAbstractReaderInterface
      * @return int|null
      */
     public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int;
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    public function getProductAbstractPricesByConcreteSkusAndCriteria(array $concreteSkus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

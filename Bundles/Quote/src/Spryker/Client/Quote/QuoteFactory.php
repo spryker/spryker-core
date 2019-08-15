@@ -9,6 +9,12 @@ namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
+use Spryker\Client\Quote\QuoteLocker\QuoteLocker;
+use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidator;
+use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidator;
+use Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface;
 use Spryker\Client\Quote\Session\QuoteSession;
 use Spryker\Client\Quote\StorageStrategy\DatabaseStorageStrategy;
 use Spryker\Client\Quote\StorageStrategy\SessionStorageStrategy;
@@ -42,6 +48,14 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker();
+    }
+
+    /**
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface
      */
     protected function createStorageStrategyProvider()
@@ -69,7 +83,10 @@ class QuoteFactory extends AbstractFactory
     protected function createSessionStorageStrategy()
     {
         return new SessionStorageStrategy(
-            $this->createSession()
+            $this->createSession(),
+            $this->createQuoteLockStatusValidator(),
+            $this->createQuoteEditStatusValidator(),
+            $this->createQuoteLocker()
         );
     }
 
@@ -81,8 +98,30 @@ class QuoteFactory extends AbstractFactory
         return new DatabaseStorageStrategy(
             $this->getCustomerClient(),
             $this->createZedQuoteStub(),
-            $this->createSession()
+            $this->createSession(),
+            $this->createQuoteLockStatusValidator(),
+            $this->createQuoteEditStatusValidator(),
+            $this->createQuoteLocker(),
+            $this->getDatabaseStrategyPreCheckPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidatorInterface
+     */
+    public function createQuoteEditStatusValidator(): QuoteEditStatusValidatorInterface
+    {
+        return new QuoteEditStatusValidator(
+            $this->createQuoteLockStatusValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\QuoteValidator\QuoteLockStatusValidatorInterface
+     */
+    public function createQuoteLockStatusValidator(): QuoteLockStatusValidatorInterface
+    {
+        return new QuoteLockStatusValidator();
     }
 
     /**
@@ -117,6 +156,14 @@ class QuoteFactory extends AbstractFactory
     protected function getQuoteTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
+     */
+    public function getDatabaseStrategyPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS);
     }
 
     /**

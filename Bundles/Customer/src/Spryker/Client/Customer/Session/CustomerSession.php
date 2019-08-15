@@ -8,6 +8,7 @@
 namespace Spryker\Client\Customer\Session;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\Customer\Exception\EmptyCustomerTransferCacheException;
 use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
@@ -30,6 +31,11 @@ class CustomerSession implements CustomerSessionInterface
     protected $customerSessionSetPlugins;
 
     /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected static $customerTransferCache;
+
+    /**
      * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
      * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[] $customerSessionGetPlugins
      * @param \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[] $customerSessionSetPlugins
@@ -50,6 +56,7 @@ class CustomerSession implements CustomerSessionInterface
     public function logout()
     {
         $this->sessionClient->remove(self::SESSION_KEY);
+        $this->invalidateCustomerTransferCache();
     }
 
     /**
@@ -57,7 +64,7 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function hasCustomer()
     {
-        return $this->sessionClient->has(self::SESSION_KEY);
+        return $this->hasCustomerTransferCache() || $this->sessionClient->has(self::SESSION_KEY);
     }
 
     /**
@@ -65,6 +72,10 @@ class CustomerSession implements CustomerSessionInterface
      */
     public function getCustomer()
     {
+        if ($this->hasCustomerTransferCache()) {
+            return $this->getCustomerTransferCache();
+        }
+
         $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
 
         if ($customerTransfer === null) {
@@ -74,6 +85,8 @@ class CustomerSession implements CustomerSessionInterface
         foreach ($this->customerSessionGetPlugins as $customerSessionGetPlugin) {
             $customerSessionGetPlugin->execute($customerTransfer);
         }
+
+        $this->cacheCustomerTransfer($customerTransfer);
 
         return $customerTransfer;
     }
@@ -94,6 +107,39 @@ class CustomerSession implements CustomerSessionInterface
             $customerSessionSetPlugin->execute($customerTransfer);
         }
 
+        $this->invalidateCustomerTransferCache();
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomerRawData(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $this->sessionClient->set(
+            static::SESSION_KEY,
+            $customerTransfer
+        );
+
+        $this->invalidateCustomerTransferCache();
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerRawData(): ?CustomerTransfer
+    {
+        $customerTransfer = $this->sessionClient->get(self::SESSION_KEY);
+
+        if ($customerTransfer === null) {
+            return null;
+        }
+
         return $customerTransfer;
     }
 
@@ -104,6 +150,47 @@ class CustomerSession implements CustomerSessionInterface
     {
         if ($this->hasCustomer() !== false) {
             $this->getCustomer()->setIsDirty(true);
+            $this->invalidateCustomerTransferCache();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasCustomerTransferCache(): bool
+    {
+        return static::$customerTransferCache !== null;
+    }
+
+    /**
+     * @throws \Spryker\Client\Customer\Exception\EmptyCustomerTransferCacheException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerTransferCache(): CustomerTransfer
+    {
+        if (static::$customerTransferCache === null) {
+            throw new EmptyCustomerTransferCacheException();
+        }
+
+        return static::$customerTransferCache;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function cacheCustomerTransfer(CustomerTransfer $customerTransfer): void
+    {
+        static::$customerTransferCache = $customerTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function invalidateCustomerTransferCache(): void
+    {
+        static::$customerTransferCache = null;
     }
 }

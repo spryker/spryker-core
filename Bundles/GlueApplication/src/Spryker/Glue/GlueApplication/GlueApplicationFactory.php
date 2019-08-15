@@ -24,6 +24,8 @@ use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidator;
+use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatter;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractor;
@@ -54,6 +56,8 @@ use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcher;
 use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParser;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
+use Spryker\Glue\GlueApplication\Rest\User\UserProvider;
+use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolver;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
@@ -82,7 +86,8 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestRequestValidator(),
             $this->createRestResourceBuilder(),
             $this->createRestControllerCallbacks(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createUserProvider()
         );
     }
 
@@ -328,6 +333,24 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface
+     */
+    public function createUserProvider(): UserProviderInterface
+    {
+        return new UserProvider(
+            $this->getRestUserFinderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidatorInterface
+     */
+    public function createPaginationParametersRequestValidator(): PaginationParametersHttpRequestValidatorInterface
+    {
+        return new PaginationParametersHttpRequestValidator();
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     public function getValidateRestRequestPlugins(): array
@@ -429,5 +452,13 @@ class GlueApplicationFactory extends AbstractFactory
     public function getControllerAfterActionPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_CONTROLLER_AFTER_ACTION);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
+     */
+    public function getRestUserFinderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REST_USER_FINDER);
     }
 }

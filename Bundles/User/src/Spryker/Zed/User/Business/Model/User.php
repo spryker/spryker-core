@@ -42,6 +42,16 @@ class User implements UserInterface
      */
     protected $userPostSavePlugins;
 
+    /**
+     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     */
+    protected $userPreSavePlugins;
+
+    /**
+     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[]
+     */
+    protected $userTransferExpanderPlugins;
+
     use TransactionTrait;
 
     /**
@@ -49,17 +59,23 @@ class User implements UserInterface
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
      * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[] $userPostSavePlugins
+     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[] $userPreSavePlugins
+     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[] $userTransferExpanderPlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
         SessionInterface $session,
         UserConfig $settings,
-        array $userPostSavePlugins = []
+        array $userPostSavePlugins = [],
+        array $userPreSavePlugins = [],
+        array $userTransferExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->session = $session;
         $this->settings = $settings;
         $this->userPostSavePlugins = $userPostSavePlugins;
+        $this->userPreSavePlugins = $userPreSavePlugins;
+        $this->userTransferExpanderPlugins = $userTransferExpanderPlugins;
     }
 
     /**
@@ -155,6 +171,7 @@ class User implements UserInterface
             $userEntity = new SpyUser();
         }
 
+        $userTransfer = $this->executePreSavePlugins($userTransfer);
         $modifiedUser = $userTransfer->modifiedToArray();
 
         unset($modifiedUser[UserTransfer::PASSWORD]);
@@ -169,6 +186,20 @@ class User implements UserInterface
         $userEntity->save();
         $userTransfer = $this->entityToTransfer($userEntity);
         $userTransfer = $this->executePostSavePlugins($userTransfer);
+
+        return $userTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executePreSavePlugins(UserTransfer $userTransfer): UserTransfer
+    {
+        foreach ($this->userPreSavePlugins as $preSavePlugin) {
+            $userTransfer = $preSavePlugin->preSave($userTransfer);
+        }
 
         return $userTransfer;
     }
@@ -442,6 +473,22 @@ class User implements UserInterface
     {
         $userTransfer = new UserTransfer();
         $userTransfer->fromArray($userEntity->toArray(), true);
+
+        $userTransfer = $this->executeUserTransferExpanderPlugins($userTransfer);
+
+        return $userTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executeUserTransferExpanderPlugins(UserTransfer $userTransfer): UserTransfer
+    {
+        foreach ($this->userTransferExpanderPlugins as $userTransferExpanderPlugin) {
+            $userTransfer = $userTransferExpanderPlugin->expandUserTransfer($userTransfer);
+        }
 
         return $userTransfer;
     }

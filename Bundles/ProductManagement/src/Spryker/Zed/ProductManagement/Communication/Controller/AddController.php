@@ -65,10 +65,9 @@ class AddController extends AbstractController
                     ->getProductFacade()
                     ->addProduct($productAbstractTransfer, $concreteProductCollection);
 
-                $this->addSuccessMessage(sprintf(
-                    'The product [%s] was added successfully.',
-                    $productAbstractTransfer->getSku()
-                ));
+                $this->addSuccessMessage('The product [%s] was added successfully.', [
+                    '%s' => $productAbstractTransfer->getSku(),
+                ]);
 
                 return $this->createRedirectResponseAfterAdd($idProductAbstract, $request);
             } catch (CategoryUrlExistsException $exception) {
@@ -169,7 +168,9 @@ class AddController extends AbstractController
             $productConcreteTransfer = new ProductConcreteTransfer();
             $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
             $productConcreteTransfer->setIsActive(false);
-            $productConcreteTransfer->setPrices($productAbstractTransfer->getPrices());
+            foreach ($productAbstractTransfer->getPrices() as $price) {
+                $productConcreteTransfer->addPrice(clone $price);
+            }
             $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
             return [$productConcreteTransfer];

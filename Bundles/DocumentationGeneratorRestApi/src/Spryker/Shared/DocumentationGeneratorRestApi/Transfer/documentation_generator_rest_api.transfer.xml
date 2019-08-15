@@ -43,6 +43,7 @@
         <property name="reference" type="string" />
         <property name="itemsReference" type="string" />
         <property name="itemsType" type="string" />
+        <property name="isNullable" type="bool" />
     </transfer>
 
     <transfer name="SecurityScheme">
@@ -101,6 +102,7 @@
         <property name="schemaReference" type="string" />
         <property name="itemsSchemaReference" type="string" />
         <property name="itemsType" type="string" />
+        <property name="isNullable" type="bool" />
     </transfer>
 
     <transfer name="SecuritySchemeComponent">
@@ -118,11 +120,13 @@
     </transfer>
 
     <transfer name="Annotation">
+        <property name="path" type="string" />
         <property name="summary" type="string[]" />
         <property name="parameters" singular="parameter" type="PathParameterComponent[]" />
         <property name="responseAttributesClassName" type="string" />
         <property name="isEmptyResponse" type="bool" />
         <property name="responses" singular="response" type="array" />
+        <property name="isIdNullable" type="bool" />
     </transfer>
 
 </transfers>

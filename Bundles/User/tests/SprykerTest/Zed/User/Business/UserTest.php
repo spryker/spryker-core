@@ -377,7 +377,7 @@ class UserTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Session\SessionClient
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient
      */
     protected function createSessionClient()
     {
@@ -387,7 +387,7 @@ class UserTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
     protected function createQueryContainer()
     {

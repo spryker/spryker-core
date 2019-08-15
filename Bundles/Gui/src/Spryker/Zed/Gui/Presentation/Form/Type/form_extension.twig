@@ -9,4 +9,16 @@
     {% endif %}
 
     {{ parent() }}
-{% endblock %} 
+{% endblock %}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        {% if form.parent is not null %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+        <ul class="list-unstyled">
+        {%- for error in errors -%}
+            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message | trans }}</li>
+        {%- endfor -%}
+    </ul>
+        {% if form.parent is not null %}</span>{% else %}</div>{% endif %}
+    {%- endif %}
+{%- endblock form_errors %}

@@ -53,4 +53,18 @@ interface BusinessOnBehalfClientInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
+     * - Executes stack of plugins CompanyUserChangeAllowedCheckPluginInterface.
+     * - Returns false if at least one plugin returns false.
+     * - Returns true by default.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function isCompanyUserChangeAllowed(CustomerTransfer $customerTransfer): bool;
 }

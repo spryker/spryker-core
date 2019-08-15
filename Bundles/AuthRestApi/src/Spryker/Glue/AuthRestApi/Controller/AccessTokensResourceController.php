@@ -31,7 +31,8 @@ class AccessTokensResourceController extends AbstractController
      *          "responses": {
      *              "401": "Failed to authenticate user.",
      *              "403": "Unauthorized request."
-     *          }
+     *          },
+     *          "isIdNullable": true
      *     }
      * })
      *
@@ -45,5 +46,15 @@ class AccessTokensResourceController extends AbstractController
         return $this->getFactory()
             ->createAccessTokensReader()
             ->processAccessTokenRequest($restAccessTokensAttributesTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return $this->getFactory()->getResourceBuilder()->createRestResponse();
     }
 }

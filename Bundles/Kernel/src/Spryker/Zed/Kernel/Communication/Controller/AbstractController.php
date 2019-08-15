@@ -282,7 +282,7 @@ abstract class AbstractController
      */
     protected function getMessenger()
     {
-        $messenger = ($this->application->offsetExists('messenger')) ? $this->application['messenger'] : new NullMessenger();
+        $messenger = ($this->application->has('messenger')) ? $this->application->get('messenger') : new NullMessenger();
         $kernelToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $kernelToMessengerBridge;
@@ -341,6 +341,7 @@ abstract class AbstractController
      */
     protected function extractDomainFromUrl(string $url): string
     {
+        /** @var string|false $urlDomain */
         $urlDomain = parse_url($url, PHP_URL_HOST);
         if ($urlDomain === false) {
             return '';

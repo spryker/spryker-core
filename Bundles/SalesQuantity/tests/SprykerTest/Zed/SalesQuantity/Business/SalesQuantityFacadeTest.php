@@ -43,7 +43,7 @@ class SalesQuantityFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\SalesQuantity\SalesQuantityConfig|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Spryker\Zed\SalesQuantity\SalesQuantityConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $configMock;
 

@@ -205,7 +205,7 @@ class CartClientTest extends Unit
      * @param \Spryker\Client\Cart\Zed\CartStubInterface|null $cartStub
      * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface|null $quoteStorageStrategyPlugin
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getFactoryMock(
         ?CartToQuoteInterface $quote = null,
@@ -213,7 +213,7 @@ class CartClientTest extends Unit
         ?QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
     ) {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
-            ->setMethods(['getQuoteClient', 'createZedStub', 'getQuoteStorageStrategy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
+            ->setMethods(['getQuoteClient', 'createZedStub', 'createQuoteStorageStrategyProxy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
             ->disableOriginalConstructor()->getMock();
 
         if ($quote !== null) {
@@ -231,7 +231,7 @@ class CartClientTest extends Unit
                 ->method('getFactory')
                 ->will($this->returnValue($factoryMock));
             $factoryMock->expects($this->any())
-                ->method('getQuoteStorageStrategy')
+                ->method('createQuoteStorageStrategyProxy')
                 ->will($this->returnValue($quoteStorageStrategyPlugin));
         }
 
@@ -247,9 +247,9 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $factoryMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $factoryMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     private function getSessionQuoteStorageStrategyPluginMock()
     {
@@ -260,9 +260,9 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @param \PHPUnit_Framework_MockObject_MockObject $factoryMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $factoryMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\CartClient
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\CartClient
      */
     private function getCartClientMock($factoryMock)
     {
@@ -276,7 +276,7 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getQuoteMock()
     {
@@ -286,6 +286,8 @@ class CartClientTest extends Unit
             'clearQuote',
             'getStorageStrategy',
             'reloadItems',
+            'isQuoteLocked',
+            'lockQuote',
         ])->getMock();
 
         $quoteMock->method('getStorageStrategy')
@@ -295,7 +297,7 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\Zed\CartStubInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\Zed\CartStubInterface
      */
     private function getStubMock()
     {
@@ -308,6 +310,7 @@ class CartClientTest extends Unit
             'validateQuote',
             'addFlashMessagesFromLastZedRequest',
             'addResponseMessagesToMessenger',
+            'resetQuoteLock',
         ])->getMock();
     }
 }

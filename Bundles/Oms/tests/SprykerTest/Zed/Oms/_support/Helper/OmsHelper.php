@@ -100,7 +100,7 @@ class OmsHelper extends Module
      */
     protected function runCommand($command)
     {
-        $process = new Process($command);
+        $process = new Process(explode(' ', $command));
         $process->run();
     }
 

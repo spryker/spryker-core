@@ -47,14 +47,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedDecodedValues;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface|null
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
      */
     public static $service;
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface $service
      */
     public function getService()
     {
@@ -225,6 +225,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             self::$cachedKeys[$key] = self::KEY_USED;
         }
 
+        $allPreparedKeys = $this->prefixKeyValues(array_flip($keys));
+
         // Get the rest of requested keys without a value
         $keys = array_diff($keys, array_keys($keyValues));
 
@@ -235,7 +237,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
             self::$cachedKeys += array_fill_keys($keys, self::KEY_NEW);
         }
 
-        return $keyValues;
+        return array_merge($allPreparedKeys, $keyValues);
     }
 
     /**
@@ -479,6 +481,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         }
 
         ksort($allowedGetParameters);
+
         return '?' . http_build_query($allowedGetParameters);
     }
 

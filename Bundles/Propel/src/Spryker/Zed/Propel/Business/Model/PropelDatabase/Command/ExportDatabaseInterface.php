@@ -10,6 +10,8 @@ namespace Spryker\Zed\Propel\Business\Model\PropelDatabase\Command;
 interface ExportDatabaseInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $backupPath
      *
      * @return void

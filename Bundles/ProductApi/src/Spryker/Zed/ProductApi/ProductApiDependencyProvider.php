@@ -106,6 +106,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
         };
+
         return $container;
     }
 
@@ -119,6 +120,7 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductApiToProductBridge($container->getLocator()->product()->facade());
         };
+
         return $container;
     }
 }

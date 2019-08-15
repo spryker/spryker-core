@@ -31,4 +31,11 @@ interface ProductConcretePageSearchReaderInterface
      * @return array
      */
     public function getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale(array $productConcreteIds): array;
+
+    /**
+     * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 }

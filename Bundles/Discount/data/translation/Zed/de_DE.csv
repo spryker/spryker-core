@@ -1,0 +1,71 @@
+Activate,Aktivieren
+"Add group","Gruppe hinzufügen"
+"Add Random Generated Code Length","Zufallsgenerierte Codelänge hinzufügen"
+"Add rule","Regel hinzufügen"
+Amount:,Betrag:
+"Apply to query:","Auf Query anwenden:"
+"Batch Value",Satz
+"Calculator type",Berechnungsgrundlage
+"Cart Rules",Warenkorb-Regeln
+Conditions,Bedingungen
+"Could not change discount visibility.","Sichtbarkeit des Rabatts konnte nicht geändert werden."
+"Create new discount","Neuen Rabatt erstellen"
+"Create new Discount","Neuen Rabatt erstellen"
+"Create voucher codes for the discount","Gutscheincodes für den Rabatt erstellen"
+Deactivate,Deaktivieren
+"Define what to apply the discount to","Geben Sie an, auf was der Rabatt angewendet werden soll"
+"Define when to apply the discount","Geben Sie an, wann der Rabatt angewendet werden soll"
+"Delete codes","Codes löschen"
+Description,Beschreibung
+Description:,Beschreibung:
+"Discount calculation",Rabattberechnung
+"Discount collection type","Discount application type"
+"Discount List",Rabattliste
+"Discount successfully activated","Rabatt erfolgreich aktiviert"
+"Discount successfully created, but not activated.","Rabatt erfolgreich erstellt, aber nicht aktiviert."
+"Discount successfully deactivated","Rabatt erfolgreich deaktiviert."
+"Discount successfully updated.","Rabatt erfolgreich aktualisiert."
+"Discount Type:",Rabatttyp:
+"Discount with id %s doesn't exist","Rabatt mit der ID %s existiert nicht."
+"Discount with this name is already used.","Rabatt mit diesem Namen ist bereits vergeben."
+Edit,Bearbeiten
+"Edit discount","Rabatt bearbeiten"
+"Enter your custom code as a string. If selected in the next step, additional random characters are added at the end of this string. Use the placeholder [code] to indicate where you want random characters to be generated.","Geben Sie Ihren benutzerdefinierten Code als Zeichenkette ein. Wenn im nächsten Schritt ausgewählt, werden am Ende dieser Zeichenkette weitere zusätzliche Zeichen hinzugefügt. Verwenden Sie den Platzhalter[code], um anzugeben, wo zufällige Zeichen generiert werden sollen."""
+Examples,Beispiele
+Exclusive:,Exklusiv:
+Explanation,Erklärung
+Export,Exportieren
+Field,Feld
+"Fill in the general discount information","Allgemeine Rabattinformationen ausfüllen"
+"General Information","Allgemeine Informationen"
+"Generated Discount Codes","Generierte Rabattcodes"
+"List of Discounts","Liste der Rabatte"
+"Matches all elements which have a ""width"" attribute defined, but with any ""width"" value","Gleicht alle Elemente ab, bei denen das Attribut ""width"" festgelegt wurde, unabhängig von deren Wert für ""width"""
+"Matches elements with the exact same SKU: ""SKU-1""","Gleicht Elemente mit der exakt gleichen SKU ab: ""SKU-1"""
+"Max nr. of uses","Maximale Anzahl der Verwendungen"
+"Max number of uses (0 = Infinite usage)","Maximale Anzahl der Verwendungen (0 = unendlich viele Verwendungen)"
+N/A,k.A.
+Name,Name
+"Name (A unique name that will be displayed to your customers)","Name (eine eindeutige Bezeichnung, die Ihren Kunden angezeigt wird)"
+Name:,Name:
+No,Nein
+"No additional random characters","Keine weiteren zufälligen Zeichen"
+"No conditions, discount always applied.","Keine Bedingungen, Rabatt wird immer angewandt."
+"No voucher codes were deleted.","Keine Gutscheincodes wurden gelöscht."
+Operation,Operation
+Overview,Übersicht
+"Plain query","Einfache Query"
+"Please fill all required fields.","Bitte alle erforderlichen Felder ausfüllen."
+"Query builder","Query builder"
+"Query String","Query String"
+Save,Speichern
+"Store relation:",Store-Beziehung:
+"Successfully deleted ""%d"" vouchers.","Gutscheine ""%d"" erfolgreich gelöscht."
+Type:,Typ:
+Used,Verwendet
+"Valid from:","Gültig ab (inklusive):"
+"Valid until:","Gültig bis (exklusive):"
+Value,Wert
+Voucher,Gutschein
+"Voucher Code",Gutscheincode
+Yes,Ja

@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Update "' ~ roleTransfer.getName() | e ~ '" Role' %}
+{% set widget_title = 'Update'| trans ~ ' "' ~ roleTransfer.getName() | e ~ '" ' ~ 'Role'| trans %}
 
 {% block head_title widget_title | trans %}
 

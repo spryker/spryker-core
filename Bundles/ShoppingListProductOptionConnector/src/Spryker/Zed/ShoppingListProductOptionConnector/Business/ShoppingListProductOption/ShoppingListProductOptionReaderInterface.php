@@ -8,13 +8,14 @@
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption;
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 interface ShoppingListProductOptionReaderInterface
 {
     /**
-     * @param int $idShoppingListItem
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer;
+    public function getShoppingListItemProductOptionsByIdShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ProductOptionCollectionTransfer;
 }

@@ -44,7 +44,9 @@ class ViewController extends AddController
             ->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstractTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProductAbstract));
+            $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', [
+                '%s' => $idProductAbstract,
+            ]);
 
             return new RedirectResponse('/product-management');
         }
@@ -132,7 +134,7 @@ class ViewController extends AddController
         $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
 
         if (!$productTransfer) {
-            $this->addErrorMessage(sprintf('The product [%s] you are trying to edit, does not exist.', $idProduct));
+            $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', ['%s' => $idProduct]);
 
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }

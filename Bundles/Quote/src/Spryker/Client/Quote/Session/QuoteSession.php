@@ -62,7 +62,7 @@ class QuoteSession implements QuoteSessionInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return $this
      */
     public function setQuote(QuoteTransfer $quoteTransfer)
     {
@@ -72,6 +72,8 @@ class QuoteSession implements QuoteSessionInterface
 
         $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
         $this->updateCurrency($quoteTransfer);
+
+        return $this;
     }
 
     /**

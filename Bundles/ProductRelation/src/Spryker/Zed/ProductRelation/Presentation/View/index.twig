@@ -18,11 +18,11 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' }  %}
         {% block widget_content %}
             <p>
-                <strong>{{ 'Is active:' | trans }}</strong> {{ productRelation.isActive ? 'yes' : 'no' }}
+                <strong>{{ 'Is active:' | trans }}</strong> {{ (productRelation.isActive ? 'yes' : 'no') | trans }}
             </p>
 
             <p>
-                <strong>{{ 'Relation type:' | trans }}</strong> {{ productRelation.productRelationType.key }}
+                <strong>{{ 'Relation type:' | trans }}</strong> {{ productRelation.productRelationType.key | trans }}
             </p>
 
             {% for imageSet in product.imageSets %}

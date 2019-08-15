@@ -1,0 +1,32 @@
+{
+  "name": "spryker/content-gui-extension",
+  "type": "library",
+  "description": "ContentGuiExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/kernel": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/kernel": "If you want to use content plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

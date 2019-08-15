@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
+
 interface ProductStorageClientInterface
 {
     /**
@@ -39,6 +42,25 @@ interface ProductStorageClientInterface
      * @return array|null
      */
     public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductAbstract resource from Storage.
+     * - Responds with null if product abstract is restricted.
+     * - Maps raw product data to ProductViewTransfer for the current locale.
+     * - Based on the super attributes and the selected attributes of the product the result is abstract product.
+     * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductAbstractViewTransfer(int $idProductAbstract, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
 
     /**
      * Specification:
@@ -98,6 +120,24 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves a current Store specific ProductConcrete resource from Storage.
+     * - Responds with null if product concrete is restricted.
+     * - Maps raw product data to ProductViewTransfer for the current locale.
+     * - Based on the super attributes and the selected attributes of the product the result is concrete product.
+     * - Executes a stack of `StorageProductExpanderPluginInterface` plugins that expand result.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
+     */
+    public function findProductConcreteViewTransfer(int $idProductConcrete, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+
+    /**
+     * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage using specified mapping.
      *
      * @api
@@ -112,7 +152,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - Maps raw product data to StorageProductTransfer for the current locale.
+     * - Maps raw product data to ProductViewTransfer for the current locale.
      * - Based on the super attributes and the selected attributes of the product the result might be abstract or concrete product.
      * - Executes a stack of Spryker\Client\ProductStorage\Dependency\Plugin\StorageProductExpanderPluginInterface plugins that
      * can expand the result with extra data.
@@ -178,4 +218,17 @@ interface ProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
+
+    /**
+     * Specification:
+     * - maps given storage data to ProductConcreteTransfer.
+     * - executes ProductConcreteExpanderPluginInterface plugin stack.
+     *
+     * @api
+     *
+     * @param array $productStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductStorageDataToProductConcreteTransfer(array $productStorageData): ProductConcreteTransfer;
 }

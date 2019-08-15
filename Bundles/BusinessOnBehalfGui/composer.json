@@ -6,13 +6,13 @@
   "require": {
     "php": ">=7.1",
     "spryker/business-on-behalf-gui-extension": "^1.0.0",
-    "spryker/company": "^1.0.0",
+    "spryker/company": "^1.2.0",
     "spryker/company-business-unit": "^2.0.0",
-    "spryker/company-user": "^2.3.0",
+    "spryker/company-user": "^2.7.0",
     "spryker/company-user-gui-extension": "^1.1.0",
     "spryker/customer": "^7.0.0",
     "spryker/customer-extension": "^1.1.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.1.0",
     "spryker/util-text": "^1.1.0"
   },

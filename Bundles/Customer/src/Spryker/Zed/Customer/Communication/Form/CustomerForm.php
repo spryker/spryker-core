@@ -131,7 +131,6 @@ class CustomerForm extends AbstractType
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -182,7 +181,6 @@ class CustomerForm extends AbstractType
             'label' => 'Gender',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => [
                 new Required(),
             ],
@@ -259,7 +257,6 @@ class CustomerForm extends AbstractType
             'label' => 'Locale',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'required' => false,
 
         ]);
@@ -301,6 +298,7 @@ class CustomerForm extends AbstractType
             new NotBlank(),
             new Required(),
             new Email(),
+            new Length(['max' => 100]),
         ];
 
         $customerQuery = $this->getQueryContainer()->queryCustomers();

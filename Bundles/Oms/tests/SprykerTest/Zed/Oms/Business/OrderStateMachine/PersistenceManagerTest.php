@@ -52,7 +52,7 @@ class PersistenceManagerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\OmsConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\OmsConfig
      */
     protected function createOmsConfigMock()
     {

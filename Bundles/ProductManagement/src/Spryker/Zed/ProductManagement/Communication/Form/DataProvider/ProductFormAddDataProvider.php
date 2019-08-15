@@ -16,11 +16,6 @@ class ProductFormAddDataProvider extends AbstractProductFormDataProvider
      */
     public function getData(?array $priceDimension = null)
     {
-        $formData = [];
-        $defaults = $this->getDefaultFormFields($priceDimension);
-
-        $formData = array_merge($defaults, $formData);
-
-        return $formData;
+        return $this->getDefaultFormFields($priceDimension);
     }
 }

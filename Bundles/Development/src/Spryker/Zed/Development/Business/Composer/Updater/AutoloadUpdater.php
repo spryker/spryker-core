@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business\Composer\Updater;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
+use Zend\Filter\FilterChain;
+use Zend\Filter\Word\DashToCamelCase;
 
 class AutoloadUpdater implements UpdaterInterface
 {
@@ -19,14 +21,30 @@ class AutoloadUpdater implements UpdaterInterface
     public const BASE_SRC_DIRECTORY = 'src';
     public const BASE_SUPPORT_DIRECTORY = '_support';
     public const BASE_HELPER_DIRECTORY = 'Helper';
+    public const BASE_TESTER_DIRECTORY = 'Tester';
+    public const BASE_FIXTURES_DIRECTORY = 'Fixtures';
+    public const BASE_STEP_OVERRIDE_DIRECTORY = 'StepOverride';
+    public const BASE_FILTER_DIRECTORY = 'Filter';
 
     public const SPRYKER_TEST_NAMESPACE = 'SprykerTest';
+    public const SPRYKER_SDK_TEST_NAMESPACE = 'SprykerSdkTest';
+    public const SPRYKER_ECO_TEST_NAMESPACE = 'SprykerEcoTest';
+    public const SPRYKER_SHOP_TEST_NAMESPACE = 'SprykerShopTest';
+    public const SPRYKER_MERCHANT_PORTAL_SHOP_TEST_NAMESPACE = 'SprykerMerchantPortalTest';
+
     public const SPRYKER_NAMESPACE = 'Spryker';
     public const SPRYKER_SHOP_NAMESPACE = 'SprykerShop';
     public const SPRYKER_ECO_NAMESPACE = 'SprykerEco';
+    public const SPRYKER_SDK_NAMESPACE = 'SprykerSdk';
+    public const SPRYKER_MERCHANT_PORTAL_NAMESPACE = 'SprykerMerchantPortal';
 
     public const PSR_0 = 'psr-0';
     public const PSR_4 = 'psr-4';
+
+    protected const RESERVED_NAMESPACES = [
+        'vendor/',
+        'tests/_',
+    ];
 
     /**
      * @var array
@@ -56,6 +74,12 @@ class AutoloadUpdater implements UpdaterInterface
         self::SPRYKER_SHOP_NAMESPACE,
         self::SPRYKER_ECO_NAMESPACE,
         self::BASE_HELPER_DIRECTORY,
+        self::BASE_TESTER_DIRECTORY,
+        self::BASE_STEP_OVERRIDE_DIRECTORY,
+        self::BASE_FIXTURES_DIRECTORY,
+        self::BASE_FILTER_DIRECTORY,
+        self::SPRYKER_SDK_NAMESPACE,
+        self::SPRYKER_MERCHANT_PORTAL_NAMESPACE,
     ];
 
     /**
@@ -65,6 +89,19 @@ class AutoloadUpdater implements UpdaterInterface
         self::SPRYKER_NAMESPACE,
         self::SPRYKER_SHOP_NAMESPACE,
         self::SPRYKER_ECO_NAMESPACE,
+        self::SPRYKER_SDK_NAMESPACE,
+        self::SPRYKER_MERCHANT_PORTAL_NAMESPACE,
+    ];
+
+    /**
+     * @var array
+     */
+    protected $sprykerCodeTestNamespacesMapping = [
+        self::SPRYKER_TEST_NAMESPACE,
+        self::SPRYKER_SHOP_TEST_NAMESPACE,
+        self::SPRYKER_ECO_TEST_NAMESPACE,
+        self::SPRYKER_SDK_TEST_NAMESPACE,
+        self::SPRYKER_MERCHANT_PORTAL_SHOP_TEST_NAMESPACE,
     ];
 
     /**
@@ -140,24 +177,26 @@ class AutoloadUpdater implements UpdaterInterface
     protected function updateAutoloadWithSupportTestClasses(array $composerJson, $modulePath)
     {
         $moduleName = $this->getLastPartOfPath($modulePath);
-        foreach ($this->applications as $application) {
-            $pathParts = [
-                static::BASE_TESTS_DIRECTORY,
-                static::SPRYKER_TEST_NAMESPACE,
-                $application,
-                $moduleName,
-                static::BASE_SUPPORT_DIRECTORY,
-            ];
+        foreach ($this->sprykerCodeTestNamespacesMapping as $testNamespace) {
+            foreach ($this->applications as $application) {
+                $pathParts = [
+                    static::BASE_TESTS_DIRECTORY,
+                    $testNamespace,
+                    $application,
+                    $this->convertDashToCamelCase($moduleName),
+                    static::BASE_SUPPORT_DIRECTORY,
+                ];
 
-            $supportDirectoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+                $supportDirectoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
 
-            if ($this->pathExists($supportDirectoryPath)) {
-                $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($supportDirectoryPath);
-                $composerJson = $this->addAutoloadPsr4($composerJson);
-                foreach ($nonEmptySupportDirectories as $directory) {
-                    preg_match('/' . static::BASE_SUPPORT_DIRECTORY . '\/(.+)/', $directory, $subNameSpace);
-                    $composerJson[static::AUTOLOAD_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\' . $application . '\\' . $moduleName . '\\' . str_replace('/', '\\', $subNameSpace[1]) . '\\']
-                        = $this->getPath(array_merge($pathParts, explode(DIRECTORY_SEPARATOR, $subNameSpace[1])));
+                if ($this->pathExists($supportDirectoryPath)) {
+                    $nonEmptySupportDirectories = $this->getNonEmptyDirectoriesWithHelpers($supportDirectoryPath);
+                    $composerJson = $this->addAutoloadPsr4($composerJson);
+                    foreach ($nonEmptySupportDirectories as $directory) {
+                        preg_match('/' . static::BASE_SUPPORT_DIRECTORY . '\/(.+)/', $directory, $subNameSpace);
+                        $composerJson[static::AUTOLOAD_KEY][static::PSR_4][$testNamespace . '\\' . $application . '\\' . $this->convertDashToCamelCase($moduleName) . '\\' . str_replace('/', '\\', $subNameSpace[1]) . '\\']
+                            = $this->getPath(array_merge($pathParts, explode(DIRECTORY_SEPARATOR, $subNameSpace[1])));
+                    }
                 }
             }
         }
@@ -192,6 +231,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function getLastPartOfPath($path)
     {
         $pathArray = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
+
         return end($pathArray);
     }
 
@@ -203,16 +243,18 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function updateAutoloadDevWithDefaultTestDirectory(array $composerJson, $modulePath)
     {
-        $pathParts = [
-            static::BASE_TESTS_DIRECTORY,
-            static::SPRYKER_TEST_NAMESPACE,
-        ];
+        foreach ($this->sprykerCodeTestNamespacesMapping as $testNamespace) {
+            $pathParts = [
+                static::BASE_TESTS_DIRECTORY,
+                $testNamespace,
+            ];
 
-        $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
+            $directoryPath = $this->getPath(array_merge([rtrim($modulePath, DIRECTORY_SEPARATOR)], $pathParts));
 
-        if ($this->pathExists($directoryPath)) {
-            $composerJson = $this->addAutoloadDevPsr4($composerJson);
-            $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_4][static::SPRYKER_TEST_NAMESPACE . '\\'] = $this->getPath($pathParts);
+            if ($this->pathExists($directoryPath)) {
+                $composerJson = $this->addAutoloadDevPsr4($composerJson);
+                $composerJson[static::AUTOLOAD_DEV_KEY][static::PSR_4][$testNamespace . '\\'] = $this->getPath($pathParts);
+            }
         }
 
         return $composerJson;
@@ -427,7 +469,7 @@ class AutoloadUpdater implements UpdaterInterface
     protected function removeInvalidAutoloadNamespaces(array $autoload, $modulePath)
     {
         foreach ($autoload as $namespace => $relativeDirectory) {
-            if (substr($relativeDirectory, 0, 7) === 'vendor/') {
+            if ($this->isReservedNamespace($relativeDirectory)) {
                 continue;
             }
 
@@ -466,5 +508,34 @@ class AutoloadUpdater implements UpdaterInterface
         }
 
         return $composerJson;
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function convertDashToCamelCase(string $value): string
+    {
+        $filterChain = new FilterChain();
+        $filterChain->attach(new DashToCamelCase());
+
+        return $filterChain->filter($value);
+    }
+
+    /**
+     * @param string $relativeDirectory
+     *
+     * @return bool
+     */
+    protected function isReservedNamespace(string $relativeDirectory): bool
+    {
+        foreach (static::RESERVED_NAMESPACES as $reservedNamespace) {
+            if (strpos($relativeDirectory, $reservedNamespace) === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\SharedCart\Business\Model;
 
+use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareCartRequestTransfer;
+use Generated\Shared\Transfer\ShareCartResponseTransfer;
+use Generated\Shared\Transfer\ShareDetailCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -61,6 +65,101 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     {
         $this->sharedCartEntityManager
             ->deleteShareRelationsForCompanyUserId($idCompanyUser);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function addQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    {
+        $shareCartRequestTransfer->requireIdQuote()
+            ->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+
+        $this->createNewQuoteCompanyUser($shareCartRequestTransfer->getIdQuote(), $shareDetailTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function createQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        $shareCartRequestTransfer->requireIdQuote()
+            ->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $shareDetailTransfer->requireQuotePermissionGroup()
+            ->requireIdCompanyUser();
+
+        $quoteCompanyUserTransfer = $this->sharedCartEntityManager->createQuoteCompanyUser(
+            $this->createQuoteCompanyUserTransfer($shareCartRequestTransfer)
+        );
+
+        if (!$quoteCompanyUserTransfer->getIdQuoteCompanyUser()) {
+            return (new ShareCartResponseTransfer())->setIsSuccessful(false);
+        }
+
+        $shareDetailCriteriaFilterTransfer = (new ShareDetailCriteriaFilterTransfer())
+            ->setIdQuote($shareCartRequestTransfer->getIdQuote())
+            ->setIdCompanyUser($shareDetailTransfer->getIdCompanyUser());
+
+        $shareDetailCollectionTransfer = $this->sharedCartRepository
+            ->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+
+        return (new ShareCartResponseTransfer())->setIsSuccessful(true)
+            ->setShareDetails($shareDetailCollectionTransfer->getShareDetails());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShareCartResponseTransfer
+     */
+    public function updateQuoteCompanyUserPermissionGroup(ShareCartRequestTransfer $shareCartRequestTransfer): ShareCartResponseTransfer
+    {
+        $shareCartRequestTransfer->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $shareDetailTransfer->requireIdQuoteCompanyUser()
+            ->requireQuotePermissionGroup();
+
+        $quoteCompanyUserTransfer = $this->sharedCartEntityManager->updateQuoteCompanyUserQuotePermissionGroup($shareDetailTransfer);
+        if (!$quoteCompanyUserTransfer) {
+            return (new ShareCartResponseTransfer())->setIsSuccessful(false);
+        }
+
+        $shareDetailCriteriaFilterTransfer = (new ShareDetailCriteriaFilterTransfer())
+            ->setIdQuoteCompanyUser($quoteCompanyUserTransfer->getIdQuoteCompanyUser());
+
+        $shareDetailCollectionTransfer = $this->sharedCartRepository
+            ->getShareDetailCollectionByShareDetailCriteria($shareDetailCriteriaFilterTransfer);
+
+        return (new ShareCartResponseTransfer())->setIsSuccessful(true)
+            ->setShareDetails($shareDetailCollectionTransfer->getShareDetails());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return void
+     */
+    public function deleteQuoteCompanyUser(ShareCartRequestTransfer $shareCartRequestTransfer): void
+    {
+        $shareCartRequestTransfer->requireShareDetails();
+
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+        $shareDetailTransfer->requireIdQuoteCompanyUser();
+
+        $this->sharedCartEntityManager->deleteQuoteCompanyUser($shareDetailTransfer->getIdQuoteCompanyUser());
     }
 
     /**
@@ -229,5 +328,23 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         }
 
         return $quoteCompanyUserIdIndex;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCompanyUserTransfer
+     */
+    protected function createQuoteCompanyUserTransfer(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteCompanyUserTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer */
+        $shareDetailTransfer = $shareCartRequestTransfer->getShareDetails()->offsetGet(0);
+
+        return (new QuoteCompanyUserTransfer())
+            ->setFkQuote($shareCartRequestTransfer->getIdQuote())
+            ->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser())
+            ->setFkQuotePermissionGroup(
+                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+            );
     }
 }

@@ -104,7 +104,7 @@ class ActiveProcessFetcherTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\DrawerInterface
      */
     protected function createDrawerMock(): DrawerInterface
     {

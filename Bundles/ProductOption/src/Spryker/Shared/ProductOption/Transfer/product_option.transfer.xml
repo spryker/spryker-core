@@ -26,6 +26,8 @@
 
     <transfer name="ProductOptionCriteria">
         <property name="ProductOptionIds" type="array" />
+        <property name="productOptionGroupIsActive" type="bool" />
+        <property name="productConcreteSku" type="string" />
     </transfer>
 
     <transfer name="Item">
@@ -155,6 +157,12 @@
     <transfer name="EventEntity">
         <property name="id" type="int"/>
         <property name="foreignKeys" type="array"/>
+    </transfer>
+
+    <transfer name="ProductAbstractOptionGroupStatus">
+        <property name="idProductAbstract" type="int" />
+        <property name="isActive" type="bool" />
+        <property name="productOptionGroupName" type="string" />
     </transfer>
 
 </transfers>

@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Event\ConsoleCommandEvent;
-use Symfony\Component\Console\Event\ConsoleExceptionEvent;
+use Symfony\Component\Console\Event\ConsoleErrorEvent;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -37,7 +37,7 @@ class ConsoleLogPluginTest extends Unit
     {
         $consoleLogPlugin = new ConsoleLogPlugin();
 
-        $this->assertInternalType('array', $consoleLogPlugin->getSubscribedEvents());
+        $this->assertIsArray($consoleLogPlugin->getSubscribedEvents());
     }
 
     /**
@@ -77,13 +77,13 @@ class ConsoleLogPluginTest extends Unit
         $loggerMock->expects($this->once())->method('error');
 
         $consoleLogPlugin = $this->getConsoleLogPluginMock($loggerMock);
-        $event = new ConsoleExceptionEvent(new Command('test-command'), new ArrayInput([]), new ConsoleOutput(), new Exception(), 0);
+        $event = new ConsoleErrorEvent(new ArrayInput([]), new ConsoleOutput(), new Exception(), new Command('test-command'));
 
-        $consoleLogPlugin->onConsoleException($event);
+        $consoleLogPlugin->onConsoleError($event);
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock()
     {
@@ -95,7 +95,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @param \Psr\Log\LoggerInterface $loggerMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin
      */
     protected function getConsoleLogPluginMock(LoggerInterface $loggerMock)
     {

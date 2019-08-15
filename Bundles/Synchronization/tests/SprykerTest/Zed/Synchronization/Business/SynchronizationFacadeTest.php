@@ -370,6 +370,7 @@ class SynchronizationFacadeTest extends Unit
 
             if (count($synchronizationPlugins) && $this->isSuiteProject()) {
                 $queueMock->expects($this->atLeastOnce())->method('sendMessages');
+
                 return $queueMock;
             }
 
@@ -381,6 +382,7 @@ class SynchronizationFacadeTest extends Unit
         $container[SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA] = function (Container $container) {
             return $this->createSynchronizationDataPlugins();
         };
+        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->executeResolvedPluginsBySources([]);
@@ -399,7 +401,7 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createQueueClientBridge()
     {
@@ -458,7 +460,7 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createStorageClientBridge()
     {
@@ -475,7 +477,7 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createSearchClientBridge()
     {
@@ -492,7 +494,7 @@ class SynchronizationFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createUtilEncodingServiceBridgeMock()
     {

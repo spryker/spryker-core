@@ -57,11 +57,11 @@ class ProductAbstractImageSynchronizationDataPlugin extends AbstractPlugin imple
     {
         $query = $this->getQueryContainer()->queryProductAbstractImageStorageByIds($ids);
 
-        if (empty($ids)) {
+        if ($ids === []) {
             $query->clear();
         }
 
-        return $query;
+        return $query->orderByIdProductAbstractImageStorage();
     }
 
     /**

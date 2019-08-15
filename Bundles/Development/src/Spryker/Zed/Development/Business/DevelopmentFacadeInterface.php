@@ -41,6 +41,20 @@ interface DevelopmentFacadeInterface
     public function runTest($module, array $options = []);
 
     /**
+     * Specification:
+     * - Runs the vendor/bin/codecept fixtures command with options
+     * - If options contains "initialize", it will also run vendor/bin/codecept build
+     *
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return void
+     */
+    public function runFixtures($module, array $options = []);
+
+    /**
      * @api
      *
      * @param string|null $module
@@ -180,7 +194,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return bool
+     * @return array
      */
     public function getAdjacencyMatrixData();
 
