@@ -39,7 +39,7 @@ class Customer implements CustomerInterface
     protected const BCRYPT_FACTOR = 12;
     protected const BCRYPT_SALT = '';
 
-    protected const KEY_VALIDATION_LENGTH = '{{ limit }}';
+    protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
     protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
     protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
 
@@ -922,7 +922,7 @@ class Customer implements CustomerInterface
             $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
                 static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
                 [
-                    static::KEY_VALIDATION_LENGTH => $minLength,
+                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $minLength,
                 ]
             );
 
@@ -933,7 +933,7 @@ class Customer implements CustomerInterface
             $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
                 static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
                 [
-                    static::KEY_VALIDATION_LENGTH => $maxLength,
+                    static::GLOSSARY_PARAM_VALIDATION_LENGTH => $maxLength,
                 ]
             );
 
