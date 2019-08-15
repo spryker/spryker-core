@@ -21,7 +21,7 @@ Tabs.prototype.checkErrors = function() {
     }
 
     self.tabsContainer.find('.tab-content .tab-pane').each(function(i, tab) {
-        var hasError = $(tab).find('.has-error').length;
+        var hasError = $(tab).find('.has-error, .alert-danger').length;
         var tabHeader = self.tabsContainer.find('.nav-tabs li[data-tab-content-id="' + tab.id + '"]');
 
         if (hasError) {
