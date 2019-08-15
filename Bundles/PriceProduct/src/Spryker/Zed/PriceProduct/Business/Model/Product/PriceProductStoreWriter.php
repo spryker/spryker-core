@@ -148,7 +148,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
-        if ($this->priceProductConfig->getDeleteOrphanPricesModeEnabled()) {
+        if ($this->priceProductConfig->getDeleteOrphanPricesOnSaveEnabled()) {
             $this->deleteOrphanPriceProductStoreEntities();
         }
 

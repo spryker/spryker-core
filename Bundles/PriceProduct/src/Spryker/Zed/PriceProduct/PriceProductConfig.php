@@ -17,7 +17,7 @@ class PriceProductConfig extends AbstractBundleConfig
     /**
      * Decides if orphan prices need to be cleared after every product price update.
      */
-    protected const DELETE_ORPHAN_PRICES_MODE_ENABLED = true;
+    protected const DELETE_ORPHAN_PRICES_ON_SAVE_ENABLED = true;
 
     /**
      * @return string
@@ -54,8 +54,8 @@ class PriceProductConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function getDeleteOrphanPricesModeEnabled(): bool
+    public function getDeleteOrphanPricesOnSaveEnabled(): bool
     {
-        return static::DELETE_ORPHAN_PRICES_MODE_ENABLED;
+        return static::DELETE_ORPHAN_PRICES_ON_SAVE_ENABLED;
     }
 }
