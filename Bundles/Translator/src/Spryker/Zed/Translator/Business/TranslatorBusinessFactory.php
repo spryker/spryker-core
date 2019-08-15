@@ -101,7 +101,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
      */
-    public function createTranslatorSet(): array
+    public function createTranslatorCollection(): array
     {
         $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
 
@@ -161,7 +161,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslationCacheGenerator(): CacheGeneratorInterface
     {
         return new CacheGenerator(
-            $this->createTranslatorSet(),
+            $this->createTranslatorCollection(),
             $this->getStore()
         );
     }

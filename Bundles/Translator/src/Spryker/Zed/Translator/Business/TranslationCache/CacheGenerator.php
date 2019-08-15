@@ -14,7 +14,7 @@ class CacheGenerator implements CacheGeneratorInterface
     /**
      * @var \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
      */
-    protected $translatorSet;
+    protected $translatorCollection;
 
     /**
      * @var \Spryker\Shared\Kernel\Store
@@ -22,12 +22,12 @@ class CacheGenerator implements CacheGeneratorInterface
     protected $store;
 
     /**
-     * @param \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[] $translatorSet
+     * @param \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[] $translatorCollection
      * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(array $translatorSet, Store $store)
+    public function __construct(array $translatorCollection, Store $store)
     {
-        $this->translatorSet = $translatorSet;
+        $this->translatorCollection = $translatorCollection;
         $this->store = $store;
     }
 
@@ -36,7 +36,7 @@ class CacheGenerator implements CacheGeneratorInterface
      */
     public function generateTranslationCache(): void
     {
-        foreach ($this->translatorSet as $translator) {
+        foreach ($this->translatorCollection as $translator) {
             $translator->getCatalogue();
         }
     }
