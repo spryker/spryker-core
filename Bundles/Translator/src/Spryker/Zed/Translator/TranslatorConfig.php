@@ -77,4 +77,12 @@ class TranslatorConfig extends AbstractBundleConfig
     {
         return static::ZED_CSV_FILE_DELIMITER;
     }
+
+    /**
+     * @return bool
+     */
+    public function isTranslatorDebugEnabled(): bool
+    {
+        return $this->get(TranslatorConstants::TRANSLATION_ZED_DEBUG_ENABLED, false);
+    }
 }

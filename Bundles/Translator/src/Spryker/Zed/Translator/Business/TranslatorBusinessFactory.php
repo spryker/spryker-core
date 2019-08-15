@@ -122,8 +122,6 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
             $this->createTranslationBuilder(),
             $localeName,
             null,
-            $this->getConfig()->getTranslatorCacheDirectory(),
-            false,
             $this->getConfig()
         );
 

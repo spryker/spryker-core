@@ -33,19 +33,20 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
      * @param \Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilderInterface $translatorBuilder
      * @param string $locale
      * @param \Symfony\Component\Translation\Formatter\MessageFormatterInterface|null $formatter
-     * @param string|null $cacheDir
-     * @param bool $debug
-     * @param \Spryker\Zed\Translator\TranslatorConfig|null $translatorConfig
+     * @param \Spryker\Zed\Translator\TranslatorConfig $translatorConfig
      */
     public function __construct(
         TranslatorBuilderInterface $translatorBuilder,
         string $locale,
         ?MessageFormatterInterface $formatter,
-        ?string $cacheDir,
-        bool $debug,
-        ?TranslatorConfig $translatorConfig
+        TranslatorConfig $translatorConfig
     ) {
-        parent::__construct($locale, $formatter, $cacheDir, $debug);
+        parent::__construct(
+            $locale,
+            $formatter,
+            $translatorConfig->getTranslatorCacheDirectory(),
+            $translatorConfig->isTranslatorDebugEnabled()
+        );
 
         $this->translatorBuilder = $translatorBuilder;
         $this->translatorConfig = $translatorConfig;
@@ -103,7 +104,7 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     protected function computeFallbackLocales($locale): array
     {
         $locales = parent::computeFallbackLocales($locale);
-        $configFalbackLocales = !empty($this->translatorConfig) ? $this->translatorConfig->getFallbackLocales($locale) : [];
+        $configFalbackLocales = $this->translatorConfig->getFallbackLocales($locale);
 
         return array_unique(array_merge($locales, $configFalbackLocales));
     }
