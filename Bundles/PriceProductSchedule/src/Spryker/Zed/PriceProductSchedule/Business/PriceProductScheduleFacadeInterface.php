@@ -146,6 +146,7 @@ interface PriceProductScheduleFacadeInterface
     public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer;
 
     /**
+     * Specification:
      * - Removes scheduled price with given id.
      * - Applies scheduled price for product, related to given scheduled price.
      *
