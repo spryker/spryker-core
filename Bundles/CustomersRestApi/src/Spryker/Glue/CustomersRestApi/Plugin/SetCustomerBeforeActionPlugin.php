@@ -18,10 +18,9 @@ class SetCustomerBeforeActionPlugin extends AbstractPlugin implements Controller
 {
     /**
      * {@inheritdoc}
-     * - Sets current authorized user to session.
-     * - Executes CustomerExpanderPluginInterface plugin stack before setting the customer to session.
      * - Sets the CustomerTransfer to session without execution of CustomerSessionSetPluginInterface plugins.
-     * - Will abort if RestRequestInterface::restUser is not set.
+     * - Executes CustomerExpanderPluginInterface plugin stack before setting the customer to session.
+     * - Will do nothing if RestRequestInterface::$restUser is not set.
      *
      * @api
      *
