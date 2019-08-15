@@ -47,7 +47,7 @@ var SlotTable = function (options) {
                 if (response.success) {
                     _self.slotTable.DataTable().ajax.reload(null, false);
 
-                    return true;
+                    return;
                 }
 
                 window.sweetAlert({
