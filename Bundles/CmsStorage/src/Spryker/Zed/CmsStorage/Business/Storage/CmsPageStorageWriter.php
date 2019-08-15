@@ -295,7 +295,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         array $cmsPageEntities,
         array $cmsPageStorageEntities
     ): array {
-        $storeTransfers = $this->indexStoresByStoreName($this->storeFacade->getAllStores());
+        $localeNameMap = $this->getLocaleNameMapByStoreName($this->storeFacade->getAllStores());
 
         $pairs = [];
 
@@ -304,7 +304,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
                 $cmsPageEntity,
                 $cmsPageStorageEntities,
                 $pairs,
-                $storeTransfers
+                $localeNameMap
             );
         }
 
@@ -317,7 +317,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageStorageEntities
      * @param array $pairs
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param string[][] $localeNameMap
      *
      * @return array
      */
@@ -325,14 +325,14 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         SpyCmsPage $cmsPageEntity,
         array $cmsPageStorageEntities,
         array $pairs,
-        array $storeTransfers
+        array $localeNameMap
     ): array {
         $idCmsPage = $cmsPageEntity->getIdCmsPage();
         $cmsPageStores = $cmsPageEntity->getSpyCmsPageStores();
 
         foreach ($cmsPageStores as $cmsPageStore) {
             $storeName = $cmsPageStore->getSpyStore()->getName();
-            $localeNames = $storeTransfers[$storeName]->getAvailableLocaleIsoCodes();
+            $localeNames = $localeNameMap[$storeName];
 
             foreach ($localeNames as $localeName) {
                 $cmsPageStorageEntity = isset($cmsPageStorageEntities[$idCmsPage][$localeName][$storeName]) ?
@@ -376,16 +376,16 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return string[][]
      */
-    protected function indexStoresByStoreName(array $storeTransfers): array
+    protected function getLocaleNameMapByStoreName(array $storeTransfers): array
     {
-        $storesTransfersIndexedByStoreName = [];
+        $localeNameMapByStoreName = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            $storesTransfersIndexedByStoreName[$storeTransfer->getName()] = $storeTransfer;
+            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
         }
 
-        return $storesTransfersIndexedByStoreName;
+        return $localeNameMapByStoreName;
     }
 }
