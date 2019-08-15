@@ -121,7 +121,6 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
         $translator = new Translator(
             $this->createTranslationBuilder(),
             $localeName,
-            null,
             $this->getConfig()
         );
 

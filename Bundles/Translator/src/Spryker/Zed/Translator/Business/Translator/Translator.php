@@ -39,13 +39,13 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
         TranslatorBuilderInterface $translatorBuilder,
         string $locale,
         TranslatorConfig $translatorConfig,
-        ?MessageFormatterInterface $formatter
+        ?MessageFormatterInterface $formatter = null
     ) {
         parent::__construct(
             $locale,
             $formatter,
             $translatorConfig->getTranslatorCacheDirectory(),
-            $translatorConfig->isTranslatorDebugEnabled()
+            $translatorConfig->isZedTranslatorDebugEnabled()
         );
 
         $this->translatorBuilder = $translatorBuilder;
