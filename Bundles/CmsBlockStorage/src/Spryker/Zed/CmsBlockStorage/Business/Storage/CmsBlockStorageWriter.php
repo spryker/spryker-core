@@ -134,11 +134,6 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 continue;
             }
 
-            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY] !== $cmsBlockStorageEntity->getKey()) {
-                $this->deleteStorageEntity($cmsBlockStorageEntity);
-                $cmsBlockStorageEntity = new SpyCmsBlockStorage();
-            }
-
             $this->updateStoreData($cmsBlockEntity, $cmsBlockStorageEntity, $pair[static::STORE_NAME], $pair[static::LOCALE_NAME]);
         }
     }
@@ -184,7 +179,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $cmsBlockStorageEntity
             ->setData($cmsBlockEntity)
             ->setFkCmsBlock($cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK])
-            ->setKey($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY])
+            ->setCmsBlockKey($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY])
             ->setLocale($localeName)
             ->setStore($storeName)
             ->setName($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME])
