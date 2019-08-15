@@ -5,6 +5,7 @@
 
     <transfer name="Item">
         <property name="id" type="int" />
+        <property name="sku" type="string"/>
         <property name="priceProduct" type="PriceProduct" />
         <property name="unitGrossPrice" type="int" />
         <property name="forcedUnitGrossPrice" type="bool" deprecated="Will be removed with a next major release" />
@@ -15,6 +16,7 @@
 
         <property name="originUnitGrossPrice" type="int" />
         <property name="originUnitNetPrice" type="int" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="Quote">
@@ -23,6 +25,22 @@
 
     <transfer name="Store">
         <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quote" type="Quote"/>
+        <property name="quantity" type="int" />
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="operation" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
 </transfers>
