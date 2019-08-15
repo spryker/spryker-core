@@ -295,7 +295,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         array $cmsPageEntities,
         array $cmsPageStorageEntities
     ): array {
-        $localeNameMap = $this->getLocaleNameMapByStoreName($this->storeFacade->getAllStores());
+        $localeNameMap = $this->getLocaleNameMapByStoreName();
 
         $pairs = [];
 
@@ -374,12 +374,12 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     *
      * @return string[][]
      */
-    protected function getLocaleNameMapByStoreName(array $storeTransfers): array
+    protected function getLocaleNameMapByStoreName(): array
     {
+        $storeTransfers = $this->storeFacade->getAllStores();
+
         $localeNameMapByStoreName = [];
 
         foreach ($storeTransfers as $storeTransfer) {
