@@ -72,7 +72,6 @@ class TemplateTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            //if you remove ID column, slots table loading won't work
             static::COL_ID => static::VALUE_COL_ID,
             static::COL_NAME => static::VALUE_COL_NAME,
             static::COL_DESCRIPTION => static::VALUE_COL_DESCRIPTION,

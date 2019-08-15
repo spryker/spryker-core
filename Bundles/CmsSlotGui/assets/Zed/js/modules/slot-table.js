@@ -46,7 +46,16 @@ var SlotTable = function (options) {
             $.get(url, function (response) {
                 if (response.success) {
                     _self.slotTable.DataTable().ajax.reload(null, false);
+
+                    return true;
                 }
+
+                window.sweetAlert({
+                    title: 'Error',
+                    text: response.message,
+                    html: true,
+                    type: 'error'
+                });
             });
 
             return false;

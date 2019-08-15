@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotGui\Communication\Controller;
 
+use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,7 @@ class ActivateSlotController extends AbstractController
 {
     public const PARAM_ID_CMS_SLOT = 'id-cms-slot';
     protected const RESPONSE_SUCCESS_KEY = 'success';
+    protected const RESPONSE_MESSAGE = 'message';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -27,7 +29,14 @@ class ActivateSlotController extends AbstractController
     {
         $idCmsSlot = $this->castId($request->get(static::PARAM_ID_CMS_SLOT));
 
-        $this->getFactory()->getCmsSlotFacade()->activateByIdCmsSlot($idCmsSlot);
+        try {
+            $this->getFactory()->getCmsSlotFacade()->activateByIdCmsSlot($idCmsSlot);
+        } catch (MissingCmsSlotException $exception) {
+            return $this->jsonResponse([
+                static::RESPONSE_SUCCESS_KEY => false,
+                static::RESPONSE_MESSAGE => $exception->getMessage(),
+            ]);
+        }
 
         return $this->jsonResponse([static::RESPONSE_SUCCESS_KEY => true]);
     }
@@ -41,7 +50,14 @@ class ActivateSlotController extends AbstractController
     {
         $idCmsSlot = $this->castId($request->get(static::PARAM_ID_CMS_SLOT));
 
-        $this->getFactory()->getCmsSlotFacade()->deactivateByIdCmsSlot($idCmsSlot);
+        try {
+            $this->getFactory()->getCmsSlotFacade()->deactivateByIdCmsSlot($idCmsSlot);
+        } catch (MissingCmsSlotException $exception) {
+            return $this->jsonResponse([
+                static::RESPONSE_SUCCESS_KEY => false,
+                static::RESPONSE_MESSAGE => $exception->getMessage(),
+            ]);
+        }
 
         return $this->jsonResponse([static::RESPONSE_SUCCESS_KEY => true]);
     }

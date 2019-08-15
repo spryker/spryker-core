@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlot\Business\Activator;
 
+use Generated\Shared\Transfer\CmsSlotTransfer;
+use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotException;
 use Spryker\Zed\CmsSlot\Persistence\CmsSlotEntityManagerInterface;
 use Spryker\Zed\CmsSlot\Persistence\CmsSlotRepositoryInterface;
 
@@ -39,13 +41,10 @@ class CmsSlotActivator implements CmsSlotActivatorInterface
      */
     public function activateByIdCmsSlot(int $idCmsSlot): void
     {
-        $cmsSlotTransfer = $this->cmsSlotRepository->findCmsSlotById($idCmsSlot);
-
-        if (!$cmsSlotTransfer) {
-            return;
-        }
+        $cmsSlotTransfer = $this->getCmsSlotById($idCmsSlot);
 
         $cmsSlotTransfer->setIsActive(true);
+
         $this->cmsSlotEntityManager->updateCmsSlot($cmsSlotTransfer);
     }
 
@@ -56,13 +55,33 @@ class CmsSlotActivator implements CmsSlotActivatorInterface
      */
     public function deactivateByIdCmsSlot(int $idCmsSlot): void
     {
+        $cmsSlotTransfer = $this->getCmsSlotById($idCmsSlot);
+
+        $cmsSlotTransfer->setIsActive(false);
+
+        $this->cmsSlotEntityManager->updateCmsSlot($cmsSlotTransfer);
+    }
+
+    /**
+     * @param int $idCmsSlot
+     *
+     * @throws \Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotException
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer
+     */
+    protected function getCmsSlotById(int $idCmsSlot): CmsSlotTransfer
+    {
         $cmsSlotTransfer = $this->cmsSlotRepository->findCmsSlotById($idCmsSlot);
 
         if (!$cmsSlotTransfer) {
-            return;
+            throw new MissingCmsSlotException(
+                sprintf(
+                    'CMS Slot with id "%d" not found.',
+                    $idCmsSlot
+                )
+            );
         }
 
-        $cmsSlotTransfer->setIsActive(false);
-        $this->cmsSlotEntityManager->updateCmsSlot($cmsSlotTransfer);
+        return $cmsSlotTransfer;
     }
 }
