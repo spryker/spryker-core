@@ -59,7 +59,7 @@ class CompanyUserStorage implements CompanyUserStorageInterface
         $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference);
 
-        return $this->getStorageDataByMappingKeyAndLocaleName($mappingKey);
+        return $this->findStorageDataByMappingKey($mappingKey);
     }
 
     /**
@@ -83,29 +83,29 @@ class CompanyUserStorage implements CompanyUserStorageInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer|null
      */
-    protected function getStorageDataByMappingKeyAndLocaleName(string $mappingKey)
+    protected function findStorageDataByMappingKey(string $mappingKey): ?CompanyUserStorageTransfer
     {
         $storageData = $this->storageClient->get($mappingKey);
 
-        if (!$storageData) {
-            return null;
-        }
-
         if ($this->config->isSendingToQueue()) {
             $storageData = $this->resolveMappingData($storageData);
+        }
+
+        if (!$storageData) {
+            return null;
         }
 
         return (new CompanyUserStorageTransfer())->fromArray($storageData, true);
     }
 
     /**
-     * @param array $mappingData
+     * @param mixed $mappingData
      *
      * @return array|null
      */
-    protected function resolveMappingData(array $mappingData): ?array
+    protected function resolveMappingData($mappingData): ?array
     {
-        if (!isset($mappingData[static::KEY_ID])) {
+        if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
             return null;
         }
 

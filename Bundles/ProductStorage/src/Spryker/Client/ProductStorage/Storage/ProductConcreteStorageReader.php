@@ -202,7 +202,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference, $localeName);
 
-        return $this->getStorageDataByMappingKeyAndLocaleName($localeName, $mappingKey);
+        return $this->findStorageDataByMappingKeyAndLocaleName($mappingKey, $localeName);
     }
 
     /**
@@ -239,20 +239,16 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param string $localeName
      * @param string $mappingKey
+     * @param string $localeName
      *
      * @return array|null
      */
-    protected function getStorageDataByMappingKeyAndLocaleName(string $localeName, string $mappingKey)
+    protected function findStorageDataByMappingKeyAndLocaleName(string $mappingKey, string $localeName)
     {
         $storageData = $this->storageClient->get($mappingKey);
 
-        if (!$storageData) {
-            return null;
-        }
-
-        if ($this->config->isSendingToQueue() && isset($storageData[static::KEY_ID])) {
+        if ($this->config->isSendingToQueue()) {
             return $this->resolveMappingData($storageData, $localeName);
         }
 
@@ -260,14 +256,14 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param array $mappingData
+     * @param mixed $mappingData
      * @param string $localeName
      *
      * @return array|null
      */
-    protected function resolveMappingData(array $mappingData, string $localeName): ?array
+    protected function resolveMappingData($mappingData, string $localeName): ?array
     {
-        if (!isset($mappingData[static::KEY_ID])) {
+        if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
             return null;
         }
 
