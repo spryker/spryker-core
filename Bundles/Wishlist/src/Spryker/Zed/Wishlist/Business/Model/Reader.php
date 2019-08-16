@@ -428,7 +428,7 @@ class Reader implements ReaderInterface
         $wishlistTransfer = $this->wishlistRepository
             ->getWishlistByCustomerIdAndUuid(
                 $wishlistRequestTransfer->getIdCustomer(),
-                $wishlistRequestTransfer->getWishlist()->getUuid()
+                $wishlistRequestTransfer->getUuid()
             );
 
         return $wishlistResponseTransfer
