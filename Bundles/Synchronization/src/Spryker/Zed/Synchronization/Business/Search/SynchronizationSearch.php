@@ -35,8 +35,10 @@ class SynchronizationSearch implements SynchronizationInterface
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface $searchClient
      * @param \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface $outdatedValidator
      */
-    public function __construct(SynchronizationToSearchClientInterface $searchClient, OutdatedValidatorInterface $outdatedValidator)
-    {
+    public function __construct(
+        SynchronizationToSearchClientInterface $searchClient,
+        OutdatedValidatorInterface $outdatedValidator
+    ) {
         $this->searchClient = $searchClient;
         $this->outdatedValidator = $outdatedValidator;
     }
@@ -51,6 +53,7 @@ class SynchronizationSearch implements SynchronizationInterface
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
+
         $data = $this->formatTimestamp($data);
         $existingEntry = $this->read($data[static::KEY]);
 
@@ -75,6 +78,7 @@ class SynchronizationSearch implements SynchronizationInterface
     {
         $typeName = $this->getParam($data, static::TYPE);
         $indexName = $this->getParam($data, static::INDEX);
+
         $data = $this->formatTimestamp($data);
         $existingEntry = $this->read($data[static::KEY]);
 
@@ -163,6 +167,12 @@ class SynchronizationSearch implements SynchronizationInterface
         foreach ($data as $datum) {
             $typeName = $this->getParam($datum, static::TYPE);
             $indexName = $this->getParam($datum, static::INDEX);
+
+            // Hack
+            if ($indexName === '') {
+                $indexName = sprintf('%s_%s', strtolower(APPLICATION_STORE), $typeName);
+            }
+
             $key = $datum[static::KEY];
             $value = $datum[static::VALUE];
             unset($value['_timestamp']);

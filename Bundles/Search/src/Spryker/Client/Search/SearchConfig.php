@@ -10,11 +10,16 @@ namespace Spryker\Client\Search;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @method \Spryker\Shared\Search\SearchConfig getSharedConfig()
+ */
 class SearchConfig extends AbstractBundleConfig
 {
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
     /**
+     * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface::getIndexName()` in your Query class to determine which index should be used for the specific query.
+     *
      * @return string
      */
     public function getSearchIndexName()
@@ -23,6 +28,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. Since ES v6 only one type per index is allowed and we don't need it anymore.
+     *
      * @return string
      */
     public function getSearchDocumentType()

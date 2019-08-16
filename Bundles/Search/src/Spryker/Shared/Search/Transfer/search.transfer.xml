@@ -3,6 +3,12 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="IndexDefinition">
+        <property name="indexName" type="string" />
+        <property name="settings" type="array" />
+        <property name="mappings" type="array" />
+    </transfer>
+
     <transfer name="ElasticsearchIndexDefinition">
         <property name="indexName" type="string" />
         <property name="settings" type="array" />
@@ -131,6 +137,14 @@
         <property name="data" type="array"/>
         <property name="type" type="string"/>
         <property name="index" type="string"/>
+    </transfer>
+
+    <transfer name="DefinitionValidationResult">
+        <property name="errors" type="DefinitionError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="DefinitionError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

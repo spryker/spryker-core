@@ -20,6 +20,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
+    public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
 
     /**
@@ -32,6 +33,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchClient($container);
         $container = $this->addUtilEncodingFacade($container);
         $container = $this->addPluginSearchPageMaps($container);
+        $container = $this->addSearchInstallerPlugins($container);
         $container = $this->addGuzzleClient($container);
 
         return $container;
@@ -83,6 +85,28 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     protected function getSearchPageMapPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSearchInstallerPlugins(Container $container): Container
+    {
+        $container->set(static::SEARCH_INSTALLER_PLUGINS, function () {
+            return $this->getSearchInstallerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    protected function getSearchInstallerPlugins(): array
     {
         return [];
     }

@@ -9,6 +9,8 @@ namespace Spryker\Client\Search;
 
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Delegator\SearchDelegator;
+use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactory;
@@ -42,6 +44,24 @@ class SearchFactory extends AbstractFactory
      * @var \Elastica\Client
      */
     protected static $searchClient;
+
+    /**
+     * @return \Spryker\Client\Search\Delegator\SearchDelegatorInterface
+     */
+    public function createSearchDelegator(): SearchDelegatorInterface
+    {
+        return new SearchDelegator(
+            $this->getClientAdapterPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     */
+    public function getClientAdapterPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_ADAPTER_PLUGINS);
+    }
 
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
@@ -91,13 +111,28 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface
+     * @deprecated Use `\Spryker\Client\Search\SearchFactory::createSearchDelegator()` instead.
+     *
+     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface|\Spryker\Client\Search\Search\SearchInterface
      */
     public function createElasticsearchSearchHandler()
     {
+        $searchPlugins = $this->getSearchPlugins();
+        if (count($searchPlugins) > 0) {
+            return $this->createSearchDelegator();
+        }
+
         return new ElasticsearchSearchHandler(
-            $this->createIndexClientProvider()->getClient()
+            $this->createIndexClientProvider()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchPluginInterface[]
+     */
+    public function getSearchPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_PLUGINS);
     }
 
     /**

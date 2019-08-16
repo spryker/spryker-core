@@ -33,21 +33,23 @@ use Spryker\Zed\Search\SearchDependencyProvider;
 class SearchBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @param \Psr\Log\LoggerInterface $messenger
+     * @param \Psr\Log\LoggerInterface|null $messenger (deprecated Use `\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface::install()` instead)
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    public function createSearchInstaller(LoggerInterface $messenger)
+    public function createSearchInstaller(?LoggerInterface $messenger)
     {
         return new SearchInstaller($this->getSearchInstallerStack($messenger));
     }
 
     /**
+     * @param string|null $indexName
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
      */
-    public function createSearchIndexManager()
+    public function createSearchIndexManager(?string $indexName = null)
     {
-        return new SearchIndexManager($this->getElasticsearchIndex());
+        return new SearchIndexManager($this->getElasticsearchIndex($indexName), $this->getSearchClient());
     }
 
     /**
@@ -72,16 +74,33 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::getInstallerPlugins()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
     protected function getSearchInstallerStack(LoggerInterface $messenger)
     {
+        $installerPlugins = $this->getInstallerPlugins();
+
+        /** @deprecated Will be removed in favor of direct return of the attached InstallPluginInterface's. */
+        if (count($installerPlugins) > 0) {
+            return $installerPlugins;
+        }
+
         return [
             $this->createElasticsearchIndexInstaller($messenger),
             $this->createIndexMapInstaller($messenger),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    public function getInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_INSTALLER_PLUGINS);
     }
 
     /**
