@@ -321,15 +321,13 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @param string $methodName
-     * @param int $idMethod
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
      */
-    public function hasMethodByNameAndIdCarrier(string $methodName, int $idMethod, int $idCarrier): bool
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
         return $this->getRepository()
-            ->hasMethodByNameAndIdCarrier($methodName, $idMethod, $idCarrier);
+            ->isShipmentMethodUniqueForCarrier($shipmentMethodTransfer);
     }
 }

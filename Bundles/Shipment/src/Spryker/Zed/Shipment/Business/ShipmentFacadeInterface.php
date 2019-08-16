@@ -271,15 +271,13 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification
-     * - Check if carrier has shipment method name.
+     * - Check if shipment method name is unique for carrier.
      *
      * @api
      *
-     * @param string $methodName
-     * @param int $idMethod
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
      */
-    public function hasMethodByNameAndIdCarrier(string $methodName, int $idMethod, int $idCarrier): bool;
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }

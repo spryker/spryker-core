@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -16,21 +17,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ShipmentRepository extends AbstractRepository implements ShipmentRepositoryInterface
 {
     /**
-     * @param string $methodName
-     * @param int $idMethod
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
      */
-    public function hasMethodByNameAndIdCarrier(string $methodName, int $idMethod, int $idCarrier): bool
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
-        $count = $this->getFactory()
+        return $this->getFactory()
             ->createShipmentMethodQuery()
-            ->filterByName($methodName)
-            ->filterByIdShipmentMethod($idMethod, Criteria::NOT_EQUAL)
-            ->filterByFkShipmentCarrier($idCarrier)
-            ->count();
-
-        return (bool)$count;
+            ->filterByName($shipmentMethodTransfer->getName())
+            ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)
+            ->filterByFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier())
+            ->exists();
     }
 }

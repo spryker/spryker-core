@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -47,7 +46,7 @@ class MethodForm extends AbstractType
     public const OPTION_TAX_SETS = 'option_tax_sets';
     public const OPTION_MONEY_FACADE = 'money facade';
     public const OPTION_DATA_CLASS = 'data_class';
-    public const OPTION_DATA = 'data';
+    protected const OPTION_DATA = 'data';
 
     protected const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
 
@@ -155,25 +154,13 @@ class MethodForm extends AbstractType
      *
      * @return callable
      */
-    protected function validateUniqueName(array $options)
+    protected function validateUniqueName(array $options): callable
     {
         return function ($name, ExecutionContextInterface $contextInterface) use ($options) {
-            if ($this->isUniqueMethodName($name, $options[static::OPTION_DATA])) {
+            if ($this->getFacade()->isShipmentMethodUniqueForCarrier($options[static::OPTION_DATA])) {
                 $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
             }
         };
-    }
-
-    /**
-     * @param string $name
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return bool
-     */
-    protected function isUniqueMethodName(string $name, ShipmentMethodTransfer $shipmentMethodTransfer): bool
-    {
-        return $this->getFacade()
-            ->hasMethodByNameAndIdCarrier($name, $shipmentMethodTransfer->getIdShipmentMethod(), $shipmentMethodTransfer->getFkShipmentCarrier());
     }
 
     /**

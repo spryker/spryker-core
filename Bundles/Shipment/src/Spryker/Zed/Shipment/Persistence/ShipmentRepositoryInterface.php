@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+
 interface ShipmentRepositoryInterface
 {
     /**
-     * @param string $methodName
-     * @param int $idMethod
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
      */
-    public function hasMethodByNameAndIdCarrier(string $methodName, int $idMethod, int $idCarrier): bool;
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }
