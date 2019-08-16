@@ -143,6 +143,9 @@ class Writer implements WriterInterface
         $excludeIdProductImage = [];
 
         foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            if (!$productImageTransfer->getIdProductImage()) {
+                continue;
+            }
             $excludeIdProductImage[] = $productImageTransfer->getIdProductImage();
         }
 
