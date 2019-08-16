@@ -1,0 +1,16 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Stores' %}
+{% block section_title %}{{ widget_title | trans }}{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Stores' | trans } %}
+
+        {% block widget_content %}
+            {{ storeTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
