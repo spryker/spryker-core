@@ -18,7 +18,6 @@ Categories,Categories
 "Create a Product","Create a Product"
 "Create Bundle Product","Create Bundle Product"
 "Create Product","Create Product"
-Currency,Currency
 Deactivate,Deactivate
 Default,Default
 "Delete image","Delete image"
@@ -36,7 +35,6 @@ Large,Large
 "List Products","List of products"
 "Manage Attributes","Manage Attributes"
 "Merchant Price Dimension","Merchant Price Dimension"
-"Merchant relation","Merchant relation"
 "Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image","Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image"
 n/a,n/a
 "Net price","Net price"
@@ -49,7 +47,6 @@ n/a,n/a
 "Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)"
 "Note: The SKU is not editable after saving anymore.","Note: The SKU is not editable after saving anymore."
 "Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore."
-"Price Type","Price Type"
 "Price & Tax","Price & Tax"
 "Price & Taxes","Price & Taxes"
 "Product bundle does not have variants!","Product bundle does not have variants!"
@@ -68,7 +65,6 @@ Save,Save
 "SEO (Meta Information)","SEO (Meta Information)"
 Small,Small
 "Stock Type","Stock Type"
-Store,Store
 "Store relation","Store relation"
 "Tax Set","Tax Set"
 "The product [%s] does not exist.","The product [%s] does not exist."
