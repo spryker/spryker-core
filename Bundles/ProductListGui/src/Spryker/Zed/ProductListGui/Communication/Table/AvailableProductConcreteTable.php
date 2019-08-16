@@ -32,7 +32,7 @@ class AvailableProductConcreteTable extends AbstractProductConcreteTable
                     SpyProductListProductConcreteTableMap::TABLE_NAME,
                     sprintf(
                         '%s = %d',
-                        SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST ,
+                        SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST,
                         $this->getIdProductList()
                     )
                 );
