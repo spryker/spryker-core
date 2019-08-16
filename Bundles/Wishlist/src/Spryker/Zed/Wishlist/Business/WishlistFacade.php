@@ -254,10 +254,10 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         return $this->getFactory()
             ->createReader()
-            ->getCustomerWishlistByUuid($wishlistRequestTransfer);
+            ->getWishlistByUuid($wishlistRequestTransfer);
     }
 }

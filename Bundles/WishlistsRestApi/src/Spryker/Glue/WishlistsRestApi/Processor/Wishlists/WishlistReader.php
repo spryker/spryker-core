@@ -89,7 +89,7 @@ class WishlistReader implements WishlistReaderInterface
         $customerId = $restRequest->getRestUser()->getSurrogateIdentifier();
 
         if ($wishlistUuid) {
-            return $this->getCustomerWishlistByUuid($customerId, $wishlistUuid);
+            return $this->getWishlistResponseByIdCustomerAndUuid($customerId, $wishlistUuid);
         }
 
         return $this->readCurrentCustomerWishlists();
@@ -102,7 +102,16 @@ class WishlistReader implements WishlistReaderInterface
      */
     public function findWishlistByUuid(string $wishlistUuid): ?WishlistTransfer
     {
-        return $this->getWishlistByUuid($wishlistUuid);
+        $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
+        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
+
+        foreach ($customerWishlists as $wishlistTransfer) {
+            if ($wishlistTransfer->getUuid() === $wishlistUuid) {
+                return $wishlistTransfer;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -112,7 +121,7 @@ class WishlistReader implements WishlistReaderInterface
      */
     public function findWishlistOverviewByUuid(string $wishlistUuid): ?WishlistOverviewResponseTransfer
     {
-        $wishlistTransfer = $this->getWishlistByUuid($wishlistUuid);
+        $wishlistTransfer = $this->findWishlistByUuid($wishlistUuid);
         if (!$wishlistTransfer) {
             return null;
         }
@@ -156,12 +165,12 @@ class WishlistReader implements WishlistReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCustomerWishlistByUuid(int $customerId, string $idWishlist): RestResponseInterface
+    protected function getWishlistResponseByIdCustomerAndUuid(int $customerId, string $idWishlist): RestResponseInterface
     {
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setIdCustomer($customerId)
             ->setUuid($idWishlist);
-        $wishlistResponseTransfer = $this->wishlistsRestApiClient->getCustomerWishlistByUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistsRestApiClient->getWishlistByUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(
@@ -211,24 +220,5 @@ class WishlistReader implements WishlistReaderInterface
         $wishlistOverviewRequestTransfer->setItemsPerPage(PHP_INT_MAX);
 
         return $this->wishlistClient->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequestTransfer);
-    }
-
-    /**
-     * @param string $wishlistUuid
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|null
-     */
-    protected function getWishlistByUuid(string $wishlistUuid): ?WishlistTransfer
-    {
-        $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
-        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
-
-        foreach ($customerWishlists as $wishlistTransfer) {
-            if ($wishlistTransfer->getUuid() === $wishlistUuid) {
-                return $wishlistTransfer;
-            }
-        }
-
-        return null;
     }
 }

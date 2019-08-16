@@ -31,11 +31,11 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
         $wishlistResponseTransfer = $this->zedStubClient->call(
-            '/wishlists-rest-api/gateway/get-customer-wishlist-by-uuid',
+            '/wishlists-rest-api/gateway/get-wishlist-by-uuid',
             $wishlistRequestTransfer
         );
 

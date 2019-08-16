@@ -41,12 +41,4 @@ interface WishlistReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function getWishlistsByCustomerReference(string $customerReference): array;
-
-    /**
-     * @param int $customerId
-     * @param string $idWishlist
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getCustomerWishlistByUuid(int $customerId, string $idWishlist): RestResponseInterface;
 }

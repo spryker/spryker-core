@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 
-class Deleter implements DeleterInterface
+class WishlistReader implements WishlistReaderInterface
 {
     /**
      * @var \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface
@@ -31,16 +31,8 @@ class Deleter implements DeleterInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
-
-        if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $wishlistResponseTransfer;
-        }
-
-        $this->wishlistFacade->removeWishlist($wishlistResponseTransfer->getWishlist());
-
-        return $wishlistResponseTransfer;
+        return $this->wishlistFacade->getWishlistByUuid($wishlistRequestTransfer);
     }
 }
