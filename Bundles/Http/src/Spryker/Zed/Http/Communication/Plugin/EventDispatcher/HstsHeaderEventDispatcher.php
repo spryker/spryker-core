@@ -41,7 +41,9 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], static::EVENT_PRIORITY);
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+            $this->onKernelResponse($event);
+        }, static::EVENT_PRIORITY);
 
         return $eventDispatcher;
     }
@@ -51,7 +53,7 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
      *
      * @return void
      */
-    public function onKernelResponse(FilterResponseEvent $event): void
+    protected function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest() || !$this->getConfig()->isHstsEnabled()) {
             return;
