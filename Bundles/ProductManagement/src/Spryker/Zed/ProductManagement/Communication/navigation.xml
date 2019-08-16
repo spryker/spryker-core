@@ -34,27 +34,6 @@
                         <controller>edit</controller>
                         <action>index</action>
                         <visible>0</visible>
-<<<<<<< HEAD
-                        <pages>
-                            <create-scheduled-price>
-                                <label>Add scheduled price</label>
-                                <title>Add scheduled price</title>
-                                <bundle>price-product-schedule-gui</bundle>
-                                <controller>create</controller>
-                                <action>index</action>
-                                <visible>0</visible>
-                            </create-scheduled-price>
-                            <edit-scheduled-price>
-                                <label>Edit scheduled price</label>
-                                <title>Edit scheduled price</title>
-                                <bundle>price-product-schedule-gui</bundle>
-                                <controller>edit</controller>
-                                <action>index</action>
-                                <visible>0</visible>
-                            </edit-scheduled-price>
-                        </pages>
-=======
->>>>>>> cbddc80e5d1b56b5b62bcc1bd36793f47ba59cfc
                     </product-edit>
 
                     <product-concrete-view>
@@ -73,27 +52,6 @@
                         <controller>edit</controller>
                         <action>variant</action>
                         <visible>0</visible>
-<<<<<<< HEAD
-                        <pages>
-                            <create-scheduled-price>
-                                <label>Add scheduled price</label>
-                                <title>Add scheduled price</title>
-                                <bundle>price-product-schedule-gui</bundle>
-                                <controller>create</controller>
-                                <action>index</action>
-                                <visible>0</visible>
-                            </create-scheduled-price>
-                            <edit-scheduled-price>
-                                <label>Edit scheduled price</label>
-                                <title>Edit scheduled price</title>
-                                <bundle>price-product-schedule-gui</bundle>
-                                <controller>edit</controller>
-                                <action>index</action>
-                                <visible>0</visible>
-                            </edit-scheduled-price>
-                        </pages>
-=======
->>>>>>> cbddc80e5d1b56b5b62bcc1bd36793f47ba59cfc
                     </product-concrete-edit>
                 </pages>
             </products>

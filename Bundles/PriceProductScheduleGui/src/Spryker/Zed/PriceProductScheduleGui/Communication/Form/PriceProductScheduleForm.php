@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
-use Closure;
-use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -128,7 +124,7 @@ class PriceProductScheduleForm extends AbstractType
         ]);
 
         $builder->get(static::FIELD_ACTIVE_FROM)
-            ->addModelTransformer($this->createModelTransformer());
+            ->addModelTransformer($this->getFactory()->createDateTransformer());
 
         return $this;
     }
@@ -151,48 +147,9 @@ class PriceProductScheduleForm extends AbstractType
         ]);
 
         $builder->get(static::FIELD_ACTIVE_TO)
-            ->addModelTransformer($this->createModelTransformer());
+            ->addModelTransformer($this->getFactory()->createDateTransformer());
 
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\DataTransformerInterface
-     */
-    protected function createModelTransformer(): DataTransformerInterface
-    {
-        return new CallbackTransformer(
-            $this->createTransformCallback(),
-            $this->createReverseTransformCallback()
-        );
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function createTransformCallback(): Closure
-    {
-        return function ($time) {
-            if ($time === null) {
-                return null;
-            }
-
-            return new DateTime($time);
-        };
-    }
-
-    /**
-     * @return \Closure
-     */
-    protected function createReverseTransformCallback(): Closure
-    {
-        return function (?DateTime $time) {
-            if ($time === null) {
-                return null;
-            }
-
-            return $time->format('Y-m-d H:i:s');
-        };
     }
 
     /**
