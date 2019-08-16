@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -24,6 +25,22 @@ class StoreSubForm extends AbstractType
     public const FIELD_ID_STORE = 'idStore';
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined([
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+        ]);
+
+        $resolver->setRequired([
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -31,7 +48,8 @@ class StoreSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIdStore($builder);
+        $this->addIdStore($builder, $options);
+
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
             /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
             $storeTransfer = $event->getData();
@@ -57,20 +75,15 @@ class StoreSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addIdStore(FormBuilderInterface $builder)
+    protected function addIdStore(FormBuilderInterface $builder, array $options)
     {
-        $storeValues = array_flip(
-            $this->getFactory()
-                ->createPriceProductScheduleFormDataProvider()
-            ->getOptions()[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES]
-        );
-
         $builder->add(static::FIELD_ID_STORE, ChoiceType::class, [
             'label' => 'Store',
-            'choices' => $storeValues,
+            'choices' => array_flip($options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES]),
             'placeholder' => 'Choose store',
             'constraints' => [
                 new NotBlank(),

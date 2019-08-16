@@ -35,10 +35,15 @@ class PriceProductScheduleForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        parent::configureOptions($resolver);
-        $resolver->setRequired([
+        $resolver->setDefined([
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+        ]);
+
+        $resolver->setRequired([
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
         ]);
 
         $resolver->setDefaults([
@@ -58,7 +63,7 @@ class PriceProductScheduleForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addPriceProduct($builder)
+        $this->addPriceProduct($builder, $options)
             ->addActiveFrom($builder)
             ->addActiveTo($builder)
             ->addSubmitField($builder);
@@ -66,14 +71,18 @@ class PriceProductScheduleForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addPriceProduct(FormBuilderInterface $builder)
+    protected function addPriceProduct(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PRICE_PRODUCT, PriceProductSubForm::class, [
             'data_class' => PriceProductTransfer::class,
             'label' => false,
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES],
+            PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
+            PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES],
         ]);
 
         return $this;

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -21,6 +22,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CurrencySubForm extends AbstractType
 {
     public const FIELD_ID_CURRENCY = 'idCurrency';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined([
+            PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

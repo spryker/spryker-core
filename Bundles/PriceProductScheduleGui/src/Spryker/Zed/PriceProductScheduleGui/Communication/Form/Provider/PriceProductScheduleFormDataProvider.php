@@ -17,6 +17,7 @@ class PriceProductScheduleFormDataProvider
     public const OPTION_DATA_CLASS = 'data_class';
     public const OPTION_STORE_CHOICES = 'option_store_choices';
     public const OPTION_CURRENCY_CHOICES = 'option_currency_choices';
+    public const OPTION_PRICE_TYPE_CHOICES = 'option_price_type_choices';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
@@ -51,7 +52,7 @@ class PriceProductScheduleFormDataProvider
     /**
      * @return array
      */
-    public function getPriceTypeValues(): array
+    protected function getPriceTypeValues(): array
     {
         $priceTypes = $this->priceProductFacade->getPriceTypeValues();
         $result = [];
@@ -118,6 +119,7 @@ class PriceProductScheduleFormDataProvider
             static::OPTION_DATA_CLASS => PriceProductScheduleTransfer::class,
             static::OPTION_STORE_CHOICES => $this->getStoreValues(),
             static::OPTION_CURRENCY_CHOICES => $this->getCurrencyValues($idStore),
+            static::OPTION_PRICE_TYPE_CHOICES => $this->getPriceTypeValues(),
         ];
     }
 }

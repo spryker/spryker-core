@@ -10,8 +10,10 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -23,6 +25,22 @@ class MoneyValueSubForm extends AbstractType
     public const FIELD_GROSS_AMOUNT = 'grossAmount';
     public const FIELD_CURRENCY = 'currency';
     public const FIELD_STORE = 'store';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined([
+            PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+        ]);
+        $resolver->setRequired([
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -41,14 +59,16 @@ class MoneyValueSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addStore(FormBuilderInterface $builder)
+    protected function addStore(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_STORE, StoreSubForm::class, [
             'label' => false,
             'data_class' => StoreTransfer::class,
+            PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES],
         ]);
 
         return $this;
@@ -62,7 +82,7 @@ class MoneyValueSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addStore($builder)
+        $this->addStore($builder, $options)
             ->addCurrency($builder)
             ->addNetPrice($builder)
             ->addGrossPrice($builder);
