@@ -157,7 +157,7 @@ class MethodForm extends AbstractType
     protected function validateUniqueName(array $options): callable
     {
         return function ($name, ExecutionContextInterface $contextInterface) use ($options) {
-            if ($this->getFacade()->isShipmentMethodUniqueForCarrier($options[static::OPTION_DATA])) {
+            if (!$this->getFacade()->isShipmentMethodUniqueForCarrier($options[static::OPTION_DATA])) {
                 $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
             }
         };

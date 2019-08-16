@@ -23,7 +23,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
-        return $this->getFactory()
+        return !$this->getFactory()
             ->createShipmentMethodQuery()
             ->filterByName($shipmentMethodTransfer->getName())
             ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)

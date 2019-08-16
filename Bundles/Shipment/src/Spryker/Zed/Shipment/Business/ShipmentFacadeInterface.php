@@ -271,7 +271,7 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification
-     * - Check if shipment method name is unique for carrier.
+     * - Checks if shipment method name is unique for carrier, except for shipment method which is passed in $shipmentMethodTransfer.
      *
      * @api
      *
