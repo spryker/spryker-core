@@ -122,8 +122,6 @@ class QuoteMapper implements QuoteMapperInterface
                 foreach ($quoteData[$fieldKey] as $itemData) {
                     $data[$fieldKey][] = $this->filterDisallowedQuoteData($itemData, $fieldData);
                 }
-
-                continue;
             }
         }
 

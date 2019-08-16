@@ -29,6 +29,7 @@ use Spryker\Zed\Quote\QuoteConfig;
  * @group Quote
  * @group Persistence
  * @group Propel
+ * @group Mapper
  * @group QuoteMapperTest
  * Add your own group annotations below this line
  */
@@ -37,13 +38,17 @@ class QuoteMapperTest extends Unit
     /**
      * @dataProvider mapTransferToEntityProvider
      *
-     * @param QuoteTransfer $quoteTransfer
-     * @param SpyQuote $quote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quote
      * @param array $expectedQuoteData
+     *
      * @return void
      */
-    public function testMapTransferToEntity(QuoteTransfer $quoteTransfer, SpyQuote $quote, array $expectedQuoteData)
-    {
+    public function testMapTransferToEntity(
+        QuoteTransfer $quoteTransfer,
+        SpyQuote $quote,
+        array $expectedQuoteData
+    ): void {
         $utilEncodingServiceMock = $this->getMockBuilder(QuoteToUtilEncodingServiceInterface::class)
             ->getMock();
         $quoteConfigMock = $this->getMockBuilder(QuoteConfig::class)
@@ -58,7 +63,10 @@ class QuoteMapperTest extends Unit
         $this->assertEquals($expectedQuoteData, $updatedQuote->toArray());
     }
 
-    protected function createQuoteEntity()
+    /**
+     * @return \Orm\Zed\Quote\Persistence\SpyQuote
+     */
+    protected function createQuoteEntity(): SpyQuote
     {
         return (SpyQuoteQuery::create())->findOneOrCreate();
     }
