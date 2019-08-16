@@ -18,6 +18,7 @@ Categories,Kategorien
 "Create a Product","Produkt erstellen"
 "Create Bundle Product","Bundle-Produkt erstellen"
 "Create Product","Produkt erstellen"
+Currency,Währung
 Deactivate,Deaktivieren
 Default,Standard
 "Delete image","Lösche Bild"
@@ -35,6 +36,7 @@ Large,Groß
 "List Products","Liste der Produkte"
 "Manage Attributes","Attribute verwalten"
 "Merchant Price Dimension","Preisdimension des Händlers"
+"Merchant relation",Händlerbeziehung
 "Multiple images can be grouped to an image set. An image set has a name for identification and may contain a small and a large version of each image","Mehrere Bilder können zu einem Bilderset zusammengefasst werden. Ein Bilderset hat einen Namen zur Identifikation und kann eine kleine und eine große Version jedes Bildes enthalten."
 n/a,k.A.
 "Net price",Nettopreis
@@ -47,6 +49,7 @@ n/a,k.A.
 "Note: The price that you edit here is only displayed in the shop catalog and the product detail page for the non configured product (Not product variant)","Hinweis: Der Preis, den Sie hier bearbeiten, wird nur im Shop-Katalog und in der Detailansicht des nicht konfigurierten Produkts (nicht der Produktvariante) angezeigt."
 "Note: The SKU is not editable after saving anymore.","Hinweis: Die SKU kann nach dem Speichern nicht mehr bearbeitet werden."
 "Note: The SKU prefix, just like the SKUs of your product variants, are not editable after saving anymore.","Hinweis: Das SKU-Präfix kann, genau wie die SKUs Ihrer Produktvarianten, nach dem Speichern nicht mehr bearbeitet werden."
+"Price Type",Preistyp
 "Price & Tax","Preis und Steuer"
 "Price & Taxes","Preis und Steuern"
 "Product bundle does not have variants!","Bündelprodukt hat keine Varianten!"
@@ -66,6 +69,7 @@ Save,Speichern
 Small,Klein
 "Stock Type",Bestandsart
 "Store relation","Store relation"
+Store,Geschäft
 "Tax Set",Steuer-Set
 "The product [%s] does not exist.","Das Produkt [%s] existiert nicht."
 "The product [%s] was saved successfully.","Das Produkt [%s] wurde erfolgreich gespeichert."
