@@ -13,6 +13,7 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -39,24 +40,17 @@ class SslEventDispatcherPlugin extends AbstractPlugin implements EventDispatcher
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         if ($this->getConfig()->isSslEnabled()) {
-            $eventDispatcher->addListener(KernelEvents::REQUEST, [$this, 'onKernelRequest'], static::EVENT_PRIORITY);
+            $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) {
+                $request = $event->getRequest();
+                if ($this->shouldBeSsl($request)) {
+                    return $this->redirectToSsl($request);
+                }
+
+                return null;
+            }, static::EVENT_PRIORITY);
         }
 
         return $eventDispatcher;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
-     */
-    protected function onKernelRequest(Request $request): ?RedirectResponse
-    {
-        if ($this->shouldBeSsl($request)) {
-            return $this->redirectToSsl($request);
-        }
-
-        return null;
     }
 
     /**

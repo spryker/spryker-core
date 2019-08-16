@@ -46,7 +46,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      *
      * @return void
      */
-    protected function onKernelResponse(FilterResponseEvent $event): void
+    public function onKernelResponse(FilterResponseEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

@@ -36,7 +36,9 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], static::HEADER_HANDLER_PRIORITY);
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+            $this->onKernelResponse($event);
+        }, static::HEADER_HANDLER_PRIORITY);
 
         return $eventDispatcher;
     }

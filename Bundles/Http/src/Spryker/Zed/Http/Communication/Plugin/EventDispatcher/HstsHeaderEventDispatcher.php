@@ -41,7 +41,7 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelRequest'], static::EVENT_PRIORITY);
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], static::EVENT_PRIORITY);
 
         return $eventDispatcher;
     }
