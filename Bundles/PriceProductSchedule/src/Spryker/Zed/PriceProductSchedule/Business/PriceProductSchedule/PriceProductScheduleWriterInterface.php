@@ -17,4 +17,13 @@ interface PriceProductScheduleWriterInterface
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
     public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function createPriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer;
 }

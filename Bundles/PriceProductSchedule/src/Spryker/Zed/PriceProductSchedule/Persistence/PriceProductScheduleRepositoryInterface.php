@@ -77,6 +77,13 @@ interface PriceProductScheduleRepositoryInterface
     ): ?PriceProductScheduleTransfer;
 
     /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer|null
+     */
+    public function findPriceProductScheduleListByName(string $name): ?PriceProductScheduleListTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductAbstract
      *

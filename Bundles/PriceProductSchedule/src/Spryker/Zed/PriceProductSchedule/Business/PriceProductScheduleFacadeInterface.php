@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\PriceProductScheduledListImportRequestTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleResponseTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 
 interface PriceProductScheduleFacadeInterface
@@ -129,6 +131,19 @@ interface PriceProductScheduleFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
     public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer;
+
+    /**
+     * Specification:
+     * - Creates scheduled price.
+     * - Apply scheduled prices for product, related to given scheduled price.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function createAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer;
 
     /**
      * Specification:

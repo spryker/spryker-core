@@ -18,6 +18,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\Abstr
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplierInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplierInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Creator\PriceProductScheduleCreator;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Creator\PriceProductScheduleCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferMoneyValueDataExpander;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferPriceDimensionDataExpander;
@@ -207,7 +209,8 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListCreator(): PriceProductScheduleListCreatorInterface
     {
         return new PriceProductScheduleListCreator(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -344,7 +347,8 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListFinder(): PriceProductScheduleListFinderInterface
     {
         return new PriceProductScheduleListFinder(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 
@@ -455,6 +459,19 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
             $this->createPriceProductScheduleDisabler()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Creator\PriceProductScheduleCreatorInterface
+     */
+    public function createPriceProductScheduleCreator(): PriceProductScheduleCreatorInterface
+    {
+        return new PriceProductScheduleCreator(
+            $this->createPriceProductScheduleWriter(),
+            $this->createPriceProductScheduleApplierByProductTypeResolver(),
+            $this->createPriceProductScheduleListFinder(),
+            $this->createPriceProductScheduleListCreator()
         );
     }
 
