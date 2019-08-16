@@ -22,6 +22,8 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
 {
+    protected const KEY_ID = 'id';
+
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
@@ -53,10 +55,16 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected static $productsAbstractDataCache = [];
 
     /**
+     * @var \Spryker\Client\ProductStorage\ProductStorageConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
+     * @param \Spryker\Client\ProductStorage\ProductStorageConfig $config
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[] $productAbstractRestrictionPlugins
      */
     public function __construct(
@@ -64,6 +72,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         Store $store,
         ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter,
+        ProductStorageConfig $config,
         array $productAbstractRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
@@ -71,6 +80,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         $this->store = $store;
         $this->productAbstractVariantsRestrictionFilter = $productAbstractVariantsRestrictionFilter;
         $this->productAbstractRestrictionPlugins = $productAbstractRestrictionPlugins;
+        $this->config = $config;
     }
 
     /**
@@ -195,13 +205,8 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     {
         $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference, $localeName);
-        $mappingData = $this->storageClient->get($mappingKey);
 
-        if (!$mappingData) {
-            return null;
-        }
-
-        return $this->findProductAbstractStorageData($mappingData['id'], $localeName);
+        return $this->getStorageDataByMappingKeyAndLocaleName($mappingKey, $localeName);
     }
 
     /**
@@ -261,5 +266,41 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected function cacheProductAbstractDataByIdProductAbstractAndLocaleName(int $idProductAbstract, string $localeName, ?array $productData): void
     {
         static::$productsAbstractDataCache[$idProductAbstract][$localeName] = $productData;
+    }
+
+    /**
+     * @param string $localeName
+     * @param string $mappingKey
+     *
+     * @return array|null
+     */
+    protected function getStorageDataByMappingKeyAndLocaleName(string $localeName, string $mappingKey)
+    {
+        $storageData = $this->storageClient->get($mappingKey);
+
+        if (!$storageData) {
+            return null;
+        }
+
+        if ($this->config->isSendingToQueue()) {
+            return $this->resolveMappingData($storageData, $localeName);
+        }
+
+        return $storageData;
+    }
+
+    /**
+     * @param array $mappingData
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function resolveMappingData(array $mappingData, string $localeName): ?array
+    {
+        if (!isset($mappingData[static::KEY_ID])) {
+            return null;
+        }
+
+        return $this->findProductAbstractStorageData($mappingData[static::KEY_ID], $localeName);
     }
 }

@@ -12,6 +12,9 @@ use Spryker\Client\CompanyUserStorage\Dependency\Service\CompanyUserStorageToSyn
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\CompanyUserStorage\CompanyUserStorageConfig getConfig()
+ */
 class CompanyUserStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';

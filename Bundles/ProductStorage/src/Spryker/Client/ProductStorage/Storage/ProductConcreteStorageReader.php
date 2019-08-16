@@ -21,6 +21,8 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
+    protected const KEY_ID = 'id';
+
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
      */
@@ -42,21 +44,29 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $productConcreteRestrictionPlugins;
 
     /**
+     * @var \Spryker\Client\ProductStorage\ProductStorageConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
+     * @param \Spryker\Client\ProductStorage\ProductStorageConfig $config
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
+        ProductStorageConfig $config,
         array $productConcreteRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->localeClient = $localeClient;
         $this->productConcreteRestrictionPlugins = $productConcreteRestrictionPlugins;
+        $this->config = $config;
     }
 
     /**
@@ -191,13 +201,8 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference, $localeName);
-        $mappingData = $this->storageClient->get($mappingKey);
 
-        if (!$mappingData) {
-            return null;
-        }
-
-        return $this->findProductConcreteStorageData($mappingData['id'], $localeName);
+        return $this->getStorageDataByMappingKeyAndLocaleName($localeName, $mappingKey);
     }
 
     /**
@@ -231,5 +236,41 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductStorageConstants::PRODUCT_CONCRETE_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param string $localeName
+     * @param string $mappingKey
+     *
+     * @return array|null
+     */
+    protected function getStorageDataByMappingKeyAndLocaleName(string $localeName, string $mappingKey)
+    {
+        $storageData = $this->storageClient->get($mappingKey);
+
+        if (!$storageData) {
+            return null;
+        }
+
+        if ($this->config->isSendingToQueue() && isset($storageData[static::KEY_ID])) {
+            return $this->resolveMappingData($storageData, $localeName);
+        }
+
+        return $storageData;
+    }
+
+    /**
+     * @param array $mappingData
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function resolveMappingData(array $mappingData, string $localeName): ?array
+    {
+        if (!isset($mappingData[static::KEY_ID])) {
+            return null;
+        }
+
+        return $this->findProductConcreteStorageData($mappingData[static::KEY_ID], $localeName);
     }
 }
