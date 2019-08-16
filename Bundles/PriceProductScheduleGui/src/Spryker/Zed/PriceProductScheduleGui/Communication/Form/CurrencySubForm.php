@@ -9,8 +9,10 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -20,6 +22,18 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CurrencySubForm extends AbstractType
 {
     public const FIELD_ID_CURRENCY = 'idCurrency';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined([
+            PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -44,6 +58,7 @@ class CurrencySubForm extends AbstractType
 
         $builder->add(static::FIELD_ID_CURRENCY, ChoiceType::class, [
             'label' => 'Currency',
+            'disabled' => true,
             'placeholder' => 'Choose currency',
             'choices' => $currencyChoices,
             'constraints' => [
@@ -68,7 +83,7 @@ class CurrencySubForm extends AbstractType
         return array_flip(
             $this->getFactory()
                 ->createPriceProductScheduleFormDataProvider()
-                ->getCurrencyValues($idStore)
+                ->getOptions($idStore)[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
         );
     }
 

@@ -14,6 +14,11 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class PriceProductScheduleFormDataProvider
 {
+    public const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_STORE_CHOICES = 'option_store_choices';
+    public const OPTION_CURRENCY_CHOICES = 'option_currency_choices';
+    public const OPTION_PRICE_TYPE_CHOICES = 'option_price_type_choices';
+
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
      */
@@ -55,7 +60,7 @@ class PriceProductScheduleFormDataProvider
     /**
      * @return array
      */
-    public function getPriceTypeValues(): array
+    protected function getPriceTypeValues(): array
     {
         $priceTypes = $this->priceProductFacade->getPriceTypeValues();
         $result = [];
@@ -70,7 +75,7 @@ class PriceProductScheduleFormDataProvider
     /**
      * @return array
      */
-    public function getStoreValues(): array
+    protected function getStoreValues(): array
     {
         $storeCollection = $this->storeFacade->getAllStores();
         $result = [];
@@ -83,24 +88,21 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
-     * @param int $idStore
+     * @param int|null $idStore
      *
      * @return array
      */
-    public function getCurrencyValues(int $idStore): array
+    protected function getCurrencyValues(?int $idStore): array
     {
+        if ($idStore === null) {
+            return [];
+        }
+
         $result = [];
-        $storeWithCurrenciesCollection = $this->currencyFacade->getAllStoresWithCurrencies();
-        foreach ($storeWithCurrenciesCollection as $storeWithCurrencyTransfer) {
-            if ($storeWithCurrencyTransfer->getStore() === null) {
-                continue;
-            }
-            if ($storeWithCurrencyTransfer->getStore()->getIdStore() !== $idStore) {
-                continue;
-            }
-            foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
-            }
+        $storeWithCurrenciesTransfer = $this->currencyFacade->getStoreWithCurrenciesByIdStore($idStore);
+
+        foreach ($storeWithCurrenciesTransfer->getCurrencies() as $currencyTransfer) {
+            $result[$currencyTransfer->getIdCurrency()] = $currencyTransfer->getCode();
         }
 
         return $result;
@@ -119,12 +121,17 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
+     * @param int|null $idStore
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(?int $idStore = null): array
     {
         return [
-            'data_class' => PriceProductScheduleTransfer::class,
+            static::OPTION_DATA_CLASS => PriceProductScheduleTransfer::class,
+            static::OPTION_STORE_CHOICES => $this->getStoreValues(),
+            static::OPTION_CURRENCY_CHOICES => $this->getCurrencyValues($idStore),
+            static::OPTION_PRICE_TYPE_CHOICES => $this->getPriceTypeValues(),
         ];
     }
 }

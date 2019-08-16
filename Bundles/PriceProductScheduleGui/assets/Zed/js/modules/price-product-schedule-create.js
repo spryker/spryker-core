@@ -5,38 +5,77 @@
 
 'use strict';
 
-$(document).ready(function() {
-    var $activeFrom = $('#price_product_schedule_activeFrom_date');
-    var $activeTo = $('#price_product_schedule_activeTo_date');
-    var $store = $('#price_product_schedule_priceProduct_moneyValue_store_idStore');
-    var $currency = $('#price_product_schedule_priceProduct_moneyValue_currency_idCurrency');
-    $activeFrom.datepicker({
-        altFormat: "yy-mm-dd",
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        defaultData: 0,
-    });
-    $activeTo.datepicker({
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        defaultData: 0,
-    });
+var DependentSelectBox = require('ZedGuiModules/libs/dependent-select-box');
 
-    $store.change(function() {
-        var data = {};
-        data.idStore = $store.val();
-        $currency.find('option:gt(0)').remove();
-        $.ajax({
-            url: '/currency/currencies-for-store',
-            type: 'POST',
-            data: data,
-            success: function(data) {
-                $.each(data.currencies, function(key, currency) {
-                    $currency.append($('<option value="'+ currency.id_currency +'">'+ currency.code +'</option>'));
-                });
-                $('#active_from_timezone').html(data.timezoneText);
-                $('#active_to_timezone').html(data.timezoneText);
-            }
+function PriceProductScheduleCreate(options) {
+    $.extend(this, options);
+
+    var self = this;
+
+    this.init = function() {
+        this.initActiveFromDatepicker();
+        this.initActiveToDatepicker();
+        this.hideTimezoneMessage();
+        this.initDependentSelectBox();
+    };
+
+    this.initActiveFromDatepicker = function() {
+        this.$activeFrom.datepicker({
+            altFormat: "yy-mm-dd",
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            defaultData: 0,
         });
-    });
-});
+    };
+
+    this.initActiveToDatepicker = function() {
+        this.$activeTo.datepicker({
+            dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            defaultData: 0,
+        });
+    };
+
+    this.toggleVisibility = function(display) {
+        this.$activeFromTimezoneText.toggle(display);
+        this.$activeToTimezoneText.toggle(display);
+    };
+
+    this.hideTimezoneMessage = function() {
+        if (!this.$store.val()) {
+            this.toggleVisibility(false);
+        }
+    };
+
+    this.fillTimezoneMessage = function(data) {
+        this.$timezone.each(function(index, element) {
+            $(element).text(data.store.timezone);
+        });
+    };
+
+    this.successCallback = function(data) {
+        if (!data.store) {
+            self.toggleVisibility(false);
+
+            return;
+        }
+
+        self.fillTimezoneMessage(data);
+        self.toggleVisibility(true);
+    };
+
+    this.initDependentSelectBox = function() {
+        new DependentSelectBox({
+            $trigger: this.$store,
+            $target: this.$currency,
+            requestUrl: this.requestUrl,
+            dataKey: this.dataKey,
+            responseData: this.currencies,
+            successCallback: this.successCallback
+        });
+    };
+
+    this.init();
+}
+
+module.exports = PriceProductScheduleCreate;

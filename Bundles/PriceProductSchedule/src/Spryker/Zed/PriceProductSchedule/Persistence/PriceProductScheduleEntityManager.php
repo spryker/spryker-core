@@ -79,6 +79,9 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
     public function createPriceProductSchedule(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductScheduleTransfer {
+        $priceProductScheduleTransfer->requirePriceProductScheduleList()->getPriceProductScheduleList()->requireIdPriceProductScheduleList();
+        $priceProductScheduleTransfer->getPriceProduct()->requireMoneyValue();
+
         $priceProductScheduleEntity = $this->getFactory()
             ->createPriceProductScheduleMapper()
             ->mapPriceProductScheduleTransferToPriceProductScheduleEntity(
