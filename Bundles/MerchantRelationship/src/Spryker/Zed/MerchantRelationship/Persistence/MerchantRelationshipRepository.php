@@ -117,6 +117,8 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship[] $merchantRelationshipEntities */
         $merchantRelationshipEntities = $this->getFactory()
             ->createMerchantRelationshipQuery()
+            ->joinWithCompanyBusinessUnit()
+            ->joinWithMerchant()
             ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
                 ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
