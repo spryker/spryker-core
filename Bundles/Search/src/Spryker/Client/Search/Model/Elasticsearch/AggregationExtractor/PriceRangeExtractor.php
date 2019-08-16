@@ -69,12 +69,12 @@ class PriceRangeExtractor extends RangeExtractor
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
         $activeMax = null;
-        if (empty($requestParameters[$parameterName]['max']) === false) {
+        if (!empty($requestParameters[$parameterName]['max'])) {
             $activeMax = (float)$requestParameters[$parameterName]['max'];
         }
 
         $activeMin = null;
-        if (empty($requestParameters[$parameterName]['min']) === false) {
+        if (!empty($requestParameters[$parameterName]['min'])) {
             $activeMin = (float)$requestParameters[$parameterName]['min'];
         }
 
