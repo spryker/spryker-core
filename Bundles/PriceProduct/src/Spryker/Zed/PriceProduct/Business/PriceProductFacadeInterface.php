@@ -390,6 +390,7 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Creates new spy_price_product record if it not exists.
      *  - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
+     *  - Optionally deletes orphan spy_price_product_store records depending on PriceProductConfig::IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED value.
      *  - Regenerates spy_price_product_store PriceDataChecksum before save.
      *
      * @api
