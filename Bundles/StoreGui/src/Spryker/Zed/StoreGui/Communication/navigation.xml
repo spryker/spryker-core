@@ -6,7 +6,7 @@
         <icon>fa-angle-double-right</icon>
         <pages>
             <stores>
-                <label>Manage Stores</label>
+                <label>Stores</label>
                 <title>Stores</title>
                 <bundle>store-gui</bundle>
                 <controller>list</controller>

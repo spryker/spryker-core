@@ -44,10 +44,9 @@ class StoreTable extends AbstractTable
             static::COL_NAME => 'Name',
         ]);
 
-        $config->setDefaultSortField(static::COL_ID_STORE);
+        $config->setDefaultSortField(static::COL_NAME);
 
         $config->setSortable([
-            static::COL_ID_STORE,
             static::COL_NAME,
         ]);
 
