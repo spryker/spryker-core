@@ -12,6 +12,8 @@ use Symfony\Component\Form\DataTransformerInterface;
 
 class DateTransformer implements DataTransformerInterface
 {
+    protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @param string|null $value
      *
@@ -37,6 +39,6 @@ class DateTransformer implements DataTransformerInterface
             return null;
         }
 
-        return $value->format('Y-m-d H:i:s');
+        return $value->format(static::PATTERN_DATE_FORMAT);
     }
 }

@@ -8,29 +8,31 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Extractor;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
 class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtractorInterface
 {
-    protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
-    protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
-
-    protected const REDIRECT_URL_PRODUCT_CONCRETE_PATTERN = '/product-management/edit/variant?id-product=%s&id-product-abstract=%s#tab-content-scheduled_prices';
-    protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
-
-    protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be <b>%s</b> as defined on the store selected';
-
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface
      */
-    public function __construct(PriceProductScheduleGuiToStoreFacadeInterface $storeFacade)
-    {
+    protected $priceProductScheduleDataFormatter;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface $priceProductScheduleDataFormatter
+     */
+    public function __construct(
+        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
+        PriceProductScheduleDataFormatterInterface $priceProductScheduleDataFormatter
+    ) {
         $this->storeFacade = $storeFacade;
+        $this->priceProductScheduleDataFormatter = $priceProductScheduleDataFormatter;
     }
 
     /**
@@ -43,14 +45,8 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     ): string {
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
-        $idProductAbstract = $priceProductTransfer->getIdProductAbstract();
-        if ($idProductAbstract !== null) {
-            return sprintf(static::TITLE_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
-        }
 
-        $idProductConcrete = $priceProductTransfer->getIdProduct();
-
-        return sprintf(static::TITLE_PRODUCT_CONCRETE_PATTERN, $idProductConcrete);
+        return $this->priceProductScheduleDataFormatter->formatTitle($priceProductTransfer);
     }
 
     /**
@@ -63,14 +59,8 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     ): string {
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
-        $idProductAbstract = $priceProductTransfer->getIdProductAbstract();
-        $idProductConcrete = $priceProductTransfer->getIdProduct();
 
-        if ($idProductConcrete !== null) {
-            return sprintf(static::REDIRECT_URL_PRODUCT_CONCRETE_PATTERN, $idProductConcrete, $idProductAbstract);
-        }
-
-        return sprintf(static::REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
+        return $this->priceProductScheduleDataFormatter->formatRedirectUrl($priceProductTransfer);
     }
 
     /**
@@ -87,10 +77,6 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
         );
         $timezone = $storeTransfer->getTimezone();
 
-        if ($timezone === null) {
-            return '';
-        }
-
-        return sprintf(static::TIMEZONE_TEXT_PATTERN, $timezone);
+        return $this->priceProductScheduleDataFormatter->formatTimezoneText($timezone);
     }
 }

@@ -27,6 +27,7 @@ class PriceProductScheduleForm extends AbstractType
     public const FIELD_SUBMIT = 'submit';
     public const FIELD_ACTIVE_FROM = 'activeFrom';
     public const FIELD_ACTIVE_TO = 'activeTo';
+    protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -116,7 +117,7 @@ class PriceProductScheduleForm extends AbstractType
         $builder->add(static::FIELD_ACTIVE_FROM, DateTimeType::class, [
             'label' => 'Start from (included)',
             'date_widget' => 'single_text',
-            'format' => 'Y-m-d H:i:s',
+            'format' => static::PATTERN_DATE_FORMAT,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
@@ -139,7 +140,7 @@ class PriceProductScheduleForm extends AbstractType
         $builder->add(static::FIELD_ACTIVE_TO, DateTimeType::class, [
             'label' => 'Finish at (included)',
             'date_widget' => 'single_text',
-            'format' => 'Y-m-d H:i:s',
+            'format' => static::PATTERN_DATE_FORMAT,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),

@@ -100,9 +100,11 @@ class PriceProductScheduleFindTest extends Unit
             ],
         ];
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
-        $priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->setNetAmount(500);
+
         // Act
-        $foundedPriceProductScheduleTransfer = $this->priceProductScheduleFacade->findPriceProductScheduleById($priceProductScheduleTransfer->getIdPriceProductSchedule());
+        $foundedPriceProductScheduleTransfer = $this->priceProductScheduleFacade
+            ->findPriceProductScheduleById($priceProductScheduleTransfer->getIdPriceProductSchedule());
+
         // Assert
         $this->assertNotNull(
             $foundedPriceProductScheduleTransfer,
@@ -155,6 +157,7 @@ class PriceProductScheduleFindTest extends Unit
         // Act
         $foundedPriceProductScheduleTransfer = $this->priceProductScheduleFacade
             ->findPriceProductScheduleById($priceProductScheduleTransfer->getIdPriceProductSchedule());
+
         // Assert
         $this->assertNotNull(
             $foundedPriceProductScheduleTransfer,

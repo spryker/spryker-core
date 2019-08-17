@@ -36,13 +36,18 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $priceProductScheduleTransfer = new PriceProductScheduleTransfer();
+        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest($request, $priceProductScheduleTransfer);
+
         $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
-        $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+        $form = $this->getFactory()
+            ->createPriceProductScheduleForm($priceProductScheduleFormDataProvider, $priceProductScheduleTransfer);
+
         $form->handleRequest($request);
         $redirectUrl = $this->getRedirectUrlFromRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->handleSubmitForm($form, $redirectUrl, $request);
+            return $this->handleSubmitForm($form, $redirectUrl);
         }
 
         return $this->viewResponse([
@@ -55,15 +60,13 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      * @param string $redirectUrl
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleSubmitForm(FormInterface $form, string $redirectUrl, Request $request): RedirectResponse
+    protected function handleSubmitForm(FormInterface $form, string $redirectUrl): RedirectResponse
     {
         /** @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer */
         $priceProductScheduleTransfer = $form->getData();
-        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest($request, $priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()
             ->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);

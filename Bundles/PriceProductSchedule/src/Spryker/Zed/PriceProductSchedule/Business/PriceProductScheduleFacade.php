@@ -207,9 +207,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * Specification:
-     * - Finds scheduled price by given id.
-     * - Returns PriceProductScheduleTransfer or null if there are no records in database.
+     * @inheritdoc
      *
      * @api
      *

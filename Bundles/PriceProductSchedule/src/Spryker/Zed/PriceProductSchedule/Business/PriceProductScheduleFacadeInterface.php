@@ -161,7 +161,7 @@ interface PriceProductScheduleFacadeInterface
     /**
      * Specification:
      * - Updates given scheduled price.
-     * - Applies scheduled price for product, related to given scheduled price.
+     * - Applies scheduled price to product, related to given scheduled price.
      *
      * @api
      *

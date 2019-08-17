@@ -73,6 +73,7 @@ class StoreSubForm extends AbstractType
                     )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
             );
         }
+
         $event->getForm()
             ->getParent()
             ->get(MoneyValueSubForm::FIELD_CURRENCY)

@@ -11,19 +11,19 @@ use Generated\Shared\Transfer\PriceProductScheduleErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
 class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterface
 {
     use TransactionTrait;
 
-    protected const MESSAGE_ERROR_SAVE_SCHEDULED_PRICE = 'Schedule price haven not been saved';
+    protected const MESSAGE_ERROR_SAVE_SCHEDULED_PRICE = 'Failed to save price schedule';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface
      */
-    protected $priceProductScheduleWriter;
+    protected $priceProductScheduleEntityManager;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface
@@ -31,14 +31,14 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
     protected $priceProductScheduleApplierByProductTypeResolver;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver
      */
     public function __construct(
-        PriceProductScheduleWriterInterface $priceProductScheduleWriter,
+        PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
         PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver
     ) {
-        $this->priceProductScheduleWriter = $priceProductScheduleWriter;
+        $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
         $this->priceProductScheduleApplierByProductTypeResolver = $priceProductScheduleApplierByProductTypeResolver;
     }
 
@@ -50,7 +50,7 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
     public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): PriceProductScheduleResponseTransfer {
-            return $this->executeUpdateLogicTransaction($priceProductScheduleTransfer);
+            return $this->executeUpdateAndAPplyLogicTransaction($priceProductScheduleTransfer);
         });
     }
 
@@ -59,11 +59,11 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
      */
-    protected function executeUpdateLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
+    protected function executeUpdateAndAPplyLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
         $priceProductScheduleResponseTransfer = new PriceProductScheduleResponseTransfer();
         $priceProductScheduleTransfer->requirePriceProductScheduleList();
-        $priceProductScheduleTransfer = $this->priceProductScheduleWriter
+        $priceProductScheduleTransfer = $this->priceProductScheduleEntityManager
             ->savePriceProductSchedule($priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer->setPriceProductSchedule($priceProductScheduleTransfer);
         $this->priceProductScheduleApplierByProductTypeResolver

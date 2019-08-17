@@ -66,8 +66,10 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 new PriceProductScheduleListTransfer()
             );
 
-        $storeTransfer = (new StoreTransfer())
-            ->fromArray($priceProductScheduleEntity->getStore()->toArray(), true);
+        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+            $priceProductScheduleEntity->getStore(),
+            new StoreTransfer()
+        );
 
         return $priceProductScheduleTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
@@ -98,6 +100,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             return $priceProductScheduleEntity;
         }
 
+        $idStore = $moneyValueTransfer->getFkStore();
+        $idCurrency = $moneyValueTransfer->getFkCurrency();
+
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
             $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         }
@@ -106,9 +111,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
         }
 
+        if ($idStore === null && $moneyValueTransfer->getStore() !== null) {
+            $idStore = $moneyValueTransfer->getStore()->getIdStore();
+        }
+
+        if ($idCurrency === null && $moneyValueTransfer->getCurrency() !== null) {
+            $idCurrency = $moneyValueTransfer->getCurrency()->getIdCurrency();
+        }
+
         return $priceProductScheduleEntity
-            ->setFkCurrency($this->getIdCurrencyFromMoneyValueTransfer($moneyValueTransfer))
-            ->setFkStore($this->getIdStoreFromMoneyValueTransfer($moneyValueTransfer))
+            ->setFkCurrency($idCurrency)
+            ->setFkStore($idStore)
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
             ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
             ->setNetPrice($moneyValueTransfer->getNetAmount())
@@ -116,38 +129,6 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
             ->setActiveTo($priceProductScheduleTransfer->getActiveTo())
             ->setIsCurrent($priceProductScheduleTransfer->getIsCurrent());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return int|null
-     */
-    protected function getIdStoreFromMoneyValueTransfer(MoneyValueTransfer $moneyValueTransfer): ?int
-    {
-        $storeTransfer = $moneyValueTransfer->getStore();
-
-        if ($storeTransfer === null) {
-            return $moneyValueTransfer->getFkStore();
-        }
-
-        return $storeTransfer->getIdStore();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return int|null
-     */
-    protected function getIdCurrencyFromMoneyValueTransfer(MoneyValueTransfer $moneyValueTransfer): ?int
-    {
-        $currencyTransfer = $moneyValueTransfer->getCurrency();
-
-        if ($currencyTransfer === null) {
-            return $moneyValueTransfer->getFkCurrency();
-        }
-
-        return $currencyTransfer->getIdCurrency();
     }
 
     /**

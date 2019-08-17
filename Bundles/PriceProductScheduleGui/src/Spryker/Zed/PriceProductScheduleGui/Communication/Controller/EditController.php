@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,32 +42,48 @@ class EditController extends AbstractController
             ->findPriceProductScheduleById($idPriceProductSchedule);
 
         if ($priceProductScheduleTransfer === null) {
-            return $this->redirectResponse($request->headers->get(static::KEY_HEADER_REFERER));
+            return $this->redirectResponse($request->headers->get(static::KEY_HEADER_REFERER, '/'));
         }
 
         $priceProductScheduleFormDataProvider = $this->getFactory()
-            ->createPriceProductScheduleFormDataProvider($priceProductScheduleTransfer);
-        $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+            ->createPriceProductScheduleFormDataProvider();
+        $form = $this->getFactory()
+            ->createPriceProductScheduleForm($priceProductScheduleFormDataProvider, $priceProductScheduleTransfer);
         $form->handleRequest($request);
-        $dataExtractor = $this->getFactory()
-            ->createPriceProductScheduleDataExtractor();
-        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
+
+        $viewData = $this->prepareViewResponseData($form, $priceProductScheduleTransfer);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->handleSubmitForm($form, $redirectUrl);
+            return $this->handleSubmitForm($form, $viewData[static::KEY_REDIRECT_URL]);
         }
 
+        return $this->viewResponse($viewData);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return array
+     */
+    protected function prepareViewResponseData(
+        FormInterface $form,
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array {
+        $dataExtractor = $this->getFactory()
+            ->createPriceProductScheduleDataExtractor();
         $title = $dataExtractor
             ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
         $timezoneText = $dataExtractor
             ->extractTimezoneTextFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
+        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
 
-        return $this->viewResponse([
+        return [
             static::KEY_FORM => $form->createView(),
             static::KEY_TITLE => $title,
             static::KEY_REDIRECT_URL => $redirectUrl,
             static::KEY_TIMEZONE_TEXT => $timezoneText,
-        ]);
+        ];
     }
 
     /**

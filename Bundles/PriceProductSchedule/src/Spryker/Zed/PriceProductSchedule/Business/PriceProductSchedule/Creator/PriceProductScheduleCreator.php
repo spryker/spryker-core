@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\PriceProductScheduleErrorTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
 class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterface
 {
@@ -23,9 +23,9 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
     protected const MESSAGE_ERROR_CREATE_SCHEDULED_PRICE = 'Scheduled price creation failed';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface
      */
-    protected $priceProductScheduleWriter;
+    protected $priceProductScheduleEntityManager;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface
@@ -43,18 +43,18 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
     protected $priceProductScheduleListCreator;
 
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinderInterface $priceProductScheduleListFinder
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator
      */
     public function __construct(
-        PriceProductScheduleWriterInterface $priceProductScheduleWriter,
+        PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
         PriceProductScheduleApplierByProductTypeResolverInterface $priceProductScheduleApplierByProductTypeResolver,
         PriceProductScheduleListFinderInterface $priceProductScheduleListFinder,
         PriceProductScheduleListCreatorInterface $priceProductScheduleListCreator
     ) {
-        $this->priceProductScheduleWriter = $priceProductScheduleWriter;
+        $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
         $this->priceProductScheduleApplierByProductTypeResolver = $priceProductScheduleApplierByProductTypeResolver;
         $this->priceProductScheduleListFinder = $priceProductScheduleListFinder;
         $this->priceProductScheduleListCreator = $priceProductScheduleListCreator;
@@ -109,7 +109,7 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
             return $this->addErrorMessage($priceProductScheduleResponseTransfer);
         }
 
-        $priceProductScheduleTransfer = $this->priceProductScheduleWriter
+        $priceProductScheduleTransfer = $this->priceProductScheduleEntityManager
             ->createPriceProductSchedule($priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer->setPriceProductSchedule($priceProductScheduleTransfer);
         $this->priceProductScheduleApplierByProductTypeResolver
