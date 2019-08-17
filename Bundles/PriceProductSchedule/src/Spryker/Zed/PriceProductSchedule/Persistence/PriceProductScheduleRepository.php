@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException;
@@ -595,5 +596,58 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 $priceProductScheduleListEntity,
                 new PriceProductScheduleListTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductScheduleUnique(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): bool {
+        $priceProductScheduleEntity = $this->getFactory()
+            ->createPriceProductScheduleMapper()
+            ->mapPriceProductScheduleTransferToPriceProductScheduleEntity($priceProductScheduleTransfer, new SpyPriceProductSchedule());
+
+        $priceProductScheduleQuery = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->filterByActiveFrom($priceProductScheduleEntity->getActiveFrom())
+            ->filterByActiveTo($priceProductScheduleEntity->getActiveTo())
+            ->filterByNetPrice($priceProductScheduleEntity->getNetPrice())
+            ->filterByGrossPrice($priceProductScheduleEntity->getGrossPrice())
+            ->filterByFkCurrency($priceProductScheduleEntity->getFkCurrency())
+            ->filterByFkStore($priceProductScheduleEntity->getFkStore())
+            ->filterByFkPriceType($priceProductScheduleEntity->getFkPriceType());
+
+        $priceProductScheduleQuery = $this->addProductIdentifierToQuery(
+            $priceProductScheduleEntity,
+            $priceProductScheduleQuery
+        );
+
+        return $priceProductScheduleQuery->count() !== 0;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function addProductIdentifierToQuery(
+        SpyPriceProductSchedule $priceProductScheduleEntity,
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery
+    ): SpyPriceProductScheduleQuery {
+        $idProductAbstract = $priceProductScheduleEntity->getFkProductAbstract();
+        if ($idProductAbstract !== null) {
+            return $priceProductScheduleQuery->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL);
+        }
+
+        $idProduct = $priceProductScheduleEntity->getFkProduct();
+        if ($idProduct !== null) {
+            return $priceProductScheduleQuery->filterByFkProduct($idProduct, Criteria::NOT_EQUAL);
+        }
+
+        return $priceProductScheduleQuery;
     }
 }

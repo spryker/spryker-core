@@ -13,6 +13,7 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductSchedulePriceConstraint;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleUniqueConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
@@ -237,6 +238,16 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductSchedulePriceConstraint(): PriceProductSchedulePriceConstraint
     {
         return new PriceProductSchedulePriceConstraint();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleUniqueConstraint
+     */
+    public function createPriceProductScheduleUniqueConstraint(): PriceProductScheduleUniqueConstraint
+    {
+        return new PriceProductScheduleUniqueConstraint([
+            PriceProductScheduleUniqueConstraint::OPTION_PRICE_PRODUCT_SCHEDULE_REPOSITORY => $this->getRepository(),
+        ]);
     }
 
     /**

@@ -104,4 +104,11 @@ interface PriceProductScheduleRepositoryInterface
         StoreTransfer $storeTransfer,
         int $idProductConcrete
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
 }
