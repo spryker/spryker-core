@@ -10,7 +10,7 @@ namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
 use Closure;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
+use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
 
 /**
  * @deprecated Exists for Backward Compatibility reasons only.
@@ -36,7 +36,7 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
+     * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface
      */
     public function resolve(QuoteTransfer $quoteTransfer): CalculatorInterface
     {

@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Calculator;
 
-use Spryker\Zed\Tax\Business\Model\CalculatorInterface as DeprecatedCalculatorInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-/**
- * Added in BC manner to avoid cross module dependency violations.
- * In the next major should be removed inheritance of \Spryker\Zed\Tax\Business\Model\CalculatorInterface.
- * And recalculate() method declaration should be copied into current \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface.
- */
-interface CalculatorInterface extends DeprecatedCalculatorInterface
+interface CalculatorInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function recalculate(QuoteTransfer $quoteTransfer);
 }

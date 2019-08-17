@@ -8,7 +8,7 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Tax\Business\Model\CalculatorInterface;
+use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\ProductItemTaxRateCalculator as ProductItemTaxRateCalculatorWithMultipleShipmentTaxRate;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReader;
@@ -45,7 +45,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate() instead.
      *
-     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
+     * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface
      */
     public function createProductItemTaxRateCalculator()
     {
@@ -53,7 +53,7 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Business\Model\CalculatorInterface
+     * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface
      */
     public function createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate(): CalculatorInterface
     {

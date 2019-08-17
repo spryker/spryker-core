@@ -45,7 +45,7 @@ class MethodDeliveryTimeReader implements MethodDeliveryTimeReaderInterface
         }
 
         $deliveryTimePlugin = $this->getDeliveryTimePlugin($shipmentMethodTransfer);
-        if (!($deliveryTimePlugin instanceof ShipmentMethodAvailabilityPluginInterface)) {
+        if (!$deliveryTimePlugin instanceof ShipmentMethodDeliveryTimePluginInterface) {
             /**
              * @deprecated Exists for Backward Compatibility reasons only.
              */
@@ -56,21 +56,6 @@ class MethodDeliveryTimeReader implements MethodDeliveryTimeReaderInterface
             return null;
         }
 
-        return $this->getTimeNewWay($deliveryTimePlugin, $shipmentGroupTransfer, $quoteTransfer);
-    }
-
-    /**
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return int
-     */
-    protected function getTimeNewWay(
-        ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin,
-        ShipmentGroupTransfer $shipmentGroupTransfer,
-        QuoteTransfer $quoteTransfer
-    ): int {
         return $deliveryTimePlugin->getTime($shipmentGroupTransfer, $quoteTransfer);
     }
 
