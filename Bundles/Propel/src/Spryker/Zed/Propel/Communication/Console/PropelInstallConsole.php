@@ -102,7 +102,7 @@ class PropelInstallConsole extends Console
 
             $this->output->writeln(
                 sprintf(
-                    '<fg=red>There are no commands defined in the "%s" namespace. Make sure the command is registered properly.</>',
+                    '<fg=red>There is no command defined with the name "%s". Make sure the command was registered properly.</>',
                     $command
                 )
             );
