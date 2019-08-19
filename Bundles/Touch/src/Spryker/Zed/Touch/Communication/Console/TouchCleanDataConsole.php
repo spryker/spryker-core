@@ -12,23 +12,21 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use TouchCleanDataConsole instead.
- *
  * @method \Spryker\Zed\Touch\Business\TouchFacadeInterface getFacade()
  * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface getQueryContainer()
  */
-class TouchCleanUpConsole extends Console
+class TouchCleanDataConsole extends Console
 {
-    public const COMMAND_NAME = 'touch:cleanup';
-    public const COMMAND_DESCRIPTION = 'Cleans up the Touch tables by removing obsolete touch data';
+    public const COMMAND_NAME = 'touch:clean-data';
+    public const COMMAND_DESCRIPTION = 'Cleans obsolete touch entities in the database.';
 
     /**
      * @return void
      */
     protected function configure()
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::COMMAND_DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::COMMAND_DESCRIPTION);
 
         parent::configure();
     }
@@ -41,7 +39,7 @@ class TouchCleanUpConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $deleteCount = $this->getFacade()->removeTouchEntriesMarkedAsDeleted();
+        $deleteCount = $this->getFacade()->cleanTouchEntitiesForDeletedItemEvent();
 
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
         $output->writeln('<fg=yellow>Cleaning up the touch table(s)<fg=yellow>');
