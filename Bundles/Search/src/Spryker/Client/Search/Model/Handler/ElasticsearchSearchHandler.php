@@ -9,38 +9,36 @@ namespace Spryker\Client\Search\Model\Handler;
 
 use Elastica\Exception\ResponseException;
 use Elastica\ResultSet;
+use Elastica\SearchableInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Exception\SearchResponseException;
-use Spryker\Client\Search\Provider\IndexClientProvider;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 class ElasticsearchSearchHandler implements SearchHandlerInterface
 {
     /**
-     * @var \Spryker\Client\Search\Provider\IndexClientProvider
+     * @var \Elastica\SearchableInterface
      */
-    protected $indexClientProvider;
+    protected $searchableInterface;
 
     /**
-     * @param \Spryker\Client\Search\Provider\IndexClientProvider $indexClientProvider
+     * @param \Elastica\SearchableInterface $searchableInterface
      */
-    public function __construct(IndexClientProvider $indexClientProvider)
+    public function __construct(SearchableInterface $searchableInterface)
     {
-        $this->indexClientProvider = $indexClientProvider;
+        $this->searchableInterface = $searchableInterface;
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        $rawSearchResult = $this->executeQuery($searchQuery);
+        $query = $searchQuery->getSearchQuery();
+        $rawSearchResult = $this->executeQuery($query);
 
         if (!$resultFormatters) {
             return $rawSearchResult;
@@ -50,7 +48,7 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param \Elastica\ResultSet $rawSearchResult
      * @param array $requestParameters
      *
@@ -68,18 +66,16 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
+     * @param \Elastica\Query $query
      *
      * @throws \Spryker\Client\Search\Exception\SearchResponseException
      *
      * @return \Elastica\ResultSet
      */
-    protected function executeQuery(QueryInterface $query)
+    protected function executeQuery($query)
     {
         try {
-            $query = $query->getSearchQuery();
-            $client = $this->indexClientProvider->getClient();
-            $rawSearchResult = $client->search($query);
+            $rawSearchResult = $this->searchableInterface->search($query);
         } catch (ResponseException $e) {
             $rawQuery = json_encode($query->toArray());
 

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch;
 
 use Elastica\Exception\ResponseException;
 use Elastica\Index;
-use Spryker\Client\Search\SearchClientInterface;
 
 class SearchIndexManager implements SearchIndexManagerInterface
 {
@@ -19,29 +18,18 @@ class SearchIndexManager implements SearchIndexManagerInterface
     private $index;
 
     /**
-     * @var \Spryker\Client\Search\SearchClientInterface|null
-     */
-    protected $searchClient;
-
-    /**
      * @param \Elastica\Index $index
-     * @param \Spryker\Client\Search\SearchClientInterface|null $searchClient
      */
-    public function __construct(Index $index, ?SearchClientInterface $searchClient = null)
+    public function __construct(Index $index)
     {
         $this->index = $index;
-        $this->searchClient = $searchClient;
     }
 
     /**
      * @return int
      */
-    public function getTotalCount(/* ?string $indexName = null */)
+    public function getTotalCount()
     {
-        if ($this->searchClient) {
-            return $this->searchClient->getTotalCount(/* $indexName */);
-        }
-
         try {
             return $this->index->count();
         } catch (ResponseException $e) {
@@ -52,12 +40,8 @@ class SearchIndexManager implements SearchIndexManagerInterface
     /**
      * @return array
      */
-    public function getMetaData(/* ?string $indexName = null */)
+    public function getMetaData()
     {
-        if ($this->searchClient) {
-            return $this->searchClient->getMetaData(/* $indexName */);
-        }
-
         $metaData = [];
 
         try {
@@ -74,14 +58,10 @@ class SearchIndexManager implements SearchIndexManagerInterface
     }
 
     /**
-     * @return \Elastica\Response|\Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return \Elastica\Response
      */
-    public function delete(/* ?string $indexName = null */)
+    public function delete()
     {
-        if ($this->searchClient) {
-            return $this->searchClient->deleteIndices(/* $indexName */);
-        }
-
         return $this->index->delete();
     }
 

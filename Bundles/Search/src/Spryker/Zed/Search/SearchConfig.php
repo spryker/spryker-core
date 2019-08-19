@@ -10,9 +10,6 @@ namespace Spryker\Zed\Search;
 use Spryker\Shared\Search\SearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\Search\SearchConfig getSharedConfig()
- */
 class SearchConfig extends AbstractBundleConfig
 {
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
@@ -86,7 +83,7 @@ class SearchConfig extends AbstractBundleConfig
         ];
 
         $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/IndexMap/';
-        if (glob($applicationTransferGlobPattern, GLOB_NOSORT | GLOB_ONLYDIR)) {
+        if (glob($applicationTransferGlobPattern)) {
             $directories[] = $applicationTransferGlobPattern;
         }
 
@@ -139,29 +136,5 @@ class SearchConfig extends AbstractBundleConfig
     public function getPermissionMode(): int
     {
         return $this->get(SearchConstants::DIRECTORY_PERMISSION, 0777);
-    }
-
-    /**
-     * @return string
-     */
-    public function getIndexMapClassTemplateDirectory(): string
-    {
-        return __DIR__ . '/Business/Installer/IndexMap/Generator/Templates/';
-    }
-
-    /**
-     * @return string
-     */
-    public function getIndexNameSuffix(): string
-    {
-        return $this->get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
-    }
-
-    /**
-     * @return array
-     */
-    public function getIndexNameMap(): array
-    {
-        return $this->getSharedConfig()->getIndexNameNap();
     }
 }

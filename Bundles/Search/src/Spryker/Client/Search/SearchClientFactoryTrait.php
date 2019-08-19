@@ -9,9 +9,6 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Search\ServiceProvider\SearchClientServiceProvider;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 trait SearchClientFactoryTrait
 {
     /**

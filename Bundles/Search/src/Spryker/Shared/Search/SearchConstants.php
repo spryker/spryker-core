@@ -42,8 +42,6 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Search\SearchConstants::INDEX_NAME_MAP` instead.
-     *
      * Elasticsearch connection index name. (Required)
      *
      * @api
@@ -97,12 +95,4 @@ interface SearchConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'SEARCH:DIRECTORY_PERMISSION';
-
-    /**
-     * Specification:
-     * - A map to map a filename e.g. `search.json` to an index name `de_search`.
-     *
-     * @api
-     */
-    public const INDEX_NAME_MAP = 'SEARCH:INDEX_NAME_MAP';
 }

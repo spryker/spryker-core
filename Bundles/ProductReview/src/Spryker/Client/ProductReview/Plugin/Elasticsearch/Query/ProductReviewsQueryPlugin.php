@@ -51,14 +51,6 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
-     * @return string
-     */
-    public function getIndexName(): string
-    {
-        return 'product-review';
-    }
-
-    /**
      * @return \Elastica\Query
      */
     protected function createSearchQuery()

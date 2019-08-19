@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
-/**
- * @deprecated Use `\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface` instead.
- */
 interface SearchInstallerInterface
 {
     /**

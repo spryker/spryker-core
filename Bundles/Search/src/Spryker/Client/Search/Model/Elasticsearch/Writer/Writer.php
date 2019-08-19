@@ -11,7 +11,6 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Exception\NotFoundException;
 use Spryker\Client\Search\Exception\InvalidDataSetException;
-use Symfony\Component\VarDumper\VarDumper;
 
 class Writer implements WriterInterface
 {
@@ -40,16 +39,6 @@ class Writer implements WriterInterface
         $this->client = $searchClient;
         $this->index = $this->client->getIndex($indexName);
         $this->type = $type;
-    }
-
-    /**
-     * @return void
-     */
-    public function getIndices()
-    {
-        $response = $this->client->request('_aliases');
-
-        echo '<pre>' . PHP_EOL . VarDumper::dump($response) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
     }
 
     /**

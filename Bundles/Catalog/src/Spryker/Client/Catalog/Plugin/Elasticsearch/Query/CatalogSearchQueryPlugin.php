@@ -14,9 +14,9 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
@@ -43,14 +43,6 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     public function getSearchQuery()
     {
         return $this->query;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIndexName(): string
-    {
-        return 'page';
     }
 
     /**

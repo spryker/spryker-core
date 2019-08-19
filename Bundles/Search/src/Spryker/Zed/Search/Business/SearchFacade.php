@@ -31,7 +31,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         $this
             ->getFactory()
             ->createSearchInstaller($messenger)
-            ->install($messenger);
+            ->install();
     }
 
     /**
@@ -39,11 +39,9 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @param string|null $indexName
-     *
      * @return int
      */
-    public function getTotalCount(?string $indexName = null)
+    public function getTotalCount()
     {
         return $this
             ->getFactory()
@@ -56,32 +54,29 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @param string|null $indexName
-     *
      * @return array
      */
-    public function getMetaData(?string $indexName = null)
+    public function getMetaData()
     {
         return $this
             ->getFactory()
-            ->createSearchIndexManager($indexName)
+            ->createSearchIndexManager()
             ->getMetaData();
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Removes the current index
      *
      * @api
      *
-     * @param string|null $indexName
-     *
      * @return \Elastica\Response
      */
-    public function delete(?string $indexName = null)
+    public function delete()
     {
         return $this
             ->getFactory()
-            ->createSearchIndexManager($indexName)
+            ->createSearchIndexManager()
             ->delete();
     }
 
@@ -112,7 +107,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return mixed (@deprecated Only mixed will be supported with the next major)
+     * @return \Elastica\ResultSet
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {
@@ -175,7 +170,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function generatePageIndexMap(LoggerInterface $messenger)
     {
-        $this->getFactory()
+        $this
+            ->getFactory()
             ->createIndexMapInstaller($messenger)
             ->install();
     }

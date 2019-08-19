@@ -11,7 +11,6 @@
     "spryker/locale": "^3.1.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/search": "^7.0.0 || ^8.0.0",
-    "spryker/search-extension": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-encoding": "^2.0.0"
