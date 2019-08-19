@@ -44,11 +44,11 @@ class StockTable extends AbstractTable
             static::COL_NAME => 'Name',
         ]);
 
-        $config->setSortable([
-            static::COL_ID_STOCK,
+        $config->setSearchable([
             static::COL_NAME,
         ]);
-        $config->setSearchable([
+        $config->setSortable([
+            static::COL_ID_STOCK,
             static::COL_NAME,
         ]);
         $config->setDefaultSortField(static::COL_ID_STOCK);
