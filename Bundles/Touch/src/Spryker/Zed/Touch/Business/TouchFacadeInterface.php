@@ -108,12 +108,12 @@ interface TouchFacadeInterface
     public function getItemsByType($itemType);
 
     /**
-     * @deprecated Use TouchFacadeInterface::cleanTouchEntitiesForDeletedItemEvent() instead.
-     *
      * Specification:
      * - Removes all 'touch deleted' records from touch table(s).
      *
      * @api
+     *
+     * @deprecated Use TouchFacadeInterface::cleanTouchEntitiesForDeletedItemEvent() instead.
      *
      * @return int
      */
@@ -121,7 +121,7 @@ interface TouchFacadeInterface
 
     /**
      * Specification:
-     * - Removes all touch entities which have 'item_event=deleted'.
+     * - Removes all touch entities for 'deleted' item event.
      * - Returns deleted touch entities count.
      *
      * @api
