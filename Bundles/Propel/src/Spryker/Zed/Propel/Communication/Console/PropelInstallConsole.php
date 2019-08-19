@@ -25,6 +25,8 @@ class PropelInstallConsole extends Console
     public const COMMAND_NAME = 'propel:install';
     public const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
 
+    protected const ERROR_COMMAND_NOT_FOUND = '<fg=red>There are no commands defined in the "%s" namespace. Make sure the command is registered properly.</>';
+
     /**
      * @return void
      */
@@ -81,6 +83,30 @@ class PropelInstallConsole extends Console
         }
         $dependingCommands[] = MigrateConsole::COMMAND_NAME;
 
-        return $dependingCommands;
+        return $this->filterOutNonRegisteredCommands($dependingCommands);
+    }
+
+    /**
+     * @param string[] $commands
+     *
+     * @return string[]
+     */
+    protected function filterOutNonRegisteredCommands(array $commands): array
+    {
+        $filteredCommands = [];
+
+        foreach ($commands as $command) {
+            if ($this->getApplication()->has($command)) {
+                $filteredCommands[] = $command;
+
+                continue;
+            }
+
+            $this->output->writeln(
+                sprintf(static::ERROR_COMMAND_NOT_FOUND, $command)
+            );
+        }
+
+        return $filteredCommands;
     }
 }
