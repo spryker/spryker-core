@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,13 +37,20 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest(
+            $request,
+            new PriceProductScheduleTransfer()
+        );
+
         $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
-        $form = $this->getFactory()->createPriceProductScheduleForm($priceProductScheduleFormDataProvider);
+        $form = $this->getFactory()
+            ->createPriceProductScheduleForm($priceProductScheduleFormDataProvider, $priceProductScheduleTransfer);
+
         $form->handleRequest($request);
         $redirectUrl = $this->getRedirectUrlFromRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            return $this->handleSubmitForm($form, $redirectUrl, $request);
+            return $this->handleSubmitForm($form, $redirectUrl);
         }
 
         return $this->viewResponse([
@@ -55,15 +63,13 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      * @param string $redirectUrl
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleSubmitForm(FormInterface $form, string $redirectUrl, Request $request): RedirectResponse
+    protected function handleSubmitForm(FormInterface $form, string $redirectUrl): RedirectResponse
     {
         /** @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer */
         $priceProductScheduleTransfer = $form->getData();
-        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest($request, $priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()
             ->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
@@ -89,11 +95,11 @@ class CreateController extends AbstractController
      */
     protected function setProductIdentifierFromRequest(Request $request, PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
     {
-        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = new PriceProductTransfer();
         $requestParams = $request->query->all();
-        $priceProductScheduleTransfer->getPriceProduct()->fromArray($requestParams, true);
+        $priceProductTransfer->fromArray($requestParams, true);
 
-        return $priceProductScheduleTransfer;
+        return $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer);
     }
 
     /**

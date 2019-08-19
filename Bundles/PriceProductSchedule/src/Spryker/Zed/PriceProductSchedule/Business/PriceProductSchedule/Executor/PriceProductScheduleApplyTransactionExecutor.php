@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 
 class PriceProductScheduleApplyTransactionExecutor implements PriceProductScheduleApplyTransactionExecutorInterface
 {
@@ -30,20 +30,23 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
     protected $priceProductFacade;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface
      */
-    protected $priceProductScheduleWriter;
+    protected $priceProductScheduleEntityManager;
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface $priceProductScheduleDisabler
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface $priceProductScheduleWriter
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      */
-    public function __construct(PriceProductScheduleDisablerInterface $priceProductScheduleDisabler, PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade, PriceProductScheduleWriterInterface $priceProductScheduleWriter)
-    {
+    public function __construct(
+        PriceProductScheduleDisablerInterface $priceProductScheduleDisabler,
+        PriceProductScheduleToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
+    ) {
         $this->priceProductScheduleDisabler = $priceProductScheduleDisabler;
         $this->priceProductFacade = $priceProductFacade;
-        $this->priceProductScheduleWriter = $priceProductScheduleWriter;
+        $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
     }
 
     /**
@@ -74,7 +77,7 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
 
         $priceProductScheduleTransfer->setIsCurrent(true);
 
-        $this->priceProductScheduleWriter->savePriceProductSchedule($priceProductScheduleTransfer);
+        $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
     }
 
     /**
