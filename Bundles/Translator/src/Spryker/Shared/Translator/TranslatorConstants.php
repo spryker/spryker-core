@@ -38,5 +38,5 @@ interface TranslatorConstants
      *
      * @api
      */
-    public const ZED_TRANSLATOR_DEBUG_ENABLED = 'ZED_TRANSLATOR_DEBUG_ENABLED';
+    public const TRANSLATION_ZED_DEBUG_ENABLED = 'TRANSLATION:TRANSLATION_ZED_DEBUG_ENABLED';
 }

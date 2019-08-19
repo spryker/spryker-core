@@ -83,6 +83,6 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function isZedTranslatorDebugEnabled(): bool
     {
-        return $this->get(TranslatorConstants::ZED_TRANSLATOR_DEBUG_ENABLED, false);
+        return $this->get(TranslatorConstants::TRANSLATION_ZED_DEBUG_ENABLED, false);
     }
 }
