@@ -61,20 +61,18 @@ class PropelBatchIterator implements CountableIteratorInterface
      */
     protected function loadChunk()
     {
-        $query = clone $this->query;
-
-        $query->setOffset($this->offset);
-        $query->setLimit($this->chunkSize);
+        $this->query->setOffset($this->offset);
+        $this->query->setLimit($this->chunkSize);
 
         if ($this->orderBy) {
             if (!$this->orderByDirection) {
                 $this->orderByDirection = Criteria::ASC;
             }
 
-            $query->orderBy($this->orderBy, $this->orderByDirection);
+            $this->query->orderBy($this->orderBy, $this->orderByDirection);
         }
 
-        $this->currentDataSet = $query->find();
+        $this->currentDataSet = $this->query->find();
 
         $this->offset += $this->chunkSize;
     }
