@@ -55,7 +55,7 @@ class WishlistDeleter implements WishlistDeleterInterface
         }
 
         return $this->wishlistRestResponseBuilder
-            ->createWishlistsRestResponse(null);
+            ->createWishlistsRestResponse();
     }
 
     /**

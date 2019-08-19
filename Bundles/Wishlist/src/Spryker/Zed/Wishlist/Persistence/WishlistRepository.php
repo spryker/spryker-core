@@ -56,7 +56,7 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer|null
      */
-    public function getWishlistByCustomerIdAndUuid($idCustomer, $uuidWishlist): ?WishlistTransfer
+    public function getWishlistByCustomerIdAndUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer
     {
         $wishlistEntity = $this->getFactory()
             ->createWishlistQuery()

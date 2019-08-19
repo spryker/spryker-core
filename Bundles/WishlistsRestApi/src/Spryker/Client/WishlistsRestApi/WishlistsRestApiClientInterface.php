@@ -15,7 +15,7 @@ interface WishlistsRestApiClientInterface
     /**
      * Specification:
      *  - Finds one wishlist by uuid and customer id.
-     *  - Returns wishlist response with wishlist.
+     *  - Returns wishlist response with wishlist inside.
      *  - If error occurred returns wishlist response with errors.
      *
      * @api
