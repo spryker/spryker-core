@@ -224,7 +224,6 @@ interface WishlistFacadeInterface
      * Specification:
      *  - Returns wishlist by uuid for a given customer.
      *  - Required values of WishlistTransfer: fkCustomer, uuid.
-     *  - Returns WishlistResponseTransfer
      *
      * @api
      *
@@ -232,5 +231,5 @@ interface WishlistFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 }

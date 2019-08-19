@@ -42,9 +42,9 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createWishlistReader()->getWishlistByUuid($wishlistRequestTransfer);
+        return $this->getFactory()->createWishlistReader()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
     }
 
     /**

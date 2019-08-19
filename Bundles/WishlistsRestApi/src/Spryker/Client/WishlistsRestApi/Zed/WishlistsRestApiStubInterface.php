@@ -17,7 +17,7 @@ interface WishlistsRestApiStubInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer

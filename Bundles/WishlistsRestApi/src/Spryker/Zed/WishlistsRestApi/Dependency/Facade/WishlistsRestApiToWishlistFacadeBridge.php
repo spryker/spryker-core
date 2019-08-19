@@ -31,9 +31,9 @@ class WishlistsRestApiToWishlistFacadeBridge implements WishlistsRestApiToWishli
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->wishlistFacade->getWishlistByUuid($wishlistRequestTransfer);
+        return $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
     }
 
     /**

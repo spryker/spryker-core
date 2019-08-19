@@ -34,7 +34,7 @@ class WishlistUpdater implements WishlistUpdaterInterface
      */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $wishlistResponseTransfer;

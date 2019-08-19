@@ -25,9 +25,9 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFactory()->createZedStub()->getWishlistByUuid($wishlistRequestTransfer);
+        return $this->getFactory()->createZedStub()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
     }
 
     /**

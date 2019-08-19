@@ -161,16 +161,16 @@ class WishlistReader implements WishlistReaderInterface
 
     /**
      * @param int $customerId
-     * @param string $idWishlist
+     * @param string $uuidWishlist
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getWishlistResponseByIdCustomerAndUuid(int $customerId, string $idWishlist): RestResponseInterface
+    protected function getWishlistResponseByIdCustomerAndUuid(int $customerId, string $uuidWishlist): RestResponseInterface
     {
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setIdCustomer($customerId)
-            ->setUuid($idWishlist);
-        $wishlistResponseTransfer = $this->wishlistsRestApiClient->getWishlistByUuid($wishlistRequestTransfer);
+            ->setUuid($uuidWishlist);
+        $wishlistResponseTransfer = $this->wishlistsRestApiClient->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(

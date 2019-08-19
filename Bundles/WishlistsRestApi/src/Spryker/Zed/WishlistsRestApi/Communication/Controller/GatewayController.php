@@ -21,9 +21,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByUuidAction(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByIdCustomerAndUuidAction(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getFacade()->getWishlistByUuid($wishlistRequestTransfer);
+        return $this->getFacade()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
     }
 
     /**
