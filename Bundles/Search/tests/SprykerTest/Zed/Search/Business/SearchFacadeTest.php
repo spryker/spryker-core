@@ -57,7 +57,7 @@ class SearchFacadeTest extends Unit
      */
     protected function skipIfCi(): void
     {
-        if (getenv('CIRCLECI') || getenv('TRAVIS')) {
+        if (getenv('TRAVIS')) {
             $this->markTestSkipped('CircleCi/Travis not set up properly');
         }
     }
