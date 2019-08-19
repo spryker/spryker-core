@@ -137,6 +137,7 @@ interface UtilDataReaderServiceInterface
     public function getYamlBatchIterator($fileName, $chunkSize = -1);
 
     /**
+     * Specification:
      * - Returns a PropelQueryBatchIterator instance.
      * - Loads a chunk of PropelEntities with given ModelCriteria.
      *
