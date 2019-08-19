@@ -1,0 +1,21 @@
+namespace: SprykerTest\Zed\CmsSlotDataImport
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Communication:
+        path: Communication
+        class_name: CmsSlotDataImportCommunicationTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\CmsSlotDataImport\Helper\CmsSlotDataImportHelper
