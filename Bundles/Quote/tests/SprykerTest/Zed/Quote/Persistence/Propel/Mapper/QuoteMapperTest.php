@@ -67,7 +67,7 @@ class QuoteMapperTest extends Unit
     /**
      * @return \Spryker\Zed\Quote\QuoteConfig
      */
-    protected function createQuoteConfig(): QuoteConfig
+    protected function createQuoteConfig()
     {
         $quoteConfigMock = $this->getMockBuilder(QuoteConfig::class)
             ->getMock();
@@ -100,7 +100,7 @@ class QuoteMapperTest extends Unit
     public function mapTransferToEntityProvider(): array
     {
         return [
-            $this->getDataForMapTransferToEntityProvider(),
+            'should pass with default fields allowed for saving' => $this->getDataForMapTransferToEntityProvider(),
         ];
     }
 
@@ -115,7 +115,7 @@ class QuoteMapperTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(): QuoteTransfer
+    protected function createQuoteTransfer()
     {
         $quoteDefaultProductImageTransfer = (new ProductImageBuilder([
             ProductImageTransfer::ID_PRODUCT_IMAGE => 27,
