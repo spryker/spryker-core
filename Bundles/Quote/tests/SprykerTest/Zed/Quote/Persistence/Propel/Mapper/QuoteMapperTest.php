@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Quote\Persistence\Propel\Mapper;
 
-use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
@@ -18,7 +17,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
-use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface;
+use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceBridge;
 use Spryker\Zed\Quote\Persistence\Propel\Mapper\QuoteMapper;
 use Spryker\Zed\Quote\QuoteConfig;
 
@@ -39,36 +39,59 @@ class QuoteMapperTest extends Unit
      * @dataProvider mapTransferToEntityProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quote
+     * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
      * @param array $expectedQuoteData
      *
      * @return void
      */
     public function testMapTransferToEntity(
         QuoteTransfer $quoteTransfer,
-        SpyQuote $quote,
+        SpyQuote $quoteEntity,
         array $expectedQuoteData
     ): void {
-        $utilEncodingServiceMock = $this->getMockBuilder(QuoteToUtilEncodingServiceInterface::class)
-            ->getMock();
-        $quoteConfigMock = $this->getMockBuilder(QuoteConfig::class)
-            ->getMock();
+        // Arrange
+        $utilEncodingServiceMock = new QuoteToUtilEncodingServiceBridge(new UtilEncodingService());
+        $mapper = new QuoteMapper($utilEncodingServiceMock, $this->createQuoteConfig());
 
-        $mapper = new QuoteMapper($utilEncodingServiceMock, $quoteConfigMock);
-        $updatedQuote = $mapper->mapTransferToEntity(
+        // Act
+        $updatedQuoteEntity = $mapper->mapTransferToEntity(
             $quoteTransfer,
-            $quote
+            $quoteEntity
         );
+        $decodedQuoteData = $utilEncodingServiceMock->decodeJson($updatedQuoteEntity->getQuoteData(), true);
 
-        $this->assertEquals($expectedQuoteData, $updatedQuote->toArray());
+        // Assert
+        $this->assertEquals($expectedQuoteData, $decodedQuoteData);
     }
 
     /**
-     * @return \Orm\Zed\Quote\Persistence\SpyQuote
+     * @return \Spryker\Zed\Quote\QuoteConfig
      */
-    protected function createQuoteEntity(): SpyQuote
+    protected function createQuoteConfig(): QuoteConfig
     {
-        return (SpyQuoteQuery::create())->findOneOrCreate();
+        $quoteConfigMock = $this->getMockBuilder(QuoteConfig::class)
+            ->getMock();
+
+        $quoteConfigMock->method('getQuoteFieldsAllowedForSaving')->willReturn([
+            QuoteTransfer::ITEMS => [
+                ItemTransfer::ID,
+                ItemTransfer::SKU,
+                ItemTransfer::QUANTITY,
+                ItemTransfer::ID_PRODUCT_ABSTRACT,
+                ItemTransfer::IMAGES,
+                ItemTransfer::NAME,
+                ItemTransfer::UNIT_PRICE,
+                ItemTransfer::SUM_PRICE,
+                ItemTransfer::UNIT_GROSS_PRICE,
+                ItemTransfer::SUM_GROSS_PRICE,
+                ItemTransfer::IS_ORDERED,
+            ],
+            QuoteTransfer::TOTALS,
+            QuoteTransfer::CURRENCY,
+            QuoteTransfer::PRICE_MODE,
+        ]);
+
+        return $quoteConfigMock;
     }
 
     /**
@@ -82,12 +105,21 @@ class QuoteMapperTest extends Unit
     }
 
     /**
-     * @return array
+     * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */
-    protected function getDataForMapTransferToEntityProvider(): array
+    protected function createQuoteEntity(): SpyQuote
     {
-        $expectedQuoteDefaultProductImageTransfer = (new ProductImageBuilder([
+        return (SpyQuoteQuery::create())->findOneOrCreate();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(): QuoteTransfer
+    {
+        $quoteDefaultProductImageTransfer = (new ProductImageBuilder([
             ProductImageTransfer::ID_PRODUCT_IMAGE => 27,
+            ProductImageTransfer::ID_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE => null,
             ProductImageTransfer::SORT_ORDER => 0,
             ProductImageTransfer::EXTERNAL_URL_SMALL => "//images.icecat.biz/img\/norm/low/7822599-Sony.jpg",
             ProductImageTransfer::EXTERNAL_URL_LARGE => "//images.icecat.biz/img\/norm/medium/7822599-Sony.jpg",
@@ -108,7 +140,7 @@ class QuoteMapperTest extends Unit
                 ItemTransfer::UNIT_GROSS_PRICE => 4900,
                 ItemTransfer::SUM_GROSS_PRICE => 4900,
                 ItemTransfer::IMAGES => [
-                    $expectedQuoteDefaultProductImageTransfer->toArray(),
+                    $quoteDefaultProductImageTransfer->toArray(),
                 ],
             ])
             ->withTotals([
@@ -125,6 +157,7 @@ class QuoteMapperTest extends Unit
                 TotalsTransfer::REFUND_TOTAL => 4900,
             ])
             ->withCurrency([
+                CurrencyTransfer::ID_CURRENCY => '93',
                 CurrencyTransfer::CODE => 'EUR',
                 CurrencyTransfer::NAME => 'Euro',
                 CurrencyTransfer::SYMBOL => '€',
@@ -133,6 +166,14 @@ class QuoteMapperTest extends Unit
             ])
             ->build();
 
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDataForMapTransferToEntityProvider(): array
+    {
         $expectedQuoteData = [
             'items' => [
                 [
@@ -144,6 +185,7 @@ class QuoteMapperTest extends Unit
                         [
                             'externalUrlSmall' => '//images.icecat.biz/img\\/norm/low/7822599-Sony.jpg',
                             'idProductImage' => 27,
+                            'idProductImageSetToProductImage' => null,
                             'sortOrder' => 0,
                             'externalUrlLarge' => '//images.icecat.biz/img\\/norm/medium/7822599-Sony.jpg',
                         ],
@@ -165,32 +207,23 @@ class QuoteMapperTest extends Unit
                 ],
                 'grandTotal' => 4900,
                 'netTotal' => 4118,
-                'canceledTotal' => null,
-                'hash' => null,
                 'priceToPay' => 4900,
                 'refundTotal' => 4900,
             ],
             'currency' => [
+                'idCurrency' => 93,
                 'code' => 'EUR',
                 'name' => 'Euro',
                 'symbol' => '€',
                 'isDefault' => true,
                 'fractionDigits' => 2,
-                'idCurrency' => null,
             ],
             'priceMode' => 'GROSS_MODE',
-            'bundleItems' => new ArrayObject(),
-            'expenses' => new ArrayObject(),
-            'voucherDiscounts' => new ArrayObject(),
-            'promotionItems' => new ArrayObject(),
-            'cartRuleDiscounts' => new ArrayObject(),
         ];
 
-        $quote = $this->createQuoteEntity();
-
         return [
-            $quoteTransfer,
-            $quote,
+            $this->createQuoteTransfer(),
+            $this->createQuoteEntity(),
             $expectedQuoteData,
         ];
     }
