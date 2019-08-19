@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class TranslatorConfig extends AbstractBundleConfig
 {
     public const ZED_CSV_FILE_DELIMITER = ',';
-    protected const ZED_TRANSLATOR_DEBUG_ENABLED = false;
 
     /**
      * @return string[]
@@ -84,6 +83,6 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function isZedTranslatorDebugEnabled(): bool
     {
-        return static::ZED_TRANSLATOR_DEBUG_ENABLED;
+        return $this->get(TranslatorConstants::ZED_TRANSLATOR_DEBUG_ENABLED, false);
     }
 }
