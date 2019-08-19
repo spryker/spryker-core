@@ -49,6 +49,14 @@
                                 <action>index</action>
                                 <visible>0</visible>
                             </create-scheduled-price>
+                            <delete-scheduled-price>
+                                <label>Delete scheduled price</label>
+                                <title>Delete scheduled price</title>
+                                <bundle>price-product-schedule-gui</bundle>
+                                <controller>delete</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </delete-scheduled-price>
                         </pages>
                     </product-edit>
                     <product-concrete-edit>
@@ -61,6 +69,14 @@
                                 <action>index</action>
                                 <visible>0</visible>
                             </create-scheduled-price>
+                            <delete-scheduled-price>
+                                <label>Delete scheduled price</label>
+                                <title>Delete scheduled price</title>
+                                <bundle>price-product-schedule-gui</bundle>
+                                <controller>delete</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </delete-scheduled-price>
                         </pages>
                     </product-concrete-edit>
                 </pages>
