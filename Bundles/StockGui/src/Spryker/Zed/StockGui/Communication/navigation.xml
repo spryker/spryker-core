@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config>
+    <administration>
+        <label>Administration</label>
+        <title>Administration</title>
+        <icon>fa-angle-double-right</icon>
+        <pages>
+            <stores>
+                <label>Warehouses</label>
+                <title>Warehouses</title>
+                <bundle>stock-gui</bundle>
+                <controller>list</controller>
+                <action>index</action>
+                <icon>fa-angle-double-right</icon>
+            </stores>
+        </pages>
+    </administration>
+</config>
