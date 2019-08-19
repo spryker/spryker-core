@@ -7,26 +7,26 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint;
 
-use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
 use Symfony\Component\Validator\Constraint;
 
 class PriceProductScheduleUniqueConstraint extends Constraint
 {
     protected const VALIDATION_MESSAGE = 'An identical scheduled price already exist for this product.';
 
-    public const OPTION_PRICE_PRODUCT_SCHEDULE_REPOSITORY = 'priceProductScheduleRepository';
+    public const OPTION_PRICE_PRODUCT_SCHEDULE_FACADE = 'priceProductScheduleFacade';
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
      */
-    protected $priceProductScheduleRepository;
+    protected $priceProductScheduleFacade;
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
      */
-    public function getPriceProductScheduleRepository(): PriceProductScheduleRepositoryInterface
+    public function getPriceProductScheduleFacade(): PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
     {
-        return $this->priceProductScheduleRepository;
+        return $this->priceProductScheduleFacade;
     }
 
     /**

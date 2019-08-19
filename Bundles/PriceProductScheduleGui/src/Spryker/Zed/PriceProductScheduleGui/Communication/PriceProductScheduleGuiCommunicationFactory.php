@@ -255,7 +255,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleUniqueConstraint(): PriceProductScheduleUniqueConstraint
     {
         return new PriceProductScheduleUniqueConstraint([
-            PriceProductScheduleUniqueConstraint::OPTION_PRICE_PRODUCT_SCHEDULE_REPOSITORY => $this->getRepository(),
+            PriceProductScheduleUniqueConstraint::OPTION_PRICE_PRODUCT_SCHEDULE_FACADE => $this->getPriceProductScheduleFacade(),
         ]);
     }
 

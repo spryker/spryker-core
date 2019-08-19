@@ -27,7 +27,7 @@ class PriceProductScheduleUniqueConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, PriceProductScheduleUniqueConstraint::class);
         }
 
-        if ($constraint->getPriceProductScheduleRepository()->isPriceProductScheduleUnique($value)) {
+        if ($constraint->getPriceProductScheduleFacade()->isPriceProductScheduleUnique($value)) {
             return;
         }
 

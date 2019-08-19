@@ -618,14 +618,15 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->filterByGrossPrice($priceProductScheduleEntity->getGrossPrice())
             ->filterByFkCurrency($priceProductScheduleEntity->getFkCurrency())
             ->filterByFkStore($priceProductScheduleEntity->getFkStore())
-            ->filterByFkPriceType($priceProductScheduleEntity->getFkPriceType());
+            ->filterByFkPriceType($priceProductScheduleEntity->getFkPriceType())
+            ->filterByIdPriceProductSchedule($priceProductScheduleEntity->getIdPriceProductSchedule(), Criteria::NOT_EQUAL);
 
-        $priceProductScheduleQuery = $this->addProductIdentifierToQuery(
+        $priceProductScheduleQuery = $this->addProductIdentifierToUniqueQuery(
             $priceProductScheduleEntity,
             $priceProductScheduleQuery
         );
 
-        return $priceProductScheduleQuery->count() !== 0;
+        return $priceProductScheduleQuery->count() === 0;
     }
 
     /**
@@ -634,18 +635,18 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
      *
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
-    protected function addProductIdentifierToQuery(
+    protected function addProductIdentifierToUniqueQuery(
         SpyPriceProductSchedule $priceProductScheduleEntity,
         SpyPriceProductScheduleQuery $priceProductScheduleQuery
     ): SpyPriceProductScheduleQuery {
         $idProductAbstract = $priceProductScheduleEntity->getFkProductAbstract();
         if ($idProductAbstract !== null) {
-            return $priceProductScheduleQuery->filterByFkProductAbstract($idProductAbstract, Criteria::NOT_EQUAL);
+            return $priceProductScheduleQuery->filterByFkProductAbstract($idProductAbstract);
         }
 
         $idProduct = $priceProductScheduleEntity->getFkProduct();
         if ($idProduct !== null) {
-            return $priceProductScheduleQuery->filterByFkProduct($idProduct, Criteria::NOT_EQUAL);
+            return $priceProductScheduleQuery->filterByFkProduct($idProduct);
         }
 
         return $priceProductScheduleQuery;
