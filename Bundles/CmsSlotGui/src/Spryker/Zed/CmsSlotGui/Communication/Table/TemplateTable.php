@@ -89,6 +89,7 @@ class TemplateTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        $this->filterTemplatesWithoutSlots();
         $templateResults = $this->runQuery($this->cmsSlotTemplateQuery, $config);
         $results = [];
 
@@ -101,5 +102,15 @@ class TemplateTable extends AbstractTable
         }
 
         return $results;
+    }
+
+    /**
+     * @return void
+     */
+    protected function filterTemplatesWithoutSlots(): void
+    {
+        $this->cmsSlotTemplateQuery
+            ->innerJoinSpyCmsSlotToCmsSlotTemplate()
+            ->groupByIdCmsSlotTemplate();
     }
 }
