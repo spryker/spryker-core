@@ -33,7 +33,6 @@ class PriceProductScheduleUniqueConstraintValidator extends ConstraintValidator
 
         $this->context
             ->buildViolation($constraint->getMessage())
-            ->atPath('name')
             ->addViolation();
     }
 }
