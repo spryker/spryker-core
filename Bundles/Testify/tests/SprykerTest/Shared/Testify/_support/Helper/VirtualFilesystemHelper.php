@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Module;
+use Codeception\TestInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
@@ -21,11 +22,13 @@ class VirtualFilesystemHelper extends Module
     protected $virtualDirectory;
 
     /**
+     * @param array $structure
+     *
      * @return string
      */
-    public function getVirtualDirectory(): string
+    public function getVirtualDirectory(array $structure = []): string
     {
-        return $this->getVirtualRootDirectory()->url() . DIRECTORY_SEPARATOR;
+        return $this->getVirtualRootDirectory($structure)->url() . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -81,14 +84,27 @@ class VirtualFilesystemHelper extends Module
     }
 
     /**
+     * @param array $structure
+     *
      * @return \org\bovigo\vfs\vfsStreamDirectory
      */
-    protected function getVirtualRootDirectory(): vfsStreamDirectory
+    protected function getVirtualRootDirectory(array $structure = []): vfsStreamDirectory
     {
+
         if (!$this->virtualDirectory) {
-            $this->virtualDirectory = vfsStream::setup();
+            $this->virtualDirectory = vfsStream::setup('root', null, $structure);
         }
 
         return $this->virtualDirectory;
+    }
+
+    /**
+     * @param TestInterface $test
+     *
+     * @return void
+     */
+    public function _after(TestInterface $test): void
+    {
+        $this->virtualDirectory = null;
     }
 }
