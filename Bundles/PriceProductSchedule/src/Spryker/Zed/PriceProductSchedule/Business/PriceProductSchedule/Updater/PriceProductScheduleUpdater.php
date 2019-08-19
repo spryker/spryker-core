@@ -50,7 +50,7 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
     public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer): PriceProductScheduleResponseTransfer {
-            return $this->executeUpdateAndAPplyLogicTransaction($priceProductScheduleTransfer);
+            return $this->executeUpdateAndApplyLogicTransaction($priceProductScheduleTransfer);
         });
     }
 
@@ -59,7 +59,7 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
      */
-    protected function executeUpdateAndAPplyLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
+    protected function executeUpdateAndApplyLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
         $priceProductScheduleResponseTransfer = new PriceProductScheduleResponseTransfer();
         $priceProductScheduleTransfer->requirePriceProductScheduleList();

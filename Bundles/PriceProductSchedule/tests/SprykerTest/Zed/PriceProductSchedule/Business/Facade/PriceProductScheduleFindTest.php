@@ -102,12 +102,12 @@ class PriceProductScheduleFindTest extends Unit
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         // Act
-        $foundedPriceProductScheduleTransfer = $this->priceProductScheduleFacade
+        $foundPriceProductScheduleTransfer = $this->priceProductScheduleFacade
             ->findPriceProductScheduleById($priceProductScheduleTransfer->getIdPriceProductSchedule());
 
         // Assert
         $this->assertNotNull(
-            $foundedPriceProductScheduleTransfer,
+            $foundPriceProductScheduleTransfer,
             'Record is not found in database'
         );
     }
@@ -155,12 +155,12 @@ class PriceProductScheduleFindTest extends Unit
         $priceProductScheduleTransfer = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
         // Act
-        $foundedPriceProductScheduleTransfer = $this->priceProductScheduleFacade
+        $foundPriceProductScheduleTransfer = $this->priceProductScheduleFacade
             ->findPriceProductScheduleById($priceProductScheduleTransfer->getIdPriceProductSchedule());
 
         // Assert
         $this->assertNotNull(
-            $foundedPriceProductScheduleTransfer,
+            $foundPriceProductScheduleTransfer,
             'Record is not found in database'
         );
     }

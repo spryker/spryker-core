@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -36,8 +37,10 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $priceProductScheduleTransfer = new PriceProductScheduleTransfer();
-        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest($request, $priceProductScheduleTransfer);
+        $priceProductScheduleTransfer = $this->setProductIdentifierFromRequest(
+            $request,
+            new PriceProductScheduleTransfer()
+        );
 
         $priceProductScheduleFormDataProvider = $this->getFactory()->createPriceProductScheduleFormDataProvider();
         $form = $this->getFactory()
@@ -92,11 +95,11 @@ class CreateController extends AbstractController
      */
     protected function setProductIdentifierFromRequest(Request $request, PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
     {
-        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = new PriceProductTransfer();
         $requestParams = $request->query->all();
-        $priceProductScheduleTransfer->getPriceProduct()->fromArray($requestParams, true);
+        $priceProductTransfer->fromArray($requestParams, true);
 
-        return $priceProductScheduleTransfer;
+        return $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer);
     }
 
     /**
