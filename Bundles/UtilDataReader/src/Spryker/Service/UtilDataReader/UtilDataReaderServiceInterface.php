@@ -8,6 +8,7 @@
 namespace Spryker\Service\UtilDataReader;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -134,4 +135,17 @@ interface UtilDataReaderServiceInterface
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */
     public function getYamlBatchIterator($fileName, $chunkSize = -1);
+
+    /**
+     * - Returns a PropelQueryBatchIterator instance.
+     * - Loads a chunk of PropelEntities with given ModelCriteria.
+     *
+     * @api
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param int $chunkSize
+     *
+     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
+     */
+    public function getPropelQueryBatchIterator(ModelCriteria $query, int $chunkSize = 100): CountableIteratorInterface;
 }
