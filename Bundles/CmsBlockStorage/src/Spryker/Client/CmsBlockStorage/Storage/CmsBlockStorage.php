@@ -14,6 +14,12 @@ use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
+    protected const PREFIX_MAPPING_CMS_BLOCK_KEY = 'name:';
+    protected const ARRAY_KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
+    protected const ARRAY_KEY_BLOCK_KEYS = 'block_keys';
+    protected const OPTION_CATEGORY = 'category';
+    protected const OPTION_POSITION = 'position';
+
     /**
      * @var \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface
      */
@@ -80,6 +86,61 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         }
 
         return $availableBlockNames ?: [];
+    }
+
+    /**
+     * @param array $options
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBlockKeysByOptions(array $options, string $localeName): array
+    {
+        $position = null;
+
+        if (isset($options[static::OPTION_POSITION])) {
+            $position = $options[static::OPTION_POSITION] ?? null;
+            unset($options[static::OPTION_POSITION]);
+        }
+
+        $searchKey = '';
+
+        foreach ($options as $key => $value) {
+            $searchKey = $this->generateKey($value, 'cms_block_' . $key);
+        }
+
+        $blocksData = $this->storageClient->get($searchKey);
+        $blockKeys = [];
+
+        if (isset($blocksData[static::ARRAY_KEY_CMS_BLOCK_CATEGORIES])) {
+            foreach ($blocksData[static::ARRAY_KEY_CMS_BLOCK_CATEGORIES] as $key => $item) {
+                if ($position && $item[static::OPTION_POSITION] === $position) {
+                    $blockKeys = $item[static::ARRAY_KEY_BLOCK_KEYS];
+                    break;
+                }
+            }
+
+            return $blockKeys;
+        }
+
+        return $blocksData[static::ARRAY_KEY_BLOCK_KEYS];
+    }
+
+    /**
+     * @param string $blockName
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array
+    {
+        $blockNameKey = static::PREFIX_MAPPING_CMS_BLOCK_KEY . $this->generateBlockNameKey($blockName);
+        $searchKey = $this->generateKey($blockNameKey, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName, $storeName);
+
+        $mappingData = $this->storageClient->get($searchKey) ?: [];
+
+        return array_filter($mappingData);
     }
 
     /**
@@ -186,8 +247,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @deprecated Use generateStorageKey instead.
-     *
      * @param string $blockKey
      * @param string $resourceName
      * @param string|null $localeName
@@ -195,26 +254,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      *
      * @return string
      */
-    protected function generateKey($blockKey, $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName = null, $storeName = null)
-    {
-        $blockName = $this->generateBlockNameKey($blockKey);
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($storeName);
-        $synchronizationDataTransfer->setLocale($localeName);
-        $synchronizationDataTransfer->setReference($blockName);
-
-        return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @param string $blockKey
-     * @param string $resourceName
-     * @param string|null $localeName
-     * @param string|null $storeName
-     *
-     * @return string
-     */
-    protected function generateStorageKey(
+    protected function generateKey(
         string $blockKey,
         string $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
         ?string $localeName = null,
@@ -240,7 +280,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $storageKeys = [];
 
         foreach ($blockKeys as $blockKey) {
-            $storageKeys[] = $this->generateStorageKey(
+            $storageKeys[] = $this->generateKey(
                 $blockKey,
                 CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
                 $localeName,

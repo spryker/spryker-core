@@ -41,4 +41,21 @@ interface CmsBlockStorageInterface
      * @return array
      */
     public function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
+
+    /**
+     * @param string $blockName
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array;
+
+    /**
+     * @param array $options
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBlockKeysByOptions(array $options, string $localeName): array;
 }

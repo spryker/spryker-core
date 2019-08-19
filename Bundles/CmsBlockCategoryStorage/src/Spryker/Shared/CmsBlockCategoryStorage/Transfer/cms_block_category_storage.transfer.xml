@@ -11,6 +11,7 @@
     <transfer name="CmsBlockCategory">
         <property name="position" type="string"/>
         <property name="blockNames" type="array"/>
+        <property name="blockKeys" type="array"/>
     </transfer>
 
 </transfers>

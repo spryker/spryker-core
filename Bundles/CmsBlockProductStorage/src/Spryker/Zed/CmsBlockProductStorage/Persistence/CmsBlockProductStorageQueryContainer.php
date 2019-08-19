@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implements CmsBlockProductStorageQueryContainerInterface
 {
     public const NAME = 'name';
+    public const KEY = 'key';
 
     /**
      * @api
@@ -46,6 +47,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->queryCmsBlockProductConnector()
             ->innerJoinCmsBlock()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->withColumn(SpyCmsBlockTableMap::COL_KEY, static::KEY)
             ->filterByFkProductAbstract_In($productIds);
     }
 

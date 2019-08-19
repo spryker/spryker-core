@@ -125,7 +125,8 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         foreach ($mappedCmsBlockProducts as $productAbstractId => $cmsBlockProduct) {
             $cmsBlockProductTransfer = new CmsBlockProductTransfer();
             $cmsBlockProductTransfer->setIdProductAbstract($productAbstractId);
-            $cmsBlockProductTransfer->setBlockNames($cmsBlockProduct);
+            $cmsBlockProductTransfer->setBlockNames($cmsBlockProduct['names']);
+            $cmsBlockProductTransfer->setBlockKeys($cmsBlockProduct['keys']);
             $cmsBlockProductsTransfer[$productAbstractId] = $cmsBlockProductTransfer;
         }
 
@@ -142,7 +143,8 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         $cmsBlockProducts = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
         $mappedCmsBlockProducts = [];
         foreach ($cmsBlockProducts as $cmsBlockProduct) {
-            $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()][] = $cmsBlockProduct->getName();
+            $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()]['names'][] = $cmsBlockProduct->getName();
+            $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()]['keys'][] = $cmsBlockProduct->getKey();
         }
 
         return $mappedCmsBlockProducts;

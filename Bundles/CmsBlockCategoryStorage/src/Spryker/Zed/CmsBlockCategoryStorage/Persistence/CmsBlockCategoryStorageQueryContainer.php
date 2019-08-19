@@ -22,6 +22,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
 {
     public const POSITION = 'position';
     public const NAME = 'name';
+    public const KEY = 'key';
 
     /**
      * @api
@@ -58,6 +59,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
             )
             ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->withColumn(SpyCmsBlockTableMap::COL_KEY, static::KEY)
             ->filterByFkCategory_In($categoryIds);
     }
 
