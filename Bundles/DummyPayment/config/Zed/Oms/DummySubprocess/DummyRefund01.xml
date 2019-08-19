@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <statemachine
         xmlns="spryker:oms-01"
-        xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:oms-01 https://static.spryker.com/oms-01.xsd">
 
     <process name="DummyRefund">

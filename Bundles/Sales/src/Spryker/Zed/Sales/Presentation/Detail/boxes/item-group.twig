@@ -1,16 +1,12 @@
-{% for group in groups %}
+{% for group in groups if not group.groupItems[0].salesOrderConfiguredBundleItem | default %}
   {% if (group.isBundle) %}
-    <tbody class="product-bundle">
     <tr>
       <td colspan="7">
         <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': group.bundleItem.idProductAbstract, 'id-product': group.bundleItem.id, 'type': 'regular'}) }}">{{ group.bundleItem.name }}</a> ({{ 'Sku' | trans }}: {{ group.bundleItem.sku }})
       </td>
     </tr>
     {% embed '@Sales/Detail/boxes/bundle-group.twig' with {items: group.groupItems, image: group.groupImage, rowCount: group.rowCount, bundleItem: group.bundleItem} %}{% endembed %}
-    </tbody>
   {% else %}
-    <tbody class="single-item">
       {% embed '@Sales/Detail/boxes/single-item.twig' with {item: group.groupItems | first} %}{% endembed %}
-    </tbody>
   {% endif %}
 {% endfor %}
