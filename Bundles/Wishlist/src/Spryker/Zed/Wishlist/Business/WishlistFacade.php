@@ -248,6 +248,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * {@inheritdoc}
      *
+     * {@internal will work if uuid field is provided.}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
