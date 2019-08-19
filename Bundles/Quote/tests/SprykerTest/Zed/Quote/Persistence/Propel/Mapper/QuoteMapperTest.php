@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
@@ -148,8 +149,8 @@ class QuoteMapperTest extends Unit
                 TotalsTransfer::EXPENSE_TOTAL => 0,
                 TotalsTransfer::DISCOUNT_TOTAL => 0,
                 TotalsTransfer::TAX_TOTAL => [
-                    'taxRate' => null,
-                    'amount' => 782,
+                    TaxTotalTransfer::TAX_RATE => null,
+                    TaxTotalTransfer::AMOUNT => 782,
                 ],
                 TotalsTransfer::GRAND_TOTAL => 4900,
                 TotalsTransfer::NET_TOTAL => 4118,
@@ -175,50 +176,50 @@ class QuoteMapperTest extends Unit
     protected function getDataForMapTransferToEntityProvider(): array
     {
         $expectedQuoteData = [
-            'items' => [
+            QuoteTransfer::ITEMS => [
                 [
-                    'id' => 27,
-                    'sku' => '027_26976107',
-                    'quantity' => 1,
-                    'idProductAbstract' => 27,
-                    'images' => [
+                    ItemTransfer::ID => 27,
+                    ItemTransfer::SKU => '027_26976107',
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::ID_PRODUCT_ABSTRACT => 27,
+                    ItemTransfer::IMAGES => [
                         [
-                            'externalUrlSmall' => '//images.icecat.biz/img\\/norm/low/7822599-Sony.jpg',
-                            'idProductImage' => 27,
-                            'idProductImageSetToProductImage' => null,
-                            'sortOrder' => 0,
-                            'externalUrlLarge' => '//images.icecat.biz/img\\/norm/medium/7822599-Sony.jpg',
+                            ProductImageTransfer::EXTERNAL_URL_SMALL => '//images.icecat.biz/img\\/norm/low/7822599-Sony.jpg',
+                            ProductImageTransfer::ID_PRODUCT_IMAGE => 27,
+                            ProductImageTransfer::ID_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE => null,
+                            ProductImageTransfer::SORT_ORDER => 0,
+                            ProductImageTransfer::EXTERNAL_URL_LARGE => '//images.icecat.biz/img\\/norm/medium/7822599-Sony.jpg',
                         ],
                     ],
-                    'name' => 'Sony Cyber-shot DSC-WX500',
-                    'unitPrice' => 4900,
-                    'sumPrice' => 4900,
-                    'unitGrossPrice' => 4900,
-                    'sumGrossPrice' => 4900,
+                    ItemTransfer::NAME => 'Sony Cyber-shot DSC-WX500',
+                    ItemTransfer::UNIT_PRICE => 4900,
+                    ItemTransfer::SUM_PRICE => 4900,
+                    ItemTransfer::UNIT_GROSS_PRICE => 4900,
+                    ItemTransfer::SUM_GROSS_PRICE => 4900,
                 ],
             ],
-            'totals' => [
-                'subtotal' => 4900,
-                'expenseTotal' => 0,
-                'discountTotal' => 0,
-                'taxTotal' => [
-                    'taxRate' => null,
-                    'amount' => 782,
+            QuoteTransfer::TOTALS => [
+                TotalsTransfer::SUBTOTAL => 4900,
+                TotalsTransfer::EXPENSE_TOTAL => 0,
+                TotalsTransfer::DISCOUNT_TOTAL => 0,
+                TotalsTransfer::TAX_TOTAL => [
+                    TaxTotalTransfer::TAX_RATE => null,
+                    TaxTotalTransfer::AMOUNT => 782,
                 ],
-                'grandTotal' => 4900,
-                'netTotal' => 4118,
-                'priceToPay' => 4900,
-                'refundTotal' => 4900,
+                TotalsTransfer::GRAND_TOTAL => 4900,
+                TotalsTransfer::NET_TOTAL => 4118,
+                TotalsTransfer::PRICE_TO_PAY => 4900,
+                TotalsTransfer::REFUND_TOTAL => 4900,
             ],
-            'currency' => [
-                'idCurrency' => 93,
-                'code' => 'EUR',
-                'name' => 'Euro',
-                'symbol' => '€',
-                'isDefault' => true,
-                'fractionDigits' => 2,
+            QuoteTransfer::CURRENCY => [
+                CurrencyTransfer::ID_CURRENCY => 93,
+                CurrencyTransfer::CODE => 'EUR',
+                CurrencyTransfer::NAME => 'Euro',
+                CurrencyTransfer::SYMBOL => '€',
+                CurrencyTransfer::IS_DEFAULT => true,
+                CurrencyTransfer::FRACTION_DIGITS => 2,
             ],
-            'priceMode' => 'GROSS_MODE',
+            QuoteTransfer::PRICE_MODE => 'GROSS_MODE',
         ];
 
         return [

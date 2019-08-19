@@ -107,7 +107,7 @@ class QuoteMapper implements QuoteMapperInterface
      *
      * @return array
      */
-    protected function filterDisallowedQuoteData(array $quoteData, array $allowedQuoteFields)
+    protected function filterDisallowedQuoteData(array $quoteData, array $allowedQuoteFields): array
     {
         $data = [];
 
