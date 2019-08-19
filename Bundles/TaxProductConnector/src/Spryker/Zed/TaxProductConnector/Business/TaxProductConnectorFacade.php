@@ -74,6 +74,8 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\TaxSetResponseTransfer

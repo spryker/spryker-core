@@ -47,6 +47,8 @@ function createTriggerItemsUrl(idOrder, idOrderItems, eventName) {
         items: idOrderItems,
     };
 
+    parameters.items = getSelectedItems();
+
     var finalUrl = url + '?' + $.param(parameters);
 
     return decodeURIComponent(finalUrl);
@@ -66,6 +68,13 @@ $(document).ready(function () {
         e.preventDefault();
 
         $(this).prop('disabled', true).addClass('disabled');
+
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
+        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
+
+        $form.attr('action', finalUrl);
+
         $(this).parents('form').first().submit();
         var $item = $(this);
 

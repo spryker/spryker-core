@@ -12,6 +12,7 @@ Discount,Discount
 "GRAND TOTAL","Grand Total"
 "Grand Total","Grand Total"
 "Hide history","Hide history"
+"incl. %tax_amount% % tax","incl. %tax_amount% % tax"
 "Included tax amount","Included tax amount"
 "Item total","Item Total"
 Legend,Legend

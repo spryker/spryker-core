@@ -1,5 +1,5 @@
 {
   "include": {
-    "Silexphp": "Required to get the dependency installed into projects."
+    "spryker/silexphp": "Required to get the dependency installed into projects."
   }
 }
