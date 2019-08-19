@@ -406,8 +406,6 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @todo fetching can be done in bulk
-     *
      * @param int[] $productConcreteIds
      * @param string $localeName
      *

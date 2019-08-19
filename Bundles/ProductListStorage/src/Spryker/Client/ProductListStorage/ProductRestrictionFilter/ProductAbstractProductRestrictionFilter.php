@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductListStorage\ProductRestrictionFilter;
 
+use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
 use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -41,14 +42,24 @@ class ProductAbstractProductRestrictionFilter extends AbstractProductRestriction
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productListStorageTransfer
      *
      * @return int
      */
     protected function getIdProduct(AbstractTransfer $productListStorageTransfer): int
     {
-        $productListStorageTransfer->requireIdProductAbstract();
+        return $this->getIdProductAbstract($productListStorageTransfer);
+    }
 
-        return $productListStorageTransfer->getIdProductAbstract();
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer
+     *
+     * @return int
+     */
+    protected function getIdProductAbstract(ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer): int
+    {
+        $productAbstractProductListStorageTransfer->requireIdProductAbstract();
+
+        return $productAbstractProductListStorageTransfer->getIdProductAbstract();
     }
 }

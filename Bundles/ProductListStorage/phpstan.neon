@@ -1,3 +1,4 @@
 parameters:
     ignoreErrors:
-        - '#Call to an undefined method .+AbstractTransfer::.+\(\).#'
+        - '#Parameter #1 $productAbstractProductListStorageTransfer of method .+ProductAbstractProductRestrictionFilter::getIdProductAbstract() expects .+ProductAbstractProductListStorageTransfer, .+AbstractTransfer given.#'
+        - '#Parameter #1 $productConcreteProductListStorageTransfer of method .+ProductConcreteProductRestrictionFilter::getIdProductConcrete() expects .+ProductConcreteProductListStorageTransfer, .+AbstractTransfer given.#'

@@ -98,4 +98,17 @@ interface ProductClientInterface
      * @return \Generated\Shared\Transfer\StorageProductTransfer[]
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection);
+
+    /**
+     * Specification:
+     * - Gets concrete product storage data by array of concrete product ids and locale name.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getStorageProductTransfersByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array;
 }

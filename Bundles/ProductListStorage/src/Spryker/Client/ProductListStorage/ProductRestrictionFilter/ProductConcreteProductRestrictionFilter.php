@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductListStorage\ProductRestrictionFilter;
 
+use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
 use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -40,14 +41,24 @@ class ProductConcreteProductRestrictionFilter extends AbstractProductRestriction
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
      *
      * @return int
      */
     protected function getIdProduct(AbstractTransfer $productListStorageTransfer): int
     {
-        $productListStorageTransfer->requireIdProductConcrete();
+        return $this->getIdProductConcrete($productListStorageTransfer);
+    }
 
-        return $productListStorageTransfer->getIdProductConcrete();
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productConcreteProductListStorageTransfer
+     *
+     * @return int
+     */
+    protected function getIdProductConcrete(ProductConcreteProductListStorageTransfer $productConcreteProductListStorageTransfer): int
+    {
+        $productConcreteProductListStorageTransfer->requireIdProductConcrete();
+
+        return $productConcreteProductListStorageTransfer->getIdProductConcrete();
     }
 }
