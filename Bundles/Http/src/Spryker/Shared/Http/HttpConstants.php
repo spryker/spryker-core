@@ -56,7 +56,20 @@ interface HttpConstants
      */
     public const YVES_TRUSTED_HOSTS = 'HTTP:YVES_TRUSTED_HOSTS';
 
+    /**
+     * Specification:
+     * - If option set to true, the application will set http strict transport header.
+     *
+     * @api
+     */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'HTTP:YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
+    /**
+     * Specification:
+     * - Http strict transport header body.
+     *
+     * @api
+     */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'HTTP:YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
@@ -95,6 +108,19 @@ interface HttpConstants
      */
     public const ZED_TRUSTED_HOSTS = 'HTTP:ZED_TRUSTED_HOSTS';
 
+    /**
+     * Specification:
+     * - If option set to true, the application will set http strict transport header.
+     *
+     * @api
+     */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'HTTP:ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
+    /**
+     * Specification:
+     * - Http strict transport header body.
+     *
+     * @api
+     */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'HTTP:ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 }
