@@ -25,8 +25,6 @@ class PropelInstallConsole extends Console
     public const COMMAND_NAME = 'propel:install';
     public const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
 
-    protected const ERROR_COMMAND_NOT_FOUND = '<fg=red>There are no commands defined in the "%s" namespace. Make sure the command is registered properly.</>';
-
     /**
      * @return void
      */
@@ -103,7 +101,10 @@ class PropelInstallConsole extends Console
             }
 
             $this->output->writeln(
-                sprintf(static::ERROR_COMMAND_NOT_FOUND, $command)
+                sprintf(
+                    '<fg=red>There are no commands defined in the "%s" namespace. Make sure the command is registered properly.</>',
+                    $command
+                )
             );
         }
 
