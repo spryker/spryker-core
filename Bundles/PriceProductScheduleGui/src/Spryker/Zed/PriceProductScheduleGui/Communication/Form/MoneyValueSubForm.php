@@ -14,6 +14,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProduct
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -98,6 +99,9 @@ class MoneyValueSubForm extends AbstractType
         $builder->add(static::FIELD_NET_AMOUNT, NumberType::class, [
             'label' => 'Net price',
             'required' => false,
+            'constraints' => [
+                new PositiveOrZero(),
+            ],
             'attr' => [
                 'value' => null,
             ],
@@ -119,6 +123,9 @@ class MoneyValueSubForm extends AbstractType
         $builder->add(static::FIELD_GROSS_AMOUNT, NumberType::class, [
             'label' => 'Gross price',
             'required' => false,
+            'constraints' => [
+                new PositiveOrZero(),
+            ],
             'attr' => [
                 'value' => null,
             ],
