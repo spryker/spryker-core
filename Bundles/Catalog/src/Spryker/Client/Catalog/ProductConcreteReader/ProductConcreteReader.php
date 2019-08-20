@@ -64,7 +64,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer
      *
-     * @return array|\Elastica\ResultSet
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function searchProductConcretesByFullText(ProductConcreteCriteriaFilterTransfer $productConcreteCriteriaFilterTransfer)
     {

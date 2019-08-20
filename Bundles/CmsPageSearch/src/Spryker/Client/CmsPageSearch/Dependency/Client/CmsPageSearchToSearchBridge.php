@@ -29,7 +29,7 @@ class CmsPageSearchToSearchBridge implements CmsPageSearchToSearchBridgeInterfac
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
