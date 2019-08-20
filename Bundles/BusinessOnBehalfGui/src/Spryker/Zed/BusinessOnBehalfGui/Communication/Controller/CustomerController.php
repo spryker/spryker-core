@@ -8,6 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Controller;
 
 use ArrayObject;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,7 @@ class CustomerController extends AbstractController
     protected const MESSAGE_CUSTOMER_NOT_FOUND = 'Customer not found.';
 
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
+    protected const URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT = '/business-on-behalf-gui/customer/attach-customer';
 
     protected const PARAM_ID_CUSTOMER = 'id-customer';
     protected const PARAM_ID_COMPANY = 'id-company';
@@ -83,7 +85,16 @@ class CustomerController extends AbstractController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
 
-        return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
+        $redirectUrl = Url::generate(
+            static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT,
+            [
+                static::PARAM_ID_CUSTOMER => $companyUserTransfer->getFkCustomer(),
+                static::PARAM_ID_COMPANY => $companyUserTransfer->getFkCompany(),
+            ]
+        );
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
