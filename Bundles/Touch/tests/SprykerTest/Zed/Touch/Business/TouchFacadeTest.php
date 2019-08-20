@@ -204,4 +204,48 @@ class TouchFacadeTest extends Unit
         //Assert
         $this->assertSame(count($itemIds), $affectedRows);
     }
+
+    /**
+     * @return void
+     */
+    public function testCleanTouchEntitiesForDeletedItemEventShouldDeleteTouchEntitiesForDeletedItemEvent(): void
+    {
+        // Arrange
+        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::ITEM_ID_1, static::UNIQUE_INDEX_ITEM_TYPE);
+        $touchEntitiesForDeletedItemEventCount = $this->getTouchEntitiesForDeletedItemEventCount();
+
+        $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::ITEM_ID_2, static::UNIQUE_INDEX_ITEM_TYPE);
+
+        // Act
+        $deletedTouchEntitiesCount = $this->touchFacade->cleanTouchEntitiesForDeletedItemEvent();
+
+        // Assert
+        $this->assertSame($touchEntitiesForDeletedItemEventCount + 1, $deletedTouchEntitiesCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCleanTouchEntitiesForDeletedItemEventShouldNotDeleteTouchEntitiesForOtherItemEvents(): void
+    {
+        // Arrange
+        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::ITEM_ID_1, static::UNIQUE_INDEX_ITEM_TYPE);
+        $touchEntitiesForDeletedItemEventCount = $this->getTouchEntitiesForDeletedItemEventCount();
+
+        // Act
+        $deletedTouchEntitiesCount = $this->touchFacade->cleanTouchEntitiesForDeletedItemEvent();
+
+        // Assert
+        $this->assertSame($touchEntitiesForDeletedItemEventCount, $deletedTouchEntitiesCount);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getTouchEntitiesForDeletedItemEventCount(): int
+    {
+        return SpyTouchQuery::create()
+            ->filterByItemEvent(static::ITEM_EVENT_DELETED)
+            ->count();
+    }
 }
