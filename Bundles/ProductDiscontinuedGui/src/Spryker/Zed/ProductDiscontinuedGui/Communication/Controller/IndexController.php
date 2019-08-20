@@ -54,11 +54,41 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @deprecated Use IndexController::restore() instead.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function undiscontinueAction(Request $request)
+    {
+        $idProductConcrete = $this->castId($request->get(static::PARAM_ID_PRODUCT_CONCRETE));
+
+        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
+            ->setIdProduct($idProductConcrete);
+
+        $productDiscontinuedResponseTransfer = $this->getFactory()
+            ->getProductDiscontinuedFacade()
+            ->unmarkProductAsDiscontinued($productDiscontinuedRequestTransfer);
+
+        if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);
+
+            return $this->redirectToReferer($request);
+        }
+
+        $this->addErrorMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_ERROR);
+        $this->addErrorMessagesFromResponseTransfer($productDiscontinuedResponseTransfer);
+
+        return $this->redirectToReferer($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function restoreAction(Request $request)
     {
         $idProductConcrete = $this->castId($request->get(static::PARAM_ID_PRODUCT_CONCRETE));
 
