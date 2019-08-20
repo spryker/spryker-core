@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilDataReader;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -142,20 +141,5 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     public function getYamlBatchIterator($fileName, $chunkSize = -1)
     {
         return $this->getFactory()->createYamlBatchIterator($fileName, $chunkSize);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param int $chunkSize
-     *
-     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
-     */
-    public function getPropelQueryBatchIterator(ModelCriteria $query, int $chunkSize = 100): CountableIteratorInterface
-    {
-        return $this->getFactory()->createPropelQueryBatchIterator($query, $chunkSize);
     }
 }

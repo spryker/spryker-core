@@ -9,14 +9,12 @@ namespace Spryker\Service\UtilDataReader;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\CsvBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\PdoBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\PropelBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\XmlBatchIterator;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\YamlBatchIterator;
 use Spryker\Service\UtilDataReader\Model\Reader\Csv\CsvReader;
-use Spryker\Service\UtilDataReader\PropelQuery\PropelQueryBatchIterator;
 use Spryker\Shared\SqlCriteriaBuilder\CriteriaBuilder\CriteriaBuilderInterface;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -78,19 +76,6 @@ class UtilDataReaderServiceFactory extends AbstractServiceFactory
     public function createPropelBatchIterator(ModelCriteria $query, $chunkSize, $orderBy = null, $orderByDirection = null)
     {
         return new PropelBatchIterator($query, $chunkSize, $orderBy, $orderByDirection);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param int $chunkSize
-     * @param string|null $orderBy
-     * @param string|null $orderByDirection
-     *
-     * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
-     */
-    public function createPropelQueryBatchIterator(ModelCriteria $query, int $chunkSize, ?string $orderBy = null, ?string $orderByDirection = null): CountableIteratorInterface
-    {
-        return new PropelQueryBatchIterator($query, $chunkSize, $orderBy, $orderByDirection);
     }
 
     /**
