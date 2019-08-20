@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 interface ShipmentRepositoryInterface
 {
     /**
+     * - Requires ShipmentMethodTransfer::name field to be set in ShipmentMethodTransfer
+     * - Requires ShipmentMethodTransfer::fkShipmentCarrier field to be set in ShipmentMethodTransfer
+     *
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
