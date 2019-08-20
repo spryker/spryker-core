@@ -86,13 +86,10 @@ class CustomerController extends AbstractController
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_COMPANY_USER_CREATE);
 
         $companyUserTransfer = $companyUserResponseTransfer->getCompanyUser();
-        $redirectUrl = Url::generate(
-            static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT,
-            [
-                static::PARAM_ID_CUSTOMER => $companyUserTransfer->getFkCustomer(),
-                static::PARAM_ID_COMPANY => $companyUserTransfer->getFkCompany(),
-            ]
-        );
+        $redirectUrl = Url::generate(static::URL_ATTACH_CUSTOMER_TO_BUSINESS_UNIT, [
+            static::PARAM_ID_CUSTOMER => $companyUserTransfer->getFkCustomer(),
+            static::PARAM_ID_COMPANY => $companyUserTransfer->getFkCompany(),
+        ]);
 
         return $this->redirectResponse($redirectUrl);
     }
