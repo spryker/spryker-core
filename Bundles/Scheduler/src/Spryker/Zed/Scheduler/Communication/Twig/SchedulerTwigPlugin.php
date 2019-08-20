@@ -10,6 +10,9 @@ namespace Spryker\Zed\Scheduler\Communication\Twig;
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 use Twig\TwigFunction;
 
+/**
+ * @deprecated Use `Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin` instead.
+ */
 class SchedulerTwigPlugin extends AbstractTwigExtensionPlugin
 {
     public const EXTENSION_NAME = 'getenv';

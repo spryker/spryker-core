@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -20,33 +19,17 @@ class DiscountRepository extends AbstractRepository implements DiscountRepositor
     /**
      * @param string[] $codes
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return string[]
      */
-    public function findVouchersExceedingUsageLimitByCodes(array $codes): ObjectCollection
+    public function findVoucherCodesExceedingUsageLimit(array $codes): array
     {
         return $this->getFactory()
             ->createDiscountVoucherQuery()
             ->filterByCode($codes, Criteria::IN)
-            ->add(
-                SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES,
-                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES . '>=' . SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES,
-                Criteria::CUSTOM
-            )
-            ->find();
-    }
-
-    /**
-     * @param string[] $codes
-     *
-     * @return int
-     */
-    public function getCountOfVouchersExceedingUsageLimitByCodes(array $codes): int
-    {
-        return $this->getFactory()
-            ->createDiscountVoucherQuery()
-            ->filterByCode($codes, Criteria::IN)
-            ->filterByMaxNumberOfUses(0, Criteria::NOT_EQUAL)
+            ->filterByMaxNumberOfUses(0, Criteria::GREATER_THAN)
             ->where(SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES . '>=' . SpyDiscountVoucherTableMap::COL_MAX_NUMBER_OF_USES)
-            ->count();
+            ->select(SpyDiscountVoucherTableMap::COL_CODE)
+            ->find()
+            ->toArray();
     }
 }

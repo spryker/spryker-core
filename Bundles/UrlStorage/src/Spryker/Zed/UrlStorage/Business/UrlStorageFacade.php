@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface getRepository()
  */
 class UrlStorageFacade extends AbstractFacade implements UrlStorageFacadeInterface
 {

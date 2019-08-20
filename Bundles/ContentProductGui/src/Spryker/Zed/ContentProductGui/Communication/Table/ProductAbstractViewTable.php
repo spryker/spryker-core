@@ -16,10 +16,6 @@ class ProductAbstractViewTable extends AbstractProductAbstractTable
     public const TABLE_CLASS = 'product-abstract-view-table gui-table-data';
     public const BASE_URL = '/content-product-gui/product-abstract/';
 
-    public const HEADER_NAME = 'Name';
-    public const HEADER_SKU = 'SKU';
-    public const HEADER_ID_PRODUCT_ABSTRACT = 'ID';
-
     public const COL_SELECTED = 'Selected';
 
     public const COL_ALIAS_NAME = 'name';

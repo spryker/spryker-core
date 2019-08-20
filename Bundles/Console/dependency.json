@@ -2,6 +2,6 @@
   "include": {
   },
   "exclude": {
-    "Symfony": "Now directly using symfony/console"
+    "spryker/symfony": "Now directly using symfony/console"
   }
 }
