@@ -19,6 +19,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\DateTransformer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface;
@@ -253,6 +254,14 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceTransformer(): DataTransformerInterface
     {
         return new PriceTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createDateTransformer(): DataTransformerInterface
+    {
+        return new DateTransformer();
     }
 
     /**

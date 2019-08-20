@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
-use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -126,7 +125,7 @@ class PriceProductScheduleForm extends AbstractType
         ]);
 
         $builder->get(static::FIELD_ACTIVE_FROM)
-            ->addModelTransformer(new DateTimeToStringTransformer());
+            ->addModelTransformer($this->getFactory()->createDateTransformer());
 
         return $this;
     }
@@ -149,7 +148,7 @@ class PriceProductScheduleForm extends AbstractType
         ]);
 
         $builder->get(static::FIELD_ACTIVE_TO)
-            ->addModelTransformer(new DateTimeToStringTransformer());
+            ->addModelTransformer($this->getFactory()->createDateTransformer());
 
         return $this;
     }
