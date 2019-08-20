@@ -11,13 +11,13 @@ interface CmsSlotClientInterface
 {
     /**
      * Specification:
-     * - Fetches data for cms slot by provided keys.
+     * - Fetches external data for CMS slot by provided keys.
      *
      * @api
      *
-     * @param string[] $fillingKeys
+     * @param string[] $dataKeys
      *
      * @return array
      */
-    public function fetchCmsSlotAutoFilled(array $fillingKeys): array;
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): array;
 }

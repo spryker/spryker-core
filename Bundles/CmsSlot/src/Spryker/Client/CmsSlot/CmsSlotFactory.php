@@ -7,25 +7,25 @@
 
 namespace Spryker\Client\CmsSlot;
 
-use Spryker\Client\CmsSlot\Business\CmsSlotAutoFiller;
-use Spryker\Client\CmsSlot\Business\CmsSlotAutoFillerInterface;
+use Spryker\Client\CmsSlot\Business\CmsSlotDataProvider;
+use Spryker\Client\CmsSlot\Business\CmsSlotDataProviderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CmsSlotFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\CmsSlot\Business\CmsSlotAutoFillerInterface
+     * @return \Spryker\Client\CmsSlot\Business\CmsSlotDataProviderInterface
      */
-    public function createCmsSlotAutoFiller(): CmsSlotAutoFillerInterface
+    public function createCmsSlotDataProvider(): CmsSlotDataProviderInterface
     {
-        return new CmsSlotAutoFiller($this->getCmsSlotFillerStrategyPlugin());
+        return new CmsSlotDataProvider($this->getCmsSlotExternalDataProviderStrategyPlugin());
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotFillerStrategyPluginInterface[]
+     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface[]
      */
-    public function getCmsSlotFillerStrategyPlugin(): array
+    public function getCmsSlotExternalDataProviderStrategyPlugin(): array
     {
-        return $this->getProvidedDependency(CmsSlotDependencyProvider::CMS_SLOT_FILLER_STRATEGY_PLUGINS);
+        return $this->getProvidedDependency(CmsSlotDependencyProvider::CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS);
     }
 }

@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\CmsSlot\Business;
 
-interface CmsSlotAutoFillerInterface
+interface CmsSlotDataProviderInterface
 {
     /**
-     * @param string[] $fillingKeys
+     * @param string[] $dataKeys
      *
      * @return array
      */
-    public function fetchCmsSlotAutoFilled(array $fillingKeys): array;
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): array;
 }

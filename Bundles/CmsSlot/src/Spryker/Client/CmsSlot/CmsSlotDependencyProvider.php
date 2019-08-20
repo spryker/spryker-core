@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 
 class CmsSlotDependencyProvider extends AbstractDependencyProvider
 {
-    public const CMS_SLOT_FILLER_STRATEGY_PLUGINS = 'CMS_SLOT_FILLER_STRATEGY_PLUGINS';
+    public const CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS = 'CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -21,29 +21,29 @@ class CmsSlotDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = $this->addCmsSlotFillerStrategyPlugin($container);
+        $container = $this->addCmsSlotExternalDataProviderStrategyPlugin($container);
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCmsSlotFillerStrategyPlugin(Container $container): Container
+    protected function addCmsSlotExternalDataProviderStrategyPlugin(Container $container): Container
     {
-        $container->set(static::CMS_SLOT_FILLER_STRATEGY_PLUGINS, function (Container $container) {
-            return $this->getCmsSlotFillerStrategyPlugin();
+        $container->set(static::CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS, function (Container $container) {
+            return $this->getCmsSlotExternalDataProviderStrategyPlugin();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotFillerStrategyPluginInterface[]
+     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface[]
      */
-    public function getCmsSlotFillerStrategyPlugin(): array
+    public function getCmsSlotExternalDataProviderStrategyPlugin(): array
     {
         return [];
     }

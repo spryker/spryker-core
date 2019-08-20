@@ -9,6 +9,6 @@ namespace Spryker\Client\CmsSlot\Exception;
 
 use Exception;
 
-class SlotFillerIsMissingException extends Exception
+class SlotDataProviderMissingException extends Exception
 {
 }

@@ -19,12 +19,12 @@ class CmsSlotClient extends AbstractClient implements CmsSlotClientInterface
      *
      * @api
      *
-     * @param string[] $fillingKeys
+     * @param string[] $dataKeys
      *
      * @return array
      */
-    public function fetchCmsSlotAutoFilled(array $fillingKeys): array
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): array
     {
-        return $this->getFactory()->createCmsSlotAutoFiller()->fetchCmsSlotAutoFilled($fillingKeys);
+        return $this->getFactory()->createCmsSlotDataProvider()->getCmsSlotExternalDataByKeys($dataKeys);
     }
 }

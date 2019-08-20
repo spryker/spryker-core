@@ -7,29 +7,29 @@
 
 namespace Spryker\Client\CmsSlotExtension\Dependency\Plugin;
 
-interface CmsSlotFillerStrategyPluginInterface
+interface CmsSlotExternalDataProviderStrategyPluginInterface
 {
     /**
      * Specification:
-     *  - Returns true if strategy can be used for the auto filling key.
+     *  - Returns true if strategy can be used for the external data key.
      *
      * @api
      *
-     * @param string $fillingKey
+     * @param string $dataKey
      *
      * @return bool
      */
-    public function isApplicable(string $fillingKey): bool;
+    public function isApplicable(string $dataKey): bool;
 
     /**
      * Specification:
-     *  - Returns data which represents the key in the cms slot request.
+     *  - Returns data which represents the key in the CMS slot request.
      *
      * @api
      *
-     * @param string $fillingKey
+     * @param string $dataKey
      *
      * @return mixed
      */
-    public function fill(string $fillingKey);
+    public function getDataForKey(string $dataKey);
 }
