@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Search\Dependency\Client;
 
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
-
 class SearchToSearchClientBridge implements SearchToSearchClientInterface
 {
     /**
@@ -58,9 +56,9 @@ class SearchToSearchClientBridge implements SearchToSearchClientInterface
     /**
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function deleteIndices(?string $indexName = null): ResponseInterface
+    public function deleteIndices(?string $indexName = null): bool
     {
         return $this->searchClient->deleteIndices($indexName);
     }

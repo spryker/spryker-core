@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
-
 interface SearchAdapterPluginInterface
 {
     /**
@@ -74,9 +72,9 @@ interface SearchAdapterPluginInterface
      *
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function delete(?string $indexName = null): ResponseInterface;
+    public function delete(?string $indexName = null): bool;
 
     /**
      * Specification:

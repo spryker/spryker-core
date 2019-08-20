@@ -7,11 +7,19 @@
 
 namespace Spryker\Client\Search\Delegator;
 
-use Spryker\Client\Search\Search\SearchInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
-interface SearchDelegatorInterface extends SearchInterface
+interface SearchDelegatorInterface
 {
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryCriteria
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array $requestParameters
+     *
+     * @return mixed
+     */
+    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
+
     /**
      * @param string|null $indexName
      *
@@ -37,9 +45,9 @@ interface SearchDelegatorInterface extends SearchInterface
     /**
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function delete(?string $indexName = null): ResponseInterface;
+    public function delete(?string $indexName = null): bool;
 
     /**
      * @param array $searchDocumentTransfers

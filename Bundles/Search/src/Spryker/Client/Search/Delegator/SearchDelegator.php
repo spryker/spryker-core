@@ -7,13 +7,10 @@
 
 namespace Spryker\Client\Search\Delegator;
 
-use Elastica\Response as ElasticaResponse;
 use Exception;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
-use Spryker\Client\Search\Response\Response;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 class SearchDelegator implements SearchDelegatorInterface
 {
@@ -101,32 +98,11 @@ class SearchDelegator implements SearchDelegatorInterface
     /**
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function delete(?string $indexName = null): ResponseInterface
+    public function delete(?string $indexName = null): bool
     {
-        if ($indexName !== null) {
-            return $this->getSearchAdapterByIndexName($indexName)->delete($indexName);
-        }
-
-        $responses = [];
-
-        foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
-            $responses[] = $searchAdapterPlugin->delete();
-        }
-
-        return $this->mergeResponses($responses);
-    }
-
-    /**
-     * @param array $responses
-     *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
-     */
-    protected function mergeResponses(array $responses): ResponseInterface
-    {
-        // TODO refactor to return real response.
-        return new Response(new ElasticaResponse('foo', 200));
+        return $this->getSearchAdapterByIndexName($indexName)->delete($indexName);
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Client\Search;
 
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 interface SearchClientInterface
 {
@@ -199,7 +198,7 @@ interface SearchClientInterface
      *
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function deleteIndices(?string $indexName = null): ResponseInterface;
+    public function deleteIndices(?string $indexName = null): bool;
 }

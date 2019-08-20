@@ -20,7 +20,7 @@ interface AdapterPluginInterface
      *
      * @return int
      */
-    public function getTotalCount(?string $indexName = null);
+    public function getTotalCount(?string $indexName = null): int;
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface AdapterPluginInterface
      *
      * @return array
      */
-    public function getMetaData(?string $indexName = null);
+    public function getMetaData(?string $indexName = null): array;
 
     /**
      * Specification:
@@ -75,5 +75,5 @@ interface AdapterPluginInterface
      *
      * @return mixed
      */
-    public function searchKeys($searchString, $limit = null, $offset = null);
+    public function searchKeys(string $searchString, ?int $limit = null, ?int $offset = null);
 }

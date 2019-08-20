@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchElasticsearch\Search;
 
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 interface SearchInterface
 {
@@ -75,9 +74,9 @@ interface SearchInterface
      *
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function delete(?string $indexName = null): ResponseInterface;
+    public function delete(?string $indexName = null): bool;
 
     /**
      * Specification:

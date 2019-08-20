@@ -31,7 +31,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         $this
             ->getFactory()
             ->createSearchInstaller($messenger)
-            ->install($messenger);
+            ->install();
     }
 
     /**

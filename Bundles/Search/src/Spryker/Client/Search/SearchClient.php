@@ -9,7 +9,6 @@ namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
@@ -264,9 +263,9 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function deleteIndices(?string $indexName = null): ResponseInterface
+    public function deleteIndices(?string $indexName = null): bool
     {
         return $this->getFactory()->createSearchDelegator()->delete($indexName);
     }

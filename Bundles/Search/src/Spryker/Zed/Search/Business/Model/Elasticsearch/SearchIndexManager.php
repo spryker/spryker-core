@@ -74,7 +74,7 @@ class SearchIndexManager implements SearchIndexManagerInterface
     }
 
     /**
-     * @return \Elastica\Response|\Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
     public function delete(/* ?string $indexName = null */)
     {

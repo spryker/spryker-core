@@ -12,9 +12,7 @@ use Elastica\Query;
 use Elastica\Response as ElasticaResponse;
 use Elastica\Result;
 use Elastica\ResultSet;
-use Spryker\Client\SearchElasticsearch\Response\Response;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 class Search implements SearchInterface
 {
@@ -97,15 +95,16 @@ class Search implements SearchInterface
      *
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function delete(?string $indexName = null): ResponseInterface
+    public function delete(?string $indexName = null): bool
     {
         if (!$indexName) {
             $indexName = '_all';
         }
 
-        return new Response($this->client->getIndex($indexName)->delete());
+        // TODO return real value;
+        return false;
     }
 
     /**

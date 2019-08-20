@@ -113,7 +113,7 @@ class SearchFactory extends AbstractFactory
     /**
      * @deprecated Use `\Spryker\Client\Search\SearchFactory::createSearchDelegator()` instead.
      *
-     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface|\Spryker\Client\Search\Search\SearchInterface
+     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface|\Spryker\Client\Search\Delegator\SearchDelegatorInterface
      */
     public function createElasticsearchSearchHandler()
     {

@@ -7,10 +7,8 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
-use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
@@ -73,9 +71,9 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      *
      * @param string|null $indexName
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Response\ResponseInterface
+     * @return bool
      */
-    public function delete(?string $indexName = null): ResponseInterface
+    public function delete(?string $indexName = null): bool
     {
         return $this->getFactory()->createSearch()->delete($indexName);
     }
