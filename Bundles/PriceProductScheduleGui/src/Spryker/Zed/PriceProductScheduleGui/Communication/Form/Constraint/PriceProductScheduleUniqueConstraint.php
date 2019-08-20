@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint;
 
 class PriceProductScheduleUniqueConstraint extends Constraint
 {
-    protected const VALIDATION_MESSAGE = 'An identical scheduled price already exist for this product.';
+    protected const VALIDATION_MESSAGE = 'An identical scheduled price already exists for this product.';
 
     public const OPTION_PRICE_PRODUCT_SCHEDULE_FACADE = 'priceProductScheduleFacade';
 
