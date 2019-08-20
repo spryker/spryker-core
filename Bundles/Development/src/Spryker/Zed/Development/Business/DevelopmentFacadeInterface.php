@@ -428,4 +428,17 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
     public function getModuleOverview(): array;
+
+    /**
+     * Specification:
+     * - Returns the composer name for a module if module is not ambiguous.
+     * - Returns null when the module name was found in more than one organization.
+     *
+     * @api
+     *
+     * @param string $moduleName
+     *
+     * @return string|null
+     */
+    public function findComposerNameByModuleName(string $moduleName): ?string;
 }
