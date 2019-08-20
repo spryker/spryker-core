@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Gui\Communication\Form\Constraint\IntegerMoneyConstraint;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -16,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
@@ -117,6 +119,10 @@ class MoneyValueSubForm extends AbstractType
         $builder->add(static::FIELD_NET_AMOUNT, NumberType::class, [
             'label' => 'Net price',
             'required' => false,
+            'constraints' => [
+                new PositiveOrZero(),
+                new IntegerMoneyConstraint(),
+            ],
         ]);
 
         $builder->get(static::FIELD_NET_AMOUNT)
@@ -135,6 +141,10 @@ class MoneyValueSubForm extends AbstractType
         $builder->add(static::FIELD_GROSS_AMOUNT, NumberType::class, [
             'label' => 'Gross price',
             'required' => false,
+            'constraints' => [
+                new PositiveOrZero(),
+                new IntegerMoneyConstraint(),
+            ],
         ]);
 
         $builder->get(static::FIELD_GROSS_AMOUNT)
