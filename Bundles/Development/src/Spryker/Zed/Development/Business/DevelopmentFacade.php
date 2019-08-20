@@ -534,4 +534,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     {
         return $this->getFactory()->createModuleOverview()->getOverview();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $moduleName
+     *
+     * @return string|null
+     */
+    public function findComposerNameByModuleName(string $moduleName): ?string
+    {
+        return $this->getFactory()->createComposerNameFinder()->findComposerNameByModuleName($moduleName);
+    }
 }

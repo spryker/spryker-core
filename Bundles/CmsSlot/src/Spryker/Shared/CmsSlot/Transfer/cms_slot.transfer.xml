@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CmsSlot">
+        <property name="idCmsSlot" type="int"/>
+        <property name="key" type="string" />
+        <property name="contentProviderType" type="string" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
+        <property name="isActive" type="bool" />
+    </transfer>
+
+    <transfer name="CmsSlotTemplate">
+        <property name="idCmsSlotTemplate" type="int"/>
+        <property name="path" type="string" />
+        <property name="name" type="string" />
+        <property name="description" type="string" />
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="constraintViolations" type="ConstraintViolation[]" />
+    </transfer>
+
+    <transfer name="ConstraintViolation">
+        <property name="propertyName" type="string" />
+        <property name="messages" type="Message[]" singular="message" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+</transfers>
