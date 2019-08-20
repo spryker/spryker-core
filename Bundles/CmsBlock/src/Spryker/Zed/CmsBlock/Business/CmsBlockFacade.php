@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CmsBlock\Business\CmsBlockBusinessFactory getFactory()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface getRepository()
  */
 class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
 {
