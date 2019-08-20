@@ -46,9 +46,9 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
      */
     public function getData(int $offset, int $limit): array
     {
-        $filterTranser = $this->createFilterTransfer($offset, $limit);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findFilteredProductMeasurementUnitTransfers($filterTranser);
+        return $this->getFacade()->findFilteredProductMeasurementUnitTransfers($filterTransfer);
     }
 
     /**
@@ -84,6 +84,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT)
             ->setOffset($offset)
             ->setLimit($limit);
     }

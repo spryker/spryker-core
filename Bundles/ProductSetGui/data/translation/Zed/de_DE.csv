@@ -5,10 +5,13 @@ Active,Aktiv
 "Create Product Set","Produktset erstellen"
 Deactivate,Deaktivieren
 Default,Standard
+"Delete image","Lösche Bild"
+"Delete image set","Bilderset löschen"
 "Deselect All","Alle Markierungen aufheben"
 "Deselected products","Aus der Auswahl entfernte Produkte"
 Edit,Bearbeiten
 ID,ID
+"Image Set",Bildersets
 "Image Set Name","Name des Bildersets"
 Inactive,Inaktiv
 Keywords,Schlüsselwörter
@@ -24,6 +27,7 @@ Price,Preis
 "Products to be assigned","Zuzuordnende Produkte"
 "Products to be deassigned","Zu entfernende Produkte"
 "Reorder Product Sets","Produktesets neu ordnen"
+Save,Speichern
 "Select All","Alle auswählen"
 "Select products to assign","Produkte zur Zuweisung auswählen"
 Selected,Ausgewählt

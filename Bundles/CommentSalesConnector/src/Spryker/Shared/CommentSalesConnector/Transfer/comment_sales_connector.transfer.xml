@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CommentFilter">
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+        <property name="tags" type="array"/>
+    </transfer>
+
+    <transfer name="CommentRequest">
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+        <property name="comment" type="Comment"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="commentThread" type="CommentThread"/>
+    </transfer>
+
+    <transfer name="CommentThread">
+        <property name="comments" type="Comment[]" singular="comment"/>
+    </transfer>
+
+    <transfer name="Comment">
+        <property name="idComment" type="int"/>
+    </transfer>
+
+</transfers>

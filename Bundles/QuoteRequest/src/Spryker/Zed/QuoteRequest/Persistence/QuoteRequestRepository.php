@@ -132,6 +132,21 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return int[]
+     */
+    public function findQuoteRequestIdsByIdCompanyUser(int $idCompanyUser): array
+    {
+        return $this->getFactory()
+            ->getQuoteRequestPropelQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->select(SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST)
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery $quoteRequestQuery
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
@@ -181,7 +196,7 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
 
         $hiddenQuoteRequestIds = $hiddenQuoteRequestQuery
             ->joinSpyQuoteRequestVersion()
-            ->filterByIsLatestVersionHidden(true)
+            ->filterByIsLatestVersionVisible(false)
             ->groupByIdQuoteRequest()
             ->having(sprintf(
                 'COUNT(%s) = 1',

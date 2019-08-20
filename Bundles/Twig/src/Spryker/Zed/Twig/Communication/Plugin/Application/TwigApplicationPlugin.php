@@ -16,7 +16,7 @@ use Twig\Environment;
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
- * @method \Spryker\Zed\Twig\Business\TwigFacade getFacade()
+ * @method \Spryker\Zed\Twig\Business\TwigFacadeInterface getFacade()
  */
 class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {

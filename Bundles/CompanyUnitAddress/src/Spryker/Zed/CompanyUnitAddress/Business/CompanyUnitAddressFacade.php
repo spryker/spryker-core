@@ -94,7 +94,9 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
 
-        return $this->getRepository()->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
     }
 
     /**

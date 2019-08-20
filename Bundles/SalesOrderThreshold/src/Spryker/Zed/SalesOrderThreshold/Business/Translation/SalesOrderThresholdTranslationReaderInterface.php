@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesOrderThreshold\Business\Translation;
 
 use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 
+/**
+ * @deprecated Use `Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface` instead.
+ */
 interface SalesOrderThresholdTranslationReaderInterface
 {
     /**

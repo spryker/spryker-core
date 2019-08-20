@@ -1,0 +1,49 @@
+{
+  "name": "spryker/shared-carts-rest-api",
+  "type": "library",
+  "description": "SharedCartsRestApi module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/carts-rest-api-extension": "^1.4.0",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/quote": "^2.8.0",
+    "spryker/shared-cart": "^1.11.0",
+    "spryker/shared-carts-rest-api-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/uuid-behavior": "^1.0.0",
+    "spryker/zed-request": "^3.7.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-business-unit": "*",
+    "spryker/company-user": "*",
+    "spryker/customer": "*",
+    "spryker/permission": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

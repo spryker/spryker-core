@@ -20,6 +20,8 @@ Categories,Kategorien
 "Create Product","Produkt erstellen"
 Deactivate,Deaktivieren
 Default,Standard
+"Delete image","Lösche Bild"
+"Delete image set","Bilderset löschen"
 Edit,Bearbeiten
 "Edit Product Abstract","Abstraktes Produkt bearbeiten"
 "Edit Product Concrete","Konkretes Produkt bearbeiten"
@@ -27,6 +29,7 @@ Edit,Bearbeiten
 "Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Bestandswert eingeben. Wenn mehrere Varianten erstellt werden, kann der Bestand unter ""Produktvarianten"" verwaltet werden und dieses Eingabefeld wird ignoriert."
 General,Allgemein
 "Gross price",Bruttopreis
+"Image Set",Bildersets
 "Image Sets",Bildersets
 Large,Groß
 "List Products","Liste der Produkte"

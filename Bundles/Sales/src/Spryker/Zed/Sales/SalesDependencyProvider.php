@@ -40,6 +40,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
     public const ITEM_TRANSFORMER_STRATEGY_PLUGINS = 'ITEM_TRANSFORMER_STRATEGY_PLUGINS';
     public const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
+    public const PLUGINS_ORDER_POST_SAVE = 'PLUGINS_ORDER_POST_SAVE';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -65,6 +66,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
         $container = $this->addItemTransformerStrategyPlugins($container);
+        $container = $this->addOrderPostSavePlugins($container);
 
         return $container;
     }
@@ -313,6 +315,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderPostSavePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ORDER_POST_SAVE] = function () {
+            return $this->getOrderPostSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -321,7 +337,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
     {
@@ -350,5 +366,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSalesTablePlugins()
     {
          return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     */
+    protected function getOrderPostSavePlugins()
+    {
+        return [];
     }
 }

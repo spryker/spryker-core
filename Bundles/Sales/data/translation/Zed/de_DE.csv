@@ -10,7 +10,9 @@ Comments,Kommentare
 "Customer successfully updated.","Kunde wurde erfolgreich aktualisiert."
 Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
+"Grand Total",Gesamtsumme
 "Hide history","Historie ausblenden"
+"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
 "Included tax amount","Enthaltener Steuerbetrag"
 "Item total","Artikel Gesamt"
 Legend,Legende

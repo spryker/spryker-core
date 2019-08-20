@@ -16,6 +16,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
+ * @internal
+ *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
  */
@@ -26,16 +28,6 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected const OPTION_DRY_RUN_SHORT = 'd';
 
     protected const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
-
-    /**
-     * @var array|null
-     */
-    protected $moduleTransferCollectionGroupedByModuleName;
-
-    /**
-     * @var array|null
-     */
-    protected $packageTransferCollectionGroupedByPackageName;
 
     /**
      * @return void
@@ -101,10 +93,10 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->getComposerJsonAsArray($moduleTransfer);
 
         foreach ($this->getModuleDependencies($moduleTransfer) as $moduleDependencyTransfer) {
-            $composerNameToFix = $this->getComposerNameToFix($moduleDependencyTransfer);
+            $composerNameToFix = $this->getFacade()->findComposerNameByModuleName($moduleDependencyTransfer->getModuleName());
 
             if ($composerNameToFix === null) {
-                $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModule()));
+                $this->output->writeln(sprintf('Could not get a composer name for "%s"', $moduleDependencyTransfer->getModuleName()));
                 $this->output->writeln(sprintf('Please check the module <fg=yellow>%s.%s</> manually.', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
                 continue;
             }
@@ -115,124 +107,6 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $this->output->writeln(sprintf('Fixed dependencies in <fg=yellow>%s.%s</>', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName()));
 
         $this->saveComposerJsonArray($moduleTransfer, $composerJsonArray);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer $moduleDependencyTransfer
-     *
-     * @return string|null
-     */
-    protected function getComposerNameToFix(ModuleDependencyTransfer $moduleDependencyTransfer): ?string
-    {
-        $moduleName = $moduleDependencyTransfer->getModule();
-
-        $composerName = $this->getComposerNameFromModuleCollection($moduleName);
-        if ($composerName !== null) {
-            return $composerName;
-        }
-
-        $composerName = $this->getComposerNameFromPackageCollection($moduleName);
-        if ($composerName !== null) {
-            return $composerName;
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string|null
-     */
-    protected function getComposerNameFromModuleCollection(string $moduleName): ?string
-    {
-        if ($this->isNamespacedModuleName($moduleName)) {
-            $moduleTransfer = $this->getModuleTransferCollection()[$moduleName];
-
-            return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());
-        }
-
-        $moduleTransferCollection = $this->getModuleTransferCollectionGroupedByModuleName();
-
-        if (!isset($moduleTransferCollection[$moduleName])) {
-            return null;
-        }
-
-        if (count($moduleTransferCollection[$moduleName]) > 1) {
-            $this->output->writeln(sprintf('Found more than one moduleTransfer for the module name "%s"', $moduleName));
-
-            return null;
-        }
-
-        $moduleTransfer = $this->getCurrentModuleTransfer($moduleTransferCollection[$moduleName]);
-
-        return sprintf('%s/%s', $moduleTransfer->getOrganization()->getNameDashed(), $moduleTransfer->getNameDashed());
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string|null
-     */
-    protected function getComposerNameFromPackageCollection(string $moduleName): ?string
-    {
-        $packageTransferCollection = $this->getPackageTransferCollectionGroupedByPackageName();
-
-        if (isset($packageTransferCollection[$moduleName])) {
-            $packageTransfer = $packageTransferCollection[$moduleName];
-
-            return $packageTransfer->getComposerName();
-        }
-
-        return null;
-    }
-
-    /**
-     * @param array $moduleTransferCollection
-     *
-     * @return \Generated\Shared\Transfer\ModuleTransfer
-     */
-    protected function getCurrentModuleTransfer(array $moduleTransferCollection): ModuleTransfer
-    {
-        return current($moduleTransferCollection);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getModuleTransferCollectionGroupedByModuleName(): array
-    {
-        if ($this->moduleTransferCollectionGroupedByModuleName !== null) {
-            return $this->moduleTransferCollectionGroupedByModuleName;
-        }
-
-        $moduleTransferCollection = $this->getModuleTransferCollection();
-        $this->moduleTransferCollectionGroupedByModuleName = [];
-
-        foreach ($moduleTransferCollection as $moduleTransfer) {
-            $this->moduleTransferCollectionGroupedByModuleName[$moduleTransfer->getName()][] = $moduleTransfer;
-        }
-
-        return $this->moduleTransferCollectionGroupedByModuleName;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
-     */
-    protected function getPackageTransferCollectionGroupedByPackageName(): array
-    {
-        if ($this->packageTransferCollectionGroupedByPackageName !== null) {
-            return $this->packageTransferCollectionGroupedByPackageName;
-        }
-
-        $packageTransferCollection = $this->getFacade()->getPackages();
-        $this->packageTransferCollectionGroupedByPackageName = [];
-
-        foreach ($packageTransferCollection as $packageTransfer) {
-            $this->packageTransferCollectionGroupedByPackageName[$packageTransfer->getPackageName()] = $packageTransfer;
-        }
-
-        return $this->packageTransferCollectionGroupedByPackageName;
     }
 
     /**

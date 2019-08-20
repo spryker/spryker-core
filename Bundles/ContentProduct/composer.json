@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/content-storage": "^1.1.0",
+    "spryker/content-storage": "^2.0.0",
     "spryker/kernel": "^3.32.0"
   },
   "require-dev": {

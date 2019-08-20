@@ -87,6 +87,7 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->filterByFkCurrency($moneyValueTransfer->getCurrency()->getIdCurrency())
             ->filterByFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->filterByFkStore($moneyValueTransfer->getFkStore())
+            ->find()
             ->delete();
     }
 
@@ -100,6 +101,59 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
         $this->getFactory()
             ->createPriceProductQuery()
             ->filterByIdPriceProduct($idPriceProduct)
+            ->find()
             ->delete();
+    }
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    public function deletePriceProductDefaultsByPriceProductStoreId(int $idPriceProductStore): void
+    {
+        $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->filterByFkPriceProductStore($idPriceProductStore)
+            ->find()
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): int
+    {
+        $priceProductTransfer
+            ->requireFkPriceType()
+            ->requireIdProduct();
+
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFKProduct($priceProductTransfer->getIdProduct())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOneOrCreate()
+            ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return int
+     */
+    public function savePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): int
+    {
+        $priceProductTransfer
+            ->requireFkPriceType()
+            ->requireIdProductAbstract();
+
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())
+            ->findOneOrCreate()
+            ->save();
     }
 }

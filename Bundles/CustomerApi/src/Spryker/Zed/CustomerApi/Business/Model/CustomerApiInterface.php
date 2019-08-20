@@ -20,8 +20,6 @@ interface CustomerApiInterface
     public function add(ApiDataTransfer $apiDataTransfer);
 
     /**
-     * @internal param ApiFilterTransfer $apiFilterTransfer
-     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer

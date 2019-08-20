@@ -7,16 +7,25 @@
 
 namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToDash;
+
 abstract class AbstractFileDependencyFinder implements DependencyFinderInterface
 {
     /**
-     * @param string $module
+     * @var \Zend\Filter\FilterChain|null
+     */
+    protected $filter;
+
+    /**
+     * @param string $moduleOrComposerName
      *
      * @return bool
      */
-    protected function isExtensionModule(string $module): bool
+    protected function isExtensionModule(string $moduleOrComposerName): bool
     {
-        return preg_match('/Extension$/', $module);
+        return preg_match('/Extension$|-extension$/', $moduleOrComposerName);
     }
 
     /**
@@ -37,5 +46,35 @@ abstract class AbstractFileDependencyFinder implements DependencyFinderInterface
     protected function isTestFile(string $filePath)
     {
         return !strpos($filePath, '/src/');
+    }
+
+    /**
+     * @param string $organizationName
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function buildComposerName(string $organizationName, string $moduleName): string
+    {
+        $filter = $this->getFilter();
+        $composerName = sprintf('%s/%s', $filter->filter($organizationName), $filter->filter($moduleName));
+
+        return $composerName;
+    }
+
+    /**
+     * @return \Zend\Filter\FilterChain
+     */
+    protected function getFilter(): FilterChain
+    {
+        if (!$this->filter) {
+            $filter = new FilterChain();
+            $filter->attach(new CamelCaseToDash())
+                ->attach(new StringToLower());
+
+            $this->filter = $filter;
+        }
+
+        return $this->filter;
     }
 }

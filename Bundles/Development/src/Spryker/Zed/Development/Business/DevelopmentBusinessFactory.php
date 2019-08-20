@@ -13,6 +13,8 @@ use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
 use Spryker\Zed\Development\Business\CodeBuilder\Module\ModuleBuilder;
+use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilder;
+use Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfiguration;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\Config\CodeStyleSnifferConfigurationInterface;
@@ -25,6 +27,8 @@ use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface;
+use Spryker\Zed\Development\Business\Composer\ComposerNameFinder;
+use Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
@@ -69,6 +73,7 @@ use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinder;
 use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidator;
 use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidatorInterface;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleAmbiguousModuleName;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleComposite;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleDevelopmentOnlyDependency;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInRequireAndRequireDev;
@@ -173,6 +178,7 @@ use Spryker\Zed\Development\Business\SnifferConfiguration\Builder\SnifferConfigu
 use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReader;
 use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
 use Spryker\Zed\Development\Business\Stability\StabilityCalculator;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Filesystem\Filesystem;
@@ -223,7 +229,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new CodeTester(
             $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getPathToCore()
+            $this->getConfig()->getPathToCore(),
+            $this->createConfigArgumentCollectionBuilder(),
+            $this->getConfig()->getProcessTimeout()
         );
     }
 
@@ -434,7 +442,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createExtensionDependencyFinder(): DependencyFinderInterface
     {
         return new ExtensionDependencyFinder(
-            $this->createModuleFinder()
+            $this->getModuleFinderFacade()
         );
     }
 
@@ -462,7 +470,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createBehaviorDependencyFinder(): DependencyFinderInterface
     {
         return new BehaviorDependencyFinder(
-            $this->createModuleFinder()
+            $this->getModuleFinderFacade()
         );
     }
 
@@ -688,7 +696,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new DependencyValidator(
             $this->createModuleDependencyParser(),
             $this->createComposerDependencyParser(),
-            $this->createDependencyValidationRules()
+            $this->createDependencyValidationRules(),
+            $this->createComposerNameFinder()
         );
     }
 
@@ -698,6 +707,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createDependencyValidationRules(): ValidationRuleInterface
     {
         return new ValidationRuleComposite([
+            $this->createValidationRuleAmbiguousModuleName(),
             $this->createValidationRuleDevelopmentOnlyDependency(),
             $this->createValidationRuleInSourceNotInRequire(),
             $this->createValidationRuleNotInSourceButInRequire(),
@@ -709,6 +719,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createValidationRuleInSourceAndInSuggested(),
             $this->createValidationRuleInRequireAndRequireDev(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleAmbiguousModuleName(): ValidationRuleInterface
+    {
+        return new ValidationRuleAmbiguousModuleName();
     }
 
     /**
@@ -792,6 +810,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface
      */
     public function createModuleFinder(): ModuleFinderInterface
@@ -800,6 +820,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return \Spryker\Zed\Development\Business\Module\ModuleMatcher\ModuleMatcherInterface
      */
     public function createModuleMatcher(): ModuleMatcherInterface
@@ -841,7 +863,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createDependencyProviderUsedPluginFinder(): DependencyProviderUsedPluginFinderInterface
     {
         return new DependencyProviderUsedPluginFinder(
-            $this->createProjectModuleFinder(),
+            $this->getModuleFinderFacade(),
             $this->getConfig()
         );
     }
@@ -851,7 +873,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createModuleOverview(): ModuleOverviewInterface
     {
-        return new ModuleOverview($this->createProjectModuleFinder(), $this->createModuleFinder());
+        return new ModuleOverview($this->getModuleFinderFacade());
     }
 
     /**
@@ -1521,7 +1543,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createComposerDependencyParser()
     {
-        return new ComposerDependencyParser();
+        return new ComposerDependencyParser(
+            $this->createComposerNameFinder()
+        );
     }
 
     /**
@@ -1875,6 +1899,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return \Spryker\Zed\Development\Business\Module\ProjectModuleFinder\ProjectModuleFinderInterface
      */
     public function createProjectModuleFinder(): ProjectModuleFinderInterface
@@ -1883,6 +1909,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `spryker/module-finder` instead.
+     *
      * @return \Spryker\Zed\Development\Business\Package\PackageFinder\PackageFinderInterface
      */
     public function createPackageFinder(): PackageFinderInterface
@@ -1949,5 +1977,31 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function getConfigLoader(): Loader
     {
         return $this->getProvidedDependency(DevelopmentDependencyProvider::CONFIG_LOADER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
+     */
+    public function getModuleFinderFacade(): DevelopmentToModuleFinderFacadeInterface
+    {
+        return $this->getProvidedDependency(DevelopmentDependencyProvider::FACADE_MODULE_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
+     */
+    public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
+    {
+        return new CodeceptionArgumentsBuilder(
+            $this->getConfig()->getDefaultInclusiveGroups()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface
+     */
+    public function createComposerNameFinder(): ComposerNameFinderInterface
+    {
+        return new ComposerNameFinder($this->getModuleFinderFacade());
     }
 }

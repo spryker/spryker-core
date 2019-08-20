@@ -138,6 +138,36 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
     /**
      * @api
      *
+     * @param string $stateMachineName
+     * @param string $processName
+     * @param string[] $states
+     * @param string $historySortDirection
+     *
+     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
+     */
+    public function queryItemsByStateMachineProcessNameAndItemStates(
+        $stateMachineName,
+        $processName,
+        array $states,
+        string $historySortDirection
+    ) {
+        return $this->getFactory()
+            ->createStateMachineItemStateQuery()
+            ->innerJoinWithStateHistory()
+            ->useProcessQuery()
+                ->filterByStateMachineName($stateMachineName)
+                ->filterByName($processName)
+            ->endUse()
+            ->joinProcess()
+            ->filterByName($states, Criteria::IN)
+            ->useStateHistoryQuery()
+                ->orderByCreatedAt($historySortDirection)
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idProcess
      * @param string $stateName
      *

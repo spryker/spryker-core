@@ -52,17 +52,17 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productDiscontinuedStorageEntitityIds
+     * @param int[] $productDiscontinuedStorageEntityIds
      *
      * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
      */
-    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntitityIds = []): array
+    public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntityIds = []): array
     {
         $query = $this->getFactory()
             ->createProductDiscontinuedStoragePropelQuery();
 
-        if ($productDiscontinuedStorageEntitityIds) {
-            $query->filterByIdProductDiscontinuedStorage_In($productDiscontinuedStorageEntitityIds);
+        if ($productDiscontinuedStorageEntityIds) {
+            $query->filterByIdProductDiscontinuedStorage_In($productDiscontinuedStorageEntityIds);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();

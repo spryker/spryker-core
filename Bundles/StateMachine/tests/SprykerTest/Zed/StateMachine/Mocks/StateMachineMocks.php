@@ -184,6 +184,8 @@ class StateMachineMocks extends Unit
     protected function createStateMachineConfigMock()
     {
         $stateMachineConfigMock = $this->getMockBuilder(StateMachineConfig::class)->getMock();
+        $stateMachineConfigMock->method('getStateMachineItemLockExpirationInterval')
+            ->willReturn('1 minutes');
 
         return $stateMachineConfigMock;
     }

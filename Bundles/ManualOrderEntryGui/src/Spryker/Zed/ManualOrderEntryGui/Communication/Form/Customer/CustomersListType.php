@@ -60,7 +60,6 @@ class CustomersListType extends AbstractType
             'property_path' => QuoteTransfer::CUSTOMER . '.' . CustomerTransfer::ID_CUSTOMER,
             'label' => 'Select Customer',
             'choices' => array_flip($customerList),
-            'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
         ]);

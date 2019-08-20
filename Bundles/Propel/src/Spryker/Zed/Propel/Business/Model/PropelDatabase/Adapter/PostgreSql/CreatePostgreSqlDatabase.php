@@ -82,8 +82,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getCreateCommandRemote()
     {
         return sprintf(
-            'PGPASSWORD=%s psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
-            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
+            'psql -h %s -p %s -U %s -w -c "CREATE DATABASE \"%s\" WITH ENCODING=\'UTF8\' LC_COLLATE=\'en_US.UTF-8\' LC_CTYPE=\'en_US.UTF-8\' CONNECTION LIMIT=-1 TEMPLATE=\"template0\"; " %s',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
@@ -98,8 +97,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getSudoCreateCommand()
     {
         return sprintf(
-            'PGPASSWORD=%s sudo createdb %s -E UTF8 -T template0',
-            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
+            'sudo createdb %s -E UTF8 -T template0',
             $this->getConfigValue(PropelConstants::ZED_DB_DATABASE)
         );
     }
@@ -113,8 +111,8 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
      */
     protected function runProcess($command)
     {
-        $process = new Process($command);
-        $process->run();
+        $process = $this->getProcess($command);
+        $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {
             throw new RuntimeException($process->getErrorOutput());
@@ -123,6 +121,20 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
         $returnValue = (int)$process->getOutput();
 
         return (bool)$returnValue;
+    }
+
+    /**
+     * @param string $command
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function getProcess(string $command): Process
+    {
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command);
+        }
+
+        return new Process($command);
     }
 
     /**
@@ -151,5 +163,15 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
         }
 
         return $value;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getEnvironmentVariables(): array
+    {
+        return [
+            'PGPASSWORD' => $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
+        ];
     }
 }

@@ -665,7 +665,7 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
-        $this->assertFalse($storedQuoteRequestTransfer->getIsLatestVersionHidden());
+        $this->assertTrue($storedQuoteRequestTransfer->getIsLatestVersionVisible());
         $this->assertEquals(SharedQuoteRequestConfig::STATUS_READY, $storedQuoteRequestTransfer->getStatus());
     }
 
@@ -688,7 +688,7 @@ class QuoteRequestFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
-        $this->assertFalse($storedQuoteRequestTransfer->getIsLatestVersionHidden());
+        $this->assertTrue($storedQuoteRequestTransfer->getIsLatestVersionVisible());
         $this->assertEquals(SharedQuoteRequestConfig::STATUS_READY, $storedQuoteRequestTransfer->getStatus());
     }
 
@@ -1265,7 +1265,7 @@ class QuoteRequestFacadeTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus();
 
-        $quoteRequestTransfer->setIsLatestVersionHidden(true)
+        $quoteRequestTransfer->setIsLatestVersionVisible(false)
             ->setValidUntil((new DateTime("+1 hour"))->format('Y-m-d H:i:s'))
             ->getLatestVersion()
             ->setMetadata(['test' => 'test'])
@@ -1279,7 +1279,7 @@ class QuoteRequestFacadeTest extends Unit
         // Assert
         $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
         $this->assertEquals($quoteRequestTransfer->getValidUntil(), $storedQuoteRequestTransfer->getValidUntil());
-        $this->assertEquals($quoteRequestTransfer->getIsLatestVersionHidden(), $storedQuoteRequestTransfer->getIsLatestVersionHidden());
+        $this->assertEquals($quoteRequestTransfer->getIsLatestVersionVisible(), $storedQuoteRequestTransfer->getIsLatestVersionVisible());
         $this->assertEquals(
             $quoteRequestTransfer->getLatestVersion()->getQuote()->getItems(),
             $storedQuoteRequestTransfer->getLatestVersion()->getQuote()->getItems()
@@ -1447,6 +1447,29 @@ class QuoteRequestFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteQuoteRequestsForCompanyUserWillDeleteAllAssignedQuoteRequests(): void
+    {
+        // Arrange
+        $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus();
+        $quoteTransfer = (new QuoteTransfer())
+            ->setQuoteRequestReference($quoteRequestTransfer->getQuoteRequestReference())
+            ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
+
+        // Act
+        $this->tester->getFacade()->deleteQuoteRequestsByIdCompanyUser(
+            $quoteRequestTransfer->getCompanyUser()->getIdCompanyUser()
+        );
+        $quoteRequestCollection = $this->tester->getFacade()->getQuoteRequestCollectionByFilter(
+            $this->createFilterTransfer($quoteRequestTransfer)
+        );
+
+        // Assert
+        $this->assertSame(0, $quoteRequestCollection->getQuoteRequests()->count());
+    }
+
+    /**
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
@@ -1467,15 +1490,15 @@ class QuoteRequestFacadeTest extends Unit
 
     /**
      * @param string|null $validUntil
-     * @param bool|null $isLatestVersionHidden
+     * @param bool|null $isLatestVersionVisible
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
     protected function haveQuoteRequestInReadyStatus(
         ?string $validUntil = null,
-        ?bool $isLatestVersionHidden = null
+        ?bool $isLatestVersionVisible = null
     ): QuoteRequestTransfer {
-        $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus($validUntil, $isLatestVersionHidden);
+        $quoteRequestTransfer = $this->haveQuoteRequestInInProgressStatus($validUntil, $isLatestVersionVisible);
 
         return $this->tester->getFacade()
             ->sendQuoteRequestToCompanyUser($this->createFilterTransfer($quoteRequestTransfer))
@@ -1484,13 +1507,13 @@ class QuoteRequestFacadeTest extends Unit
 
     /**
      * @param string|null $validUntil
-     * @param bool|null $isLatestVersionHidden
+     * @param bool|null $isLatestVersionVisible
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer
      */
     protected function haveQuoteRequestInInProgressStatus(
         ?string $validUntil = null,
-        ?bool $isLatestVersionHidden = null
+        ?bool $isLatestVersionVisible = null
     ): QuoteRequestTransfer {
         $quoteRequestTransfer = $this->haveQuoteRequestInWaitingStatus();
 
@@ -1500,9 +1523,9 @@ class QuoteRequestFacadeTest extends Unit
 
         $quoteRequestTransfer
             ->setValidUntil($validUntil)
-            ->setIsLatestVersionHidden($isLatestVersionHidden);
+            ->setIsLatestVersionVisible($isLatestVersionVisible);
 
-        if ($validUntil || $isLatestVersionHidden) {
+        if ($validUntil || !$isLatestVersionVisible) {
             return $this->tester->getFacade()
                 ->updateQuoteRequestForCompanyUser($quoteRequestTransfer)
                 ->getQuoteRequest();

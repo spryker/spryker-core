@@ -20,6 +20,8 @@ Categories,Categories
 "Create Product","Create Product"
 Deactivate,Deactivate
 Default,Default
+"Delete image","Delete image"
+"Delete image set","Delete image set"
 Edit,Edit
 "Edit Product Abstract","Edit Product Abstract"
 "Edit Product Concrete","Edit Product Concrete"
@@ -27,6 +29,7 @@ Edit,Edit
 "Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored.","Enter stock value. In case you create multiple variants, the stock can be managed under ""Product Variants"" and this input field will be ignored."
 General,General
 "Gross price","Gross price"
+"Image Set","Image Set"
 "Image Sets","Image Sets"
 Large,Large
 "List Products","List of products"

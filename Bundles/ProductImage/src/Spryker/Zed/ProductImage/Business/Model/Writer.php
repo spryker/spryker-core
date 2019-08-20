@@ -143,6 +143,9 @@ class Writer implements WriterInterface
         $excludeIdProductImage = [];
 
         foreach ($productImageSetTransfer->getProductImages() as $productImageTransfer) {
+            if (!$productImageTransfer->getIdProductImage()) {
+                continue;
+            }
             $excludeIdProductImage[] = $productImageTransfer->getIdProductImage();
         }
 
@@ -289,11 +292,13 @@ class Writer implements WriterInterface
         foreach ($productImageSetTransfer->getProductImages() as $imageTransfer) {
             $imageTransfer = $this->saveProductImage($imageTransfer);
 
-            $this->persistProductImageRelation(
+            $idProductImageSetToProductImage = $this->persistProductImageRelation(
                 $productImageSetTransfer->requireIdProductImageSet()->getIdProductImageSet(),
                 $imageTransfer->getIdProductImage(),
                 $imageTransfer->getSortOrder()
             );
+
+            $imageTransfer->setIdProductImageSetToProductImage($idProductImageSetToProductImage);
         }
 
         return $productImageSetTransfer;
