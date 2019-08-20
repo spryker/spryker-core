@@ -10,10 +10,10 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
-class ShipmentMethodRestResponseBuilder implements ShipmentMethodRestResponseBuilderInterface
+class ShipmentMethodsRestResponseBuilder implements ShipmentMethodsRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -21,18 +21,18 @@ class ShipmentMethodRestResponseBuilder implements ShipmentMethodRestResponseBui
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface
      */
-    protected $shipmentMethodMapper;
+    protected $shipmentMethodsMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface $shipmentMethodMapper
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface $shipmentMethodsMapper
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder, ShipmentMethodMapperInterface $shipmentMethodMapper)
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder, ShipmentMethodsMapperInterface $shipmentMethodsMapper)
     {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->shipmentMethodMapper = $shipmentMethodMapper;
+        $this->shipmentMethodsMapper = $shipmentMethodsMapper;
     }
 
     /**

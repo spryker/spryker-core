@@ -10,7 +10,7 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface ShipmentMethodRestResponseBuilderInterface
+interface ShipmentMethodsRestResponseBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $shipmentMethodTransfer

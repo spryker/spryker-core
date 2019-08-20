@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-class ShipmentMethodMapper implements ShipmentMethodMapperInterface
+class ShipmentMethodsMapper implements ShipmentMethodsMapperInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers

@@ -15,7 +15,7 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 /**
  * @method \Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiFactory getFactory()
  */
-class ShipmentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ShipmentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,7 @@ class ShipmentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlu
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createShipmentMethodByCheckoutDataExpander()
+            ->createShipmentMethodsByCheckoutDataExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
