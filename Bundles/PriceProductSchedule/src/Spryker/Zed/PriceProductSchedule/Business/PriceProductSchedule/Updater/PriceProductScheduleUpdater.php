@@ -62,7 +62,8 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
     protected function executeUpdateAndApplyLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
     {
         $priceProductScheduleResponseTransfer = new PriceProductScheduleResponseTransfer();
-        $priceProductScheduleTransfer->requirePriceProductScheduleList();
+        $priceProductScheduleTransfer->requirePriceProductScheduleList()
+            ->requireIdPriceProductSchedule();
         $priceProductScheduleTransfer = $this->priceProductScheduleEntityManager
             ->savePriceProductSchedule($priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer->setPriceProductSchedule($priceProductScheduleTransfer);

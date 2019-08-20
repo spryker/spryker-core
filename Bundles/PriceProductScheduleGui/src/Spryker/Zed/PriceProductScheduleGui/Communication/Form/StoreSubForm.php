@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -65,17 +66,21 @@ class StoreSubForm extends AbstractType
         $storeTransfer = $event->getData();
         $choices = [];
         if ($storeTransfer !== null) {
-            $choices = array_flip(
-                $this->getFactory()
-                    ->createPriceProductScheduleFormDataProvider()
-                    ->getOptions(
-                        $storeTransfer->getIdStore()
-                    )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
-            );
+            $choices = $this->getCurrencyChoices($storeTransfer);
         }
 
-        $event->getForm()
-            ->getParent()
+        $parentForm = $event->getForm()
+            ->getParent();
+
+        if ($parentForm === null) {
+            return;
+        }
+
+        if (!$parentForm->has(MoneyValueSubForm::FIELD_CURRENCY)) {
+            return;
+        }
+
+        $parentForm
             ->get(MoneyValueSubForm::FIELD_CURRENCY)
             ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
                 'label' => 'Currency',
@@ -85,6 +90,22 @@ class StoreSubForm extends AbstractType
                     new NotBlank(),
                 ],
             ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    protected function getCurrencyChoices(StoreTransfer $storeTransfer): array
+    {
+        return array_flip(
+            $this->getFactory()
+                ->createPriceProductScheduleFormDataProvider()
+                ->getOptions(
+                    $storeTransfer->getIdStore()
+                )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+        );
     }
 
     /**
