@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Gui\Communication\Form\Constraint\IntegerMoneyConstraint;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -101,6 +102,7 @@ class MoneyValueSubForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new PositiveOrZero(),
+                new IntegerMoneyConstraint(),
             ],
             'attr' => [
                 'value' => null,
@@ -125,6 +127,7 @@ class MoneyValueSubForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new PositiveOrZero(),
+                new IntegerMoneyConstraint(),
             ],
             'attr' => [
                 'value' => null,
