@@ -101,11 +101,13 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function getData(): PriceProductScheduleTransfer
+    public function getData(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
     {
-        return new PriceProductScheduleTransfer();
+        return $priceProductScheduleTransfer;
     }
 
     /**

@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
@@ -88,6 +90,23 @@ class MoneyValueSubForm extends AbstractType
             ->addCurrency($builder)
             ->addNetPrice($builder)
             ->addGrossPrice($builder);
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    public function onPostSubmit(FormEvent $event): void
+    {
+        $moneyValueTransfer = $event->getData();
+        $storeTransfer = $moneyValueTransfer->getStore();
+        $currencyTransfer = $moneyValueTransfer->getCurrency();
+        $moneyValueTransfer->setFkCurrency($currencyTransfer->getIdCurrency());
+        $moneyValueTransfer->setFkStore($storeTransfer->getIdStore());
+        $event->setData($moneyValueTransfer);
     }
 
     /**
@@ -103,9 +122,6 @@ class MoneyValueSubForm extends AbstractType
             'constraints' => [
                 new PositiveOrZero(),
                 new IntegerMoneyConstraint(),
-            ],
-            'attr' => [
-                'value' => null,
             ],
         ]);
 
@@ -128,9 +144,6 @@ class MoneyValueSubForm extends AbstractType
             'constraints' => [
                 new PositiveOrZero(),
                 new IntegerMoneyConstraint(),
-            ],
-            'attr' => [
-                'value' => null,
             ],
         ]);
 

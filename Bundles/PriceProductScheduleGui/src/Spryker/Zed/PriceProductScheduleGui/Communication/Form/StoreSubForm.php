@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -49,28 +50,62 @@ class StoreSubForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdStore($builder, $options);
+        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'initializeCurrencySubForm']);
 
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event): void {
-            /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
-            $storeTransfer = $event->getData();
-            $currencyChoices = array_flip(
-                $this->getFactory()
-                    ->createPriceProductScheduleFormDataProvider()
-                    ->getOptions($storeTransfer->getIdStore())[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
-            );
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'initializeCurrencySubForm']);
+    }
 
-            $event->getForm()
-                ->getParent()
-                ->get(MoneyValueSubForm::FIELD_CURRENCY)
-                ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
-                    'label' => 'Currency',
-                    'placeholder' => 'Choose currency',
-                    'choices' => $currencyChoices,
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                ]);
-        });
+    /**
+     * @param \Symfony\Component\Form\FormEvent $event
+     *
+     * @return void
+     */
+    public function initializeCurrencySubForm(FormEvent $event): void
+    {
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $event->getData();
+        $choices = [];
+        if ($storeTransfer !== null) {
+            $choices = $this->getCurrencyChoices($storeTransfer);
+        }
+
+        $parentForm = $event->getForm()
+            ->getParent();
+
+        if ($parentForm === null) {
+            return;
+        }
+
+        if (!$parentForm->has(MoneyValueSubForm::FIELD_CURRENCY)) {
+            return;
+        }
+
+        $parentForm
+            ->get(MoneyValueSubForm::FIELD_CURRENCY)
+            ->add(CurrencySubForm::FIELD_ID_CURRENCY, ChoiceType::class, [
+                'label' => 'Currency',
+                'placeholder' => 'Choose currency',
+                'choices' => $choices,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    protected function getCurrencyChoices(StoreTransfer $storeTransfer): array
+    {
+        return array_flip(
+            $this->getFactory()
+                ->createPriceProductScheduleFormDataProvider()
+                ->getOptions(
+                    $storeTransfer->getIdStore()
+                )[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES]
+        );
     }
 
     /**

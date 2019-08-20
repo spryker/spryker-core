@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceType;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
+use Orm\Zed\Store\Persistence\SpyStore;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
@@ -64,8 +66,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 new PriceProductScheduleListTransfer()
             );
 
+        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+            $priceProductScheduleEntity->getStore(),
+            new StoreTransfer()
+        );
+
         return $priceProductScheduleTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
+            ->setStore($storeTransfer)
             ->setPriceProduct($priceProductTransfer)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
     }
@@ -208,11 +216,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             new CurrencyTransfer()
         );
 
+        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+            $priceProductScheduleEntity->getStore(),
+            new StoreTransfer()
+        );
+
         return $moneyValueTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setNetAmount($priceProductScheduleEntity->getNetPrice())
             ->setGrossAmount($priceProductScheduleEntity->getGrossPrice())
-            ->setCurrency($currencyTransfer);
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer);
     }
 
     /**
@@ -227,6 +241,19 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): CurrencyTransfer {
         return $currencyTransfer
             ->fromArray($currencyEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer {
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 
     /**

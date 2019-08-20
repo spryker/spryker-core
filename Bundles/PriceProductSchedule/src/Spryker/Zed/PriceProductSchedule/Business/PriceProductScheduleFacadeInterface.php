@@ -157,4 +157,30 @@ interface PriceProductScheduleFacadeInterface
      * @return void
      */
     public function removeAndApplyPriceProductSchedule(int $idPriceProductSchedule): void;
+
+    /**
+     * Specification:
+     * - Updates given scheduled price.
+     * - Applies scheduled price to product, related to given scheduled price.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds scheduled price by given id.
+     * - Returns PriceProductScheduleTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param int $idPriceProductSchedule
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer;
 }

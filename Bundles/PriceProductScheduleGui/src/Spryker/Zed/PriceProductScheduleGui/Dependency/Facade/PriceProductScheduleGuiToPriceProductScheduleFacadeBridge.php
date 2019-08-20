@@ -123,4 +123,26 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
         return $this->priceProductScheduleFacade
             ->createAndApplyPriceProductSchedule($priceProductScheduleTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
+     */
+    public function updateAndApplyPriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleResponseTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->updateAndApplyPriceProductSchedule($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
+     */
+    public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->findPriceProductScheduleById($idPriceProductSchedule);
+    }
 }

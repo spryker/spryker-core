@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
+use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,6 +28,7 @@ class PriceProductScheduleForm extends AbstractType
     public const FIELD_SUBMIT = 'submit';
     public const FIELD_ACTIVE_FROM = 'activeFrom';
     public const FIELD_ACTIVE_TO = 'activeTo';
+    protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -116,12 +118,15 @@ class PriceProductScheduleForm extends AbstractType
         $builder->add(static::FIELD_ACTIVE_FROM, DateTimeType::class, [
             'label' => 'Start from (included)',
             'date_widget' => 'single_text',
-            'date_format' => 'yyyy-mm-dd',
+            'format' => static::PATTERN_DATE_FORMAT,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
+
+        $builder->get(static::FIELD_ACTIVE_FROM)
+            ->addModelTransformer(new DateTimeToStringTransformer());
 
         return $this;
     }
@@ -136,12 +141,15 @@ class PriceProductScheduleForm extends AbstractType
         $builder->add(static::FIELD_ACTIVE_TO, DateTimeType::class, [
             'label' => 'Finish at (included)',
             'date_widget' => 'single_text',
-            'date_format' => 'yyyy-mm-dd',
+            'format' => static::PATTERN_DATE_FORMAT,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
+
+        $builder->get(static::FIELD_ACTIVE_TO)
+            ->addModelTransformer(new DateTimeToStringTransformer());
 
         return $this;
     }
