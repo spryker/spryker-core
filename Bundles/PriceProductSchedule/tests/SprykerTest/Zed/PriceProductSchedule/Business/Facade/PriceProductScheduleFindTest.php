@@ -63,7 +63,7 @@ class PriceProductScheduleFindTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductScheduleAbstractCreateAndApplyShouldSetDefaultPriceFromScheduledPrice(): void
+    public function testFindPriceProductScheduleByIdShouldFoundScheduledPriceForAbstractProduct(): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -115,7 +115,7 @@ class PriceProductScheduleFindTest extends Unit
     /**
      * @return void
      */
-    public function testPriceProductScheduleConcreteCreateAndApplyShouldSetDefaultPriceFromScheduledPrice(): void
+    public function testFindPriceProductScheduleByIdShouldFoundScheduledPriceForConcreteProduct(): void
     {
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
