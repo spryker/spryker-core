@@ -273,8 +273,7 @@ interface ShipmentFacadeInterface
      * Specification
      * - Checks if shipment method name is unique for carrier.
      * - If $shipmentMethodTransfer::idShipmentMethod provided, it will be excluded from the check.
-     * - Requires ShipmentMethodTransfer::name field to be set in ShipmentMethodTransfer
-     * - Requires ShipmentMethodTransfer::fkShipmentCarrier field to be set in ShipmentMethodTransfer
+     * - Requires ShipmentMethodTransfer::name and ShipmentMethodTransfer::fkShipmentCarrier fields to be set.
      *
      * @api
      *
