@@ -1,5 +1,5 @@
 {
   "include": {
-    "ConfigurableBundle": "ConfigurableBundle provides base functionality."
+    "spryker/configurable-bundle": "ConfigurableBundle provides base functionality."
   }
 }
