@@ -146,11 +146,11 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      */
     protected function getCmsBlockCategories(array $categoryIds)
     {
-        $cmsBlockCategories = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
+        $cmsBlockCategoryEntities = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
-        foreach ($cmsBlockCategories as $cmsBlockCategory) {
-            $mappedCmsBlockCategories[$cmsBlockCategory->getFkCategory()][$cmsBlockCategory->getPosition()]['names'][] = $cmsBlockCategory->getName();
-            $mappedCmsBlockCategories[$cmsBlockCategory->getFkCategory()][$cmsBlockCategory->getPosition()]['keys'][] = $cmsBlockCategory->getKey();
+        foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()]['names'][] = $cmsBlockCategoryEntity->getName();
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()]['keys'][] = $cmsBlockCategoryEntity->getKey();
         }
 
         return $mappedCmsBlockCategories;

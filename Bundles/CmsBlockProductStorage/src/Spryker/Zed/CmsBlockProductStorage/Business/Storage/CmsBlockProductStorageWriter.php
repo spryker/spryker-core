@@ -140,11 +140,11 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      */
     protected function getCmsBlockProducts(array $productAbstractIds)
     {
-        $cmsBlockProducts = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
+        $cmsBlockProductEntities = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
         $mappedCmsBlockProducts = [];
-        foreach ($cmsBlockProducts as $cmsBlockProduct) {
-            $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()]['names'][] = $cmsBlockProduct->getName();
-            $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()]['keys'][] = $cmsBlockProduct->getKey();
+        foreach ($cmsBlockProductEntities as $cmsBlockProductEntity) {
+            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()]['names'][] = $cmsBlockProductEntity->getName();
+            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()]['keys'][] = $cmsBlockProductEntity->getKey();
         }
 
         return $mappedCmsBlockProducts;

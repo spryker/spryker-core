@@ -31,9 +31,7 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
             return null;
         }
 
-        $cmsBlockTransfer = $this->getFactory()->createCmsBlockMapper()->mapCmsBlockEntityToTransfer($cmsBlockEntity);
-
-        return $cmsBlockTransfer;
+        return $this->getFactory()->createCmsBlockMapper()->mapCmsBlockEntityToTransfer($cmsBlockEntity);
     }
 
     /**
@@ -41,17 +39,12 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
      */
     public function findMaxIdCmsBlock(): int
     {
-        $clause = 'MAX(' . SpyCmsBlockTableMap::COL_ID_CMS_BLOCK . ')';
         $maxIdCmsBlock = $this->getFactory()->createCmsBlockQuery()
             ->select(static::COL_MAX_ID_CMS_BLOCK)
-            ->addAsColumn(static::COL_MAX_ID_CMS_BLOCK, $clause)
+            ->addAsColumn(static::COL_MAX_ID_CMS_BLOCK, sprintf('MAX(%d)', SpyCmsBlockTableMap::COL_ID_CMS_BLOCK))
             ->findOne();
 
-        if (!$maxIdCmsBlock) {
-            return 0;
-        }
-
-        return $maxIdCmsBlock;
+        return $maxIdCmsBlock ?: 0;
     }
 
     /**

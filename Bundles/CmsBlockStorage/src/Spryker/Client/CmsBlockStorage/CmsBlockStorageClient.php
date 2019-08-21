@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageClientInterface
 {
     /**
+     * @deprecated Use findBlocksByKeys instead.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -50,6 +52,8 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -107,14 +111,13 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
      * @api
      *
      * @param array $options
-     * @param string $localeName
      *
      * @return array
      */
-    public function findBlockKeysByOptions(array $options, string $localeName): array
+    public function findBlockKeysByOptions(array $options): array
     {
         return $this->getFactory()
             ->createCmsBlockStorage()
-            ->getBlockKeysByOptions($options, $localeName);
+            ->getBlockKeysByOptions($options);
     }
 }

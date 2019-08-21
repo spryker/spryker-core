@@ -53,9 +53,8 @@ interface CmsBlockStorageInterface
 
     /**
      * @param array $options
-     * @param string $localeName
      *
      * @return array
      */
-    public function getBlockKeysByOptions(array $options, string $localeName): array;
+    public function getBlockKeysByOptions(array $options): array;
 }

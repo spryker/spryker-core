@@ -11,9 +11,11 @@ interface CmsBlockStorageClientInterface
 {
     /**
      * Specification:
-     * - Find blocks by provided array of names with a single multi request to a storage
+     * - Finds blocks by provided array of names with a single multi request to a storage
      *
      * @api
+     *
+     * @deprecated Use findBlocksByKeys instead.
      *
      * @param string[] $blockNames
      * @param string $localeName
@@ -25,8 +27,8 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Find blocks by required options
-     * - Return only block names which fit to all provided options
+     * - Finds blocks by required options.
+     * - Returns only block names which fit to all provided options.
      *
      * @api
      *
@@ -39,9 +41,11 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Prepare a valid block key by provided name
+     * - Prepares a valid block key by provided name.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major release.
      *
      * @param string $name
      *
@@ -51,7 +55,7 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Find blocks by provided array of keys with a single multi request to a storage
+     * - Finds blocks by provided array of keys with a single multi request to a storage.
      *
      * @api
      *
@@ -65,7 +69,7 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Finds mapping data by provided block bane with a single request to a storage
+     * - Finds mapping data by provided block bane with a single request to a storage.
      *
      * @api
      *
@@ -79,15 +83,14 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Find blocks by required options
-     * - Return only block keys which fit to all provided options
+     * - Finds blocks by required options.
+     * - Returns only block keys which fit to all provided options.
      *
      * @api
      *
      * @param array $options
-     * @param string $localeName
      *
      * @return array
      */
-    public function findBlockKeysByOptions(array $options, string $localeName): array;
+    public function findBlockKeysByOptions(array $options): array;
 }
