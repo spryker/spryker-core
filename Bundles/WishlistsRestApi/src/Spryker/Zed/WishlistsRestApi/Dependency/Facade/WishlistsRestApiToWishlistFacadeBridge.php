@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -64,5 +65,15 @@ class WishlistsRestApiToWishlistFacadeBridge implements WishlistsRestApiToWishli
     public function validateAndUpdateWishlist(WishlistTransfer $wishlistTransfer)
     {
         return $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function addItem(WishlistItemTransfer $wishlistItemTransfer)
+    {
+        return $this->wishlistFacade->addItem($wishlistItemTransfer);
     }
 }

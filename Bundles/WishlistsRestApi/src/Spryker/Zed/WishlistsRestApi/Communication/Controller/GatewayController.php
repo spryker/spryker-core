@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Communication\Controller;
 
+use Generated\Shared\Transfer\WishlistItemRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -44,5 +46,15 @@ class GatewayController extends AbstractGatewayController
     public function deleteWishlistAction(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         return $this->getFacade()->deleteWishlist($wishlistRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function addWishlistItemAction(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFacade()->addItem($wishlistItemRequestTransfer);
     }
 }

@@ -16,6 +16,8 @@ use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WishlistUpdater;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WishlistUpdaterInterface;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WishlistUuidWriter;
 use Spryker\Zed\WishlistsRestApi\Business\Wishlist\WishlistUuidWriterInterface;
+use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemAdder;
+use Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemAdderInterface;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 use Spryker\Zed\WishlistsRestApi\WishlistsRestApiDependencyProvider;
 
@@ -59,6 +61,16 @@ class WishlistsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createWishlistDeleter(): WishlistDeleterInterface
     {
         return new WishlistDeleter(
+            $this->getWishlistFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\WishlistsRestApi\Business\WishlistItem\WishlistItemAdderInterface
+     */
+    public function createWishlistItemAdder(): WishlistItemAdderInterface
+    {
+        return new WishlistItemAdder(
             $this->getWishlistFacade()
         );
     }

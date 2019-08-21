@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\WishlistsRestApi;
 
+use Generated\Shared\Transfer\WishlistItemRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -56,5 +58,19 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         return $this->getFactory()->createZedStub()->deleteWishlist($wishlistRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFactory()->createZedStub()->addWishlistItem($wishlistItemRequestTransfer);
     }
 }

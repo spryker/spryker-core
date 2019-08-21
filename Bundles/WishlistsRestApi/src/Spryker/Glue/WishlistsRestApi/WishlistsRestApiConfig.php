@@ -23,12 +23,12 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
      */
-    protected const WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST = 'wishlist.validation.error.name.already_exists';
+    protected const ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST = 'wishlist.validation.error.name.already_exists';
 
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT
      */
-    protected const WISHLIST_VALIDATION_ERROR_NAME_WRONG_FORMAT = 'wishlist.validation.error.name.wrong_format';
+    protected const ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT = 'wishlist.validation.error.name.wrong_format';
 
     public const RESPONSE_CODE_WISHLIST_NOT_FOUND = '201';
     public const RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS = '202';
@@ -58,12 +58,12 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_WISHLIST_NOT_FOUND,
             ],
-            static::WISHLIST_VALIDATION_ERROR_NAME_ALREADY_EXIST => [
+            static::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST => [
                 RestErrorMessageTransfer::CODE => WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS,
             ],
-            static::WISHLIST_VALIDATION_ERROR_NAME_WRONG_FORMAT => [
+            static::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_WISHLIST_NAME_INVALID,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_WISHLIST_NAME_INVALID,

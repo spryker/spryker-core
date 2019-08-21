@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\WishlistsRestApi\Zed;
 
+use Generated\Shared\Transfer\WishlistItemRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Spryker\Client\WishlistsRestApi\Dependency\Client\WishlistsRestApiToZedRequestClientInterface;
@@ -72,5 +74,21 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
         );
 
         return $wishlistResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
+        $wishlistItemResponseTransfer = $this->zedStubClient->call(
+            '/wishlists-rest-api/gateway/add-wishlist-item',
+            $wishlistItemRequestTransfer
+        );
+
+        return $wishlistItemResponseTransfer;
     }
 }

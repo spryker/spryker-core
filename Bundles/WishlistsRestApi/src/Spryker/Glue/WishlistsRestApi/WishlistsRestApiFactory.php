@@ -92,10 +92,9 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function createWishlistItemAdder(): WishlistItemAdderInterface
     {
         return new WishlistItemAdder(
-            $this->getWishlistClient(),
             $this->getResourceBuilder(),
             $this->createWishlistItemsResourceMapper(),
-            $this->createWishlistReader()
+            $this->getClient()
         );
     }
 

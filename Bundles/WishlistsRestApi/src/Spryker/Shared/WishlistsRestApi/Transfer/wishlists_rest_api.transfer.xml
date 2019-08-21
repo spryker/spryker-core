@@ -34,6 +34,19 @@
         <property name="wishlist" type="Wishlist"/>
     </transfer>
 
+    <transfer name="WishlistItemRequest">
+        <property name="idCustomer" type="int" />
+        <property name="idWishlist" type="string" />
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="WishlistItemResponse">
+        <property name="wishlist" type="Wishlist" />
+        <property name="affectedWishlistItem"  type="WishlistItem" />
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="array" singular="error" />
+    </transfer>
+
     <transfer name="RestErrorMessage">
         <property name="status" type="int" />
         <property name="code" type="string" />

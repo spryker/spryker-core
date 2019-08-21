@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business;
 
+use Generated\Shared\Transfer\WishlistItemRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -73,5 +75,19 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         return $this->getFactory()->createWishlistDeleter()->deleteWishlist($wishlistRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function addItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFactory()->createWishlistItemAdder()->add($wishlistItemRequestTransfer);
     }
 }
