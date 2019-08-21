@@ -25,7 +25,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $shipmentMethodTransfer->requireName()
             ->requireFkShipmentCarrier();
-        
+
         return !$this->getFactory()
             ->createShipmentMethodQuery()
             ->filterByName($shipmentMethodTransfer->getName())
