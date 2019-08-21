@@ -9,6 +9,7 @@ namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
+use Spryker\Shared\Wishlist\WishlistConfig;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 
 class WishlistDeleter implements WishlistDeleterInterface
@@ -36,6 +37,10 @@ class WishlistDeleter implements WishlistDeleterInterface
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
+            $wishlistResponseTransfer->setErrorIdentifier(
+                WishlistConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
+            );
+
             return $wishlistResponseTransfer;
         }
 

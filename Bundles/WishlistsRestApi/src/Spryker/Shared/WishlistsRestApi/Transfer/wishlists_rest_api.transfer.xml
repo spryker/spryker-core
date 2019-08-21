@@ -44,6 +44,7 @@
         <property name="affectedWishlistItem"  type="WishlistItem" />
         <property name="isSuccess" type="bool" />
         <property name="errors" type="array" singular="error" />
+        <property name="errorIdentifier" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
