@@ -15,6 +15,8 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerInsert;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerUpdate;
 use Spryker\Zed\Touch\Business\Model\Touch;
 use Spryker\Zed\Touch\Business\Model\TouchRecord;
+use Spryker\Zed\Touch\Business\Touch\TouchWriter;
+use Spryker\Zed\Touch\Business\Touch\TouchWriterInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
@@ -32,8 +34,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
         return new TouchRecord(
             $this->getUtilDataReaderService(),
             $this->getQueryContainer(),
-            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION),
-            $this->getEntityManager()
+            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 
@@ -106,5 +107,17 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     protected function createIdFilterUpdate()
     {
         return new IdFilterUpdate($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Touch\Business\Touch\TouchWriterInterface
+     */
+    public function createTouchWriter(): TouchWriterInterface
+    {
+        return new TouchWriter(
+            $this->getQueryContainer(),
+            $this->getEntityManager(),
+            $this->getUtilDataReaderService()
+        );
     }
 }

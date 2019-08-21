@@ -172,7 +172,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
     public function cleanTouchEntitiesForDeletedItemEvent(): int
     {
         return $this->getFactory()
-            ->createTouchRecordModel()
+            ->createTouchWriter()
             ->cleanTouchEntitiesForDeletedItemEvent();
     }
 }

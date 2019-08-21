@@ -15,4 +15,18 @@ interface TouchEntityManagerInterface
      * @return int
      */
     public function deleteTouchEntitiesByIds(array $touchEntityIds): int;
+
+    /**
+     * @param int[] $touchEntityIds
+     *
+     * @return int
+     */
+    public function deleteTouchSearchEntitiesByTouchIds(array $touchEntityIds): int;
+
+    /**
+     * @param int[] $touchEntityIds
+     *
+     * @return int
+     */
+    public function deleteTouchStorageEntitiesByTouchIds(array $touchEntityIds): int;
 }

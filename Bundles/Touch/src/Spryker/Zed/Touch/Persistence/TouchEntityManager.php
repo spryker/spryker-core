@@ -26,4 +26,30 @@ class TouchEntityManager extends AbstractEntityManager implements TouchEntityMan
             ->filterByIdTouch_In($touchEntityIds)
             ->delete();
     }
+
+    /**
+     * @param int[] $touchEntityIds
+     *
+     * @return int
+     */
+    public function deleteTouchSearchEntitiesByTouchIds(array $touchEntityIds): int
+    {
+        return $this->getFactory()
+            ->createTouchSearchQuery()
+            ->filterByFkTouch_In($touchEntityIds)
+            ->delete();
+    }
+
+    /**
+     * @param int[] $touchEntityIds
+     *
+     * @return int
+     */
+    public function deleteTouchStorageEntitiesByTouchIds(array $touchEntityIds): int
+    {
+        return $this->getFactory()
+            ->createTouchStorageQuery()
+            ->filterByFkTouch_In($touchEntityIds)
+            ->delete();
+    }
 }
