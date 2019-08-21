@@ -24,7 +24,6 @@
     <transfer name="WishlistResponse">
         <property name="wishlist" type="Wishlist" />
         <property name="isSuccess" type="bool" />
-        <property name="errorIdentifier" type="string"/>
         <property name="errors" type="array" singular="error" />
     </transfer>
 

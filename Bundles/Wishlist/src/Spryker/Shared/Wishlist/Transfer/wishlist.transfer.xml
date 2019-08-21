@@ -75,6 +75,7 @@
         <property name="wishlist" type="Wishlist" />
         <property name="isSuccess" type="bool" />
         <property name="errors" type="array" singular="error" />
+        <property name="errorIdentifier" type="string" />
     </transfer>
 
     <transfer name="WishlistRequest">
