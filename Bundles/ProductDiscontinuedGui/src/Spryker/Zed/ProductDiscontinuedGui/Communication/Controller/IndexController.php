@@ -92,12 +92,12 @@ class IndexController extends AbstractController
     {
         $idProductConcrete = $this->castId($request->get(static::PARAM_ID_PRODUCT_CONCRETE));
 
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($idProductConcrete);
 
         $productDiscontinuedResponseTransfer = $this->getFactory()
             ->getProductDiscontinuedFacade()
-            ->unmarkProductAsDiscontinued($productDiscontinuedRequestTransfer);
+            ->unmarkProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);
