@@ -111,7 +111,7 @@ interface PriceProductFacadeInterface
      * - The product to assign can be either concrete or abstract, depending on the provided IDs.
      * - If the product doesn't have price, it throws exception.
      * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
-     * - Optionally deletes orphan spy_price_product_store records depending on PriceProductConfig::IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED value.
+     * - Deletes orphan spy_price_product_store records based on configuration.
      * - Touches product.
      *
      * @api
@@ -168,7 +168,7 @@ interface PriceProductFacadeInterface
      * - The product to assign can be either concrete or abstract, depending on the provided IDs.
      * - If the product already has price, it throws exception.
      * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
-     * - Optionally deletes orphan spy_price_product_store records depending on PriceProductConfig::IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED value.
+     * - Deletes orphan spy_price_product_store records depending on configuration.
      * - Touches product.
      *
      * @api
@@ -211,7 +211,7 @@ interface PriceProductFacadeInterface
      * - Create new product price entities if they doesn't exists by abstract product id and price type.
      * - Updates the price of product price entities if they exists by abstract product id and price type.
      * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
-     * - Optionally deletes orphan spy_price_product_store records depending on PriceProductConfig::IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED value.
+     * - Deletes orphan spy_price_product_store records based on configuration.
      * - Executes PriceDimensionAbstractSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
      *
@@ -228,7 +228,7 @@ interface PriceProductFacadeInterface
      * - Create new product price entities if they doesn't exists by concrete product id and price type.
      * - Updates the price of product price entities if they exists by concrete product id and price type.
      * - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency with regenerated PriceDataChecksum.
-     * - Optionally deletes orphan spy_price_product_store records depending on PriceProductConfig::IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED value.
+     * - Deletes orphan spy_price_product_store records based on configuration.
      * - Executes PriceDimensionConcreteSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
      *
@@ -390,7 +390,7 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Creates new spy_price_product record if it not exists.
      *  - Saves new spy_price_product_store record or finds existing one based on gross/net price, store and currency.
-     *  - Optionally deletes orphan spy_price_product_store records depending on PriceProductConfig::IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED value.
+     *  - Deletes orphan spy_price_product_store records based on configuration.
      *  - Regenerates spy_price_product_store PriceDataChecksum before save.
      *
      * @api
