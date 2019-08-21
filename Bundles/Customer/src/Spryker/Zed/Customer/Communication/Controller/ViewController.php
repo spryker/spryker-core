@@ -24,7 +24,7 @@ class ViewController extends AbstractController
     protected const PARAM_CUSTOMER = 'customerTransfer';
 
     protected const URL_REDIRECT_CUSTOMER_NOT_EXISTS = '/customer';
-    public const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id %s does not exist';
+    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id %s does not exist';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,7 +36,7 @@ class ViewController extends AbstractController
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
         if (empty($idCustomer)) {
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
         }
 
         $idCustomer = $this->castId($idCustomer);
