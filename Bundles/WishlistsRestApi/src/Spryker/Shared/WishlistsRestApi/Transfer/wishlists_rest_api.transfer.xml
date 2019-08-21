@@ -30,6 +30,7 @@
     <transfer name="WishlistRequest">
         <property name="uuid" type="string"/>
         <property name="idCustomer" type="int"/>
+        <property name="wishlist" type="Wishlist"/>
     </transfer>
 
     <transfer name="WishlistItemRequest">
