@@ -42,6 +42,11 @@ class TouchFacadeTest extends Unit
     protected const UNIQUE_INDEX_ITEM_TYPE = 'index.test.item';
 
     /**
+     * @var \SprykerTest\Zed\Touch\TouchBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
      */
     protected $touchFacade;
@@ -212,7 +217,7 @@ class TouchFacadeTest extends Unit
     {
         // Arrange
         $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::ITEM_ID_1, static::UNIQUE_INDEX_ITEM_TYPE);
-        $touchEntitiesForDeletedItemEventCount = $this->getTouchEntitiesForDeletedItemEventCount();
+        $touchEntitiesForDeletedItemEventCount = $this->tester->getTouchEntitiesForDeletedItemEventCount();
 
         $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::ITEM_ID_2, static::UNIQUE_INDEX_ITEM_TYPE);
 
@@ -230,22 +235,12 @@ class TouchFacadeTest extends Unit
     {
         // Arrange
         $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::ITEM_ID_1, static::UNIQUE_INDEX_ITEM_TYPE);
-        $touchEntitiesForDeletedItemEventCount = $this->getTouchEntitiesForDeletedItemEventCount();
+        $touchEntitiesForDeletedItemEventCount = $this->tester->getTouchEntitiesForDeletedItemEventCount();
 
         // Act
         $deletedTouchEntitiesCount = $this->touchFacade->cleanTouchEntitiesForDeletedItemEvent();
 
         // Assert
         $this->assertSame($touchEntitiesForDeletedItemEventCount, $deletedTouchEntitiesCount);
-    }
-
-    /**
-     * @return int
-     */
-    protected function getTouchEntitiesForDeletedItemEventCount(): int
-    {
-        return SpyTouchQuery::create()
-            ->filterByItemEvent(static::ITEM_EVENT_DELETED)
-            ->count();
     }
 }
