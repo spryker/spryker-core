@@ -11,6 +11,7 @@
         </index>
         <id-method-parameter value="spy_cms_block_storage_pk_seq"/>
         <behavior name="synchronization">
+            <parameter name="mappings" value="name:key"/>
             <parameter name="resource" value="cms_block"/>
             <parameter name="key_suffix_column" value="cms_block_key"/>
             <parameter name="store" required="false" />
