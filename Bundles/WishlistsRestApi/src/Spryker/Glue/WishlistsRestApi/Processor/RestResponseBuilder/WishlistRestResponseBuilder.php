@@ -76,11 +76,11 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     }
 
     /**
-     * @param string $errorIdentifier
+     * @param string|null $errorIdentifier
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createErrorResponseFromErrorIdentifier(string $errorIdentifier): RestResponseInterface
+    public function createErrorResponseFromErrorIdentifier(?string $errorIdentifier): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse()
             ->addError($this->createRestErrorMessageFromErrorIdentifier($errorIdentifier));
@@ -146,6 +146,22 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $errorMessage
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorResponseFromErrorMessage(RestErrorMessageTransfer $errorMessage): RestResponseInterface
+    {
+        $errorMessage->requireCode()
+            ->requireDetail()
+            ->requireStatus();
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($errorMessage);
+    }
+
+    /**
      * @param string $errorIdentifier
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
@@ -168,7 +184,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     protected function createDefaultUnexpectedRestErrorMessage(string $errorIdentifier): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail($errorIdentifier);
     }
 

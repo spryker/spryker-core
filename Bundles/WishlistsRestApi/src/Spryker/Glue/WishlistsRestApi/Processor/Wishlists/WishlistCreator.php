@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -14,6 +15,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
+use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class WishlistCreator implements WishlistCreatorInterface
 {
@@ -60,8 +63,11 @@ class WishlistCreator implements WishlistCreatorInterface
 
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifiers(
-                $wishlistResponseTransfer->getErrors()
+            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorMessage(
+                (new RestErrorMessageTransfer())
+                    ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_BE_CREATED)
             );
         }
 

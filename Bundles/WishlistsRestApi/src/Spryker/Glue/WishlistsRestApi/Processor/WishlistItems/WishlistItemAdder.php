@@ -84,7 +84,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         if (!$wishlistItemResponse->getIsSuccess()) {
             $restErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_ADD_ITEM)
-                ->setStatus(Response::HTTP_BAD_REQUEST)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                 ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM);
 
             return $restResponse->addError($restErrorMessageTransfer);

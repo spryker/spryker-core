@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -48,4 +49,11 @@ interface WishlistRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createWishlistsResource(WishlistTransfer $wishlistTransfer): RestResourceInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $errorMessage
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createErrorResponseFromErrorMessage(RestErrorMessageTransfer $errorMessage): RestResponseInterface;
 }
