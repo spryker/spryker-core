@@ -200,7 +200,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
                 $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
 
-                if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
+                if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock)) {
                     $bundleStock = $itemStock;
                 }
 
@@ -221,17 +221,12 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $bundleStock
      * @param int $itemStock
-     * @param bool $isNeverOutOfStock
      *
      * @return bool
      */
-    protected function isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)
+    protected function isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock)
     {
-        if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
-            return true;
-        }
-
-        return false;
+        return $bundleStock > $itemStock || $bundleStock === 0;
     }
 
     /**
