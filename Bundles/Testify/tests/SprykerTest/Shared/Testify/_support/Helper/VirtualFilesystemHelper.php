@@ -90,7 +90,6 @@ class VirtualFilesystemHelper extends Module
      */
     protected function getVirtualRootDirectory(array $structure = []): vfsStreamDirectory
     {
-
         if (!$this->virtualDirectory) {
             $this->virtualDirectory = vfsStream::setup('root', null, $structure);
         }
@@ -99,7 +98,7 @@ class VirtualFilesystemHelper extends Module
     }
 
     /**
-     * @param TestInterface $test
+     * @param \Codeception\TestInterface $test
      *
      * @return void
      */
