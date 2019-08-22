@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Touch\Business\Touch;
+namespace Spryker\Zed\Touch\Business\Writer;
 
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface;
@@ -19,12 +19,12 @@ class TouchWriter implements TouchWriterInterface
     use TransactionTrait;
 
     /**
-     * @uses SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+     * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ITEM_EVENT_DELETED
      */
     protected const COL_ITEM_EVENT_DELETED = 'deleted';
 
     /**
-     * @uses SpyTouchTableMap::COL_ID_TOUCH
+     * @uses \Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap::COL_ID_TOUCH
      */
     protected const COL_ID_TOUCH = 'spy_touch.id_touch';
 

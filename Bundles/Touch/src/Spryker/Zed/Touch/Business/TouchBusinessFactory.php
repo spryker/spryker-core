@@ -15,8 +15,8 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerInsert;
 use Spryker\Zed\Touch\Business\Model\BulkTouch\Handler\BulkTouchHandlerUpdate;
 use Spryker\Zed\Touch\Business\Model\Touch;
 use Spryker\Zed\Touch\Business\Model\TouchRecord;
-use Spryker\Zed\Touch\Business\Touch\TouchWriter;
-use Spryker\Zed\Touch\Business\Touch\TouchWriterInterface;
+use Spryker\Zed\Touch\Business\Writer\TouchWriter;
+use Spryker\Zed\Touch\Business\Writer\TouchWriterInterface;
 use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
@@ -110,7 +110,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Touch\Business\Touch\TouchWriterInterface
+     * @return \Spryker\Zed\Touch\Business\Writer\TouchWriterInterface
      */
     public function createTouchWriter(): TouchWriterInterface
     {

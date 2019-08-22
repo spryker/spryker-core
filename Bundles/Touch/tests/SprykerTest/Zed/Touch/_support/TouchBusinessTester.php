@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\Touch;
 
 use Codeception\Actor;
-use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
-use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
  * Inherited Methods
@@ -30,13 +28,7 @@ class TouchBusinessTester extends Actor
 {
     use _generated\TouchBusinessTesterActions;
 
-    /**
-     * @return int
-     */
-    public function getTouchEntitiesForDeletedItemEventCount(): int
-    {
-        return SpyTouchQuery::create()
-            ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->count();
-    }
+   /**
+    * Define custom actions here
+    */
 }

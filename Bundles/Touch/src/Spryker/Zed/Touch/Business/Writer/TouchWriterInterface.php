@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Touch\Business\Touch;
+namespace Spryker\Zed\Touch\Business\Writer;
 
 interface TouchWriterInterface
 {
