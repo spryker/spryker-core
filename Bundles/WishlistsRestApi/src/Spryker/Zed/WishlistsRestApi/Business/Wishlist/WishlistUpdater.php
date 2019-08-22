@@ -9,7 +9,7 @@ namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Shared\WishlistsRestApi\WishlistsRestApiConfig;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 
 class WishlistUpdater implements WishlistUpdaterInterface
@@ -37,27 +37,25 @@ class WishlistUpdater implements WishlistUpdaterInterface
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
+            $wishlistResponseTransfer->setErrorIdentifier(
+                WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
+            );
+
             return $wishlistResponseTransfer;
         }
 
-        $wishlistTransfer = $this->mergeWishlistTransfers(
-            $wishlistResponseTransfer->getWishlist(),
-            $wishlistRequestTransfer->getWishlist()
-        );
+        $originalWishlist = $wishlistResponseTransfer->getWishlist();
+        $updatedWishlist = $wishlistRequestTransfer->getWishlist();
+        $wishlistTransfer = $originalWishlist->fromArray($updatedWishlist->modifiedToArray(), true);
 
-        return $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
-    }
+        $wishlistResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $originalWishlistTransfer
-     * @param \Generated\Shared\Transfer\WishlistTransfer $updatedWishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
-    protected function mergeWishlistTransfers(
-        WishlistTransfer $originalWishlistTransfer,
-        WishlistTransfer $updatedWishlistTransfer
-    ): WishlistTransfer {
-        return $originalWishlistTransfer->setName($updatedWishlistTransfer->getName());
+        if (!$wishlistResponseTransfer->getIsSuccess()) {
+            return $wishlistResponseTransfer->setErrorIdentifier(
+                WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
+            );
+        }
+
+        return $wishlistResponseTransfer;
     }
 }
