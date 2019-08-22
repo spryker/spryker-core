@@ -317,7 +317,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
     protected function createTriggerPersistenceMock()
     {
@@ -329,11 +329,12 @@ class TriggerTest extends StateMachineMocks
                     return $stateMachineItems;
                 }
             );
+
         return $stateMachinePersistenceMock;
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
      */
     protected function createTrigerFinderMock()
     {
@@ -354,7 +355,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
      */
     protected function createTriggerConditionMock()
     {
@@ -369,7 +370,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
      */
     protected function createTriggerTransitionLog()
     {

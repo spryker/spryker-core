@@ -1,0 +1,25 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Content Items' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {% set linksData = {} %}
+    {% for termKey in termKeys %}
+        {% set linksData = linksData | merge({(termKey): {'url' : '/content-gui/create-content?term-key='~termKey, 'title' : termKey | trans}}) %}
+    {% endfor %}
+    {{ groupActionButtons(linksData,'Add Content Item' | trans)}}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Content Items' | trans }}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ contents | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

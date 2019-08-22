@@ -8,7 +8,7 @@
     "everon/criteria-builder": "^1.1.5",
     "moneyphp/money": "^3.0.0",
     "fzaninotto/faker": "^1.6",
-    "mikey179/vfsStream": "^1.6"
+    "mikey179/vfsstream": "^1.6"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -136,6 +136,7 @@
     "spryker/maintenance": "*",
     "spryker/mandrill": "*",
     "spryker/messenger": "*",
+    "spryker/module-finder": "*",
     "spryker/money": "*",
     "spryker/monolog": "*",
     "spryker/monitoring": "*",

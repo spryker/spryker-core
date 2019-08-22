@@ -1,0 +1,53 @@
+{
+  "name": "spryker/company-user-storage",
+  "type": "library",
+  "description": "CompanyUserStorage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company-user": "^2.9.0",
+    "spryker/company-user-storage-extension": "^1.0.0",
+    "spryker/event-behavior": "^1.3.1",
+    "spryker/kernel": "^3.30.0",
+    "spryker/shared-carts-rest-api-extension": "^1.0.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^1.1.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/customer": "*",
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/propel-orm": "*",
+    "spryker/queue": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/company": "If you want to use CompanyEvents",
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

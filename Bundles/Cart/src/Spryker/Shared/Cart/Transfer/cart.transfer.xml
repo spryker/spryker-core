@@ -7,9 +7,11 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="isLocked" type="bool"/>
     </transfer>
 
     <transfer name="CartChange">
+        <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
     </transfer>

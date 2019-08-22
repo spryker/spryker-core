@@ -3,4 +3,3 @@ parameters:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
         - '#Call to an undefined method .+Criteria::withColumn\(\).#'
         - '#Call to an undefined method .+Criteria::endUse\(\).#'
-        - '#Method .+ProductCategoryQueryContainer::query.+\(\) should return Orm\\Zed\\ProductCategory\\Persistence\\SpyProductCategoryQuery but returns .+SpyCategoryNodeQuery#'

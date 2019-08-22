@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Development\Business\PhpMd;
 
 use ErrorException;
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -21,30 +22,16 @@ class PhpMdRunner
     public const OPTION_FORMAT = 'format';
 
     /**
-     * @var string
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $applicationRoot;
+    protected $config;
 
     /**
-     * @var string
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    protected $pathToBundles;
-
-    /**
-     * @var string
-     */
-    protected $architectureStandard;
-
-    /**
-     * @param string $applicationRoot
-     * @param string $pathToBundles
-     * @param string $architectureStandard
-     */
-    public function __construct($applicationRoot, $pathToBundles, $architectureStandard)
+    public function __construct(DevelopmentConfig $config)
     {
-        $this->applicationRoot = $applicationRoot;
-        $this->pathToBundles = $pathToBundles;
-        $this->architectureStandard = $architectureStandard;
+        $this->config = $config;
     }
 
     /**
@@ -77,15 +64,15 @@ class PhpMdRunner
     }
 
     /**
-     * @param string $bundle
+     * @param string $value
      *
      * @return string
      */
-    protected function normalizeBundleName($bundle)
+    protected function convertToCamelCase(string $value): string
     {
         $filter = new UnderscoreToCamelCase();
 
-        return ucfirst($filter->filter($bundle));
+        return ucfirst($filter->filter($value));
     }
 
     /**
@@ -97,15 +84,15 @@ class PhpMdRunner
     {
         if ($bundle) {
             if ($bundle === static::BUNDLE_ALL) {
-                return $this->pathToBundles;
+                return $this->config->getPathToCore();
             }
 
-            $bundle = $this->normalizeBundleName($bundle);
+            $bundle = $this->convertToCamelCase($bundle);
 
             return $this->getPathToBundle($bundle);
         }
 
-        return $this->applicationRoot;
+        return $this->config->getPathToRoot();
     }
 
     /**
@@ -115,7 +102,32 @@ class PhpMdRunner
      */
     protected function getPathToBundle($bundle)
     {
-        return $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
+        if (strpos($bundle, '.') !== false) {
+            return $this->resolveCorePaths($bundle);
+        }
+
+        return $this->config->getPathToCore() . $bundle . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param string $module
+     *
+     * @return string
+     */
+    protected function resolveCorePaths(string $module): string
+    {
+        [$namespace, $module] = explode('.', $module, 2);
+
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($pathToInternalNamespace !== null && is_dir($pathToInternalNamespace . $module)) {
+            return $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
+        }
+
+        $namespace = $this->convertToCamelCase($namespace);
+        $module = $this->convertToCamelCase($module);
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+
+        return $path;
     }
 
     /**
@@ -133,7 +145,7 @@ class PhpMdRunner
             $format = $options[static::OPTION_FORMAT];
         }
 
-        $config = $this->architectureStandard;
+        $config = $this->config->getArchitectureStandard();
 
         if ($options['ignore']) {
             $config .= ' --exclude ' . $options['ignore'];
@@ -146,7 +158,7 @@ class PhpMdRunner
             return static::CODE_SUCCESS;
         }
 
-        $process = new Process($command, $this->applicationRoot, null, null, 4800);
+        $process = new Process(explode(' ', $command), $this->config->getPathToRoot(), null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

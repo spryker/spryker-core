@@ -38,7 +38,7 @@ class RedirectAfterLoginProviderTest extends Unit
     public function setUp()
     {
         Request::setTrustedHosts([]);
-        Request::setTrustedProxies([]);
+        Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
     }
 
     /**
@@ -175,7 +175,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider
      */
     protected function getRedirectAfterLoginProvider(array $methods = [])
     {
@@ -189,7 +189,7 @@ class RedirectAfterLoginProviderTest extends Unit
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getHttpKernel()
     {

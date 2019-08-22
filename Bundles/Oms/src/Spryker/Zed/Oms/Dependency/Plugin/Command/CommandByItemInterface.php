@@ -10,11 +10,13 @@ namespace Spryker\Zed\Oms\Dependency\Plugin\Command;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
+/**
+ * Command which is executed per order item basis
+ */
 interface CommandByItemInterface extends CommandInterface
 {
     /**
-     *
-     * Command which is executed per order item basis
+     * Execute per order item basis
      *
      * @api
      *

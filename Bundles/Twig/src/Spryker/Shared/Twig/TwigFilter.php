@@ -7,8 +7,8 @@
 
 namespace Spryker\Shared\Twig;
 
-use Twig_SimpleFilter;
+use Twig\TwigFilter as BaseTwigFilter;
 
-class TwigFilter extends Twig_SimpleFilter
+class TwigFilter extends BaseTwigFilter
 {
 }

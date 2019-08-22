@@ -146,7 +146,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function createStockFacadeMock()
     {
@@ -155,7 +155,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function createOmsFacadeMock()
     {
@@ -164,7 +164,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
      */
     protected function createTouchFacadeMock()
     {
@@ -173,7 +173,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Business\Model\SellableInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     protected function createSellableMock()
     {
@@ -184,7 +184,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @param int $availabilityQuantity
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
     protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0)
     {
@@ -233,7 +233,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Availability\Persistence\SpyAvailability
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Availability\Persistence\SpyAvailability
      */
     protected function createAvailabilityEntityMock()
     {
@@ -242,7 +242,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
     protected function createAvailabilityAbstractEntityMock()
     {
@@ -251,7 +251,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
      */
     protected function createAvailabilityToProductFacade()
     {
@@ -260,7 +260,7 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
     protected function createStoreFacade()
     {

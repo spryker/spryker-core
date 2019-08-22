@@ -14,8 +14,15 @@
 {% endblock %}
 
 {% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Assign products to category' | trans } %}
+        {% block widget_title %}
+            {% if categoryPath is defined and categoryPath is not null %}
+                <h5>{{ 'Assign products to category'  | trans }}: <strong>{{ categoryPath }}</strong></h5>
+            {% else %}
+                <h5>{{ 'Assign products to category'  | trans }}</h5>
+            {% endif %}
+        {% endblock %}
 
         {% block widget_content %}
 

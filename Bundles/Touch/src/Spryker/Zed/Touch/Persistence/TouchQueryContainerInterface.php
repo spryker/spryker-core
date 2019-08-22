@@ -9,6 +9,7 @@ namespace Spryker\Zed\Touch\Persistence;
 
 use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface TouchQueryContainerInterface extends QueryContainerInterface
@@ -111,4 +112,45 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */
     public function queryTouchStorageByTouchIds($touchIds);
+
+    /**
+     * Specification:
+     * - Filters `SpyTouchQuery` by item type, item event and array of item ids and returns query object.
+     *
+     * @api
+     *
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByItemTypeAndItemEventAndItemIds(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery;
+
+    /**
+     * Specification:
+     * - Filters `spy_touch` entries by item type, item ids and with the same item event.
+     * - If there are no records with same item event, returns a record if there are only one record with provided item type and item id.
+     *
+     * @api
+     *
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent(string $itemType, string $itemEvent, array $itemIds): SpyTouchQuery;
+
+    /**
+     * Specification:
+     * - Filters `spy_touch` entries by array of touch ids.
+     *
+     * @api
+     *
+     * @param array $touchIds
+     *
+     * @return \Orm\Zed\Touch\Persistence\SpyTouchQuery
+     */
+    public function queryTouchEntriesByTouchIds(array $touchIds): SpyTouchQuery;
 }

@@ -74,7 +74,7 @@ class CmsPageActivatorTest extends CmsMocks
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface|null $cmsQueryContainerMock
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface|null $touchFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageActivator
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageActivator
      */
     protected function createCmsPageActivateMock(
         SpyCmsPage $cmsPageEntity,

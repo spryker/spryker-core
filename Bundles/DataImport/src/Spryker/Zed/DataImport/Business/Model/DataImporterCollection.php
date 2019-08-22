@@ -9,6 +9,9 @@ namespace Spryker\Zed\DataImport\Business\Model;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface;
+use Spryker\Zed\DataImport\Business\Exception\InvalidImportGroupException;
+use Spryker\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface;
 
@@ -37,13 +40,20 @@ class DataImporterCollection implements
     protected $afterImportHooks = [];
 
     /**
+     * @var \Spryker\Zed\DataImport\DataImportConfig|null
+     */
+    protected $config = null;
+
+    /**
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[] $afterImportHooks
+     * @param \Spryker\Zed\DataImport\DataImportConfig|null $config
      */
-    public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [])
+    public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [], ?DataImportConfig $config = null)
     {
         $this->beforeImportHooks = $beforeImportHooks;
         $this->afterImportHooks = $afterImportHooks;
+        $this->config = $config;
     }
 
     /**
@@ -127,12 +137,13 @@ class DataImporterCollection implements
     {
         $importType = $this->getCurrentImportType($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImporterReport($importType);
+        $dataImporters = $this->getDataImportersByImportGroup($dataImporterConfigurationTransfer);
 
         $this->beforeImport();
 
         if ($importType !== $this->getImportType()) {
             $this->executeDataImporter(
-                $this->dataImporter[$importType],
+                $dataImporters[$importType],
                 $dataImporterReportTransfer,
                 $dataImporterConfigurationTransfer
             );
@@ -142,13 +153,7 @@ class DataImporterCollection implements
             return $dataImporterReportTransfer;
         }
 
-        foreach ($this->dataImporter as $dataImporter) {
-            $this->executeDataImporter(
-                $dataImporter,
-                $dataImporterReportTransfer,
-                $dataImporterConfigurationTransfer
-            );
-        }
+        $this->runDataImporters($dataImporters, $dataImporterReportTransfer, $dataImporterConfigurationTransfer);
 
         $this->afterImport();
 
@@ -198,6 +203,45 @@ class DataImporterCollection implements
     }
 
     /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[] $dataImporters
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return void
+     */
+    protected function runDataImporters(
+        array $dataImporters,
+        DataImporterReportTransfer $dataImporterReportTransfer,
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+    ): void {
+        if ($this->config === null) {
+            foreach ($dataImporters as $dataImporter) {
+                $this->executeDataImporter(
+                    $dataImporter,
+                    $dataImporterReportTransfer,
+                    $dataImporterConfigurationTransfer
+                );
+            }
+
+            return;
+        }
+
+        foreach ($dataImporters as $dataImporter) {
+            if ($this->config->getFullImportTypes()
+                && !in_array($dataImporter->getImportType(), $this->config->getFullImportTypes(), true)
+            ) {
+                continue;
+            }
+
+            $this->executeDataImporter(
+                $dataImporter,
+                $dataImporterReportTransfer,
+                $dataImporterConfigurationTransfer
+            );
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return string
@@ -225,5 +269,41 @@ class DataImporterCollection implements
             ->setImportedDataSetCount(0);
 
         return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidImportGroupException
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]
+     */
+    protected function getDataImportersByImportGroup(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): array
+    {
+        if (!$dataImporterConfigurationTransfer
+            || $dataImporterConfigurationTransfer->getImportGroup() === DataImportConfig::IMPORT_GROUP_FULL
+        ) {
+            return $this->dataImporter;
+        }
+
+        $dataImporters = [];
+
+        foreach ($this->dataImporter as $dataImporter) {
+            if (!$dataImporter instanceof DataImporterImportGroupAwareInterface) {
+                continue;
+            }
+
+            if ($dataImporter->getImportGroup() === $dataImporterConfigurationTransfer->getImportGroup()) {
+                $dataImporters[$dataImporter->getImportType()] = $dataImporter;
+            }
+        }
+
+        if (!$dataImporters) {
+            throw new InvalidImportGroupException(
+                sprintf('No data importers found for the import group %s. Make the name of the group is spelled correctly.', $dataImporterConfigurationTransfer->getImportGroup())
+            );
+        }
+
+        return $dataImporters;
     }
 }

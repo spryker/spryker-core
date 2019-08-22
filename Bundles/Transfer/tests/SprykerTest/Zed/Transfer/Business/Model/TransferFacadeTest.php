@@ -29,7 +29,7 @@ class TransferFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\PHPUnit_Framework_MockObject_MockObject|\Psr\Log\LoggerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     private function getMessenger()
     {
@@ -71,9 +71,98 @@ class TransferFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCanGenerateDataTransfers(): void
+    {
+        // Arrange
+        $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
+
+        // Act
+        $this->generateDataTransfers();
+
+        // Assert
+        $this->tester->assertVirtualDirectoryNotEmpty($transferDestinationDirectory);
+        $this->tester->isDataTransfersExist($transferDestinationDirectory);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanGenerateEntityTransfers(): void
+    {
+        // Arrange
+        $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
+
+        // Act
+        $this->generateEntityTransfers();
+
+        // Assert
+        $this->tester->assertVirtualDirectoryNotEmpty($transferDestinationDirectory);
+        $this->tester->isEntityTransfersExist($transferDestinationDirectory);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteDataTransfers(): void
+    {
+        // Arrange
+        $transferDestinationDirectory = $this->tester->getTransferDestinationDir();
+
+        // Act
+        $this->generateTransfers();
+        $this->tester->getFacade()->deleteGeneratedDataTransferObjects();
+
+        // Assert
+        $this->assertTrue(
+            $this->tester->isEntityTransfersExist($transferDestinationDirectory)
+        );
+        $this->assertFalse(
+            $this->tester->isDataTransfersExist($transferDestinationDirectory)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteEntityTransfers(): void
+    {
+        // Arrange
+        $this->generateTransfers();
+
+        // Act
+        $this->tester->getFacade()->deleteGeneratedEntityTransferObjects();
+
+        // Assert
+        $this->assertTrue($this->tester->isDataTransfersExist(
+            $this->tester->getTransferDestinationDir()
+        ));
+        $this->assertFalse($this->tester->isEntityTransfersExist(
+            $this->tester->getTransferDestinationDir()
+        ));
+    }
+
+    /**
+     * @return void
+     */
     protected function generateTransfers(): void
     {
+        $this->generateDataTransfers();
+        $this->generateEntityTransfers();
+    }
+
+    /**
+     * @return void
+     */
+    protected function generateDataTransfers(): void
+    {
         $this->tester->getFacade()->generateTransferObjects($this->getMessenger());
+    }
+
+    /**
+     * @return void
+     */
+    protected function generateEntityTransfers(): void
+    {
         $this->tester->getFacade()->generateEntityTransferObjects($this->getMessenger());
     }
 }

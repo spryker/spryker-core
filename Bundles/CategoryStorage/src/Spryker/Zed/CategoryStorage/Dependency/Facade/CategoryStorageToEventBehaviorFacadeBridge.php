@@ -42,4 +42,15 @@ class CategoryStorageToEventBehaviorFacadeBridge implements CategoryStorageToEve
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $columnName
+     *
+     * @return array
+     */
+    public function getEventTransfersOriginalValues(array $eventTransfers, string $columnName): array
+    {
+        return $this->eventBehaviorFacade->getEventTransfersOriginalValues($eventTransfers, $columnName);
+    }
 }

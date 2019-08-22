@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUnitAddress\Business\Model;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressRepositoryInterface;
 
@@ -50,7 +51,30 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
         );
 
-        return $this->repository->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+        return $this->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
+     */
+    public function getCompanyBusinessUnitAddressesByCriteriaFilter(
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUnitAddressCollectionTransfer {
+        $companyUnitAddressCollectionTransfer = $this->repository->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
+        $companyUnitAddressIds = $this->getCompanyUnitAddressIds($companyUnitAddressCollectionTransfer);
+        $addressRelationsToBusinessUnit = $this->repository->getCompanyBusinessUnitAddressToBusinessUnitRelations($companyUnitAddressIds);
+
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
+            $idCompanyUnitAddress = $companyUnitAddress->getIdCompanyUnitAddress();
+
+            if (isset($addressRelationsToBusinessUnit[$idCompanyUnitAddress])) {
+                $companyUnitAddress->setCompanyBusinessUnits($addressRelationsToBusinessUnit[$idCompanyUnitAddress]);
+            }
+        }
+
+        return $companyUnitAddressCollectionTransfer;
     }
 
     /**
@@ -65,5 +89,62 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
             ->executeCompanyUnitAddressHydratorPlugins($companyUnitAddress);
 
         return $companyUnitAddress;
+    }
+
+    /**
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
+    {
+        $companyUnitAddressTransfer = $this->repository->findCompanyUnitAddressById($idCompanyUnitAddress);
+
+        if (!$companyUnitAddressTransfer) {
+            return null;
+        }
+
+        return $this->companyUnitAddressPluginExecutor->executeCompanyUnitAddressHydratorPlugins($companyUnitAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        $companyUnitAddressTransfer->requireUuid();
+
+        $companyUnitAddressTransfer = $this->repository
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer->getUuid());
+
+        $companyUnitAddressResponseTransfer = new CompanyUnitAddressResponseTransfer();
+        if (!$companyUnitAddressTransfer) {
+            return $companyUnitAddressResponseTransfer->setIsSuccessful(false);
+        }
+
+        $companyUnitAddressTransfer = $this->companyUnitAddressPluginExecutor
+            ->executeCompanyUnitAddressHydratorPlugins($companyUnitAddressTransfer);
+
+        return $companyUnitAddressResponseTransfer
+            ->setIsSuccessful(true)
+            ->setCompanyUnitAddressTransfer($companyUnitAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getCompanyUnitAddressIds(
+        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+    ): array {
+        $companyUnitAddressIds = [];
+        foreach ($companyUnitAddressCollectionTransfer->getCompanyUnitAddresses() as $companyUnitAddress) {
+            $companyUnitAddressIds[] = $companyUnitAddress->getIdCompanyUnitAddress();
+        }
+
+        return $companyUnitAddressIds;
     }
 }

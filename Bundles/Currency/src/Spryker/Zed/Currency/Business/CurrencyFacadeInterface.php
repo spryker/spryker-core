@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Currency\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
@@ -95,4 +97,41 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getDefaultCurrencyForCurrentStore();
+
+    /**
+     * Specification:
+     *  - Verifies if provided currency in quote is available.
+     *  - Returns error message if currency not valid.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
+     */
+    public function validateCurrencyInQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds currency by given ISO code.
+     *
+     * @api
+     *
+     * @param string $isoCode
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyByIsoCode(string $isoCode): ?CurrencyTransfer;
+
+    /**
+     * Specification:
+     * - Gets currency transfers by array of iso codes.
+     *
+     * @api
+     *
+     * @param string[] $isoCodes
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     */
+    public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
 }

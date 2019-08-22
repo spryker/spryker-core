@@ -84,7 +84,7 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
      */
     protected function createOrderStateMachine()
     {
@@ -97,7 +97,7 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface
      */
     private function createOmsTimeoutMock()
     {

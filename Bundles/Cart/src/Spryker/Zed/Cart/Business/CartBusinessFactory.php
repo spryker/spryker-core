@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Spryker\Zed\Cart\Business\Locker\QuoteLocker;
+use Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
@@ -16,6 +18,7 @@ use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
+use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -32,6 +35,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->createStorageProvider(),
             $this->getCalculatorFacade(),
             $this->getMessengerFacade(),
+            $this->getQuoteFacade(),
             $this->getItemExpanderPlugins(),
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins(),
@@ -54,7 +58,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
         return new QuoteValidator(
             $this->createCartOperation(),
             $this->createQuoteChangeObserver(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getQuoteFacade()
         );
     }
 
@@ -64,6 +69,18 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function createQuoteCleaner(): QuoteCleanerInterface
     {
         return new QuoteCleaner();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface
+     */
+    public function createQuoteLocker(): QuoteLockerInterface
+    {
+        return new QuoteLocker(
+            $this->getQuoteFacade(),
+            $this->createCartOperation(),
+            $this->getQuoteLockPreResetPlugins()
+        );
     }
 
     /**
@@ -91,6 +108,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getCalculatorFacade()
     {
         return $this->getProvidedDependency(CartDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
+     */
+    public function getQuoteFacade(): CartToQuoteFacadeInterface
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::FACADE_QUOTE);
     }
 
     /**
@@ -187,5 +212,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function getPostReloadItemsPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_POST_RELOAD_ITEMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteLockPreResetPluginInterface[]
+     */
+    public function getQuoteLockPreResetPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_LOCK_PRE_RESET);
     }
 }

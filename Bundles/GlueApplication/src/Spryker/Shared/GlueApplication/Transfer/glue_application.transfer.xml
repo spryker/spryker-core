@@ -27,4 +27,10 @@
         <property name="minor" type="int" />
     </transfer>
 
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string" />
+        <property name="surrogateIdentifier" type="int" />
+        <property name="scopes" type="string[]" singular="scope"/>
+    </transfer>
+
 </transfers>

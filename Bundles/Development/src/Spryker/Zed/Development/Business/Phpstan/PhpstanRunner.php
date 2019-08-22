@@ -151,17 +151,34 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
             $output->writeln($command);
+
             return static::CODE_SUCCESS;
         }
 
-        $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
+        if ($output->isVerbose()) {
+            $output->writeln(sprintf('Checking %s (level %s)', $path, $level));
+        }
 
         $process = $this->getProcess($command);
-        $process->run(function ($type, $buffer) use ($output) {
+
+        $processOutputBuffer = '';
+
+        $process->run(function ($type, $buffer) use ($output, &$processOutputBuffer) {
             $this->addErrors($buffer);
 
-            $output->write($buffer);
+            preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
+            if (!$matches && !$output->isVeryVerbose()) {
+                $processOutputBuffer .= $buffer;
+
+                return;
+            }
+
+            $processOutputBuffer .= $buffer;
+            $output->write($processOutputBuffer);
+            $processOutputBuffer = '';
         });
+
+        $processOutputBuffer = '';
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);
@@ -177,7 +194,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getProcess($command)
     {
-        return new Process($command, null, null, null, 0);
+        return new Process(explode(' ', $command), null, null, null, 0);
     }
 
     /**
@@ -309,7 +326,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return null;
         }
 
-        $pathToModules = $namespace === static::NAMESPACE_SPRYKER_SHOP ? $this->config->getPathToShop() : $this->config->getPathToCore();
+        $pathToModules = $this->config->getPathToInternalNamespace($namespace);
 
         return dirname($pathToModules) . DIRECTORY_SEPARATOR;
     }
@@ -327,33 +344,23 @@ class PhpstanRunner implements PhpstanRunnerInterface
         [$namespace, $module] = explode('.', $module, 2);
 
         if ($module === 'all') {
-            if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
-                $corePath = $this->config->getPathToShop();
-            } elseif ($namespace === static::NAMESPACE_SPRYKER) {
-                $corePath = $this->config->getPathToCore();
-            } else {
+            $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+            if ($pathToInternalNamespace === null) {
                 throw new RuntimeException('Namespace invalid: ' . $namespace);
             }
 
-            $modules = $this->getCoreModules($corePath);
+            $modules = $this->getCoreModules($pathToInternalNamespace);
             foreach ($modules as $module) {
-                $path = $corePath . $module . DIRECTORY_SEPARATOR;
+                $path = $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR;
                 $paths = $this->addPath($paths, $path, $namespace);
             }
 
             return $paths;
         }
 
-        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, $namespace);
-
-            return $paths;
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, $namespace);
-
-            return $paths;
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
+            return $this->addPath($paths, $pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $namespace);
         }
 
         $vendor = $this->dasherize($namespace);

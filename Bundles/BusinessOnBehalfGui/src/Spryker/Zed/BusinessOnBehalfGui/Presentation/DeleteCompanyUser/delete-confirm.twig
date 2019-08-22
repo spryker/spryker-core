@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Company user deletion confirmation' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <p>You are trying to delete user: <b>"{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.lastName }}"</b>
+                for company <b>"{{ companyUser.company.name }}"</b>,
+                business unit <b>"{{ companyUser.companyBusinessUnit.name }}"</b>
+            </p>
+            <p>{{ 'The Company User and all related data will be deleted permanently.' | trans }}</p>
+            <div>
+                <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
+                <a href="{{ url(
+                    '/business-on-behalf-gui/delete-company-user/delete',
+                    {'id-company-user': companyUser.idCompanyUser}
+                )}}" class="btn btn-danger safe-submit">{{ 'Delete company user' | trans }}</a>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

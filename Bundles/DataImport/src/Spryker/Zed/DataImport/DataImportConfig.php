@@ -8,12 +8,21 @@
 namespace Spryker\Zed\DataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer;
 use Spryker\Shared\DataImport\DataImportConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DataImportConfig extends AbstractBundleConfig
 {
+    public const IMPORT_GROUP_FULL = 'FULL';
+    public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
+    public const IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
+
+    protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
+    protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
+
     /**
      * @return string
      */
@@ -26,17 +35,27 @@ class DataImportConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return int
      */
-    private function getDefaultPath()
+    public function getQueueReaderChunkSize(): int
     {
-        $pathParts = [
-            APPLICATION_ROOT_DIR,
-            'data',
-            'import',
-        ];
+        return $this->get(DataImportConstants::QUEUE_READER_CHUNK_SIZE, static::DEFAULT_QUEUE_READER_CHUNK_SIZE);
+    }
 
-        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
+    /**
+     * @return int
+     */
+    public function getQueueWriterChunkSize(): int
+    {
+        return $this->get(DataImportConstants::QUEUE_WRITER_CHUNK_SIZE, static::DEFAULT_QUEUE_WRITER_CHUNK_SIZE);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFullImportTypes(): array
+    {
+        return [];
     }
 
     /**
@@ -58,5 +77,44 @@ class DataImportConfig extends AbstractBundleConfig
             ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
 
         return $dataImporterConfigurationTransfer;
+    }
+
+    /**
+     * @param string $queueName
+     * @param string $importType
+     * @param array $queueConsumerOptions
+     *
+     * @return \Generated\Shared\Transfer\QueueDataImporterConfigurationTransfer
+     */
+    protected function buildQueueDataImporterConfiguration(string $queueName, string $importType, array $queueConsumerOptions): QueueDataImporterConfigurationTransfer
+    {
+        $dataImportQueueReaderConfigurationTransfer = new DataImporterQueueReaderConfigurationTransfer();
+        $dataImportQueueReaderConfigurationTransfer
+            ->setQueueName($queueName)
+            ->setChunkSize(
+                $this->getQueueReaderChunkSize()
+            )
+            ->setQueueConsumerOptions($queueConsumerOptions);
+
+        $queueDataImporterConfigurationTransfer = new QueueDataImporterConfigurationTransfer();
+        $queueDataImporterConfigurationTransfer
+            ->setImportType($importType)
+            ->setReaderConfiguration($dataImportQueueReaderConfigurationTransfer);
+
+        return $queueDataImporterConfigurationTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    private function getDefaultPath()
+    {
+        $pathParts = [
+            APPLICATION_ROOT_DIR,
+            'data',
+            'import',
+        ];
+
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 }

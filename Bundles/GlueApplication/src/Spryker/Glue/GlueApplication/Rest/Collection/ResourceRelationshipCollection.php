@@ -20,9 +20,9 @@ class ResourceRelationshipCollection implements ResourceRelationshipCollectionIn
      * @param string $resourceType
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipsPlugin
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
+     * @return $this
      */
-    public function addRelationship(string $resourceType, ResourceRelationshipPluginInterface $resourceRelationshipsPlugin): ResourceRelationshipCollectionInterface
+    public function addRelationship(string $resourceType, ResourceRelationshipPluginInterface $resourceRelationshipsPlugin)
     {
         $this->relationships[$resourceType][] = $resourceRelationshipsPlugin;
 

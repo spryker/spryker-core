@@ -94,7 +94,9 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
 
-        return $this->getRepository()->getCompanyUnitAddressCollection($criteriaFilterTransfer);
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->getCompanyBusinessUnitAddressesByCriteriaFilter($criteriaFilterTransfer);
     }
 
     /**
@@ -112,5 +114,39 @@ class CompanyUnitAddressFacade extends AbstractFacade implements CompanyUnitAddr
         $this->getFactory()
             ->createCompanyBusinessUnitAddressWriter()
             ->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|null
+     */
+    public function findCompanyUnitAddressById(int $idCompanyUnitAddress): ?CompanyUnitAddressTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->findCompanyUnitAddressById($idCompanyUnitAddress);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * {@internal will work if UUID field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     */
+    public function findCompanyBusinessUnitAddressByUuid(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAddressReader()
+            ->findCompanyBusinessUnitAddressByUuid($companyUnitAddressTransfer);
     }
 }

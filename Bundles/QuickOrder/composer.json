@@ -5,10 +5,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/product-storage": "^1.6.0",
-    "spryker/quick-order-extension": "^1.1.0"
+    "spryker/quick-order-extension": "^1.1.0",
+    "spryker/synchronization-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

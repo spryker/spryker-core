@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListPr
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingListProductOptionConnectorToProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorRepositoryInterface;
 
@@ -37,27 +38,35 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     }
 
     /**
-     * @param int $idShoppingListItem
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getShoppingListItemProductOptionsByIdShoppingListItem(int $idShoppingListItem): ProductOptionCollectionTransfer
+    public function getShoppingListItemProductOptionsByIdShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ProductOptionCollectionTransfer
     {
-        $productOptionCriteriaTransfer = $this->getProductOptionCriteriaTransfer($idShoppingListItem);
+        $productOptionCriteriaTransfer = $this->getProductOptionCriteriaTransfer($shoppingListItemTransfer);
 
         return $this->productOptionFacade->getProductOptionCollectionByProductOptionCriteria($productOptionCriteriaTransfer);
     }
 
     /**
-     * @param int $idShoppingListItem
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCriteriaTransfer
      */
-    protected function getProductOptionCriteriaTransfer(int $idShoppingListItem): ProductOptionCriteriaTransfer
+    protected function getProductOptionCriteriaTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ProductOptionCriteriaTransfer
     {
-        $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
-            ->getShoppingListItemProductOptionIdsByIdShoppingListItem($idShoppingListItem);
+        $productOptionCriteriaTransfer = new ProductOptionCriteriaTransfer();
 
-        return (new ProductOptionCriteriaTransfer())->setProductOptionIds($shoppingListItemProductOptionIds);
+        $shoppingListItemProductOptionIds = $this->shoppingListProductOptionRepository
+            ->getShoppingListItemProductOptionIdsByIdShoppingListItem(
+                $shoppingListItemTransfer->getIdShoppingListItem()
+            );
+
+        $productOptionCriteriaTransfer->setProductOptionIds($shoppingListItemProductOptionIds)
+            ->setProductConcreteSku($shoppingListItemTransfer->getSku())
+            ->setProductOptionGroupIsActive(true);
+
+        return $productOptionCriteriaTransfer;
     }
 }

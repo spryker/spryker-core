@@ -52,7 +52,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder): MailTypePluginInterface
+    protected function setSubject(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSubject('availability_notification_subscription.mail.subscribed.subject');
 
@@ -64,7 +64,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setHtmlTemplate('AvailabilityNotification/mail/subscribed.html.twig');
 
@@ -76,7 +76,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder): MailTypePluginInterface
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setTextTemplate('AvailabilityNotification/mail/subscribed.text.twig');
 
@@ -88,7 +88,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder): MailTypePluginInterface
+    protected function setRecipient(MailBuilderInterface $mailBuilder)
     {
         $mailTransfer = $mailBuilder->getMailTransfer();
         $mailTransfer->requireAvailabilityNotificationSubscriptionMailData();
@@ -104,7 +104,7 @@ class AvailabilityNotificationSubscriptionMailTypePlugin extends AbstractPlugin 
      *
      * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): MailTypePluginInterface
+    protected function setSender(MailBuilderInterface $mailBuilder)
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 

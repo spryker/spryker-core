@@ -107,6 +107,9 @@ $chat-box-background-color: #f0f0f0;
   display: none;
 }
 
+.more-history {
+  color: #337ab7;
+}
 
 .addition-row {
   td {
@@ -120,11 +123,34 @@ $chat-box-background-color: #f0f0f0;
 img.product-image {
   width: 150px;
   border: 1px solid #e7eaec;
+
+    &--small {
+        width: 60px;
+    }
+
+    &--borderless {
+        border: none;
+    }
+}
+
+.image-wrap {
+    position: relative;
+    display: inline-block;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.05);
+    }
 }
 
 span.discounted {
   text-decoration: line-through;
-  color: #AAAAAA;
+  color: #aaa;
 }
 
 .table > tbody.single-item {
@@ -141,7 +167,7 @@ span.discounted {
 }
 
 .sku {
-  color: #AAAAAA;
+  color: #aaa;
   font-size: 10px;
 }
 
@@ -155,6 +181,6 @@ span.discounted {
 }
 
 .tax-info {
-  color: #AAAAAA;
+  color: #aaa;
   font-size: 10px;
 }

@@ -38,6 +38,7 @@ class EditMerchantController extends AbstractController
 
         if ($merchantTransfer === null) {
             $this->addErrorMessage("Merchant with id %s doesn't exists.", ['%s' => $idMerchant]);
+
             return $this->redirectResponse(MerchantTableConstants::URL_MERCHANT_LIST);
         }
 

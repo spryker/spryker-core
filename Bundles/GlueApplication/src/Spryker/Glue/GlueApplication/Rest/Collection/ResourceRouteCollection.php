@@ -47,7 +47,7 @@ class ResourceRouteCollection implements ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addGet(string $actionName, bool $isProtected = true, array $context = []): ResourceRouteCollectionInterface
+    public function addGet(string $actionName, bool $isProtected = true, array $context = [])
     {
         $this->addAction(Request::METHOD_GET, $actionName, $isProtected, $context);
 
@@ -61,7 +61,7 @@ class ResourceRouteCollection implements ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addPost(string $actionName, bool $isProtected = true, array $context = []): ResourceRouteCollectionInterface
+    public function addPost(string $actionName, bool $isProtected = true, array $context = [])
     {
         $this->addAction(Request::METHOD_POST, $actionName, $isProtected, $context);
 
@@ -75,7 +75,7 @@ class ResourceRouteCollection implements ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addDelete(string $actionName, bool $isProtected = true, array $context = []): ResourceRouteCollectionInterface
+    public function addDelete(string $actionName, bool $isProtected = true, array $context = [])
     {
         $this->addAction(Request::METHOD_DELETE, $actionName, $isProtected, $context);
 
@@ -89,7 +89,7 @@ class ResourceRouteCollection implements ResourceRouteCollectionInterface
      *
      * @return $this
      */
-    public function addPatch(string $actionName, bool $isProtected = true, array $context = []): ResourceRouteCollectionInterface
+    public function addPatch(string $actionName, bool $isProtected = true, array $context = [])
     {
         $this->addAction(Request::METHOD_PATCH, $actionName, $isProtected, $context);
 

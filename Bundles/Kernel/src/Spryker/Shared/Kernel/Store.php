@@ -29,7 +29,7 @@ class Store
     /**
      * List of all storeNames
      *
-     * @var array
+     * @var string[]
      */
     protected $allStoreNames;
 
@@ -43,14 +43,14 @@ class Store
      *
      * E.g: "de" => "de_DE"
      *
-     * @var array
+     * @var string[]
      */
     protected $locales;
 
     /**
      * List of countries
      *
-     * @var array
+     * @var string[]
      */
     protected $countries;
 
@@ -77,6 +77,13 @@ class Store
      * @var string
      */
     protected static $defaultStore;
+
+    /**
+     * Cache for data from stores.php to not open it too many times.
+     *
+     * @var array
+     */
+    protected $stores;
 
     /**
      * Examples: EUR, PLN
@@ -149,13 +156,25 @@ class Store
      */
     protected function getStoreSetup($currentStoreName)
     {
-        $stores = require APPLICATION_ROOT_DIR . '/config/Shared/stores.php';
+        $stores = $this->getStores();
 
         if (array_key_exists($currentStoreName, $stores) === false) {
             throw new Exception('Missing setup for store: ' . $currentStoreName);
         }
 
         return $stores;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getStores(): array
+    {
+        if ($this->stores === null) {
+            $this->stores = require APPLICATION_ROOT_DIR . '/config/Shared/stores.php';
+        }
+
+        return $this->stores;
     }
 
     /**
@@ -220,7 +239,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAllowedStores()
     {
@@ -228,7 +247,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getInactiveStores()
     {
@@ -243,7 +262,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getLocales()
     {
@@ -253,7 +272,7 @@ class Store
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return string[]
      */
     public function getLocalesPerStore($storeName)
     {
@@ -309,7 +328,7 @@ class Store
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCountries()
     {
@@ -356,6 +375,7 @@ class Store
     {
         if (count($this->currencyIsoCodes) === 0) {
             $this->currencyIsoCode = $currencyIsoCode;
+
             return;
         }
 

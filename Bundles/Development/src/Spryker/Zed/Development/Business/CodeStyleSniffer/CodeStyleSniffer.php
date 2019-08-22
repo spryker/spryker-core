@@ -116,15 +116,13 @@ class CodeStyleSniffer
             throw new RuntimeException('Path suffix option is not possible for "all".');
         }
 
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
-            $corePath = $this->config->getPathToShop();
-        } elseif ($namespace === static::NAMESPACE_SPRYKER) {
-            $corePath = $this->config->getPathToCore();
-        } else {
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+
+        if (!$pathToInternalNamespace) {
             throw new RuntimeException('Namespace invalid: ' . $namespace);
         }
 
-        return $corePath;
+        return $pathToInternalNamespace;
     }
 
     /**
@@ -161,12 +159,9 @@ class CodeStyleSniffer
      */
     protected function getCorePath($module, $namespace, $pathSuffix = null)
     {
-        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
-            return $this->buildPath($this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
-        }
-
-        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
-            return $this->buildPath($this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
+        $pathToInternalNamespace = $this->config->getPathToInternalNamespace($namespace);
+        if ($pathToInternalNamespace && is_dir($pathToInternalNamespace . $module)) {
+            return $this->buildPath($pathToInternalNamespace . $module . DIRECTORY_SEPARATOR, $pathSuffix);
         }
 
         $vendor = $this->normalizeName($namespace);
@@ -272,7 +267,7 @@ class CodeStyleSniffer
             return static::CODE_SUCCESS;
         }
 
-        $process = new Process($command, $this->config->getPathToRoot(), null, null, 4800);
+        $process = new Process(explode(' ', $command), $this->config->getPathToRoot(), null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

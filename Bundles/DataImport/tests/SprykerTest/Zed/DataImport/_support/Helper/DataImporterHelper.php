@@ -13,6 +13,7 @@ use Codeception\Util\Stub;
 use Faker\Factory;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\DataImport\Business\Model\DataImporter;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
@@ -45,6 +46,38 @@ class DataImporterHelper extends Module
             }),
             'getImportType' => function () use ($importType) {
                 return $importType;
+            },
+        ]);
+
+        return $dataImporterStub;
+    }
+
+    /**
+     * @param string $importType
+     * @param string $importGroup
+     * @param bool $isCalled
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
+     */
+    public function getDataImporterImportGroupAwareMock(string $importType, string $importGroup, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
+    {
+        if (!$dataImporterReportTransfer) {
+            $dataImporterReportTransfer = new DataImporterReportTransfer();
+            $dataImporterReportTransfer->setImportType($importType)
+                ->setImportedDataSetCount(0);
+        }
+
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporterStub */
+        $dataImporterStub = Stub::makeEmpty(DataImporter::class, [
+            'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
+                return $dataImporterReportTransfer;
+            }),
+            'getImportType' => function () use ($importType) {
+                return $importType;
+            },
+            'getImportGroup' => function () use ($importGroup) {
+                return $importGroup;
             },
         ]);
 
@@ -98,7 +131,7 @@ class DataImporterHelper extends Module
     public function getFailingDataImportStepMock()
     {
         $executeCallback = function () {
-            throw new DataImportException();
+            throw new DataImportException('ExceptionMessage');
         };
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface $dataSetStub */
         $dataSetStub = Stub::makeEmpty(DataImportStepInterface::class, ['execute' => $executeCallback]);

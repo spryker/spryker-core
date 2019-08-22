@@ -36,6 +36,18 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
+     * @deprecated Use `Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductBridge::getRawProductConcreteTransfersByConcreteSkus()` instead.
+     *
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getRawProductConcreteBySku(string $productConcreteSku): ProductConcreteTransfer
+    {
+        return $this->productFacade->getRawProductConcreteBySku($productConcreteSku);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -74,5 +86,15 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
         return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
+    }
+
+    /**
+     * @param array $productConcreteSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
+    {
+        return $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($productConcreteSkus);
     }
 }

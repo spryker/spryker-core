@@ -36,10 +36,9 @@
         <property name="store" type="Store" />
     </transfer>
 
-    <transfer name="AvailabilityNotification">
+    <transfer name="AvailabilityNotificationData">
         <property name="sku" type="string"/>
         <property name="store" type="Store"/>
-        <property name="productConcrete" type="ProductConcrete"/>
     </transfer>
 
 </transfers>

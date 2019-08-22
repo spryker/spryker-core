@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
 use Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
-use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
@@ -137,11 +140,36 @@ class PriceManagerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
     protected function createPriceFacadeBridgeMock()
     {
         return $this->getMockBuilder(PriceCartToPriceInterface::class)->getMock();
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductCartToPriceBridge
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
+     */
+    protected function createPriceProductFilterMock(
+        PriceCartToPriceProductInterface $priceProductCartToPriceBridge,
+        PriceCartToPriceInterface $priceFacadeMock
+    ) {
+        return new PriceProductFilter(
+            $priceProductCartToPriceBridge,
+            $priceFacadeMock,
+            $this->createCurrencyFacadeBridgeMock()
+        );
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface
+     */
+    protected function createCurrencyFacadeBridgeMock()
+    {
+        return $this->getMockBuilder(PriceCartConnectorToCurrencyFacadeInterface::class)->getMock();
     }
 
     /**
@@ -151,7 +179,7 @@ class PriceManagerTest extends Unit
      */
     protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub)
     {
-        $priceProductCartToPriceBridge = new PriceCartToPriceProductBridge($priceProductFacadeStub);
+        $priceProductCartToPriceAdapter = new PriceCartConnectorToPriceProductAdapter($priceProductFacadeStub);
 
         $priceFacadeMock = $this->createPriceFacadeBridgeMock();
 
@@ -161,7 +189,12 @@ class PriceManagerTest extends Unit
         $priceFacadeMock->method('getGrossPriceModeIdentifier')
             ->willReturn('GROSS_MODE');
 
-        return new PriceManager($priceProductCartToPriceBridge, $priceFacadeMock);
+        $priceFacadeMock->method('getDefaultPriceMode')
+            ->willReturn('GROSS_MODE');
+
+        $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceAdapter, $priceFacadeMock);
+
+        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock);
     }
 
     /**

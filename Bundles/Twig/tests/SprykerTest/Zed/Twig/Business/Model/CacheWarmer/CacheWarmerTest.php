@@ -53,7 +53,7 @@ class CacheWarmerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Twig\Cache\CacheWriterInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Twig\Cache\CacheWriterInterface
      */
     protected function getCacheWriterMock()
     {
@@ -64,7 +64,7 @@ class CacheWarmerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilderInterface
      */
     protected function getTemplatePathMapBuilderMock()
     {

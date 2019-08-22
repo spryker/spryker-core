@@ -6,14 +6,15 @@
   "require": {
     "php": ">=7.1",
     "spryker/checkout-rest-api-extension": "^1.0.0",
-    "spryker/customer": "^7.14.0",
-    "spryker/customers-rest-api-extension": "^1.0.0",
-    "spryker/glue-application": "^1.8.0",
+    "spryker/customer": "^7.21.0",
+    "spryker/customers-rest-api-extension": "^1.1.0",
+    "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.0.0",
-    "spryker/kernel": "^3.22.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/session": "^3.2.0 || ^4.0.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

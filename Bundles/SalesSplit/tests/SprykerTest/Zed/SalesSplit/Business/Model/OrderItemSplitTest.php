@@ -116,7 +116,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
      */
     protected function createValidatorMock()
     {
@@ -129,7 +129,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
     protected function createQueryContainerMock()
     {
@@ -139,7 +139,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected function createSalesOrderMock()
     {
@@ -153,7 +153,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface
      */
     protected function createCalculatorMock()
     {
@@ -166,7 +166,7 @@ class OrderItemSplitTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Propel\Runtime\Connection\ConnectionInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
     protected function createDatabaseConnectionMock()
     {

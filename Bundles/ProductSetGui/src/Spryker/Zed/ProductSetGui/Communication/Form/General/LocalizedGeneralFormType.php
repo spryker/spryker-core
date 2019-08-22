@@ -198,9 +198,9 @@ class LocalizedGeneralFormType extends AbstractType
         }
 
         $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
+        $urlTransfer->setUrl(explode('?', $url)[0]);
 
-        if ($this->getFactory()->getUrlFacade()->hasUrl($urlTransfer)) {
+        if ($this->getFactory()->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer)) {
             $context
                 ->buildViolation('URL is already used.')
                 ->atPath('[' . static::FIELD_URL . ']')

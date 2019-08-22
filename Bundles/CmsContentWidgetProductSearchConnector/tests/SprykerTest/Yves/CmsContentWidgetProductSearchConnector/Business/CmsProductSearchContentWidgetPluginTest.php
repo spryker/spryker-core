@@ -36,7 +36,7 @@ class CmsProductSearchContentWidgetPluginTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
     protected function createCmsContentWidgetConfigurationProviderMock()
     {

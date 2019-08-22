@@ -1,0 +1,37 @@
+{% block content %}
+    <div class="content-errors hide">
+        <h5 class="error item">{{ 'Please select a content item' | trans }}</h5>
+        <h5 class="error template">{{ 'Please select a template' | trans }}</h5>
+    </div>
+
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% set widget_title = 'Select a content item' | trans %}
+        {% block widget_content %}
+            {{ table | raw }}
+        {% endblock %}
+    {% endembed %}
+
+    <input type="hidden" name="twigFunctionTemplate" value="{{ twigFunctionTemplate | default('No defined widget' | trans) }}" />
+    <input type="hidden" name="type" value="{{ contentType }}" />
+    <input type="hidden" name="displayType" value="{{ contentType | trans }}" />
+
+    {% if templates is not empty %}
+        {% set selectedTemplateIdentifier = selectedTemplateIdentifier is not empty ? selectedTemplateIdentifier : templates[0].identifier %}
+
+        <h5 class="template-title">{{ 'Select a template' | trans }}</h5>
+        <ul class="template-list">
+            {% for key, template in templates %}
+                {% set templateName = template.name | trans %}
+                <li>
+                    <label>
+                    <input type="radio" name="template"
+                            {{ selectedTemplateIdentifier == template.identifier ? 'checked="checked"' : '' }}
+                            data-template="{{ templateName }}"
+                            value="{{ template.identifier }}" />
+                            <span class="template-name-wrapper">{{ templateName }}</span>
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

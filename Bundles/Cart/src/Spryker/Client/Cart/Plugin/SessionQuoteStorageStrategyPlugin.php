@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -21,7 +22,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\Cart\CartClientInterface getClient()
  * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
-class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
+class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -36,7 +37,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Adds items.
      *  - Makes zed request.
      *  - Stores quote in session internally after zed request.
-     *  - Returns update quote.
+     *  - Returns updated quote if quote is not locked.
+     *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
@@ -92,7 +94,8 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Makes zed request.
      *  - Adds only items, that passed cart validation.
      *  - Stores quote in session internally after zed request.
-     *  - Returns update quote.
+     *  - Returns update quote if quote is not locked.
+     *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
@@ -304,6 +307,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Check error messages
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
+     *  - Returns with unchanged QuoteTransfer and 'isSuccessful=true' when cart is locked.
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -341,6 +345,28 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
             $quoteResponseTransfer->setIsSuccessful(true);
             $this->getQuoteClient()->setQuote($quoteTransfer);
         }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Executes QuoteLockPreResetPluginInterface plugins before unlock.
+     * - Unlocks quote by setting `isLocked` transfer property to false.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     * - Stores quote in session internally after zed request.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function resetQuoteLock(): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->getCartZedStub()
+            ->resetQuoteLock($this->getQuote());
+
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
         return $quoteResponseTransfer;
     }

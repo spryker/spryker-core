@@ -51,4 +51,12 @@ class CmsBlockCategoryConnectorToCategoryQueryContainerBridge implements CmsBloc
     {
         return $this->categoryQueryContainer->queryCategoryTemplateById($idCategoryTemplate);
     }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery
+     */
+    public function queryCategoryTemplate()
+    {
+        return $this->categoryQueryContainer->queryCategoryTemplate();
+    }
 }

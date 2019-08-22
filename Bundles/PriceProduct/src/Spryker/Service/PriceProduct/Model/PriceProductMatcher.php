@@ -115,6 +115,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             return false;
         }
 
+        if ($priceProductCriteriaTransfer->getIdStore() !== $priceProductTransfer->getMoneyValue()->getFkStore()) {
+            return false;
+        }
+
         if ($priceProductCriteriaTransfer->getPriceDimension() !== null) {
             if ($priceProductCriteriaTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
                 return false;

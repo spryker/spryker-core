@@ -14,6 +14,9 @@ use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
 
+/**
+ * @deprecated Use `spryker/module-finder` instead.
+ */
 class PackageFinder implements PackageFinderInterface
 {
     /**
@@ -37,7 +40,7 @@ class PackageFinder implements PackageFinderInterface
         $packageTransferCollection = [];
 
         foreach ($this->getPackageFinder() as $directoryInfo) {
-            if (in_array($directoryInfo->getFilename(), ['spryker', 'spryker-shop'])) {
+            if (in_array($directoryInfo->getFilename(), $this->config->getInternalPackageDirectories())) {
                 continue;
             }
             $packageTransfer = $this->getPackageTransfer($directoryInfo);

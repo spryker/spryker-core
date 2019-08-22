@@ -46,6 +46,21 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
+     * @param int[] $productOptionValueIds
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptionsByProductOptionValueIds(array $productOptionValueIds): void
+    {
+        $shoppingListProductOptionEntities = $this->getFactory()
+            ->createSpyShoppingListProductOptionQuery()
+            ->filterByFkProductOptionValue_In($productOptionValueIds)
+            ->find();
+
+        $this->deleteEntitiesAndTriggerEvents($shoppingListProductOptionEntities);
+    }
+
+    /**
      * @param \Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListProductOptionEntities
      *
      * @return void

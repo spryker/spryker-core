@@ -43,7 +43,7 @@ class TransferCleanerTest extends Unit
      */
     private function getTestDirectory()
     {
-        return __DIR__ . '/test_files/';
+        return codecept_data_dir('test_files/tmp/');
     }
 
     /**

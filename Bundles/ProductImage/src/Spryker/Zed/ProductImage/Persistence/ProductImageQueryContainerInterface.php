@@ -46,7 +46,7 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
      */
     public function queryImageCollectionByProductAbstractId($idProductAbstract);
 
@@ -94,7 +94,7 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryDefaultAbstractProductImageSets($idProductAbstract);
 
@@ -104,7 +104,7 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryLocalizedAbstractProductImageSets($idProductAbstract, $idLocale);
 
@@ -113,7 +113,7 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryDefaultConcreteProductImageSets($idProductConcrete);
 
@@ -123,7 +123,7 @@ interface ProductImageQueryContainerInterface extends QueryContainerInterface
      * @param int $idProductConcrete
      * @param int $idLocale
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
     public function queryLocalizedConcreteProductImageSets($idProductConcrete, $idLocale);
 
