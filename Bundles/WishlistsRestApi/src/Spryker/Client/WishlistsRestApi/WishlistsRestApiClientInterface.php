@@ -16,20 +16,6 @@ interface WishlistsRestApiClientInterface
 {
     /**
      * Specification:
-     *  - Finds one wishlist by uuid and customer id.
-     *  - Returns wishlist response with wishlist inside.
-     *  - If error occurred returns wishlist response with errors.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
-
-    /**
-     * Specification:
      *  - Updates existing wishlist records in DB.
      *  - Required properties: uuid, idCustomer and wishlist.
      *  - Returns wishlist response with updated wishlist.
@@ -67,4 +53,16 @@ interface WishlistsRestApiClientInterface
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
     public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Deletes item from specified wishlist.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
 }

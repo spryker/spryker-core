@@ -66,7 +66,7 @@ class WishlistDeleter implements WishlistDeleterInterface
     protected function createWishlistRequestTransferFromRequest(RestRequestInterface $restRequest)
     {
         return (new WishlistRequestTransfer())
-            ->setUuid($restRequest->getResource()->getId())
+            ->setIdWishlist($restRequest->getResource()->getId())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
     }
 }

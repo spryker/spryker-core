@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -252,5 +254,21 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this->getFactory()->createCartClient(),
             $this
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    {
+        return $this->getZedStub()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
     }
 }

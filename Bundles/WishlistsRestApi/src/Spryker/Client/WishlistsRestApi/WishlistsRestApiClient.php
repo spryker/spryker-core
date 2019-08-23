@@ -27,20 +27,6 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
-    {
-        return $this->getFactory()->createZedStub()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         return $this->getFactory()->createZedStub()->updateWishlist($wishlistRequestTransfer);
@@ -72,5 +58,19 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
     public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
         return $this->getFactory()->createZedStub()->addWishlistItem($wishlistItemRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFactory()->createZedStub()->deleteWishlistItem($wishlistItemRequestTransfer);
     }
 }

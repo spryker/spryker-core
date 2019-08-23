@@ -56,10 +56,7 @@ class WishlistUpdater implements WishlistUpdaterInterface
      */
     public function update(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        $wishlistTransfer = $this->wishlistResourceMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
-
-        $wishlistRequestTransfer = $this->createWishlistRequestTransferFromRequest($restRequest)
-            ->setWishlist($wishlistTransfer);
+        $wishlistRequestTransfer = $this->createWishlistRequestTransferFromRequest($attributesTransfer, $restRequest);
 
         $wishlistResponseTransfer = $this->wishlistsRestApiClient->updateWishlist($wishlistRequestTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -73,14 +70,21 @@ class WishlistUpdater implements WishlistUpdaterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\WishlistRequestTransfer
      */
-    protected function createWishlistRequestTransferFromRequest(RestRequestInterface $restRequest)
-    {
+    protected function createWishlistRequestTransferFromRequest(
+        RestWishlistsAttributesTransfer $attributesTransfer,
+        RestRequestInterface $restRequest
+    ) {
+        $wishlistTransfer = $this->wishlistResourceMapper
+            ->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
+
         return (new WishlistRequestTransfer())
-            ->setUuid($restRequest->getResource()->getId())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
+            ->setIdWishlist($restRequest->getResource()->getId())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setWishlist($wishlistTransfer);
     }
 }

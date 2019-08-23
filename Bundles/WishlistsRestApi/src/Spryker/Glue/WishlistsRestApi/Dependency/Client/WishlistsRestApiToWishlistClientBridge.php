@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 class WishlistsRestApiToWishlistClientBridge implements WishlistsRestApiToWishlistClientInterface
@@ -104,5 +106,15 @@ class WishlistsRestApiToWishlistClientBridge implements WishlistsRestApiToWishli
     public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
     {
         return $this->wishlistClient->removeItem($wishlistItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    {
+        return $this->wishlistClient->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
     }
 }

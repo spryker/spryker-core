@@ -8,24 +8,27 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\WishlistItems;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\WishlistItemRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class WishlistItemDeleter implements WishlistItemDeleterInterface
 {
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
+     * @var \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface
      */
-    protected $wishlistClient;
+    protected $wishlistRestApiClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -33,31 +36,31 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface
-     */
-    protected $wishlistReader;
-
-    /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface
      */
     protected $wishlistItemMapper;
 
     /**
-     * @param \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface $wishlistClient
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface
+     */
+    protected $wishlistRestResponseBuilder;
+
+    /**
+     * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistRestApiClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface $wishlistItemMapper
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface $wishlistReader
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
      */
     public function __construct(
-        WishlistsRestApiToWishlistClientInterface $wishlistClient,
+        WishlistsRestApiClientInterface $wishlistRestApiClient,
         RestResourceBuilderInterface $restResourceBuilder,
         WishlistItemMapperInterface $wishlistItemMapper,
-        WishlistReaderInterface $wishlistReader
+        WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
     ) {
-        $this->wishlistClient = $wishlistClient;
+        $this->wishlistRestApiClient = $wishlistRestApiClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->wishlistItemMapper = $wishlistItemMapper;
-        $this->wishlistReader = $wishlistReader;
+        $this->wishlistRestResponseBuilder = $wishlistRestResponseBuilder;
     }
 
     /**
@@ -67,37 +70,25 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
+        //TODO: check if it may be substituted with validation
         if (!$restRequest->getResource()->getId()) {
-            return $this->addItemSkuMissingErrorToResponse($restResponse);
+            return $this->addItemSkuMissingErrorToResponse();
         }
 
-        $sku = $restRequest->getResource()->getId();
         $wishlistResource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
         if (!$wishlistResource) {
-            return $this->createWishlistNotFoundErrorResponse($restResponse);
+            return $this->createWishlistNotFoundErrorResponse();
         }
 
-        $wishlistUuid = $wishlistResource->getId();
-        $wishlistOverviewTransfer = $this->wishlistReader->findWishlistOverviewByUuid($wishlistUuid);
-        if ($wishlistOverviewTransfer === null) {
-            return $this->createWishlistNotFoundErrorResponse($restResponse);
+        $deleteWishlistItemResponse = $this->wishlistRestApiClient->deleteWishlistItem(
+            $this->createWishlistItemRequest($restRequest, $wishlistResource)
+        );
+
+        if (!$deleteWishlistItemResponse->getIsSuccess()) {
+            return $this->createDeleteWishlistItemErrorResponse($deleteWishlistItemResponse);
         }
 
-        if (!$this->isSkuInWishlist($wishlistOverviewTransfer, $sku)) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
-
-            return $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        $wishlistItemTransfer = $this->createWishlistItemTransfer($wishlistOverviewTransfer->getWishlist(), $sku);
-        $this->wishlistClient->removeItem($wishlistItemTransfer);
-
-        return $restResponse;
+        return $this->restResourceBuilder->createRestResponse();
     }
 
     /**
@@ -135,32 +126,77 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createWishlistNotFoundErrorResponse(RestResponseInterface $restResponse): RestResponseInterface
+    protected function createWishlistNotFoundErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
 
-        return $restResponse->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addItemSkuMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
+    protected function addItemSkuMissingErrorToResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_ID_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED);
 
-        return $restResponse->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createNoItemWithProvidedIdErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $wishlistResource
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemRequestTransfer
+     */
+    protected function createWishlistItemRequest(RestRequestInterface $restRequest, RestResourceInterface $wishlistResource): WishlistItemRequestTransfer
+    {
+        $sku = $restRequest->getResource()->getId();
+        $idCustomer = $restRequest->getRestUser()->getSurrogateIdentifier();
+        $uuidWishlist = $wishlistResource->getId();
+
+        return (new WishlistItemRequestTransfer())
+            ->setSku($sku)
+            ->setIdWishlist($uuidWishlist)
+            ->setIdCustomer($idCustomer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemResponseTransfer $deleteWishlistItemResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createDeleteWishlistItemErrorResponse(WishlistItemResponseTransfer $deleteWishlistItemResponse)
+    {
+        return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(
+            $deleteWishlistItemResponse->getErrorIdentifier()
+        );
     }
 }

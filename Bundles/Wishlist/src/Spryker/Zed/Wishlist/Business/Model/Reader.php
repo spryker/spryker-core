@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Util\PropelModelPager;
-use Spryker\Shared\Wishlist\WishlistConfig;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface;
 use Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface;
@@ -29,6 +28,8 @@ use Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface;
 
 class Reader implements ReaderInterface
 {
+    protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
+
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
@@ -420,7 +421,7 @@ class Reader implements ReaderInterface
     public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         $wishlistRequestTransfer
-            ->requireUuid()
+            ->requireIdWishlist()
             ->requireIdCustomer();
 
         $wishlistResponseTransfer = (new WishlistResponseTransfer())
@@ -429,13 +430,11 @@ class Reader implements ReaderInterface
         $wishlistTransfer = $this->wishlistRepository
             ->getWishlistByCustomerIdAndUuid(
                 $wishlistRequestTransfer->getIdCustomer(),
-                $wishlistRequestTransfer->getUuid()
+                $wishlistRequestTransfer->getIdWishlist()
             );
 
         if (!$wishlistTransfer) {
-            $wishlistResponseTransfer->setErrorIdentifier(
-                WishlistConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND
-            );
+            $wishlistResponseTransfer->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
 
             return $wishlistResponseTransfer;
         }

@@ -48,4 +48,11 @@ interface WishlistsRestApiToWishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer);
 }

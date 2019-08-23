@@ -61,17 +61,26 @@ class WishlistCreator implements WishlistCreatorInterface
         $wishlistTransfer = $this->wishlistMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
         $wishlistTransfer->setFkCustomer((int)$restRequest->getRestUser()->getSurrogateIdentifier());
 
+        //TODO: handle different error cases
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorMessage(
-                (new RestErrorMessageTransfer())
-                    ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST)
-                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_BE_CREATED)
-            );
+            return $this->createErrorResponse();
         }
 
         return $this->wishlistRestResponseBuilder
             ->createWishlistsRestResponse($wishlistResponseTransfer->getWishlist());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createErrorResponse(): RestResponseInterface
+    {
+        return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorMessage(
+            (new RestErrorMessageTransfer())
+                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST)
+                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_BE_CREATED)
+        );
     }
 }

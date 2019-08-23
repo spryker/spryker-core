@@ -104,10 +104,10 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function createWishlistItemDeleter(): WishlistItemDeleterInterface
     {
         return new WishlistItemDeleter(
-            $this->getWishlistClient(),
+            $this->getClient(),
             $this->getResourceBuilder(),
             $this->createWishlistItemsResourceMapper(),
-            $this->createWishlistReader()
+            $this->createWishlistRestResponseBuilder()
         );
     }
 

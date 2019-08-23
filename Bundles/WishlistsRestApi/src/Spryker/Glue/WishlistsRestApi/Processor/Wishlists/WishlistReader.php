@@ -8,6 +8,7 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
@@ -96,40 +97,6 @@ class WishlistReader implements WishlistReaderInterface
     }
 
     /**
-     * @param string $wishlistUuid
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|null
-     */
-    public function findWishlistByUuid(string $wishlistUuid): ?WishlistTransfer
-    {
-        $customerWishlistCollectionTransfer = $this->wishlistClient->getCustomerWishlistCollection();
-        $customerWishlists = $customerWishlistCollectionTransfer->getWishlists();
-
-        foreach ($customerWishlists as $wishlistTransfer) {
-            if ($wishlistTransfer->getUuid() === $wishlistUuid) {
-                return $wishlistTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $wishlistUuid
-     *
-     * @return \Generated\Shared\Transfer\WishlistOverviewResponseTransfer|null
-     */
-    public function findWishlistOverviewByUuid(string $wishlistUuid): ?WishlistOverviewResponseTransfer
-    {
-        $wishlistTransfer = $this->findWishlistByUuid($wishlistUuid);
-        if (!$wishlistTransfer) {
-            return null;
-        }
-
-        return $this->getWishlistOverviewWithoutProductDetails($wishlistTransfer);
-    }
-
-    /**
      * @param string $customerReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
@@ -169,13 +136,16 @@ class WishlistReader implements WishlistReaderInterface
     {
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setIdCustomer($customerId)
-            ->setUuid($uuidWishlist);
-        $wishlistResponseTransfer = $this->wishlistsRestApiClient->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
+            ->setIdWishlist($uuidWishlist);
+        $wishlistResponseTransfer = $this->wishlistClient->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
+        //TODO: add proper error
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorIdentifier(
-                $wishlistResponseTransfer->getErrorIdentifier()
-            );
+            return $this->restResourceBuilder->createRestResponse()
+                ->addError((new RestErrorMessageTransfer())
+                    ->setDetail('')
+                    ->setCode('200')
+                    ->setStatus(422));
         }
 
         return $this->wishlistRestResponseBuilder

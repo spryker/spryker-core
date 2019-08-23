@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Shared\WishlistsRestApi\WishlistsRestApiConfig;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 
 class WishlistItemAdder implements WishlistItemAdderInterface
 {
-    //TODO: can we do so?
     protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'error.message.wishlist.not.found';
     protected const ERROR_MESSAGE_WISHLIST_ITEM_CAN_NOT_BE_ADDED = 'error.message.wishlist.item.can.not.be.added';
 
@@ -71,7 +71,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     {
         return (new WishlistRequestTransfer())
             ->setIdCustomer($wishlistItemRequestTransfer->getIdCustomer())
-            ->setUuid($wishlistItemRequestTransfer->getIdWishlist());
+            ->setIdWishlist($wishlistItemRequestTransfer->getIdWishlist());
     }
 
     /**
@@ -108,7 +108,8 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     {
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(false)
-            ->addError(static::ERROR_MESSAGE_WISHLIST_ITEM_CAN_NOT_BE_ADDED);
+            ->addError(static::ERROR_MESSAGE_WISHLIST_ITEM_CAN_NOT_BE_ADDED)
+            ->setErrorIdentifier(WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED);
     }
 
     /**
@@ -123,7 +124,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
             (new WishlistRequestTransfer())
                 ->setIdCustomer($wishlistTransfer->getFkCustomer())
-                ->setUuid($wishlistTransfer->getUuid())
+                ->setIdWishlist($wishlistTransfer->getUuid())
         );
 
         //TODO: check if items re mapped

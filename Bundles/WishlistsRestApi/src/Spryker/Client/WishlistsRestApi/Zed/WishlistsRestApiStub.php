@@ -33,22 +33,6 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
-        $wishlistResponseTransfer = $this->zedStubClient->call(
-            '/wishlists-rest-api/gateway/get-wishlist-by-id-customer-and-uuid',
-            $wishlistRequestTransfer
-        );
-
-        return $wishlistResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer */
@@ -86,6 +70,22 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
         /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
         $wishlistItemResponseTransfer = $this->zedStubClient->call(
             '/wishlists-rest-api/gateway/add-wishlist-item',
+            $wishlistItemRequestTransfer
+        );
+
+        return $wishlistItemResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\WishlistItemResponseTransfer $wishlistItemResponseTransfer */
+        $wishlistItemResponseTransfer = $this->zedStubClient->call(
+            '/wishlists-rest-api/gateway/delete-wishlist-item',
             $wishlistItemRequestTransfer
         );
 

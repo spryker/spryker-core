@@ -44,20 +44,6 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
-    {
-        return $this->getFactory()->getWishlistFacade()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         return $this->getFactory()->createWishlistUpdater()->updateWishlist($wishlistRequestTransfer);
@@ -89,5 +75,19 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     public function addItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
         return $this->getFactory()->createWishlistItemAdder()->add($wishlistItemRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function deleteItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFactory()->createWishlistItemDeleter()->delete($wishlistItemRequestTransfer);
     }
 }

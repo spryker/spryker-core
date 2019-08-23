@@ -76,4 +76,14 @@ class WishlistsRestApiToWishlistFacadeBridge implements WishlistsRestApiToWishli
     {
         return $this->wishlistFacade->addItem($wishlistItemTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function removeItem(WishlistItemTransfer $wishlistItemTransfer)
+    {
+        return $this->wishlistFacade->removeItem($wishlistItemTransfer);
+    }
 }
