@@ -12,6 +12,8 @@ use Generated\Shared\DataBuilder\CmsSlotBuilder;
 use Generated\Shared\DataBuilder\CmsSlotTemplateBuilder;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsSlotHelper extends Module
@@ -54,5 +56,43 @@ class CmsSlotHelper extends Module
         $cmsSlotTemplateTransfer = (new CmsSlotTemplateBuilder(array_merge($data, $override)))->build();
 
         return $cmsSlotTemplateTransfer;
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer
+     */
+    public function haveCmsSlotInDb(array $override): CmsSlotTransfer
+    {
+        $data = [
+            CmsSlotTransfer::KEY => 'test-center',
+            CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerTestBlock',
+            CmsSlotTransfer::NAME => 'Test Name',
+            CmsSlotTransfer::DESCRIPTION => 'Test description.',
+            CmsSlotTransfer::IS_ACTIVE => 1,
+        ];
+
+        $cmsSlotTransfer = (new CmsSlotBuilder(array_merge($data, $override)))->build();
+
+        $cmsSlotEntity = new SpyCmsSlot();
+        $cmsSlotEntity->fromArray($cmsSlotTransfer->toArray());
+        $cmsSlotEntity->save();
+
+        $cmsSlotTransfer->setIdCmsSlot($cmsSlotEntity->getIdCmsSlot());
+
+        return $cmsSlotTransfer;
+    }
+
+    /**
+     * @param int $idCmsSlot
+     *
+     * @return bool
+     */
+    public function isActiveCmsSlotById(int $idCmsSlot): bool
+    {
+        $cmsSlot = SpyCmsSlotQuery::create()->findOneByIdCmsSlot($idCmsSlot);
+
+        return $cmsSlot->getIsActive();
     }
 }
