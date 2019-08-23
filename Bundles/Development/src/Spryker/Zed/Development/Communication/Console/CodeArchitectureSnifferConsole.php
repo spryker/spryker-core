@@ -111,6 +111,7 @@ class CodeArchitectureSnifferConsole extends Console
         $moduleTransferCollection = $this->getModulesToExecute($moduleArgument);
         if (!$moduleTransferCollection) {
             $output->writeln(sprintf('<error>No module(s) found: `%s`.</error>', $moduleArgument));
+
             return false;
         }
 
