@@ -8,4 +8,10 @@
         <property name="username" type="string" />
     </transfer>
 
+    <transfer name="CustomerUserConnectionUpdate">
+        <property name="idUser" type="int" />
+        <property name="idCustomersToAssign" type="array" />
+        <property name="idCustomersToDeAssign" type="array" />
+    </transfer>
+
 </transfers>
