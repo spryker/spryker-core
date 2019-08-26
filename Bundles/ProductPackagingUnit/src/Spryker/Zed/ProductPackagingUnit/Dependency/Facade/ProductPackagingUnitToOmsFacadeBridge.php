@@ -48,10 +48,10 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     }
 
     /**
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
-    public function getReservedStateNames(): array
+    public function getReservedStates(): array
     {
-        return $this->omsFacade->getReservedStateNames();
+        return $this->omsFacade->getReservedStates();
     }
 }

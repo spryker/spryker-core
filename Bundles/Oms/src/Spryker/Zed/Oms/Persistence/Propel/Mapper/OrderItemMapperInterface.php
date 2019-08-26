@@ -24,5 +24,5 @@ interface OrderItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapOrderItemEntityArrayToTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer;
+    public function mapOrderItemEntityArrayToItemTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer;
 }

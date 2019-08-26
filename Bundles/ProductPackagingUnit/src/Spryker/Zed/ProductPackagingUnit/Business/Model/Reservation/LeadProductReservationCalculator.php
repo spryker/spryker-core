@@ -43,10 +43,28 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      */
     public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
     {
-        $reservedStateNames = $this->omsFacade->getReservedStateNames();
+        $reservedStates = $this->omsFacade->getReservedStates();
 
-        $sumReservedLeadProductAmount = $this->productPackagingUnitRepository
-            ->sumLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, $reservedStateNames);
+        $reservedStateNames = [];
+        $reservedStatesMap = [];
+        foreach ($reservedStates as $reservedState) {
+            $reservedStateNames[$reservedState->getName()] = $reservedState->getName();
+            $reservedStatesMap[$reservedState->getProcess()->getName()][$reservedState->getName()] = $reservedState->getName();
+        }
+
+        $reservedLeadProductAmountAggregations = $this->productPackagingUnitRepository
+            ->aggregateLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, $reservedStateNames);
+
+        $sumReservedLeadProductAmount = 0;
+        foreach ($reservedLeadProductAmountAggregations as $reservedLeadProductAmountAggregation) {
+            $processName = $reservedLeadProductAmountAggregation->getProcess();
+            $stateName = $reservedLeadProductAmountAggregation->getState()->getName();
+            if (!isset($reservedStatesMap[$processName][$stateName])) {
+                continue;
+            }
+
+            $sumReservedLeadProductAmount += $reservedLeadProductAmountAggregation->getQuantity();
+        }
 
         $sumReservedLeadProductQuantity = $this->omsFacade
             ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);

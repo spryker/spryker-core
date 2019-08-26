@@ -42,7 +42,7 @@ class OrderItemMapper implements OrderItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    public function mapOrderItemEntityArrayToTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer
+    public function mapOrderItemEntityArrayToItemTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer
     {
         return $itemTransfer
             ->setProcess($orderItemEntityArray[SpyOmsOrderProcessTableMap::COL_NAME])

@@ -589,7 +589,20 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getReservedStates()` instead.
+     *
      * @return string[]
      */
     public function getReservedStateNames(): array;
+
+    /**
+     * Specification:
+     *  - Reads states from XML definition
+     *  - Returns a list of reserved state objects
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     */
+    public function getReservedStates(): array;
 }

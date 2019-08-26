@@ -16,6 +16,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\OmsConfig;
 
 /**
@@ -160,7 +161,9 @@ class OmsFacadeTest extends Unit
         ];
 
         // Action
-        $stateNames = $this->createOmsFacade()->getReservedStateNames();
+        $stateNames = array_map(function (StateInterface $state) {
+            return $state->getName();
+        }, $this->createOmsFacade()->getReservedStates());
 
         // Assert
         $this->assertSame($expected, $stateNames);

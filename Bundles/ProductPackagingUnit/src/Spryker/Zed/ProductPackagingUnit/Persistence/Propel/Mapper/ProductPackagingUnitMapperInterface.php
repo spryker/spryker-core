@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
@@ -61,4 +62,12 @@ interface ProductPackagingUnitMapperInterface
         SpySalesOrderItem $salesOrderItemEntity,
         SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
     ): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * @param array $orderItemEntityArray
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function mapOrderItemEntityArrayToItemTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer;
 }

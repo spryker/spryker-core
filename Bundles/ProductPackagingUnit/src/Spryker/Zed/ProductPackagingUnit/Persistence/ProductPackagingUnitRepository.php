@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
@@ -290,20 +293,38 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      * @param string $sku
      * @param string[] $reservedStateNames
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int
+    public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array
     {
-        $salesOrderItemQuery = $this->getFactory()
+        $salesOrderItemAggregations = $this->getFactory()
             ->createSalesOrderItemQuery()
             ->filterByAmountSku($sku)
+            ->joinWithProcess()
+            ->joinWithState()
             ->useStateQuery()
                 ->filterByName($reservedStateNames, Criteria::IN)
             ->endUse()
+            ->groupByFkOmsOrderItemState()
+            ->groupByFkOmsOrderProcess()
             ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM_AMOUNT)
-            ->select([static::COL_SUM_AMOUNT]);
+            ->select([
+                SpySalesOrderItemTableMap::COL_SKU,
+                SpyOmsOrderProcessTableMap::COL_NAME,
+                SpyOmsOrderItemStateTableMap::COL_NAME,
+                static::COL_SUM_AMOUNT,
+            ])->find();
 
-        return (int)$salesOrderItemQuery->findOne();
+        $itemTransfers = [];
+        foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
+            $salesOrderItemAggregation[SpySalesOrderItemTableMap::COL_QUANTITY] = $salesOrderItemAggregation[static::COL_SUM_AMOUNT];
+
+            $itemTransfers[] = $this->getFactory()
+                ->createProductPackagingUnitMapper()
+                ->mapOrderItemEntityArrayToItemTransfer($salesOrderItemAggregation, new ItemTransfer());
+        }
+
+        return $itemTransfers;
     }
 
     /**

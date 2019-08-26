@@ -650,10 +650,24 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getReservedStates()` instead.
+     *
      * @return string[]
      */
     public function getReservedStateNames(): array
     {
         return $this->getFactory()->createUtilReservation()->getReservedStateNames();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     */
+    public function getReservedStates(): array
+    {
+        return $this->getFactory()->createActiveProcessFetcher()->getReservedStatesFromAllActiveProcesses();
     }
 }

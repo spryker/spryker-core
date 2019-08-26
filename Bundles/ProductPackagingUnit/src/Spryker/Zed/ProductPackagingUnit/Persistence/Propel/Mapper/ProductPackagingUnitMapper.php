@@ -7,15 +7,20 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
@@ -96,5 +101,20 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         $spySalesOrderItemEntityTransfer->fromArray($salesOrderItemEntity->toArray(), true);
 
         return $spySalesOrderItemEntityTransfer;
+    }
+
+    /**
+     * @param array $orderItemEntityArray
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function mapOrderItemEntityArrayToItemTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        return $itemTransfer
+            ->setProcess($orderItemEntityArray[SpyOmsOrderProcessTableMap::COL_NAME])
+            ->setState((new ItemStateTransfer())->setName($orderItemEntityArray[SpyOmsOrderItemStateTableMap::COL_NAME]))
+            ->setSku($orderItemEntityArray[SpySalesOrderItemTableMap::COL_SKU])
+            ->setQuantity($orderItemEntityArray[SpySalesOrderItemTableMap::COL_QUANTITY]);
     }
 }

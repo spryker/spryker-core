@@ -79,7 +79,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             $salesOrderItemEntityArray[SpySalesOrderItemTableMap::COL_QUANTITY] = $salesOrderItemEntityArray[static::SUM_COLUMN];
             $itemTransfers[] = $this->getFactory()
                 ->createOrderItemMapper()
-                ->mapOrderItemEntityArrayToTransfer($salesOrderItemEntityArray, new ItemTransfer());
+                ->mapOrderItemEntityArrayToItemTransfer($salesOrderItemEntityArray, new ItemTransfer());
         }
 
         return $itemTransfers;

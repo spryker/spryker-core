@@ -29,7 +29,7 @@ interface ProductPackagingUnitToOmsFacadeInterface
     public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
 
     /**
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
-    public function getReservedStateNames(): array;
+    public function getReservedStates(): array;
 }
