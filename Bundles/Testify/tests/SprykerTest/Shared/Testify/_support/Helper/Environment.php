@@ -87,7 +87,7 @@ class Environment extends Module
      */
     private function getDefaultStore()
     {
-        $defaultStoreFile = $this->getRootDirectory() . '/Config/Shared/default_store.php';
+        $defaultStoreFile = $this->getRootDirectory() . '/config/Shared/default_store.php';
 
         if (file_exists($defaultStoreFile)) {
             return include $defaultStoreFile;
