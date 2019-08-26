@@ -68,10 +68,16 @@ $(document).ready(function () {
         e.preventDefault();
 
         $(this).prop('disabled', true).addClass('disabled');
-        $(this).parents('form').first().submit();
-        var $item = $(this);
 
-        disableTrigger($item);
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
+        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
+
+        $form.attr('action', finalUrl);
+
+        $(this).parents('form').first().submit();
+
+        disableTrigger($(this));
     });
 
     $('.trigger-order-event').click(function(e){

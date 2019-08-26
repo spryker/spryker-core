@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <cms-gui>
+        <pages>
+            <slots>
+                <label>Slots</label>
+                <title>Slots</title>
+                <bundle>cms-slot-gui</bundle>
+                <controller>template-list</controller>
+                <action>index</action>
+            </slots>
+        </pages>
+    </cms-gui>
+</config>
