@@ -38,7 +38,7 @@ class Environment extends Module
     /**
      * @return string
      */
-    protected function getRootDirectory()
+    protected function getRootDirectory(): string
     {
         if (!$this->rootDirectory) {
             $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
@@ -57,7 +57,7 @@ class Environment extends Module
      *
      * @return string
      */
-    protected function getStore()
+    protected function getStore(): string
     {
         if (getenv('APPLICATION_STORE')) {
             return getenv('APPLICATION_STORE');
@@ -83,9 +83,9 @@ class Environment extends Module
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    private function getDefaultStore()
+    private function getDefaultStore(): ?string
     {
         $defaultStoreFile = $this->getRootDirectory() . '/config/Shared/default_store.php';
 
@@ -93,13 +93,13 @@ class Environment extends Module
             return include $defaultStoreFile;
         }
 
-        return false;
+        return null;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    private function getFirstDefinedStore()
+    private function getFirstDefinedStore(): ?string
     {
         $storesFile = $this->getRootDirectory() . '/config/Shared/stores.php';
 
@@ -109,6 +109,6 @@ class Environment extends Module
             return current(array_keys($stores));
         }
 
-        return false;
+        return null;
     }
 }
