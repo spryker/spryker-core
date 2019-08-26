@@ -45,7 +45,7 @@ class ProductSetStorageToEventBehaviorFacadeBridge implements ProductSetStorageT
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     * @param array $columns
+     * @param string[] $columns
      *
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */

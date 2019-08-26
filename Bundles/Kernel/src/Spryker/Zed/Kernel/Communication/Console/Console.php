@@ -306,9 +306,7 @@ class Console extends SymfonyCommand
         $width = max(0, $width);
         $message .= str_repeat(' ', $width);
 
-        $this->output->writeln('<error>' . str_repeat(' ', $this->getTerminalWidth()) . '</error>');
         $this->output->writeln(sprintf('<error> %s</error>', $message));
-        $this->output->writeln('<error>' . str_repeat(' ', $this->getTerminalWidth()) . '</error>');
     }
 
     /**
@@ -325,9 +323,7 @@ class Console extends SymfonyCommand
         $width = max(0, $width);
         $message .= str_repeat(' ', $width);
 
-        $this->output->writeln('<warning>' . str_repeat(' ', $this->getTerminalWidth()) . '</warning>');
         $this->output->writeln(sprintf('<warning> %s</warning>', $message));
-        $this->output->writeln('<warning>' . str_repeat(' ', $this->getTerminalWidth()) . '</warning>');
     }
 
     /**
@@ -344,9 +340,7 @@ class Console extends SymfonyCommand
         $width = max(0, $width);
         $message .= str_repeat(' ', $width);
 
-        $this->output->writeln('<success>' . str_repeat(' ', $this->getTerminalWidth()) . '</success>');
         $this->output->writeln(sprintf('<success> %s</success>', $message));
-        $this->output->writeln('<success>' . str_repeat(' ', $this->getTerminalWidth()) . '</success>');
     }
 
     /**
@@ -425,9 +419,9 @@ class Console extends SymfonyCommand
     {
         $questionHelper = $this->getQuestionHelper();
 
-        $question = new ChoiceQuestion($question, $options, $default);
+        $choiceQuestion = new ChoiceQuestion($question, $options, $default);
 
-        return $questionHelper->ask($this->input, $this->output, $question);
+        return $questionHelper->ask($this->input, $this->output, $choiceQuestion);
     }
 
     /**

@@ -78,25 +78,20 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function addItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteResponseTransfer = $this->createQuoteResponseTransfer($quoteTransfer);
+
         if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
 
-        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
-        foreach ($itemTransferList as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
-        }
+        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
         $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-        }
+        $updatedQuoteResponseTransfer = $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
-        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer()));
+        $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($quoteResponseTransfer, $updatedQuoteResponseTransfer);
+
+        return $this->quoteResponseExpander->expand($mergedQuoteResponseTransfer);
     }
 
     /**
@@ -107,18 +102,14 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function addValidItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteResponseTransfer = $this->createQuoteResponseTransfer($quoteTransfer);
+
         if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
 
-        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
-        foreach ($itemTransferList as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
-        }
+        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
+
         $quoteTransfer = $this->cartFacade->addValid($cartChangeTransfer);
 
         return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
@@ -132,20 +123,14 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function removeItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteResponseTransfer = $this->createQuoteResponseTransfer($quoteTransfer);
+
         if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
 
-        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
-        foreach ($itemTransferList as $itemTransfer) {
-            if (!empty($itemTransfer)) {
-                $cartChangeTransfer->addItem($itemTransfer);
-            }
-        }
+        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
+
         $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
         $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
         $this->quoteFacade->updateQuote($quoteTransfer);
@@ -214,10 +199,11 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer(QuoteTransfer $quoteTransfer): CartChangeTransfer
+    protected function createCartChangeTransfer(QuoteTransfer $quoteTransfer, array $itemTransferList): CartChangeTransfer
     {
         $items = $quoteTransfer->getItems();
 
@@ -228,6 +214,42 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($quoteTransfer);
 
+        foreach ($itemTransferList as $itemTransfer) {
+            $cartChangeTransfer->addItem($itemTransfer);
+        }
+
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createQuoteResponseTransfer(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->setQuoteTransfer($quoteTransfer)
+            ->setCustomer($quoteTransfer->getCustomer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $updatedQuoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function mergeQuoteResponseTransfers(
+        QuoteResponseTransfer $quoteResponseTransfer,
+        QuoteResponseTransfer $updatedQuoteResponseTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer->setIsSuccessful($updatedQuoteResponseTransfer->getIsSuccessful() && $quoteResponseTransfer->getIsSuccessful());
+        foreach ($updatedQuoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
+            $quoteResponseTransfer->addError($quoteErrorTransfer);
+        }
+        $quoteResponseTransfer->setQuoteTransfer($updatedQuoteResponseTransfer->getQuoteTransfer());
+
+        return $quoteResponseTransfer;
     }
 }
