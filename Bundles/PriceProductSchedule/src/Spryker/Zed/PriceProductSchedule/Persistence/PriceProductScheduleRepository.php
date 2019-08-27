@@ -606,6 +606,10 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     public function isPriceProductScheduleUnique(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): bool {
+        $priceProductScheduleTransfer->requirePriceProduct()
+            ->getPriceProduct()
+            ->requireMoneyValue();
+
         $priceProductScheduleEntity = $this->getFactory()
             ->createPriceProductScheduleMapper()
             ->mapPriceProductScheduleTransferToPriceProductScheduleEntity($priceProductScheduleTransfer, new SpyPriceProductSchedule());
