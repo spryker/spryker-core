@@ -166,4 +166,12 @@ class PredisAdapter implements RedisAdapterInterface
     {
         return $this->client->dbsize();
     }
+
+    /**
+     * @return void
+     */
+    public function flushDb(): void
+    {
+        $this->client->flushdb();
+    }
 }

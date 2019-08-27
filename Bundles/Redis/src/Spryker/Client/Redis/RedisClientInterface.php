@@ -212,6 +212,19 @@ interface RedisClientInterface
 
     /**
      * Specification:
+     * - Deletes all keys in the connection database.
+     * - @see https://redis.io/commands/flushdb
+     *
+     * @api
+     *
+     * @param string $connectionKey
+     *
+     * @return void
+     */
+    public function flushDb(string $connectionKey): void;
+
+    /**
+     * Specification:
      * - Initializes a connection with provided configuration, if it was not already initialized.
      *
      * @api

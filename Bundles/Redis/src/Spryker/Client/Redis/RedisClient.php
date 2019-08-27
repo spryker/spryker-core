@@ -237,6 +237,20 @@ class RedisClient extends AbstractClient implements RedisClientInterface
      * @api
      *
      * @param string $connectionKey
+     *
+     * @return void
+     */
+    public function flushDb(string $connectionKey): void
+    {
+        $this->getConnection($connectionKey)->flushDb();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $connectionKey
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $configurationTransfer
      *
      * @return void

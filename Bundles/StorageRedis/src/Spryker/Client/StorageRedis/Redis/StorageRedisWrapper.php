@@ -332,9 +332,11 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      */
     public function deleteAll(): int
     {
-        $keys = $this->getAllKeys();
+        $dbSizeBefore = $this->getDbSize();
+        $this->redisClient->flushDb($this->connectionKey);
+        $dbSizeAfter = $this->getDbSize();
 
-        return $this->redisClient->del($this->connectionKey, $keys);
+        return $dbSizeBefore - $dbSizeAfter;
     }
 
     /**

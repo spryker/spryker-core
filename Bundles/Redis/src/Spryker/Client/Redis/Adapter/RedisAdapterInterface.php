@@ -107,4 +107,9 @@ interface RedisAdapterInterface
      * @return int
      */
     public function dbSize(): int;
+
+    /**
+     * @return void
+     */
+    public function flushDb(): void;
 }

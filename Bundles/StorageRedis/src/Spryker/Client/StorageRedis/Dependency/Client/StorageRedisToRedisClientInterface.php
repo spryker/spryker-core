@@ -130,6 +130,13 @@ interface StorageRedisToRedisClientInterface
 
     /**
      * @param string $connectionKey
+     *
+     * @return void
+     */
+    public function flushDb(string $connectionKey): void;
+
+    /**
+     * @param string $connectionKey
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $configurationTransfer
      *
      * @return void
