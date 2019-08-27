@@ -168,5 +168,5 @@ interface MerchantFacadeInterface
      *
      * @return string[]
      */
-    public function getNextStatuses(string $currentStatus): array;
+    public function getApplicableMerchantStatuses(string $currentStatus): array;
 }

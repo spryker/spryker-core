@@ -26,10 +26,10 @@ class GetNextStatusesTest extends AbstractMerchantFacadeTest
      */
     public function testGetNextStatusesWillReturnArray(): void
     {
-        $nextStatuses = $this->tester->getFacade()->getNextStatuses($this->tester->createMerchantConfig()->getDefaultMerchantStatus());
+        $applicableMerchantStatuses = $this->tester->getFacade()->getApplicableMerchantStatuses($this->tester->createMerchantConfig()->getDefaultMerchantStatus());
 
-        $this->assertTrue(is_array($nextStatuses));
-        $this->assertNotEmpty($nextStatuses);
+        $this->assertTrue(is_array($applicableMerchantStatuses));
+        $this->assertNotEmpty($applicableMerchantStatuses);
     }
 
     /**
@@ -37,9 +37,9 @@ class GetNextStatusesTest extends AbstractMerchantFacadeTest
      */
     public function testGetNextStatusesWillReturnEmptyArrayOnNotFoundCurrentStatus(): void
     {
-        $nextStatuses = $this->tester->getFacade()->getNextStatuses('random-status');
+        $applicableMerchantStatuses = $this->tester->getFacade()->getApplicableMerchantStatuses('random-status');
 
-        $this->assertTrue(is_array($nextStatuses));
-        $this->assertEmpty($nextStatuses);
+        $this->assertTrue(is_array($applicableMerchantStatuses));
+        $this->assertEmpty($applicableMerchantStatuses);
     }
 }

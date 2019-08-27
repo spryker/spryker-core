@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\MerchantAddress;
 
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 
 interface MerchantAddressWriterInterface
@@ -24,4 +25,12 @@ interface MerchantAddressWriterInterface
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer
      */
     public function update(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
+     */
+    public function handleMerchantAddressCollectionSave(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer;
 }

@@ -7,51 +7,35 @@
 
 namespace Spryker\Zed\Merchant\Business\Model\Status;
 
-use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
-
 class MerchantStatusValidator implements MerchantStatusValidatorInterface
 {
-    /**
-     * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
-     */
-    protected $merchantRepository;
-
     /**
      * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
      */
     protected $merchantStatusReader;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface $merchantStatusReader
      */
     public function __construct(
-        MerchantRepositoryInterface $merchantRepository,
         MerchantStatusReaderInterface $merchantStatusReader
     ) {
-        $this->merchantRepository = $merchantRepository;
         $this->merchantStatusReader = $merchantStatusReader;
     }
 
     /**
-     * @param int $idMerchant
      * @param string $newStatus
+     * @param string $currentStatus
      *
      * @return bool
      */
-    public function isMerchantStatusTransitionValid(int $idMerchant, string $newStatus): bool
+    public function isMerchantStatusTransitionValid(string $newStatus, string $currentStatus): bool
     {
-        $existingMerchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($idMerchant);
-
-        if ($existingMerchantTransfer === null) {
-            return false;
-        }
-
-        if ($newStatus === $existingMerchantTransfer->getStatus()) {
+        if ($newStatus === $currentStatus) {
             return true;
         }
 
-        if (!$this->isTransitionToStatusAllowed($newStatus, $existingMerchantTransfer->getStatus())) {
+        if (!$this->isTransitionToStatusAllowed($newStatus, $currentStatus)) {
             return false;
         }
 
@@ -66,8 +50,8 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
      */
     protected function isTransitionToStatusAllowed(string $newStatus, string $currentStatus): bool
     {
-        $nextStatuses = $this->merchantStatusReader->getNextStatuses($currentStatus);
+        $applicableMerchantStatuses = $this->merchantStatusReader->getApplicableMerchantStatuses($currentStatus);
 
-        return in_array($newStatus, $nextStatuses);
+        return in_array($newStatus, $applicableMerchantStatuses);
     }
 }

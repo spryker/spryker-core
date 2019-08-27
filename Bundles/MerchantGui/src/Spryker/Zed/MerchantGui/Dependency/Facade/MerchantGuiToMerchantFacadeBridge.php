@@ -101,9 +101,9 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
      *
      * @return string[]
      */
-    public function getNextStatuses(string $currentStatus): array
+    public function getApplicableMerchantStatuses(string $currentStatus): array
     {
-        return $this->merchantFacade->getNextStatuses($currentStatus);
+        return $this->merchantFacade->getApplicableMerchantStatuses($currentStatus);
     }
 
     /**

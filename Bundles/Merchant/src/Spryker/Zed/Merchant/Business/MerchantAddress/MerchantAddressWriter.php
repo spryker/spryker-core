@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\MerchantAddress;
 
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
@@ -47,6 +48,40 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
         $this->assertUpdateMerchantAddressTransferRequirements($merchantAddressTransfer);
 
         return $this->merchantEntityManager->saveMerchantAddress($merchantAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
+     */
+    public function handleMerchantAddressCollectionSave(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer
+    {
+        $savedMerchantAddressCollectionTransfer = new MerchantAddressCollectionTransfer();
+
+        foreach ($merchantAddressCollectionTransfer->getAddresses() as $merchantAddressTransfer) {
+            $savedMerchantAddressCollectionTransfer->addAddress($this->handleMerchantAddressSave($merchantAddressTransfer, $idMerchant));
+        }
+
+        return $savedMerchantAddressCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    protected function handleMerchantAddressSave(MerchantAddressTransfer $merchantAddressTransfer, int $idMerchant): MerchantAddressTransfer
+    {
+        $merchantAddressTransfer->setFkMerchant($idMerchant);
+
+        if ($merchantAddressTransfer->getIdMerchantAddress() === null) {
+            return $this->create($merchantAddressTransfer);
+        }
+
+        return $this->update($merchantAddressTransfer);
     }
 
     /**
