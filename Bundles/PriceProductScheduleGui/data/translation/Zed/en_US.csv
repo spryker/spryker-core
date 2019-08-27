@@ -35,16 +35,16 @@ Prices,Prices
 "Your prices are now available to your custoers based on their start and end date.","Your prices are now available to your customers based on their start and end date."
 "Your prices are now available to your customers based on their start and end date.",
 "Your scheduled prices have been published","Your scheduled prices have been published"
-"Draft","Draft"
-"Published","Published"
+Draft,Draft
+Published,Published
 "Import ID","Import ID"
-"Name","Name"
+Name,Name
 "Imported by and on the","Imported by and on the"
-"Status","Status"
+Status,Status
 "Number of prices","Number of prices"
 "Number of products","Number of products"
-"Actions","Actions"
-"View","View"
-"Edit","Edit"
-"Download","Download"
-"Delete","Delete"
+Actions,Actions
+View,View
+Edit,Edit
+Download,Download
+Delete,Delete

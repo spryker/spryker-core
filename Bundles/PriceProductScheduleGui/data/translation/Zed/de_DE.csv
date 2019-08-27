@@ -35,16 +35,16 @@ Prices,Preise
 "Your prices are now available to your custoers based on their start and end date.","Ihre Preise sind nun entsprechend deren Start- und Enddaten für Ihre Kunden verfügbar."
 "Your prices are now available to your customers based on their start and end date.","Ihre Preise stehen Ihren Kunden nun basierend auf ihrem Start- und Enddatum zur Verfügung"
 "Your scheduled prices have been published","Ihre geplanten Preise wurden veröffentlicht"
-"Draft","Entwurf"
-"Published","Veröffentlicht"
+Draft,Entwurf
+Published,Veröffentlicht
 "Import ID","ID importieren"
-"Name","Name"
+Name,Name
 "Imported by and on the","Importiert von und am"
-"Status","Status"
+Status,Status
 "Number of prices","Anzahl der Preise"
 "Number of products","Anzahl der Produkte"
-"Actions","Aktionen"
-"View","Aussicht"
-"Edit","Bearbeiten"
-"Download","Herunterladen"
-"Delete","Löschen"
+Actions,Aktionen
+View,Aussicht
+Edit,Bearbeiten
+Download,Herunterladen
+Delete,Löschen
