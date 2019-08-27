@@ -1,5 +1,5 @@
 {
   "include": {
-    "UuidBehavior": "Used to generate UUIDs for entities."
+    "spryker/uuid-behavior": "Used to generate UUIDs for entities."
   }
 }
