@@ -92,9 +92,9 @@ class Worker implements WorkerInterface
         while ($totalPassedSeconds < $maxThreshold) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
+            $isWorkerStopOnlyWhenEmpty = $this->isWorkerStopOnlyWhenEmpty($pendingProcesses, $options);
 
-            if (count($pendingProcesses) === 0 &&
-                (isset($options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY]) && $options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY])) {
+            if ($isWorkerStopOnlyWhenEmpty) {
                 return;
             }
 
@@ -132,7 +132,8 @@ class Worker implements WorkerInterface
         $pendingProcesses = $this->getPendingProcesses($processes);
 
         if (count($pendingProcesses) > 0) {
-            if ($this->queueConfig->getIsWorkerLoopEnabled()) {
+            $isWorkerLoopEnabled = $this->isWorkerLoopEnabled($options);
+            if ($isWorkerLoopEnabled) {
                 $this->workerProgressBar->reset();
                 $this->start($command, $options, ++$round, $pendingProcesses);
             }
@@ -269,5 +270,36 @@ class Worker implements WorkerInterface
     protected function getFreshMicroTime(): float
     {
         return microtime(true);
+    }
+
+    /**
+     * @param array $pendingProcesses
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isWorkerStopOnlyWhenEmpty(array $pendingProcesses, array $options): bool
+    {
+        return count($pendingProcesses) === 0 && $this->isWorkerStopOnlyWhenEmptyEnabled($options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isWorkerLoopEnabled(array $options): bool
+    {
+        return $this->queueConfig->getIsWorkerLoopEnabled() || $this->isWorkerStopOnlyWhenEmptyEnabled($options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isWorkerStopOnlyWhenEmptyEnabled(array $options): bool
+    {
+        return isset($options[SharedQueueConfig::CONFIG_WORKER_STOP_ONLY_WHEN_EMPTY]) && $options[SharedQueueConfig::CONFIG_WORKER_STOP_ONLY_WHEN_EMPTY];
     }
 }
