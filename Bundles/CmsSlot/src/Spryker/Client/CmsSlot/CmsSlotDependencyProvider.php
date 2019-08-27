@@ -33,7 +33,7 @@ class CmsSlotDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsSlotExternalDataProviderStrategyPlugin(Container $container): Container
     {
-        $container->set(static::CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS, function (Container $container) {
+        $container->set(static::CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS, function () {
             return $this->getCmsSlotExternalDataProviderStrategyPlugin();
         });
 
