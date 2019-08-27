@@ -28,7 +28,7 @@ class WishlistsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Wishlist not found."
+     *              "404": "Wishlist not found.",
      *              "422": "Unknown error."
      *          }
      *     },
@@ -58,14 +58,15 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Creates wishlist."
+     *              "Creates wishlist.",
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Wishlist with the same name already exists."
+     *              "400": "Wishlist with the same name already exists, Wishlist name has wrong format.",
+     *              "422": "Unknown error."
      *          }
      *     }
      * })

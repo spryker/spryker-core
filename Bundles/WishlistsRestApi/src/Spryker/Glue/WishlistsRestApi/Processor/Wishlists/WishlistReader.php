@@ -26,7 +26,7 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 class WishlistReader implements WishlistReaderInterface
 {
     /**
-     * @see \Spryker\Zed\Wishlist\Business\Model\Reader::ERROR_MESSAGE_WISHLIST_NOT_FOUND
+     * @uses \Spryker\Zed\Wishlist\Business\Model\Reader::ERROR_MESSAGE_WISHLIST_NOT_FOUND
      */
     protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
 
@@ -223,8 +223,8 @@ class WishlistReader implements WishlistReaderInterface
 
         return $this->restResourceBuilder->createRestResponse()
             ->addError((new RestErrorMessageTransfer())
-                ->setDetail($error)
-                ->setCode('200')
+                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND)
+                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
                 ->setStatus(404));
     }
 }
