@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage;
 
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Facade\CmsBlockCategoryStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\QueryContainer\CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge;
+use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceBridge;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -21,6 +23,8 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,9 +33,9 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new CmsBlockCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        $container = $this->addFacadeEventBehavior($container);
+        $container = $this->addClientStorage($container);
+        $container = $this->addServiceSynchronization($container);
 
         return $container;
     }
@@ -60,6 +64,48 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
         $container[static::QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR] = function (Container $container) {
             return new CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge($container->getLocator()->cmsBlockCategoryConnector()->queryContainer());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFacadeEventBehavior(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new CmsBlockCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addClientStorage(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
+            return new CmsBlockCategoryStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addServiceSynchronization(Container $container): Container
+    {
+        $container->set(self::SERVICE_SYNCHRONIZATION, function (Container $container) {
+            return new CmsBlockCategoryStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
+        });
 
         return $container;
     }

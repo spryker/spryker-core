@@ -15,7 +15,7 @@ interface CmsBlockStorageClientInterface
      *
      * @api
      *
-     * @deprecated Use findBlocksByKeys instead.
+     * @deprecated Use \Spryker\Client\CmsBlockStorage\CmsBlockStorageClientInterface::findBlocksByKeys() instead.
      *
      * @param string[] $blockNames
      * @param string $localeName

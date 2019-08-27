@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Communication;
 
+use Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageReader;
+use Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageReaderInterface;
 use Spryker\Zed\CmsBlockProductStorage\CmsBlockProductStorageDependencyProvider;
+use Spryker\Zed\CmsBlockProductStorage\Dependency\Client\CmsBlockProductStorageToStorageClientInterface;
+use Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToSynchronizationServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -17,6 +21,30 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CmsBlockProductStorageCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageReaderInterface
+     */
+    public function createCmsBlockProductStorageReader(): CmsBlockProductStorageReaderInterface
+    {
+        return new CmsBlockProductStorageReader($this->getStorageClient(), $this->getSynchronizationService());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductStorage\Dependency\Client\CmsBlockProductStorageToStorageClientInterface
+     */
+    public function getStorageClient(): CmsBlockProductStorageToStorageClientInterface
+    {
+        return $this->getProvidedDependency(CmsBlockProductStorageDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToSynchronizationServiceInterface
+     */
+    public function getSynchronizationService(): CmsBlockProductStorageToSynchronizationServiceInterface
+    {
+        return $this->getProvidedDependency(CmsBlockProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
     /**
      * @return \Spryker\Zed\CmsBlockProductStorage\Dependency\Facade\CmsBlockProductStorageToEventBehaviorFacadeInterface
      */

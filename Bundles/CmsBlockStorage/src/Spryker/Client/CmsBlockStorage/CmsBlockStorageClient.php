@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageClientInterface
 {
     /**
-     * @deprecated Use findBlocksByKeys instead.
+     * @deprecated Use \Spryker\Client\CmsBlockStorage\CmsBlockStorageClient::findBlocksByKeys() instead.
      *
      * {@inheritdoc}
      *

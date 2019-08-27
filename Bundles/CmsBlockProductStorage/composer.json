@@ -7,8 +7,11 @@
     "php": ">=7.1",
     "spryker/cms-block": "^1.5.0 || ^2.0.0 || ^3.0.0",
     "spryker/cms-block-product-connector": "^1.1.0",
+    "spryker/cms-block-storage-extension": "^1.1.0",
     "spryker/event-behavior": "^1.10.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/storage": "^3.8.1",
+    "spryker/synchronization": "^1.7.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
     "spryker/util-sanitize": "^2.1.0"

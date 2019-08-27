@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/cms-block": "^1.5.0 || ^2.0.0 || ^3.0.0",
+    "spryker/cms-block-storage-extension": "^1.0.0",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.5.0",

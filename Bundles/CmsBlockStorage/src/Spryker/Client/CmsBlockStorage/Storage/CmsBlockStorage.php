@@ -31,13 +31,23 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface[]
+     */
+    protected $cmsBlockStorageRelatedBlocksFinderPlugins;
+
+    /**
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface[] $cmsBlockStorageRelatedBlocksFinderPlugins
      */
-    public function __construct(CmsBlockStorageToStorageInterface $storageClient, CmsBlockStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        CmsBlockStorageToStorageInterface $storageClient,
+        CmsBlockStorageToSynchronizationServiceInterface $synchronizationService,
+        array $cmsBlockStorageRelatedBlocksFinderPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->cmsBlockStorageRelatedBlocksFinderPlugins = $cmsBlockStorageRelatedBlocksFinderPlugins;
     }
 
     /**
@@ -95,34 +105,19 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      */
     public function getBlockKeysByOptions(array $options): array
     {
-        $position = null;
-
-        if (isset($options[static::OPTION_POSITION])) {
-            $position = $options[static::OPTION_POSITION] ?? null;
-            unset($options[static::OPTION_POSITION]);
-        }
-
-        $searchKey = '';
-
-        foreach ($options as $key => $value) {
-            $searchKey = $this->generateKey($value, 'cms_block_' . $key);
-        }
-
-        $blocksData = $this->storageClient->get($searchKey);
         $blockKeys = [];
 
-        if (isset($blocksData[static::ARRAY_KEY_CMS_BLOCK_CATEGORIES])) {
-            foreach ($blocksData[static::ARRAY_KEY_CMS_BLOCK_CATEGORIES] as $key => $item) {
-                if ($position && $item[static::OPTION_POSITION] === $position) {
-                    $blockKeys = $item[static::ARRAY_KEY_BLOCK_KEYS];
-                    break;
-                }
+        foreach ($this->cmsBlockStorageRelatedBlocksFinderPlugins as $cmsBlockStorageRelatedBlocksFinderPlugin) {
+            $cmsBlockTransfers = $cmsBlockStorageRelatedBlocksFinderPlugin->findRelatedCmsBlocks($options);
+
+            if (count($cmsBlockTransfers) < 1) {
+                continue;
             }
 
-            return $blockKeys;
+            $blockKeys = array_merge($blockKeys, $this->getBlockKeysFromTransfers($cmsBlockTransfers));
         }
 
-        return $blocksData[static::ARRAY_KEY_BLOCK_KEYS];
+        return $blockKeys;
     }
 
     /**
@@ -140,6 +135,22 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $mappingData = $this->storageClient->get($searchKey) ?: [];
 
         return array_filter($mappingData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
+     *
+     * @return array
+     */
+    protected function getBlockKeysFromTransfers(array $cmsBlockTransfers): array
+    {
+        $blockKeys = [];
+
+        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
+            $blockKeys[] = $cmsBlockTransfer->getKey();
+        }
+
+        return $blockKeys;
     }
 
     /**
