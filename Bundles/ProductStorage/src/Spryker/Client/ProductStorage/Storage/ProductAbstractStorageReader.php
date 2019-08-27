@@ -286,7 +286,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param mixed $mappingData
+     * @param array $mappingData
      * @param string $localeName
      *
      * @return array|null

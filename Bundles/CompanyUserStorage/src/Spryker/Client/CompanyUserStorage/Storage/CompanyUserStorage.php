@@ -99,7 +99,7 @@ class CompanyUserStorage implements CompanyUserStorageInterface
     }
 
     /**
-     * @param mixed $mappingData
+     * @param array $mappingData
      *
      * @return array|null
      */

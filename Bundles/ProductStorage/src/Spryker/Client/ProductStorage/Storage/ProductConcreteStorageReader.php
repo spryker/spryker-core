@@ -256,7 +256,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param mixed $mappingData
+     * @param array $mappingData
      * @param string $localeName
      *
      * @return array|null
