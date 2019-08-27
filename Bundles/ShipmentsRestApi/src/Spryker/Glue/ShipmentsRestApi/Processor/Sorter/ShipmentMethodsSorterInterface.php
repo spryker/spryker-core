@@ -15,9 +15,9 @@ interface ShipmentMethodsSorterInterface
      * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[] $restShipmentMethodAttributeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
      */
-    public function sortShipmentMethods(
+    public function sortShipmentMethodAttributesTransfers(
         array $restShipmentMethodAttributeTransfers,
         RestRequestInterface $restRequest
     ): array;

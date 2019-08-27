@@ -44,7 +44,6 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         ShipmentMethodsMapperInterface $shipmentMethodMapper,
         ShipmentMethodsSorterInterface $shipmentMethodsSorter
     ) {
-
         $this->shipmentMethodRestResponseBuilder = $shipmentMethodRestResponseBuilder;
         $this->shipmentMethodMapper = $shipmentMethodMapper;
         $this->shipmentMethodsSorter = $shipmentMethodsSorter;
@@ -69,23 +68,13 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
                 continue;
             }
 
-            $restShipmentMethodAttributesTransfers = $this->shipmentMethodMapper
-                ->mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
-                    $shipmentMethodsTransfer->getMethods(),
-                    $currentStoreTransfer
-                );
+            $restShipmentMethodAttributesTransfers = $this->getSortedShipmentMethodAttributesTransfers(
+                $shipmentMethodsTransfer,
+                $currentStoreTransfer,
+                $restRequest
+            );
 
-            $restShipmentMethodAttributesTransfers = $this->shipmentMethodsSorter
-                ->sortShipmentMethods($restShipmentMethodAttributesTransfers, $restRequest);
-
-            foreach ($restShipmentMethodAttributesTransfers as $idShipmentMethod => $restShipmentMethodAttributesTransfer) {
-                $shipmentMethodRestResource = $this->createShipmentMethodRestResourceByCheckoutDataExpander(
-                    $restShipmentMethodAttributesTransfer,
-                    $idShipmentMethod
-                );
-
-                $resource->addRelationship($shipmentMethodRestResource);
-            }
+            $this->addShipmentMethodResourceRelationships($restShipmentMethodAttributesTransfers, $resource);
         }
 
         return $resources;
@@ -135,6 +124,48 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         }
 
         return $restCheckoutDataTransfer->getCurrentStore();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
+     */
+    protected function getSortedShipmentMethodAttributesTransfers(
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        StoreTransfer $currentStoreTransfer,
+        RestRequestInterface $restRequest
+    ): array {
+        $restShipmentMethodAttributesTransfers = $this->shipmentMethodMapper
+            ->mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
+                $shipmentMethodsTransfer->getMethods(),
+                $currentStoreTransfer
+            );
+
+        return $this->shipmentMethodsSorter
+            ->sortShipmentMethodAttributesTransfers($restShipmentMethodAttributesTransfers, $restRequest);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[] $restShipmentMethodAttributesTransfers
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return void
+     */
+    protected function addShipmentMethodResourceRelationships(
+        array $restShipmentMethodAttributesTransfers,
+        RestResourceInterface $resource
+    ): void {
+        foreach ($restShipmentMethodAttributesTransfers as $idShipmentMethod => $restShipmentMethodAttributesTransfer) {
+            $shipmentMethodRestResource = $this->createShipmentMethodRestResourceByCheckoutDataExpander(
+                $restShipmentMethodAttributesTransfer,
+                $idShipmentMethod
+            );
+
+            $resource->addRelationship($shipmentMethodRestResource);
+        }
     }
 
     /**
