@@ -45,8 +45,11 @@ class Environment extends Module
             $srcDirectoryPosition = array_search('current', $pathParts);
 
             $rootDirPathParts = array_slice($pathParts, 1, $srcDirectoryPosition);
-
-            $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+            if ($rootDirPathParts) {
+                $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+            } else {
+                $this->rootDirectory = getcwd();
+            }
         }
 
         return $this->rootDirectory;
