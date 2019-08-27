@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 
 /**
  * Auto-generated group annotations
@@ -21,8 +21,13 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  * @group DeleteMerchantTest
  * Add your own group annotations below this line
  */
-class DeleteMerchantTest extends AbstractMerchantFacadeTest
+class DeleteMerchantTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */

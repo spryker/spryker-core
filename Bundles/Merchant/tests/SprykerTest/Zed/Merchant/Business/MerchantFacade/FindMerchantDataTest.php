@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
-use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
+use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
@@ -16,11 +16,64 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  * @group Merchant
  * @group Business
  * @group MerchantFacade
- * @group FindMerchantAddressByIdMerchantAddressTest
+ * @group FindMerchantDataTest
  * Add your own group annotations below this line
  */
-class FindMerchantAddressByIdMerchantAddressTest extends AbstractMerchantFacadeTest
+class FindMerchantDataTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
+     */
+    protected $tester;
+
+    protected const MERCHANT_EMAIL = 'merchant@test.test';
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByIdWillFindExistingMerchant(): void
+    {
+        $expectedMerchant = $this->tester->haveMerchantWithAddressCollection();
+
+        $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($expectedMerchant->getIdMerchant());
+
+        $this->assertEquals($expectedMerchant, $actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByIdWillNotFindMerchant(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
+
+        $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($merchantTransfer->getIdMerchant() + 1);
+
+        $this->assertNull($actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByEmailWillFindExistingMerchant(): void
+    {
+        $expectedMerchant = $this->tester->haveMerchantWithAddressCollection();
+
+        $actualMerchant = $this->tester->getFacade()->findMerchantByEmail($expectedMerchant->getEmail());
+
+        $this->assertEquals($expectedMerchant, $actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindMerchantByEmailWillNotFindMerchant(): void
+    {
+        $actualMerchant = $this->tester->getFacade()->findMerchantByEmail(static::MERCHANT_EMAIL);
+
+        $this->assertNull($actualMerchant);
+    }
+
     /**
      * @return void
      */

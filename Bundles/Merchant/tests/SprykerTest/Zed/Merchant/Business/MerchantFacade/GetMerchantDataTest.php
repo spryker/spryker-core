@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
-use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 
 /**
  * Auto-generated group annotations
@@ -18,11 +18,16 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  * @group Merchant
  * @group Business
  * @group MerchantFacade
- * @group GetMerchantByIdTest
+ * @group GetMerchantDataTest
  * Add your own group annotations below this line
  */
-class GetMerchantByIdTest extends AbstractMerchantFacadeTest
+class GetMerchantDataTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -51,5 +56,41 @@ class GetMerchantByIdTest extends AbstractMerchantFacadeTest
         $this->expectException(MerchantNotFoundException::class);
 
         $this->tester->getFacade()->getMerchantById($merchantTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantsReturnNotEmptyCollection(): void
+    {
+        $this->tester->truncateMerchantRelations();
+
+        $this->tester->haveMerchantWithAddressCollection();
+        $this->tester->haveMerchantWithAddressCollection();
+
+        $merchantCollectionTransfer = $this->tester->getFacade()->getMerchantCollection();
+        $this->assertCount(2, $merchantCollectionTransfer->getMerchants());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetApplicableMerchantStatusesWillReturnArray(): void
+    {
+        $applicableMerchantStatuses = $this->tester->getFacade()->getApplicableMerchantStatuses($this->tester->createMerchantConfig()->getDefaultMerchantStatus());
+
+        $this->assertTrue(is_array($applicableMerchantStatuses));
+        $this->assertNotEmpty($applicableMerchantStatuses);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetApplicableMerchantStatusesWillReturnEmptyArrayOnNotFoundCurrentStatus(): void
+    {
+        $applicableMerchantStatuses = $this->tester->getFacade()->getApplicableMerchantStatuses('random-status');
+
+        $this->assertTrue(is_array($applicableMerchantStatuses));
+        $this->assertEmpty($applicableMerchantStatuses);
     }
 }
