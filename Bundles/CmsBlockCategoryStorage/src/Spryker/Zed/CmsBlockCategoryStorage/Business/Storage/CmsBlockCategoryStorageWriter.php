@@ -129,10 +129,18 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
             foreach ($mappedCmsBlockCategoryPositions as $position => $blockData) {
                 $cmsBlockPositionTransfer = new CmsBlockCategoryTransfer();
                 $cmsBlockPositionTransfer->setPosition($position);
+
+                if (!isset($blockData['keys'])) {
+                    $cmsBlockPositionTransfer->setBlockNames($blockData);
+                    $cmsBlockCategoryTransfer->addCmsBlockCategory($cmsBlockPositionTransfer);
+                    continue;
+                }
+
                 $cmsBlockPositionTransfer->setBlockNames($blockData['names']);
                 $cmsBlockPositionTransfer->setBlockKeys($blockData['keys']);
                 $cmsBlockCategoryTransfer->addCmsBlockCategory($cmsBlockPositionTransfer);
             }
+
             $cmsBlockCategoriesTransfer[$categoryId] = $cmsBlockCategoryTransfer;
         }
 
@@ -149,6 +157,11 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         $cmsBlockCategoryEntities = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
         foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
+            if (!method_exists($cmsBlockCategoryEntity, 'getKey')) {
+                $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][] = $cmsBlockCategoryEntity->getName();
+                continue;
+            }
+
             $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()]['names'][] = $cmsBlockCategoryEntity->getName();
             $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()]['keys'][] = $cmsBlockCategoryEntity->getKey();
         }

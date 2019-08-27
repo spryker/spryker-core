@@ -22,7 +22,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
 {
     public const POSITION = 'position';
     public const NAME = 'name';
-    public const KEY = 'key';
+    protected const KEY = 'key';
 
     /**
      * @api
@@ -47,7 +47,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      */
     public function queryCmsBlockCategories(array $categoryIds)
     {
-        return $this->getFactory()
+        $query = $this->getFactory()
             ->getCmsBlockCategoryConnectorQuery()
             ->queryCmsBlockCategoryConnector()
             ->innerJoinCmsBlockCategoryPosition()
@@ -58,9 +58,13 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
                 Criteria::INNER_JOIN
             )
             ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
-            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
-            ->withColumn(SpyCmsBlockTableMap::COL_KEY, static::KEY)
-            ->filterByFkCategory_In($categoryIds);
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME);
+
+        if (defined(SpyCmsBlockTableMap::COL_KEY)) {
+            $query->withColumn(SpyCmsBlockTableMap::COL_KEY, static::KEY);
+        }
+
+        return $query->filterByFkCategory_In($categoryIds);
     }
 
     /**

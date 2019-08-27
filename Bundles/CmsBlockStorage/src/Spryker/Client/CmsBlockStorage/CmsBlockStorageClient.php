@@ -15,11 +15,11 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageClientInterface
 {
     /**
-     * @deprecated Use \Spryker\Client\CmsBlockStorage\CmsBlockStorageClient::findBlocksByKeys() instead.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use \Spryker\Client\CmsBlockStorage\CmsBlockStorageClient::findBlocksByKeys() instead.
      *
      * @param string[] $blockNames
      * @param string $localeName
@@ -32,41 +32,6 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
         return $this->getFactory()
             ->createCmsBlockStorage()
             ->getBlocksByNames($blockNames, $localeName, $storeName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $options
-     * @param string $localName
-     *
-     * @return array
-     */
-    public function findBlockNamesByOptions(array $options, $localName)
-    {
-        return $this->getFactory()
-            ->createCmsBlockStorage()
-            ->getBlockNamesByOptions($options, $localName);
-    }
-
-    /**
-     * @deprecated Will be removed in the next major release.
-     *
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name)
-    {
-        return $this->getFactory()
-            ->createCmsBlockStorage()
-            ->generateBlockNameKey($name);
     }
 
     /**
@@ -85,24 +50,6 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
         return $this->getFactory()
             ->createCmsBlockStorage()
             ->getBlocksByKeys($blockKeys, $localeName, $storeName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $blockName
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function findMappingDataByBlockName(string $blockName, string $localeName, string $storeName): array
-    {
-        return $this->getFactory()
-            ->createCmsBlockStorage()
-            ->getMappingDataByBlockName($blockName, $localeName, $storeName);
     }
 
     /**
