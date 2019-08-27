@@ -92,9 +92,9 @@ class Worker implements WorkerInterface
         while ($totalPassedSeconds < $maxThreshold) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
-            $isWorkerStopOnlyWhenEmpty = $this->isWorkerStopOnlyWhenEmpty($pendingProcesses, $options);
+            $isEmptyQueue = $this->isEmptyQueue($pendingProcesses, $options);
 
-            if ($isWorkerStopOnlyWhenEmpty) {
+            if ($isEmptyQueue) {
                 return;
             }
 
@@ -278,9 +278,9 @@ class Worker implements WorkerInterface
      *
      * @return bool
      */
-    protected function isWorkerStopOnlyWhenEmpty(array $pendingProcesses, array $options): bool
+    protected function isEmptyQueue(array $pendingProcesses, array $options): bool
     {
-        return count($pendingProcesses) === 0 && $this->isWorkerStopOnlyWhenEmptyEnabled($options);
+        return count($pendingProcesses) === 0 && $this->isWorkerStopsWhenEmptyQueueEnabled($options);
     }
 
     /**
@@ -290,7 +290,7 @@ class Worker implements WorkerInterface
      */
     protected function isWorkerLoopEnabled(array $options): bool
     {
-        return $this->queueConfig->getIsWorkerLoopEnabled() || $this->isWorkerStopOnlyWhenEmptyEnabled($options);
+        return $this->queueConfig->getIsWorkerLoopEnabled() || $this->isWorkerStopsWhenEmptyQueueEnabled($options);
     }
 
     /**
@@ -298,8 +298,8 @@ class Worker implements WorkerInterface
      *
      * @return bool
      */
-    protected function isWorkerStopOnlyWhenEmptyEnabled(array $options): bool
+    protected function isWorkerStopsWhenEmptyQueueEnabled(array $options): bool
     {
-        return isset($options[SharedQueueConfig::CONFIG_WORKER_STOP_ONLY_WHEN_EMPTY]) && $options[SharedQueueConfig::CONFIG_WORKER_STOP_ONLY_WHEN_EMPTY];
+        return isset($options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY]) && $options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY];
     }
 }
