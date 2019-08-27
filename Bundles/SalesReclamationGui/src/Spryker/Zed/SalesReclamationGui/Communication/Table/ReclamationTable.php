@@ -59,6 +59,7 @@ class ReclamationTable extends AbstractTable
         ]);
 
         $config->setSortable([
+            SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION,
             SpySalesReclamationTableMap::COL_CREATED_AT,
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME,
             SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL,
