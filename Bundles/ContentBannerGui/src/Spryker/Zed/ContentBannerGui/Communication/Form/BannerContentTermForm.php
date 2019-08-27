@@ -9,7 +9,6 @@ namespace Spryker\Zed\ContentBannerGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\Options;
@@ -126,7 +125,7 @@ class BannerContentTermForm extends AbstractType
      */
     protected function addImageUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IMAGE_URL, UrlType::class, [
+        $builder->add(static::FIELD_IMAGE_URL, TextType::class, [
             'label' => static::LABEL_IMAGE_URL,
         ]);
 
@@ -140,7 +139,7 @@ class BannerContentTermForm extends AbstractType
      */
     protected function addClickUrlField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CLICK_URL, UrlType::class, [
+        $builder->add(static::FIELD_CLICK_URL, TextType::class, [
             'label' => static::LABEL_CLICK_URL,
         ]);
 
