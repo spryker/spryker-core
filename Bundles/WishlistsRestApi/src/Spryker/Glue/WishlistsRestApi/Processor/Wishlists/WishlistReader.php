@@ -26,6 +26,11 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 class WishlistReader implements WishlistReaderInterface
 {
     /**
+     * @see \Spryker\Zed\Wishlist\Business\Model\Reader::ERROR_MESSAGE_WISHLIST_NOT_FOUND
+     */
+    protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
+
+    /**
      * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
      */
     protected $wishlistClient;
@@ -127,25 +132,20 @@ class WishlistReader implements WishlistReaderInterface
     }
 
     /**
-     * @param int $customerId
+     * @param int $idCustomer
      * @param string $uuidWishlist
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getWishlistResponseByIdCustomerAndUuid(int $customerId, string $uuidWishlist): RestResponseInterface
+    protected function getWishlistResponseByIdCustomerAndUuid(int $idCustomer, string $uuidWishlist): RestResponseInterface
     {
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
-            ->setIdCustomer($customerId)
+            ->setIdCustomer($idCustomer)
             ->setIdWishlist($uuidWishlist);
         $wishlistResponseTransfer = $this->wishlistClient->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
-        //TODO: add proper error
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->restResourceBuilder->createRestResponse()
-                ->addError((new RestErrorMessageTransfer())
-                    ->setDetail('')
-                    ->setCode('200')
-                    ->setStatus(422));
+            return $this->getRestResponseByErrors($wishlistResponseTransfer->getErrors());
         }
 
         return $this->wishlistRestResponseBuilder
@@ -190,5 +190,41 @@ class WishlistReader implements WishlistReaderInterface
         $wishlistOverviewRequestTransfer->setItemsPerPage(PHP_INT_MAX);
 
         return $this->wishlistClient->getWishlistOverviewWithoutProductDetails($wishlistOverviewRequestTransfer);
+    }
+
+    /**
+     * @param array $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getRestResponseByErrors(array $errors): RestResponseInterface
+    {
+        foreach ($errors as $error) {
+            return $this->getRestErrorResponse($error);
+        }
+
+        return $this->getRestErrorResponse();
+    }
+
+    /**
+     * @param string|null $error
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getRestErrorResponse(?string $error = null): RestResponseInterface
+    {
+        if (!$error || $error !== static::ERROR_MESSAGE_WISHLIST_NOT_FOUND) {
+            return $this->restResourceBuilder->createRestResponse()
+                ->addError((new RestErrorMessageTransfer())
+                    ->setDetail('Unknown error.')
+                    ->setCode('')
+                    ->setStatus(422));
+        }
+
+        return $this->restResourceBuilder->createRestResponse()
+            ->addError((new RestErrorMessageTransfer())
+                ->setDetail($error)
+                ->setCode('200')
+                ->setStatus(404));
     }
 }

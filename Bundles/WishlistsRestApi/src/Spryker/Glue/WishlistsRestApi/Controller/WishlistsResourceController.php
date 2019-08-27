@@ -29,6 +29,7 @@ class WishlistsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Wishlist not found."
+     *              "422": "Unknown error."
      *          }
      *     },
      *     "getCollection": {
