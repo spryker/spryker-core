@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Formatter;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToProductFacadeInterface;
 
 class PriceProductScheduleDataFormatter implements PriceProductScheduleDataFormatterInterface
 {
@@ -18,6 +19,19 @@ class PriceProductScheduleDataFormatter implements PriceProductScheduleDataForma
     protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
 
     protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be <b>%s</b> as defined on the store selected';
+
+    /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToProductFacadeInterface $productFacade
+     */
+    public function __construct(PriceProductScheduleGuiToProductFacadeInterface $productFacade)
+    {
+        $this->productFacade = $productFacade;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
@@ -47,10 +61,29 @@ class PriceProductScheduleDataFormatter implements PriceProductScheduleDataForma
         $idProductConcrete = $priceProductTransfer->getIdProduct();
 
         if ($idProductConcrete !== null) {
-            return sprintf(static::REDIRECT_URL_PRODUCT_CONCRETE_PATTERN, $idProductConcrete, $idProductAbstract);
+            return $this->makeRedirectUrlByIdProductConcreteAndIdProductAbstract(
+                $idProductConcrete
+            );
         }
 
         return sprintf(static::REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return string
+     */
+    protected function makeRedirectUrlByIdProductConcreteAndIdProductAbstract(
+        int $idProductConcrete
+    ): string {
+        $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProductConcrete);
+
+        if ($idProductAbstract === null) {
+            return '/';
+        }
+
+        return sprintf(static::REDIRECT_URL_PRODUCT_CONCRETE_PATTERN, $idProductConcrete, $idProductAbstract);
     }
 
     /**
