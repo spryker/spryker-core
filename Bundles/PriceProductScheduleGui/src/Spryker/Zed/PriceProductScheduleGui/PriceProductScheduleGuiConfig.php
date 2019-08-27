@@ -61,14 +61,6 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     protected const FILE_MAX_SIZE = '50M';
     protected const FILE_MIME_TYPES = ['text/csv', 'text/plain'];
 
-    protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
-
-    protected const URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW = '/price-product-schedule-gui/view-schedule-list';
-    protected const URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT = '/price-product-schedule-gui/edit-schedule-list';
-    protected const URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD = '/price-product-schedule-gui/download-schedule-list';
-    protected const URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE = '/price-product-schedule-gui/delete-schedule-list';
-    protected const URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT = '/price-product-schedule-gui/dry-run-import';
-
     /**
      * @return string[]
      */
@@ -190,53 +182,5 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     public function getFileMimeTypes(): array
     {
         return static::FILE_MIME_TYPES;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdPriceProductScheduleParam(): string
-    {
-        return static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriceProductScheduleListViewUrl(): string
-    {
-        return static::URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriceProductScheduleListEditUrl(): string
-    {
-        return static::URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriceProductScheduleListDownloadUrl(): string
-    {
-        return static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriceProductScheduleListDeleteUrl(): string
-    {
-        return static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPriceProductScheduleListDryRunImportUrl(): string
-    {
-        return static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT;
     }
 }

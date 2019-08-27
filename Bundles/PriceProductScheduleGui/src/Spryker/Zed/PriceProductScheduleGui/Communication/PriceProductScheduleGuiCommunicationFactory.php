@@ -198,8 +198,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleListTable(): PriceProductScheduleListTable
     {
         return new PriceProductScheduleListTable(
-            $this->getPriceProductScheduleListPropelQuery(),
-            $this->getConfig()
+            $this->getPriceProductScheduleListPropelQuery()
         );
     }
 
