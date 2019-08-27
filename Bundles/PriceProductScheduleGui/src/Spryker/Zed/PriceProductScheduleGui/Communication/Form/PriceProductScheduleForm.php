@@ -52,6 +52,7 @@ class PriceProductScheduleForm extends AbstractType
             'constraints' => [
                 $this->getFactory()->createPriceProductScheduleDateConstraint(),
                 $this->getFactory()->createPriceProductSchedulePriceConstraint(),
+                $this->getFactory()->createPriceProductScheduleUniqueConstraint(),
             ],
         ]);
     }

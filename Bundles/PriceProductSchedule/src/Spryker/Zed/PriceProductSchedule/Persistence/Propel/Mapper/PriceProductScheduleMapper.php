@@ -119,11 +119,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             $idCurrency = $moneyValueTransfer->getCurrency()->getIdCurrency();
         }
 
+        $idPriceProductScheduleList = null;
+        $priceProductScheduleListTransfer = $priceProductScheduleTransfer->getPriceProductScheduleList();
+        if ($priceProductScheduleListTransfer !== null) {
+            $idPriceProductScheduleList = (string)$priceProductScheduleListTransfer->getIdPriceProductScheduleList();
+        }
+
         return $priceProductScheduleEntity
             ->setFkCurrency($idCurrency)
             ->setFkStore($idStore)
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
-            ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
+            ->setFkPriceProductScheduleList($idPriceProductScheduleList)
             ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())

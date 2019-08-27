@@ -183,4 +183,16 @@ interface PriceProductScheduleFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
      */
     public function findPriceProductScheduleById(int $idPriceProductSchedule): ?PriceProductScheduleTransfer;
+
+    /**
+     * Specification:
+     * - Checks uniqueness of given scheduled price.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
 }
