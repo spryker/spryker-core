@@ -23,7 +23,7 @@ class ViewController extends AbstractController
 {
     protected const PARAM_CUSTOMER = 'customerTransfer';
 
-    protected const URL_REDIRECT_CUSTOMER_NOT_EXISTS = '/customer';
+    protected const URL_REDIRECT_CUSTOMER_LIST_PAGE = '/customer';
     protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id %s does not exist';
 
     /**
@@ -36,7 +36,7 @@ class ViewController extends AbstractController
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
         if (empty($idCustomer)) {
-            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
+            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_LIST_PAGE);
         }
 
         $idCustomer = $this->castId($idCustomer);
@@ -46,7 +46,7 @@ class ViewController extends AbstractController
         if ($customerTransfer === null) {
             $this->addErrorMessage(static::MESSAGE_ERROR_CUSTOMER_NOT_EXIST, ['%s' => $idCustomer]);
 
-            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_NOT_EXISTS);
+            return $this->redirectResponse(static::URL_REDIRECT_CUSTOMER_LIST_PAGE);
         }
 
         $addressTable = $this->getFactory()
@@ -101,7 +101,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @deprecated Use `ViewController::findCustomer()` instead.
+     * @deprecated Use `ViewController::findCustomerById()` instead.
      *
      * @param int $idCustomer
      *
