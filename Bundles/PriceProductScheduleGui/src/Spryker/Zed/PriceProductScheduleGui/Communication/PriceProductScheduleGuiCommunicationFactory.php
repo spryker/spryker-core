@@ -198,7 +198,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleListTable(): PriceProductScheduleListTable
     {
         return new PriceProductScheduleListTable(
-            $this->getPriceProductScheduleListQuery(),
+            $this->getPriceProductScheduleListPropelQuery(),
             $this->getConfig()
         );
     }
@@ -254,7 +254,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
      */
-    public function getPriceProductScheduleListQuery(): SpyPriceProductScheduleListQuery
+    public function getPriceProductScheduleListPropelQuery(): SpyPriceProductScheduleListQuery
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST);
     }

@@ -183,11 +183,13 @@ class PriceProductScheduleListTable extends AbstractTable
         $createdAt = $priceProductScheduleListEntity->getCreatedAt()->format(static::PATTERN_DATE_TIME);
         $userFullName = static::DEFAULT_IMPORTED_BY_VALUE;
 
-        if ($priceProductScheduleListEntity->getUser() !== null) {
+        $userEntity = $priceProductScheduleListEntity->getUser();
+
+        if ($userEntity !== null) {
             $userFullName = sprintf(
                 static::TEMPLATE_FULL_NAME,
-                $priceProductScheduleListEntity->getUser()->getFirstName(),
-                $priceProductScheduleListEntity->getUser()->getLastName()
+                $userEntity->getFirstName(),
+                $userEntity->getLastName()
             );
         }
 

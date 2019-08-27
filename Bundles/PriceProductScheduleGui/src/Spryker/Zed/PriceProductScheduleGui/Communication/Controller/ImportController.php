@@ -20,8 +20,9 @@ class ImportController extends AbstractController
      */
     public function indexAction()
     {
-        $priceProductScheduleImportForm = $this->getFactory()->getPriceProductScheduleImportForm();
-        $priceProductScheduleListTable = $this->getFactory()->createPriceProductScheduleListTable();
+        $factory = $this->getFactory();
+        $priceProductScheduleImportForm = $factory->getPriceProductScheduleImportForm();
+        $priceProductScheduleListTable = $factory->createPriceProductScheduleListTable();
 
         return $this->viewResponse([
             'importForm' => $priceProductScheduleImportForm->createView(),
