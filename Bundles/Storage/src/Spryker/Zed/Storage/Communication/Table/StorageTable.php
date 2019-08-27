@@ -22,6 +22,11 @@ class StorageTable extends AbstractTable
     protected const VALUE_LENGTH_LIMIT = 120;
 
     /**
+     * @var int
+     */
+    protected $defaultPageLength;
+
+    /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageClient;
@@ -34,11 +39,13 @@ class StorageTable extends AbstractTable
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      * @param \Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface $utilSanitizeService
+     * @param int|null $defaultPageLength
      */
-    public function __construct(StorageClientInterface $storageClient, StorageToUtilSanitizeServiceInterface $utilSanitizeService)
+    public function __construct(StorageClientInterface $storageClient, StorageToUtilSanitizeServiceInterface $utilSanitizeService, ?int $defaultPageLength = null)
     {
         $this->storageClient = $storageClient;
         $this->utilSanitizeService = $utilSanitizeService;
+        $this->defaultPageLength = $defaultPageLength ?? static::DEFAULT_PAGE_LENGTH;
     }
 
     /**
@@ -70,9 +77,9 @@ class StorageTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         try {
-            $keys = $this->storageClient->scanKeys($this->getSearchTerm(), static::DEFAULT_PAGE_LENGTH)->getKeys();
+            $keys = $this->storageClient->scanKeys($this->getSearchTerm(), $this->defaultPageLength)->getKeys();
         } catch (InvalidStorageScanPluginInterfaceException $exception) {
-            $keys = array_slice($this->storageClient->getKeys($this->getSearchTerm()), 0, static::DEFAULT_PAGE_LENGTH);
+            $keys = array_slice($this->storageClient->getKeys($this->getSearchTerm()), 0, $this->defaultPageLength);
         }
 
         $keys = array_map(function (string $key) {
