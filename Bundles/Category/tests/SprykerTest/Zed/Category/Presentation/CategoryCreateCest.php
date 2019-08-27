@@ -47,6 +47,6 @@ class CategoryCreateCest
         }
         $i->click(CategoryCreatePage::FORM_SUBMIT_BUTTON);
 
-        $i->waitForText(CategoryCreatePage::SUCCESS_MESSAGE, 10);
+        $i->seeInPageSource(CategoryCreatePage::SUCCESS_MESSAGE);
     }
 }
