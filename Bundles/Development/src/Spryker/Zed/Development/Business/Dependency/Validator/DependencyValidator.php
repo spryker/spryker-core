@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\Dependency\Validator;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleDependencyTransfer;
+use Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
 use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParserInterface;
@@ -32,18 +33,26 @@ class DependencyValidator implements DependencyValidatorInterface
     protected $validationRule;
 
     /**
+     * @var \Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface
+     */
+    protected $composerNameFinder;
+
+    /**
      * @param \Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface $moduleDependencyParser
      * @param \Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParserInterface $composerDependencyParser
      * @param \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface $validationRule
+     * @param \Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface $composerNameFinder
      */
     public function __construct(
         ModuleDependencyParserInterface $moduleDependencyParser,
         ComposerDependencyParserInterface $composerDependencyParser,
-        ValidationRuleInterface $validationRule
+        ValidationRuleInterface $validationRule,
+        ComposerNameFinderInterface $composerNameFinder
     ) {
         $this->moduleDependencyParser = $moduleDependencyParser;
         $this->composerDependencyParser = $composerDependencyParser;
         $this->validationRule = $validationRule;
+        $this->composerNameFinder = $composerNameFinder;
     }
 
     /**
@@ -86,6 +95,10 @@ class DependencyValidator implements DependencyValidatorInterface
             $dependencyValidationRequestTransfer->getModule(),
             $dependencyValidationRequestTransfer->getDependencyType()
         );
+        foreach ($moduleDependencies->getDependencyModules() as $dependencyModuleTransfer) {
+            $composerName = $dependencyModuleTransfer->getComposerName() ?? $this->composerNameFinder->findComposerNameByModuleName($dependencyModuleTransfer->getModule());
+            $dependencyModuleTransfer->setComposerName($composerName);
+        }
         $composerDependencies = $this->composerDependencyParser->getComposerDependencyComparison($moduleDependencies);
 
         return $composerDependencies;
@@ -102,7 +115,8 @@ class DependencyValidator implements DependencyValidatorInterface
         foreach ($composerDependencies as $composerDependency) {
             $moduleDependencyTransfer = new ModuleDependencyTransfer();
             $moduleDependencyTransfer
-                ->setModule($composerDependency['dependencyModule'])
+                ->setModuleName($composerDependency['moduleName'])
+                ->setComposerName($composerDependency['composerName'])
                 ->setIsValid(true)
                 ->setDependencyTypes($this->getDependencyTypes($composerDependency))
                 ->setIsOptionalDependency($composerDependency['isOptional'])

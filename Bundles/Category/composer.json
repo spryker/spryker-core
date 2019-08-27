@@ -23,6 +23,7 @@
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/container": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",

@@ -1,0 +1,4 @@
+{{ 'availability_notification_subscription.mail.copyright'|trans|raw }}
+{% if mail.type != 'AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL' %}
+    {{ 'availability_notification_subscription.mail.unsubscribe_text'|trans({'%link%': mail.availabilityNotificationSubscriptionMailData.availabilityUnsubscriptionLink})|raw }}
+{% endif %}

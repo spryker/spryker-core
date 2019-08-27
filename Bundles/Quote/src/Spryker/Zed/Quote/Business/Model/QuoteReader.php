@@ -13,10 +13,16 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
 class QuoteReader implements QuoteReaderInterface
 {
+    /**
+     * @var \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
     /**
      * @var \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface
      */
@@ -30,13 +36,16 @@ class QuoteReader implements QuoteReaderInterface
     /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[] $quoteExpanderPlugins
+     * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         QuoteRepositoryInterface $quoteRepository,
-        array $quoteExpanderPlugins
+        array $quoteExpanderPlugins,
+        QuoteToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->quoteExpanderPlugins = $quoteExpanderPlugins;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -51,8 +60,10 @@ class QuoteReader implements QuoteReaderInterface
         $customerTransfer->requireCustomerReference();
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteTransfer = $this->quoteRepository
-            ->findQuoteByCustomer($customerTransfer->getCustomerReference());
+        $quoteTransfer = $this->quoteRepository->findQuoteByCustomerReferenceAndIdStore(
+            $customerTransfer->getCustomerReference(),
+            $this->storeFacade->getCurrentStore()->getIdStore()
+        );
 
         $quoteTransfer = $this->executeExpandQuotePlugins($quoteTransfer);
 
