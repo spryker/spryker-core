@@ -8,6 +8,7 @@
 namespace Spryker\Client\AuthRestApi;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -18,11 +19,13 @@ class AuthRestApiClient extends AbstractClient implements AuthRestApiClientInter
     /**
      * Specification: specification
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): \Generated\Shared\Transfer\OauthResponseTransfer
+    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         return $this->getFactory()->createAuthRestApiZedStub()->processAccessToken($oauthRequestTransfer);
     }

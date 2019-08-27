@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -159,6 +160,28 @@ interface CartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
 
     /**
      * Specification:

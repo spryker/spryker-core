@@ -8,15 +8,18 @@
 namespace Spryker\Client\AuthRestApi;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 
 interface AuthRestApiClientInterface
 {
     /**
      * Specification: specification
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): \Generated\Shared\Transfer\OauthResponseTransfer;
+    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

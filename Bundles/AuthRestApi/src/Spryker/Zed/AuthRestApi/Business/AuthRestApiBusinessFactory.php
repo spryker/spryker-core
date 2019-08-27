@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\AuthRestApi\Business;
 
+use Spryker\Zed\AuthRestApi\AuthRestApiDependencyProvider;
 use Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenProcessor;
 use Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenProcessorInterface;
+use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -21,14 +23,25 @@ class AuthRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createAccessTokenProcessor(): AccessTokenProcessorInterface
     {
-        return new AccessTokenProcessor($this->getOauthFacade());
+        return new AccessTokenProcessor(
+            $this->getOauthFacade(),
+            $this->getPostAuthPlugins()
+        );
     }
 
     /**
      * @return \Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface
      */
-    public function getOauthFacade(): \Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface
+    public function getOauthFacade(): AuthRestApiToOauthFacadeInterface
     {
-        return $this->getProvidedDependency(\Spryker\Zed\AuthRestApi\AuthRestApiDependencyProvider::FACADE_OAUTH);
+        return $this->getProvidedDependency(AuthRestApiDependencyProvider::FACADE_OAUTH);
+    }
+
+    /**
+     * @return \Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface[]
+     */
+    protected function getPostAuthPlugins(): array
+    {
+        return $this->getProvidedDependency(AuthRestApiDependencyProvider::PLUGINS_POST_AUTH);
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -186,6 +187,38 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
         return $this->getFactory()
             ->createQuoteItemAdder()
             ->addToCart($cartItemRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    {
+        $this->getFactory()
+            ->createGuestQuoteItemAdder()
+            ->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    {
+        $this->getFactory()
+            ->createQuoteUpdater()
+            ->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
     }
 
     /**

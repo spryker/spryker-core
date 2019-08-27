@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
@@ -28,4 +29,11 @@ interface GuestQuoteItemAdderInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addToGuestCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
 }

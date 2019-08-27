@@ -75,13 +75,9 @@ class AccessTokensReader implements AccessTokensReaderInterface
         $oauthRequestTransfer
             ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_PASSWORD);
 
-        // Will be self client that proxy to Zed and executes plugins there.
-        $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
-        $oauthResponseTransfer1 = $this->authRestApiClient
+        $oauthResponseTransfer = $this->authRestApiClient
             ->processAccessToken($oauthRequestTransfer
-                ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()
-                )
-            );
+                ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()));
 
         if (!$oauthResponseTransfer->getIsValid()) {
             $restErrorTransfer = (new RestErrorMessageTransfer())

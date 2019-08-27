@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\AuthRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
+
 class AuthRestApiToOauthFacadeBridge implements AuthRestApiToOauthFacadeInterface
 {
     /**
@@ -21,12 +24,13 @@ class AuthRestApiToOauthFacadeBridge implements AuthRestApiToOauthFacadeInterfac
     {
         $this->oauthFacade = $oauthFacade;
     }
+
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
- *
- * @return \Generated\Shared\Transfer\OauthResponseTransfer
- */
-    public function processAccessTokenRequest(\Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer): \Generated\Shared\Transfer\OauthResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         return $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
     }

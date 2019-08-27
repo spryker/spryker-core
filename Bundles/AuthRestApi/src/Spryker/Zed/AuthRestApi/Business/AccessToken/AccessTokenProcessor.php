@@ -19,11 +19,20 @@ class AccessTokenProcessor implements AccessTokenProcessorInterface
     protected $oauthFacade;
 
     /**
-     * @param \Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface $oauthFacade
+     * @var \Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface[]
      */
-    public function __construct(AuthRestApiToOauthFacadeInterface $oauthFacade)
-    {
+    protected $postAuthPlugins;
+
+    /**
+     * @param \Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface $oauthFacade
+     * @param \Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface[] $postAuthPlugins
+     */
+    public function __construct(
+        AuthRestApiToOauthFacadeInterface $oauthFacade,
+        array $postAuthPlugins
+    ) {
         $this->oauthFacade = $oauthFacade;
+        $this->postAuthPlugins = $postAuthPlugins;
     }
 
     /**
@@ -33,10 +42,14 @@ class AccessTokenProcessor implements AccessTokenProcessorInterface
      */
     public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
+        $oauthRequestTransfer->requireCustomerReference();
+
         $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
         $oauthResponseTransfer->setAnonymousCustomerReference($oauthRequestTransfer->getCustomerReference());
-        // execute
 
+        foreach ($this->postAuthPlugins as $postAuthPlugin) {
+            $postAuthPlugin->postAuth($oauthResponseTransfer);
+        }
 
         return $oauthResponseTransfer;
     }

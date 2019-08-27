@@ -13,9 +13,11 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 interface AuthRestApiFacadeInterface
 {
     /**
-     * @param OauthRequestTransfer $oauthRequestTransfer
+     * @api
      *
-     * @return OauthResponseTransfer
+     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
     public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

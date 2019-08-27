@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CartsRestApi;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\AssignGuestQuoteRequestBuilder;
 use Generated\Shared\DataBuilder\CartItemRequestBuilder;
+use Generated\Shared\DataBuilder\OauthResponseBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteCollectionBuilder;
 use Generated\Shared\DataBuilder\QuoteCriteriaFilterBuilder;
@@ -18,6 +19,7 @@ use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -255,6 +257,52 @@ class CartsRestApiBusinessTester extends Actor
         ))->build();
 
         return $cartItemRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function prepareOauthResponseTransfer(): OauthResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
+        $oauthResponseTransfer = (new OauthResponseBuilder(
+            [
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $oauthResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function prepareOauthResponseTransferWithoutCustomerReference(): OauthResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
+        $oauthResponseTransfer = (new OauthResponseBuilder(
+            [
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $oauthResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function prepareOauthResponseTransferWithoutAnonymousCustomerReference(): OauthResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
+        $oauthResponseTransfer = (new OauthResponseBuilder(
+            [
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+
+        return $oauthResponseTransfer;
     }
 
     /**

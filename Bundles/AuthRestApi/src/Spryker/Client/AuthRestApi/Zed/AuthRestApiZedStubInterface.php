@@ -8,6 +8,7 @@
 namespace Spryker\Client\AuthRestApi\Zed;
 
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 
 interface AuthRestApiZedStubInterface
 {
@@ -18,5 +19,5 @@ interface AuthRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): \Generated\Shared\Transfer\OauthResponseTransfer;
+    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

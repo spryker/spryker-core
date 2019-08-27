@@ -10,6 +10,7 @@ namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -113,6 +114,55 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
 
         return $this->addItem($cartItemRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    {
+        $oauthResponseTransfer
+            ->requireCustomerReference()
+            ->requireAnonymousCustomerReference();
+
+        $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();
+        $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())->setCustomerReference($anonymousCustomerReference)
+        );
+
+        $guestQuotes = $guestQuoteCollection->getQuotes();
+        if (!$guestQuotes->count()) {
+            return;
+        }
+
+        $questQuote = $guestQuotes[0];
+        if (!$questQuote->getItems()->count()) {
+            return;
+        }
+
+        $customerReference = $oauthResponseTransfer->getCustomerReference();
+        $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
+        );
+
+        $customerQuotes = $customerQuoteCollection->getQuotes();
+        if (!$customerQuotes->count()) {
+            return;
+        }
+
+        $customerQuote = $customerQuotes[0];
+
+        foreach ($customerQuote->getItems() as $item) {
+            $cartItemRequestTransfer = (new CartItemRequestTransfer())
+                ->setQuoteUuid($customerQuote->getUuid())
+                ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
+                ->setSku($item->getSku())
+                ->setQuantity($item->getQuantity());
+
+            $this->addItem($cartItemRequestTransfer);
+        }
     }
 
     /**

@@ -580,6 +580,66 @@ class CartsRestApiFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateGuestQuoteToCustomerQuoteWillUpdateGuestQuoteToCustomerQuote(): void
+    {
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
+
+        $this->cartsRestApiFacade->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateGuestQuoteToCustomerQuoteWillNotUpdateGuestQuoteToCustomerQuoteWithoutCustomerReference(): void
+    {
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->cartsRestApiFacade->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateGuestQuoteToCustomerQuoteWillNotUpdateGuestQuoteToCustomerQuoteWithoutAnonymousCustomerReference(): void
+    {
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->cartsRestApiFacade->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGuestQuoteItemsToCustomerQuoteWillAddGuestQuoteItemsToCustomerQuote(): void
+    {
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
+
+        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutAnonymousCustomerReference(): void
+    {
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutCustomerReference(): void
+    {
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
+        $this->expectException(RequiredTransferPropertyException::class);
+        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockCartsRestApiBusinessFactory(): MockObject

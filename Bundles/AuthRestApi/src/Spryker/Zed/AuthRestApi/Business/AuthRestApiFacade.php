@@ -17,9 +17,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AuthRestApiFacade extends AbstractFacade implements AuthRestApiFacadeInterface
 {
     /**
-     * @param OauthRequestTransfer $oauthRequestTransfer
+     * @api
      *
-     * @return OauthResponseTransfer
+     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
     public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {

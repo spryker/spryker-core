@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -140,6 +141,32 @@ class QuoteUpdater implements QuoteUpdaterInterface
         $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $quoteCollectionTransfer);
 
         return $this->performUpdatingQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    {
+        $oauthResponseTransfer
+            ->requireCustomerReference()
+            ->requireAnonymousCustomerReference();
+
+        $guestQuoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())
+                ->setCustomerReference($oauthResponseTransfer->getAnonymousCustomerReference())
+        );
+
+        if (!$guestQuoteCollectionTransfer->getQuotes()->count()) {
+            return;
+        }
+
+        $registeredCustomerReference = $oauthResponseTransfer->getCustomerReference();
+        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuoteCollectionTransfer);
+
+        $this->performUpdatingQuote($quoteTransfer);
     }
 
     /**

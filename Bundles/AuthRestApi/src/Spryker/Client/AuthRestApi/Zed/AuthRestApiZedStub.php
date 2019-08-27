@@ -7,14 +7,8 @@
 
 namespace Spryker\Client\AuthRestApi\Zed;
 
-use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
-use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Client\AuthRestApi\Dependency\Client\AuthRestApiToZedRequestClientInterface;
 
 class AuthRestApiZedStub implements AuthRestApiZedStubInterface
@@ -39,7 +33,7 @@ class AuthRestApiZedStub implements AuthRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): \Generated\Shared\Transfer\OauthResponseTransfer
+    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
         $oauthResponseTransfer = $this->zedRequestClient->call('/auth-rest-api/gateway/process-access-token', $oauthRequestTransfer);
