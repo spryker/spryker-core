@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyModuleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Zend\Filter\Word\DashToCamelCase;
 
 class DependencyContainer implements DependencyContainerInterface
 {
@@ -34,18 +35,27 @@ class DependencyContainer implements DependencyContainerInterface
     }
 
     /**
-     * @param string $module
+     * @param string $moduleOrComposerName
      * @param string $type
      * @param bool $isOptional
      * @param bool $isTest
      *
      * @return $this
      */
-    public function addDependency(string $module, string $type, bool $isOptional = false, bool $isTest = false)
+    public function addDependency(string $moduleOrComposerName, string $type, bool $isOptional = false, bool $isTest = false)
     {
+        $moduleName = $moduleOrComposerName;
+        $composerName = null;
+
+        if (strpos($moduleOrComposerName, '/') !== false) {
+            $composerName = $moduleOrComposerName;
+            $moduleName = $this->getModuleNameFromComposerName($composerName);
+        }
+
         $dependencyTransfer = new DependencyTransfer();
         $dependencyTransfer
-            ->setModule($module)
+            ->setModule($moduleName)
+            ->setComposerName($composerName)
             ->setType($type)
             ->setIsOptional($isOptional)
             ->setIsInTest($isTest);
@@ -71,6 +81,7 @@ class DependencyContainer implements DependencyContainerInterface
 
         $dependencyModuleTransfer = new DependencyModuleTransfer();
         $dependencyModuleTransfer->setModule($dependencyTransfer->getModule());
+        $dependencyModuleTransfer->setComposerName($dependencyTransfer->getComposerName());
 
         $this->dependencyCollectionTransfer->addDependencyModule($dependencyModuleTransfer);
 
@@ -107,5 +118,19 @@ class DependencyContainer implements DependencyContainerInterface
         }
 
         return $dependencyCollectionTransfer;
+    }
+
+    /**
+     * @param string $composerName
+     *
+     * @return string
+     */
+    protected function getModuleNameFromComposerName(string $composerName): string
+    {
+        [$organizationName, $moduleName] = explode('/', $composerName);
+
+        $filter = new DashToCamelCase();
+
+        return ucfirst($filter->filter($moduleName));
     }
 }

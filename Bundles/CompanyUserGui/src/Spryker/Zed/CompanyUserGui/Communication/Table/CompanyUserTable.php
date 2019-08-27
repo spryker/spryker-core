@@ -42,7 +42,7 @@ class CompanyUserTable extends AbstractTable
     protected $companyUserTableActionLinksExpanderPlugins;
 
     /**
-     * @var null|\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface
+     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableDeleteActionPluginInterface|null
      */
     protected $companyUserTableDeleteActionPlugin;
 

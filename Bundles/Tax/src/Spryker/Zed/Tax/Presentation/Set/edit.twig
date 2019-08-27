@@ -2,7 +2,7 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% block section_title %}
-    {{ 'Edit Tax Set:' | trans ~ '' ~ taxSet.idTaxSet }}
+    {{ 'Edit Tax Set:' | trans ~ ' ' ~ taxSet.name }}
 {% endblock %}
 
 {% block action %}

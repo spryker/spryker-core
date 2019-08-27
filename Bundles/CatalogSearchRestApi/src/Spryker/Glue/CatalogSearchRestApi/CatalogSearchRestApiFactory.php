@@ -12,6 +12,8 @@ use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToGl
 use Spryker\Glue\CatalogSearchRestApi\Dependency\Client\CatalogSearchRestApiToPriceClientInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReader;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchReaderInterface;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersIntegerValidator;
+use Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersIntegerValidatorInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapperInterface;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
@@ -20,6 +22,9 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTransla
 use Spryker\Glue\CatalogSearchRestApi\Processor\Translation\CatalogSearchTranslationExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Glue\CatalogSearchRestApi\CatalogSearchRestApiConfig getConfig()
+ */
 class CatalogSearchRestApiFactory extends AbstractFactory
 {
     /**
@@ -61,6 +66,17 @@ class CatalogSearchRestApiFactory extends AbstractFactory
     public function createCatalogSearchTranslationExpander(): CatalogSearchTranslationExpanderInterface
     {
         return new CatalogSearchTranslationExpander($this->getGlossaryStorageClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\CatalogSearchRestApi\Processor\Catalog\CatalogSearchRequestParametersIntegerValidatorInterface
+     */
+    public function createCatalogSearchRequestParametersIntegerValidator(): CatalogSearchRequestParametersIntegerValidatorInterface
+    {
+        return new CatalogSearchRequestParametersIntegerValidator(
+            $this->getResourceBuilder(),
+            $this->getConfig()
+        );
     }
 
     /**
