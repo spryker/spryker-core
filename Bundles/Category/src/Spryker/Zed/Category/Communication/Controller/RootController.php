@@ -10,7 +10,7 @@ namespace Spryker\Zed\Category\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
- * @deprecated This class has been replaced by \Spryker\Zed\CategoryGui\Communication\Controller\ListController
+ * @deprecated This class has been replaced by \Spryker\Zed\CategoryGui\Communication\Controller\WarehouseController
  *
  * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\Category\Communication\CategoryCommunicationFactory getFactory()

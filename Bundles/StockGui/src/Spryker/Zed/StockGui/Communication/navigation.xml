@@ -9,8 +9,8 @@
                 <label>Warehouses</label>
                 <title>Warehouses</title>
                 <bundle>stock-gui</bundle>
-                <controller>list</controller>
-                <action>index</action>
+                <controller>warehouse</controller>
+                <action>list</action>
                 <icon>fa-angle-double-right</icon>
             </stores>
         </pages>

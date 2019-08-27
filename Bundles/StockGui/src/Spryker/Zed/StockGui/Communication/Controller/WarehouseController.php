@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method \Spryker\Zed\StockGui\Communication\StockGuiCommunicationFactory getFactory()
  */
-class ListController extends AbstractController
+class WarehouseController extends AbstractController
 {
     /**
      * @return array
      */
-    public function indexAction(): array
+    public function listAction(): array
     {
         $stockTable = $this->getFactory()->createStockTable();
 
