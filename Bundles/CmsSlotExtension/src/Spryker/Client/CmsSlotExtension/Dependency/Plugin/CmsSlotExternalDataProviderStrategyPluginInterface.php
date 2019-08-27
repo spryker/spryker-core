@@ -27,9 +27,7 @@ interface CmsSlotExternalDataProviderStrategyPluginInterface
      *
      * @api
      *
-     * @param string $dataKey
-     *
      * @return mixed
      */
-    public function getDataForKey(string $dataKey);
+    public function getDataForKey();
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlot\Business;
 
-use Spryker\Client\CmsSlot\Exception\SlotDataProviderMissingException;
+use Spryker\Client\CmsSlot\Exception\CmsSlotExternalDataProviderMissingException;
 
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
@@ -34,7 +34,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         $externalData = [];
 
         foreach ($dataKeys as $dataKey) {
-            $externalData[$dataKey] = $this->applyCmsSlotExternalDataProviderStrategyPlugin($dataKey);
+            $externalData[$dataKey] = $this->executeCmsSlotExternalDataProviderStrategyPlugin($dataKey);
         }
 
         return $externalData;
@@ -43,18 +43,18 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     /**
      * @param string $dataKey
      *
-     * @throws \Spryker\Client\CmsSlot\Exception\SlotDataProviderMissingException
+     * @throws \Spryker\Client\CmsSlot\Exception\CmsSlotExternalDataProviderMissingException
      *
      * @return mixed
      */
-    protected function applyCmsSlotExternalDataProviderStrategyPlugin(string $dataKey)
+    protected function executeCmsSlotExternalDataProviderStrategyPlugin(string $dataKey)
     {
         foreach ($this->cmsSlotExternalDataProviderStrategyPlugins as $cmsSlotExternalDataProviderStrategyPlugin) {
             if ($cmsSlotExternalDataProviderStrategyPlugin->isApplicable($dataKey)) {
-                return $cmsSlotExternalDataProviderStrategyPlugin->getDataForKey($dataKey);
+                return $cmsSlotExternalDataProviderStrategyPlugin->getDataForKey();
             }
         }
 
-        throw new SlotDataProviderMissingException(sprintf('The data provider for the key "%s" is missing', $dataKey));
+        throw new CmsSlotExternalDataProviderMissingException(sprintf('The data provider for the key "%s" is missing', $dataKey));
     }
 }

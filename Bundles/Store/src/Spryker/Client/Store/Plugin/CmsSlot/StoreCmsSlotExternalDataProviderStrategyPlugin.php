@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  */
 class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin implements CmsSlotExternalDataProviderStrategyPluginInterface
 {
-    protected const FILLING_KEY = 'store';
+    protected const DATA_KEY = 'store';
 
     /**
      * {@inheritdoc}
@@ -28,7 +28,7 @@ class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin impl
      */
     public function isApplicable(string $dataKey): bool
     {
-        return $dataKey === static::FILLING_KEY;
+        return $dataKey === static::DATA_KEY;
     }
 
     /**
@@ -37,11 +37,9 @@ class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param string $dataKey
-     *
      * @return \Generated\Shared\Transfer\StoreTransfer|mixed
      */
-    public function getDataForKey(string $dataKey)
+    public function getDataForKey()
     {
         return $this->getClient()->getCurrentStore();
     }

@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  */
 class LocaleCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin implements CmsSlotExternalDataProviderStrategyPluginInterface
 {
-    protected const FILLING_KEY = 'locale';
+    protected const DATA_KEY = 'locale';
 
     /**
      * {@inheritdoc}
@@ -28,20 +28,18 @@ class LocaleCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin imp
      */
     public function isApplicable(string $dataKey): bool
     {
-        return $dataKey === static::FILLING_KEY;
+        return $dataKey === static::DATA_KEY;
     }
 
     /**
      * {@inheritdoc}
-     *  - Returns the current locale's name.
+     *  - Returns the current locale name.
      *
      * @api
      *
-     * @param string $dataKey
-     *
      * @return string|mixed
      */
-    public function getDataForKey(string $dataKey)
+    public function getDataForKey()
     {
         return $this->getClient()->getCurrentLocale();
     }

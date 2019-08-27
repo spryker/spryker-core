@@ -9,6 +9,6 @@ namespace Spryker\Client\CmsSlot\Exception;
 
 use Exception;
 
-class SlotDataProviderMissingException extends Exception
+class CmsSlotExternalDataProviderMissingException extends Exception
 {
 }
