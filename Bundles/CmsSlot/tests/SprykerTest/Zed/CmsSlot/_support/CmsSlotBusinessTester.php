@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Storage;
+namespace SprykerTest\Zed\CmsSlot;
 
 use Codeception\Actor;
 
@@ -20,13 +20,14 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method void pause()
+ * @method \Spryker\Zed\CmsSlot\Business\CmsSlotFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class BusinessTester extends Actor
+class CmsSlotBusinessTester extends Actor
 {
-    use _generated\BusinessTesterActions;
+    use _generated\CmsSlotBusinessTesterActions;
 
    /**
     * Define custom actions here

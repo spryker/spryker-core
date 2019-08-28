@@ -91,10 +91,11 @@ class PersistQuoteTest extends Unit
 
         // Assert
         $actualQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer)->getQuoteTransfer();
-        $actualQuoteData = $actualQuoteTransfer->modifiedToArray();
-        unset($actualQuoteData['id_quote']);
 
-        $this->assertArraySubset($expectedQuoteTransfer->modifiedToArray(), $actualQuoteData, 'Quote from database should have returned expected data.');
+        $this->assertNotNull($actualQuoteTransfer->getIdQuote());
+        $this->assertEquals($actualQuoteTransfer->getCurrency(), $expectedQuoteTransfer->getCurrency());
+        $this->assertEquals($actualQuoteTransfer->getStore(), $expectedQuoteTransfer->getStore());
+        $this->assertEquals($actualQuoteTransfer->getCustomerReference(), $expectedQuoteTransfer->getCustomerReference());
     }
 
     /**

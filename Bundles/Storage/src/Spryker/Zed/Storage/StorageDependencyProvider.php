@@ -9,6 +9,7 @@ namespace Spryker\Zed\Storage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceBridge;
 
 /**
  * @method \Spryker\Zed\Storage\StorageConfig getConfig()
@@ -16,6 +17,7 @@ use Spryker\Zed\Kernel\Container;
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_STORAGE = 'storage client';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +26,9 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->addStorageClient($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addStorageClient($container);
 
         return $container;
     }
@@ -36,7 +40,10 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->addStorageClient($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addStorageClient($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -44,12 +51,28 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStorageClient(Container $container)
+    protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return $container->getLocator()->storage()->client();
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new StorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        });
+
+        return $container;
     }
 }
