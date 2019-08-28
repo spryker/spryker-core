@@ -244,7 +244,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array|null
      */
-    protected function findStorageDataByMappingKeyAndLocaleName(string $mappingKey, string $localeName)
+    protected function findStorageDataByMappingKeyAndLocaleName(string $mappingKey, string $localeName): ?array
     {
         $storageData = $this->storageClient->get($mappingKey);
 
