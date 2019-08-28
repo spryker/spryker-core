@@ -20,6 +20,7 @@ use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\CustomerConfig;
@@ -1052,9 +1053,9 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Customer\Business\CustomerFacadeInterface
+     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
-    protected function getCustomerFacadeWithMockedConfig()
+    protected function getCustomerFacadeWithMockedConfig(): CustomerFacadeInterface
     {
         $customerFacade = $this->tester->getFacade();
 
