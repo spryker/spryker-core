@@ -30,7 +30,7 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     protected $productFacade;
 
     /**
-     * @var null|\Psr\Log\LoggerInterface
+     * @var \Psr\Log\LoggerInterface|null
      */
     protected $logger;
 
