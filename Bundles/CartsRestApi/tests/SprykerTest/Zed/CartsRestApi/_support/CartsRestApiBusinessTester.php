@@ -78,6 +78,18 @@ class CartsRestApiBusinessTester extends Actor
         ],
     ];
 
+    public const ITEMS = [
+        [
+            'sku' => 'test sku',
+            'quantity' => '666',
+
+        ],
+        [
+            'sku' => 'test sku 2',
+            'quantity' => '666',
+        ],
+    ];
+
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -96,8 +108,11 @@ class CartsRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE, 'idQuote' => static::TEST_ID_QUOTE])
-            ->build();
+            ->withQuoteTransfer([
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE, 'idQuote' => static::TEST_ID_QUOTE,
+                'items' => static::ITEMS,
+            ])->build();
 
         return $quoteResponseTransfer;
     }
@@ -147,6 +162,23 @@ class CartsRestApiBusinessTester extends Actor
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+            ]
+        ))->build();
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function prepareQuoteTransferForGuest(): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_ANONYMOUS_CUSTOMER_REFERENCE),
             ]
         ))->build();
 

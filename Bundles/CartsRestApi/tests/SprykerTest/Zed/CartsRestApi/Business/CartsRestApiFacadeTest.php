@@ -585,8 +585,19 @@ class CartsRestApiFacadeTest extends Unit
     public function testUpdateGuestQuoteToCustomerQuoteWillUpdateGuestQuoteToCustomerQuote(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
+        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
+        $quoteTransferForGuest = $this->tester->prepareQuoteTransferForGuest();
 
-        $this->cartsRestApiFacade->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+        $quoteCollectionTransfer1 = $this->cartsRestApiFacade
+            ->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        $this->cartsRestApiFacade
+            ->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+
+        $this->cartsRestApiFacade->createQuote($quoteTransferForGuest);
+
+        $quoteCollectionTransfer2 = $this->cartsRestApiFacade
+            ->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 
     /**
@@ -615,8 +626,16 @@ class CartsRestApiFacadeTest extends Unit
     public function testAddGuestQuoteItemsToCustomerQuoteWillAddGuestQuoteItemsToCustomerQuote(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
 
-        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+        $this->cartsRestApiFacade
+            ->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+
+        $quoteResponseTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid($quoteTransfer);
+
+        $this->assertEquals($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(), $oauthResponseTransfer->getCustomerReference());
+        $this->assertNotEquals($quoteTransfer->getItems()->count(), $quoteResponseTransfer->getQuoteTransfer()->getItems()->count());
     }
 
     /**
@@ -739,7 +758,7 @@ class CartsRestApiFacadeTest extends Unit
         $persistentCartFacadeMock->method('deleteQuote')
             ->willReturn($this->tester->prepareQuoteResponseTransfer());
         $persistentCartFacadeMock->method('add')
-            ->willReturn($this->tester->prepareQuoteResponseTransfer());
+            ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
         $persistentCartFacadeMock->method('changeItemQuantity')
             ->willReturn($this->tester->prepareQuoteResponseTransfer());
         $persistentCartFacadeMock->method('remove')
