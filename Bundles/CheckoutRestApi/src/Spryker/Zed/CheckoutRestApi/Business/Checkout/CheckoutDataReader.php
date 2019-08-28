@@ -122,7 +122,13 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         QuoteTransfer $quoteTransfer
     ): ShipmentMethodsTransfer {
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
-        $selectedShipmentMethodId = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod();
+        $restShipmentTransfer = $restCheckoutRequestAttributesTransfer->getShipment();
+
+        if ($restShipmentTransfer === null) {
+            return $shipmentMethodsTransfer;
+        }
+
+        $selectedShipmentMethodId = $restShipmentTransfer->getIdShipmentMethod();
 
         foreach ($this->getShipmentMethodsTransfer($quoteTransfer)->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $selectedShipmentMethodId) {

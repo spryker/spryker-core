@@ -27,6 +27,10 @@ class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
     ): array {
         $sorts = $restRequest->getSort();
 
+        if (empty($sorts)) {
+            return $restShipmentMethodAttributeTransfers;
+        }
+
         uasort(
             $restShipmentMethodAttributeTransfers,
             function (
