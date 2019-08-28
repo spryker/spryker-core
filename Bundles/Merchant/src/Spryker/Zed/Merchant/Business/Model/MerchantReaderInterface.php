@@ -12,13 +12,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 interface MerchantReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
-
-    /**
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
