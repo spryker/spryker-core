@@ -919,45 +919,25 @@ class Customer implements CustomerInterface
         $maxLength = $this->customerConfig->getCustomerPasswordMaxLength();
 
         if ($customerPasswordLength < $minLength) {
-            $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
-                static::GLOSSARY_KEY_MIN_LENGTH_ERROR,
-                [
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_MIN_LENGTH_ERROR)
+                ->setParameters([
                     static::GLOSSARY_PARAM_VALIDATION_LENGTH => $minLength,
-                ]
-            );
+                ]);
 
-            return $customerResponseTransfer->addError($customerErrorTransfer);
+            return $customerResponseTransfer->setMessage($messageTransfer);
         }
 
         if ($customerPasswordLength > $maxLength) {
-            $customerErrorTransfer = $this->createCustomerErrorTransferWithTranslatableMessage(
-                static::GLOSSARY_KEY_MAX_LENGTH_ERROR,
-                [
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_MAX_LENGTH_ERROR)
+                ->setParameters([
                     static::GLOSSARY_PARAM_VALIDATION_LENGTH => $maxLength,
-                ]
-            );
+                ]);
 
-            return $customerResponseTransfer->addError($customerErrorTransfer);
+            return $customerResponseTransfer->setMessage($messageTransfer);
         }
 
         return $customerResponseTransfer->setIsSuccess(true);
-    }
-
-    /**
-     * @param string $message
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\CustomerErrorTransfer
-     */
-    protected function createCustomerErrorTransferWithTranslatableMessage(
-        string $message,
-        array $params
-    ): CustomerErrorTransfer {
-        $messageTransfer = (new MessageTransfer())
-            ->setValue($message)
-            ->setParameters($params);
-
-        return (new CustomerErrorTransfer())
-            ->setTranslatableMessage($messageTransfer);
     }
 }
