@@ -103,7 +103,7 @@ class CompanyUserStorage implements CompanyUserStorageInterface
      *
      * @return array|null
      */
-    protected function resolveMappingData($mappingData): ?array
+    protected function resolveMappingData(array $mappingData): ?array
     {
         if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
             return null;

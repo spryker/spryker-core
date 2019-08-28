@@ -261,7 +261,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array|null
      */
-    protected function resolveMappingData($mappingData, string $localeName): ?array
+    protected function resolveMappingData(array $mappingData, string $localeName): ?array
     {
         if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
             return null;
