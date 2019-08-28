@@ -8,7 +8,7 @@
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider" deprecated="Use selectedPaymentMethods instead"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
-        <property name="selectedPaymentMethods" type="RestPaymentMethod" singular="selectedPaymentMethod"/>
+        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
     </transfer>
 
     <transfer name="RestCheckoutError">

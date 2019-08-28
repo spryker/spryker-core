@@ -13,13 +13,13 @@ use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType;
 interface PaymentMapperInterface
 {
     /**
-     * @param \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType $productPackagingUnitEntity
+     * @param \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType $spySalesPaymentMethodTypeEntity
      * @param \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer
      */
     public function mapSalesPaymentMethodTypeTransfer(
-        SpySalesPaymentMethodType $productPackagingUnitEntity,
+        SpySalesPaymentMethodType $spySalesPaymentMethodTypeEntity,
         SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
     ): SalesPaymentMethodTypeTransfer;
 }
