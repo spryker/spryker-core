@@ -84,6 +84,9 @@ abstract class AbstractController
     }
 
     /**
+     * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
+     * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
+     *
      * @param string $absoluteUrl
      * @param int $code
      *
