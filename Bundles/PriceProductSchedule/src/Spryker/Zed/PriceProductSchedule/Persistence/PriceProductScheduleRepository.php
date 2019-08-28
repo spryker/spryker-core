@@ -643,14 +643,14 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         SpyPriceProductSchedule $priceProductScheduleEntity,
         SpyPriceProductScheduleQuery $priceProductScheduleQuery
     ): SpyPriceProductScheduleQuery {
-        $idProductAbstract = $priceProductScheduleEntity->getFkProductAbstract();
-        if ($idProductAbstract !== null) {
-            return $priceProductScheduleQuery->filterByFkProductAbstract($idProductAbstract);
-        }
-
         $idProduct = $priceProductScheduleEntity->getFkProduct();
         if ($idProduct !== null) {
             return $priceProductScheduleQuery->filterByFkProduct($idProduct);
+        }
+
+        $idProductAbstract = $priceProductScheduleEntity->getFkProductAbstract();
+        if ($idProductAbstract !== null) {
+            return $priceProductScheduleQuery->filterByFkProductAbstract($idProductAbstract);
         }
 
         return $priceProductScheduleQuery;
