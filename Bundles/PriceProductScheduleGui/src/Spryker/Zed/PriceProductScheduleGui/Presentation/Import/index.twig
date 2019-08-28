@@ -41,4 +41,12 @@
 
     {% endembed %}
 
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Scheduled prices imported' | trans} %}
+
+        {% block widget_content %}
+            {{ priceProductScheduleListTableView | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}
