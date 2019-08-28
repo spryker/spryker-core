@@ -24,7 +24,7 @@ class ViewController extends AbstractController
     protected const PARAM_CUSTOMER = 'customerTransfer';
 
     protected const URL_REDIRECT_CUSTOMER_LIST_PAGE = '/customer';
-    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id %s does not exist';
+    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id `%s` does not exist';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

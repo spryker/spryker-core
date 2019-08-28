@@ -23,7 +23,7 @@ class EditController extends AbstractController
 {
     public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
     public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
-    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id "%s" does not exist';
+    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id `%s` does not exist';
 
     protected const URL_REDIRECT_CUSTOMER_LIST_PAGE = '/customer';
 
