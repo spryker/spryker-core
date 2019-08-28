@@ -20,7 +20,6 @@ use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\CustomerConfig;
@@ -90,20 +89,21 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->customerFacade = new CustomerFacade();
-        $this->customerFacade->setFactory($this->getBusinessFactory());
+        $this->customerFacade->setFactory($this->getCustomerBusinessFactory());
     }
 
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerBusinessFactory
      */
-    protected function getBusinessFactory()
+    protected function getCustomerBusinessFactory(): CustomerBusinessFactory
     {
         $customerBusinessFactory = new CustomerBusinessFactory();
         $customerBusinessFactory->setContainer($this->getContainer());
+        $customerBusinessFactory->setConfig($this->getCustomerConfigMock());
 
         return $customerBusinessFactory;
     }
@@ -239,8 +239,7 @@ class CustomerFacadeTest extends Unit
         ]))->build();
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->addCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->addCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -261,8 +260,7 @@ class CustomerFacadeTest extends Unit
         ]))->build();
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->addCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->addCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -283,8 +281,7 @@ class CustomerFacadeTest extends Unit
         ]))->build();
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->addCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->addCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -302,8 +299,7 @@ class CustomerFacadeTest extends Unit
         ]))->build();
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->registerCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -324,8 +320,7 @@ class CustomerFacadeTest extends Unit
         ]))->build();
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->registerCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -346,8 +341,7 @@ class CustomerFacadeTest extends Unit
         ]))->build();
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->registerCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -367,8 +361,7 @@ class CustomerFacadeTest extends Unit
             ->setNewPassword(static::VALUE_SHORT_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -391,8 +384,7 @@ class CustomerFacadeTest extends Unit
             ->setNewPassword(static::VALUE_LONG_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -415,8 +407,7 @@ class CustomerFacadeTest extends Unit
             ->setNewPassword(static::VALUE_NEW_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->updateCustomer($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -436,8 +427,7 @@ class CustomerFacadeTest extends Unit
             ->setNewPassword(static::VALUE_SHORT_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->updateCustomerPassword($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->updateCustomerPassword($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -460,8 +450,7 @@ class CustomerFacadeTest extends Unit
             ->setNewPassword(static::VALUE_LONG_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->updateCustomerPassword($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->updateCustomerPassword($customerTransfer);
 
         // Assert
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
@@ -484,8 +473,7 @@ class CustomerFacadeTest extends Unit
             ->setNewPassword(static::VALUE_NEW_PASSWORD);
 
         // Act
-        $customerResponseTransfer = $this->getCustomerFacadeWithMockedConfig()
-            ->updateCustomerPassword($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->updateCustomerPassword($customerTransfer);
 
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
@@ -1050,21 +1038,6 @@ class CustomerFacadeTest extends Unit
         }
 
         return $messageTransfer->getValue() === $message;
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
-     */
-    protected function getCustomerFacadeWithMockedConfig(): CustomerFacadeInterface
-    {
-        $customerFacade = $this->tester->getFacade();
-
-        $customerBusinessFactory = new CustomerBusinessFactory();
-        $customerBusinessFactory->setConfig(
-            $this->getCustomerConfigMock()
-        );
-
-        return $customerFacade->setFactory($customerBusinessFactory);
     }
 
     /**
