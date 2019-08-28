@@ -1,0 +1,5 @@
+Currency,Währung
+"Enter a quantity and the item price that should be applied if customer buys above that threshold","Geben Sie eine Anzahl und den Artikelpreis ein, der angewendet werden soll, wenn der Kunde über diesem Schwellenwert kauft"
+"Price Dimension Name","Name der Preisdimension"
+"Price Type",Preistyp
+Store,Geschäft

@@ -27,7 +27,7 @@ class SalesDataHelper extends Module
     /**
      * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
      */
-    protected $saveOrderStack;
+    protected $saveOrderStack = [];
 
     /**
      * @param array $override
@@ -113,6 +113,7 @@ class SalesDataHelper extends Module
         $salesConfig->setStateMachineProcessName($stateMachineProcessName);
         $salesBusinessFactory->setConfig($salesConfig);
 
+        /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $salesFacade */
         $salesFacade->setFactory($salesBusinessFactory);
 
         return $salesFacade;
