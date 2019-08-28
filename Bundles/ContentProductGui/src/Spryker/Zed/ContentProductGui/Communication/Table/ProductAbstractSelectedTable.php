@@ -49,10 +49,10 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
         $this->disableSearch();
 
         $config->setHeader([
-            static::COL_ID_PRODUCT_ABSTRACT => static::COL_ID_PRODUCT_ABSTRACT,
-            static::COL_SKU => static::COL_SKU,
+            static::COL_ID_PRODUCT_ABSTRACT => static::HEADER_ID_PRODUCT_ABSTRACT,
+            static::COL_SKU => static::HEADER_SKU,
             static::COL_IMAGE => static::COL_IMAGE,
-            static::COL_NAME => static::COL_NAME,
+            static::COL_NAME => static::HEADER_NAME,
             static::COL_STORES => static::COL_STORES,
             static::COL_STATUS => static::COL_STATUS,
             static::COL_ACTIONS => static::COL_ACTIONS,

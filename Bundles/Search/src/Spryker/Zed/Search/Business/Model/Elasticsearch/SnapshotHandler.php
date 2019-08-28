@@ -14,6 +14,9 @@ use RuntimeException;
 
 class SnapshotHandler implements SnapshotHandlerInterface
 {
+    protected const TYPE_FILESYSTEM = 'fs';
+    protected const SETTINGS_LOCATION = 'location';
+
     /**
      * @var \Elastica\Snapshot
      */
@@ -34,8 +37,10 @@ class SnapshotHandler implements SnapshotHandlerInterface
      *
      * @return bool
      */
-    public function registerSnapshotRepository($repositoryName, $type = 'fs', $settings = [])
+    public function registerSnapshotRepository($repositoryName, $type = self::TYPE_FILESYSTEM, $settings = [])
     {
+        $settings = $this->buildRepositorySettings($repositoryName, $type, $settings);
+
         return $this->elasticaSnapshot->registerRepository($repositoryName, $type, $settings)->isOk();
     }
 
@@ -131,5 +136,21 @@ class SnapshotHandler implements SnapshotHandlerInterface
     public function deleteSnapshot($repositoryName, $snapshotName)
     {
         return $this->elasticaSnapshot->deleteSnapshot($repositoryName, $snapshotName)->isOk();
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return array
+     */
+    protected function buildRepositorySettings(string $repositoryName, string $type = self::TYPE_FILESYSTEM, array $settings = []): array
+    {
+        if ($type === static::TYPE_FILESYSTEM && !isset($settings[static::SETTINGS_LOCATION])) {
+            $settings[static::SETTINGS_LOCATION] = $repositoryName;
+        }
+
+        return $settings;
     }
 }

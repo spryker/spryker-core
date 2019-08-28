@@ -5,36 +5,20 @@
 {% block head_title widget_title | trans %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
-
             <div class="row">
-                <div class="col-md-6">
-
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>{{ "Number of entries:" | trans }}</th>
-                            <td><a href="/search/maintenance/list">{{ totalCount }}</a></td>
-                        </tr>
-
-
+                <div class="col-md-12">
+                    <dl class="row">
+                        <dt class="col-xs-3">{{ "Number of entries:" | trans }}</dt>
+                        <dd class="col-xs-9"><a href="/search/maintenance/list">{{ totalCount }}</a></dd>
                         {% for key, timestamp in metaData %}
-                            <tr>
-                                <th>{{ key }}</th>
-                                <td>{{ timestamp }}</td>
-                            </tr>
+                            <dt class="col-xs-3">{{ key }}</dt>
+                            <dd class="col-xs-9">{{ timestamp }}</dd>
                         {% endfor %}
-                        <tr>
-                            <th></th>
-                            <td><a href="/collector-search-connector/maintenance/drop-timestamps">{{ "Drop timestamps" | trans }}</a></td>
-                        </tr>
-                    </table>
+                    </dl>
                 </div>
             </div>
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}
