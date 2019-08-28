@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Module;
+use Codeception\TestInterface;
 use org\bovigo\vfs\vfsStream;
 use org\bovigo\vfs\vfsStreamDirectory;
 
@@ -21,11 +22,30 @@ class VirtualFilesystemHelper extends Module
     protected $virtualDirectory;
 
     /**
+     * @param array $structure
+     *
      * @return string
      */
-    public function getVirtualDirectory(): string
+    public function getVirtualDirectory(array $structure = []): string
     {
-        return $this->getVirtualRootDirectory()->url() . DIRECTORY_SEPARATOR;
+        return $this->getVirtualRootDirectory($structure)->url() . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string[]
+     */
+    public function getVirtualDirectoryContents(string $path): array
+    {
+        $contents = [];
+
+        /** @var \org\bovigo\vfs\vfsStreamContent $child */
+        foreach ($this->getVirtualRootDirectory()->getChild($path)->getChildren() as $child) {
+            $contents[] = $child->getName();
+        }
+
+        return $contents;
     }
 
     /**
@@ -37,7 +57,7 @@ class VirtualFilesystemHelper extends Module
     public function assertVirtualDirectoryIsEmpty(string $path, string $message = ''): void
     {
         $this->assertVirtualDirectoryExists($path, sprintf(static::ASSERT_EXISTS_DIR_MESSAGE, $path));
-        $this->assertEmpty($this->getVirtualRootDirectory()->getChild($path)->getChildren(), $message);
+        $this->assertEmpty($this->getVirtualDirectoryContents($path), $message);
     }
 
     /**
@@ -49,7 +69,7 @@ class VirtualFilesystemHelper extends Module
     public function assertVirtualDirectoryNotEmpty(string $path, string $message = ''): void
     {
         $this->assertVirtualDirectoryExists($path, sprintf(static::ASSERT_EXISTS_DIR_MESSAGE, $path));
-        $this->assertNotEmpty($this->getVirtualRootDirectory()->getChild($path)->getChildren(), $message);
+        $this->assertNotEmpty($this->getVirtualDirectoryContents($path), $message);
     }
 
     /**
@@ -64,14 +84,26 @@ class VirtualFilesystemHelper extends Module
     }
 
     /**
+     * @param array $structure
+     *
      * @return \org\bovigo\vfs\vfsStreamDirectory
      */
-    protected function getVirtualRootDirectory(): vfsStreamDirectory
+    protected function getVirtualRootDirectory(array $structure = []): vfsStreamDirectory
     {
         if (!$this->virtualDirectory) {
-            $this->virtualDirectory = vfsStream::setup();
+            $this->virtualDirectory = vfsStream::setup('root', null, $structure);
         }
 
         return $this->virtualDirectory;
+    }
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _after(TestInterface $test): void
+    {
+        $this->virtualDirectory = null;
     }
 }

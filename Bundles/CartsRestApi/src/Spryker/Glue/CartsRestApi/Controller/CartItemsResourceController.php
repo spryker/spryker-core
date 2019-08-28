@@ -27,6 +27,7 @@ class CartItemsResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "400": "Cart id is missing.",
      *              "403": "Unauthorized cart action.",
@@ -62,6 +63,7 @@ class CartItemsResourceController extends AbstractController
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",
      *              "403": "Unauthorized cart action.",

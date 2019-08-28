@@ -408,7 +408,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             return [];
         }
 
-        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities, $concreteSkus);
     }
 
     /**
