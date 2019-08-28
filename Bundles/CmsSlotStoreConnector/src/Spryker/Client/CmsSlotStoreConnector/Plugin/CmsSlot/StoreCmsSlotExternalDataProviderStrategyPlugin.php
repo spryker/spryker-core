@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Store\Plugin\CmsSlot;
+namespace Spryker\Client\CmsSlotStoreConnector\Plugin\CmsSlot;
 
 use Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @method \Spryker\Client\CmsSlotStoreConnector\CmsSlotStoreConnectorFactory getFactory()
  * @method \Spryker\Client\Store\StoreClientInterface getClient()
  */
 class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin implements CmsSlotExternalDataProviderStrategyPluginInterface
@@ -41,6 +42,6 @@ class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin impl
      */
     public function getDataForKey()
     {
-        return $this->getClient()->getCurrentStore();
+        return $this->getFactory()->getStoreClient()->getCurrentStore();
     }
 }

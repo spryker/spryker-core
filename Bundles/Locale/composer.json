@@ -6,7 +6,6 @@
   "require": {
     "php": ">=7.1",
     "spryker/application-extension": "^1.0.0",
-    "spryker/cms-slot-extension": "^1.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale-extension": "^1.0.0",

@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Locale\Plugin\CmsSlot;
+namespace Spryker\Client\CmsSlotLocaleConnector\Plugin\CmsSlot;
 
 use Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @method \Spryker\Client\CmsSlotLocaleConnector\CmsSlotLocaleConnectorFactory getFactory()
  * @method \Spryker\Client\Locale\LocaleClientInterface getClient()
  */
 class LocaleCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin implements CmsSlotExternalDataProviderStrategyPluginInterface
@@ -41,6 +42,6 @@ class LocaleCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin imp
      */
     public function getDataForKey()
     {
-        return $this->getClient()->getCurrentLocale();
+        return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }
 }
