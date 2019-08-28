@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_PAGE_LENGTH = 100;
+
     /**
      * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE` instead.
      */
@@ -40,6 +42,14 @@ class StorageConfig extends AbstractBundleConfig
     public function getRdbDumpPath()
     {
         return '/var/lib/redis/dump.rdb';
+    }
+
+    /**
+     * @return int
+     */
+    public function getGuiDefaultPageLength(): int
+    {
+        return static::DEFAULT_PAGE_LENGTH;
     }
 
     /**

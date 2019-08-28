@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 class MaintenanceController extends AbstractController
 {
     public const REFERENCE_KEY = 'reference_key';
-    public const MESSAGE_REMOVED_ENTRIES = 'Removed "%s" entries from storage.';
     public const URL_STORAGE_MAINTENANCE = '/storage/maintenance';
 
     /**
@@ -30,7 +29,6 @@ class MaintenanceController extends AbstractController
         return $this->viewResponse(
             [
                 'totalCount' => $count,
-                'metaData' => $count,
             ]
         );
     }
@@ -55,19 +53,6 @@ class MaintenanceController extends AbstractController
         return $this->jsonResponse(
             $table->fetchData()
         );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteAllAction()
-    {
-        $numberOfDeletedEntries = $this->getFacade()->deleteAll();
-        $this->addInfoMessage(
-            sprintf(self::MESSAGE_REMOVED_ENTRIES, $numberOfDeletedEntries)
-        );
-
-        return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
     }
 
     /**
