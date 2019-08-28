@@ -24,6 +24,8 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
+use Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReader;
+use Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReaderInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizer;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate as MultipleShipmentOrderHydrate;
@@ -178,7 +180,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentExpenseFilter(): ShipmentExpenseFilterInterface
     {
-        return new ShipmentExpenseFilter($this->getConfig());
+        return new ShipmentExpenseFilter();
     }
 
     /**
@@ -236,8 +238,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository(),
-            $this->getConfig()
+            $this->getRepository()
         );
     }
 
@@ -342,7 +343,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createMultipleShipmentOrderHydrate(): ShipmentOrderHydrateInterface
     {
-        return new MultipleShipmentOrderHydrate($this->getRepository(), $this->getSalesFacade(), $this->getConfig());
+        return new MultipleShipmentOrderHydrate($this->getRepository(), $this->getSalesFacade());
     }
 
     /**
@@ -476,7 +477,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentExpenseCreator(): ShipmentExpenseCreatorInterface
     {
         return new ShipmentExpenseCreator(
-            $this->getConfig(),
             $this->createShipmentMapper(),
             $this->createExpenseSanitizer()
         );
@@ -557,5 +557,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getDeliveryTimePlugins(): array
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReaderInterface
+     */
+    public function createShipmentSalesOrderItemReader(): ShipmentSalesOrderItemReaderInterface
+    {
+        return new ShipmentSalesOrderItemReader($this->getRepository());
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -370,22 +369,6 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
-     */
-    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject
-    {
-        return $this->getFactory()
-            ->createSalesOrderItemReader()
-            ->findSalesOrderItemsBySalesShipmentId($idSalesShipment);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
@@ -395,19 +378,5 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createSalesAddressExpander()
             ->expandWithCustomerOrSalesAddress($addressTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getIdSalesOrderParameter(): string
-    {
-        return $this->getFactory()
-            ->createConfigReader()
-            ->getIdSalesOrderParameter();
     }
 }

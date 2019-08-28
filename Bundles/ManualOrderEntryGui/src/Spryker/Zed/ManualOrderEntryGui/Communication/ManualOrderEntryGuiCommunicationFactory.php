@@ -129,14 +129,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToShipmentServiceInterface
-     */
-    public function getShipmentService(): ManualOrderEntryGuiToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::SERVICE_SHIPMENT);
-    }
-
-    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoneyFacadeInterface
      */
     public function getMoneyFacade(): ManualOrderEntryGuiToMoneyFacadeInterface
@@ -608,8 +600,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createShipmentFormHandler(): FormHandlerInterface
     {
         return new ShipmentFormHandler(
-            $this->getShipmentFacade(),
-            $this->getShipmentService()
+            $this->getShipmentFacade()
         );
     }
 

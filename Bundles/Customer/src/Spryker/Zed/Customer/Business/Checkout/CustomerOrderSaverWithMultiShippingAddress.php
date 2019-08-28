@@ -135,8 +135,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
      */
     protected function isAddressNewAndUnique(AddressTransfer $addressTransfer, string $addressTransferKey): bool
     {
-        return $addressTransfer->getIdCompanyUnitAddress() !== null
-            || $addressTransfer->getIdCustomerAddress() !== null
+        return $addressTransfer->getIdCustomerAddress() !== null
             || isset($this->existingAddresses[$addressTransferKey]);
     }
 }

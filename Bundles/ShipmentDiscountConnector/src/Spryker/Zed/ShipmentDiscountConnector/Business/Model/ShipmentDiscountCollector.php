@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\ShipmentDiscountConnector\ShipmentDiscountConnectorConstants;
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountConnectorToShipmentServiceInterface;
 
 /**
@@ -49,9 +50,8 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         $discountableItems = [];
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== $shipmentExpenseType) {
+            if ($expenseTransfer->getType() !== ShipmentDiscountConnectorConstants::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 

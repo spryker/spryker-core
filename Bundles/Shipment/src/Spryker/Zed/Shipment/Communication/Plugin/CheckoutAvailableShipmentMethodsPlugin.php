@@ -23,8 +23,6 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     /**
      * @api
      *
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer

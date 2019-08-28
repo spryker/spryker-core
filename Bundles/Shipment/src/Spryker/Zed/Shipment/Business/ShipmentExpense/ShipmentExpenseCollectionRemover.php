@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConstants;
 
 class ShipmentExpenseCollectionRemover implements ShipmentExpenseCollectionRemoverInterface
 {
@@ -34,9 +35,8 @@ class ShipmentExpenseCollectionRemover implements ShipmentExpenseCollectionRemov
      */
     public function removeExpenseByShipmentHash(ArrayObject $expenseTransfers, string $shipmentHash): ArrayObject
     {
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($expenseTransfers as $expenseIndex => $expenseTransfer) {
-            if ($expenseTransfer->getType() === $shipmentExpenseType
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
                 && $this->isExpenseShipmentMatchesWithHash($expenseTransfer, $shipmentHash)) {
                 $expenseTransfers->offsetUnset($expenseIndex);
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
@@ -34,15 +33,4 @@ interface SalesOrderItemMapperInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         SpySalesOrderItem $salesOrderItem
     ): SpySalesOrderItem;
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    public function mapSalesOrderItemEntityToItemTransfer(
-        SpySalesOrderItem $spySalesOrderItemEntity,
-        ItemTransfer $itemTransfer
-    ): ItemTransfer;
 }

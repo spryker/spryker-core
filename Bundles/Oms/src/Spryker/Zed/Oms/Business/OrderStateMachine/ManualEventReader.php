@@ -89,7 +89,7 @@ class ManualEventReader implements ManualEventReaderInterface
      *
      * @return string[]
      */
-    public function getManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
+    protected function getManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
     {
         $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idSalesOrder)->find();
 

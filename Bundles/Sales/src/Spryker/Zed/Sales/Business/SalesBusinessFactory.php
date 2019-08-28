@@ -45,8 +45,6 @@ use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShipping
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
-use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReader;
-use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
@@ -333,14 +331,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemGrouper(): SalesOrderItemGrouperInterface
     {
         return new SalesOrderItemGrouper();
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemReaderInterface
-     */
-    public function createSalesOrderItemReader(): SalesOrderItemReaderInterface
-    {
-        return new SalesOrderItemReader($this->getRepository());
     }
 
     /**

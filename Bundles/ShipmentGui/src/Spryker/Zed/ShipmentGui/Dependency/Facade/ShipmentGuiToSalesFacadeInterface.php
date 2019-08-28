@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface ShipmentGuiToSalesFacadeInterface
@@ -18,16 +17,4 @@ interface ShipmentGuiToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
-
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
-     */
-    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject;
-
-    /**
-     * @return string
-     */
-    public function getIdSalesOrderParameter(): string;
 }

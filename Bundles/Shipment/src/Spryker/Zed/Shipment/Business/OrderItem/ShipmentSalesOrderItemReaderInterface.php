@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\OrderItem;
+namespace Spryker\Zed\Shipment\Business\OrderItem;
 
 use ArrayObject;
 
-interface SalesOrderItemReaderInterface
+interface ShipmentSalesOrderItemReaderInterface
 {
     /**
+     * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
-    public function findSalesOrderItemsBySalesShipmentId(int $idSalesShipment): ArrayObject;
+    public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
 }

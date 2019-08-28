@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
@@ -306,18 +305,6 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns sales order items by salesShipmentId or null.
-     *
-     * @api
-     *
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
-     */
-    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesShipment): ArrayObject;
-
-    /**
-     * Specification:
      * - Expands AddressTransfer with customer address data or sales address data and returns the modified object.
      *
      * @api
@@ -327,14 +314,4 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
-
-    /**
-     * Specification:
-     * - Gets id-sales-order parameter from config.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getIdSalesOrderParameter(): string;
 }

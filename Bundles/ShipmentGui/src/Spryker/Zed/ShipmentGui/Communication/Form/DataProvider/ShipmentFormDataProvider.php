@@ -139,7 +139,7 @@ class ShipmentFormDataProvider
 
         $shipmentSelectedItemsIds = [];
         if ($shipmentTransfer !== null) {
-            $shipmentSelectedItemsIds = $this->getShipmentSelectedItemsIds($shipmentTransfer);
+            $shipmentSelectedItemsIds = $this->getShipmentSelectedItemsIds($orderTransfer, $shipmentTransfer);
         }
 
         $options[ShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS] = $shipmentSelectedItemsIds;
@@ -149,13 +149,18 @@ class ShipmentFormDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return array
      */
-    public function getShipmentSelectedItemsIds(ShipmentTransfer $shipmentTransfer): array
+    public function getShipmentSelectedItemsIds(OrderTransfer $orderTransfer, ShipmentTransfer $shipmentTransfer): array
     {
-        $salesItems = $this->salesFacade->findSalesOrderItemsIdsBySalesShipmentId($shipmentTransfer->getIdSalesShipment());
+        $salesItems = $this->shipmentFacade->findSalesOrderItemsIdsBySalesShipmentId(
+            $orderTransfer->getIdSalesOrder(),
+            $shipmentTransfer->getIdSalesShipment()
+        );
+
         if ($salesItems->count() === 0) {
             return [];
         }

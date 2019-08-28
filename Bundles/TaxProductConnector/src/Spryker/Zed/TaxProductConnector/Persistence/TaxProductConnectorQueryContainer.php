@@ -107,6 +107,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @deprecated Use queryTaxSetByIdProductAbstractAndCountryIso2Codes() instead.
      *
+     * @module Country
+     *
      * @param int[] $allIdProductAbstracts
      * @param string $countryIso2Code
      *
@@ -135,6 +137,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
 
     /**
      * @api
+     *
+     * @module Country
      *
      * @param int[] $idProductAbstracts
      * @param string[] $countryIso2Code

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
@@ -73,14 +74,13 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      */
     protected function setQuoteExpenseTaxRate(QuoteTransfer $quoteTransfer, $taxRate)
     {
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         $shipmentMethodName = $quoteTransfer->requireShipment()
             ->getShipment()
             ->requireMethod()
             ->getMethod()
             ->getName();
         foreach ($quoteTransfer->getExpenses() as $expense) {
-            if ($expense->getType() === $shipmentExpenseType && $expense->getName() === $shipmentMethodName) {
+            if ($expense->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE && $expense->getName() === $shipmentMethodName) {
                 $expense->setTaxRate($taxRate);
             }
         }
