@@ -81,6 +81,33 @@ class PropelInstallConsole extends Console
         }
         $dependingCommands[] = MigrateConsole::COMMAND_NAME;
 
-        return $dependingCommands;
+        return $this->filterOutNonRegisteredCommands($dependingCommands);
+    }
+
+    /**
+     * @param string[] $commands
+     *
+     * @return string[]
+     */
+    protected function filterOutNonRegisteredCommands(array $commands): array
+    {
+        $filteredCommands = [];
+
+        foreach ($commands as $command) {
+            if ($this->getApplication()->has($command)) {
+                $filteredCommands[] = $command;
+
+                continue;
+            }
+
+            $this->output->writeln(
+                sprintf(
+                    '<fg=red>There is no command defined with the name "%s". Make sure the command was registered properly.</>',
+                    $command
+                )
+            );
+        }
+
+        return $filteredCommands;
     }
 }

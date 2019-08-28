@@ -7,8 +7,11 @@
 
 namespace Spryker\Client\Storage;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException;
 use Spryker\Client\Storage\Redis\Service;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -47,14 +50,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     protected static $bufferedDecodedValues;
 
     /**
-     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|null
+     * @var \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface|null
      */
     public static $service;
 
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface $service
+     * @return \Spryker\Client\Storage\Redis\ServiceInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface $service
      */
     public function getService()
     {
@@ -374,13 +377,35 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @api
      *
-     * @param mixed $pattern
+     * @param string $pattern
      *
      * @return array
      */
     public function getKeys($pattern = '*')
     {
         return $this->getService()->getKeys($pattern);
+    }
+
+    /**
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int|null $cursor
+     *
+     * @throws \Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer
+    {
+        if (!$this->getService() instanceof StorageScanPluginInterface) {
+            throw new InvalidStorageScanPluginInterfaceException(
+                'In order to use the method `scanKeys` you need a service that implements the plugin interface `StorageScanPluginInterface`'
+            );
+        }
+
+        return $this->getService()->scanKeys($pattern, $limit, $cursor);
     }
 
     /**

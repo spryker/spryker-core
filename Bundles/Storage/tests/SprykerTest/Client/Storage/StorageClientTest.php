@@ -10,6 +10,7 @@ namespace SprykerTest\Client\Storage;
 use Codeception\Test\Unit;
 use Spryker\Client\Storage\StorageClient;
 use Spryker\Client\Storage\StorageFactory;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -41,6 +42,16 @@ class StorageClientTest extends Unit
         parent::setUp();
 
         $this->setupStorageClientMock();
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        $storageClient = $this->createStorageClient();
+        $storageClient::$service = null;
     }
 
     /**
@@ -198,6 +209,22 @@ class StorageClientTest extends Unit
     }
 
     /**
+     * @expectedException \Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException
+     *
+     * @return void
+     */
+    public function testInvalidStorageScanPluginInterfaceExceptionThrown(): void
+    {
+        /** @var \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\PHPUnit\Framework\MockObject\MockObject $storagePluginMock */
+        $storagePluginMock = $this->getMockBuilder(StoragePluginInterface::class)->getMock();
+
+        $storageClient = $this->createStorageClient();
+        $storageClient::$service = $storagePluginMock;
+
+        $storageClient->scanKeys('*', 100);
+    }
+
+    /**
      * @return void
      */
     public function testCacheIsDisabled(): void
@@ -231,6 +258,14 @@ class StorageClientTest extends Unit
             $request,
             static::STORAGE_CACHE_STRATEGY
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClient
+     */
+    protected function createStorageClient(): StorageClient
+    {
+        return new StorageClient();
     }
 
     /**
