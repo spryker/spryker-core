@@ -53,7 +53,8 @@
     </transfer>
 
     <transfer name="PaymentMethod">
-        <property name="methodName" type="string" />
+        <property name="idSalesPaymentMethodType" type="int"/>
+        <property name="methodName" type="string"/>
     </transfer>
 
     <transfer name="Totals">
