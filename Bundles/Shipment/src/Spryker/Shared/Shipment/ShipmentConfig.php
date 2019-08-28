@@ -20,4 +20,12 @@ class ShipmentConfig extends AbstractSharedConfig
     {
         return $this->get(ShipmentConstants::SHIPMENT_EXPENSE_TYPE, ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
     }
+
+    /**
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool
+    {
+        return false;
+    }
 }

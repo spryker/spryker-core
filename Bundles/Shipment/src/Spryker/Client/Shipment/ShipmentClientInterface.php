@@ -47,4 +47,14 @@ interface ShipmentClientInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns multi shipment selection enabled status.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool;
 }

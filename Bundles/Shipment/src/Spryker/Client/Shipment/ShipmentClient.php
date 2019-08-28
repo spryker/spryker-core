@@ -45,4 +45,16 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     {
         return $this->getFactory()->createZedStub()->getAvailableMethodsByShipment($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool
+    {
+        return $this->getFactory()->getConfig()->isMultiShipmentSelectionEnabled();
+    }
 }
