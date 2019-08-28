@@ -56,9 +56,11 @@ interface MerchantFacadeInterface
      *   - contactPersonPhone
      *   - email
      *   - address
+     * - Returns MerchantResponseTransfer with 'isSuccessful=false' and error messages if merchant not found.
+     * - Returns MerchantResponseTransfer with 'isSuccessful=false' and error messages if merchant status transition is not valid.
      * - Uses incoming transfer to update entity fields.
      * - Persists the entity to DB.
-     * - Throws MerchantNotFoundException in case a record is not found.
+     * - Returns MerchantResponseTransfer with 'isSuccessful=true' and updated MerchantTransfer.
      *
      * @api
      *

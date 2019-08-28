@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -20,6 +21,9 @@ use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 class MerchantWriter implements MerchantWriterInterface
 {
     use TransactionTrait;
+
+    protected const ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
+    protected const ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID = 'Merchant status transition is not valid.';
 
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface
@@ -119,10 +123,14 @@ class MerchantWriter implements MerchantWriterInterface
 
         $existingMerchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
         if ($existingMerchantTransfer === null) {
+            $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_NOT_FOUND);
+
             return $merchantResponseTransfer;
         }
 
         if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($merchantTransfer->getStatus(), $existingMerchantTransfer->getStatus())) {
+            $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID);
+
             return $merchantResponseTransfer;
         }
 
@@ -229,5 +237,18 @@ class MerchantWriter implements MerchantWriterInterface
     {
         return (new MerchantResponseTransfer())
             ->setIsSuccess(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantResponseTransfer $merchantResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    protected function addMerchantError(MerchantResponseTransfer $merchantResponseTransfer, string $message): MerchantResponseTransfer
+    {
+        $merchantResponseTransfer->addError((new MerchantErrorTransfer())->setMessage($message));
+
+        return $merchantResponseTransfer;
     }
 }
