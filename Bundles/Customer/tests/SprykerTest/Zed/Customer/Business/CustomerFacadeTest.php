@@ -1052,7 +1052,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
     protected function getCustomerFacadeWithMockedConfig()
     {
@@ -1067,7 +1067,7 @@ class CustomerFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Customer\CustomerConfig|\PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\CustomerConfig
      */
     protected function getCustomerConfigMock()
     {
