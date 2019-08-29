@@ -20,6 +20,11 @@
     <transfer name="MerchantResponse">
         <property name="merchant" type="Merchant" />
         <property name="isSuccess" type="bool"/>
+        <property name="errors" type="MerchantError[]" singular="error" />
+    </transfer>
+
+    <transfer name="MerchantError">
+        <property name="message" type="string" />
     </transfer>
 
     <transfer name="MerchantAddress">

@@ -29,7 +29,7 @@ class MerchantStatusReader implements MerchantStatusReaderInterface
      *
      * @return string[]
      */
-    public function getNextStatuses(string $currentStatus): array
+    public function getApplicableMerchantStatuses(string $currentStatus): array
     {
         $statusTree = $this->merchantConfig->getStatusTree();
 

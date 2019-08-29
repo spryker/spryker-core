@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 
 /**
  * Auto-generated group annotations
@@ -20,8 +20,13 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  * @group CreateMerchantTest
  * Add your own group annotations below this line
  */
-class CreateMerchantTest extends AbstractMerchantFacadeTest
+class CreateMerchantTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -70,5 +75,32 @@ class CreateMerchantTest extends AbstractMerchantFacadeTest
 
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($newMerchantTransfer);
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantAddress(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantAddressTransfer = $this->tester->createMerchantAddressTransfer()
+            ->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        $this->tester->getFacade()->createMerchantAddress($merchantAddressTransfer);
+
+        $this->assertNotNull($merchantAddressTransfer->getIdMerchantAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantAddressWithoutRequiredDataThrowsException(): void
+    {
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        $merchantAddressTransfer = $this->tester->createMerchantAddressTransfer()
+            ->setCity(null);
+
+        $this->tester->getFacade()->createMerchantAddress($merchantAddressTransfer);
     }
 }

@@ -39,6 +39,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createMerchantKeyGenerator(),
             $this->createMerchantAddressWriter(),
             $this->createMerchantStatusValidator(),
@@ -72,7 +73,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
     {
         return new MerchantStatusValidator(
-            $this->getRepository(),
             $this->createMerchantStatusReader()
         );
     }
