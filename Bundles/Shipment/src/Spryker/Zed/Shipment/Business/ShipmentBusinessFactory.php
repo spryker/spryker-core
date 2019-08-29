@@ -431,7 +431,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentFetcher(
             $this->getQueryContainer(),
-            $this->getStoreFacade(),
             $this->getCurrencyFacade(),
             $this->createShipmentMethodTransformer()
         );
@@ -443,7 +442,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentMethodExpander(): ShipmentMethodExpanderInterface
     {
         return new ShipmentMethodExpander(
-            $this->createShipmentFetcher()
+            $this->createShipmentFetcher(),
+            $this->getStoreFacade()
         );
     }
 

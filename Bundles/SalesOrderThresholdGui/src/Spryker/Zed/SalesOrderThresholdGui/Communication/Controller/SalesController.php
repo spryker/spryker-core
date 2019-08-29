@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentGui\Communication\Controller;
+namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Controller;
 
 use Spryker\Shared\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;

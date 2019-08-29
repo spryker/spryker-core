@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ManualOrderEntryGui\ManualOrderEntryGuiConstants;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentFormHandler implements FormHandlerInterface
