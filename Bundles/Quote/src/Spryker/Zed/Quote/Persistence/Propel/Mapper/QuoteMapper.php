@@ -92,7 +92,7 @@ class QuoteMapper implements QuoteMapperInterface
      */
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
-        $allowedQuoteFields = $this->quoteConfig->getQuoteFieldsAllowedForSaving();
+        $allowedQuoteFields = $this->quoteConfig->getQuoteFieldsTreeAllowedForSaving();
         $filteredQuoteData = $this->filterDisallowedQuoteData(
             $quoteTransfer->modifiedToArray(true, true),
             $allowedQuoteFields
