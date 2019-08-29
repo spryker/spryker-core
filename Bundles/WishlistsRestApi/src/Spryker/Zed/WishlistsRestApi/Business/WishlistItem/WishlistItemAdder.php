@@ -11,15 +11,13 @@ use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Shared\WishlistsRestApi\WishlistsRestApiConfig;
 use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface;
 
 class WishlistItemAdder implements WishlistItemAdderInterface
 {
-    protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'error.message.wishlist.not.found';
-    protected const ERROR_MESSAGE_WISHLIST_ITEM_CAN_NOT_BE_ADDED = 'error.message.wishlist.item.can.not.be.added';
-
     /**
      * @var \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface
      */
@@ -44,8 +42,8 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
         $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
 
-        if ($wishlistTransfer === null) {
-            return $this->createWishlistNotFoundErrorResponse();
+        if (!$wishlistResponseTransfer->getIsSuccess()) {
+            return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
 
         $wishlistItemTransfer = $this->createWishlistItemTransfer($wishlistTransfer);
@@ -92,13 +90,16 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer
+     *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    protected function createWishlistNotFoundErrorResponse(): WishlistItemResponseTransfer
+    protected function createWishlistNotFoundErrorResponse(WishlistResponseTransfer $wishlistResponseTransfer): WishlistItemResponseTransfer
     {
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(false)
-            ->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
+            ->setErrors($wishlistResponseTransfer->getErrors())
+            ->setErrorIdentifier(WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND);
     }
 
     /**
@@ -108,7 +109,6 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     {
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(false)
-            ->addError(static::ERROR_MESSAGE_WISHLIST_ITEM_CAN_NOT_BE_ADDED)
             ->setErrorIdentifier(WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED);
     }
 
