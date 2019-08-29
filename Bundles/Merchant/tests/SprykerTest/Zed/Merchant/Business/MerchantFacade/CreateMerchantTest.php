@@ -76,31 +76,4 @@ class CreateMerchantTest extends Unit
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($newMerchantTransfer);
         $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
     }
-
-    /**
-     * @return void
-     */
-    public function testCreateMerchantAddress(): void
-    {
-        $merchantTransfer = $this->tester->haveMerchant();
-        $merchantAddressTransfer = $this->tester->createMerchantAddressTransfer()
-            ->setFkMerchant($merchantTransfer->getIdMerchant());
-
-        $this->tester->getFacade()->createMerchantAddress($merchantAddressTransfer);
-
-        $this->assertNotNull($merchantAddressTransfer->getIdMerchantAddress());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateMerchantAddressWithoutRequiredDataThrowsException(): void
-    {
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        $merchantAddressTransfer = $this->tester->createMerchantAddressTransfer()
-            ->setCity(null);
-
-        $this->tester->getFacade()->createMerchantAddress($merchantAddressTransfer);
-    }
 }

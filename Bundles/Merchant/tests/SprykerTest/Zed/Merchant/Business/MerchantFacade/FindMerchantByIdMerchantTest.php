@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
-use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
+use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
@@ -19,7 +19,7 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  * @group FindMerchantByIdMerchantTest
  * Add your own group annotations below this line
  */
-class FindMerchantByIdMerchantTest extends AbstractMerchantFacadeTest
+class FindMerchantByIdMerchantTest extends Unit
 {
     /**
      * @return void

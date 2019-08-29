@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
-use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
+use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
@@ -19,7 +19,7 @@ use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
  * @group FindMerchantByEmailTest
  * Add your own group annotations below this line
  */
-class FindMerchantByEmailTest extends AbstractMerchantFacadeTest
+class FindMerchantByEmailTest extends Unit
 {
     protected const MERCHANT_EMAIL = 'merchant@test.test';
 
