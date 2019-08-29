@@ -15,23 +15,24 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
-use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
 use SprykerTest\Zed\Company\Helper\CompanyHelper;
 
 class CompanyUserAuthRestApiHelper extends REST
 {
-    use ModuleLocatorTrait;
-
     public const DEFAULT_PASSWORD = 'Pass$.123456';
+
+    protected const RESOURCE_CUSTOMERS = 'customers';
 
     /**
      * @var \SprykerTest\Zed\Company\Helper\CompanyHelper|null
      */
     protected $companyProvider;
+
     /**
      * @var \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper|null
      */
     protected $companyUserProvider;
+
     /**
      * @var \SprykerTest\Shared\Customer\Helper\CustomerDataHelper|null
      */
@@ -44,9 +45,9 @@ class CompanyUserAuthRestApiHelper extends REST
     {
         parent::_initialize();
 
-        $this->companyProvider = $this->findModule(CompanyHelper::class);
-        $this->companyUserProvider = $this->findModule(CompanyUserHelper::class);
-        $this->customerProvider = $this->findModule(CustomerDataHelper::class);
+        $this->companyProvider = $this->findCompanyProvider();
+        $this->companyUserProvider = $this->findCompanyUserProvider();
+        $this->customerProvider = $this->findCustomerProvider();
     }
 
     /**
@@ -90,7 +91,6 @@ class CompanyUserAuthRestApiHelper extends REST
     }
 
     /**
-     * TODO: Move to Customer module
      * @part json
      *
      * @param string $withEmail
@@ -101,15 +101,18 @@ class CompanyUserAuthRestApiHelper extends REST
     public function amUser(string $withEmail = '', string $withPassword = ''): CustomerTransfer
     {
         $withEmail = $withEmail ?: sprintf('%s@test.local.com', uniqid('glue-', true));
-        return $this->customerProvider
-            ? $this->customerProvider->haveCustomer([
-                CustomerTransfer::FIRST_NAME => 'John',
-                CustomerTransfer::LAST_NAME => 'Doe',
-                CustomerTransfer::EMAIL => $withEmail,
-                CustomerTransfer::PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
-                CustomerTransfer::NEW_PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
-            ])
-            : $this->haveCustomerByApi($withEmail, $withPassword);
+
+        if ($this->customerProvider === null) {
+            return $this->haveCustomerByApi($withEmail, $withPassword);
+        }
+
+        return $this->customerProvider->haveCustomer([
+            CustomerTransfer::FIRST_NAME => 'John',
+            CustomerTransfer::LAST_NAME => 'Doe',
+            CustomerTransfer::EMAIL => $withEmail,
+            CustomerTransfer::PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
+            CustomerTransfer::NEW_PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
+        ]);
     }
 
     /**
@@ -157,9 +160,9 @@ class CompanyUserAuthRestApiHelper extends REST
             ->setSalutation('Mr')
             ->setEmail($withEmail)
             ->setNewPassword($withPassword ?: static::DEFAULT_PASSWORD);
-        $this->sendPOST('customers', [
+        $this->sendPOST(static::RESOURCE_CUSTOMERS, [
             'data' => [
-                'type' => 'customers',
+                'type' => static::RESOURCE_CUSTOMERS,
                 'attributes' => [
                     'salutation' => $customerTransfer->getSalutation(),
                     'firstName' => $customerTransfer->getFirstName(),
@@ -191,5 +194,47 @@ class CompanyUserAuthRestApiHelper extends REST
         }
 
         return $customerTransfer;
+    }
+
+    /**
+     * @return \SprykerTest\Zed\Company\Helper\CompanyHelper|null
+     */
+    protected function findCompanyProvider(): ?CompanyHelper
+    {
+        foreach ($this->getModules() as $module) {
+            if ($module instanceof CompanyHelper) {
+                return $module;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper|null
+     */
+    protected function findCompanyUserProvider(): ?CompanyUserHelper
+    {
+        foreach ($this->getModules() as $module) {
+            if ($module instanceof CompanyUserHelper) {
+                return $module;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Customer\Helper\CustomerDataHelper|null
+     */
+    protected function findCustomerProvider(): ?CustomerDataHelper
+    {
+        foreach ($this->getModules() as $module) {
+            if ($module instanceof CustomerDataHelper) {
+                return $module;
+            }
+        }
+
+        return null;
     }
 }
