@@ -20,7 +20,6 @@ class ViewScheduleListController extends AbstractController
 {
     public const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
-    protected const REQUEST_KEY_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -84,7 +83,7 @@ class ViewScheduleListController extends AbstractController
     public function tableAction(Request $request): JsonResponse
     {
         $idPriceProductScheduleList = $this->castId(
-            $request->query->get(static::REQUEST_KEY_ID_PRICE_PRODUCT_SCHEDULE_LIST)
+            $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST)
         );
 
         $priceProductScheduleTable = $this->getFactory()

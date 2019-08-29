@@ -212,6 +212,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleTable(
             $this->createRowFormatter(),
+            $this->getPriceProductScheduleQuery(),
             $idPriceProductScheduleList
         );
     }

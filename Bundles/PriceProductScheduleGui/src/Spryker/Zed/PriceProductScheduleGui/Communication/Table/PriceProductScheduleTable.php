@@ -27,7 +27,9 @@ class PriceProductScheduleTable extends AbstractTable
     protected const COL_GROSS_PRICE = 'gross_price';
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
+
     protected const PRICE_NUMERIC_PATTERN = '/[^0-9]+/';
+
     protected const TABLE_IDENTIFIER = 'price-product-schedule-table:%s';
 
     protected const DEFAULT_SORT_COLUMN = 'id_price_product_schedule';
@@ -36,26 +38,34 @@ class PriceProductScheduleTable extends AbstractTable
     /**
      * @var int
      */
-    protected $fkPriceProductScheduleList;
+    protected $idPriceProductScheduleList;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
      */
     protected $rowFormatter;
 
     /**
+     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected $priceProductScheduleQuery;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
-     * @param int $fkPriceProductScheduleList
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
+     * @param int $idPriceProductScheduleList
      */
     public function __construct(
         RowFormatterInterface $rowFormatter,
-        int $fkPriceProductScheduleList
+        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
+        int $idPriceProductScheduleList
     ) {
-        $this->fkPriceProductScheduleList = $fkPriceProductScheduleList;
+        $this->idPriceProductScheduleList = $idPriceProductScheduleList;
+        $this->priceProductScheduleQuery = $priceProductScheduleQuery;
         $this->rowFormatter = $rowFormatter;
         $this->baseUrl = '/';
         $this->defaultUrl = Url::generate('price-product-schedule-gui/view-schedule-list/table', [
-            ViewScheduleListController::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $fkPriceProductScheduleList,
+            ViewScheduleListController::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $idPriceProductScheduleList,
         ])->build();
     }
 
@@ -100,20 +110,6 @@ class PriceProductScheduleTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    protected function prepareQuery(): SpyPriceProductScheduleQuery
-    {
-        return (new SpyPriceProductScheduleQuery())
-            ->leftJoinWithCurrency()
-            ->leftJoinWithStore()
-            ->leftJoinWithProductAbstract()
-            ->leftJoinWithProduct()
-            ->leftJoinWithPriceType()
-            ->filterByFkPriceProductScheduleList($this->fkPriceProductScheduleList);
-    }
-
-    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -130,6 +126,20 @@ class PriceProductScheduleTable extends AbstractTable
         }
 
         return $priceProductScheduleCollection;
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function prepareQuery(): SpyPriceProductScheduleQuery
+    {
+        return $this->priceProductScheduleQuery
+            ->leftJoinWithCurrency()
+            ->leftJoinWithStore()
+            ->leftJoinWithProductAbstract()
+            ->leftJoinWithProduct()
+            ->leftJoinWithPriceType()
+            ->filterByFkPriceProductScheduleList($this->idPriceProductScheduleList);
     }
 
     /**

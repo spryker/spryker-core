@@ -61,10 +61,27 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
         SpyPriceProductScheduleList $priceProductScheduleListEntity,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListTransfer {
-        $priceProductScheduleListMetadataTransfer = new PriceProductScheduleListMetaDataTransfer();
-        $priceProductScheduleListMetadataTransfer->setNumberOfPrices($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRICES));
-        $priceProductScheduleListMetadataTransfer->setNumberOfProducts($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRODUCTS));
+        $priceProductScheduleListMetadataTransfer = $this->mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
+            $priceProductScheduleListEntity,
+            new PriceProductScheduleListMetaDataTransfer()
+        );
 
         return $priceProductScheduleListTransfer->setMetaData($priceProductScheduleListMetadataTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListMetaDataTransfer $priceProductScheduleListMetadataTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListMetaDataTransfer
+     */
+    protected function mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
+        SpyPriceProductScheduleList $priceProductScheduleListEntity,
+        PriceProductScheduleListMetaDataTransfer $priceProductScheduleListMetadataTransfer
+    ): PriceProductScheduleListMetaDataTransfer {
+        $priceProductScheduleListMetadataTransfer->setNumberOfPrices($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRICES))
+            ->setNumberOfProducts($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRODUCTS));
+
+        return $priceProductScheduleListMetadataTransfer;
     }
 }
