@@ -57,4 +57,18 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     {
         return $this->getFactory()->getConfig()->isMultiShipmentSelectionEnabled();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createZedStub()->expandQuoteWithShipmentGroups($quoteTransfer);
+    }
 }

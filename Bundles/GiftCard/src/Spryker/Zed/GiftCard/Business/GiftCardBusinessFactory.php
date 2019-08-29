@@ -10,6 +10,8 @@ namespace Spryker\Zed\GiftCard\Business;
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
+use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsChecker;
+use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCodeGenerator;
 use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardCreator;
@@ -20,6 +22,8 @@ use Spryker\Zed\GiftCard\Business\Payment\PaymentMethodFilter;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPaymentSaver;
 use Spryker\Zed\GiftCard\Business\Payment\SalesOrderPreChecker;
 use Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaver;
+use Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupsSanitizer;
+use Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupsSanitizerInterface;
 use Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilter;
 use Spryker\Zed\GiftCard\Business\ShipmentGroup\ShipmentGroupMethodFilterInterface;
@@ -314,5 +318,21 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createShipmentMethodGiftCardDisallowedChecker(): ShipmentMethodGiftCardAllowanceCheckerInterface
     {
         return new ShipmentMethodGiftCardDisallowedChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface
+     */
+    public function createGiftCardItemsChecker(): GiftCardItemsCheckerInterface
+    {
+        return new GiftCardItemsChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupsSanitizerInterface
+     */
+    public function createShipmentGroupSanitizer(): ShipmentGroupsSanitizerInterface
+    {
+        return new ShipmentGroupsSanitizer($this->createGiftCardItemsChecker());
     }
 }

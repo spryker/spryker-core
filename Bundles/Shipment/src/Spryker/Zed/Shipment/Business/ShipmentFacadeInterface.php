@@ -346,4 +346,16 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Expand quote with shipment groups by items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

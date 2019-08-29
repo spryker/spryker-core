@@ -51,4 +51,17 @@ class ShipmentStub implements ShipmentStubInterface
 
         return $shipmentMethodsCollectionTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/shipment/gateway/expand-quote-with-shipment-groups', $quoteTransfer);
+
+        return $quoteTransfer;
+    }
 }

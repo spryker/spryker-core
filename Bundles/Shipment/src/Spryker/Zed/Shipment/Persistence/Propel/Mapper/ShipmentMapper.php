@@ -16,7 +16,7 @@ use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
-class ShipmentMapper implements ShipmentMapperInterface
+class ShipmentMapper
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer

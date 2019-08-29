@@ -393,4 +393,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->resolve($calculableObjectTransfer->getItems())
             ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteShipmentExpander()
+            ->expendQuoteWithShipmentGroups($quoteTransfer);
+    }
 }

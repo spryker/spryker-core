@@ -36,6 +36,7 @@ class ItemsGrouper implements ItemsGrouperInterface
      */
     public function groupByShipment(iterable $itemTransferCollection): ArrayObject
     {
+        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers */
         $shipmentGroupTransfers = [];
 
         foreach ($itemTransferCollection as $itemTransfer) {
@@ -49,6 +50,7 @@ class ItemsGrouper implements ItemsGrouperInterface
                 );
             }
 
+            $itemTransfer->setShipment($shipmentGroupTransfers[$shipmentHashKey]->getShipment());
             $shipmentGroupTransfers[$shipmentHashKey]->addItem($itemTransfer);
         }
 

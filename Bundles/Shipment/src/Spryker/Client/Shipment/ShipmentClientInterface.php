@@ -57,4 +57,16 @@ interface ShipmentClientInterface
      * @return bool
      */
     public function isMultiShipmentSelectionEnabled(): bool;
+
+    /**
+     * Specification:
+     * - Expand quote with shipment groups by items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

@@ -9,15 +9,23 @@ namespace Spryker\Zed\Shipment\Business\Sanitizer;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 
-/**
- * @deprecated For BC reasons the missing sum prices are mirrored from unit prices.
- */
 interface ExpenseSanitizerInterface
 {
     /**
+     * @deprecated @deprecated For BC reasons the missing sum prices are mirrored from unit prices.
+     *
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function sanitizeExpenseSumValues(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
+     * @param int $price
+     * @param string $priceMode
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function sanitizeShipmentExpensePricesByPriceMode(ExpenseTransfer $shipmentExpenseTransfer, int $price, string $priceMode): ExpenseTransfer;
 }
