@@ -41,7 +41,7 @@ interface UrlStorageClientInterface
     /**
      * Specification:
      * - Looks up the redirect entity in key-value storage.
-     * - Return RedirectTransfer in case redirect is found in the storage and null otherwise.
+     * - Returns UrlRedirectStorageTransfer in case redirect is found in the storage and null otherwise.
      *
      * @api
      *

@@ -7,14 +7,10 @@
 
 namespace Spryker\Client\UrlStorage\Storage;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlRedirectStorageTransfer;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
-use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
+use Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilderInterface;
 use Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface;
-use Spryker\Client\UrlStorage\UrlStorageConfig;
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\UrlStorage\UrlStorageConstants;
 
 class UrlRedirectStorageReader implements UrlRedirectStorageReaderInterface
 {
@@ -24,9 +20,9 @@ class UrlRedirectStorageReader implements UrlRedirectStorageReaderInterface
     protected $storageClient;
 
     /**
-     * @var \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilderInterface
      */
-    protected $synchronizationService;
+    protected $redirectStorageKeyBuilder;
 
     /**
      * @var \Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface
@@ -35,16 +31,16 @@ class UrlRedirectStorageReader implements UrlRedirectStorageReaderInterface
 
     /**
      * @param \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface $storageClient
-     * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilderInterface $redirectStorageKeyBuilder
      * @param \Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface $urlRedirectStorageMapper
      */
     public function __construct(
         UrlStorageToStorageInterface $storageClient,
-        UrlStorageToSynchronizationServiceInterface $synchronizationService,
+        UrlRedirectStorageKeyBuilderInterface $redirectStorageKeyBuilder,
         UrlRedirectStorageMapperInterface $urlRedirectStorageMapper
     ) {
         $this->storageClient = $storageClient;
-        $this->synchronizationService = $synchronizationService;
+        $this->redirectStorageKeyBuilder = $redirectStorageKeyBuilder;
         $this->urlRedirectStorageMapper = $urlRedirectStorageMapper;
     }
 
@@ -55,38 +51,12 @@ class UrlRedirectStorageReader implements UrlRedirectStorageReaderInterface
      */
     public function findUrlRedirectStorageById(int $idRedirectUrl): ?UrlRedirectStorageTransfer
     {
-        $data = $this->storageClient->get($this->generateKey($idRedirectUrl));
+        $data = $this->storageClient->get($this->redirectStorageKeyBuilder->generateKey($idRedirectUrl));
 
         if (!$data) {
             return null;
         }
 
         return $this->urlRedirectStorageMapper->mapStorageDataToUrlRedirectStorageTransfer($data, new UrlRedirectStorageTransfer());
-    }
-
-    /**
-     * @param int $idRedirectUrl
-     *
-     * @return string
-     */
-    protected function generateKey(int $idRedirectUrl): string
-    {
-        if (UrlStorageConfig::isCollectorCompatibilityMode()) {
-            $collectorDataKey = sprintf(
-                '%s.%s.resource.redirect.%s',
-                strtolower(Store::getInstance()->getStoreName()),
-                strtolower(Store::getInstance()->getCurrentLocale()),
-                $idRedirectUrl
-            );
-
-            return $collectorDataKey;
-        }
-
-        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($idRedirectUrl);
-
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(UrlStorageConstants::REDIRECT_RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
     }
 }

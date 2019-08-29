@@ -114,6 +114,10 @@ class UrlReader implements UrlReaderInterface
             $urlStorageTransfer->getFkResourceRedirect()
         );
 
+        if (!$urlRedirectStorageTransfer) {
+            return null;
+        }
+
         return $this->getUrlStorageTransfer($urlRedirectStorageTransfer->getToUrl());
     }
 
