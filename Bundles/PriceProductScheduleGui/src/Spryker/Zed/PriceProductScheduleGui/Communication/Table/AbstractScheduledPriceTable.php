@@ -125,19 +125,20 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_GROSS_PRICE => $this->formatMoney($priceProductScheduleEntity->getGrossPrice(), $priceProductScheduleEntity),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
             static::COL_CURRENCY => $priceProductScheduleEntity->getCurrency()->getCode(),
-            static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom()),
-            static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo()),
+            static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom(), $priceProductScheduleEntity->getFkStore()),
+            static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo(), $priceProductScheduleEntity->getFkStore()),
         ];
     }
 
     /**
      * @param \DateTime $dateTime
+     * @param int $fkStore
      *
      * @return string
      */
-    protected function formatDateTime(DateTime $dateTime): string
+    protected function formatDateTime(DateTime $dateTime, int $fkStore): string
     {
-        return $this->rowFormatter->formatDateTime($dateTime);
+        return $this->rowFormatter->formatDateTime($dateTime, $fkStore);
     }
 
     /**
