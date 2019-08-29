@@ -14,17 +14,21 @@ use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
  */
-class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, NamedQueryInterface, SearchStringSetterInterface
+class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface
 {
+    protected const SOURCE_NAME = 'page';
+
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
      */
@@ -82,11 +86,18 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return string
+     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    public function getIndexName(): string
+    public function getSearchContext(): SearchContextTransfer
     {
-        return 'page';
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+
+        return $searchContextTransfer;
     }
 
     /**

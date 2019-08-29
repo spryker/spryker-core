@@ -1,16 +1,14 @@
 <?php
+
 /**
- * Copyright © 2019-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\SearchExtension\Dependency\Plugin;
 
-
 interface AdapterPluginInterface
 {
-
-
     /**
      * Specification:
      * - Returns the total number of documents in the current index if no indexName is passed.

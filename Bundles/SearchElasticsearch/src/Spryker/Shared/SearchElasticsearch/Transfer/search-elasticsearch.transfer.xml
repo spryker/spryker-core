@@ -9,4 +9,12 @@
         <property name="mappings" type="array" />
     </transfer>
 
+    <transfer name="ElasticsearchSearchContext">
+        <property name="sourceName" type="string" />
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="elasticsearchContext" type="ElasticsearchSearchContext" />
+    </transfer>
+
 </transfers>

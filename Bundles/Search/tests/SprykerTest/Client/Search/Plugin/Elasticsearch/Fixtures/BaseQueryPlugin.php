@@ -9,13 +9,17 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
-class BaseQueryPlugin implements QueryInterface, NamedQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
+class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
+    protected const SOURCE_NAME = 'page';
+
     /**
      * @var \Elastica\Query
      */
@@ -67,10 +71,17 @@ class BaseQueryPlugin implements QueryInterface, NamedQueryInterface, SearchStri
      *
      * @api
      *
-     * @return string
+     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    public function getIndexName(): string
+    public function getSearchContext(): SearchContextTransfer
     {
-        return 'page';
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+
+        return $searchContextTransfer;
     }
 }

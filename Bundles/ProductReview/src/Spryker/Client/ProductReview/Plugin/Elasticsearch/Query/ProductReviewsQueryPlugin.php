@@ -13,17 +13,21 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Elastica\Query\Type;
 use Generated\Shared\Search\ProductReviewIndexMap;
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewConfig getFactory()
  */
-class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, NamedQueryInterface
+class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    protected const SOURCE_NAME = 'product-review';
+
     /**
      * @var \Elastica\Query
      */
@@ -60,11 +64,18 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      *
      * @api
      *
-     * @return string
+     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    public function getIndexName(): string
+    public function getSearchContext(): SearchContextTransfer
     {
-        return 'product-review';
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+
+        return $searchContextTransfer;
     }
 
     /**
