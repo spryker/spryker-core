@@ -124,10 +124,6 @@ class MerchantTable extends AbstractTable
             Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, $urlParams),
             'Edit'
         );
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(MerchantTableConstants::URL_MERCHANT_DELETE, $urlParams),
-            'Delete'
-        );
 
         return implode(' ', $buttons);
     }
@@ -145,10 +141,6 @@ class MerchantTable extends AbstractTable
             return '';
         }
 
-        return sprintf(
-            '<span class="label %1$s" title="%2$s">%2$s</span>',
-            static::STATUS_CLASS_MAPPING[$currentStatus],
-            $currentStatus
-        );
+        return $this->generateLabel($currentStatus, static::STATUS_CLASS_MAPPING[$currentStatus]);
     }
 }

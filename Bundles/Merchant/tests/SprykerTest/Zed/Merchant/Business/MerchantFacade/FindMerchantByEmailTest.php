@@ -28,7 +28,7 @@ class FindMerchantByEmailTest extends AbstractMerchantFacadeTest
      */
     public function testFindMerchantByEmailWillFindExistingMerchant(): void
     {
-        $expectedMerchant = $this->tester->haveMerchantWithAddressCollection();
+        $expectedMerchant = $this->tester->haveMerchant();
 
         $actualMerchant = $this->tester->getFacade()->findMerchantByEmail($expectedMerchant->getEmail());
 

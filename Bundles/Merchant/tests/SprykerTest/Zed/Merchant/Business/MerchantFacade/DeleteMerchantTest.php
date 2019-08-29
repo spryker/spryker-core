@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use SprykerTest\Zed\Merchant\Business\AbstractMerchantFacadeTest;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed

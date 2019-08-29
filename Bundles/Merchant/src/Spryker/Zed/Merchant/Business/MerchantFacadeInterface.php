@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Merchant\Business;
 
-use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -69,11 +68,13 @@ interface MerchantFacadeInterface
     public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
      * Specification:
      * - Finds a merchant record by ID in DB.
      * - Removes the merchant record.
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
@@ -129,34 +130,6 @@ interface MerchantFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchantCollection(): MerchantCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Creates a new merchant address entity.
-     * - Uses incoming transfer to set entity fields.
-     * - Persists the entity to DB.
-     * - Sets ID to the returning transfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
-     */
-    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer;
-
-    /**
-     * Specification:
-     * - Finds a merchant address by merchant address id.
-     * - Returns MerchantAddressTransfer if found, NULL otherwise.
-     *
-     * @api
-     *
-     * @param int $idMerchantAddress
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
-     */
-    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer;
 
     /**
      * Specification:

@@ -30,17 +30,15 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testUpdateMerchant(): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection([
+        $merchantTransfer = $this->tester->haveMerchant([
             'one-key',
             'One Company',
         ]);
 
         $expectedIdMerchant = $merchantTransfer->getIdMerchant();
-        $merchantAddressTransfer = $this->tester->haveMerchantAddressCollection(['fkMerchant' => $expectedIdMerchant]);
         $merchantTransfer
             ->setMerchantKey('second-key')
-            ->setName('Second Company')
-            ->setAddressCollection($merchantAddressTransfer);
+            ->setName('Second Company');
 
         $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
         $updatedMerchant = $merchantResponseTransfer->getMerchant();
@@ -48,6 +46,7 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
         $this->assertEquals('Second Company', $updatedMerchant->getName());
+        $this->assertNotEmpty($updatedMerchant->getAddressCollection()->getAddresses()->offsetGet(0));
     }
 
     /**
@@ -59,7 +58,7 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testUpdateMerchantWithCorrectStatusWorks(array $presetStatuses): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
+        $merchantTransfer = $this->tester->haveMerchant();
         $expectedStatus = end($presetStatuses);
 
         $merchantResponseTransfer = $this->updateMerchantWithStatuses($merchantTransfer, $presetStatuses);
@@ -77,7 +76,7 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testUpdateMerchantWithIncorrectStatusReturnsIsSuccessFalse(array $presetStatuses): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
+        $merchantTransfer = $this->tester->haveMerchant();
 
         $merchantResponseTransfer = $this->updateMerchantWithStatuses($merchantTransfer, $presetStatuses);
 
@@ -89,7 +88,7 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testUpdateMerchantWithoutDataThrowsException(): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
+        $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer
             ->setName(null);
 
@@ -103,7 +102,7 @@ class UpdateMerchantTest extends AbstractMerchantFacadeTest
      */
     public function testUpdateMerchantWithWrongIdReturnsIsSuccessFalse(): void
     {
-        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
+        $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer
             ->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
 

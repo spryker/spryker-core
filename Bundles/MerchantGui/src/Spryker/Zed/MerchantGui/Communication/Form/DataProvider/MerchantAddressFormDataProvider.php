@@ -10,44 +10,21 @@ namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantAddressForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface;
-use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 
 class MerchantAddressFormDataProvider
 {
-    /**
-     * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
-     */
-    protected $merchantFacade;
-
     /**
      * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface
      */
     protected $countryFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface $countryFacade
      */
     public function __construct(
-        MerchantGuiToMerchantFacadeInterface $merchantFacade,
         MerchantGuiToCountryFacadeInterface $countryFacade
     ) {
-        $this->merchantFacade = $merchantFacade;
         $this->countryFacade = $countryFacade;
-    }
-
-    /**
-     * @param int|null $idMerchantAddress
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
-     */
-    public function getData(?int $idMerchantAddress = null): ?MerchantAddressTransfer
-    {
-        if ($idMerchantAddress === null) {
-            return null;
-        }
-
-        return $this->merchantFacade->findMerchantAddressByIdMerchantAddress($idMerchantAddress);
     }
 
     /**

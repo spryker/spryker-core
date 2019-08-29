@@ -83,7 +83,6 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantAddressFormDataProvider(): MerchantAddressFormDataProvider
     {
         return new MerchantAddressFormDataProvider(
-            $this->getMerchantFacade(),
             $this->getCountryFacade()
         );
     }

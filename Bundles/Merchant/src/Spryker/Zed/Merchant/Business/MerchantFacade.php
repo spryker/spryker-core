@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Merchant\Business;
 
-use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -53,6 +52,8 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * {@inheritdoc}
      *
      * @api
@@ -126,38 +127,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     public function getMerchantCollection(): MerchantCollectionTransfer
     {
         return $this->getRepository()->getMerchantCollection();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantAddressTransfer $merchantAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
-     */
-    public function createMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantAddressWriter()
-            ->create($merchantAddressTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idMerchantAddress
-     *
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer|null
-     */
-    public function findMerchantAddressByIdMerchantAddress(int $idMerchantAddress): ?MerchantAddressTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantAddressReader()
-            ->findMerchantAddressByIdMerchantAddress($idMerchantAddress);
     }
 
     /**
