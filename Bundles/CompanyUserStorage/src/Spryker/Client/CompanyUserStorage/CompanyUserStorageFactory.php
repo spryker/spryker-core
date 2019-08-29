@@ -13,6 +13,9 @@ use Spryker\Client\CompanyUserStorage\Storage\CompanyUserStorage;
 use Spryker\Client\CompanyUserStorage\Storage\CompanyUserStorageInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\CompanyUserStorage\CompanyUserStorageConfig getConfig()
+ */
 class CompanyUserStorageFactory extends AbstractFactory
 {
     /**
@@ -22,7 +25,8 @@ class CompanyUserStorageFactory extends AbstractFactory
     {
         return new CompanyUserStorage(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getConfig()
         );
     }
 
