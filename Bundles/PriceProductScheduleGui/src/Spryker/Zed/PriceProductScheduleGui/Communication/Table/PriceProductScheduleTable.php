@@ -30,6 +30,9 @@ class PriceProductScheduleTable extends AbstractTable
     protected const PRICE_NUMERIC_PATTERN = '/[^0-9]+/';
     protected const TABLE_IDENTIFIER = 'price-product-schedule-table:%s';
 
+    protected const DEFAULT_SORT_COLUMN = 'id_price_product_schedule';
+    protected const DEFAULT_SORT_ORDER = 'DESC';
+
     /**
      * @var int
      */
@@ -91,6 +94,7 @@ class PriceProductScheduleTable extends AbstractTable
             static::COL_ACTIVE_FROM,
             static::COL_ACTIVE_TO,
         ]);
+        $config->setDefaultSortField(static::DEFAULT_SORT_COLUMN, static::DEFAULT_SORT_ORDER);
 
         return $config;
     }
