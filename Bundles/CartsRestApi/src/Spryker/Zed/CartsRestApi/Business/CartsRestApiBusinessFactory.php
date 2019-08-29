@@ -148,7 +148,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteItemAdder(),
             $this->createQuoteCreator(),
             $this->getStoreFacade(),
-            $this->createQuoteItemMapper()
+            $this->getQuoteFacade()
         );
     }
 

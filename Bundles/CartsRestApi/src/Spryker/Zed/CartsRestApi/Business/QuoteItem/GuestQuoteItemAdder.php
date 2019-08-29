@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
-use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
+use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 
 class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
@@ -43,29 +43,29 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
+     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface
      */
-    protected $quoteItemMapper;
+    protected $quoteFacade;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface $quoteItemAdder
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
+     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         QuoteItemAdderInterface $quoteItemAdder,
         QuoteCreatorInterface $quoteCreator,
         CartsRestApiToStoreFacadeInterface $storeFacade,
-        QuoteItemMapperInterface $quoteItemMapper
+        CartsRestApiToQuoteFacadeInterface $quoteFacade
     ) {
         $this->quoteReader = $quoteReader;
         $this->quoteItemAdder = $quoteItemAdder;
         $this->quoteCreator = $quoteCreator;
         $this->storeFacade = $storeFacade;
-        $this->quoteItemMapper = $quoteItemMapper;
+        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -154,7 +154,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $customerQuote = $customerQuotes[0];
 
-        foreach ($customerQuote->getItems() as $item) {
+        foreach ($questQuote->getItems() as $item) {
             $cartItemRequestTransfer = (new CartItemRequestTransfer())
                 ->setQuoteUuid($customerQuote->getUuid())
                 ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
@@ -163,6 +163,9 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
             $this->addItem($cartItemRequestTransfer);
         }
+
+        $questQuote->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
+        $this->quoteFacade->deleteQuote($questQuote);
     }
 
     /**
