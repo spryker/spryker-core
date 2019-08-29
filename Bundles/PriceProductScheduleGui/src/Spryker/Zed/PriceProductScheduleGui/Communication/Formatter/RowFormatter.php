@@ -70,17 +70,11 @@ class RowFormatter implements RowFormatterInterface
 
     /**
      * @param \DateTime $dateTime
-     * @param int $fkStore
      *
      * @return string
      */
-    public function formatDateTime(DateTime $dateTime, int $fkStore): string
+    public function formatDateTime(DateTime $dateTime): string
     {
-        $dateTime = $this->setTimezoneFromStore(
-            $dateTime,
-            $fkStore
-        );
-
         return $dateTime->format(static::DATE_FORMAT);
     }
 

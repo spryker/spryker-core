@@ -28,6 +28,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Table\ImportSuccessListTab
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleAbstractTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleListTable;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
@@ -199,6 +200,19 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleListTable(
             $this->getPriceProductScheduleListPropelQuery()
+        );
+    }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleTable
+     */
+    public function createPriceProductScheduleTable(int $idPriceProductScheduleList): PriceProductScheduleTable
+    {
+        return new PriceProductScheduleTable(
+            $this->createRowFormatter(),
+            $idPriceProductScheduleList
         );
     }
 

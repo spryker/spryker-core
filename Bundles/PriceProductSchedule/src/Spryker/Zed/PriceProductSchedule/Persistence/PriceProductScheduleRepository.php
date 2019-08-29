@@ -27,6 +27,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     protected const COL_PRODUCT_ID = 'product_id';
     protected const COL_RESULT = 'result';
 
+    protected const ALIAS_NUMBER_OF_PRICES = 'numberOfPrices';
+    protected const ALIAS_NUMBER_OF_PRODUCTS = 'numberOfProducts';
     protected const ALIAS_CONCATENATED = 'concatenated';
     protected const ALIAS_FILTERED = 'filtered';
 
@@ -38,6 +40,8 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     ];
 
     protected const EXPRESSION_CONCATENATED_PRODUCT_ID = 'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, 0), \'_\', COALESCE(%s, 0))';
+    protected const EXPRESSION_NUMBER_OF_PRICES = 'COUNT(id_price_product_schedule)';
+    protected const EXPRESSION_NUMBER_OF_PRODUCTS = 'COUNT(distinct fk_product) + COUNT(distinct fk_product_abstract)';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
@@ -347,6 +351,11 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
         $priceProductScheduleListEntity = $this->getFactory()
             ->createPriceProductScheduleListQuery()
             ->filterByIdPriceProductScheduleList($priceProductScheduleListTransfer->getIdPriceProductScheduleList())
+            ->usePriceProductScheduleQuery()
+                ->addAsColumn(static::ALIAS_NUMBER_OF_PRICES, static::EXPRESSION_NUMBER_OF_PRICES)
+                ->addAsColumn(static::ALIAS_NUMBER_OF_PRODUCTS, static::EXPRESSION_NUMBER_OF_PRODUCTS)
+            ->endUse()
+            ->groupByIdPriceProductScheduleList()
             ->findOne();
 
         if ($priceProductScheduleListEntity === null) {

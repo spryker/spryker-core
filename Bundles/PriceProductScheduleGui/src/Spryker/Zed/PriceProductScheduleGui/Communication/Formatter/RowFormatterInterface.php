@@ -22,9 +22,8 @@ interface RowFormatterInterface
 
     /**
      * @param \DateTime $dateTime
-     * @param int $fkStore
      *
      * @return string
      */
-    public function formatDateTime(DateTime $dateTime, int $fkStore): string;
+    public function formatDateTime(DateTime $dateTime): string;
 }

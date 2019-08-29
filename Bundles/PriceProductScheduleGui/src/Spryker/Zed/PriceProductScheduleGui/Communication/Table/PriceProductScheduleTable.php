@@ -13,47 +13,47 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Controller\ViewScheduleListController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 
-abstract class AbstractScheduledPriceTable extends AbstractTable
+class PriceProductScheduleTable extends AbstractTable
 {
+    protected const COL_SKU_PRODUCT_ABSTRACT = 'spy_product_abstract.sku';
+    protected const COL_SKU_PRODUCT = 'spy_product.sku';
+    protected const COL_PRICE_TYPE = 'spy_price_type.name';
     protected const COL_CURRENCY = 'fk_currency';
     protected const COL_STORE = 'fk_store';
     protected const COL_NET_PRICE = 'net_price';
     protected const COL_GROSS_PRICE = 'gross_price';
     protected const COL_ACTIVE_FROM = 'active_from';
     protected const COL_ACTIVE_TO = 'active_to';
-    protected const COL_ACTIONS = 'actions';
     protected const PRICE_NUMERIC_PATTERN = '/[^0-9]+/';
+    protected const TABLE_IDENTIFIER = 'price-product-schedule-table:%s';
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface
+     * @var int
+     */
+    protected $fkPriceProductScheduleList;
+
+    /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      */
     protected $rowFormatter;
 
     /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
+     * @param int $fkPriceProductScheduleList
      */
     public function __construct(
-        RowFormatterInterface $rowFormatter
+        RowFormatterInterface $rowFormatter,
+        int $fkPriceProductScheduleList
     ) {
+        $this->fkPriceProductScheduleList = $fkPriceProductScheduleList;
         $this->rowFormatter = $rowFormatter;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSearchTerm(): array
-    {
-        $searchTerm = $this->request->query->get('search');
-
-        if (!$this->isSearchTermValid($searchTerm)) {
-            return $this->getDefaultSearchTerm();
-        }
-
-        $searchTerm[static::PARAMETER_VALUE] = $this->normalizeMoneyValue($searchTerm[static::PARAMETER_VALUE]);
-
-        return $searchTerm;
+        $this->baseUrl = '/';
+        $this->defaultUrl = Url::generate('price-product-schedule-gui/view-schedule-list/table', [
+            ViewScheduleListController::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $fkPriceProductScheduleList,
+        ])->build();
     }
 
     /**
@@ -64,6 +64,9 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
+            static::COL_SKU_PRODUCT_ABSTRACT => 'Abstract SKU',
+            static::COL_SKU_PRODUCT => 'Concrete SKU',
+            static::COL_PRICE_TYPE => 'Price Type',
             static::COL_CURRENCY => 'Currency',
             static::COL_STORE => 'Store',
             static::COL_NET_PRICE => 'Net price',
@@ -73,11 +76,14 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
         ]);
 
         $config->setSearchable([
-            static::COL_NET_PRICE,
-            static::COL_GROSS_PRICE,
+            static::COL_SKU_PRODUCT_ABSTRACT,
+            static::COL_SKU_PRODUCT,
         ]);
 
         $config->setSortable([
+            static::COL_SKU_PRODUCT_ABSTRACT,
+            static::COL_SKU_PRODUCT,
+            static::COL_PRICE_TYPE,
             static::COL_CURRENCY,
             static::COL_STORE,
             static::COL_NET_PRICE,
@@ -90,11 +96,25 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     }
 
     /**
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     */
+    protected function prepareQuery(): SpyPriceProductScheduleQuery
+    {
+        return (new SpyPriceProductScheduleQuery())
+            ->leftJoinWithCurrency()
+            ->leftJoinWithStore()
+            ->leftJoinWithProductAbstract()
+            ->leftJoinWithProduct()
+            ->leftJoinWithPriceType()
+            ->filterByFkPriceProductScheduleList($this->fkPriceProductScheduleList);
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config): array
+    protected function prepareData(TableConfiguration $config)
     {
         $query = $this->prepareQuery();
         $queryResults = $this->runQuery($query, $config, true);
@@ -109,11 +129,6 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
-     */
-    abstract protected function prepareQuery(): SpyPriceProductScheduleQuery;
-
-    /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
      *
      * @return array
@@ -121,6 +136,9 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     protected function generateItem(SpyPriceProductSchedule $priceProductScheduleEntity): array
     {
         return [
+            static::COL_SKU_PRODUCT_ABSTRACT => $this->getAbstractSkuFromPriceProductScheduleEntity($priceProductScheduleEntity),
+            static::COL_SKU_PRODUCT => $this->getConcreteSkuFromPriceProductScheduleEntity($priceProductScheduleEntity),
+            static::COL_PRICE_TYPE => $priceProductScheduleEntity->getPriceType()->getName(),
             static::COL_NET_PRICE => $this->formatMoney($priceProductScheduleEntity->getNetPrice(), $priceProductScheduleEntity),
             static::COL_GROSS_PRICE => $this->formatMoney($priceProductScheduleEntity->getGrossPrice(), $priceProductScheduleEntity),
             static::COL_STORE => $priceProductScheduleEntity->getStore()->getName(),
@@ -128,6 +146,38 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
             static::COL_ACTIVE_FROM => $this->formatDateTime($priceProductScheduleEntity->getActiveFrom()),
             static::COL_ACTIVE_TO => $this->formatDateTime($priceProductScheduleEntity->getActiveTo()),
         ];
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     *
+     * @return string|null
+     */
+    protected function getAbstractSkuFromPriceProductScheduleEntity(SpyPriceProductSchedule $priceProductScheduleEntity): ?string
+    {
+        $productAbstractEntity = $priceProductScheduleEntity->getProductAbstract();
+
+        if ($productAbstractEntity === null) {
+            return null;
+        }
+
+        return $productAbstractEntity->getSku();
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     *
+     * @return string|null
+     */
+    protected function getConcreteSkuFromPriceProductScheduleEntity(SpyPriceProductSchedule $priceProductScheduleEntity): ?string
+    {
+        $productConcreteEntity = $priceProductScheduleEntity->getProduct();
+
+        if ($productConcreteEntity === null) {
+            return null;
+        }
+
+        return $productConcreteEntity->getSku();
     }
 
     /**
@@ -153,82 +203,5 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
         }
 
         return $this->rowFormatter->formatMoney($amount, $priceProductScheduleEntity);
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $item
-     *
-     * @return string[]
-     */
-    protected function createActionColumn(SpyPriceProductSchedule $item): array
-    {
-        return [
-            $this->generatePriceProductScheduleEditButton($item),
-            $this->generatePriceProductScheduleRemoveButton($item),
-        ];
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $item
-     *
-     * @return string
-     */
-    protected function generatePriceProductScheduleEditButton(SpyPriceProductSchedule $item): string
-    {
-        return $this->generateEditButton(
-            Url::generate('/price-product-schedule-gui/edit', [
-                'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
-            ]),
-            'Edit'
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $item
-     *
-     * @return string
-     */
-    protected function generatePriceProductScheduleRemoveButton(SpyPriceProductSchedule $item): string
-    {
-        return $this->generateRemoveButton(
-            Url::generate('/price-product-schedule-gui/delete', [
-                'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
-            ]),
-            'Delete'
-        );
-    }
-
-    /**
-     * @param mixed $searchTerm
-     *
-     * @return bool
-     */
-    protected function isSearchTermValid($searchTerm): bool
-    {
-        return is_array($searchTerm)
-            && array_key_exists(static::PARAMETER_VALUE, $searchTerm)
-            && is_scalar($searchTerm[static::PARAMETER_VALUE]);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultSearchTerm(): array
-    {
-        return [
-            static::PARAMETER_VALUE => '',
-        ];
-    }
-
-    /**
-     * @param string $moneyValue
-     *
-     * @return string
-     */
-    protected function normalizeMoneyValue(string $moneyValue): string
-    {
-        $moneyValue = str_replace('.', '', $moneyValue);
-
-        return str_replace(',', '', $moneyValue);
     }
 }
