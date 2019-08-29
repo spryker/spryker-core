@@ -53,6 +53,11 @@ interface ClassDefinitionInterface extends DefinitionInterface
     public function hasArrayObject();
 
     /**
+     * @return bool
+     */
+    public function hasDouble();
+
+    /**
      * @return string
      */
     public function getEntityNamespace();

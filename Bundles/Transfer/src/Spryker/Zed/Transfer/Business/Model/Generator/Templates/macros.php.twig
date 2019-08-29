@@ -86,6 +86,12 @@
         }
 
         {% endif -%}
+        {% if method.double -%}
+            if (${{ method.property }} !== null && !${{ method.property }} instanceof Decimal) {
+            ${{ method.property }} = new Decimal(${{ method.property }});
+        }
+
+        {% endif -%}
         $this->{{ method.property }} = ${{ method.property }};
         $this->modifiedProperties[self::{{ method.propertyConst }}] = true;
 

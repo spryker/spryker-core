@@ -10,6 +10,9 @@ namespace Generated\Shared\Transfer;
 {% if hasArrayObject %}
 use ArrayObject;
 {% endif %}
+{% if hasDouble %}
+use Spryker\DecimalObject\Decimal;
+{% endif %}
 {% if entityNamespace is null %}
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 {% set abstractClass = 'AbstractTransfer' %}

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Transfer\Business\Model;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GeneratedTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
@@ -40,10 +41,33 @@ class GeneratedTransferTest extends Unit
     /**
      * @return void
      */
-    public function testStringProperty()
+    public static function setUpBeforeClass()
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
+        parent::setUpBeforeClass();
 
+        $definitionBuilder = static::getDefinitionBuilder([
+            codecept_data_dir('GeneratedTest/'),
+        ]);
+
+        $messenger = static::getMessenger();
+        $generator = static::getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
+        $transferGenerator->execute();
+
+        static::assertFileExists(static::getTargetDirectory() . 'GeneratedTransfer.php');
+        require_once(static::getTargetDirectory() . 'GeneratedTransfer.php');
+    }
+
+    /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
+     * @return void
+     */
+    public function testStringProperty(GeneratedTransfer $generatedTransfer): void
+    {
         $generatedTransfer->setTestString('string');
         $this->assertSame('string', $generatedTransfer->getTestString());
         $this->assertIsString($generatedTransfer->getTestString());
@@ -62,12 +86,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testStringArrayProperty()
+    public function testStringArrayProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $generatedTransfer->setTestStringArray(['string a', 'string b']);
         $this->assertSame(['string a', 'string b'], $generatedTransfer->getTestStringArray());
         $this->assertIsArray($generatedTransfer->getTestStringArray());
@@ -83,22 +109,27 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testStringArrayPropertyAdd()
+    public function testStringArrayPropertyAdd(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
         $generatedTransfer->addTestStringArray('string for array');
         $this->assertSame(['string for array'], $generatedTransfer->getTestStringArray());
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testIntProperty()
+    public function testIntProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $generatedTransfer->setTestInt(100);
         $this->assertSame(100, $generatedTransfer->getTestInt());
         $this->assertIsInt($generatedTransfer->getTestInt());
@@ -117,12 +148,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testIntArrayProperty()
+    public function testIntArrayProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $generatedTransfer->setTestIntArray([100, 200]);
         $this->assertSame([100, 200], $generatedTransfer->getTestIntArray());
         $this->assertIsArray($generatedTransfer->getTestIntArray());
@@ -136,22 +169,27 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testIntArrayPropertyAdd()
+    public function testIntArrayPropertyAdd(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
         $generatedTransfer->addTestIntArray(300);
         $this->assertSame([300], $generatedTransfer->getTestIntArray());
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testBoolProperty()
+    public function testBoolProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $generatedTransfer->setTestBool(true);
         $this->assertSame(true, $generatedTransfer->getTestBool());
         $this->assertIsBool($generatedTransfer->getTestBool());
@@ -170,12 +208,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testBoolArrayProperty()
+    public function testBoolArrayProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $generatedTransfer->setTestBoolArray([true, false]);
         $this->assertSame([true, false], $generatedTransfer->getTestBoolArray());
         $this->assertIsArray($generatedTransfer->getTestBoolArray());
@@ -189,22 +229,27 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testBoolArrayPropertyAdd()
+    public function testBoolArrayPropertyAdd(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
         $generatedTransfer->addTestBoolArray(true);
         $this->assertSame([true], $generatedTransfer->getTestBoolArray());
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testArrayProperty()
+    public function testArrayProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $generatedTransfer->setTestArray([]);
         $this->assertSame([], $generatedTransfer->getTestArray());
         $this->assertIsArray($generatedTransfer->getTestArray());
@@ -218,12 +263,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testTransferProperty()
+    public function testTransferProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $innerGeneratedTransfer = new GeneratedTransfer();
         $generatedTransfer->setTestTransfer($innerGeneratedTransfer);
         $this->assertSame($innerGeneratedTransfer, $generatedTransfer->getTestTransfer());
@@ -240,12 +287,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testTransferCollectionProperty()
+    public function testTransferCollectionProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
-
         $transferCollection = new ArrayObject([
             new GeneratedTransfer(),
         ]);
@@ -267,11 +316,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
      * @return void
      */
-    public function testTransferCollectionPropertyAdd()
+    public function testTransferCollectionPropertyAdd(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer = $this->getTestTransferForTesting();
         $generatedTransfer->addTransfer(new GeneratedTransfer());
         $transferCollection = new ArrayObject([
             new GeneratedTransfer(),
@@ -287,27 +339,7 @@ class GeneratedTransferTest extends Unit
     /**
      * @return void
      */
-    public function testTransferCollectionSetAndAddModified()
-    {
-        $generatedTransferSet = $this->getTestTransferForTesting();
-        $transferCollection = new ArrayObject([
-            new GeneratedTransfer(),
-            new GeneratedTransfer(),
-        ]);
-        $generatedTransferSet->setTestTransfers($transferCollection);
-
-        $generatedTransferAdd = $this->getTestTransferForTesting();
-        $generatedTransferAdd
-            ->addTransfer(new GeneratedTransfer())
-            ->addTransfer(new GeneratedTransfer());
-
-        $this->assertEquals($generatedTransferSet, $generatedTransferAdd);
-    }
-
-    /**
-     * @return void
-     */
-    public function testFromArrayWithUnderScoreNames()
+    public function testFromArrayWithUnderScoreNames(): void
     {
         $generatedTransferData = [
             'test_string' => 'string',
@@ -338,9 +370,41 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider getTestTransferForTesting
+     *
+     * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
+     *
+     * @return void
+     */
+    public function testDoubleProperty(GeneratedTransfer $generatedTransfer): void
+    {
+        $generatedTransfer->setTestDouble(1);
+        $this->assertSame('1', $generatedTransfer->getTestDouble()->toString());
+        $this->assertInstanceOf(Decimal::class, $generatedTransfer->getTestDouble());
+
+        $modified = $generatedTransfer->modifiedToArray();
+        $this->assertInstanceOf(Decimal::class, $modified['test_double']);
+        $this->assertSame(['test_double' => $generatedTransfer->getTestDouble()], $modified);
+
+        $generatedTransfer->fromArray([
+            'test_double' => 1.01,
+        ]);
+        $this->assertInstanceOf(Decimal::class, $generatedTransfer->modifiedToArray()['test_double']);
+
+        $generatedTransfer->requireTestDouble();
+
+        $generatedTransfer->setTestDouble(null);
+        $modified = $generatedTransfer->modifiedToArray();
+        $this->assertSame(['test_double' => null], $modified);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $generatedTransfer->requireTestDouble();
+    }
+
+    /**
      * @return string
      */
-    protected function getTargetDirectory()
+    protected static function getTargetDirectory()
     {
         return codecept_data_dir('test_files/Generated/');
     }
@@ -348,19 +412,17 @@ class GeneratedTransferTest extends Unit
     /**
      * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
-    protected function getMessenger()
+    protected static function getMessenger()
     {
-        $messenger = new ConsoleLogger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
-
-        return $messenger;
+        return new ConsoleLogger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
     }
 
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
-    protected function getClassGenerator()
+    protected static function getClassGenerator()
     {
-        $targetDirectory = $this->getTargetDirectory();
+        $targetDirectory = static::getTargetDirectory();
 
         return new ClassGenerator($targetDirectory);
     }
@@ -370,7 +432,7 @@ class GeneratedTransferTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getDefinitionBuilder($sourceDirectories)
+    protected static function getDefinitionBuilder($sourceDirectories)
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
@@ -385,25 +447,14 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\GeneratedTransfer
+     * @return array
      */
-    protected function getTestTransferForTesting()
+    public function getTestTransferForTesting(): array
     {
-        $sourceDirectories = [
-            codecept_data_dir('GeneratedTest/'),
+        require_once(static::getTargetDirectory() . 'GeneratedTransfer.php');
+
+        return [
+            [new GeneratedTransfer()],
         ];
-        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
-
-        $messenger = $this->getMessenger();
-        $generator = $this->getClassGenerator();
-
-        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
-        $transferGenerator->execute();
-
-        $this->assertFileExists($this->getTargetDirectory() . 'GeneratedTransfer.php');
-
-        require_once($this->getTargetDirectory() . 'GeneratedTransfer.php');
-
-        return new GeneratedTransfer();
     }
 }

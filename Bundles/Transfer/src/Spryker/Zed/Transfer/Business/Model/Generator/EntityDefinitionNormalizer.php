@@ -13,7 +13,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
     protected const TYPE_MAPPING = [
-        'double' => 'float',
+        'double' => '\Spryker\DecimalObject\Decimal',
     ];
 
     public const KEY_TYPE = 'type';

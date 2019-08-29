@@ -12,6 +12,7 @@ use ArrayObject;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -149,6 +150,8 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
             } elseif ($this->transferMetadata[$property]['is_transfer']) {
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
+            } elseif ($this->transferMetadata[$property]['type'] === Decimal::class) {
+                $value = $this->initializeDecimal($property, $value, $ignoreMissingProperty);
             }
 
             $this->$property = $value;
@@ -252,6 +255,26 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         return $value;
+    }
+
+    /**
+     * @param string $property
+     * @param mixed $value
+     * @param bool $ignoreMissingProperty
+     *
+     * @return \Spryker\DecimalObject\Decimal|null
+     */
+    protected function initializeDecimal($property, $value, $ignoreMissingProperty = false): ?Decimal
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if ($value instanceof Decimal) {
+            return $value;
+        }
+
+        return new Decimal($value);
     }
 
     /**

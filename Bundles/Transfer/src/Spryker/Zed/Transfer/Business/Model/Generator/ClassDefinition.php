@@ -60,6 +60,11 @@ class ClassDefinition implements ClassDefinitionInterface
     private $hasArrayObject = false;
 
     /**
+     * @var bool
+     */
+    private $hasDouble = false;
+
+    /**
      * @var array
      */
     private $propertyNameMap = [];
@@ -164,6 +169,14 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasDouble()
+    {
+        return $this->hasDouble;
+    }
+
+    /**
      * @param array $properties
      *
      * @return void
@@ -261,6 +274,10 @@ class ClassDefinition implements ClassDefinitionInterface
                 $property = $this->buildTransferPropertyDefinition($property);
             }
 
+            if ($this->isDouble($property)) {
+                $property = $this->buildDoublePropertyDefinition($property);
+            }
+
             $property['is_typed_array'] = false;
             if ($this->isTypedArray($property)) {
                 $property['is_typed_array'] = true;
@@ -300,13 +317,35 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @param array $property
+     *
+     * @return array
+     */
+    private function buildDoublePropertyDefinition(array $property)
+    {
+        $property[self::TYPE_FULLY_QUALIFIED] = 'Spryker\DecimalObject\Decimal';
+
+        return $property;
+    }
+
+    /**
      * @param string $type
      *
      * @return bool
      */
     private function isTransferOrTransferArray($type)
     {
-        return (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+        return (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    private function isDouble(array $property)
+    {
+        return $property['type'] === 'double';
     }
 
     /**
@@ -316,6 +355,10 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getPropertyType(array $property)
     {
+        if ($this->isDouble($property)) {
+            return '\Spryker\DecimalObject\Decimal|null';
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -354,6 +397,10 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getSetVar(array $property)
     {
+        if ($this->isDouble($property)) {
+            return 'string|int|float|\Spryker\DecimalObject\Decimal';
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -523,6 +570,10 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getReturnType(array $property)
     {
+        if ($this->isDouble($property)) {
+            return '\Spryker\DecimalObject\Decimal|null';
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -599,6 +650,12 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
+        if ($this->isDouble($property)) {
+            $this->hasDouble = true;
+
+            return false;
+        }
+
         if (preg_match('/^(string|int|integer|float|bool|boolean)$/', $property['type'])) {
             return false;
         }
@@ -660,12 +717,17 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
+            'double' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method['typeHint'], $property, $method);
+
+        if ($this->isDouble($property)) {
+            $method['double'] = true;
+        }
 
         $this->methods[$methodName] = $method;
     }
@@ -738,7 +800,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint && (!$this->isCollection($property) || $typeHint === 'array')) {
+        if ($this->isDouble($property) || ($typeHint && (!$this->isCollection($property) || $typeHint === 'array'))) {
             $method['hasDefaultNull'] = true;
         }
 
