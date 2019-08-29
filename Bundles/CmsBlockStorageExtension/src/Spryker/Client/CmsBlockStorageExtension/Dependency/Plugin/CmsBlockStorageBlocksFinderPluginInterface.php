@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin;
+namespace Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin;
 
 interface CmsBlockStorageBlocksFinderPluginInterface
 {

@@ -20,16 +20,16 @@ class CmsBlockStorageFactory extends AbstractFactory
         return new CmsBlockStorage(
             $this->getStorage(),
             $this->getSynchronizationService(),
-            $this->getCmsBlockStorageRelatedBlocksFinderPlugins()
+            $this->getCmsBlockStorageBlocksFinderPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
+     * @return \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
      */
-    public function getCmsBlockStorageRelatedBlocksFinderPlugins(): array
+    public function getCmsBlockStorageBlocksFinderPlugins(): array
     {
-        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::PLUGINS_CMS_BLOCK_STORAGE_RELATED_BLOCKS_FINDER);
+        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER);
     }
 
     /**

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockCategoryStorage\Business\Storage;
+namespace Spryker\Client\CmsBlockCategoryStorage\Storage;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface;
-use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface;
+use Spryker\Client\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface;
+use Spryker\Client\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface;
 
 class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInterface
 {
@@ -21,18 +21,18 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
     /**
-     * @var \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface
+     * @var \Spryker\Client\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface $storageClient
-     * @param \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
         CmsBlockCategoryStorageToStorageClientInterface $storageClient,

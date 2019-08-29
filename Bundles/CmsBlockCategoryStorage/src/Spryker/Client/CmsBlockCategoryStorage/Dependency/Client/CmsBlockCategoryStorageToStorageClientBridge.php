@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockCategoryStorage\Dependency\Client;
+namespace Spryker\Client\CmsBlockCategoryStorage\Dependency\Client;
 
 class CmsBlockCategoryStorageToStorageClientBridge implements CmsBlockCategoryStorageToStorageClientInterface
 {

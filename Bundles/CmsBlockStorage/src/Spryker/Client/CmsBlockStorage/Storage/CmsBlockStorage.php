@@ -27,23 +27,23 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
+     * @var \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
      */
-    protected $cmsBlockStorageRelatedBlocksFinderPlugins;
+    protected $cmsBlockStorageBlocksFinderPlugins;
 
     /**
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[] $cmsBlockStorageRelatedBlocksFinderPlugins
+     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[] $cmsBlockStorageBlocksFinderPlugins
      */
     public function __construct(
         CmsBlockStorageToStorageInterface $storageClient,
         CmsBlockStorageToSynchronizationServiceInterface $synchronizationService,
-        array $cmsBlockStorageRelatedBlocksFinderPlugins
+        array $cmsBlockStorageBlocksFinderPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->cmsBlockStorageRelatedBlocksFinderPlugins = $cmsBlockStorageRelatedBlocksFinderPlugins;
+        $this->cmsBlockStorageBlocksFinderPlugins = $cmsBlockStorageBlocksFinderPlugins;
     }
 
     /**
@@ -91,8 +91,8 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     {
         $blockKeys = [];
 
-        foreach ($this->cmsBlockStorageRelatedBlocksFinderPlugins as $cmsBlockStorageRelatedBlocksFinderPlugin) {
-            $cmsBlockTransfers = $cmsBlockStorageRelatedBlocksFinderPlugin->getRelatedCmsBlocks($options);
+        foreach ($this->cmsBlockStorageBlocksFinderPlugins as $cmsBlockStorageBlocksFinderPlugin) {
+            $cmsBlockTransfers = $cmsBlockStorageBlocksFinderPlugin->getRelatedCmsBlocks($options);
 
             if (count($cmsBlockTransfers) < 1) {
                 continue;

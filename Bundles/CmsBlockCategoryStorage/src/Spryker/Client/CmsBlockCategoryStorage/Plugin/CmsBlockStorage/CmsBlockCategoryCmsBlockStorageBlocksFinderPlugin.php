@@ -5,16 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\CmsBlockStorage;
+namespace Spryker\Client\CmsBlockCategoryStorage\Plugin\CmsBlockStorage;
 
-use Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface;
+use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageConfig getConfig()
- * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlockCategoryStorageFacadeInterface getFacade()
+ * @method \Spryker\Client\CmsBlockCategoryStorage\CmsBlockCategoryStorageFactory getFactory()
  */
 class CmsBlockCategoryCmsBlockStorageBlocksFinderPlugin extends AbstractPlugin implements CmsBlockStorageBlocksFinderPluginInterface
 {
