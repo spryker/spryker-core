@@ -35,6 +35,13 @@ interface MerchantGuiToMerchantFacadeInterface
     public function deleteMerchant(MerchantTransfer $merchantTransfer): void;
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+
+    /**
      * @param int $idMerchant
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null

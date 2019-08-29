@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 
 /**
  * Auto-generated group annotations
@@ -30,16 +31,31 @@ class GetMerchantDataTest extends Unit
     /**
      * @return void
      */
-    public function testFindMerchantById(): void
+    public function testGetMerchantById(): void
     {
         $expectedMerchant = $this->tester->haveMerchantWithAddressCollection();
 
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($expectedMerchant->getIdMerchant());
 
-        $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
+        $actualMerchant = $this->tester->getFacade()->getMerchantById($merchantTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantByIdWillThrowMerchantNotFoundException(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchantWithAddressCollection();
+
+        $merchantTransfer = (new MerchantTransfer())
+            ->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
+
+        $this->expectException(MerchantNotFoundException::class);
+
+        $this->tester->getFacade()->getMerchantById($merchantTransfer);
     }
 
     /**
