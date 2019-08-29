@@ -12,7 +12,6 @@ use ArrayObject;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
-use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilEncoding\Model\Json;
 use Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -150,12 +149,10 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
             } elseif ($this->transferMetadata[$property]['is_transfer']) {
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
-            } elseif ($this->transferMetadata[$property]['type'] === Decimal::class) {
-                $value = $this->initializeDecimal($property, $value, $ignoreMissingProperty);
             }
 
-            $this->$property = $value;
-            $this->modifiedProperties[$property] = true;
+            $propertySetterMethod = $this->getSetterMethod($property);
+            $this->$propertySetterMethod($value);
         }
 
         return $this;
@@ -174,6 +171,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         foreach ($arrayObject as $arrayElement) {
             if (!is_array($arrayElement)) {
                 $transferObjectsArray->append(new $elementType());
+
                 continue;
             }
 
@@ -258,23 +256,13 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @param string $property
-     * @param mixed $value
-     * @param bool $ignoreMissingProperty
+     * @param string $propertyName
      *
-     * @return \Spryker\DecimalObject\Decimal|null
+     * @return string
      */
-    protected function initializeDecimal($property, $value, $ignoreMissingProperty = false): ?Decimal
+    protected function getSetterMethod(string $propertyName): string
     {
-        if ($value === null) {
-            return null;
-        }
-
-        if ($value instanceof Decimal) {
-            return $value;
-        }
-
-        return new Decimal($value);
+        return 'set' . ucfirst($propertyName);
     }
 
     /**

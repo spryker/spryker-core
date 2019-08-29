@@ -7,8 +7,6 @@
 
 namespace Spryker\Shared\Kernel\Transfer;
 
-use Spryker\DecimalObject\Decimal;
-
 class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferInterface
 {
     /**
@@ -38,6 +36,7 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
         foreach ($data as $property => $value) {
             if ($this->hasProperty($property, $acceptVirtualProperties) === false) {
                 $this->virtualProperties[$property] = $value;
+
                 continue;
             }
 
@@ -48,12 +47,10 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
                 $value = $this->processArrayObject($elementType, $value, $acceptVirtualProperties);
             } elseif ($this->transferMetadata[$property]['is_transfer']) {
                 $value = $this->initializeNestedTransferObject($property, $value, $acceptVirtualProperties);
-            } elseif ($this->transferMetadata[$property]['type'] === Decimal::class) {
-                $value = $this->initializeDecimal($property, $value, $acceptVirtualProperties);
             }
 
-            $this->$property = $value;
-            $this->modifiedProperties[$property] = true;
+            $propertySetterMethod = $this->getSetterMethod($property);
+            $this->$propertySetterMethod($value);
         }
 
         return $this;
