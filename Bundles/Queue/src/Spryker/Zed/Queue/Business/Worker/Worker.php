@@ -72,7 +72,7 @@ class Worker implements WorkerInterface
 
     /**
      * @param string $command
-     * @param string[] $options
+     * @param array $options
      * @param int $round
      * @param array $processes
      *
