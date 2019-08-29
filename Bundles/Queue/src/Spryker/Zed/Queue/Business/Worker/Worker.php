@@ -117,7 +117,7 @@ class Worker implements WorkerInterface
      * @param string $command
      * @param int $round
      * @param int $delayIntervalSeconds
-     * @param string[] $options
+     * @param array $options
      *
      * @return void
      */
