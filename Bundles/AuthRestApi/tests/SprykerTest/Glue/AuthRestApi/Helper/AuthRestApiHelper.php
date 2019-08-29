@@ -35,6 +35,22 @@ class AuthRestApiHelper extends REST
     }
 
     /**
+     * Publishes access token
+     *
+     * @part json
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function amUnauthorizedGlueUser(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $this->haveHttpHeader('X-Anonymous-Customer-Unique-Id', $customerTransfer->getCustomerReference());
+
+        return $customerTransfer;
+    }
+
+    /**
      * @part json
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
