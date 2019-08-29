@@ -103,7 +103,7 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
      */
     protected function addServiceSynchronization(Container $container): Container
     {
-        $container->set(self::SERVICE_SYNCHRONIZATION, function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CmsBlockCategoryStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         });
 

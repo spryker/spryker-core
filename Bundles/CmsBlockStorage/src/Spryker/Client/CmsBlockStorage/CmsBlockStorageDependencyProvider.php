@@ -75,7 +75,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface[]
+     * @return \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
      */
     protected function getCmsBlockStorageRelatedBlocksFinderPlugins(): array
     {

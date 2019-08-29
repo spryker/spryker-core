@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin;
 
-interface CmsBlockStorageRelatedBlocksFinderPluginInterface
+interface CmsBlockStorageBlocksFinderPluginInterface
 {
     /**
      * Specification:
      * - Finds cms blocks by provided options.
-     * - Returns CmsBlockTransfers with `key` parameter.
+     * - Returns CmsBlockTransfers with filled `key` property.
      *
      * @api
      *
-     * @param array $options
+     * @param array $cmsBlockOptions
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function findRelatedCmsBlocks(array $options): array;
+    public function getRelatedCmsBlocks(array $cmsBlockOptions): array;
 }

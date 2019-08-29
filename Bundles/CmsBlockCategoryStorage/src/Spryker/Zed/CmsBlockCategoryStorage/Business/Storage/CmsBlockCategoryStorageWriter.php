@@ -9,12 +9,16 @@ namespace Spryker\Zed\CmsBlockCategoryStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsBlockCategoriesTransfer;
 use Generated\Shared\Transfer\CmsBlockCategoryTransfer;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface;
 
 class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInterface
 {
+    protected const KEYS = 'keys';
+    protected const NAMES = 'names';
+
     /**
      * @var \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface
      */
@@ -127,17 +131,14 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
             $cmsBlockCategoryTransfer = new CmsBlockCategoriesTransfer();
             $cmsBlockCategoryTransfer->setIdCategory($categoryId);
             foreach ($mappedCmsBlockCategoryPositions as $position => $blockData) {
-                $cmsBlockPositionTransfer = new CmsBlockCategoryTransfer();
-                $cmsBlockPositionTransfer->setPosition($position);
+                $cmsBlockPositionTransfer = (new CmsBlockCategoryTransfer())
+                    ->setPosition($position)
+                    ->setBlockNames($blockData[static::NAMES]);
 
-                if (!isset($blockData['keys'])) {
-                    $cmsBlockPositionTransfer->setBlockNames($blockData);
-                    $cmsBlockCategoryTransfer->addCmsBlockCategory($cmsBlockPositionTransfer);
-                    continue;
+                if (isset($blockData[static::KEYS])) {
+                    $cmsBlockPositionTransfer->setBlockKeys($blockData[static::KEYS]);
                 }
 
-                $cmsBlockPositionTransfer->setBlockNames($blockData['names']);
-                $cmsBlockPositionTransfer->setBlockKeys($blockData['keys']);
                 $cmsBlockCategoryTransfer->addCmsBlockCategory($cmsBlockPositionTransfer);
             }
 
@@ -157,13 +158,13 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         $cmsBlockCategoryEntities = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
         foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
-            if (!method_exists($cmsBlockCategoryEntity, 'getKey')) {
-                $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][] = $cmsBlockCategoryEntity->getName();
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] = $cmsBlockCategoryEntity->getName();
+
+            if (!defined(SpyCmsBlockTableMap::COL_KEY)) {
                 continue;
             }
 
-            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()]['names'][] = $cmsBlockCategoryEntity->getName();
-            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()]['keys'][] = $cmsBlockCategoryEntity->getKey();
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::KEYS][] = $cmsBlockCategoryEntity->getKey();
         }
 
         return $mappedCmsBlockCategories;

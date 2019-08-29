@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\CmsBlockStorage;
 
-use Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface;
+use Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,19 +16,19 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlockCategoryStorageFacadeInterface getFacade()
  */
-class CmsBlockCategoryCmsBlockStorageRelatedBlocksFinderPlugin extends AbstractPlugin implements CmsBlockStorageRelatedBlocksFinderPluginInterface
+class CmsBlockCategoryCmsBlockStorageBlocksFinderPlugin extends AbstractPlugin implements CmsBlockStorageBlocksFinderPluginInterface
 {
     /**
      * {@inheritDoc}
      *
      * @api
      *
-     * @param array $options
+     * @param array $cmsBlockOptions
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function findRelatedCmsBlocks(array $options): array
+    public function getRelatedCmsBlocks(array $cmsBlockOptions): array
     {
-        return $this->getFactory()->createCmsBlockCategoryStorageReader()->findCmsBlocksByOptions($options);
+        return $this->getFactory()->createCmsBlockCategoryStorageReader()->getCmsBlocksByOptions($cmsBlockOptions);
     }
 }

@@ -19,7 +19,6 @@ use Orm\Zed\CmsBlockProductConnector\Persistence\Base\SpyCmsBlockProductConnecto
  * long as it does not already exist in the output directory.
  *
  * @method string getName()
- * @method string getKey()
  */
 abstract class AbstractSpyCmsBlockProductConnector extends BaseSpyCmsBlockProductConnector
 {

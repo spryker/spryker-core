@@ -10,9 +10,9 @@ namespace Spryker\Zed\CmsBlockProductStorage\Business\Storage;
 interface CmsBlockProductStorageReaderInterface
 {
     /**
-     * @param array $options
+     * @param array $cmsBlockOptions
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function findCmsBlocksByOptions(array $options): array;
+    public function getCmsBlocksByOptions(array $cmsBlockOptions): array;
 }

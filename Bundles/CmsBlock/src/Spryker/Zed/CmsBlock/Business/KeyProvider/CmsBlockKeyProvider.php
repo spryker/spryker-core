@@ -36,7 +36,7 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
         if ($idCmsBlock) {
             $keyCandidate = $this->suggestCandidate($idCmsBlock);
 
-            if (!$this->isCandidateNotSuitable($keyCandidate)) {
+            if ($this->isCandidateSuitable($keyCandidate)) {
                 return $keyCandidate;
             }
         }
@@ -77,8 +77,8 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
      *
      * @return bool
      */
-    protected function isCandidateNotSuitable(string $candidate): bool
+    protected function isCandidateSuitable(string $candidate): bool
     {
-        return $this->cmsBlockRepository->hasKey($candidate);
+        return !$this->cmsBlockRepository->hasKey($candidate);
     }
 }

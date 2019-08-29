@@ -15,10 +15,6 @@ use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
     protected const PREFIX_MAPPING_CMS_BLOCK_KEY = 'name:';
-    protected const ARRAY_KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
-    protected const ARRAY_KEY_BLOCK_KEYS = 'block_keys';
-    protected const OPTION_CATEGORY = 'category';
-    protected const OPTION_POSITION = 'position';
 
     /**
      * @var \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface
@@ -31,14 +27,14 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface[]
+     * @var \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
      */
     protected $cmsBlockStorageRelatedBlocksFinderPlugins;
 
     /**
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface[] $cmsBlockStorageRelatedBlocksFinderPlugins
+     * @param \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[] $cmsBlockStorageRelatedBlocksFinderPlugins
      */
     public function __construct(
         CmsBlockStorageToStorageInterface $storageClient,
@@ -89,14 +85,14 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param array $options
      *
-     * @return array
+     * @return string[]
      */
     public function getBlockKeysByOptions(array $options): array
     {
         $blockKeys = [];
 
         foreach ($this->cmsBlockStorageRelatedBlocksFinderPlugins as $cmsBlockStorageRelatedBlocksFinderPlugin) {
-            $cmsBlockTransfers = $cmsBlockStorageRelatedBlocksFinderPlugin->findRelatedCmsBlocks($options);
+            $cmsBlockTransfers = $cmsBlockStorageRelatedBlocksFinderPlugin->getRelatedCmsBlocks($options);
 
             if (count($cmsBlockTransfers) < 1) {
                 continue;
@@ -160,7 +156,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
      *
-     * @return array
+     * @return string[]
      */
     protected function getBlockKeysFromTransfers(array $cmsBlockTransfers): array
     {
@@ -176,17 +172,13 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param string $blockKey
      * @param string $resourceName
-     * @param string|null $localeName
-     * @param string|null $storeName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return string
      */
-    protected function generateKey(
-        string $blockKey,
-        string $resourceName = CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
-        ?string $localeName = null,
-        ?string $storeName = null
-    ): string {
+    protected function generateKey(string $blockKey, string $resourceName, string $localeName, string $storeName): string
+    {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setStore($storeName);
         $synchronizationDataTransfer->setLocale($localeName);

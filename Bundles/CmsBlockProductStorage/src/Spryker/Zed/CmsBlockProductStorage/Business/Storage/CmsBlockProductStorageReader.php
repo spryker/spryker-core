@@ -41,17 +41,17 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     }
 
     /**
-     * @param array $options
+     * @param array $cmsBlockOptions
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function findCmsBlocksByOptions(array $options): array
+    public function getCmsBlocksByOptions(array $cmsBlockOptions): array
     {
-        if (!isset($options[static::OPTION_KEY_PRODUCT])) {
+        if (!isset($cmsBlockOptions[static::OPTION_KEY_PRODUCT])) {
             return [];
         }
 
-        $searchKey = $this->generateKey($options[static::OPTION_KEY_PRODUCT], static::RESOURCE_CMS_BLOCK_PRODUCT);
+        $searchKey = $this->generateKey($cmsBlockOptions[static::OPTION_KEY_PRODUCT], static::RESOURCE_CMS_BLOCK_PRODUCT);
 
         $block = $this->storageClient->get($searchKey);
 
@@ -85,9 +85,9 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     }
 
     /**
-     * @param array $blockKeys
+     * @param string[] $blockKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     protected function mapBlockKeysArrayToCmsBlockTransfers(array $blockKeys): array
     {

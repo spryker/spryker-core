@@ -43,18 +43,18 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
     }
 
     /**
-     * @param array $options
+     * @param array $cmsBlockOptions
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function findCmsBlocksByOptions(array $options): array
+    public function getCmsBlocksByOptions(array $cmsBlockOptions): array
     {
-        if (!isset($options[static::OPTION_KEY_CATEGORY])) {
+        if (!isset($cmsBlockOptions[static::OPTION_KEY_CATEGORY])) {
             return [];
         }
 
-        $position = $options[static::OPTION_KEY_POSITION] ?? null;
-        $searchKey = $this->generateKey($options[static::OPTION_KEY_CATEGORY], static::RESOURCE_CMS_BLOCK_CATEGORY);
+        $position = $cmsBlockOptions[static::OPTION_KEY_POSITION] ?? null;
+        $searchKey = $this->generateKey($cmsBlockOptions[static::OPTION_KEY_CATEGORY], static::RESOURCE_CMS_BLOCK_CATEGORY);
 
         $blocks = $this->storageClient->get($searchKey);
         $cmsBlockTransfers = [];
@@ -92,9 +92,9 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
     }
 
     /**
-     * @param array $blockKeys
+     * @param string[] $blockKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     protected function mapBlockKeysArrayToCmsBlockTransfers(array $blockKeys): array
     {

@@ -11,7 +11,7 @@ interface CmsBlockStorageClientInterface
 {
     /**
      * Specification:
-     * - Finds blocks by provided array of names with a single multi request to a storage
+     * - Finds blocks by the provided array of names with a single multi request to a storage.
      *
      * @api
      *
@@ -27,7 +27,7 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Finds blocks by provided array of keys with a single multi request to a storage.
+     * - Finds blocks by the provided array of keys with a single multi request to a storage.
      *
      * @api
      *

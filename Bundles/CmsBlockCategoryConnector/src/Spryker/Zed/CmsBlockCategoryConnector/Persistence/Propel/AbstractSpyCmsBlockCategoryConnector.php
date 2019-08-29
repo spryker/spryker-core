@@ -20,7 +20,6 @@ use Orm\Zed\CmsBlockCategoryConnector\Persistence\Base\SpyCmsBlockCategoryConnec
  *
  * @method int getPosition()
  * @method string getName()
- * @method string getKey()
  */
 abstract class AbstractSpyCmsBlockCategoryConnector extends BaseSpyCmsBlockCategoryConnector
 {

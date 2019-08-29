@@ -32,7 +32,7 @@ interface CmsBlockStorageInterface
     /**
      * @param array $options
      *
-     * @return array
+     * @return string[]
      */
     public function getBlockKeysByOptions(array $options): array;
 }

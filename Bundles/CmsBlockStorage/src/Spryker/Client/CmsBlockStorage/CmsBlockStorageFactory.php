@@ -25,7 +25,7 @@ class CmsBlockStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageRelatedBlocksFinderPluginInterface[]
+     * @return \Spryker\Zed\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
      */
     public function getCmsBlockStorageRelatedBlocksFinderPlugins(): array
     {
