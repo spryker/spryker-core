@@ -12,12 +12,7 @@
 "Merchant with id %s doesn't exists.","Händler mit der ID %s existiert nicht."
 "Overview of Merchants","Übersicht der Händler"
 Save,Speichern,
-waiting-for-approval,warten auf die bestätigung
-approved,genehmigt
-active,aktiv
-inactive,inaktiv
 E-Mail,E-Mail
-
 City,Stadt
 Zip Code,Postleitzahl
 Country,Land
