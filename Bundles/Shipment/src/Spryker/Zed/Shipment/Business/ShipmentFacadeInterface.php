@@ -268,4 +268,18 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification
+     * - Checks if shipment method name is unique for carrier.
+     * - If $shipmentMethodTransfer::idShipmentMethod provided, it will be excluded from the check.
+     * - Requires ShipmentMethodTransfer::name and ShipmentMethodTransfer::fkShipmentCarrier fields to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }

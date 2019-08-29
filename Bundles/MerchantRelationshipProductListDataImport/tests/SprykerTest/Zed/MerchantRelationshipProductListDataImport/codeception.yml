@@ -30,3 +30,4 @@ suites:
                    - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
                    - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                    - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                   - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
