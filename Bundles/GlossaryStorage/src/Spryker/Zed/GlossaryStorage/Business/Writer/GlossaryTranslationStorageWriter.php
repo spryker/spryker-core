@@ -199,24 +199,27 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      */
     protected function storeData(array $glossaryTranslationEntityTransfers, array $mappedGlossaryStorageEntityTransfers)
     {
+        $glossaryStorageEntityTransfers = [];
         foreach ($glossaryTranslationEntityTransfers as $id => $glossaryTranslationEntityTransfer) {
             $idGlossaryKey = $glossaryTranslationEntityTransfer->getFkGlossaryKey();
             $localeName = $glossaryTranslationEntityTransfer->getLocale()->getLocaleName();
             if (isset($mappedGlossaryStorageEntityTransfers[$idGlossaryKey][$localeName])) {
-                $this->storeDataSet($glossaryTranslationEntityTransfer, $mappedGlossaryStorageEntityTransfers[$idGlossaryKey][$localeName]);
+                $glossaryStorageEntityTransfers[] = $this->storeDataSet($glossaryTranslationEntityTransfer, $mappedGlossaryStorageEntityTransfers[$idGlossaryKey][$localeName]);
 
                 continue;
             }
 
-            $this->storeDataSet($glossaryTranslationEntityTransfer);
+            $glossaryStorageEntityTransfers[] = $this->storeDataSet($glossaryTranslationEntityTransfer);
         }
+
+        $this->entityManager->saveGlossaryStorageEntities($glossaryStorageEntityTransfers, $this->isSendingToQueue);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer
      * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer|null $glossaryStorageEntityTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer
      */
     protected function storeDataSet(SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer, ?SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer = null)
     {
@@ -231,10 +234,13 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         /**
          * This line added to keep the glossary data structure in backward compatible and
          * will be removed in the next major version.
+         *
+         * @var string $data https://spryker.atlassian.net/browse/TE-3518
          */
         $data = $this->makeGlossaryDataBackwardCompatible($glossaryTranslationEntityTransfer->modifiedToArray());
+        $glossaryStorageEntityTransfer->setData($data);
 
-        $this->entityManager->saveGlossaryStorageEntity($glossaryStorageEntityTransfer, $this->isSendingToQueue, $data);
+        return $glossaryStorageEntityTransfer;
     }
 
     /**

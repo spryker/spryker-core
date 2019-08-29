@@ -7,18 +7,15 @@
 
 namespace Spryker\Zed\GlossaryStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer;
-
 interface GlossaryStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
      * @param bool $isSendingToQueue
-     * @param array $data
      *
      * @return void
      */
-    public function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer, bool $isSendingToQueue, array $data): void;
+    public function saveGlossaryStorageEntities(array $glossaryStorageEntityTransfers, bool $isSendingToQueue): void;
 
     /**
      * @param int $idGlossaryStorage

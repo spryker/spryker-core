@@ -16,13 +16,25 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class GlossaryStorageEntityManager extends AbstractEntityManager implements GlossaryStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
      * @param bool $isSendingToQueue
-     * @param array $data
      *
      * @return void
      */
-    public function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer, bool $isSendingToQueue, array $data): void
+    public function saveGlossaryStorageEntities(array $glossaryStorageEntityTransfers, bool $isSendingToQueue): void
+    {
+        foreach ($glossaryStorageEntityTransfers as $glossaryStorageEntityTransfer) {
+            $this->saveGlossaryStorageEntity($glossaryStorageEntityTransfer, $isSendingToQueue);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer
+     * @param bool $isSendingToQueue
+     *
+     * @return void
+     */
+    protected function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer, bool $isSendingToQueue)
     {
         $glossaryStorageEntityTransfer->requireFkGlossaryKey();
 
@@ -37,7 +49,6 @@ class GlossaryStorageEntityManager extends AbstractEntityManager implements Glos
             ->hydrateSpyGlossaryStorageEntity($glossaryStorage, $glossaryStorageEntityTransfer);
 
         $glossaryStorage->setIsSendingToQueue($isSendingToQueue);
-        $glossaryStorage->setData($data);
 
         $glossaryStorage->save();
     }
