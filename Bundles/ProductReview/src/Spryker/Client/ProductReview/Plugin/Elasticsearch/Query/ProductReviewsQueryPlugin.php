@@ -49,6 +49,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for product review search.
      *
      * @api
      *
@@ -61,6 +62,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
 
     /**
      * {@inheritdoc}
+     * - Defines a context for product review search.
      *
      * @api
      *

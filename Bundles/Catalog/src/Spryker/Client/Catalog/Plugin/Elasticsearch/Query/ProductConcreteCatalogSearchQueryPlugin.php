@@ -55,6 +55,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for concrete products catalog search.
      *
      * @api
      *
@@ -83,6 +84,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritdoc}
+     * - Defines a context for concrete products catalog search.
      *
      * @api
      *

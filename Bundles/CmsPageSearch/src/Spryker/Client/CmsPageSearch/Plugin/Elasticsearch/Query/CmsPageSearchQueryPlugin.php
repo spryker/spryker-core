@@ -47,6 +47,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for CMS page search.
      *
      * @api
      *
@@ -59,6 +60,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
     /**
      * {@inheritdoc}
+     * - Defines a context for CMS page search.
      *
      * @api
      *

@@ -52,6 +52,7 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for keys search.
      *
      * @api
      *
@@ -79,6 +80,7 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
 
     /**
      * {@inheritdoc}
+     * - Defines a context for keys search.
      *
      * @api
      *

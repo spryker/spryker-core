@@ -19,5 +19,3 @@ interface QueryInterface
      */
     public function getSearchQuery();
 }
-
-class_alias(QueryInterface::class, 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface', false);

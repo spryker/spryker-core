@@ -39,6 +39,7 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for new products search.
      *
      * @api
      *
@@ -51,6 +52,7 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
 
     /**
      * {@inheritdoc}
+     * - Defines a context for new products search.
      *
      * @api
      *

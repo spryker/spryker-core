@@ -15,3 +15,5 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface as SearchExt
 interface QueryInterface extends SearchExtensionQueryInterface
 {
 }
+
+class_alias(SearchExtensionQueryInterface::class, QueryInterface::class, false);

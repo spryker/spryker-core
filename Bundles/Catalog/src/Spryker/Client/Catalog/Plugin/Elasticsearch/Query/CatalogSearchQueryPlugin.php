@@ -44,6 +44,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for catalog search.
      *
      * @api
      *
@@ -56,6 +57,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
     /**
      * {@inheritdoc}
+     * - Defines a context for catalog search.
      *
      * @api
      *

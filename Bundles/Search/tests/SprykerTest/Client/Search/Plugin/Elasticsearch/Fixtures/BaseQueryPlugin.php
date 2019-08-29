@@ -38,6 +38,7 @@ class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterfac
 
     /**
      * {@inheritdoc}
+     * - Returns a query object for base search.
      *
      * @api
      *
@@ -68,6 +69,7 @@ class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterfac
 
     /**
      * {@inheritdoc}
+     * - Defines a context for base query search.
      *
      * @api
      *
