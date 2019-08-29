@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlockProductStorage\Dependency\Service;
+namespace Spryker\Client\CmsBlockProductStorage\Dependency\Service;
 
 class CmsBlockProductStorageToSynchronizationServiceBridge implements CmsBlockProductStorageToSynchronizationServiceInterface
 {
