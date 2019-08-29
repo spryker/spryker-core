@@ -16,6 +16,19 @@ use Symfony\Component\Process\Process;
 class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
 {
     /**
+     * @var \Spryker\Zed\Propel\PropelConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig $config
+     */
+    public function __construct(PropelConfig $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * @return string
      */
     public function getEngine()
@@ -118,6 +131,7 @@ class PostgreSqlDatabaseCreator implements DatabaseCreatorInterface
         $this->exportPostgresPassword();
 
         $process = new Process(explode(' ', $command));
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         if (!$process->isSuccessful()) {

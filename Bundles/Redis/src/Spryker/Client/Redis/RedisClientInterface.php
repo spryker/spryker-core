@@ -183,6 +183,48 @@ interface RedisClientInterface
 
     /**
      * Specification:
+     * - Return all keys matching pattern, starting from cursor, limited to count.
+     * - PATTERN and COUNT are passed in the options argument.
+     * - @see https://redis.io/commands/scan
+     *
+     * @api
+     *
+     * @param string $connectionKey
+     * @param int $cursor
+     * @param array $options
+     *
+     * @return array [string, string[]]
+     */
+    public function scan(string $connectionKey, int $cursor, array $options): array;
+
+    /**
+     * Specification:
+     * - Returns the number of keys in the connection database.
+     * - @see https://redis.io/commands/dbsize
+     *
+     * @api
+     *
+     * @param string $connectionKey
+     *
+     * @return int
+     */
+    public function dbSize(string $connectionKey): int;
+
+    /**
+     * Specification:
+     * - Deletes all keys in the connection database.
+     * - @see https://redis.io/commands/flushdb
+     *
+     * @api
+     *
+     * @param string $connectionKey
+     *
+     * @return void
+     */
+    public function flushDb(string $connectionKey): void;
+
+    /**
+     * Specification:
      * - Initializes a connection with provided configuration, if it was not already initialized.
      *
      * @api
