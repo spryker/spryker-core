@@ -51,24 +51,6 @@ class CompanyUserAuthRestApiHelper extends REST
     }
 
     /**
-     * Publishes access token
-     *
-     * @part json
-     *
-     * @param array $glueToken
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function amAuthorizedGlueCompanyUser(array $glueToken, CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        $this->haveHttpHeader('X-Company-User-Id', $customerTransfer->getCompanyUserTransfer()->getUuid());
-        $this->haveHttpHeader('Authorization', sprintf('%s %s', $glueToken['tokenType'], $glueToken['accessToken']));
-
-        return $customerTransfer;
-    }
-
-    /**
      * Creates company, company user and customer
      *
      * @part json
