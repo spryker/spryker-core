@@ -21,7 +21,7 @@ class EventConfig extends AbstractBundleConfig
      * @deprecated This is added only for BC reason and will
      * be removed in the next major.
      *
-     * @var bool
+     * @var bool|null
      */
     protected static $eventRetryQueueActive;
 
