@@ -26,4 +26,30 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     {
         return $this->get(SearchElasticsearchConstants::INDEX_NAME_MAP, []);
     }
+
+    /**
+     * @return array
+     */
+    public function getClientConfig(): array
+    {
+        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::CLIENT_CONFIGURATION)) {
+            return $this->get(SearchElasticsearchConstants::CLIENT_CONFIGURATION);
+        }
+
+        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::EXTRA)) {
+            $config = $this->get(SearchElasticsearchConstants::EXTRA);
+        }
+
+        $config['transport'] = ucfirst($this->get(SearchElasticsearchConstants::TRANSPORT));
+        $config['port'] = $this->get(SearchElasticsearchConstants::PORT);
+        $config['host'] = $this->get(SearchElasticsearchConstants::HOST);
+
+        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::AUTH_HEADER)) {
+            $config['headers'] = [
+                'Authorization' => sprintf('Basic %s', $this->get(SearchElasticsearchConstants::AUTH_HEADER)),
+            ];
+        }
+
+        return $config;
+    }
 }

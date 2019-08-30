@@ -38,7 +38,6 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function getTotalCount(?string $indexName = null): int
     {
-        return $this->getFactory()->createSearch()->getTotalCount($indexName);
     }
 
     /**
@@ -50,7 +49,6 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function getMetaData(?string $indexName = null): array
     {
-        return $this->getFactory()->createSearch()->getMetaData($indexName);
     }
 
     /**
@@ -63,7 +61,6 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function read(string $key, string $indexName)
     {
-        return $this->getFactory()->createSearch()->read($key, $indexName);
     }
 
     /**
@@ -75,7 +72,6 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function delete(?string $indexName = null): bool
     {
-        return $this->getFactory()->createSearch()->delete($indexName);
     }
 
     /**
@@ -87,6 +83,5 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        return $this->getFactory()->createSearch()->deleteDocuments($searchDocumentTransfers);
     }
 }

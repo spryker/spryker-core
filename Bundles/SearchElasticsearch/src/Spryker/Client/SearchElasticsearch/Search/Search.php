@@ -7,19 +7,19 @@
 
 namespace Spryker\Client\SearchElasticsearch\Search;
 
+use Elastica\Client;
 use Elastica\Exception\ResponseException;
 use Elastica\ResultSet;
 use Spryker\Client\SearchElasticsearch\Exception\SearchResponseException;
-use Spryker\Client\SearchElasticsearch\Provider\SearchElasticsearchClientProvider;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 
-class ElasticsearchSearch /*implements SearchInterface*/
+class Search implements SearchInterface
 {
     /**
-     * @var \Spryker\Client\SearchElasticsearch\Provider\SearchElasticsearchClientProvider
+     * @var \Elastica\Client
      */
-    protected $indexClientProvider;
+    protected $client;
 
     /**
      * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
@@ -27,12 +27,12 @@ class ElasticsearchSearch /*implements SearchInterface*/
     protected $indexNameResolver;
 
     /**
-     * @param \Spryker\Client\SearchElasticsearch\Provider\SearchElasticsearchClientProvider $indexClientProvider
+     * @param \Elastica\Client $client
      * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      */
-    public function __construct(SearchElasticsearchClientProvider $indexClientProvider, IndexNameResolverInterface $indexNameResolver)
+    public function __construct(Client $client, IndexNameResolverInterface $indexNameResolver)
     {
-        $this->indexClientProvider = $indexClientProvider;
+        $this->client = $client;
         $this->indexNameResolver = $indexNameResolver;
     }
 
@@ -41,9 +41,9 @@ class ElasticsearchSearch /*implements SearchInterface*/
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return \Elastica\ResultSet
+     * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []): ResultSet
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
         $rawSearchResult = $this->executeQuery($searchQuery);
 
@@ -61,7 +61,7 @@ class ElasticsearchSearch /*implements SearchInterface*/
      *
      * @return array
      */
-    protected function formatSearchResults(array $resultFormatters, ResultSet $rawSearchResult, array $requestParameters)
+    protected function formatSearchResults(array $resultFormatters, ResultSet $rawSearchResult, array $requestParameters): array
     {
         $formattedSearchResult = [];
 
@@ -79,14 +79,13 @@ class ElasticsearchSearch /*implements SearchInterface*/
      *
      * @return \Elastica\ResultSet
      */
-    protected function executeQuery(QueryInterface $query)
+    protected function executeQuery(QueryInterface $query): ResultSet
     {
         try {
             $indexName = $this->getIndexName($query);
-
             $query = $query->getSearchQuery();
-            $client = $this->indexClientProvider->getClient($indexName);
-            $rawSearchResult = $client->search($query);
+            $index = $this->client->getIndex($indexName);
+            $rawSearchResult = $index->search($query);
         } catch (ResponseException $e) {
             $rawQuery = json_encode($query->toArray());
 

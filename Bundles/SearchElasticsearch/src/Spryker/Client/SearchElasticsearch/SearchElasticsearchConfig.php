@@ -8,8 +8,10 @@
 namespace Spryker\Client\SearchElasticsearch;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 
+/**
+ * @method \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig getSharedConfig()
+ */
 class SearchElasticsearchConfig extends AbstractBundleConfig
 {
     /**
@@ -17,24 +19,14 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
      */
     public function getClientConfig(): array
     {
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::CLIENT_CONFIGURATION)) {
-            return $this->get(SearchElasticsearchConstants::CLIENT_CONFIGURATION);
-        }
+        return $this->getSharedConfig()->getClientConfig();
+    }
 
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::EXTRA)) {
-            $config = $this->get(SearchElasticsearchConstants::EXTRA);
-        }
-
-        $config['transport'] = ucfirst($this->get(SearchElasticsearchConstants::TRANSPORT));
-        $config['port'] = $this->get(SearchElasticsearchConstants::PORT);
-        $config['host'] = $this->get(SearchElasticsearchConstants::HOST);
-
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::AUTH_HEADER)) {
-            $config['headers'] = [
-                'Authorization' => 'Basic ' . $this->get(SearchElasticsearchConstants::AUTH_HEADER),
-            ];
-        }
-
-        return $config;
+    /**
+     * @return array
+     */
+    public function getIndexNameMap(): array
+    {
+        return $this->getSharedConfig()->getIndexNameMap();
     }
 }
