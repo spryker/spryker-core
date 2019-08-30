@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -273,6 +274,8 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConstants::SHIPMENT_EXPENSE_TYPE constant.
+     *
      * @return string
      */
     public function getShipmentExpenseTypeIdentifier();
@@ -358,4 +361,17 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns sales order items by sales order id and salesShipmentId or null.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
 }

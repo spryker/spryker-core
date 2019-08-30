@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\ManualOrderEntryGui\ManualOrderEntryGuiConstants;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToShipmentServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ShipmentFormHandler implements FormHandlerInterface
@@ -24,20 +24,12 @@ class ShipmentFormHandler implements FormHandlerInterface
     protected $shipmentFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface $shipmentFacade
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToShipmentServiceInterface $shipmentService
      */
     public function __construct(
-        ManualOrderEntryGuiToShipmentFacadeInterface $shipmentFacade,
-        ManualOrderEntryGuiToShipmentServiceInterface $shipmentService
+        ManualOrderEntryGuiToShipmentFacadeInterface $shipmentFacade
     ) {
         $this->shipmentFacade = $shipmentFacade;
-        $this->shipmentService = $shipmentService;
     }
 
     /**
@@ -75,7 +67,7 @@ class ShipmentFormHandler implements FormHandlerInterface
     {
         $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
-        $shipmentExpenseTransfer->setType($this->shipmentService->getShipmentExpenseType());
+        $shipmentExpenseTransfer->setType(ManualOrderEntryGuiConstants::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($shipmentMethodTransfer->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);

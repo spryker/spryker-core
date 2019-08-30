@@ -23,7 +23,6 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProdu
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToShipmentServiceBridge;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiConfig getConfig()
@@ -51,8 +50,6 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
-    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -78,7 +75,6 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
-        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -177,20 +173,6 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container[static::FACADE_SHIPMENT] = function (Container $container) {
             return new ManualOrderEntryGuiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
         };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addShipmentService(Container $container): Container
-    {
-        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
-            return new ManualOrderEntryGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());
-        });
 
         return $container;
     }

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
@@ -192,9 +193,8 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         QuoteTransfer $quoteTransfer,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === $shipmentExpenseType) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 $orderTransfer->addExpense($expenseTransfer);
             }
         }
@@ -269,10 +269,9 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         ShipmentTransfer $shipmentTransfer
     ): ?ExpenseTransfer {
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($salesOrderTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentTransfer = $expenseTransfer->getShipment();
-            if ($expenseShipmentTransfer === null || $expenseTransfer->getType() !== $shipmentExpenseType) {
+            if ($expenseShipmentTransfer === null || $expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 

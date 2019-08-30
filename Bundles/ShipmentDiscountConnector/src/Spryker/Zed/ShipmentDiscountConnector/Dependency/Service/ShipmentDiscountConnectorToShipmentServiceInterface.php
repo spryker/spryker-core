@@ -25,9 +25,4 @@ interface ShipmentDiscountConnectorToShipmentServiceInterface
      * @return string
      */
     public function getShipmentHashKey(ShipmentTransfer $shipmentTransfer): string;
-
-    /**
-     * @return string
-     */
-    public function getShipmentExpenseType(): string;
 }

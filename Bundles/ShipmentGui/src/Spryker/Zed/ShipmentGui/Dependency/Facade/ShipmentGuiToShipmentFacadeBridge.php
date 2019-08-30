@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -81,5 +82,16 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     ): ShipmentGroupTransfer {
         return $this->shipmentFacade
             ->createShipmentGroupTransferWithListedItems($shipmentGroupTransfer, $itemListUpdatedStatus);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject
+    {
+        return $this->shipmentFacade->findSalesOrderItemsIdsBySalesShipmentId($idSalesOrder, $idSalesShipment);
     }
 }

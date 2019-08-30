@@ -22,14 +22,6 @@ class SalesConfig extends AbstractBundleConfig
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
-     * @return string
-     */
-    public function getIdSalesOrderParameter(): string
-    {
-        return static::PARAM_ID_SALES_ORDER;
-    }
-
-    /**
      * Separator for the sequence number
      *
      * @return string
@@ -76,14 +68,12 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
-        /**
-         * @deprecated Exists for Backward Compatibility reasons only.
-         */
-        if (!$this->isMultipleShipment($quoteTransfer)) {
-            return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
+            return false;
         }
 
-        return $this->isTestOrderWithMultiShippingAddress($quoteTransfer);
+        return true;
     }
 
     /**
@@ -116,61 +106,5 @@ class SalesConfig extends AbstractBundleConfig
     public function getSalesDetailExternalBlocksUrls()
     {
         return [];
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isMultipleShipment(QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment() === null) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isTestOrderWithoutMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
-    {
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isTestOrderWithMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $shipmentTransfer = $itemTransfer->getShipment();
-
-            if ($shipmentTransfer === null
-                || $shipmentTransfer->getShippingAddress() === null
-                || $shipmentTransfer->getShippingAddress()->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME
-            ) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

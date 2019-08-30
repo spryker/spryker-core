@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
-use Spryker\Zed\Shipment\ShipmentConfig;
 
 /**
  * @deprecated Use \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver instead.
@@ -46,26 +46,18 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected $shipmentRepository;
 
     /**
-     * @var \Spryker\Zed\Shipment\ShipmentConfig
-     */
-    protected $shipmentConfig;
-
-    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
-     * @param \Spryker\Zed\Shipment\ShipmentConfig $shipmentConfig
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
         ExpenseSanitizerInterface $expenseSanitizer,
-        ShipmentRepositoryInterface $shipmentRepository,
-        ShipmentConfig $shipmentConfig
+        ShipmentRepositoryInterface $shipmentRepository
     ) {
         $this->entityManager = $entityManager;
         $this->expenseSanitizer = $expenseSanitizer;
         $this->shipmentRepository = $shipmentRepository;
-        $this->shipmentConfig = $shipmentConfig;
     }
 
     /**
@@ -130,9 +122,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         OrderTransfer $orderTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): OrderTransfer {
-        $shipmentExpenseType = $this->shipmentConfig->getShipmentExpenseType();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== $shipmentExpenseType) {
+            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
@@ -215,9 +206,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      */
     protected function findShipmentExpense(SaveOrderTransfer $saveOrderTransfer, $shipmentMethodName): ?ExpenseTransfer
     {
-        $shipmentExpenseType = $this->shipmentConfig->getShipmentExpenseType();
         foreach ($saveOrderTransfer->getOrderExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === $shipmentExpenseType && $shipmentMethodName === $expenseTransfer->getName()) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE && $shipmentMethodName === $expenseTransfer->getName()) {
                 return $expenseTransfer;
             }
         }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -318,6 +319,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConstants::SHIPMENT_EXPENSE_TYPE constant.
+     *
      * @return string
      */
     public function getShipmentExpenseTypeIdentifier()
@@ -392,6 +395,23 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->createShipmentExpenseFilterStrategyResolver()
             ->resolve($calculableObjectTransfer->getItems())
             ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     */
+    public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject
+    {
+        return $this->getFactory()
+            ->createShipmentSalesOrderItemReader()
+            ->findSalesOrderItemsBySalesShipmentId($idSalesOrder, $idSalesShipment);
     }
 
     /**

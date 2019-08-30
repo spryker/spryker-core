@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
@@ -20,11 +21,6 @@ class ShipmentFetcher implements ShipmentFetcherInterface
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface
      */
     protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
-     */
-    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
@@ -44,12 +40,10 @@ class ShipmentFetcher implements ShipmentFetcherInterface
      */
     public function __construct(
         ShipmentQueryContainerInterface $queryContainer,
-        ShipmentToStoreInterface $storeFacade,
         ShipmentToCurrencyInterface $currencyFacade,
         ShipmentMethodTransformerInterface $shipmentMethodTransformer
     ) {
         $this->queryContainer = $queryContainer;
-        $this->storeFacade = $storeFacade;
         $this->currencyFacade = $currencyFacade;
         $this->shipmentMethodTransformer = $shipmentMethodTransformer;
     }
@@ -78,16 +72,19 @@ class ShipmentFetcher implements ShipmentFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param string $currencyIsoCode
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentPriceTransfer|null
      */
-    public function findMethodPriceByShipmentMethodAndCurrentStoreCurrency(ShipmentMethodTransfer $shipmentMethodTransfer, string $currencyIsoCode): ?ShipmentPriceTransfer
-    {
-        $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
+    public function findMethodPriceByShipmentMethodAndCurrentStoreCurrency(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): ?ShipmentPriceTransfer {
+        $storeTransfer->requireIdStore()
+            ->requireSelectedCurrencyIsoCode();
 
         $idCurrencyIsoCode = $this->currencyFacade
-            ->fromIsoCode($currencyIsoCode)
+            ->fromIsoCode($storeTransfer->getSelectedCurrencyIsoCode())
             ->getIdCurrency();
 
         /**
@@ -96,7 +93,7 @@ class ShipmentFetcher implements ShipmentFetcherInterface
         $shipmentMethodPriceEntity = $this->queryContainer
             ->queryMethodPriceByShipmentMethodAndStoreCurrency(
                 $shipmentMethodTransfer->getIdShipmentMethod(),
-                $idStore,
+                $storeTransfer->getIdStore(),
                 $idCurrencyIsoCode
             )
             ->findOne();

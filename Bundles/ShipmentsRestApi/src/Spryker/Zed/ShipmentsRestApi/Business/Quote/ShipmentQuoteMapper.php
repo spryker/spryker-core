@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConstants;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface;
 
@@ -81,7 +82,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     {
         $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentTransfer->getMethod()->toArray(), true);
-        $shipmentExpenseTransfer->setType($this->shipmentService->getShipmentExpenseType());
+        $shipmentExpenseTransfer->setType(ShipmentsRestApiConstants::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);

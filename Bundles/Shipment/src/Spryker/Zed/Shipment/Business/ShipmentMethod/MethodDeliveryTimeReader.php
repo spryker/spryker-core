@@ -10,7 +10,6 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 
 class MethodDeliveryTimeReader implements MethodDeliveryTimeReaderInterface

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
@@ -138,9 +139,12 @@ class MethodPriceReader implements MethodPriceReaderInterface
             return null;
         }
 
+        $storeTransfer = $this->getStore($quoteTransfer);
+        $storeTransfer->requireIdStore();
+
         $shipmentMethodPriceTransfer = $this->shipmentRepository->findShipmentMethodPrice(
             $shipmentMethodTransfer->getIdShipmentMethod(),
-            $this->storeFacade->getCurrentStore()->getIdStore(),
+            $storeTransfer->getIdStore(),
             $this->getIdCurrencyByIsoCode($currencyCode)
         );
 
@@ -188,5 +192,20 @@ class MethodPriceReader implements MethodPriceReaderInterface
         return $quoteTransfer->getPriceMode() === ShipmentConstants::PRICE_MODE_GROSS ?
             $shipmentMethodPriceTransfer->getDefaultGrossPrice() :
             $shipmentMethodPriceTransfer->getDefaultNetPrice();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStore(QuoteTransfer $quoteTransfer): StoreTransfer
+    {
+        $storeTransfer = $quoteTransfer->getStore();
+        if ($storeTransfer !== null) {
+            return $storeTransfer;
+        }
+
+        return $this->storeFacade->getCurrentStore();
     }
 }

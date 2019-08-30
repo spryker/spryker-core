@@ -38,20 +38,15 @@
                 </div>
 
                 <div class="row">
-                    {% for expense in order.expenses %}
-                        <div class="col-sm-10">
-                            <p>
-                                {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' %}
-                                    {{ 'Shipment' | trans }} {{ expense.shipment.method.carrierName ?? '' }} {{ expense.name }}
-                                {% endif %}
+                    {% include [
+                        '@ShipmentGui/Sales/boxes/shipment-expenses.twig',
+                        '@Sales/Detail/boxes/order-overview-shipment-expenses.twig'
+                    ] %}
 
-                                {% if expense.type == 'THRESHOLD_EXPENSE_TYPE' %}
-                                    {{ 'Surcharge' | trans }}
-                                {% endif %}
-                            </p>
-                        </div>
-                        <div class="col-sm-2"><p>{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</p></div>
-                    {% endfor %}
+                    {% include [
+                        '@SalesOrderThresholdGui/Sales/boxes/threshold-expenses.twig',
+                        '@Sales/Detail/boxes/order-overview-threshold-expenses.twig'
+                    ] %}
                 </div>
 
                 <div class="row">

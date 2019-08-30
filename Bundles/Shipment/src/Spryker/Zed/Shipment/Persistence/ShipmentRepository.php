@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
@@ -471,5 +473,38 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     protected function queryMethodPrices(): SpyShipmentMethodPriceQuery
     {
         return $this->getFactory()->createShipmentMethodPriceQuery();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesShipment
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject
+    {
+        $salesOrderItemEntities = $this->getFactory()
+            ->createSalesOrderItemQuery()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->filterByFkSalesShipment($idSalesShipment)
+            ->_or()
+            ->filterByFkSalesShipment(null)
+            ->find();
+
+        if ($salesOrderItemEntities->count() === 0) {
+            return new ArrayObject();
+        }
+
+        $salesOrderItemMapper = $this->getFactory()->createShipmentSalesOrderItemMapper();
+
+        $itemTransfers = new ArrayObject();
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $itemTransfer = $salesOrderItemMapper
+                ->mapSalesOrderItemEntityToItemTransfer($salesOrderItemEntity, new ItemTransfer());
+
+            $itemTransfers->append($itemTransfer);
+        }
+
+        return $itemTransfers;
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentGroup;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ShipmentFetcherInterface
 {
@@ -21,9 +22,12 @@ interface ShipmentFetcherInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param string $currencyIsoCode
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentPriceTransfer|null
      */
-    public function findMethodPriceByShipmentMethodAndCurrentStoreCurrency(ShipmentMethodTransfer $shipmentMethodTransfer, string $currencyIsoCode): ?ShipmentPriceTransfer;
+    public function findMethodPriceByShipmentMethodAndCurrentStoreCurrency(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): ?ShipmentPriceTransfer;
 }
