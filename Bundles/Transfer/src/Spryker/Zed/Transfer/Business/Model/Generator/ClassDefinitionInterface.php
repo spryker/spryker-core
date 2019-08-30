@@ -15,50 +15,50 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
-    public function getConstants();
+    public function getConstants(): array;
 
     /**
      * @return array
      */
-    public function getProperties();
+    public function getProperties(): array;
 
     /**
      * @return array
      */
-    public function getPropertyNameMap();
+    public function getPropertyNameMap(): array;
 
     /**
      * @return array
      */
-    public function getConstructorDefinition();
+    public function getConstructorDefinition(): array;
 
     /**
      * @return array
      */
-    public function getMethods();
+    public function getMethods(): array;
 
     /**
      * @return array
      */
-    public function getNormalizedProperties();
+    public function getNormalizedProperties(): array;
 
     /**
      * @return string|null
      */
-    public function getDeprecationDescription();
+    public function getDeprecationDescription(): ?string;
 
     /**
      * @return bool
      */
-    public function hasArrayObject();
+    public function hasArrayObject(): bool;
 
     /**
      * @return bool
      */
-    public function hasDouble();
+    public function hasDouble(): bool;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEntityNamespace();
+    public function getEntityNamespace(): ?string;
 }

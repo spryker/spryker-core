@@ -15,7 +15,9 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassGenerator;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
@@ -39,25 +41,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class GeneratedTransferTest extends Unit
 {
     /**
-     * @return void
+     * @var bool
      */
-    public static function setUpBeforeClass()
-    {
-        parent::setUpBeforeClass();
-
-        $definitionBuilder = static::getDefinitionBuilder([
-            codecept_data_dir('GeneratedTest/'),
-        ]);
-
-        $messenger = static::getMessenger();
-        $generator = static::getClassGenerator();
-
-        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
-        $transferGenerator->execute();
-
-        static::assertFileExists(static::getTargetDirectory() . 'GeneratedTransfer.php');
-        require_once(static::getTargetDirectory() . 'GeneratedTransfer.php');
-    }
+    protected $transferGenerated;
 
     /**
      * @dataProvider getTestTransferForTesting
@@ -402,9 +388,32 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    protected function generateTransfer(): void
+    {
+        if ($this->transferGenerated) {
+            return;
+        }
+
+        $definitionBuilder = $this->getDefinitionBuilder([
+            codecept_data_dir('GeneratedTest/'),
+        ]);
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
+
+        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
+        $transferGenerator->execute();
+
+        $this->assertFileExists($this->getTargetDirectory() . 'GeneratedTransfer.php');
+        $this->transferGenerated = true;
+    }
+
+    /**
      * @return string
      */
-    protected static function getTargetDirectory()
+    protected function getTargetDirectory(): string
     {
         return codecept_data_dir('test_files/Generated/');
     }
@@ -412,7 +421,7 @@ class GeneratedTransferTest extends Unit
     /**
      * @return \Symfony\Component\Console\Logger\ConsoleLogger
      */
-    protected static function getMessenger()
+    protected function getMessenger(): ConsoleLogger
     {
         return new ConsoleLogger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
     }
@@ -420,9 +429,9 @@ class GeneratedTransferTest extends Unit
     /**
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\GeneratorInterface
      */
-    protected static function getClassGenerator()
+    protected function getClassGenerator(): GeneratorInterface
     {
-        $targetDirectory = static::getTargetDirectory();
+        $targetDirectory = $this->getTargetDirectory();
 
         return new ClassGenerator($targetDirectory);
     }
@@ -432,7 +441,7 @@ class GeneratedTransferTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected static function getDefinitionBuilder($sourceDirectories)
+    protected function getDefinitionBuilder($sourceDirectories): DefinitionBuilderInterface
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();
@@ -451,7 +460,8 @@ class GeneratedTransferTest extends Unit
      */
     public function getTestTransferForTesting(): array
     {
-        require_once(static::getTargetDirectory() . 'GeneratedTransfer.php');
+        $this->generateTransfer();
+        require_once($this->getTargetDirectory() . 'GeneratedTransfer.php');
 
         return [
             [new GeneratedTransfer()],

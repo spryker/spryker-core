@@ -88,7 +88,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
      *
      * @return $this
      */
-    private function setName($name)
+    protected function setName($name)
     {
         $name = ucfirst($name);
         $this->transferName = $name . 'Transfer';

@@ -123,7 +123,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      *
      * @return array
      */
-    private function normalizeForeignKeys(array $foreignKeys, array $properties, $module)
+    protected function normalizeForeignKeys(array $foreignKeys, array $properties, $module)
     {
         if (isset($foreignKeys[0])) {
             return $this->addForeignKeyTransfer($foreignKeys, $properties, $module);
