@@ -1,0 +1,8 @@
+{{ 'mail.order.confirmation.shipment_details' | trans }}
+
+{{ 'mail.order.confirmation.shipping_address' | trans }}: {{ mail.order.shippingAddress.firstName }} {{ mail.order.shippingAddress.lastName }}<br />
+{{ mail.order.shippingAddress.address1 }} {{ mail.order.shippingAddress.address2 }} {{ mail.order.shippingAddress.address3 }}<br />
+{{ mail.order.shippingAddress.zipCode }} {{ mail.order.shippingAddress.city }}<br />
+{{ mail.order.shippingAddress.region }}
+
+- - -

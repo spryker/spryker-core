@@ -13,7 +13,6 @@ use Spryker\Zed\ShipmentsRestApi\Business\Quote\ShipmentQuoteMapperInterface;
 use Spryker\Zed\ShipmentsRestApi\Business\Validator\ShipmentMethodCheckoutDataValidator;
 use Spryker\Zed\ShipmentsRestApi\Business\Validator\ShipmentMethodCheckoutDataValidatorInterface;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
-use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface;
 use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
 
 /**
@@ -26,7 +25,7 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentQuoteMapper(): ShipmentQuoteMapperInterface
     {
-        return new ShipmentQuoteMapper($this->getShipmentFacade(), $this->getShipmentService());
+        return new ShipmentQuoteMapper($this->getShipmentFacade());
     }
 
     /**
@@ -43,13 +42,5 @@ class ShipmentsRestApiBusinessFactory extends AbstractBusinessFactory
     public function getShipmentFacade(): ShipmentsRestApiToShipmentFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::FACADE_SHIPMENT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface
-     */
-    public function getShipmentService(): ShipmentsRestApiToShipmentServiceInterface
-    {
-        return $this->getProvidedDependency(ShipmentsRestApiDependencyProvider::SERVICE_SHIPMENT);
     }
 }

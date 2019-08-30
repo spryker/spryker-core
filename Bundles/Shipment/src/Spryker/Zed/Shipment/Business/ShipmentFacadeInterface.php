@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -362,4 +363,30 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
+
+    /**
+     * Specification:
+     * - Expands order mail transfer data with shipment groups data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    public function expandOrderMailTransfer(MailTransfer $mailTransfer, OrderTransfer $orderTransfer): MailTransfer;
+
+    /**
+     * Specification:
+     * - Groups manual events by sales shipment id.
+     *
+     * @api
+     *
+     * @param array $events
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     *
+     * @return array
+     */
+    public function groupEventsByShipment(array $events, array $orderItemTransfers): array;
 }

@@ -15,6 +15,8 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\ManualEventReaderInterface;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReader;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
@@ -33,7 +35,6 @@ use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\Reservation;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
-use Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
@@ -120,8 +121,9 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createManualOrderReader(): ManualEventReaderInterface
     {
         return new ManualEventReader(
-            $this->getQueryContainer(),
-            $this->createOrderStateMachineBuilder()
+            $this->getRepository(),
+            $this->createOrderItemManualEventReader(),
+            $this->getOmsManualEventGrouperPlugins()
         );
     }
 
@@ -317,7 +319,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         $mailHandler = new MailHandler(
             $this->getSalesFacade(),
             $this->getMailFacade(),
-            $this->getShipmentService()
+            $this->getOmsOrderMailExpanderPlugins()
         );
 
         return $mailHandler;
@@ -369,10 +371,28 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface
      */
-    public function getShipmentService(): OmsToShipmentServiceInterface
+    public function createOrderItemManualEventReader(): OrderItemManualEventReaderInterface
     {
-        return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_SHIPMENT);
+        return new OrderItemManualEventReader(
+            $this->createOrderStateMachineBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
+     */
+    public function getOmsOrderMailExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_ORDER_MAIL_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+     */
+    public function getOmsManualEventGrouperPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_MANUAL_EVENT_GROUPER);
     }
 }
