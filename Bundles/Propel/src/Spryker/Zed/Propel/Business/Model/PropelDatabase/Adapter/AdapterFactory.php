@@ -23,6 +23,19 @@ use Spryker\Zed\Propel\PropelConfig;
 class AdapterFactory implements AdapterFactoryInterface
 {
     /**
+     * @var \Spryker\Zed\Propel\PropelConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig $config
+     */
+    public function __construct(PropelConfig $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\Adapter\AdapterInterface
      */
     public function createMySqlAdapter()
@@ -60,7 +73,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     protected function createMySqlExportCommand()
     {
-        return new ExportMySqlDatabase();
+        return new ExportMySqlDatabase($this->config);
     }
 
     /**
@@ -68,7 +81,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     protected function createMySqlImportCommand()
     {
-        return new ImportMySqlDatabase();
+        return new ImportMySqlDatabase($this->config);
     }
 
     /**
@@ -93,7 +106,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     protected function createPostgreSqlCreateCommand()
     {
-        return new CreatePostgreSqlDatabase();
+        return new CreatePostgreSqlDatabase($this->config);
     }
 
     /**
@@ -101,7 +114,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     protected function createPostgreSqlDropCommand()
     {
-        return new DropPostgreSqlDatabase();
+        return new DropPostgreSqlDatabase($this->config);
     }
 
     /**
@@ -109,7 +122,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     protected function createPostgreSqlExportCommand()
     {
-        return new ExportPostgreSqlDatabase();
+        return new ExportPostgreSqlDatabase($this->config);
     }
 
     /**
@@ -117,7 +130,7 @@ class AdapterFactory implements AdapterFactoryInterface
      */
     protected function createPostgreSqlImportCommand()
     {
-        return new ImportPostgreSqlDatabase();
+        return new ImportPostgreSqlDatabase($this->config);
     }
 
     /**

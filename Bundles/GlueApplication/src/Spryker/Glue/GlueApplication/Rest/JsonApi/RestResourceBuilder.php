@@ -22,7 +22,6 @@ class RestResourceBuilder implements RestResourceBuilderInterface
         ?string $id = null,
         ?AbstractTransfer $attributeTransfer = null
     ): RestResourceInterface {
-
         return new RestResource($type, $id, $attributeTransfer);
     }
 

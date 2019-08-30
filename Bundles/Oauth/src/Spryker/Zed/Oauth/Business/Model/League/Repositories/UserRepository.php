@@ -64,7 +64,6 @@ class UserRepository implements UserRepositoryInterface
         string $grantType,
         ClientEntityInterface $clientEntity
     ): ?UserEntityInterface {
-
         $oauthUserTransfer = (new OauthUserTransfer())
             ->fromArray($request, true)
             ->setClientId($clientEntity->getIdentifier())
@@ -115,7 +114,6 @@ class UserRepository implements UserRepositoryInterface
         string $grantType,
         ClientEntityInterface $clientEntity
     ): OauthUserTransfer {
-
         $oauthUserTransfer = new OauthUserTransfer();
         $oauthUserTransfer
             ->setIsSuccess(false)

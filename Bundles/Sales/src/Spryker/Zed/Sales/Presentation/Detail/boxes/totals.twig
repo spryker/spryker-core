@@ -18,7 +18,7 @@
                             <tr>
                                 <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
                                 <td></td>
-                                <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</td>
+                                <td class="text-right">{{ (orderItemOption.sumPrice | default(orderItemOption.unitPrice)) | money(true, order.currencyIsoCode) }}</td>
                                 <td></td>
                             </tr>
                         {% endfor %}
@@ -43,7 +43,7 @@
                                     <tr>
                                         <td></td>
                                         <td> + {{ orderItemOption.value }}</td>
-                                        <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode)  }}</td>
+                                        <td class="text-right">{{ (orderItemOption.sumPrice | default(orderItemOption.unitPrice)) | money(true, order.currencyIsoCode)  }}</td>
                                         <td></td>
                                     </tr>
                                 {% endfor %}
