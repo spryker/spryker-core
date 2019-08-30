@@ -139,7 +139,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
                 $this->logConsumerAction($errorMessage, $throwable);
                 if (!$this->eventConfig->isLoggerActivated()) {
-                    $errorMessage = '';
+                    $errorMessage = 'Please enable the event logger in the config_* files to see the error message: `$config[EventConstants::LOGGER_ACTIVE] = true;`';
                 }
                 $this->handleFailedMessages($eventItem, $errorMessage);
             }
