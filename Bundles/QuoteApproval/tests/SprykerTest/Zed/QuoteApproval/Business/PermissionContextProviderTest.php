@@ -42,6 +42,5 @@ class PermissionContextProviderTest extends Unit
         //Assert
         $this->assertArrayHasKey(QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
         $this->assertEquals(12345, $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
-
     }
 }
