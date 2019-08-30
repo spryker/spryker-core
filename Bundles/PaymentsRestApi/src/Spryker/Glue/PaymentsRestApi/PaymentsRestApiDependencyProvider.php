@@ -10,6 +10,9 @@ namespace Spryker\Glue\PaymentsRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig getConfig()
+ */
 class PaymentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

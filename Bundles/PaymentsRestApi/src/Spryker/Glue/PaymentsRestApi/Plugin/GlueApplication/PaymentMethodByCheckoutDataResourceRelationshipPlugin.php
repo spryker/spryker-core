@@ -10,6 +10,7 @@ namespace Spryker\Glue\PaymentsRestApi\Plugin\GlueApplication;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
 /**
  * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiFactory getFactory()
@@ -43,6 +44,6 @@ class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlug
      */
     public function getRelationshipResourceType(): string
     {
-        return \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS;
+        return PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS;
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
+
 class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuilderInterface
 {
     /**
@@ -23,10 +26,9 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface $paymentMethodMapper
      */
-    public function __construct(\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder, \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface $paymentMethodMapper)
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder, PaymentMethodMapperInterface $paymentMethodMapper)
     {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->paymentMethodMapper = $paymentMethodMapper;
     }
-
 }
