@@ -104,7 +104,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     protected function createWishlistRequestTransfer(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistRequestTransfer
     {
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
-            ->setIdWishlist($wishlistItemRequestTransfer->getIdWishlist())
+            ->setUuid($wishlistItemRequestTransfer->getUuidWishlist())
             ->setIdCustomer($wishlistItemRequestTransfer->getIdCustomer());
 
         return $wishlistRequestTransfer;

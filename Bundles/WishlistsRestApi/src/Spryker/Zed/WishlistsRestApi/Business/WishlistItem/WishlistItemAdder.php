@@ -38,6 +38,10 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      */
     public function add(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
+        $wishlistItemRequestTransfer->requireIdCustomer()
+            ->requireUuidWishlist()
+            ->requireSku();
+
         $wishlistRequestTransfer = $this->createWishlistRequest($wishlistItemRequestTransfer);
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
         $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
@@ -69,7 +73,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     {
         return (new WishlistRequestTransfer())
             ->setIdCustomer($wishlistItemRequestTransfer->getIdCustomer())
-            ->setIdWishlist($wishlistItemRequestTransfer->getIdWishlist());
+            ->setUuid($wishlistItemRequestTransfer->getUuidWishlist());
     }
 
     /**
@@ -124,10 +128,9 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
             (new WishlistRequestTransfer())
                 ->setIdCustomer($wishlistTransfer->getFkCustomer())
-                ->setIdWishlist($wishlistTransfer->getUuid())
+                ->setUuid($wishlistTransfer->getUuid())
         );
 
-        //TODO: check if items re mapped
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(true)
             ->setWishlist($wishlistResponseTransfer->getWishlist())
