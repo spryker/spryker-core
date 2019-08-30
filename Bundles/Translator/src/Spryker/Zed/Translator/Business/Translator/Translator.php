@@ -68,24 +68,6 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     }
 
     /**
-     * @param string $locale
-     *
-     * @return void
-     */
-    public function setLocale($locale): void
-    {
-        parent::setLocale($locale);
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale(): string
-    {
-        return parent::getLocale();
-    }
-
-    /**
      * @param string $keyName
      * @param string $locale
      *
