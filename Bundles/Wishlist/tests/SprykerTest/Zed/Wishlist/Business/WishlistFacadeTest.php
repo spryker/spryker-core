@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -209,14 +210,24 @@ class WishlistFacadeTest extends Unit
      */
     protected function setupWishlist($name = self::DEFAULT_NAME)
     {
+        $this->setupEmptyWishlist($name);
+
+        $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getSku());
+        $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_2->getSku());
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
+    protected function setupEmptyWishlist(string $name = self::DEFAULT_NAME): void
+    {
         $this->wishlist = (new SpyWishlist())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setName($name);
 
         $this->wishlist->save();
-
-        $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getSku());
-        $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_2->getSku());
     }
 
     /**
@@ -616,6 +627,57 @@ class WishlistFacadeTest extends Unit
         $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
 
         $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWishlistByIdCustomerAndUuidShouldReturnWishlist(): void
+    {
+        //Arrange
+        $wishlistName = 'Test Wishlist';
+
+        $this->setupEmptyWishlist($wishlistName);
+        $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getSku());
+
+        //Act
+        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
+            (new WishlistRequestTransfer())
+                ->setIdCustomer($this->customer->getIdCustomer())
+                ->setIdWishlist($this->wishlist->getUuid())
+        );
+        $wishlist = $wishlistResponseTransfer->getWishlist();
+
+        //Assert
+        $this->assertTrue($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response is unsuccessful.');
+        $this->assertEmpty($wishlistResponseTransfer->getErrors(), 'Unexpected errors returned in response.');
+        $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');
+        $this->assertNotNull($wishlist, 'No wishlist returned.');
+        $this->assertEquals($wishlistName, $wishlist->getName(), 'Wishlist name is different.');
+        $this->assertCount(1, $wishlist->getWishlistItems(), 'Returned wishlist items amount is not expected.');
+        $this->assertEquals($this->product_1->getSku(), $wishlist->getWishlistItems()[0]->getSku(), 'Wishlist item sku is unexpected.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWishlistByIdCustomerAndUuidShouldReturnError(): void
+    {
+        //Arrange
+        $uuidWishlistNotExisting = 'fake-uuid';
+
+        //Act
+        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
+            (new WishlistRequestTransfer())
+                ->setIdCustomer($this->customer->getIdCustomer())
+                ->setIdWishlist($uuidWishlistNotExisting)
+        );
+
+        //Assert
+        $this->assertFalse($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response should be unsuccessful.');
+        $this->assertCount(1, $wishlistResponseTransfer->getErrors(), 'Exectly 1 error is expected');
+        $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');
+        $this->assertNull($wishlistResponseTransfer->getWishlist(), 'No wishlist should be returned.');
     }
 
     /**

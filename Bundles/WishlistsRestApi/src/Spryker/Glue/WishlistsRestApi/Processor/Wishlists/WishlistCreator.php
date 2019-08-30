@@ -16,10 +16,19 @@ use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistCl
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class WishlistCreator implements WishlistCreatorInterface
 {
+    /**
+     * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
+     */
+    protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+
+    /**
+     * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT
+     */
+    protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
+
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
      */
@@ -61,10 +70,9 @@ class WishlistCreator implements WishlistCreatorInterface
         $wishlistTransfer = $this->wishlistMapper->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
         $wishlistTransfer->setFkCustomer((int)$restRequest->getRestUser()->getSurrogateIdentifier());
 
-        //TODO: handle different error cases
         $wishlistResponseTransfer = $this->wishlistClient->validateAndCreateWishlist($wishlistTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            return $this->createErrorResponse();
+            return $this->getRestResponseByErrors($wishlistResponseTransfer->getErrors());
         }
 
         return $this->wishlistRestResponseBuilder
@@ -72,15 +80,52 @@ class WishlistCreator implements WishlistCreatorInterface
     }
 
     /**
+     * @param array $errors
+     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createErrorResponse(): RestResponseInterface
+    protected function getRestResponseByErrors(array $errors): RestResponseInterface
     {
-        return $this->wishlistRestResponseBuilder->createErrorResponseFromErrorMessage(
-            (new RestErrorMessageTransfer())
-                ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST)
-                ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_BE_CREATED)
-        );
+        foreach ($errors as $error) {
+            return $this->getRestErrorResponse($error);
+        }
+
+        return $this->getRestErrorResponse();
+    }
+
+    /**
+     * @param string|null $error
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function getRestErrorResponse(?string $error = null): RestResponseInterface
+    {
+        if ($error === static::ERROR_MESSAGE_NAME_ALREADY_EXISTS) {
+            return $this->wishlistRestResponseBuilder
+                ->createErrorResponseFromErrorMessage(
+                    (new RestErrorMessageTransfer())
+                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
+                    ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
+                    ->setStatus(400)
+                );
+        }
+
+        if ($error === static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT) {
+            return $this->wishlistRestResponseBuilder
+                ->createErrorResponseFromErrorMessage(
+                    (new RestErrorMessageTransfer())
+                        ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NAME_INVALID)
+                        ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NAME_INVALID)
+                        ->setStatus(400)
+                );
+        }
+
+        return $this->wishlistRestResponseBuilder
+            ->createErrorResponseFromErrorMessage(
+                (new RestErrorMessageTransfer())
+                    ->setDetail('Unknown error.')
+                    ->setCode('200')
+                    ->setStatus(422)
+            );
     }
 }
