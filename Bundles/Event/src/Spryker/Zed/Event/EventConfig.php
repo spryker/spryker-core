@@ -18,9 +18,12 @@ class EventConfig extends AbstractBundleConfig
     public const DEFAULT_MAX_RETRY = 1;
 
     /**
+     * @deprecated This is added only for BC reason and will
+     * be removed in the next major.
+     *
      * @var bool
      */
-    protected static $eventRetryActive;
+    protected static $eventRetryQueueActive;
 
     /**
      * @return string|null
@@ -57,6 +60,10 @@ class EventConfig extends AbstractBundleConfig
             return true;
         }
 
+        /**
+         * @deprecated This is added only for BC reason and will
+         * be removed in the next major.
+         */
         return $this->isEventRetryQueueExists();
     }
 
@@ -84,19 +91,19 @@ class EventConfig extends AbstractBundleConfig
      */
     protected function isEventRetryQueueExists(): bool
     {
-        if (static::$eventRetryActive === null) {
-            static::$eventRetryActive = false;
+        if (static::$eventRetryQueueActive === null) {
+            static::$eventRetryQueueActive = false;
             $bundleConfigResolver = new BundleConfigResolver();
             try {
                 /** @var \Spryker\Client\RabbitMq\RabbitMqConfig $config */
                 $config = $bundleConfigResolver->resolve('\Spryker\Client\RabbitMq\RabbitMqFactory');
-                static::$eventRetryActive = $this->hasEventRetryConfig($config);
+                static::$eventRetryQueueActive = $this->hasEventRetryQueueConfig($config);
             } catch (BundleConfigNotFoundException $exception) {
-                static::$eventRetryActive = false;
+                static::$eventRetryQueueActive = false;
             }
         }
 
-        return static::$eventRetryActive;
+        return static::$eventRetryQueueActive;
     }
 
     /**
@@ -107,7 +114,7 @@ class EventConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    protected function hasEventRetryConfig($config): bool
+    protected function hasEventRetryQueueConfig($config): bool
     {
         $connections = $config->getQueueConnections();
         $defaultConnection = current($connections);
