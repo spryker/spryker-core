@@ -112,7 +112,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return mixed (@deprecated Only mixed will be supported with the next major)
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {
