@@ -161,8 +161,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslationCacheGenerator(): CacheGeneratorInterface
     {
         return new CacheGenerator(
-            $this->createTranslatorCollection(),
-            $this->getStore()
+            $this->createTranslatorCollection()
         );
     }
 

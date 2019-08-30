@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Translator\Business\TranslationCache;
 
-use Spryker\Shared\Kernel\Store;
-
 class CacheGenerator implements CacheGeneratorInterface
 {
     /**
@@ -17,18 +15,11 @@ class CacheGenerator implements CacheGeneratorInterface
     protected $translatorCollection;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[] $translatorCollection
-     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(array $translatorCollection, Store $store)
+    public function __construct(array $translatorCollection)
     {
         $this->translatorCollection = $translatorCollection;
-        $this->store = $store;
     }
 
     /**
