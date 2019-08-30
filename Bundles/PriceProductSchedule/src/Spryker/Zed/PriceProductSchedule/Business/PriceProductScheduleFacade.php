@@ -155,4 +155,18 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
             ->createPriceProductScheduleCsvValidator()
             ->validateCsvFile($uploadedFile);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return array
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array
+    {
+        return [];
+    }
 }

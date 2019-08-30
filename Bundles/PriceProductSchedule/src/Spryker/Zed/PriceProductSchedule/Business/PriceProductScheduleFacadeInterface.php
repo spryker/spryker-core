@@ -129,4 +129,16 @@ interface PriceProductScheduleFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
     public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer;
+
+    /**
+     * Specification:
+     * - Finds all scheduled prices related to given scheduled price list.
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return array
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array;
 }
