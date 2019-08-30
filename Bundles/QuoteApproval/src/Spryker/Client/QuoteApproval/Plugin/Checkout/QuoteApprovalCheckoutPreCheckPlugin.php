@@ -14,6 +14,8 @@ use Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInt
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated
+ *
  * @method \Spryker\Client\QuoteApproval\QuoteApprovalClient getClient()
  */
 class QuoteApprovalCheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface

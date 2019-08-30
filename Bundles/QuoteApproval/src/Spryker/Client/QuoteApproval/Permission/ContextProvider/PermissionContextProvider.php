@@ -37,7 +37,7 @@ class PermissionContextProvider implements PermissionContextProviderInterface
             return 0;
         }
 
-        return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
+        return $quoteTransfer->getTotals()->getGrandTotal();
     }
 
     /**
