@@ -31,9 +31,7 @@ class PermissionContextProviderTest extends Unit
     public function testProvideContextShouldReturnGrandTotalInCentAmountArrayElement(): void
     {
         //Assign
-        $quoteTransfer = (new QuoteTransfer())->setTotals(
-            (new TotalsTransfer())->setGrandTotal(12345)
-        );
+        $quoteTransfer = $this->createQuoteTransferWithGrandTotal(12345);
         $permissionContextProvider = new PermissionContextProvider();
 
         //Act
@@ -42,5 +40,17 @@ class PermissionContextProviderTest extends Unit
         //Assert
         $this->assertArrayHasKey(QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
         $this->assertEquals(12345, $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
+    }
+
+    /**
+     * @param int $grandTotalInCents
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransferWithGrandTotal(int $grandTotalInCents): QuoteTransfer
+    {
+        return (new QuoteTransfer())->setTotals(
+            (new TotalsTransfer())->setGrandTotal($grandTotalInCents)
+        );
     }
 }
