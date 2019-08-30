@@ -90,9 +90,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
             ->setPaymentProviders($this->getPaymentProviders())
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
-//            ->setSelectedPaymentMethods(
-//                $this->getSelectedPaymentMethods($restCheckoutRequestAttributesTransfer, $quoteTransfer)
-//            )
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
@@ -126,23 +123,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected function getAvailablePaymentMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
     {
         return $this->paymentFacade->getAvailableMethods($quoteTransfer);
-    }
-
-    protected function getSelectedPaymentMethods(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        QuoteTransfer $quoteTransfer
-    ): array {
-        $selectedPaymentMethods = new PaymentMethodsTransfer();
-//        $selectedPaymentMethodId = $restCheckoutRequestAttributesTransfer->getPayments()->getIdShipmentMethod();
-//
-//        foreach ($this->getShipmentMethodsTransfer($quoteTransfer)->getMethods() as $shipmentMethodTransfer) {
-//            if ($shipmentMethodTransfer->getIdShipmentMethod() === $selectedPaymentMethodId) {
-//                $selectedPaymentMethods->addMethod($shipmentMethodTransfer);
-//                break;
-//            }
-//        }
-
-        return $selectedPaymentMethods;
     }
 
     /**
