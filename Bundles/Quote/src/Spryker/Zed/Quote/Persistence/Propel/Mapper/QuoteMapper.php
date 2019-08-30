@@ -106,15 +106,12 @@ class QuoteMapper implements QuoteMapperInterface
      */
     protected function getQuoteFieldsTreeAllowedForSaving(): array
     {
-        $fields = [];
-        foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $fieldName) {
-            if ($fieldName === QuoteTransfer::ITEMS) {
-                $fields[QuoteTransfer::ITEMS] = $this->quoteConfig->getQuoteItemFieldsAllowedForSaving();
+        $fields = $this->quoteConfig->getQuoteFieldsAllowedForSaving();
 
-                continue;
-            }
-
-            $fields[] = $fieldName;
+        $position = array_search(QuoteTransfer::ITEMS, $fields);
+        if ($position !== false) {
+            $fields[QuoteTransfer::ITEMS] = $this->quoteConfig->getQuoteItemFieldsAllowedForSaving();
+            unset($fields[$position]);
         }
 
         return $fields;
