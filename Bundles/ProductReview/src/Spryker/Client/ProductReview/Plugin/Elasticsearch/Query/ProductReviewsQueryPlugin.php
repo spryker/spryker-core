@@ -66,16 +66,14 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      *
      * @api
      *
-     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
-     *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+        $searchContextTransfer->setElasticsearchContext(
+            $this->createElasticsearchSearchContextTransfer()
+        );
 
         return $searchContextTransfer;
     }
@@ -135,5 +133,16 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
 
         return $productReviewTypeFilter;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer
+     */
+    protected function createElasticsearchSearchContextTransfer(): ElasticsearchSearchContextTransfer
+    {
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
+
+        return $elasticsearchSearchContextTransfer;
     }
 }

@@ -80,16 +80,14 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
      *
      * @api
      *
-     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
-     *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+        $searchContextTransfer->setElasticsearchContext(
+            $this->createElasticsearchSearchContextTransfer()
+        );
 
         return $searchContextTransfer;
     }
@@ -126,5 +124,16 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
         if ($this->offset !== null) {
             $baseQuery->setFrom($this->offset);
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer
+     */
+    protected function createElasticsearchSearchContextTransfer(): ElasticsearchSearchContextTransfer
+    {
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
+
+        return $elasticsearchSearchContextTransfer;
     }
 }
