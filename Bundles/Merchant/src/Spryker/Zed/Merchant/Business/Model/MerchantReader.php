@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
@@ -27,6 +29,8 @@ class MerchantReader implements MerchantReaderInterface
     }
 
     /**
+     * @deprecated Use MerchantReader::findOne() instead.
+     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
@@ -43,6 +47,26 @@ class MerchantReader implements MerchantReaderInterface
         }
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
+    {
+        return $this->merchantRepository->find($merchantCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
+    {
+        return $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
     }
 
     /**

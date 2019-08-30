@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
@@ -63,6 +64,16 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
     {
         return $this->merchantFacade->getMerchantById($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
+    {
+        return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
     }
 
     /**

@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\SpyMerchantEntityTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 
 class MerchantMapper implements MerchantMapperInterface
@@ -66,5 +69,46 @@ class MerchantMapper implements MerchantMapperInterface
         );
 
         return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyMerchantEntityTransfer $merchantEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function mapMerchantEntityTransferToMerchantTransfer(SpyMerchantEntityTransfer $merchantEntityTransfer): MerchantTransfer
+    {
+        $merchantTransfer = (new MerchantTransfer())
+            ->fromArray($merchantEntityTransfer->toArray(), true);
+
+        $merchantTransfer->setAddressCollection(
+            $this->merchantAddressMapper->mapMerchantAddressEntityTransfersToMerchantAddressCollectionTransfer(
+                $merchantEntityTransfer->getSpyMerchantAddresses()->getArrayCopy(),
+                new MerchantAddressCollectionTransfer()
+            )
+        );
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyMerchantEntityTransfer[] $collection
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function mapMerchantCollectionToMerchantCollectionTransfer(
+        $collection,
+        MerchantCollectionTransfer $merchantCollectionTransfer
+    ): MerchantCollectionTransfer {
+        $merchants = new ArrayObject();
+
+        foreach ($collection as $merchantEntityTransfer) {
+            $merchants->append($this->mapMerchantEntityTransferToMerchantTransfer($merchantEntityTransfer));
+        }
+
+        $merchantCollectionTransfer->setMerchants($merchants);
+
+        return $merchantCollectionTransfer;
     }
 }

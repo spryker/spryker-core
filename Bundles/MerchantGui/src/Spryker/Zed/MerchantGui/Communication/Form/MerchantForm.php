@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -297,7 +298,10 @@ class MerchantForm extends AbstractType
     protected function getExistingEmailValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
     {
         return function ($email, ExecutionContextInterface $context) use ($merchantFacade) {
-            if ($merchantFacade->findMerchantByEmail($email) !== null) {
+            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+            $merchantCriteriaFilterTransfer->setEmail($email);
+            $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
+            if ($merchantTransfer !== null) {
                 $context->addViolation('Email is already used.');
             }
         };

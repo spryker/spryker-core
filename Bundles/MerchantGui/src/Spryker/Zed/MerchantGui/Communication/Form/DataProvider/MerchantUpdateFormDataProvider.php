@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
@@ -44,7 +45,10 @@ class MerchantUpdateFormDataProvider
      */
     public function getData(int $idMerchant): ?MerchantTransfer
     {
-        return $this->merchantFacade->findMerchantByIdMerchant($idMerchant);
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
+
+        return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
     }
 
     /**
