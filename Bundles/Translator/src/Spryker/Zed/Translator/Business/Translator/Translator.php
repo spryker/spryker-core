@@ -50,6 +50,7 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
 
         $this->translatorBuilder = $translatorBuilder;
         $this->translatorConfig = $translatorConfig;
+        $this->setFallbackLocales($this->translatorConfig->getFallbackLocales($locale));
     }
 
     /**
@@ -76,18 +77,5 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
     public function has(string $keyName, string $locale): bool
     {
         return $this->getCatalogue($locale)->defines($keyName);
-    }
-
-    /**
-     * @param mixed $locale
-     *
-     * @return array
-     */
-    protected function computeFallbackLocales($locale): array
-    {
-        $locales = parent::computeFallbackLocales($locale);
-        $configFalbackLocales = $this->translatorConfig->getFallbackLocales($locale);
-
-        return array_unique(array_merge($locales, $configFalbackLocales));
     }
 }
