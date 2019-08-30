@@ -51,6 +51,12 @@ class ShipmentFacadeTest extends Test
 
     protected const VALUE_ANOTHER_EXPENSE_TYPE = 'VALUE_ANOTHER_EXPENSE_TYPE';
 
+    protected const NOT_UNIQUE_SHIPMENT_NAME_STANDART = 'Standard';
+    protected const NOT_UNIQUE_SHIPMENT_NAME_EXPRESS = 'Express';
+    protected const UNIQUE_SHIPMENT_NAME = 'Example unique shipment name';
+    protected const FK_SHIPMENT_CARRIER = 1;
+    protected const FK_SHIPMENT_METHOD = 1;
+
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -591,5 +597,83 @@ class ShipmentFacadeTest extends Test
         ];
 
         return $priceList;
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsNewShipmentMethodUniqueForCarrierMethodWitchExistingMethodShouldReturnFalseWhenNotUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertFalse($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsNewShipmentMethodUniqueForCarrierMethodWithNotExistingMethodShouldReturnTrueWhenUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::UNIQUE_SHIPMENT_NAME)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertTrue($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodUniqueForCarrierMethodWitchExistingMethodShouldReturnFalseWhenNotUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_EXPRESS)
+            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertFalse($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodUniqueForCarrierMethodWithNotExistingMethodShouldReturnTrueWhenUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::UNIQUE_SHIPMENT_NAME)
+            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertTrue($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testNoRenamingShipmentMethodUniqueForCarrierMethodShouldReturnTrue(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
+            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertTrue($isShipmentMethodUniqueForCarrier);
     }
 }

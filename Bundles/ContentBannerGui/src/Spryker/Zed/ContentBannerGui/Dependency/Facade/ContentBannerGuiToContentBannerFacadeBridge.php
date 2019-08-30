@@ -33,7 +33,6 @@ class ContentBannerGuiToContentBannerFacadeBridge implements ContentBannerGuiToC
     public function validateContentBannerTerm(
         ContentBannerTermTransfer $contentBannerTermTransfer
     ): ContentValidationResponseTransfer {
-
         return $this->contentBannerFacade->validateContentBannerTerm($contentBannerTermTransfer);
     }
 }
