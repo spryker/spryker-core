@@ -89,6 +89,8 @@ interface SessionRedisWrapperInterface
     public function info(?string $section = null): array;
 
     /**
+     * @deprecated Will be removed with next major release.
+     *
      * @param string $pattern
      *
      * @return array
