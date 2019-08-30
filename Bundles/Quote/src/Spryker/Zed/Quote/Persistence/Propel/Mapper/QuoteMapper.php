@@ -27,15 +27,23 @@ class QuoteMapper implements QuoteMapperInterface
     protected $quoteConfig;
 
     /**
+     * @var \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected $quoteTransfer;
+
+    /**
      * @param \Spryker\Zed\Quote\Dependency\Service\QuoteToUtilEncodingServiceInterface $encodingService
      * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      */
     public function __construct(
         QuoteToUtilEncodingServiceInterface $encodingService,
-        QuoteConfig $quoteConfig
+        QuoteConfig $quoteConfig,
+        QuoteTransfer $quoteTransfer
     ) {
         $this->encodingService = $encodingService;
         $this->quoteConfig = $quoteConfig;
+        $this->quoteTransfer = $quoteTransfer;
     }
 
     /**

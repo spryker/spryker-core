@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote\Persistence;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Quote\Persistence\Propel\Mapper\QuoteMapper;
@@ -32,7 +33,7 @@ class QuotePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createQuoteMapper()
     {
-        return new QuoteMapper($this->getUtilEncodingService(), $this->getConfig());
+        return new QuoteMapper($this->getUtilEncodingService(), $this->getConfig(), $this->getQuoteFieldsPlugins());
     }
 
     /**
@@ -41,5 +42,13 @@ class QuotePersistenceFactory extends AbstractPersistenceFactory
     protected function getUtilEncodingService()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getQuoteFieldsPlugins(): QuoteTransfer
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_EXPANDER);
     }
 }

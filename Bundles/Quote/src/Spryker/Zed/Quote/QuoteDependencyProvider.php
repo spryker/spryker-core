@@ -28,6 +28,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_VALIDATOR = 'PLUGINS_QUOTE_VALIDATOR';
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
     public const PLUGINS_QUOTE_EXPAND_BEFORE_CREATE = 'PLUGINS_QUOTE_EXPAND_BEFORE_CREATE';
+    public const PLUGINS_QUOTE_FIELDS_EXPANDER = 'PLUGINS_QUOTE_FIELDS_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -60,6 +61,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addQuoteFieldsExpanderPlugins($container);
 
         return $container;
     }
@@ -219,6 +221,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteFieldsExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_QUOTE_FIELDS_EXPANDER] = function (Container $container) {
+            return $this->getQuoteFieldsExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
@@ -286,6 +302,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
      */
     protected function getQuoteValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     */
+    protected function getQuoteFieldsExpanderPlugins(): array
     {
         return [];
     }
