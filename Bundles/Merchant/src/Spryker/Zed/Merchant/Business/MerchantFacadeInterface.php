@@ -153,19 +153,6 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Finds a merchant by email.
-     * - Returns MerchantTransfer if found, NULL otherwise.
-     *
-     * @api
-     *
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $email): ?MerchantTransfer;
-
-    /**
-     * Specification:
      * - Retrieves collection of all merchants.
      *
      * @api

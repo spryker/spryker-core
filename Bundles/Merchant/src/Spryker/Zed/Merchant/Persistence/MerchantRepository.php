@@ -122,27 +122,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param string $merchantEmail
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $merchantEmail): ?MerchantTransfer
-    {
-        $spyMerchant = $this->getFactory()
-            ->createMerchantQuery()
-            ->filterByEmail($merchantEmail)
-            ->findOne();
-
-        if (!$spyMerchant) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createPropelMerchantMapper()
-            ->mapMerchantEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchantCollection(): MerchantCollectionTransfer

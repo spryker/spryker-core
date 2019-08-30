@@ -41,7 +41,10 @@ class MerchantReader implements MerchantReaderInterface
     {
         $merchantTransfer->requireIdMerchant();
 
-        $merchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
+
+        $merchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
         if (!$merchantTransfer) {
             throw new MerchantNotFoundException();
         }
@@ -77,15 +80,5 @@ class MerchantReader implements MerchantReaderInterface
     public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
     {
         return $this->merchantRepository->findMerchantByIdMerchant($idMerchant);
-    }
-
-    /**
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $email): ?MerchantTransfer
-    {
-        return $this->merchantRepository->findMerchantByEmail($email);
     }
 }

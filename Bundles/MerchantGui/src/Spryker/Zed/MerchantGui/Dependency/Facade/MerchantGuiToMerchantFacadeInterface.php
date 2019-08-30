@@ -35,32 +35,11 @@ interface MerchantGuiToMerchantFacadeInterface
     public function deleteMerchant(MerchantTransfer $merchantTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
-
-    /**
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $email): ?MerchantTransfer;
 
     /**
      * @param string $currentStatus

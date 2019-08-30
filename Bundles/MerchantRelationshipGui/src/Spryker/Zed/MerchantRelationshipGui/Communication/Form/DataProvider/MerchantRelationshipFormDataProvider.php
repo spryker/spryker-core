@@ -140,7 +140,7 @@ class MerchantRelationshipFormDataProvider
     {
         $choices = [];
 
-        foreach ($this->merchantFacade->getMerchantCollection()->getMerchants() as $merchant) {
+        foreach ($this->merchantFacade->find()->getMerchants() as $merchant) {
             $choices[$merchant->getIdMerchant()] = sprintf(
                 '%d - %s',
                 $merchant->getIdMerchant(),

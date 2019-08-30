@@ -42,11 +42,4 @@ interface MerchantReaderInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
-
-    /**
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $email): ?MerchantTransfer;
 }

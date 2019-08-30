@@ -155,22 +155,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @api
      *
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $email): ?MerchantTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantReader()
-            ->findMerchantByEmail($email);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchantCollection(): MerchantCollectionTransfer

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -121,7 +122,10 @@ class MerchantWriter implements MerchantWriterInterface
 
         $merchantResponseTransfer = $this->createMerchantResponseTransfer();
 
-        $existingMerchantTransfer = $this->merchantRepository->findMerchantByIdMerchant($merchantTransfer->getIdMerchant());
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant());
+
+        $existingMerchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
         if ($existingMerchantTransfer === null) {
             $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_NOT_FOUND);
 

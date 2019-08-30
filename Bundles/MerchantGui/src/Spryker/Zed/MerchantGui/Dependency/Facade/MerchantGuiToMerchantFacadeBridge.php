@@ -57,16 +57,6 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
-    {
-        return $this->merchantFacade->getMerchantById($merchantTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
@@ -74,26 +64,6 @@ class MerchantGuiToMerchantFacadeBridge implements MerchantGuiToMerchantFacadeIn
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
         return $this->merchantFacade->findOne($merchantCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
-    {
-        return $this->merchantFacade->findMerchantByIdMerchant($idMerchant);
-    }
-
-    /**
-     * @param string $email
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $email): ?MerchantTransfer
-    {
-        return $this->merchantFacade->findMerchantByEmail($email);
     }
 
     /**

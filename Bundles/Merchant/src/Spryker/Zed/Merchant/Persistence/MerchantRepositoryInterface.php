@@ -43,13 +43,6 @@ interface MerchantRepositoryInterface
     public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
 
     /**
-     * @param string $merchantEmail
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByEmail(string $merchantEmail): ?MerchantTransfer;
-
-    /**
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchantCollection(): MerchantCollectionTransfer;

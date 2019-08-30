@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 
 /**
  * Auto-generated group annotations
@@ -22,13 +23,21 @@ use Codeception\Test\Unit;
 class FindMerchantByIdMerchantTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Merchant\MerchantBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testFindMerchantByIdWillFindExistingMerchant(): void
     {
         $expectedMerchant = $this->tester->haveMerchant();
 
-        $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($expectedMerchant->getIdMerchant());
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($expectedMerchant->getIdMerchant());
+
+        $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -40,7 +49,10 @@ class FindMerchantByIdMerchantTest extends Unit
     {
         $merchantTransfer = $this->tester->haveMerchant();
 
-        $actualMerchant = $this->tester->getFacade()->findMerchantByIdMerchant($merchantTransfer->getIdMerchant() + 1);
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
+
+        $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
 
         $this->assertNull($actualMerchant);
     }

@@ -7,7 +7,8 @@
     "php": ">=7.1",
     "spryker/country": "^3.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/util-text": "^1.0.0"
+    "spryker/util-text": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
