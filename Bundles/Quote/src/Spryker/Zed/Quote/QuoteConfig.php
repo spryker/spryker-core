@@ -43,25 +43,20 @@ class QuoteConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getQuoteFieldsTreeAllowedForSaving(): array
+    public function getQuoteItemFieldsAllowedForSaving(): array
     {
         return [
-            QuoteTransfer::ITEMS => [
-                ItemTransfer::ID,
-                ItemTransfer::SKU,
-                ItemTransfer::QUANTITY,
-                ItemTransfer::ID_PRODUCT_ABSTRACT,
-                ItemTransfer::IMAGES,
-                ItemTransfer::NAME,
-                ItemTransfer::UNIT_PRICE,
-                ItemTransfer::SUM_PRICE,
-                ItemTransfer::UNIT_GROSS_PRICE,
-                ItemTransfer::SUM_GROSS_PRICE,
-                ItemTransfer::IS_ORDERED,
-            ],
-            QuoteTransfer::TOTALS,
-            QuoteTransfer::CURRENCY,
-            QuoteTransfer::PRICE_MODE,
+            ItemTransfer::ID,
+            ItemTransfer::SKU,
+            ItemTransfer::QUANTITY,
+            ItemTransfer::ID_PRODUCT_ABSTRACT,
+            ItemTransfer::IMAGES,
+            ItemTransfer::NAME,
+            ItemTransfer::UNIT_PRICE,
+            ItemTransfer::SUM_PRICE,
+            ItemTransfer::UNIT_GROSS_PRICE,
+            ItemTransfer::SUM_GROSS_PRICE,
+            ItemTransfer::IS_ORDERED,
         ];
     }
 

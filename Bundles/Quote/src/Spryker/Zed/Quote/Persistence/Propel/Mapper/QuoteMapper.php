@@ -92,13 +92,32 @@ class QuoteMapper implements QuoteMapperInterface
      */
     protected function encodeQuoteData(QuoteTransfer $quoteTransfer)
     {
-        $allowedQuoteFields = $this->quoteConfig->getQuoteFieldsTreeAllowedForSaving();
+        $allowedQuoteFields = $this->getQuoteFieldsTreeAllowedForSaving();
         $filteredQuoteData = $this->filterDisallowedQuoteData(
             $quoteTransfer->modifiedToArray(true, true),
             $allowedQuoteFields
         );
 
         return $this->encodingService->encodeJson($filteredQuoteData, JSON_OBJECT_AS_ARRAY);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getQuoteFieldsTreeAllowedForSaving(): array
+    {
+        $fields = [];
+        foreach ($this->quoteConfig->getQuoteFieldsAllowedForSaving() as $fieldName) {
+            if ($fieldName === QuoteTransfer::ITEMS) {
+                $fields[QuoteTransfer::ITEMS] = $this->quoteConfig->getQuoteItemFieldsAllowedForSaving();
+
+                continue;
+            }
+
+            $fields[] = $fieldName;
+        }
+
+        return $fields;
     }
 
     /**
