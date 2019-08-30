@@ -63,12 +63,14 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
         $priceProductTransfer->requireIdProduct();
+        $this->priceProductScheduleDisabler
+            ->disableNotActiveScheduledPricesByIdProductConcrete($priceProductTransfer->getIdProduct());
+        $priceProductScheduleTransfer = $this->priceProductScheduleDisabler
+            ->deactivatePriceProductSchedule($priceProductScheduleTransfer);
 
         $priceProductScheduleTransferCollection = $this->findPriceProductSchedulesToEnableForCurrentStoreAndIdProductConcrete($priceProductScheduleTransfer);
         $this->applyScheduledPriceTransactionExecutor
             ->execute($priceProductScheduleTransferCollection);
-        $this->priceProductScheduleDisabler
-            ->disableNotActiveScheduledPricesByIdProductConcrete($priceProductTransfer->getIdProduct());
     }
 
     /**

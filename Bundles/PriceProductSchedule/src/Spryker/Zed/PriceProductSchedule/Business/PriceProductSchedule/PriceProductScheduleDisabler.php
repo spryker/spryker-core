@@ -201,4 +201,18 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         return $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function deactivatePriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
+        $priceProductScheduleTransfer->setIsCurrent(false);
+
+        return $this->priceProductScheduleEntityManager
+            ->savePriceProductSchedule($priceProductScheduleTransfer);
+    }
 }
