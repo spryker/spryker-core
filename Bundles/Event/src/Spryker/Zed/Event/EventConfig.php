@@ -49,13 +49,15 @@ class EventConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isEventRetryEnabled()
+    public function isEventRetryEnabled(): bool
     {
-        if ($this->isEventRetryQueueExists()) {
+        $isEventRetryEnabled = $this->getConfig()->get(EventConstants::EVENT_QUEUE_RETRY_ACTIVE, false);
+
+        if ($isEventRetryEnabled) {
             return true;
         }
 
-        return $this->getConfig()->get(EventConstants::EVENT_RETRY_ACTIVE, false);
+        return $this->isEventRetryQueueExists();
     }
 
     /**
@@ -88,7 +90,7 @@ class EventConfig extends AbstractBundleConfig
             try {
                 /** @var \Spryker\Client\RabbitMq\RabbitMqConfig $config */
                 $config = $bundleConfigResolver->resolve('\Spryker\Client\RabbitMq\RabbitMqFactory');
-                static::$eventRetryActive = $this->isEventRetryConfigExists($config);
+                static::$eventRetryActive = $this->hasEventRetryConfig($config);
             } catch (BundleConfigNotFoundException $exception) {
                 static::$eventRetryActive = false;
             }
@@ -105,7 +107,7 @@ class EventConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    protected function isEventRetryConfigExists($config): bool
+    protected function hasEventRetryConfig($config): bool
     {
         $connections = $config->getQueueConnections();
         $defaultConnection = current($connections);

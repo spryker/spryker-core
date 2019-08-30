@@ -34,7 +34,7 @@ interface EventConstants
      *
      * @api
      */
-    public const EVENT_RETRY_ACTIVE = 'EVENT_RETRY_ACTIVE';
+    public const EVENT_QUEUE_RETRY_ACTIVE = 'EVENT_QUEUE_RETRY_ACTIVE';
 
     /**
      * Specification:
