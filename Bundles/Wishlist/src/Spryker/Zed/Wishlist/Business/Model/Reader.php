@@ -421,7 +421,7 @@ class Reader implements ReaderInterface
     public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         $wishlistRequestTransfer
-            ->requireIdWishlist()
+            ->requireUuid()
             ->requireIdCustomer();
 
         $wishlistResponseTransfer = (new WishlistResponseTransfer())
@@ -430,7 +430,7 @@ class Reader implements ReaderInterface
         $wishlistTransfer = $this->wishlistRepository
             ->getWishlistByCustomerIdAndUuid(
                 $wishlistRequestTransfer->getIdCustomer(),
-                $wishlistRequestTransfer->getIdWishlist()
+                $wishlistRequestTransfer->getUuid()
             );
 
         if (!$wishlistTransfer) {
