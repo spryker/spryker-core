@@ -168,7 +168,6 @@ class ControllerFilter implements ControllerFilterInterface
         string $action,
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-
         $this->controllerCallbacks->beforeAction($action, $restRequest);
 
         if ($controller instanceof ErrorControllerInterface) {
