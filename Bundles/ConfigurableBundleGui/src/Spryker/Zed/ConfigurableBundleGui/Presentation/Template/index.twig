@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Configurable Bundle Templates' | trans %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ createActionButton('/punchout-catalogs/index/create', 'Create New Template' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ configurableBundleTemplateTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
