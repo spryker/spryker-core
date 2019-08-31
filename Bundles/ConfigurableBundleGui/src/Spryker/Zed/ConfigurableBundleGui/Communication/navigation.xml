@@ -9,7 +9,6 @@
                 <controller>template</controller>
                 <action>index</action>
                 <visible>1</visible>
-                <order>10</order>
             </configurable-bundle-templates>
         </pages>
     </product>

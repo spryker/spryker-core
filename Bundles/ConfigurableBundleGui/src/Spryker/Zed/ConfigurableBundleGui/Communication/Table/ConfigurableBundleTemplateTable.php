@@ -148,7 +148,10 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             ->leftJoinSpyConfigurableBundleTemplateSlot()
             ->addJoin(SpyConfigurableBundleTemplateTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::LEFT_JOIN)
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::LEFT_JOIN)
-            ->withColumn('COUNT(' . SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT . ')', static::COL_COUNT_OF_SLOTS)
+            ->withColumn(
+                sprintf('COUNT(%s)', SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
+                static::COL_COUNT_OF_SLOTS
+            )
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_NAME_TRANSLATION)
             ->where(
                 sprintf(
