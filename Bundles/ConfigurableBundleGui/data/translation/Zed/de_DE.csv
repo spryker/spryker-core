@@ -7,5 +7,5 @@ Inactive,Inaktiv
 Name,Name
 Status,Status
 Configurable Bundle Templates,Vorlagen der konfigurierbaren Bündel
-# of Slots,# der Slots
+""# of Slots","# der Slots"
 Create New Template,Neue Vorlage erstellen
