@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Quote\Persistence\Propel\Mapper;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -108,7 +109,7 @@ class QuoteMapperTest extends Unit
         $quoteTransfer = (new QuoteBuilder([
             QuoteTransfer::PRICE_MODE => 'GROSS_MODE',
         ]))
-            ->withItem([
+            ->withAnotherItem([
                 ItemTransfer::ID => 27,
                 ItemTransfer::SKU => '027_26976107',
                 ItemTransfer::QUANTITY => 1,
@@ -122,7 +123,7 @@ class QuoteMapperTest extends Unit
                     $quoteDefaultProductImageTransfer->toArray(),
                 ],
             ])
-            ->withTotals([
+            ->withAnotherTotals([
                 TotalsTransfer::SUBTOTAL => 4900,
                 TotalsTransfer::EXPENSE_TOTAL => 0,
                 TotalsTransfer::DISCOUNT_TOTAL => 0,
@@ -135,7 +136,7 @@ class QuoteMapperTest extends Unit
                 TotalsTransfer::PRICE_TO_PAY => 4900,
                 TotalsTransfer::REFUND_TOTAL => 4900,
             ])
-            ->withCurrency([
+            ->withAnotherCurrency([
                 CurrencyTransfer::ID_CURRENCY => '93',
                 CurrencyTransfer::CODE => 'EUR',
                 CurrencyTransfer::NAME => 'Euro',
