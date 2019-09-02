@@ -88,6 +88,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleTransfer $priceProductScheduleTransfer,
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): SpyPriceProductSchedule {
+        $priceProductScheduleEntity->fromArray($priceProductScheduleTransfer->toArray());
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         if ($priceProductTransfer === null) {

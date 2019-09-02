@@ -11,15 +11,16 @@ use Symfony\Component\Validator\Constraints\LessThan;
 
 class IntegerMoneyConstraint extends LessThan
 {
-    protected const MAX_INT_VALUE = 2147483647;
+    protected const MAX_INT_VALUE = 214748364;
     protected const OPTION_VALUE = 'value';
+    protected const MESSAGE_PATTERN = 'This value should be less than %.2f';
 
     /**
      * {@inheritdoc}
      */
     public function __construct($options = null)
     {
-        $this->message = sprintf('This value should be less than %d.', (int)(static::MAX_INT_VALUE / 100));
+        $this->message = sprintf(static::MESSAGE_PATTERN, static::MAX_INT_VALUE / 100);
         if ($options === null) {
             $options = [];
         }
