@@ -25,13 +25,17 @@ use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
  */
 class PermissionContextProviderTest extends Unit
 {
+    protected const QUOTE_GRAND_TOTAL = 12345;
+
     /**
      * @return void
      */
     public function testProvideContextShouldReturnGrandTotalInCentAmountArrayElement(): void
     {
         // Assign
-        $quoteTransfer = $this->createQuoteTransferWithGrandTotal(12345);
+        $quoteTransfer = (new QuoteTransfer())->setTotals(
+            (new TotalsTransfer())->setGrandTotal(static::QUOTE_GRAND_TOTAL)
+        );
         $permissionContextProvider = new PermissionContextProvider();
 
         // Act
@@ -39,18 +43,6 @@ class PermissionContextProviderTest extends Unit
 
         // Assert
         $this->assertArrayHasKey(QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
-        $this->assertEquals(12345, $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
-    }
-
-    /**
-     * @param int $grandTotalInCents
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteTransferWithGrandTotal(int $grandTotalInCents): QuoteTransfer
-    {
-        return (new QuoteTransfer())->setTotals(
-            (new TotalsTransfer())->setGrandTotal($grandTotalInCents)
-        );
+        $this->assertEquals(static::QUOTE_GRAND_TOTAL, $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
     }
 }
