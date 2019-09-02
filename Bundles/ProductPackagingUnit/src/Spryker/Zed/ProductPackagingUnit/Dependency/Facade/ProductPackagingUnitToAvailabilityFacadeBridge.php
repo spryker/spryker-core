@@ -30,7 +30,7 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
      *
      * @return int
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): int
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
     {
         return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
     }
@@ -42,7 +42,7 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
     {
         return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
@@ -54,7 +54,7 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
      *
      * @return int
      */
-    public function saveProductAvailabilityForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int
+    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
     {
         return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
     }

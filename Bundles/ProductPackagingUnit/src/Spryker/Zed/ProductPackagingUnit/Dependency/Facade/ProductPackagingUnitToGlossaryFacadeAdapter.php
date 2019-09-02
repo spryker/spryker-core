@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 
-class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnitToGlossaryFacadeInterface
+class ProductPackagingUnitToGlossaryFacadeAdapter implements ProductPackagingUnitToGlossaryFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface
@@ -31,7 +31,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return bool
      */
-    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
@@ -42,7 +42,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
@@ -68,7 +68,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return bool
      */
-    public function hasKey(string $keyName): bool
+    public function hasKey($keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -78,7 +78,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return int
      */
-    public function createKey(string $keyName): int
+    public function createKey($keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -88,7 +88,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return bool
      */
-    public function deleteKey(string $keyName): bool
+    public function deleteKey($keyName): bool
     {
         return $this->glossaryFacade->deleteKey($keyName);
     }
@@ -100,7 +100,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }

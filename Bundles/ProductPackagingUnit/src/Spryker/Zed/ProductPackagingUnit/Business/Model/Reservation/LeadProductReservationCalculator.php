@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
+use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -43,32 +44,40 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      */
     public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
     {
-        $reservedStates = $this->omsFacade->getReservedStates();
-
-        $reservedStateNames = [];
-        $reservedStatesMap = [];
-        foreach ($reservedStates as $reservedState) {
-            $reservedStateNames[$reservedState->getName()] = $reservedState->getName();
-            $reservedStatesMap[$reservedState->getProcess()->getName()][$reservedState->getName()] = $reservedState->getName();
-        }
+        $reservedStates = $this->omsFacade->getReservedStates()->getStates();
 
         $reservedLeadProductAmountAggregations = $this->productPackagingUnitRepository
-            ->aggregateLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, $reservedStateNames);
+            ->aggregateLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, array_keys($reservedStates->getArrayCopy()));
 
         $sumReservedLeadProductAmount = 0;
         foreach ($reservedLeadProductAmountAggregations as $reservedLeadProductAmountAggregation) {
-            $processName = $reservedLeadProductAmountAggregation->getProcess();
-            $stateName = $reservedLeadProductAmountAggregation->getState()->getName();
-            if (!isset($reservedStatesMap[$processName][$stateName])) {
+            $this->validateAggregationTransfer($reservedLeadProductAmountAggregation);
+
+            $processName = $reservedLeadProductAmountAggregation->getProcessName();
+            $stateName = $reservedLeadProductAmountAggregation->getStateName();
+            if (!$reservedStates->offsetExists($stateName) || !$reservedStates[$stateName]->getProcesses()->offsetExists($processName)) {
                 continue;
             }
 
-            $sumReservedLeadProductAmount += $reservedLeadProductAmountAggregation->getQuantity();
+            $reservedLeadProductAmountAggregation->requireAggregationSum();
+            $sumReservedLeadProductAmount += $reservedLeadProductAmountAggregation->getAggregationSum();
         }
 
-        $sumReservedLeadProductQuantity = $this->omsFacade
-            ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
+        $sumReservedLeadProductQuantity = $this->omsFacade->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
         return $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductSalesAggregationTransfer $salesAggregationTransfer
+     *
+     * @return void
+     */
+    protected function validateAggregationTransfer(ProductSalesAggregationTransfer $salesAggregationTransfer): void
+    {
+        $salesAggregationTransfer
+            ->requireSku()
+            ->requireProcessName()
+            ->requireStateName();
     }
 }

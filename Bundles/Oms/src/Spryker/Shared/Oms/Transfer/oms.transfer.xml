@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ItemState">
         <property name="idSalesOrder" type="int"/>
-        <property name="name" type="string" />
-        <property name="createdAt" type="string" />
+        <property name="name" type="string"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="Mail">
@@ -18,11 +18,31 @@
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
-        <property name="sku" type="string" />
-        <property name="reservationAmount" type="int" />
+        <property name="sku" type="string"/>
+        <property name="reservationAmount" type="int"/>
         <property name="originStore" type="Store"/>
         <property name="synchronizeToStore" type="Store"/>
-        <property name="version" type="string" />
+        <property name="version" type="string"/>
+    </transfer>
+
+    <transfer name="OmsStateCollection">
+        <property name="states" type="OmsState[]" associative="true" singular="state"/>
+    </transfer>
+
+    <transfer name="OmsState">
+        <property name="name" type="string"/>
+        <property name="processes" type="OmsProcess[]" associative="true" singular="process"/>
+    </transfer>
+
+    <transfer name="OmsProcess">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductSalesAggregation">
+        <property name="sku" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="aggregationSum" type="int"/>
     </transfer>
 
 </transfers>

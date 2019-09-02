@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface ProductPackagingUnitToProductFacadeInterface
 {
     /**
@@ -16,12 +14,12 @@ interface ProductPackagingUnitToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById(int $idProduct): ?ProductConcreteTransfer;
+    public function findProductConcreteById($idProduct);
 
     /**
      * @param string $sku
      *
      * @return int|null
      */
-    public function findProductConcreteIdBySku(string $sku): ?int;
+    public function findProductConcreteIdBySku($sku);
 }

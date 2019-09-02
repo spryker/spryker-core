@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ItemTransfer;
-
 interface OrderItemMapperInterface
 {
     /**
@@ -17,12 +15,4 @@ interface OrderItemMapperInterface
      * @return array
      */
     public function mapOrderItemMatrix(array $orderItemsMatrixResult): array;
-
-    /**
-     * @param array $orderItemEntityArray
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    public function mapOrderItemEntityArrayToItemTransfer(array $orderItemEntityArray, ItemTransfer $itemTransfer): ItemTransfer;
 }

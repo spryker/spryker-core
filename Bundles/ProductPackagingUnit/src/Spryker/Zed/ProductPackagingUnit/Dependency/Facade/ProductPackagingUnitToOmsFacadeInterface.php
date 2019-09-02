@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductPackagingUnitToOmsFacadeInterface
 {
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int;
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
 
     /**
      * @param string $sku
@@ -29,7 +30,7 @@ interface ProductPackagingUnitToOmsFacadeInterface
     public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void;
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): array;
+    public function getReservedStates(): OmsStateCollectionTransfer;
 }

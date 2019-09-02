@@ -17,7 +17,7 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      *
      * @return int
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): int;
+    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -26,7 +26,7 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool;
+    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
 
     /**
      * @param string $sku
@@ -35,5 +35,5 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      *
      * @return int
      */
-    public function saveProductAvailabilityForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int;
+    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
 }

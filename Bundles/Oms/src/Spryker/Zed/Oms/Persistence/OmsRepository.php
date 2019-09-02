@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Oms\Business\Process\State;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -21,7 +20,10 @@ use Spryker\Zed\Oms\Business\Process\State;
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
-    protected const SUM_COLUMN = 'SUM';
+    protected const SUM_COLUMN = 'aggregationSum';
+    protected const SKU_COLUMN = 'sku';
+    protected const PROCESS_NAME_COLUMN = 'processName';
+    protected const STATE_NAME_COLUMN = 'stateName';
 
     /**
      * @param int[] $processIds
@@ -41,23 +43,19 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\State[] $states
+     * @param string[] $stateNames
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ProductSalesAggregationTransfer[]
      */
-    public function getSalesOrderItemsBySkuAndStatesNames(array $states, string $sku, ?StoreTransfer $storeTransfer): array
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array
     {
-        $stateNames = array_unique($this->mapStatesToStateNames($states));
-
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
             ->select([
                 SpySalesOrderItemTableMap::COL_SKU,
-                SpyOmsOrderProcessTableMap::COL_NAME,
-                SpyOmsOrderItemStateTableMap::COL_NAME,
             ])->filterBySku($sku)
             ->innerJoinProcess()
             ->useStateQuery()
@@ -65,6 +63,9 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->groupByFkOmsOrderProcess()
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::SKU_COLUMN)
+            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
+            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
             ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN);
 
         if ($storeTransfer !== null) {
@@ -74,26 +75,11 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
                 ->endUse();
         }
 
-        $itemTransfers = [];
-        foreach ($salesOrderItemQuery->find() as $salesOrderItemEntityArray) {
-            $salesOrderItemEntityArray[SpySalesOrderItemTableMap::COL_QUANTITY] = $salesOrderItemEntityArray[static::SUM_COLUMN];
-            $itemTransfers[] = $this->getFactory()
-                ->createOrderItemMapper()
-                ->mapOrderItemEntityArrayToItemTransfer($salesOrderItemEntityArray, new ItemTransfer());
+        $salesAggregationTransfers = [];
+        foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
+            $salesAggregationTransfers[] = (new ProductSalesAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
         }
 
-        return $itemTransfers;
-    }
-
-    /**
-     * @param \Spryker\Zed\Oms\Business\Process\State[] $states
-     *
-     * @return string[]
-     */
-    protected function mapStatesToStateNames(array $states): array
-    {
-        return array_map(function (State $state) {
-            return $state->getName();
-        }, $states);
+        return $salesAggregationTransfers;
     }
 }

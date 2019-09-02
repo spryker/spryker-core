@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use Generated\Shared\Transfer\ItemTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\OmsProcessTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OmsStateTransfer;
+use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -89,7 +93,7 @@ class Reservation implements ReservationInterface
     public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->sumProductQuantitiesForSku(
-            $this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses(),
+            $this->getReservedStates()->getStates(),
             $sku,
             $storeTransfer
         );
@@ -147,7 +151,7 @@ class Reservation implements ReservationInterface
     /**
      * @return string[]
      */
-    public function getReservedStateNames()
+    public function getReservedStateNames(): array
     {
         $stateNames = [];
         foreach ($this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses() as $reservedState) {
@@ -158,61 +162,71 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getReservedStates(): OmsStateCollectionTransfer
+    {
+        $reservedStatesTransfer = new OmsStateCollectionTransfer();
+        $stateProcessMap = [];
+        foreach ($this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses() as $reservedState) {
+            $stateProcessMap[$reservedState->getName()][] = $reservedState->getProcess()->getName();
+        }
+
+        foreach ($stateProcessMap as $reservedStateName => $stateProcesses) {
+            $stateTransfer = (new OmsStateTransfer())->setName($reservedStateName);
+            foreach ($stateProcesses as $processName) {
+                $stateTransfer->addProcess($processName, (new OmsProcessTransfer())->setName($processName));
+            }
+
+            $reservedStatesTransfer->addState($reservedStateName, $stateTransfer);
+        }
+
+        return $reservedStatesTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $reservedStates
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    protected function sumProductQuantitiesForSku(
-        array $states,
-        $sku,
-        ?StoreTransfer $storeTransfer = null
-    ) {
+    protected function sumProductQuantitiesForSku(ArrayObject $reservedStates, string $sku, ?StoreTransfer $storeTransfer = null): int
+    {
         $sumQuantity = 0;
-        $mappedStates = $this->mapStatesByStateAndProcessNames($states);
-        $itemTransfers = $this->omsRepository->getSalesOrderItemsBySkuAndStatesNames($states, $sku, $storeTransfer);
-        foreach ($itemTransfers as $itemTransfer) {
-            $this->validateItemTransfer($itemTransfer);
+        $salesAggregationTransfers = $this->omsRepository->getSalesOrderAggregationBySkuAndStatesNames(
+            array_keys($reservedStates->getArrayCopy()),
+            $sku,
+            $storeTransfer
+        );
 
-            if (!isset($mappedStates[$itemTransfer->getProcess()][$itemTransfer->getState()->getName()])) {
+        foreach ($salesAggregationTransfers as $salesAggregationTransfer) {
+            $this->validateAggregationTransfer($salesAggregationTransfer);
+
+            $stateName = $salesAggregationTransfer->getStateName();
+            $processName = $salesAggregationTransfer->getProcessName();
+            if (!$reservedStates->offsetExists($stateName) || !$reservedStates[$stateName]->getProcesses()->offsetExists($processName)) {
                 continue;
             }
 
-            $itemTransfer->requireQuantity();
-            $sumQuantity += $itemTransfer->getQuantity();
+            $salesAggregationTransfer->requireAggregationSum();
+            $sumQuantity += $salesAggregationTransfer->getAggregationSum();
         }
 
         return $sumQuantity;
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
-     *
-     * @return array
-     */
-    protected function mapStatesByStateAndProcessNames(array $states): array
-    {
-        $mapResult = [];
-        foreach ($states as $state) {
-            $mapResult[$state->getProcess()->getName()][$state->getName()] = $state;
-        }
-
-        return $mapResult;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductSalesAggregationTransfer $salesAggregationTransfer
      *
      * @return void
      */
-    protected function validateItemTransfer(ItemTransfer $itemTransfer): void
+    protected function validateAggregationTransfer(ProductSalesAggregationTransfer $salesAggregationTransfer): void
     {
-        $itemTransfer
-            ->requireProcess()
-            ->requireState()
-            ->getState()
-                ->requireName();
+        $salesAggregationTransfer
+            ->requireSku()
+            ->requireProcessName()
+            ->requireStateName();
     }
 
     /**

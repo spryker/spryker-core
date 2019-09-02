@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -262,11 +263,12 @@ interface OmsFacadeInterface
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
     /**
-     *
      * Specification:
      *  - Reads all order items having state with reserved attribute for given concrete product
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      *
@@ -305,6 +307,8 @@ interface OmsFacadeInterface
      *  - Gets state entity by state name from persistence
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $stateName
      *
@@ -598,11 +602,11 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Reads states from XML definition
-     *  - Returns a list of reserved state objects
+     *  - Returns a list of reserved state objects in an associative array
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): array;
+    public function getReservedStates(): OmsStateCollectionTransfer;
 }

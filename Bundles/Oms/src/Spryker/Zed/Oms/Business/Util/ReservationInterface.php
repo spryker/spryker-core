@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface ReservationInterface
@@ -54,5 +55,10 @@ interface ReservationInterface
     /**
      * @return string[]
      */
-    public function getReservedStateNames();
+    public function getReservedStateNames(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getReservedStates(): OmsStateCollectionTransfer;
 }

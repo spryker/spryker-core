@@ -20,11 +20,11 @@ interface OmsRepositoryInterface
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\State[] $states
+     * @param string[] $stateNames
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ProductSalesAggregationTransfer[]
      */
-    public function getSalesOrderItemsBySkuAndStatesNames(array $states, string $sku, ?StoreTransfer $storeTransfer): array;
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array;
 }

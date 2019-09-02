@@ -14,21 +14,21 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
 {
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
-    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool;
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
+    public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
      * @param string $key
@@ -44,7 +44,7 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasKey(string $keyName): bool;
+    public function hasKey($keyName);
 
     /**
      * @param string $keyName
@@ -53,14 +53,14 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey(string $keyName): int;
+    public function createKey($keyName);
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function deleteKey(string $keyName): bool;
+    public function deleteKey($keyName);
 
     /**
      * @param string $keyName
