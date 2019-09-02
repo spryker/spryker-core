@@ -107,7 +107,6 @@ class ProductListAbstractController extends AbstractController
         ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer,
         FormInterface $form
     ): ProductListProductConcreteRelationTransfer {
-
         $productsCsvFile = $form
             ->get(ProductListProductConcreteRelationFormType::FIELD_FILE_UPLOAD)
             ->getData();

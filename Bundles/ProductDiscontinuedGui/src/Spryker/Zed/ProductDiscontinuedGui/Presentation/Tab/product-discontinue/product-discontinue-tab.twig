@@ -10,7 +10,7 @@
 
 {% if discontinued is not empty %}
     <div class="form-group">
-        <a href="{{ url('/product-discontinued-gui/index/undiscontinue', {'id-product-concrete': idProduct}) }}" class="btn btn-outline btn-remove">{{ 'Discontinued' | trans }}</a>
+        <a href="{{ url('/product-discontinued-gui/index/restore', {'id-product-concrete': idProduct}) }}" class="btn btn-outline btn-remove">{{ 'Restore' | trans }}</a>
     </div>
     <div class="form-group">
         {{ 'Will be deactivated on:' | trans }}

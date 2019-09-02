@@ -47,7 +47,6 @@ class ResponsePagination implements ResponsePaginationInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): array {
-
         $pageOffsetsTransfer = $this->calculatePaginationOffset($restRequest, $restResponse);
 
         if (!$pageOffsetsTransfer) {
@@ -87,7 +86,6 @@ class ResponsePagination implements ResponsePaginationInterface
         RestRequestInterface $restRequest,
         RestResponseInterface $restResponse
     ): ?RestPageOffsetsTransfer {
-
         if (!$restRequest->getPage() || !$restResponse->getTotals()) {
             return null;
         }
