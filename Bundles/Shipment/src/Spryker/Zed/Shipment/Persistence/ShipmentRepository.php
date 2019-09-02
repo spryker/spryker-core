@@ -19,9 +19,8 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
-use Spryker\Shared\Tax\TaxConstants;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
