@@ -8,7 +8,7 @@
     "everon/criteria-builder": "^1.1.5",
     "moneyphp/money": "^3.0.0",
     "fzaninotto/faker": "^1.6",
-    "mikey179/vfsStream": "^1.6"
+    "mikey179/vfsstream": "^1.6"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -30,7 +30,7 @@
     "Bundles/Console/bin/console"
   ],
   "scripts": {
-    "cs-check": "vendor/bin/phpcs Bundles --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p"
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
   "replace": {
     "spryker/acl": "*",

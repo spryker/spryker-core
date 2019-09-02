@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlot\Business;
 
+use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivator;
+use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivatorInterface;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
@@ -20,6 +22,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CmsSlot\CmsSlotConfig getConfig()
+ * @method \Spryker\Zed\CmsSlot\Persistence\CmsSlotRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CmsSlot\Persistence\CmsSlotEntityManagerInterface getEntityManager()
  */
 class CmsSlotBusinessFactory extends AbstractBusinessFactory
 {
@@ -51,6 +55,17 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     public function createCmsSlotConstraintsProvider(): ConstraintsProviderInterface
     {
         return new CmsSlotConstraintsProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivatorInterface
+     */
+    public function createCmsSlotActivator(): CmsSlotActivatorInterface
+    {
+        return new CmsSlotActivator(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 
     /**
