@@ -692,7 +692,14 @@ abstract class AbstractTable
                     $filter,
                     Propel::getConnection()->quote($conditionParameter)
                 );
-                $query->where($condition);
+
+                if (!$this->config->getHasSearchableFieldsWithAggregateFunctions()) {
+                    $query->where($condition);
+
+                    continue;
+                }
+
+                $query->having($condition);
             }
 
             $this->filtered = $query->count();
