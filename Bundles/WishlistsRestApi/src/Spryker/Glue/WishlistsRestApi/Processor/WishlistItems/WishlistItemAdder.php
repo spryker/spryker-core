@@ -120,7 +120,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     ): ?WishlistItemRequestTransfer {
         return (new WishlistItemRequestTransfer())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
-            ->setIdWishlist($wishlistResource->getId())
+            ->setUuidWishlist($wishlistResource->getId())
             ->setSku($restWishlistItemsAttributesRequestTransfer->getSku());
     }
 
