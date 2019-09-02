@@ -62,7 +62,7 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]|null
      */
     protected function findPaymentMethodAttributesTransfers(RestResourceInterface $restResource): ?array
     {
@@ -83,7 +83,7 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
      */
     protected function findPaymentProviderTransfersInPayload(RestResourceInterface $restResource): ?array
     {
-        $restCheckoutDataTransfer  = $this->findPayloadAsRestCheckoutDataTransfer($restResource);
+        $restCheckoutDataTransfer = $this->findPayloadAsRestCheckoutDataTransfer($restResource);
 
         if (!$restCheckoutDataTransfer) {
             return null;
@@ -117,6 +117,8 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodAttributesTransfers
+     *
+     * @return void
      */
     protected function addPaymentMethodsRelationships(
         RestResourceInterface $restResource,
@@ -131,6 +133,8 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      * @param int $idPaymentMethod
      * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer $restPaymentMethodAttributesTransfer
+     *
+     * @return void
      */
     protected function addPaymentMethodRelationship(
         RestResourceInterface $restResource,

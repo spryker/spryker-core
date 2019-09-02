@@ -8,16 +8,12 @@
 namespace Spryker\Glue\PaymentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleConfig;
-use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 
 class PaymentsRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_PAYMENT_METHODS = 'payment-methods';
 
-    protected const PAYMENT_METHOD_PRIORITY = [
-        DummyPaymentConfig::PAYMENT_METHOD_NAME_INVOICE => 1,
-        DummyPaymentConfig::PAYMENT_METHOD_NAME_CREDIT_CARD => 2,
-    ];
+    protected const PAYMENT_METHOD_PRIORITY = [];
 
     /**
      * @return int[]

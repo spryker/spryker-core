@@ -84,7 +84,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
 
         return (new RestPaymentMethodsAttributesTransfer())
             ->setName($paymentMethodName)
-            ->setProviderName($paymentProviderTransfer->getName())
+            ->setPaymentProviderName($paymentProviderTransfer->getName())
             ->setPriority($paymentMethodPriority);
     }
 

@@ -128,7 +128,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer,
         ?RestCheckoutDataResponseTransfer $restCheckoutDataResponseTransfer
     ): RestResponseInterface {
-
         $checkoutDataResource = $this->createRestResource(
             $restCheckoutResponseAttributesTransfer,
             $restCheckoutDataResponseTransfer
