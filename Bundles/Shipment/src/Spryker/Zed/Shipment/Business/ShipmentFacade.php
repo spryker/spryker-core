@@ -181,7 +181,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return bool
      */
-    public function hasMethod($idMethod): bool
+    public function hasMethod($idMethod)
     {
         return $this->getRepository()->hasShipmentMethodByIdShipmentMethod($idMethod);
     }
@@ -195,7 +195,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @return bool
      */
-    public function deleteMethod($idMethod): bool
+    public function deleteMethod($idMethod)
     {
         return $this->getFactory()
             ->createShipmentMethodDeleter()
@@ -420,6 +420,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteShipmentExpander()
+            ->expandQuoteWithShipmentGroups($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -447,5 +463,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()
             ->createShipmentEventGrouper()
             ->groupEventsByShipment($events, $orderItemTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    {
+        return $this->getRepository()
+            ->isShipmentMethodUniqueForCarrier($shipmentMethodTransfer);
     }
 }

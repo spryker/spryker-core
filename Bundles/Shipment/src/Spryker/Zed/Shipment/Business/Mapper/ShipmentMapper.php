@@ -24,4 +24,17 @@ class ShipmentMapper implements ShipmentMapperInterface
     ): ExpenseTransfer {
         return $expenseTransfer->fromArray($shipmentMethodTransfer->modifiedToArray(), true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function mapShipmentMethodTransferToShipmentExpenseTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ExpenseTransfer $shipmentExpenseTransfer
+    ): ExpenseTransfer {
+        return $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+    }
 }

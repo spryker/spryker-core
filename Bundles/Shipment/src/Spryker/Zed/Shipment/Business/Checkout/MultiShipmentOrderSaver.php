@@ -214,7 +214,6 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
         OrderTransfer $orderTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ExpenseTransfer {
-
         $expenseTransfer = $this->expenseSanitizer->sanitizeExpenseSumValues($expenseTransfer);
 
         if ($expenseTransfer->getIdSalesExpense() !== null) {

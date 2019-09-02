@@ -56,7 +56,6 @@ class ControllerCallbacks implements ControllerCallbacksInterface
         RestRequestInterface $restRequest,
         RestResponseInterface $restResponse
     ): void {
-
         foreach ($this->controllerAfterActionPlugins as $controllerAfterActionPlugin) {
             $controllerAfterActionPlugin->afterAction($action, $restRequest, $restResponse);
         }

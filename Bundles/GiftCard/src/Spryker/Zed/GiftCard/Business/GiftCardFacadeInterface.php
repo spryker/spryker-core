@@ -241,4 +241,16 @@ interface GiftCardFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
      */
     public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
+     * Specification:
+     * - Sanitize shipment group collection.
+     *
+     * @api
+     *
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable;
 }

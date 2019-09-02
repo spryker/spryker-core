@@ -15,8 +15,10 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
@@ -44,6 +46,9 @@ class MethodForm extends AbstractType
     public const OPTION_TAX_SETS = 'option_tax_sets';
     public const OPTION_MONEY_FACADE = 'money facade';
     public const OPTION_DATA_CLASS = 'data_class';
+    protected const OPTION_DATA = 'data';
+
+    protected const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
 
     /**
      * @return string
@@ -72,7 +77,7 @@ class MethodForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCarrierField($builder, $options)
-            ->addNameField($builder)
+            ->addNameField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -124,20 +129,38 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
                 new Required(),
+                new Callback([
+                    'callback' => $this->validateUniqueName($options),
+                ]),
             ],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return callable
+     */
+    protected function validateUniqueName(array $options): callable
+    {
+        return function ($name, ExecutionContextInterface $contextInterface) use ($options) {
+            if (!$this->getFacade()->isShipmentMethodUniqueForCarrier($options[static::OPTION_DATA])) {
+                $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
+            }
+        };
     }
 
     /**

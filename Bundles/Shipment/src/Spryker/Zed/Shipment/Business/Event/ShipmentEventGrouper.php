@@ -26,7 +26,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
      * @param array $events
      * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
-     * @return string[]
+     * @return array
      */
     protected function groupEventsByIdSalesShipment(array $events, array $orderItemTransfers): array
     {

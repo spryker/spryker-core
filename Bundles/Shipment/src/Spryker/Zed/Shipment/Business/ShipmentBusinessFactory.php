@@ -16,6 +16,8 @@ use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouper;
 use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouperInterface;
+use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpander;
+use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpanderInterface;
 use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpander;
 use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpanderInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
@@ -72,6 +74,7 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategy
 use Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToPriceFacadeInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -233,6 +236,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[]
+     */
+    protected function getShipmentGroupsSanitizerPlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::SHIPMENT_GROUPS_SANITIZER_PLUGINS);
+    }
+
+    /**
      * @deprecated Use createCheckoutShipmentOrderSaver() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
@@ -256,8 +267,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new CheckoutShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository(),
-            $this->getConfig()
+            $this->getRepository()
         );
     }
 
@@ -491,7 +501,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseSanitizer(): ExpenseSanitizerInterface
     {
-        return new ExpenseSanitizer();
+        return new ExpenseSanitizer($this->getPriceFacade());
     }
 
     /**
@@ -561,6 +571,28 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getDeliveryTimePlugins(): array
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToPriceFacadeInterface
+     */
+    public function getPriceFacade(): ShipmentToPriceFacadeInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpanderInterface
+     */
+    public function createQuoteShipmentExpander(): QuoteShipmentExpanderInterface
+    {
+        return new QuoteShipmentExpander(
+            $this->getShipmentService(),
+            $this->createMethodReader(),
+            $this->createExpenseSanitizer(),
+            $this->createShipmentMapper(),
+            $this->getShipmentGroupsSanitizerPlugins()
+        );
     }
 
     /**

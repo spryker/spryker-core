@@ -303,4 +303,20 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
             ->createGiftCardReader()
             ->findGiftCardByIdSalesOrderItem($idSalesOrderItem);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable
+    {
+        return $this->getFactory()
+            ->createShipmentGroupSanitizer()
+            ->sanitizeShipmentGroupCollection($shipmentGroupCollection);
+    }
 }

@@ -22,4 +22,15 @@ interface ShipmentMapperInterface
         ShipmentMethodTransfer $shipmentMethodTransfer,
         ExpenseTransfer $expenseTransfer
     ): ExpenseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function mapShipmentMethodTransferToShipmentExpenseTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        ExpenseTransfer $shipmentExpenseTransfer
+    ): ExpenseTransfer;
 }

@@ -27,11 +27,6 @@
         <property name="metadata" type="array" />
     </transfer>
 
-    <transfer name="QuoteRequestFilter">
-        <property name="excludedStatuses" type="array" />
-        <property name="pagination" type="Pagination" />
-    </transfer>
-
     <transfer name="Quote">
         <property name="quoteRequestVersionReference" type="string" />
         <property name="quoteRequestReference" type="string" />

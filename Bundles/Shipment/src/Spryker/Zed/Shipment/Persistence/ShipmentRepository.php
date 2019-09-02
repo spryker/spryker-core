@@ -19,6 +19,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -506,5 +507,23 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    {
+        $shipmentMethodTransfer->requireName()
+            ->requireFkShipmentCarrier();
+
+        return !$this->getFactory()
+            ->createShipmentMethodQuery()
+            ->filterByName($shipmentMethodTransfer->getName())
+            ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)
+            ->filterByFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier())
+            ->exists();
     }
 }

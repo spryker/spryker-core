@@ -94,7 +94,6 @@ class ScopeRepository implements ScopeRepositoryInterface
         ClientEntityInterface $clientEntity,
         ?string $userIdentifier = null
     ): OauthScopeRequestTransfer {
-
         $oauthScopeRequestTransfer = (new OauthScopeRequestTransfer())
             ->setGrantType($grantType)
             ->setClientId($clientEntity->getIdentifier())

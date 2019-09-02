@@ -126,4 +126,11 @@ interface ShipmentRepositoryInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }
