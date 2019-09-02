@@ -81,14 +81,13 @@ class SalesDataHelper extends Module
      * @param string|null $stateMachineProcessName
      * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
     public function haveOrderUsingPreparedQuoteTransfer(
         QuoteTransfer $quoteTransfer,
         ?string $stateMachineProcessName = null,
         array $saveOrderStack = []
     ): SaveOrderTransfer {
-
         $this->getOmsHelperModule()->configureTestStateMachine([$stateMachineProcessName]);
 
         $this->saveOrderStack = $saveOrderStack;
@@ -123,7 +122,7 @@ class SalesDataHelper extends Module
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $stateMachineProcessName
      *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\SaveOrderTransfer
      */
     protected function createOrder(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
     {
