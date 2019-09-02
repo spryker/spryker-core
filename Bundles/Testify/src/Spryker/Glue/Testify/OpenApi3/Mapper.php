@@ -91,7 +91,6 @@ class Mapper implements MapperInterface
         PropertyDefinition $definition,
         $payload
     ): PropertyValueInterface {
-
         $class = $definition->getType();
         $instance = new $class();
 

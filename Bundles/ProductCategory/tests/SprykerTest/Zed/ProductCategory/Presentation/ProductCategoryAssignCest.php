@@ -47,7 +47,7 @@ class ProductCategoryAssignCest
             $idAbstractProduct
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
-        $i->canSeeElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
+        $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
 
         $assignedProductCheckboxSelector = $this->buildProductSelector(
             $idAbstractProduct,
@@ -82,7 +82,7 @@ class ProductCategoryAssignCest
             $idAbstractProduct
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
-        $i->canSeeElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
+        $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
     }
 
     /**

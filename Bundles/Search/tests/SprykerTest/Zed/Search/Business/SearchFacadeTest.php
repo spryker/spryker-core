@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\Search\Business;
 
 use Codeception\Test\Unit;
-use Psr\Log\NullLogger;
-use Spryker\Zed\Search\Communication\Plugin\Search\ElasticsearchIndexInstallerPlugin;
-use Spryker\Zed\Search\SearchDependencyProvider;
+use Elastica\Snapshot;
+use Spryker\Client\Search\Provider\SearchClientProvider;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
+use Spryker\Zed\Search\Business\SearchBusinessFactory;
+use Spryker\Zed\Search\Business\SearchFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -24,7 +26,8 @@ use Spryker\Zed\Search\SearchDependencyProvider;
  */
 class SearchFacadeTest extends Unit
 {
-    public const DE_INDEX_NAME_DEVTEST = 'de_index-name_devtest';
+    protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    protected const REPOSITORY_NAME = 'search_test_repository';
 
     /**
      * @var \SprykerTest\Zed\Search\SearchBusinessTester
@@ -34,62 +37,95 @@ class SearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testInstallIndexInstallsIndices(): void
+    public function testCreateSnapshotRepository(): void
     {
-        $this->tester->mockConfigMethod('getIndexNameMap', ['index-name' => static::DE_INDEX_NAME_DEVTEST]);
-        $this->tester->mockConfigMethod('getClassTargetDirectory', codecept_output_dir());
-        $this->tester->setDependency(SearchDependencyProvider::SEARCH_INSTALLER_PLUGINS, [
-            new ElasticsearchIndexInstallerPlugin(),
-        ]);
+        $this->skipIfCi();
 
-        $this->tester->mockConfigMethod('getJsonIndexDefinitionDirectories', [
-            codecept_data_dir('Fixtures/Definition/Finder'),
-        ]);
+        //Arrange
+        $searchFactory = $this->createSearchFactoryMock();
+        $searchFacade = $this->getSearchFacade($searchFactory);
 
-        $logger = new NullLogger();
-        $this->tester->getFacade()->installIndices($logger);
+        //Act
+        $result = $searchFacade->createSnapshotRepository(static::REPOSITORY_NAME);
 
-        $client = $this->tester->getFactory()->getElasticsearchClient();
-        $index = $client->getIndex(static::DE_INDEX_NAME_DEVTEST);
-
-        $this->assertTrue($index->exists(), 'Index was expected to be installed but was not.');
-
-        $this->tester->getFacade()->delete(self::DE_INDEX_NAME_DEVTEST);
+        //Assert
+        $this->assertTrue($result);
     }
 
     /**
      * @return void
      */
-    public function testGetTotalCountReturnsNumberOfDocumentsInAnIndex(): void
+    protected function skipIfCi(): void
     {
-        $this->tester->haveDocumentInIndex('foo');
-
-        $response = $this->tester->getFacade()->getTotalCount('foo');
-
-        $this->assertSame(1, $response, sprintf('Expected exactly one document but found "%s".', $response));
+        if (getenv('TRAVIS')) {
+            $this->markTestSkipped('Travis not set up properly');
+        }
     }
 
     /**
-     * @return void
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\SearchBusinessFactory
      */
-    public function testGetMetaDataReturnsArrayWithMetaDataOfAnIndex(): void
+    protected function createSearchFactoryMock()
     {
-        $this->tester->haveDocumentInIndex('foo');
+        $searchFactoryMockBuilder = $this->getMockBuilder(SearchBusinessFactory::class)
+            ->setMethods(['createSnapshotHandler']);
 
-        $response = $this->tester->getFacade()->getMetaData('foo');
+        $searchFactoryMock = $searchFactoryMockBuilder->getMock();
 
-        $this->assertIsArray($response, 'Expected exactly one document but found "%s".');
+        $searchFactoryMock->method('createSnapshotHandler')->willReturn($this->createSnapshotHandlerMock());
+
+        return $searchFactoryMock;
     }
 
     /**
-     * @return void
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandlerInterface
      */
-    public function testDeleteDeletesAnIndex(): void
+    protected function createSnapshotHandlerMock()
     {
-        $index = $this->tester->haveIndex('foo');
-        $response = $this->tester->getFacade()->delete('foo');
+        $snapshotHandlerMockBuilder = $this->getMockBuilder(SnapshotHandler::class)
+            ->setConstructorArgs([$this->createElasticsearchSnapshot()])
+            ->setMethods(['buildRepositorySettings']);
 
-        $this->assertTrue($response->isOk(), 'Delete response was expected to be true but is false.');
-        $this->assertFalse($index->exists(), 'Index was expected to be deleted but still exists.');
+        $snapshotHandlerMock = $snapshotHandlerMockBuilder->getMock();
+
+        $snapshotHandlerMock->method('buildRepositorySettings')->willReturn(['location' => $this->getVirtualRepositoryLocation()]);
+
+        return $snapshotHandlerMock;
+    }
+
+    /**
+     * @return \Elastica\Snapshot
+     */
+    protected function createElasticsearchSnapshot(): Snapshot
+    {
+        /** @var \Elastica\Client $searchClient */
+        $searchClient = (new SearchClientProvider())->getInstance();
+
+        return new Snapshot($searchClient);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getVirtualRepositoryLocation(): string
+    {
+        return $this->tester->getVirtualDirectory() . static::REPOSITORY_LOCATION_FILE_NAME;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Search\Business\SearchBusinessFactory|null $factory
+     *
+     * @return \Spryker\Zed\Search\Business\SearchFacadeInterface
+     */
+    protected function getSearchFacade($factory = null): SearchFacadeInterface
+    {
+        /** @var \Spryker\Zed\Search\Business\SearchFacade $searchFacade */
+        $searchFacade = $this->tester->getFacade();
+
+        if ($factory) {
+            $searchFacade->setFactory($factory);
+        }
+
+        return $searchFacade;
     }
 }
