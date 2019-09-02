@@ -19,7 +19,7 @@ abstract class AbstractProductTable extends AbstractTable
     protected function getStatusLabel($status)
     {
         if (!$status) {
-            return $this->generateLabel('Inactive', 'label-danger');
+            return $this->generateLabel('Deactivated', 'label-danger');
         }
 
         return $this->generateLabel('Active', 'label-info');
