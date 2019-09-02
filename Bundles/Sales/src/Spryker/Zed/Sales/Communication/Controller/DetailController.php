@@ -43,7 +43,7 @@ class DetailController extends AbstractController
         }
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
-        $eventsGroupedByShipment = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrderGroupedByShipment($idSalesOrder);
+        $eventsGroupedByShipment = $this->getFactory()->getOmsFacade()->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
         $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);

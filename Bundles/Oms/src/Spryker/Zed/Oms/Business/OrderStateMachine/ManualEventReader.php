@@ -46,7 +46,7 @@ class ManualEventReader implements ManualEventReaderInterface
      *
      * @return string[]
      */
-    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
         $itemTransfers = $this->omsRepository->getSalesOrderItemsByIdSalesOrder($idSalesOrder);
 
