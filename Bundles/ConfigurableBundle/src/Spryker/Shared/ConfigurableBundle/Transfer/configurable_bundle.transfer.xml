@@ -22,11 +22,25 @@
         <property name="idConfigurableBundleTemplate" type="int" />
         <property name="uuid" type="string" />
         <property name="name" type="string" />
+        <property name="isActive" type="bool" />
+        <property name="translationKey" type="string" />
+        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateTranslation">
+        <property name="name" type="string" />
+        <property name="locale" type="Locale" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int" />
         <property name="uuid" type="string" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateResponse">
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="isSuccessful" type="bool" />
+        <property name="messages" type="Message[]"  singular="message" />
     </transfer>
 
 </transfers>

@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business;
+namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleFacadeInterface
+interface ConfigurableBundleTemplateWriterInterface
 {
     /**
-     * Specification:
-     * - Persists configurable bundle template.
-     * - Generates translation key and persists configurable bundle template name translations.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer

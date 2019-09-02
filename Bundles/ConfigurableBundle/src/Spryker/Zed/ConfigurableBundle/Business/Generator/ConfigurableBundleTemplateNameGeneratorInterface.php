@@ -5,18 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Persistence;
+namespace Spryker\Zed\ConfigurableBundle\Business\Generator;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleEntityManagerInterface
+interface ConfigurableBundleTemplateNameGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function createConfigurableBundleTemplate(
+    public function generateConfigurableBundleTemplateName(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function generateConfigurableBundleTemplateTranslationKey(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer;
 }

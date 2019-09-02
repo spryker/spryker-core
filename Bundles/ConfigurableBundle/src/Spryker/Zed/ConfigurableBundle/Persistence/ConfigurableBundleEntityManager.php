@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +16,23 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class ConfigurableBundleEntityManager extends AbstractEntityManager implements ConfigurableBundleEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function createConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateTransferToeEntity($configurableBundleTemplateTransfer, new SpyConfigurableBundleTemplate());
+
+        $configurableBundleTemplateEntity->save();
+        $configurableBundleTemplateTransfer->setIdConfigurableBundleTemplate(
+            $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()
+        );
+
+        return $configurableBundleTemplateTransfer;
+    }
 }

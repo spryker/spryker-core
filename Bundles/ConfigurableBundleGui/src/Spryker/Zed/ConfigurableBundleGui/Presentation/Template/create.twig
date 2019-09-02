@@ -1,0 +1,39 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Template details' %}
+
+{% block section_title %}
+    {{ 'Create Configurable Bundle Template' | trans }}
+{% endblock %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/configurable-bunle-gui/index', 'Back to Template list' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="well">
+                {{ 'Some tips' | trans }}
+            </div>
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {% embed '@ConfigurableBundleGui/_partials/translations.twig' with {
+                currentLocale: currentLocale,
+                translations: form.translations
+            } %}
+            {% endembed %}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
+
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

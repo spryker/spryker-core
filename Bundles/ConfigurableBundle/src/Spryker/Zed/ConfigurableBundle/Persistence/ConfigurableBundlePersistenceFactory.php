@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\ConfigurableBundleMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -16,4 +17,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\ConfigurableBundleMapper
+     */
+    public function createConfigurableBundleMapper(): ConfigurableBundleMapper
+    {
+        return new ConfigurableBundleMapper();
+    }
 }

@@ -8,6 +8,7 @@
         <column name="id_configurable_bundle_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="is_active" required="true" default="false" type="BOOLEAN"/>
 
         <unique name="spy_configurable_bundle_template-uuid">
             <unique-column name="uuid"/>
