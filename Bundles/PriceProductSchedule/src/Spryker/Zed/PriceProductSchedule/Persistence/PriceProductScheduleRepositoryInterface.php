@@ -52,4 +52,13 @@ interface PriceProductScheduleRepositoryInterface
     public function findPriceProductScheduleListById(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): ?PriceProductScheduleListTransfer;
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return array
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array;
 }

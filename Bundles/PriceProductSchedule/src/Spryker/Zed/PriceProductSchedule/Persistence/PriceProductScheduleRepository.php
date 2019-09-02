@@ -359,4 +359,34 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
                 new PriceProductScheduleListTransfer()
             );
     }
+
+    /**
+     * @module Store
+     * @module Currency
+     * @module PriceProduct
+     * @module Product
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return array
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array {
+        $priceProductScheduleEntityCollection = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->leftJoinWithStore()
+            ->leftJoinWithCurrency()
+            ->leftJoinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByFkPriceProductScheduleList($idPriceProductScheduleList)
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
+                $priceProductScheduleEntityCollection
+            );
+    }
 }

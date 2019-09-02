@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceBridge;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
@@ -31,6 +32,8 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE';
     public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST';
 
+    public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -45,6 +48,23 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container = $this->addPriceProductScheduleFacade($container);
         $container = $this->addPriceProductScheduleQuery($container);
         $container = $this->addPriceProductScheduleListQuery($container);
+        $container = $this->addUtilCsvService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilCsvService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_CSV, function (Container $container) {
+            return new PriceProductScheduleGuiToUtilCsvServiceBridge(
+                $container->getLocator()->utilCsv()->service()
+            );
+        });
 
         return $container;
     }

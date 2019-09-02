@@ -167,6 +167,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array
     {
-        return [];
+        return $this->getRepository()
+            ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
     }
 }
