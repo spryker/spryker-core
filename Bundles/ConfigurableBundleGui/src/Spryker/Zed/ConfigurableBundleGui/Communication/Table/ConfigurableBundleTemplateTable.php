@@ -34,22 +34,22 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     protected const URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
 
     /**
-     * @see \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
      */
     protected const URL_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
-     * @see \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_ACTIVATE = '/configurable-bundle-gui/template/activate';
 
     /**
-     * @see \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deactivateAction()
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deactivateAction()
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE = '/configurable-bundle-gui/template/deactivate';
 
     /**
-     * @see \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deleteAction()
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deleteAction()
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE = '/configurable-bundle-gui/template/delete';
 
