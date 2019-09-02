@@ -29,10 +29,12 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
         $priceProductScheduleListTransfer
             ->fromArray($priceProductScheduleListEntity->toArray(), true);
 
-        return $this->setMetaDataToPriceProductScheduleListTransfer(
+        $priceProductScheduleListMetadataTransfer = $this->mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
             $priceProductScheduleListEntity,
-            $priceProductScheduleListTransfer
+            new PriceProductScheduleListMetaDataTransfer()
         );
+
+        return $priceProductScheduleListTransfer->setMetaData($priceProductScheduleListMetadataTransfer);
     }
 
     /**
@@ -49,24 +51,6 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
             ->fromArray($priceProductScheduleListTransfer->toArray());
 
         return $priceProductScheduleListEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
-     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
-     */
-    protected function setMetaDataToPriceProductScheduleListTransfer(
-        SpyPriceProductScheduleList $priceProductScheduleListEntity,
-        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
-    ): PriceProductScheduleListTransfer {
-        $priceProductScheduleListMetadataTransfer = $this->mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
-            $priceProductScheduleListEntity,
-            new PriceProductScheduleListMetaDataTransfer()
-        );
-
-        return $priceProductScheduleListTransfer->setMetaData($priceProductScheduleListMetadataTransfer);
     }
 
     /**
