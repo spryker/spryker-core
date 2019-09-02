@@ -58,19 +58,17 @@ class UrlResponseBuilder implements UrlResponseBuilderInterface
     }
 
     /**
-     * @param string $urlId
      * @param \Generated\Shared\Transfer\RestUrlsAttributesTransfer $restUrlsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createUrlsResourceResponse(
-        string $urlId,
         RestUrlsAttributesTransfer $restUrlsAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()->addResource(
             $this->restResourceBuilder->createRestResource(
-                UrlsRestApiConfig::RESOURCE_URLS,
-                $urlId,
+                UrlsRestApiConfig::RESOURCE_URL_SEARCH,
+                null,
                 $restUrlsAttributesTransfer
             )
         );

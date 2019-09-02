@@ -13,11 +13,11 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\UrlsRestApi\UrlsRestApiConfig;
 
-class UrlsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class UrlSearchResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for urls resource.
+     * - Configures available actions for url-search resource.
      *
      * @api
      *
@@ -41,7 +41,7 @@ class UrlsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePlu
      */
     public function getResourceType(): string
     {
-        return UrlsRestApiConfig::RESOURCE_URLS;
+        return UrlsRestApiConfig::RESOURCE_URL_SEARCH;
     }
 
     /**
@@ -53,7 +53,7 @@ class UrlsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePlu
      */
     public function getController(): string
     {
-        return 'urls-resource';
+        return 'url-search-resource';
     }
 
     /**

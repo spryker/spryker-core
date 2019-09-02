@@ -87,10 +87,7 @@ class UrlReader implements UrlReaderInterface
             new RestUrlsAttributesTransfer()
         );
 
-        return $this->urlResponseBuilder->createUrlsResourceResponse(
-            (string)$urlStorageTransfer->getIdUrl(),
-            $restUrlsAttributesTransfer
-        );
+        return $this->urlResponseBuilder->createUrlsResourceResponse($restUrlsAttributesTransfer);
     }
 
     /**

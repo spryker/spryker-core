@@ -23,13 +23,11 @@ interface UrlResponseBuilderInterface
     public function createUrlNotFoundErrorResponse(): RestResponseInterface;
 
     /**
-     * @param string $urlId
      * @param \Generated\Shared\Transfer\RestUrlsAttributesTransfer $restUrlsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createUrlsResourceResponse(
-        string $urlId,
         RestUrlsAttributesTransfer $restUrlsAttributesTransfer
     ): RestResponseInterface;
 }

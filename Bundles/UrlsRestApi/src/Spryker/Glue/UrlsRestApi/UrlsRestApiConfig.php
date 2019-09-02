@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class UrlsRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_URLS = 'urls';
+    public const RESOURCE_URL_SEARCH = 'url-search';
 
     public const RESPONSE_CODE_URL_REQUEST_PARAMETER_MISSING = '2801';
     public const RESPONSE_DETAIL_URL_REQUEST_PARAMETER_MISSING = 'Url request parameter is missing.';
