@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\PriceProductScheduleListMetaDataTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
 
 class PriceProductScheduleListMapper implements PriceProductScheduleListMapperInterface
 {
+    protected const COL_NUMBER_OF_PRICES = 'numberOfPrices';
+    protected const COL_NUMBER_OF_PRODUCTS = 'numberOfProducts';
+
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
@@ -22,8 +26,15 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
         SpyPriceProductScheduleList $priceProductScheduleListEntity,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListTransfer {
-        return $priceProductScheduleListTransfer
+        $priceProductScheduleListTransfer
             ->fromArray($priceProductScheduleListEntity->toArray(), true);
+
+        $priceProductScheduleListMetadataTransfer = $this->mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
+            $priceProductScheduleListEntity,
+            new PriceProductScheduleListMetaDataTransfer()
+        );
+
+        return $priceProductScheduleListTransfer->setMetaData($priceProductScheduleListMetadataTransfer);
     }
 
     /**
@@ -40,5 +51,21 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
             ->fromArray($priceProductScheduleListTransfer->toArray());
 
         return $priceProductScheduleListEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListMetaDataTransfer $priceProductScheduleListMetadataTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListMetaDataTransfer
+     */
+    protected function mapPriceProductScheduleListEntityToPriceProductScheduleListMetaDataTransfer(
+        SpyPriceProductScheduleList $priceProductScheduleListEntity,
+        PriceProductScheduleListMetaDataTransfer $priceProductScheduleListMetadataTransfer
+    ): PriceProductScheduleListMetaDataTransfer {
+        $priceProductScheduleListMetadataTransfer->setNumberOfPrices($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRICES))
+            ->setNumberOfProducts($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRODUCTS));
+
+        return $priceProductScheduleListMetadataTransfer;
     }
 }

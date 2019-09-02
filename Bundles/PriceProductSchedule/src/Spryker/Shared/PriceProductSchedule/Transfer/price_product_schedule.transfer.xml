@@ -30,6 +30,11 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="PriceProductScheduleListMetaData">
+        <property name="numberOfPrices" type="int"/>
+        <property name="numberOfProducts" type="int"/>
+    </transfer>
+
     <transfer name="PriceProductScheduleList">
         <property name="idPriceProductScheduleList" type="int"/>
         <property name="name" type="string"/>
@@ -38,6 +43,7 @@
         <property name="updatedAt" type="string"/>
         <property name="fkUser" type="int"/>
         <property name="user" type="User"/>
+        <property name="metaData" type="PriceProductScheduleListMetaData"/>
     </transfer>
 
     <transfer name="PriceProductScheduleImport">
