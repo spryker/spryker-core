@@ -124,7 +124,6 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      */
     protected function createWishlistItemSuccessResponse(WishlistTransfer $wishlistTransfer, WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
-
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
             (new WishlistRequestTransfer())
                 ->setIdCustomer($wishlistTransfer->getFkCustomer())
