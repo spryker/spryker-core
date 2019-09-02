@@ -42,9 +42,9 @@
         <property name="fkResourceCategorynode" type="int" />
     </transfer>
 
-    <transfer name="ResourceIdentifier">
-        <property name="type" type="string" />
-        <property name="id" type="string" />
+    <transfer name="RestUrlResolverAttributes">
+        <property name="entityType" type="string" />
+        <property name="entityId" type="string" />
     </transfer>
 
 </transfers>
