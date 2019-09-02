@@ -8,12 +8,12 @@
 namespace Spryker\Glue\PaymentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpander;
-use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpanderInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapper;
-use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilder;
-use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodsByCheckoutDataExpander;
+use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodsByCheckoutDataExpanderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapper;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilder;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface;
 
 /**
  * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig getConfig()
@@ -21,29 +21,29 @@ use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRest
 class PaymentsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpanderInterface
+     * @return \Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodsByCheckoutDataExpanderInterface
      */
-    public function createPaymentMethodByCheckoutDataExpander(): PaymentMethodByCheckoutDataExpanderInterface
+    public function createPaymentMethodsByCheckoutDataExpander(): PaymentMethodsByCheckoutDataExpanderInterface
     {
-        return new PaymentMethodByCheckoutDataExpander(
-            $this->createPaymentMethodRestResponseBuilder(),
-            $this->createPaymentMethodMapper()
+        return new PaymentMethodsByCheckoutDataExpander(
+            $this->createPaymentMethodsRestResponseBuilder(),
+            $this->createPaymentMethodsMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface
+     * @return \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface
      */
-    public function createPaymentMethodMapper(): PaymentMethodMapperInterface
+    public function createPaymentMethodsMapper(): PaymentMethodsMapperInterface
     {
-        return new PaymentMethodMapper($this->getConfig());
+        return new PaymentMethodsMapper($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface
+     * @return \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface
      */
-    public function createPaymentMethodRestResponseBuilder(): PaymentMethodRestResponseBuilderInterface
+    public function createPaymentMethodsRestResponseBuilder(): PaymentMethodsRestResponseBuilderInterface
     {
-        return new PaymentMethodRestResponseBuilder($this->getResourceBuilder());
+        return new PaymentMethodsRestResponseBuilder($this->getResourceBuilder());
     }
 }

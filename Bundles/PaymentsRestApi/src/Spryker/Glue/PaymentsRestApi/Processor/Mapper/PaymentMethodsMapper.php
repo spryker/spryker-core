@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
-class PaymentMethodMapper implements PaymentMethodMapperInterface
+class PaymentMethodsMapper implements PaymentMethodsMapperInterface
 {
     /**
      * @var \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig

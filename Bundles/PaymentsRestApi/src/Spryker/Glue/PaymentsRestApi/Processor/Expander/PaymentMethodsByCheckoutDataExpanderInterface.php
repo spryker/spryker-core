@@ -9,7 +9,7 @@ namespace Spryker\Glue\PaymentsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface PaymentMethodByCheckoutDataExpanderInterface
+interface PaymentMethodsByCheckoutDataExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

@@ -11,28 +11,28 @@ use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface;
 
-class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutDataExpanderInterface
+class PaymentMethodsByCheckoutDataExpander implements PaymentMethodsByCheckoutDataExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface
+     * @var \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface
      */
     protected $paymentMethodRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface
+     * @var \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface
      */
     protected $paymentMethodMapper;
 
     /**
-     * @param \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder
-     * @param \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface $paymentMethodMapper
+     * @param \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface $paymentMethodRestResponseBuilder
+     * @param \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface $paymentMethodMapper
      */
     public function __construct(
-        PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder,
-        PaymentMethodMapperInterface $paymentMethodMapper
+        PaymentMethodsRestResponseBuilderInterface $paymentMethodRestResponseBuilder,
+        PaymentMethodsMapperInterface $paymentMethodMapper
     ) {
         $this->paymentMethodRestResponseBuilder = $paymentMethodRestResponseBuilder;
         $this->paymentMethodMapper = $paymentMethodMapper;
@@ -142,7 +142,7 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
         RestPaymentMethodsAttributesTransfer $restPaymentMethodAttributesTransfer
     ): void {
         $restResource->addRelationship(
-            $this->paymentMethodRestResponseBuilder->createRestPaymentMethodResource(
+            $this->paymentMethodRestResponseBuilder->createRestPaymentMethodsResource(
                 $idPaymentMethod,
                 $restPaymentMethodAttributesTransfer
             )

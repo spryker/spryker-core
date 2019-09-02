@@ -31,7 +31,7 @@ class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlug
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createPaymentMethodByCheckoutDataExpander()
+            ->createPaymentMethodsByCheckoutDataExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
