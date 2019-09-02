@@ -7,8 +7,10 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
 class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuilderInterface
 {
@@ -18,17 +20,27 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface
-     */
-    protected $paymentMethodMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface $paymentMethodMapper
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder, PaymentMethodMapperInterface $paymentMethodMapper)
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
     {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->paymentMethodMapper = $paymentMethodMapper;
+    }
+
+    /**
+     * @param int $idPaymentMethod
+     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer $restPaymentMethodsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createRestPaymentMethodResource(
+        int $idPaymentMethod,
+        RestPaymentMethodsAttributesTransfer $restPaymentMethodsAttributesTransfer
+    ): RestResourceInterface {
+        return $this->restResourceBuilder->createRestResource(
+            PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS,
+            (string)$idPaymentMethod,
+            $restPaymentMethodsAttributesTransfer
+        );
     }
 }

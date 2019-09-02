@@ -126,22 +126,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     *
-     * @return string[]
-     */
-    protected function getSelectedPaymentMethodsFromRequest(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-    ): array {
-        $selectedPaymentMethods = [];
-        foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
-            $selectedPaymentMethods[] = $restPaymentTransfer->getPaymentSelection();
-        }
-
-        return $selectedPaymentMethods;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseTransfer
      */
     protected function createCartNotFoundErrorResponse(): RestCheckoutDataResponseTransfer

@@ -15,6 +15,9 @@ use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
 use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilder;
 use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
 
+/**
+ * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig getConfig()
+ */
 class PaymentsRestApiFactory extends AbstractFactory
 {
     /**
@@ -22,7 +25,10 @@ class PaymentsRestApiFactory extends AbstractFactory
      */
     public function createPaymentMethodByCheckoutDataExpander(): PaymentMethodByCheckoutDataExpanderInterface
     {
-        return new PaymentMethodByCheckoutDataExpander();
+        return new PaymentMethodByCheckoutDataExpander(
+            $this->createPaymentMethodRestResponseBuilder(),
+            $this->createPaymentMethodMapper()
+        );
     }
 
     /**
@@ -30,7 +36,7 @@ class PaymentsRestApiFactory extends AbstractFactory
      */
     public function createPaymentMethodMapper(): PaymentMethodMapperInterface
     {
-        return new PaymentMethodMapper();
+        return new PaymentMethodMapper($this->getConfig());
     }
 
     /**
@@ -38,9 +44,6 @@ class PaymentsRestApiFactory extends AbstractFactory
      */
     public function createPaymentMethodRestResponseBuilder(): PaymentMethodRestResponseBuilderInterface
     {
-        return new PaymentMethodRestResponseBuilder(
-            $this->getResourceBuilder(),
-            $this->createPaymentMethodMapper()
-        );
+        return new PaymentMethodRestResponseBuilder($this->getResourceBuilder());
     }
 }
