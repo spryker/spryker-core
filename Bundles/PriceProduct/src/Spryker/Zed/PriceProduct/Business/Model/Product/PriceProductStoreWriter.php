@@ -300,7 +300,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
-
         return $this->priceProductQueryContainer
             ->queryPriceProductStoreByProductCurrencyStore(
                 $priceProductTransfer->getIdPriceProduct(),
