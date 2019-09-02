@@ -64,7 +64,6 @@ class PriceProductScheduleUpdater implements PriceProductScheduleUpdaterInterfac
         $priceProductScheduleResponseTransfer = new PriceProductScheduleResponseTransfer();
         $priceProductScheduleTransfer->requirePriceProductScheduleList()
             ->requireIdPriceProductSchedule();
-        $priceProductScheduleTransfer->setIsCurrent(false);
         $priceProductScheduleTransfer = $this->priceProductScheduleEntityManager
             ->savePriceProductSchedule($priceProductScheduleTransfer);
         $priceProductScheduleResponseTransfer->setPriceProductSchedule($priceProductScheduleTransfer);

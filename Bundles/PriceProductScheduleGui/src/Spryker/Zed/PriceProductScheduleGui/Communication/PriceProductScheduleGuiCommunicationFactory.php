@@ -59,6 +59,8 @@ use Symfony\Component\Form\FormInterface;
  */
 class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationFactory implements ViewExpanderTableFactoryInterface
 {
+    protected const GROUP_AFTER = 'After';
+
     /**
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface
      */
@@ -257,6 +259,9 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleUniqueConstraint([
             PriceProductScheduleUniqueConstraint::OPTION_PRICE_PRODUCT_SCHEDULE_FACADE => $this->getPriceProductScheduleFacade(),
+            'groups' => [
+                static::GROUP_AFTER,
+            ],
         ]);
     }
 

@@ -63,11 +63,13 @@ class AbstractProductPriceProductScheduleApplier implements AbstractProductPrice
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
         $priceProductTransfer->requireIdProductAbstract();
+        $this->priceProductScheduleDisabler
+            ->disableNotActiveScheduledPricesByIdProductAbstract($priceProductTransfer->getIdProductAbstract());
+        $priceProductScheduleTransfer = $this->priceProductScheduleDisabler
+            ->deactivatePriceProductSchedule($priceProductScheduleTransfer);
 
         $priceProductScheduleTransferCollection = $this->findPriceProductSchedulesToEnableForCurrentStoreAndIdProductAbstract($priceProductScheduleTransfer);
         $this->applyScheduledPriceTransactionExecutor->execute($priceProductScheduleTransferCollection);
-        $this->priceProductScheduleDisabler
-            ->disableNotActiveScheduledPricesByIdProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 
     /**

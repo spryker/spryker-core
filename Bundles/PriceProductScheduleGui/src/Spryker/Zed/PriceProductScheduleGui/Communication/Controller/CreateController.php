@@ -96,10 +96,34 @@ class CreateController extends AbstractController
     protected function setProductIdentifierFromRequest(Request $request, PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
     {
         $priceProductTransfer = new PriceProductTransfer();
-        $requestParams = $request->query->all();
-        $priceProductTransfer->fromArray($requestParams, true);
+        $idProduct = $request->query->get(static::PARAM_ID_PRODUCT);
+        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
+        $priceProductTransfer = $this->setProductIdentifierToPriceProductTransfer(
+            $priceProductTransfer,
+            $idProduct,
+            $idProductAbstract
+        );
 
         return $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param int|null $idProduct
+     * @param int|null $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function setProductIdentifierToPriceProductTransfer(
+        PriceProductTransfer $priceProductTransfer,
+        ?int $idProduct,
+        ?int $idProductAbstract
+    ): PriceProductTransfer {
+        if ($idProduct === null) {
+            return $priceProductTransfer->setIdProductAbstract($idProductAbstract);
+        }
+
+        return $priceProductTransfer->setIdProduct($idProduct);
     }
 
     /**
@@ -109,14 +133,14 @@ class CreateController extends AbstractController
      */
     protected function getTitleFromRequest(Request $request): string
     {
-        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
-        if ($idProductAbstract !== null) {
-            return sprintf(static::TITLE_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
+        $idProductConcrete = $request->query->get(static::PARAM_ID_PRODUCT);
+        if ($idProductConcrete !== null) {
+            return sprintf(static::TITLE_PRODUCT_CONCRETE_PATTERN, $idProductConcrete);
         }
 
-        $idProductConcrete = $request->query->get(static::PARAM_ID_PRODUCT);
+        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
 
-        return sprintf(static::TITLE_PRODUCT_CONCRETE_PATTERN, $idProductConcrete);
+        return sprintf(static::TITLE_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
     }
 
     /**

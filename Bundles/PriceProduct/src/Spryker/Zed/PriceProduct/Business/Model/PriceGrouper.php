@@ -55,7 +55,6 @@ class PriceGrouper implements PriceGrouperInterface
         string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
     ): array {
-
         if (!$priceProductDimensionTransfer) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
                 ->setType($this->config->getPriceDimensionDefault());

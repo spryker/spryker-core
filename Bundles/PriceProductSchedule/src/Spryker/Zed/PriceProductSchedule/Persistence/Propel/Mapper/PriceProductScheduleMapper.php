@@ -100,6 +100,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         if ($moneyValueTransfer === null) {
             return $priceProductScheduleEntity;
         }
+        $priceProductScheduleEntity->fromArray($priceProductScheduleTransfer->toArray());
 
         $idStore = $moneyValueTransfer->getFkStore();
         $idCurrency = $moneyValueTransfer->getFkCurrency();
