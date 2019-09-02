@@ -22,6 +22,7 @@ use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class WishlistReader implements WishlistReaderInterface
 {
@@ -141,7 +142,7 @@ class WishlistReader implements WishlistReaderInterface
     {
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setIdCustomer($idCustomer)
-            ->setIdWishlist($uuidWishlist);
+            ->setUuid($uuidWishlist);
         $wishlistResponseTransfer = $this->wishlistClient->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -216,15 +217,15 @@ class WishlistReader implements WishlistReaderInterface
         if (!$error || $error !== static::ERROR_MESSAGE_WISHLIST_NOT_FOUND) {
             return $this->restResourceBuilder->createRestResponse()
                 ->addError((new RestErrorMessageTransfer())
-                    ->setDetail('Unknown error.')
-                    ->setCode('')
-                    ->setStatus(422));
+                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_UNKNOWN_ERROR)
+                    ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_UNKNOWN_ERROR)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY));
         }
 
         return $this->restResourceBuilder->createRestResponse()
             ->addError((new RestErrorMessageTransfer())
                 ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND)
                 ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
-                ->setStatus(404));
+                ->setStatus(Response::HTTP_NOT_FOUND));
     }
 }

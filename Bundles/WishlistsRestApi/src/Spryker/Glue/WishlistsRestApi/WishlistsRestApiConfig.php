@@ -17,6 +17,7 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_WISHLISTS = 'wishlists';
     public const RESOURCE_WISHLIST_ITEMS = 'wishlist-items';
 
+    public const RESPONSE_CODE_WISHLIST_UNKNOWN_ERROR = '200';
     public const RESPONSE_CODE_WISHLIST_NOT_FOUND = '201';
     public const RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS = '202';
     public const RESPONSE_CODE_WISHLIST_CANT_CREATE_WISHLIST = '203';
@@ -27,6 +28,7 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ID_IS_NOT_SPECIFIED = '209';
     public const RESPONSE_CODE_WISHLIST_NAME_INVALID = '210';
 
+    public const RESPONSE_DETAIL_WISHLIST_UNKNOWN_ERROR = 'Unknown error.';
     public const RESPONSE_DETAIL_WISHLIST_NOT_FOUND = 'Can\'t find wishlist.';
     public const RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS = 'A wishlist with the same name already exists.';
     public const RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM = 'Can\'t add an item.';

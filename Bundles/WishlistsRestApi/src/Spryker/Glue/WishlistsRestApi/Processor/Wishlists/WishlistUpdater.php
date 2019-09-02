@@ -83,7 +83,7 @@ class WishlistUpdater implements WishlistUpdaterInterface
             ->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
 
         return (new WishlistRequestTransfer())
-            ->setIdWishlist($restRequest->getResource()->getId())
+            ->setUuid($restRequest->getResource()->getId())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setWishlist($wishlistTransfer);
     }

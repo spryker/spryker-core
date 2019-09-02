@@ -16,6 +16,7 @@ use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistCl
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class WishlistCreator implements WishlistCreatorInterface
 {
@@ -106,7 +107,7 @@ class WishlistCreator implements WishlistCreatorInterface
                     (new RestErrorMessageTransfer())
                     ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
                     ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
-                    ->setStatus(400)
+                    ->setStatus(Response::HTTP_BAD_REQUEST)
                 );
         }
 
@@ -116,16 +117,16 @@ class WishlistCreator implements WishlistCreatorInterface
                     (new RestErrorMessageTransfer())
                         ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NAME_INVALID)
                         ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NAME_INVALID)
-                        ->setStatus(400)
+                        ->setStatus(Response::HTTP_BAD_REQUEST)
                 );
         }
 
         return $this->wishlistRestResponseBuilder
             ->createErrorResponseFromErrorMessage(
                 (new RestErrorMessageTransfer())
-                    ->setDetail('Unknown error.')
-                    ->setCode('200')
-                    ->setStatus(422)
+                    ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_UNKNOWN_ERROR)
+                    ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_UNKNOWN_ERROR)
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             );
     }
 }

@@ -79,7 +79,6 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
         WishlistTransfer $wishlistTransfer,
         WishlistItemRequestTransfer $wishlistItemRequestTransfer
     ): WishlistItemTransfer {
-
         return (new WishlistItemTransfer())
             ->setSku($wishlistItemRequestTransfer->getSku())
             ->setFkCustomer($wishlistItemRequestTransfer->getIdCustomer())
