@@ -78,21 +78,22 @@ class BaseQueryPlugin implements QueryInterface, SearchContextAwareQueryInterfac
     public function getSearchContext(): SearchContextTransfer
     {
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setElasticsearchContext(
-            $this->createElasticsearchSearchContextTransfer()
-        );
+        $searchContextTransfer = $this->expandWithVendorContext($searchContextTransfer);
 
         return $searchContextTransfer;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function createElasticsearchSearchContextTransfer(): ElasticsearchSearchContextTransfer
+    protected function expandWithVendorContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
         $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
         $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
 
-        return $elasticsearchSearchContextTransfer;
+        return $searchContextTransfer;
     }
 }
