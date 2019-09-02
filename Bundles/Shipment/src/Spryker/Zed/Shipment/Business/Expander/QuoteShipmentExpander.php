@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
@@ -72,7 +73,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expendQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $shipmentGroupCollection = $this->shipmentService->groupItemsByShipment($quoteTransfer->getItems());
         $shipmentGroupCollection = $this->setAvailableShipmentMethodsToShipmentGroups($quoteTransfer, $shipmentGroupCollection);
@@ -189,9 +190,8 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     protected function removeAllShipmentExpensesFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteExpenseForRemoveIndexes = [];
-        $shipmentExpenseType = $this->shipmentService->getShipmentExpenseType();
         foreach ($quoteTransfer->getExpenses() as $expenseTransferIndex => $expenseTransfer) {
-            if ($expenseTransfer->getType() === $shipmentExpenseType) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
                 $quoteExpenseForRemoveIndexes[] = $expenseTransferIndex;
             }
         }
@@ -209,9 +209,12 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
+    protected function createShipmentExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
     {
-        $shipmentExpenseTransfer = $this->shipmentMapper->mapShipmentMethodTransferToShippingExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
+        $shipmentExpenseTransfer = $this->shipmentMapper->mapShipmentMethodTransferToShipmentExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
+        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpenseTransfer->setQuantity(1);
+
         $shipmentMethodTransfer->requireStoreCurrencyPrice();
 
         return $this->expenseSanitizer->sanitizeShipmentExpensePricesByPriceMode($shipmentExpenseTransfer, $shipmentMethodTransfer->getStoreCurrencyPrice(), $priceMode);
@@ -228,20 +231,19 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         $quoteTransfer = $this->removeAllShipmentExpensesFromQuote($quoteTransfer);
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $shipmentGroupTransfer->requireShipment();
-            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-            $shipmentTransfer->requireMethod();
-
-            $shipmentExpenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer->getMethod(), $quoteTransfer->getPriceMode());
-            $shipmentExpenseTransfer->setShipment($shipmentTransfer);
-
             $shipmentExpenseKey = $shipmentGroupTransfer->getHash();
             if ($quoteTransfer->getExpenses()->offsetExists($shipmentExpenseKey)) {
                 continue;
             }
 
-            $quoteTransfer->getExpenses()
-                ->offsetSet($shipmentExpenseKey, $shipmentExpenseTransfer);
+            $shipmentGroupTransfer->requireShipment();
+            $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+            $shipmentTransfer->requireMethod();
+
+            $shipmentExpenseTransfer = $this->createShipmentExpenseTransfer($shipmentTransfer->getMethod(), $quoteTransfer->getPriceMode());
+            $shipmentExpenseTransfer->setShipment($shipmentTransfer);
+
+            $quoteTransfer->getExpenses()->offsetSet($shipmentExpenseKey, $shipmentExpenseTransfer);
         }
 
         return $quoteTransfer;

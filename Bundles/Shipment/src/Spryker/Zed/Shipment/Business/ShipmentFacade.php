@@ -427,6 +427,6 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return $this->getFactory()
             ->createQuoteShipmentExpander()
-            ->expendQuoteWithShipmentGroups($quoteTransfer);
+            ->expandQuoteWithShipmentGroups($quoteTransfer);
     }
 }

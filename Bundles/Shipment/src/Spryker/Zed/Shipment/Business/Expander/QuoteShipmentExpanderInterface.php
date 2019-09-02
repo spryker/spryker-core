@@ -16,5 +16,5 @@ interface QuoteShipmentExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expendQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

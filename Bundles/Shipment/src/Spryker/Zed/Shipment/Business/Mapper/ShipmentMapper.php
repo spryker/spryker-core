@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business\Mapper;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 
 class ShipmentMapper implements ShipmentMapperInterface
 {
@@ -32,14 +31,10 @@ class ShipmentMapper implements ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function mapShipmentMethodTransferToShippingExpenseTransfer(
+    public function mapShipmentMethodTransferToShipmentExpenseTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
         ExpenseTransfer $shipmentExpenseTransfer
     ): ExpenseTransfer {
-        $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
-        $shipmentExpenseTransfer->setQuantity(1);
-
-        return $shipmentExpenseTransfer;
+        return $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
     }
 }

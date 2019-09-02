@@ -198,10 +198,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
             return new ShipmentToPriceFacadeBridge($container->getLocator()->price()->facade());
         });
 
-//        $container[static::FACADE_PRICE] = function (Container $container) {
-//            return new ShipmentToPriceFacadeBridge($container->getLocator()->price()->facade());
-//        };
-
         return $container;
     }
 

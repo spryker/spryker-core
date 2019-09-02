@@ -29,7 +29,7 @@ interface ShipmentMapperInterface
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
-    public function mapShipmentMethodTransferToShippingExpenseTransfer(
+    public function mapShipmentMethodTransferToShipmentExpenseTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
         ExpenseTransfer $shipmentExpenseTransfer
     ): ExpenseTransfer;

@@ -352,7 +352,8 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Expand quote with shipment groups by items.
+     * - Expand quote items with shipments.
+     * - Expand quote expenses with shipment expenses.
      *
      * @api
      *
