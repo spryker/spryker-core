@@ -14,6 +14,9 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Session\Model\SessionHandlerFactory;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
  * @method \Spryker\Yves\Session\SessionConfig getConfig()
@@ -127,5 +130,23 @@ class SessionFactory extends AbstractFactory
     public function getMonitoringService(): SessionToMonitoringServiceInterface
     {
         return $this->getProvidedDependency(SessionDependencyProvider::MONITORING_SERVICE);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createMockSessionStorage(): SessionStorageInterface
+    {
+        return new MockFileSessionStorage();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createNativeSessionStorage(): SessionStorageInterface
+    {
+        $sessionStorage = $this->createSessionStorage();
+
+        return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
     }
 }

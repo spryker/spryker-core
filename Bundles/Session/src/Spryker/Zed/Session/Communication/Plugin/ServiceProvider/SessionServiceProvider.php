@@ -15,6 +15,9 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use `Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin` instead.
+ * @deprecated Use `Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Zed\Session\Communication\SessionCommunicationFactory getFactory()
  * @method \Spryker\Zed\Session\Business\SessionFacadeInterface getFacade()
  * @method \Spryker\Zed\Session\SessionConfig getConfig()
