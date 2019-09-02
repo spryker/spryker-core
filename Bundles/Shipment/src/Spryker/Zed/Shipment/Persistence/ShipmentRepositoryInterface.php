@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface ShipmentRepositoryInterface
 {
@@ -126,4 +127,9 @@ interface ShipmentRepositoryInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
 }

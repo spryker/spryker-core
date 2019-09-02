@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+    <maintenance>
+        <pages>
+            <collector>
+                <label>Collectors</label>
+                <title>Collectors</title>
+                <pages>
+                    <collector-search-connector>
+                        <label>Drop search timestamps</label>
+                        <title>Drop search timestamps</title>
+                        <bundle>collector-search-connector</bundle>
+                        <controller>maintenance</controller>
+                        <action>drop-timestamps</action>
+                        <icon>fa-trash-o</icon>
+                    </collector-search-connector>
+                </pages>
+            </collector>
+        </pages>
+    </maintenance>
+</config>

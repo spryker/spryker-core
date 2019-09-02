@@ -27,14 +27,16 @@ class MerchantHelper extends Module
     public function haveMerchant(array $seedData = []): MerchantTransfer
     {
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
-        $merchantTransfer->setIdMerchant(null);
 
         $merchantTransfer = $this->getLocator()
             ->merchant()
             ->facade()
             ->createMerchant($merchantTransfer);
 
+        $this->debug(sprintf('Created Merchant: %d', $merchantTransfer->getIdMerchant()));
+
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
+            $this->debug(sprintf('Deleting Merchant: %s', $merchantTransfer->getIdMerchant()));
             $this->cleanupMerchant($merchantTransfer);
         });
 
