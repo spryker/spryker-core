@@ -34,7 +34,7 @@ class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends Abstra
 
     /**
      * {@inheritdoc}
-     * - Maps data for RestUrlsAttributesTransfer from the UrlStorageTransfer.
+     * - Maps data for RestUrlResolverAttributesTransfer from the UrlStorageTransfer.
      *
      * @api
      *
@@ -45,7 +45,7 @@ class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends Abstra
     public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
         return $this->getFactory()
-            ->createResourceIdentifierMapper()
+            ->createRestUrlResolverAttributesMapper()
             ->mapUrlStorageTransferToRestUrlResolverAttributesTransfer($urlStorageTransfer, new RestUrlResolverAttributesTransfer());
     }
 }

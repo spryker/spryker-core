@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig;
 
-class RestUrlsAttributesMapper implements RestUrlsAttributesMapperInterface
+class RestUrlResolverAttributesMapper implements RestUrlResolverAttributesMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer

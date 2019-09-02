@@ -10,7 +10,7 @@ namespace Spryker\Glue\CategoriesRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 
-interface RestUrlsAttributesMapperInterface
+interface RestUrlResolverAttributesMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer

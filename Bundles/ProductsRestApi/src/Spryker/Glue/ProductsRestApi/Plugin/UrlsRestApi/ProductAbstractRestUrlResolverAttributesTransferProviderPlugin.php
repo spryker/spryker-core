@@ -35,7 +35,7 @@ class ProductAbstractRestUrlResolverAttributesTransferProviderPlugin extends Abs
     /**
      * {@inheritdoc}
      * - Looks up the product abstract in the key-value storage by id given in UrlStorageTransfer.
-     * - Returns the ResourceIdentifierTransfer with the type and id of the product abstract.
+     * - Returns the RestUrlResolverAttributesTransfer with the type and id of the product abstract.
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ProductAbstractRestUrlResolverAttributesTransferProviderPlugin extends Abs
     public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
         return $this->getFactory()
-            ->createProductAbstractResourceIdentifierReader()
+            ->createProductAbstractRestUrlResolverAttributesReader()
             ->provideRestUrlResolverAttributesTransferByUrlStorageTransfer($urlStorageTransfer);
     }
 }

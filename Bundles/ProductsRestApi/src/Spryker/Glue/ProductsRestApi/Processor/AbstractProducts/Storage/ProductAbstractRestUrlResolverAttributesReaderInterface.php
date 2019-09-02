@@ -10,7 +10,7 @@ namespace Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage;
 use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 
-interface ProductAbstractStorageReaderInterface
+interface ProductAbstractRestUrlResolverAttributesReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
