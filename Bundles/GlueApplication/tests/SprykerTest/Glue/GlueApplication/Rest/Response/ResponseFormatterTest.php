@@ -122,7 +122,6 @@ class ResponseFormatterTest extends Unit
         EncoderMatcherInterface $encoderMatcher,
         ResponseBuilderInterface $responseBuilder
     ): ResponseFormatterInterface {
-
         return new ResponseFormatter($encoderMatcher, $responseBuilder);
     }
 
