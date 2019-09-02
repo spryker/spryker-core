@@ -1,3 +1,3 @@
-# Shipment GUI Changelog
+# ShipmentExtension Changelog
 
-[Release Changelog](https://github.com/spryker/shipment-gui/releases)
+[Release Changelog](https://github.com/spryker/shipment-extension/releases)

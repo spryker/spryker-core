@@ -16,7 +16,6 @@ use Spryker\Zed\Oms\Dependency\Facade\OmsToMailBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge as PersistenceOmsToSalesBridge;
-use Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeBridge;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
@@ -34,6 +33,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
+    public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
+    public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
 
     public const FACADE_MAIL = 'FACADE_MAIL';
     public const FACADE_SALES = 'FACADE_SALES';
@@ -42,7 +43,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
-    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -62,7 +62,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addReservationHandlerPlugins($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
-        $container = $this->addShipmentService($container);
+        $container = $this->addOmsOrderMailExpanderPlugins($container);
+        $container = $this->addOmsManualEventGrouperPlugins($container);
 
         return $container;
     }
@@ -166,20 +167,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new OmsToStoreFacadeBridge($container->getLocator()->store()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addShipmentService(Container $container): Container
-    {
-        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
-            return new OmsToShipmentServiceBridge($container->getLocator()->shipment()->service());
         });
 
         return $container;
@@ -306,6 +293,54 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(self::PLUGINS_RESERVATION, function (Container $container) {
             return $this->getReservationHandlerPlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
+     */
+    protected function getOmsOrderMailExpanderPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsOrderMailExpanderPlugins(Container $container): Container
+    {
+        $container->set(self::PLUGINS_OMS_ORDER_MAIL_EXPANDER, function (Container $container) {
+            return $this->getOmsOrderMailExpanderPlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+     */
+    protected function getOmsManualEventGrouperPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsManualEventGrouperPlugins(Container $container): Container
+    {
+        $container->set(self::PLUGINS_OMS_MANUAL_EVENT_GROUPER, function (Container $container) {
+            return $this->getOmsManualEventGrouperPlugins($container);
         });
 
         return $container;

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConstants;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
-use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface;
 
 class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 {
@@ -23,20 +22,12 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     protected $shipmentFacade;
 
     /**
-     * @var \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface
-     */
-    protected $shipmentService;
-
-    /**
      * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
-     * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentServiceInterface $shipmentService
      */
     public function __construct(
-        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade,
-        ShipmentsRestApiToShipmentServiceInterface $shipmentService
+        ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
     ) {
         $this->shipmentFacade = $shipmentFacade;
-        $this->shipmentService = $shipmentService;
     }
 
     /**

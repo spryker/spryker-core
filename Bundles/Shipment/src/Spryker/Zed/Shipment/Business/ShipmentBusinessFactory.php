@@ -14,8 +14,12 @@ use Spryker\Zed\Shipment\Business\Calculator\ShipmentTaxRateCalculator as Shipme
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
+use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouper;
+use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouperInterface;
 use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpander;
 use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpanderInterface;
+use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpander;
+use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpanderInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
@@ -263,8 +267,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new CheckoutShipmentOrderSaver(
             $this->getEntityManager(),
             $this->createExpenseSanitizer(),
-            $this->getRepository(),
-            $this->getConfig()
+            $this->getRepository()
         );
     }
 
@@ -498,7 +501,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createExpenseSanitizer(): ExpenseSanitizerInterface
     {
-        return new ExpenseSanitizer();
+        return new ExpenseSanitizer($this->getPriceFacade());
     }
 
     /**
@@ -598,5 +601,23 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentSalesOrderItemReader(): ShipmentSalesOrderItemReaderInterface
     {
         return new ShipmentSalesOrderItemReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpanderInterface
+     */
+    public function createShipmentOrderMailExpander(): ShipmentOrderMailExpanderInterface
+    {
+        return new ShipmentOrderMailExpander(
+            $this->getShipmentService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouperInterface
+     */
+    public function createShipmentEventGrouper(): ShipmentEventGrouperInterface
+    {
+        return new ShipmentEventGrouper();
     }
 }

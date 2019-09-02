@@ -1,7 +1,7 @@
 {
-  "name": "spryker/shipment-extension",
+  "name": "spryker/oms-extension",
   "type": "library",
-  "description": "ShipmentExtension module",
+  "description": "OmsExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"

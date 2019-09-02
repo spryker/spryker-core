@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -428,5 +429,39 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()
             ->createQuoteShipmentExpander()
             ->expandQuoteWithShipmentGroups($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    public function expandOrderMailTransfer(MailTransfer $mailTransfer, OrderTransfer $orderTransfer): MailTransfer
+    {
+        return $this->getFactory()
+            ->createShipmentOrderMailExpander()
+            ->expandOrderMailTransfer($mailTransfer, $orderTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $events
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     *
+     * @return array
+     */
+    public function groupEventsByShipment(array $events, array $orderItemTransfers): array
+    {
+        return $this->getFactory()
+            ->createShipmentEventGrouper()
+            ->groupEventsByShipment($events, $orderItemTransfers);
     }
 }

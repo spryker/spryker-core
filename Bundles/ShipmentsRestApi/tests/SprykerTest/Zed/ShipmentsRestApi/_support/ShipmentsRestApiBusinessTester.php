@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ShipmentsRestApi;
 
 use Codeception\Actor;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 
 /**
  * Inherited Methods
@@ -28,12 +27,4 @@ use Spryker\Service\Shipment\ShipmentServiceInterface;
 class ShipmentsRestApiBusinessTester extends Actor
 {
     use _generated\ShipmentsRestApiBusinessTesterActions;
-
-    /**
-     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
-     */
-    public function getShipmentService(): ShipmentServiceInterface
-    {
-        return $this->getLocator()->shipment()->service();
-    }
 }

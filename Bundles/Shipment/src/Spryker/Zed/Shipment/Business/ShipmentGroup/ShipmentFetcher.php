@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
 class ShipmentFetcher implements ShipmentFetcherInterface
@@ -34,7 +33,6 @@ class ShipmentFetcher implements ShipmentFetcherInterface
 
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface $shipmentMethodTransformer
      */

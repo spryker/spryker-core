@@ -10,12 +10,12 @@ namespace Spryker\Zed\Oms\Business\Mail;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderConfirmationMailTypePlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypePlugin;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
-use Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface;
 
 class MailHandler
 {
@@ -30,23 +30,23 @@ class MailHandler
     protected $mailFacade;
 
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
      */
-    protected $shipmentService;
+    protected $orderMailExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $saleFacade
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface $mailFacade
-     * @param \Spryker\Zed\Oms\Dependency\Service\OmsToShipmentServiceInterface $shipmentService
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[] $orderMailExpanderPlugins
      */
     public function __construct(
         OmsToSalesInterface $saleFacade,
         OmsToMailInterface $mailFacade,
-        OmsToShipmentServiceInterface $shipmentService
+        array $orderMailExpanderPlugins
     ) {
         $this->saleFacade = $saleFacade;
         $this->mailFacade = $mailFacade;
-        $this->shipmentService = $shipmentService;
+        $this->orderMailExpanderPlugins = $orderMailExpanderPlugins;
     }
 
     /**
@@ -57,13 +57,13 @@ class MailHandler
     public function sendOrderConfirmationMail(SpySalesOrder $salesOrderEntity)
     {
         $orderTransfer = $this->getOrderTransfer($salesOrderEntity);
-        $shipmentGroups = $this->shipmentService->groupItemsByShipment($orderTransfer->getItems());
 
         $mailTransfer = (new MailTransfer())
             ->setOrder($orderTransfer)
             ->setType(OrderConfirmationMailTypePlugin::MAIL_TYPE)
-            ->setLocale($orderTransfer->getLocale())
-            ->setShipmentGroups($shipmentGroups);
+            ->setLocale($orderTransfer->getLocale());
+
+        $mailTransfer = $this->expandOrderMailTransfer($mailTransfer, $orderTransfer);
 
         $this->mailFacade->handleMail($mailTransfer);
     }
@@ -81,6 +81,8 @@ class MailHandler
         $mailTransfer->setOrder($orderTransfer);
         $mailTransfer->setType(OrderShippedMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setLocale($orderTransfer->getLocale());
+
+        $mailTransfer = $this->expandOrderMailTransfer($mailTransfer, $orderTransfer);
 
         $this->mailFacade->handleMail($mailTransfer);
     }
@@ -163,5 +165,20 @@ class MailHandler
         $localeTransfer->fromArray($localeEntity->toArray(), true);
 
         return $localeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function expandOrderMailTransfer(MailTransfer $mailTransfer, OrderTransfer $orderTransfer): MailTransfer
+    {
+        foreach ($this->orderMailExpanderPlugins as $orderMailExpanderPlugin) {
+            $mailTransfer = $orderMailExpanderPlugin->expand($mailTransfer, $orderTransfer);
+        }
+
+        return $mailTransfer;
     }
 }
