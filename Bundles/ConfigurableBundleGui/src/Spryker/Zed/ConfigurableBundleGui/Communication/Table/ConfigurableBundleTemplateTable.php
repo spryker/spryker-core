@@ -100,10 +100,13 @@ class ConfigurableBundleTemplateTable extends AbstractTable
         $config->setSearchable([
             SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE,
             SpyGlossaryTranslationTableMap::COL_VALUE,
-            sprintf('COUNT(%s)', SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
+            sprintf(
+                '(SELECT COUNT(*) FROM %s WHERE %s = %s)',
+                SpyConfigurableBundleTemplateSlotTableMap::TABLE_NAME,
+                SpyConfigurableBundleTemplateSlotTableMap::COL_FK_CONFIGURABLE_BUNDLE_TEMPLATE,
+                SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE
+            ),
         ]);
-
-        $config->setHasSearchableFieldsWithAggregateFunctions(true);
 
         $config->setRawColumns([
             static::COL_STATUS,

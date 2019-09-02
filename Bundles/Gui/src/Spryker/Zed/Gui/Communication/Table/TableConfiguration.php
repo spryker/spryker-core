@@ -99,36 +99,11 @@ class TableConfiguration
     protected $ordering = true;
 
     /**
-     * @var bool
-     */
-    protected $hasSearchableFieldsWithAggregateFunctions = false;
-
-    /**
      * @return array
      */
     public function getRawColumns()
     {
         return $this->rawColumns;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getHasSearchableFieldsWithAggregateFunctions(): bool
-    {
-        return $this->hasSearchableFieldsWithAggregateFunctions;
-    }
-
-    /**
-     * @param bool $hasSearchableFieldsWithAggregateFunctions
-     *
-     * @return $this
-     */
-    public function setHasSearchableFieldsWithAggregateFunctions(bool $hasSearchableFieldsWithAggregateFunctions)
-    {
-        $this->hasSearchableFieldsWithAggregateFunctions = $hasSearchableFieldsWithAggregateFunctions;
-
-        return $this;
     }
 
     /**
