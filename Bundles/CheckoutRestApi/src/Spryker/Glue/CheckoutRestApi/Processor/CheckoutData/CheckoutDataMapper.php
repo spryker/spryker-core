@@ -125,7 +125,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
      *
-     * @return array
+     * @return string[]
      */
     protected function getAvailablePaymentMethodsList(PaymentMethodsTransfer $availablePaymentMethods): array
     {
@@ -188,30 +188,12 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
                 continue;
             }
 
-            foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-                $isPaymentMethodExistsInRequestedPaymentMethods = $this->isPaymentMethodExistsInRequestedPaymentMethods(
-                    $restCheckoutRequestAttributesTransfer,
-                    $paymentMethodTransfer
-                );
-                if (!$isPaymentMethodExistsInRequestedPaymentMethods) {
-                    continue;
-                }
-
-                $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames(
-                    $paymentProviderTransfer->getName(),
-                    $paymentMethodTransfer->getMethodName()
-                );
-
-                if (in_array($paymentSelection, $availablePaymentMethodsList)) {
-                    $restCheckoutDataResponseAttributesTransfer->addSelectedPaymentMethod(
-                        $this->createRestPaymentMethodTransfer(
-                            $paymentMethodTransfer,
-                            $paymentProviderTransfer,
-                            $paymentSelection
-                        )
-                    );
-                }
-            }
+            $this->addSelectedPaymentMethodsToRestCheckoutDataResponseAttributesTransfer(
+                $restCheckoutDataResponseAttributesTransfer,
+                $paymentProviderTransfer,
+                $restCheckoutRequestAttributesTransfer,
+                $availablePaymentMethodsList
+            );
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
@@ -234,6 +216,46 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param string[] $availablePaymentMethodsList
+     *
+     * @return void
+     */
+    protected function addSelectedPaymentMethodsToRestCheckoutDataResponseAttributesTransfer(
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
+        PaymentProviderTransfer $paymentProviderTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        array $availablePaymentMethodsList
+    ): void {
+        foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
+            $isPaymentMethodExistsInRequestedPaymentMethods = $this->isPaymentMethodExistsInRequestedPaymentMethods(
+                $restCheckoutRequestAttributesTransfer,
+                $paymentMethodTransfer
+            );
+            if (!$isPaymentMethodExistsInRequestedPaymentMethods) {
+                continue;
+            }
+
+            $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames(
+                $paymentProviderTransfer->getName(),
+                $paymentMethodTransfer->getMethodName()
+            );
+
+            if (in_array($paymentSelection, $availablePaymentMethodsList)) {
+                $restCheckoutDataResponseAttributesTransfer->addSelectedPaymentMethod(
+                    $this->createRestPaymentMethodTransfer(
+                        $paymentMethodTransfer,
+                        $paymentProviderTransfer,
+                        $paymentSelection
+                    )
+                );
+            }
+        }
     }
 
     /**
