@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsBlockCategoryStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsBlockCategoriesTransfer;
 use Generated\Shared\Transfer\CmsBlockCategoryTransfer;
-use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface;
@@ -160,7 +159,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
             $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] = $cmsBlockCategoryEntity->getName();
 
-            if (!defined(SpyCmsBlockTableMap::COL_KEY)) {
+            if (!defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY')) {
                 continue;
             }
 

@@ -48,7 +48,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->innerJoinCmsBlock()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME);
 
-        if (defined(SpyCmsBlockTableMap::COL_KEY)) {
+        if (defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY')) {
             $query->withColumn(SpyCmsBlockTableMap::COL_KEY, static::KEY);
         }
 

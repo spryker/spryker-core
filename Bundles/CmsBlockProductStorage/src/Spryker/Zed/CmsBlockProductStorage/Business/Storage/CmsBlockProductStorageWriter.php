@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsBlockProductStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsBlockProductTransfer;
-use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage;
 use Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface;
@@ -153,7 +152,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         foreach ($cmsBlockProductEntities as $cmsBlockProductEntity) {
             $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::NAMES][] = $cmsBlockProductEntity->getName();
 
-            if (!defined(SpyCmsBlockTableMap::COL_KEY)) {
+            if (!defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY')) {
                 continue;
             }
 
