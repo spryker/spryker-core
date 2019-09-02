@@ -70,7 +70,6 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        //TODO: check if it may be substituted with validation
         if (!$restRequest->getResource()->getId()) {
             return $this->addItemSkuMissingErrorToResponse();
         }
@@ -184,7 +183,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
 
         return (new WishlistItemRequestTransfer())
             ->setSku($sku)
-            ->setIdWishlist($uuidWishlist)
+            ->setUuidWishlist($uuidWishlist)
             ->setIdCustomer($idCustomer);
     }
 

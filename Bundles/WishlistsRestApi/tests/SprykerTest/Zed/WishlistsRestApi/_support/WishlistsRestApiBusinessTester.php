@@ -1,5 +1,14 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\WishlistsRestApi;
+
+use Codeception\Actor;
+use Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface;
 
 /**
  * Inherited Methods
@@ -15,12 +24,21 @@ namespace SprykerTest\Zed\WishlistsRestApi;
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class WishlistsRestApiBusinessTester extends \Codeception\Actor
+ */
+class WishlistsRestApiBusinessTester extends Actor
 {
     use _generated\WishlistsRestApiBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface
+     */
+    public function getWishlistsRestApiFacade(): WishlistsRestApiFacadeInterface
+    {
+        /**
+         * @var \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface
+         */
+        $facade = $this->getFacade();
+
+        return $facade;
+    }
 }

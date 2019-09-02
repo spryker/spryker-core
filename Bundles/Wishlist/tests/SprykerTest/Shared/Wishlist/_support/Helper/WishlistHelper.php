@@ -12,20 +12,13 @@ use Generated\Shared\DataBuilder\WishlistBuilder;
 use Generated\Shared\DataBuilder\WishlistItemBuilder;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use Orm\Zed\Wishlist\Persistence\Base\SpyWishlist;
-use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Spryker\Zed\Wishlist\Business\WishlistFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class WishlistHelper extends Module
 {
-    use DependencyHelperTrait;
     use LocatorHelperTrait;
-    use DataCleanupHelperTrait;
 
-    //TODO: refactoring of the class: beautify code
     /**
      * @param array $override
      *
@@ -55,37 +48,13 @@ class WishlistHelper extends Module
 
         $createdWishlistItemTransfer = $this->getWishlistFacade()->addItem($wishlistItemTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($createdWishlistItemTransfer) {
-            if (!$createdWishlistItemTransfer->getIdWishlistItem()) {
-                return;
-            }
-            $this->getWishlistFacade()
-                ->removeItem($createdWishlistItemTransfer);
-        });
-
         return $createdWishlistItemTransfer;
-    }
-
-    /**
-     * @param string $idCustomer
-     * @param string $uuidWishlist
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\Base\SpyWishlist|null
-     */
-    public function findWishlistEntityDirectlyInDatabase(string $idCustomer, string $uuidWishlist): ?SpyWishlist
-    {
-        $wishlistEntity = SpyWishlistQuery::create()
-            ->filterByUuid($uuidWishlist)
-            ->filterByFkCustomer($idCustomer)
-            ->findOne();
-
-        return $wishlistEntity;
     }
 
     /**
      * @return \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface
      */
-    protected function getWishlistFacade(): WishlistFacadeInterface
+    public function getWishlistFacade(): WishlistFacadeInterface
     {
         return $this->getLocatorHelper()->getLocator()->wishlist()->facade();
     }
