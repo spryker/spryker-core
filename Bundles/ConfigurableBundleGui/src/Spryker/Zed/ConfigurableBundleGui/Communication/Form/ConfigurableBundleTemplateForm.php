@@ -49,7 +49,7 @@ class ConfigurableBundleTemplateForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addNameKeyField($builder)
+        $this->addNameField($builder)
             ->addTranslationsForm($builder, $options);
     }
 
@@ -58,7 +58,7 @@ class ConfigurableBundleTemplateForm extends AbstractType
      *
      * @return $this
      */
-    protected function addNameKeyField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_NAME, HiddenType::class);
 
