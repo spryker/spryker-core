@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\StorageRedis;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -155,6 +156,22 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      *
      * @api
      *
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer
+    {
+        return $this->getFactory()->createStorageRedisWrapper()->scanKeys($pattern, $limit, $cursor);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function resetAccessStats(): void
@@ -184,6 +201,18 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     public function getCountItems(): int
     {
         return $this->getFactory()->createStorageRedisWrapper()->getCountItems();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDbSize(): int
+    {
+        return $this->getFactory()->createStorageRedisWrapper()->getDbSize();
     }
 
     /**
