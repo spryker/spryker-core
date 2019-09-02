@@ -9,32 +9,30 @@ namespace Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Event\Listener;
 
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Event\Listener\CustomerAccessStorageBulkListener` instead.
- *
  * @method \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CustomerAccessStorage\Communication\CustomerAccessStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageConfig getConfig()
  */
-class CustomerAccessStorageListener extends AbstractPlugin implements EventHandlerInterface
+class CustomerAccessStorageBulkListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritDoc}
+     *  - Publishes all customer access types as json in storage table.
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
      * @param string $eventName
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer, $eventName): void
+    public function handleBulk(array $transfers, $eventName)
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');
