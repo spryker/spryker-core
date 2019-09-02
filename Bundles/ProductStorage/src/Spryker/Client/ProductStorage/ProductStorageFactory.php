@@ -40,6 +40,14 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface
      */
     public function getLocaleClient()
@@ -56,6 +64,7 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getLocaleClient(),
+            $this->getUtilEncodingService(),
             $this->getProductConcreteRestrictionPlugins()
         );
     }

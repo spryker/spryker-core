@@ -31,4 +31,14 @@ class ProductLabelStorageToStorageClientBridge implements ProductLabelStorageToS
     {
         return $this->storageClient->get($key);
     }
+
+    /**
+     * @param string[] $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys): array
+    {
+        return $this->storageClient->getMulti($keys);
+    }
 }

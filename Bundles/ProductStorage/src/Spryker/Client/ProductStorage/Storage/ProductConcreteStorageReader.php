@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Zend\Filter\FilterChain;
@@ -37,6 +38,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $localeClient;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
      */
     protected $productConcreteRestrictionPlugins;
@@ -45,18 +51,21 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
+     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
+        ProductStorageToUtilEncodingServiceInterface $utilEncodingService,
         array $productConcreteRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->localeClient = $localeClient;
         $this->productConcreteRestrictionPlugins = $productConcreteRestrictionPlugins;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -99,6 +108,27 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $key = $this->getStorageKey((string)$idProductConcrete, $localeName);
 
         return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getProductConcreteStorageDataByIds(array $productConcreteIds, string $localeName): array
+    {
+        $productConcreteIds = array_filter($productConcreteIds, function ($idProductConcrete) {
+            return $idProductConcrete && !$this->isProductConcreteRestricted($idProductConcrete);
+        });
+
+        $storageKeys = array_map(function ($idProductConcrete) use ($localeName) {
+            return $this->getStorageKey((string)$idProductConcrete, $localeName);
+        }, $productConcreteIds);
+
+        return array_map(function ($storageData) {
+            return $this->utilEncodingService->decodeJson($storageData);
+        }, $this->storageClient->getMulti($storageKeys));
     }
 
     /**
@@ -198,6 +228,33 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         return $this->findProductConcreteStorageData($mappingData['id'], $localeName);
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getProductConcreteStorageDataByMappingAndIdentifiers(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $mappingKeys = array_map(function ($identifier) use ($mappingType, $localeName) {
+            return $this->getStorageKey($mappingType . ':' . $identifier, $localeName);
+        }, $identifiers);
+        $mappingData = array_map(function ($storageData) {
+            return $this->utilEncodingService->decodeJson($storageData);
+        }, $this->storageClient->getMulti($mappingKeys));
+
+        if (empty($mappingData)) {
+            return [];
+        }
+
+        $concreteProductIds = array_map(function ($mappingData) {
+            return $mappingData['id'];
+        }, $mappingData);
+
+        return $this->getProductConcreteStorageDataByIds($concreteProductIds, $localeName);
     }
 
     /**

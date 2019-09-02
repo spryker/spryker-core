@@ -22,7 +22,8 @@ class ProductLabelStorageFactory extends AbstractFactory
         return new ProductAbstractLabelReader(
             $this->getStorage(),
             $this->getSynchronizationService(),
-            $this->createLabelDictionaryReader()
+            $this->createLabelDictionaryReader(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -40,6 +41,14 @@ class ProductLabelStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

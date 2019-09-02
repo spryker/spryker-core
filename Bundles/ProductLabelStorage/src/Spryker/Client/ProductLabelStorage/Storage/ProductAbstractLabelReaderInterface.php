@@ -16,4 +16,12 @@ interface ProductAbstractLabelReaderInterface
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    public function getLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
 }
