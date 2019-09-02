@@ -7,15 +7,15 @@
 
 namespace Spryker\Glue\ProductsRestApi\Plugin\UrlsRestApi;
 
-use Generated\Shared\Transfer\ResourceIdentifierTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface;
+use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface;
 
 /**
  * @method \Spryker\Glue\ProductsRestApi\ProductsRestApiFactory getFactory()
  */
-class ProductAbstractResourceIdentifierProviderPlugin extends AbstractPlugin implements ResourceIdentifierProviderPluginInterface
+class ProductAbstractRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlugin implements RestUrlResolverAttributesTransferProviderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -41,12 +41,12 @@ class ProductAbstractResourceIdentifierProviderPlugin extends AbstractPlugin imp
      *
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceIdentifierTransfer|null
+     * @return \Generated\Shared\Transfer\RestUrlResolverAttributesTransfer|null
      */
-    public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
+    public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
         return $this->getFactory()
             ->createProductAbstractResourceIdentifierReader()
-            ->provideResourceIdentifierByUrlStorageTransfer($urlStorageTransfer);
+            ->provideRestUrlResolverAttributesTransferByUrlStorageTransfer($urlStorageTransfer);
     }
 }

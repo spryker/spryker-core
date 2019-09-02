@@ -14,7 +14,7 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\UrlsRestApi\UrlsRestApiFactory getFactory()
  */
-class UrlSearchResourceController extends AbstractController
+class UrlResolverResourceController extends AbstractController
 {
     /**
      * @Glue({
@@ -40,7 +40,7 @@ class UrlSearchResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createUrlReader()
-            ->getUrl($restRequest);
+            ->createUrlResolver()
+            ->getUrlResolver($restRequest);
     }
 }

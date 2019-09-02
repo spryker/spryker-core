@@ -18,7 +18,7 @@ class UrlsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
 
-    public const PLUGINS_RESOURCE_IDENTIFIER_PROVIDER = 'PLUGINS_RESOURCE_IDENTIFIER_PROVIDER';
+    public const PLUGINS_REST_URL_RESOLVER_ATTRIBUTES_TRANSFER_PROVIDER = 'PLUGINS_REST_URL_RESOLVER_ATTRIBUTES_TRANSFER_PROVIDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -29,7 +29,7 @@ class UrlsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideDependencies($container);
         $container = $this->addUrlStorageClient($container);
-        $container = $this->addResourceIdentifierProviderPlugins($container);
+        $container = $this->addRestUrlResolverAttributesTransferProviderPlugins($container);
 
         return $container;
     }
@@ -55,19 +55,19 @@ class UrlsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addResourceIdentifierProviderPlugins(Container $container): Container
+    protected function addRestUrlResolverAttributesTransferProviderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RESOURCE_IDENTIFIER_PROVIDER, function () {
-            return $this->getResourceIdentifierProviderPlugins();
+        $container->set(static::PLUGINS_REST_URL_RESOLVER_ATTRIBUTES_TRANSFER_PROVIDER, function () {
+            return $this->getRestUrlResolverAttributesTransferProviderPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[]
+     * @return \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface[]
      */
-    protected function getResourceIdentifierProviderPlugins(): array
+    protected function getRestUrlResolverAttributesTransferProviderPlugins(): array
     {
         return [];
     }

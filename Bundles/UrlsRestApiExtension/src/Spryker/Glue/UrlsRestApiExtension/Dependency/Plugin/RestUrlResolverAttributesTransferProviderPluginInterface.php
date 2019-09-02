@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\ResourceIdentifierTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 
-interface ResourceIdentifierProviderPluginInterface
+interface RestUrlResolverAttributesTransferProviderPluginInterface
 {
     /**
      * Specification:
@@ -27,15 +27,15 @@ interface ResourceIdentifierProviderPluginInterface
     /**
      * Specification:
      * - Attempts to find the type+id pair for the the given UrlStorageTransfer.
-     * - Returns ResourceIdentifierTransfer on success, null otherwise.
+     * - Returns RestUrlResolverAttributesTransfer on success, null otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceIdentifierTransfer|null
+     * @return \Generated\Shared\Transfer\RestUrlResolverAttributesTransfer|null
      */
-    public function provideResourceIdentifierByUrlStorageTransfer(
+    public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(
         UrlStorageTransfer $urlStorageTransfer
-    ): ?ResourceIdentifierTransfer;
+    ): ?RestUrlResolverAttributesTransfer;
 }

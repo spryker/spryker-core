@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\UrlsRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestUrlsAttributesTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\UrlsRestApi\UrlsRestApiConfig;
 
-class UrlSearchResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class UrlResolverResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Configures available actions for url-search resource.
+     * - Configures available actions for url-resolver resource.
      *
      * @api
      *
@@ -41,7 +41,7 @@ class UrlSearchResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getResourceType(): string
     {
-        return UrlsRestApiConfig::RESOURCE_URL_SEARCH;
+        return UrlsRestApiConfig::RESOURCE_URL_RESOLVER;
     }
 
     /**
@@ -53,7 +53,7 @@ class UrlSearchResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getController(): string
     {
-        return 'url-search-resource';
+        return 'url-resolver-resource';
     }
 
     /**
@@ -65,6 +65,6 @@ class UrlSearchResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestUrlsAttributesTransfer::class;
+        return RestUrlResolverAttributesTransfer::class;
     }
 }

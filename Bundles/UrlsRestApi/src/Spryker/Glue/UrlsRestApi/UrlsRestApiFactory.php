@@ -9,25 +9,22 @@ namespace Spryker\Glue\UrlsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\UrlsRestApi\Dependency\Client\UrlsRestApiToUrlStorageClientInterface;
-use Spryker\Glue\UrlsRestApi\Processor\Url\Mapper\UrlMapper;
-use Spryker\Glue\UrlsRestApi\Processor\Url\Mapper\UrlMapperInterface;
-use Spryker\Glue\UrlsRestApi\Processor\Url\Reader\UrlReader;
-use Spryker\Glue\UrlsRestApi\Processor\Url\Reader\UrlReaderInterface;
+use Spryker\Glue\UrlsRestApi\Processor\Url\Resolver\UrlResolver;
+use Spryker\Glue\UrlsRestApi\Processor\Url\Resolver\UrlResolverInterface;
 use Spryker\Glue\UrlsRestApi\Processor\Url\ResponseBuilder\UrlResponseBuilder;
 use Spryker\Glue\UrlsRestApi\Processor\Url\ResponseBuilder\UrlResponseBuilderInterface;
 
 class UrlsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\UrlsRestApi\Processor\Url\Reader\UrlReaderInterface
+     * @return \Spryker\Glue\UrlsRestApi\Processor\Url\Resolver\UrlResolverInterface
      */
-    public function createUrlReader(): UrlReaderInterface
+    public function createUrlResolver(): UrlResolverInterface
     {
-        return new UrlReader(
+        return new UrlResolver(
             $this->getUrlStorageClient(),
             $this->createUrlResponseBuilder(),
-            $this->createUrlMapper(),
-            $this->getResourceIdentifierProviderPlugins()
+            $this->getRestUrlResolverAttributesTransferProviderPlugins()
         );
     }
 
@@ -40,14 +37,6 @@ class UrlsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\UrlsRestApi\Processor\Url\Mapper\UrlMapperInterface
-     */
-    public function createUrlMapper(): UrlMapperInterface
-    {
-        return new UrlMapper();
-    }
-
-    /**
      * @return \Spryker\Glue\UrlsRestApi\Dependency\Client\UrlsRestApiToUrlStorageClientInterface
      */
     public function getUrlStorageClient(): UrlsRestApiToUrlStorageClientInterface
@@ -56,10 +45,10 @@ class UrlsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface[]
+     * @return \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface[]
      */
-    public function getResourceIdentifierProviderPlugins(): array
+    public function getRestUrlResolverAttributesTransferProviderPlugins(): array
     {
-        return $this->getProvidedDependency(UrlsRestApiDependencyProvider::PLUGINS_RESOURCE_IDENTIFIER_PROVIDER);
+        return $this->getProvidedDependency(UrlsRestApiDependencyProvider::PLUGINS_REST_URL_RESOLVER_ATTRIBUTES_TRANSFER_PROVIDER);
     }
 }

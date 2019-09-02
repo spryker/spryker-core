@@ -4,14 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="RestUrlsAttributes">
-        <property name="type" type="string" />
-        <property name="id" type="string" />
-    </transfer>
-
-    <transfer name="ResourceIdentifier">
-        <property name="type" type="string" />
-        <property name="id" type="string" />
+    <transfer name="RestUrlResolverAttributes">
+        <property name="entityType" type="string" />
+        <property name="entityId" type="string" />
     </transfer>
 
     <transfer name="UrlRedirectStorage">

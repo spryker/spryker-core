@@ -8,7 +8,7 @@
 namespace Spryker\Glue\UrlsRestApi\Processor\Url\ResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestUrlsAttributesTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\UrlsRestApi\UrlsRestApiConfig;
@@ -58,18 +58,18 @@ class UrlResponseBuilder implements UrlResponseBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestUrlsAttributesTransfer $restUrlsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestUrlResolverAttributesTransfer $restUrlResolverAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createUrlsResourceResponse(
-        RestUrlsAttributesTransfer $restUrlsAttributesTransfer
+    public function createUrlResolverResourceResponse(
+        RestUrlResolverAttributesTransfer $restUrlResolverAttributesTransfer
     ): RestResponseInterface {
         return $this->restResourceBuilder->createRestResponse()->addResource(
             $this->restResourceBuilder->createRestResource(
-                UrlsRestApiConfig::RESOURCE_URL_SEARCH,
+                UrlsRestApiConfig::RESOURCE_URL_RESOLVER,
                 null,
-                $restUrlsAttributesTransfer
+                $restUrlResolverAttributesTransfer
             )
         );
     }

@@ -7,15 +7,15 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Plugin\UrlsRestApi;
 
-use Generated\Shared\Transfer\ResourceIdentifierTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\ResourceIdentifierProviderPluginInterface;
+use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface;
 
 /**
  * @method \Spryker\Glue\CategoriesRestApi\CategoriesRestApiFactory getFactory()
  */
-class CategoryNodeResourceIdentifierProviderPlugin extends AbstractPlugin implements ResourceIdentifierProviderPluginInterface
+class CategoryNodeRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlugin implements RestUrlResolverAttributesTransferProviderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -34,18 +34,18 @@ class CategoryNodeResourceIdentifierProviderPlugin extends AbstractPlugin implem
 
     /**
      * {@inheritdoc}
-     * - Maps data for ResourceIdentifierTransfer from the UrlStorageTransfer.
+     * - Maps data for RestUrlsAttributesTransfer from the UrlStorageTransfer.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceIdentifierTransfer|null
+     * @return \Generated\Shared\Transfer\RestUrlResolverAttributesTransfer|null
      */
-    public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
+    public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
         return $this->getFactory()
             ->createResourceIdentifierMapper()
-            ->mapUrlStorageTransferToResourceIdentifierTransfer($urlStorageTransfer, new ResourceIdentifierTransfer());
+            ->mapUrlStorageTransferToRestUrlResolverAttributesTransfer($urlStorageTransfer, new RestUrlResolverAttributesTransfer());
     }
 }

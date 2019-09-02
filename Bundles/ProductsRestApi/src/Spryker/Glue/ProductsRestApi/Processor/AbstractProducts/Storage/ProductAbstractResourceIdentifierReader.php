@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage;
 
-use Generated\Shared\Transfer\ResourceIdentifierTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
@@ -32,9 +32,9 @@ class ProductAbstractResourceIdentifierReader implements ProductAbstractStorageR
     /**
      * @param \Generated\Shared\Transfer\UrlStorageTransfer $urlStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ResourceIdentifierTransfer|null
+     * @return \Generated\Shared\Transfer\RestUrlResolverAttributesTransfer|null
      */
-    public function provideResourceIdentifierByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?ResourceIdentifierTransfer
+    public function provideRestUrlResolverAttributesTransferByUrlStorageTransfer(UrlStorageTransfer $urlStorageTransfer): ?RestUrlResolverAttributesTransfer
     {
         $localeName = $this->findLocaleName($urlStorageTransfer);
 
@@ -51,9 +51,9 @@ class ProductAbstractResourceIdentifierReader implements ProductAbstractStorageR
             return null;
         }
 
-        return (new ResourceIdentifierTransfer())
-            ->setType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS)
-            ->setId($data[static::KEY_SKU]);
+        return (new RestUrlResolverAttributesTransfer())
+            ->setEntityType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS)
+            ->setEntityId($data[static::KEY_SKU]);
     }
 
     /**

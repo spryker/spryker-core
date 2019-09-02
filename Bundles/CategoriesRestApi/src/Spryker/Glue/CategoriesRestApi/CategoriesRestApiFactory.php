@@ -10,8 +10,8 @@ namespace Spryker\Glue\CategoriesRestApi;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapper;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
-use Spryker\Glue\CategoriesRestApi\Processor\Mapper\ResourceIdentifierMapper;
-use Spryker\Glue\CategoriesRestApi\Processor\Mapper\ResourceIdentifierMapperInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlsAttributesMapper;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlsAttributesMapperInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReader;
 use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -50,10 +50,10 @@ class CategoriesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\ResourceIdentifierMapperInterface
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlsAttributesMapperInterface
      */
-    public function createResourceIdentifierMapper(): ResourceIdentifierMapperInterface
+    public function createResourceIdentifierMapper(): RestUrlsAttributesMapperInterface
     {
-        return new ResourceIdentifierMapper();
+        return new RestUrlsAttributesMapper();
     }
 }

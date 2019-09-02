@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\UrlsRestApi\Processor\Url\ResponseBuilder;
 
-use Generated\Shared\Transfer\RestUrlsAttributesTransfer;
+use Generated\Shared\Transfer\RestUrlResolverAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface UrlResponseBuilderInterface
@@ -23,11 +23,11 @@ interface UrlResponseBuilderInterface
     public function createUrlNotFoundErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\RestUrlsAttributesTransfer $restUrlsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestUrlResolverAttributesTransfer $restUrlResolverAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createUrlsResourceResponse(
-        RestUrlsAttributesTransfer $restUrlsAttributesTransfer
+    public function createUrlResolverResourceResponse(
+        RestUrlResolverAttributesTransfer $restUrlResolverAttributesTransfer
     ): RestResponseInterface;
 }
