@@ -188,7 +188,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 continue;
             }
 
-            if (array_values($arrayElement) !== $arrayElement) { // isAssociativeArray
+            if ($this->isAssociativeArray($arrayElement)) {
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
@@ -206,6 +206,20 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         return $transferObjectsArray;
+    }
+
+    /**
+     * @param array $arr
+     *
+     * @return bool
+     */
+    protected function isAssociativeArray(array $arr): bool
+    {
+        if ($arr === []) {
+            return false;
+        }
+
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
     /**
