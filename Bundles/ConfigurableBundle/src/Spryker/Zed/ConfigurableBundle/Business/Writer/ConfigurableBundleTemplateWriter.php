@@ -82,7 +82,6 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeCreateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
-
         $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator
             ->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
