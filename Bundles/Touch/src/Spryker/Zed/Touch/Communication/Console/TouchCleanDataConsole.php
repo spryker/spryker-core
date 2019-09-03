@@ -39,14 +39,14 @@ class TouchCleanDataConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $deleteCount = $this->getFacade()->cleanTouchEntitiesForDeletedItemEvent();
-
         $output->writeln('<fg=yellow>----------------------------------------</fg=yellow>');
         $output->writeln('<fg=yellow>Cleaning up the touch table(s)<fg=yellow>');
         $output->writeln('');
+
+        $deleteCount = $this->getFacade()->cleanTouchEntitiesForDeletedItemEvent();
+
         $output->writeln("<fg=white>Removed $deleteCount Touch table entries (along with related touch data)</fg=white>");
         $output->writeln('');
         $output->writeln('<fg=green>Finished. All Done.</fg=green>');
-        $output->writeln('');
     }
 }
