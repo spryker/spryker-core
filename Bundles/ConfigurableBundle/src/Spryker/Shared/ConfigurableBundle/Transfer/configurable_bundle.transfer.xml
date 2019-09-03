@@ -22,6 +22,7 @@
         <property name="idConfigurableBundleTemplate" type="int" />
         <property name="uuid" type="string" />
         <property name="name" type="string" />
+        <property name="isActive" type="bool" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
