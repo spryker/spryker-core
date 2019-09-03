@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ConfigurableBundleGui\Communication;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateEditTabs;
 use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
@@ -60,6 +62,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable
+     */
+    public function createConfigurableBundleTemplateSlotTable(): ConfigurableBundleTemplateSlotTable
+    {
+        return new ConfigurableBundleTemplateSlotTable($this->getConfigurableBundleTemplatePropelQuery());
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider
      */
     public function createConfigurableBundleTemplateFormDataProvider(): ConfigurableBundleTemplateFormDataProvider
@@ -69,6 +79,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getLocaleFacade(),
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
+     */
+    public function getConfigurableBundleTemplatePropelQuery(): SpyConfigurableBundleTemplateSlotQuery
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT);
     }
 
     /**

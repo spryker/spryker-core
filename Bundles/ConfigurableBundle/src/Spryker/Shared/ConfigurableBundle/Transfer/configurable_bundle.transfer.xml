@@ -34,7 +34,9 @@
 
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int" />
+        <property name="name" type="string"/>
         <property name="uuid" type="string" />
+        <property name="translationKey" type="string" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateResponse">

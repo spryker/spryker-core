@@ -10,6 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 use ArrayObject;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -121,6 +122,8 @@ class TemplateController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
+        $configurableBundleTemplateSlotTable = $this->getFactory()->createConfigurableBundleTemplateSlotTable();
+
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateForm(
                 $configurableBundleTemplateTransfer,
@@ -145,7 +148,18 @@ class TemplateController extends AbstractController
             'tabs' => $this->getFactory()->createConfigurableBundleTemplateEditTabs()->createView(),
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+            'slotTable' => $configurableBundleTemplateSlotTable->render(),
         ];
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function slotTableAction(): JsonResponse
+    {
+        $table = $this->getFactory()->createConfigurableBundleTemplateSlotTable();
+
+        return $this->jsonResponse($table->fetchData());
     }
 
     /**
