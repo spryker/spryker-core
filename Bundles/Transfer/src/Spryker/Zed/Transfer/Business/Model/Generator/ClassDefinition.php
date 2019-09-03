@@ -63,7 +63,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var bool
      */
-    protected $hasDouble = false;
+    protected $hasDecimal = false;
 
     /**
      * @var array
@@ -172,9 +172,9 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return bool
      */
-    public function hasDouble(): bool
+    public function hasDecimal(): bool
     {
-        return $this->hasDouble;
+        return $this->hasDecimal;
     }
 
     /**
@@ -275,8 +275,8 @@ class ClassDefinition implements ClassDefinitionInterface
                 $property = $this->buildTransferPropertyDefinition($property);
             }
 
-            if ($this->isDouble($property)) {
-                $property = $this->buildDoublePropertyDefinition($property);
+            if ($this->isDecimal($property)) {
+                $property = $this->buildDecimalPropertyDefinition($property);
             }
 
             $property['is_typed_array'] = false;
@@ -322,7 +322,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    protected function buildDoublePropertyDefinition(array $property): array
+    protected function buildDecimalPropertyDefinition(array $property): array
     {
         $property[self::TYPE_FULLY_QUALIFIED] = Decimal::class;
 
@@ -336,7 +336,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTransferOrTransferArray($type): bool
     {
-        return (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+        return (!preg_match('/^int|^integer|^float|^decimal|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
     }
 
     /**
@@ -344,9 +344,9 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    protected function isDouble(array $property): bool
+    protected function isDecimal(array $property): bool
     {
-        return $property['type'] === 'double';
+        return $property['type'] === 'decimal';
     }
 
     /**
@@ -356,7 +356,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getPropertyType(array $property): string
     {
-        if ($this->isDouble($property)) {
+        if ($this->isDecimal($property)) {
             return sprintf('%s|null', Decimal::class);
         }
 
@@ -398,8 +398,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getSetVar(array $property): string
     {
-        if ($this->isDouble($property)) {
-            return sprintf('string|int|float|%s', Decimal::class);
+        if ($this->isDecimal($property)) {
+            return sprintf('string|int|float|\%s', Decimal::class);
         }
 
         if ($this->isTypedArray($property)) {
@@ -571,7 +571,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getReturnType(array $property): string
     {
-        if ($this->isDouble($property)) {
+        if ($this->isDecimal($property)) {
             return '\Spryker\DecimalObject\Decimal|null';
         }
 
@@ -633,7 +633,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTypedArray(array $property): bool
     {
-        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
     }
 
     /**
@@ -651,8 +651,8 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
-        if ($this->isDouble($property)) {
-            $this->hasDouble = true;
+        if ($this->isDecimal($property)) {
+            $this->hasDecimal = true;
 
             return false;
         }
@@ -718,7 +718,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
-            'double' => false,
+            'decimal' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
@@ -726,8 +726,8 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method['typeHint'], $property, $method);
 
-        if ($this->isDouble($property)) {
-            $method['double'] = true;
+        if ($this->isDecimal($property)) {
+            $method['decimal'] = true;
         }
 
         $this->methods[$methodName] = $method;
@@ -801,7 +801,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($this->isDouble($property) || ($typeHint && (!$this->isCollection($property) || $typeHint === 'array'))) {
+        if ($this->isDecimal($property) || ($typeHint && (!$this->isCollection($property) || $typeHint === 'array'))) {
             $method['hasDefaultNull'] = true;
         }
 

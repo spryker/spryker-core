@@ -55,7 +55,7 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return bool
      */
-    public function hasDouble(): bool;
+    public function hasDecimal(): bool;
 
     /**
      * @return string|null

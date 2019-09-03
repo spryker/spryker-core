@@ -362,29 +362,29 @@ class GeneratedTransferTest extends Unit
      *
      * @return void
      */
-    public function testDoubleProperty(GeneratedTransfer $generatedTransfer): void
+    public function testDecimalProperty(GeneratedTransfer $generatedTransfer): void
     {
-        $generatedTransfer->setTestDouble(1);
-        $this->assertSame('1', $generatedTransfer->getTestDouble()->toString());
-        $this->assertInstanceOf(Decimal::class, $generatedTransfer->getTestDouble());
+        $generatedTransfer->setTestDecimal(1);
+        $this->assertSame('1', $generatedTransfer->getTestDecimal()->toString());
+        $this->assertInstanceOf(Decimal::class, $generatedTransfer->getTestDecimal());
 
         $modified = $generatedTransfer->modifiedToArray();
-        $this->assertInstanceOf(Decimal::class, $modified['test_double']);
-        $this->assertSame(['test_double' => $generatedTransfer->getTestDouble()], $modified);
+        $this->assertInstanceOf(Decimal::class, $modified['test_decimal']);
+        $this->assertSame(['test_decimal' => $generatedTransfer->getTestDecimal()], $modified);
 
         $generatedTransfer->fromArray([
-            'test_double' => 1.01,
+            'test_decimal' => 1.01,
         ]);
-        $this->assertInstanceOf(Decimal::class, $generatedTransfer->modifiedToArray()['test_double']);
+        $this->assertInstanceOf(Decimal::class, $generatedTransfer->modifiedToArray()['test_decimal']);
 
-        $generatedTransfer->requireTestDouble();
+        $generatedTransfer->requireTestDecimal();
 
-        $generatedTransfer->setTestDouble(null);
+        $generatedTransfer->setTestDecimal(null);
         $modified = $generatedTransfer->modifiedToArray();
-        $this->assertSame(['test_double' => null], $modified);
+        $this->assertSame(['test_decimal' => null], $modified);
 
         $this->expectException(RequiredTransferPropertyException::class);
-        $generatedTransfer->requireTestDouble();
+        $generatedTransfer->requireTestDecimal();
     }
 
     /**

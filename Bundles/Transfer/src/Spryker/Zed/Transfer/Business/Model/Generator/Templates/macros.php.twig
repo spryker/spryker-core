@@ -86,7 +86,7 @@
         }
 
         {% endif -%}
-        {% if method.double -%}
+        {% if method.decimal -%}
             if (${{ method.property }} !== null && !${{ method.property }} instanceof Decimal) {
             ${{ method.property }} = new Decimal(${{ method.property }});
         }
