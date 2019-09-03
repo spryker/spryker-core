@@ -20,7 +20,6 @@ use Spryker\Shared\Kernel\Store;
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
     public const SEARCH_CONFIG_BUILDER = 'search config builder';
-    public const SEARCH_PLUGINS = 'SEARCH_PLUGINS';
     public const CLIENT_ADAPTER_PLUGINS = 'CLIENT_ADAPTER_PLUGINS';
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
     public const STORE = 'store';
@@ -119,7 +118,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
      */
     protected function getClientAdapterPlugins()
     {

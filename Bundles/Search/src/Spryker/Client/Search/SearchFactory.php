@@ -127,14 +127,6 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchPluginInterface[]
-     */
-    public function getSearchPlugins(): array
-    {
-        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
     protected function createIndexClientProvider()
