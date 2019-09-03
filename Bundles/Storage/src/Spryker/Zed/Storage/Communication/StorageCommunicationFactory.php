@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Storage\Communication;
 
+use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Storage\Communication\Table\StorageTable;
+use Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Storage\StorageDependencyProvider;
 
 /**
@@ -22,16 +24,26 @@ class StorageCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createStorageTable()
     {
-        $storageClient = $this->getStorageClient();
-
-        return new StorageTable($storageClient);
+        return new StorageTable(
+            $this->getStorageClient(),
+            $this->getUtilSanitizeService(),
+            $this->getConfig()->getGuiDefaultPageLength()
+        );
     }
 
     /**
      * @return \Spryker\Client\Storage\StorageClientInterface
      */
-    public function getStorageClient()
+    public function getStorageClient(): StorageClientInterface
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface
+     */
+    public function getUtilSanitizeService(): StorageToUtilSanitizeServiceInterface
+    {
+        return $this->getProvidedDependency(StorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 }

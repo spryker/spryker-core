@@ -90,7 +90,6 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     public function persistProductConcretePriceCollection(
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
-
         return $this->handleDatabaseTransaction(function () use ($productConcreteTransfer) {
             return $this->executePersistProductConcretePriceCollectionTransaction($productConcreteTransfer);
         });
@@ -154,7 +153,6 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     protected function executePriceDimensionConcreteSaverPlugins(
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-
         $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
 
         if ($priceDimensionType === $this->config->getPriceDimensionDefault()) {
@@ -187,7 +185,6 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         PriceProductTransfer $priceProductTransfer,
         int $idProductConcrete
     ): PriceProductTransfer {
-
         $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->priceProductQueryContainer
