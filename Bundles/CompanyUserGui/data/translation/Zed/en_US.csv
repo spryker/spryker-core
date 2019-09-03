@@ -9,4 +9,4 @@ E-Mail,E-Mail
 "List of Company Users","List of Company Users"
 "Overview of Company Users","Overview of Company Users"
 "User ID","User ID"
-"Customer for company with id `%s` does not exist","Customer for company with id `%s` doesn't exist"
+"Customer with id `%s` does not exist","Customer with id `%s` does not exist"
