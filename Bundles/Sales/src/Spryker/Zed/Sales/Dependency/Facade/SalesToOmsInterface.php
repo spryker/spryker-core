@@ -57,7 +57,7 @@ interface SalesToOmsInterface
      *
      * @return array
      */
-    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array;
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
      * @return array

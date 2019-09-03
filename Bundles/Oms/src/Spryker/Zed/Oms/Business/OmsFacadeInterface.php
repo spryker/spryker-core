@@ -464,7 +464,7 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Reads all order manual events from persistence.
-     *  - Returns a list of manual events grouped by shipment.
+     *  - Returns a list of grouped manual events.
      *
      * @api
      *
@@ -472,7 +472,7 @@ interface OmsFacadeInterface
      *
      * @return string[]
      */
-    public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array;
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
      * Specification:
