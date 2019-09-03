@@ -7,38 +7,39 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
+use ArrayObject;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 
 class ManualEventReader implements ManualEventReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
-     */
-    protected $omsRepository;
-
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface
      */
     protected $orderItemManualEventReader;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[] $eventGrouperPlugins
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
      */
     protected $eventGrouperPlugins;
 
     /**
-     * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
+     * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
+     */
+    protected $salesFacade;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface $orderItemManualEventReader
      * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[] $eventGrouperPlugins
+     * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $salesFacade
      */
     public function __construct(
-        OmsRepositoryInterface $omsRepository,
         OrderItemManualEventReaderInterface $orderItemManualEventReader,
-        array $eventGrouperPlugins
+        array $eventGrouperPlugins,
+        OmsToSalesInterface $salesFacade
     ) {
-        $this->omsRepository = $omsRepository;
         $this->orderItemManualEventReader = $orderItemManualEventReader;
         $this->eventGrouperPlugins = $eventGrouperPlugins;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -48,8 +49,12 @@ class ManualEventReader implements ManualEventReaderInterface
      */
     public function getDistinctManualEventsByIdSalesOrderGroupedByShipment(int $idSalesOrder): array
     {
-        $itemTransfers = $this->omsRepository->getSalesOrderItemsByIdSalesOrder($idSalesOrder);
+        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
+        if ($orderTransfer === null) {
+            return [];
+        }
 
+        $itemTransfers = $orderTransfer->getItems();
         $events = $this->orderItemManualEventReader->getManualEventsByIdSalesOrder($itemTransfers);
 
         return $this->getManualEventsGroupingUsingPlugins($events, $itemTransfers);
@@ -57,11 +62,11 @@ class ManualEventReader implements ManualEventReaderInterface
 
     /**
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return string[]
      */
-    protected function getManualEventsGroupingUsingPlugins(array $events, array $orderItemTransfers): array
+    protected function getManualEventsGroupingUsingPlugins(array $events, ArrayObject $orderItemTransfers): array
     {
         foreach ($this->eventGrouperPlugins as $eventGrouperPlugin) {
             $events = $eventGrouperPlugin->group($events, $orderItemTransfers);

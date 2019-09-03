@@ -26,6 +26,6 @@ class ShipmentConfig extends AbstractSharedConfig
      */
     public function isMultiShipmentSelectionEnabled(): bool
     {
-        return false;
+        return true;
     }
 }

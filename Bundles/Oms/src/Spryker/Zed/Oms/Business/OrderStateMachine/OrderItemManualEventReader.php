@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
 class OrderItemManualEventReader implements OrderItemManualEventReaderInterface
@@ -19,21 +20,19 @@ class OrderItemManualEventReader implements OrderItemManualEventReaderInterface
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      */
-    public function __construct(
-        BuilderInterface $builder
-    ) {
+    public function __construct(BuilderInterface $builder)
+    {
         $this->builder = $builder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return string[][]
      */
-    public function getManualEventsByIdSalesOrder(array $orderItemTransfers): array
+    public function getManualEventsByIdSalesOrder(ArrayObject $orderItemTransfers): array
     {
         $events = [];
-
         foreach ($orderItemTransfers as $orderItemTransfer) {
             $events[$orderItemTransfer->getIdSalesOrderItem()] = $this->getManualEventsByOrderItem($orderItemTransfer);
         }
@@ -48,6 +47,7 @@ class OrderItemManualEventReader implements OrderItemManualEventReaderInterface
      */
     protected function getManualEventsByOrderItem(ItemTransfer $orderItemTransfer): array
     {
+        $orderItemTransfer->requireState();
         $stateName = $orderItemTransfer->getState()->getName();
         $processName = $orderItemTransfer->getProcess();
 

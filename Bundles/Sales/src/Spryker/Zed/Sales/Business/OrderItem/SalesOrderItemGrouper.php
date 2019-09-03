@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
+    protected const UNIQUE_ORDER_ITEM_KEY_PATTERN = '%s-%d';
+
     /**
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -20,7 +22,12 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     {
         $calculatedOrderItems = [];
         foreach ($itemTransfers as $itemTransfer) {
-            $key = $itemTransfer->requireGroupKey()->getGroupKey();
+            $key = sprintf(
+                static::UNIQUE_ORDER_ITEM_KEY_PATTERN,
+                $itemTransfer->requireGroupKey()->getGroupKey(),
+                $itemTransfer->requireShipment()->getShipment()->requireIdSalesShipment()->getIdSalesShipment()
+            );
+
             if (!isset($calculatedOrderItems[$key])) {
                 $calculatedOrderItems[$key] = clone $itemTransfer;
                 continue;

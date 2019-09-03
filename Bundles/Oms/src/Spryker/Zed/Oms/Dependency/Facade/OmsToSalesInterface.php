@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
+
 interface OmsToSalesInterface
 {
     /**
@@ -15,4 +17,11 @@ interface OmsToSalesInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer;
 }

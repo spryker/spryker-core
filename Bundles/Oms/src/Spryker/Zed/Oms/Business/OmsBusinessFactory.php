@@ -121,9 +121,9 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createManualOrderReader(): ManualEventReaderInterface
     {
         return new ManualEventReader(
-            $this->getRepository(),
             $this->createOrderItemManualEventReader(),
-            $this->getOmsManualEventGrouperPlugins()
+            $this->getOmsManualEventGrouperPlugins(),
+            $this->getSalesFacade()
         );
     }
 

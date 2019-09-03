@@ -50,7 +50,6 @@ class ItemsGrouper implements ItemsGrouperInterface
                 );
             }
 
-            $itemTransfer->setShipment($shipmentGroupTransfers[$shipmentHashKey]->getShipment());
             $shipmentGroupTransfers[$shipmentHashKey]->addItem($itemTransfer);
         }
 

@@ -16,11 +16,4 @@ interface OmsRepositoryInterface
      * @return array
      */
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
-
-    /**
-     * @param int $idOrder
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function getSalesOrderItemsByIdSalesOrder(int $idOrder): array;
 }

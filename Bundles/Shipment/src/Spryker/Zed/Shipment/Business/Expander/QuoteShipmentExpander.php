@@ -79,6 +79,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         $shipmentGroupCollection = $this->setAvailableShipmentMethodsToShipmentGroups($quoteTransfer, $shipmentGroupCollection);
         $shipmentGroupCollection = $this->setShipmentGroupsSelectedMethodTransfer($shipmentGroupCollection);
         $shipmentGroupCollection = $this->sanitizeShipmentGroupCollection($shipmentGroupCollection);
+        $shipmentGroupCollection = $this->sanitizeShipmentGroupsItemsShipment($shipmentGroupCollection);
 
         $quoteTransfer = $this->setShipmentExpenseTransfers($quoteTransfer, $shipmentGroupCollection);
         $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer, $shipmentGroupCollection);
@@ -281,5 +282,32 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         }
 
         return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    protected function sanitizeShipmentGroupsItemsShipment(iterable $shipmentGroupCollection): iterable
+    {
+        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
+            $this->sanitizeShipmentGroupItemsShipment($shipmentGroupTransfer);
+        }
+
+        return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    protected function sanitizeShipmentGroupItemsShipment(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Dependency\Plugin\Oms;
 
+use ArrayObject;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface;
 
@@ -22,11 +23,11 @@ class ShipmentManualEventGrouperPlugin extends AbstractPlugin implements OmsManu
      * @api
      *
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function group(array $events, array $orderItemTransfers): array
+    public function group(array $events, ArrayObject $orderItemTransfers): array
     {
         return $this->getFacade()->groupEventsByShipment($events, $orderItemTransfers);
     }

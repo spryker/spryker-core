@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\Shipment\Business\Event;
 
+use ArrayObject;
+
 class ShipmentEventGrouper implements ShipmentEventGrouperInterface
 {
     /**
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function groupEventsByShipment(array $events, array $orderItemTransfers): array
+    public function groupEventsByShipment(array $events, ArrayObject $orderItemTransfers): array
     {
         $events = $this->groupEventsByIdSalesShipment($events, $orderItemTransfers);
 
@@ -24,11 +26,11 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
 
     /**
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    protected function groupEventsByIdSalesShipment(array $events, array $orderItemTransfers): array
+    protected function groupEventsByIdSalesShipment(array $events, ArrayObject $orderItemTransfers): array
     {
         $groupedEvents = [];
 

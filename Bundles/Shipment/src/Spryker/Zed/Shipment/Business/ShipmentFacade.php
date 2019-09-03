@@ -454,11 +454,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function groupEventsByShipment(array $events, array $orderItemTransfers): array
+    public function groupEventsByShipment(array $events, ArrayObject $orderItemTransfers): array
     {
         return $this->getFactory()
             ->createShipmentEventGrouper()
