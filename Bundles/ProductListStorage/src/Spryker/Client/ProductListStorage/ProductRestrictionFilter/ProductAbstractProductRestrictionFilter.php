@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\ProductListStorage\ProductRestrictionFilter;
 
+use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
+use Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferTypeException;
 use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface;
 
 class ProductAbstractProductRestrictionFilter extends AbstractProductRestrictionFilter
@@ -42,10 +44,15 @@ class ProductAbstractProductRestrictionFilter extends AbstractProductRestriction
     /**
      * @param mixed $productListStorageTransfer
      *
+     * @throws \Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferTypeException
+     *
      * @return int
      */
     protected function getIdProduct($productListStorageTransfer): int
     {
+        if (!$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer) {
+            throw new NotSupportedProductListTransferTypeException();
+        }
         /** @var \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer $productAbstractProductListStorageTransfer */
         $productListStorageTransfer->requireIdProductAbstract();
 

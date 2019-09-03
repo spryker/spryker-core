@@ -8,8 +8,10 @@
 namespace Spryker\Client\ProductListStorage\ProductRestrictionFilter;
 
 use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
+use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferTypeException;
 
 abstract class AbstractProductRestrictionFilter implements ProductRestrictionFilterInterface
 {
@@ -99,21 +101,39 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
+     * @param mixed $productListStorageTransfer
      * @param array $customerBlacklistIds
      * @param array $customerWhitelistIds
      *
      * @return bool
      */
     protected function isProductRestricted(
-        AbstractTransfer $productListStorageTransfer,
+        $productListStorageTransfer,
         array $customerBlacklistIds,
         array $customerWhitelistIds
     ): bool {
+        $this->assertProductListTransferRequiredType($productListStorageTransfer);
+
         $isProductInBlacklist = count(array_intersect($productListStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
         $isProductInWhitelist = count(array_intersect($productListStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
 
         return $isProductInBlacklist || (count($customerWhitelistIds) && !$isProductInWhitelist);
+    }
+
+    /**
+     * @param mixed $productListStorageTransfer
+     *
+     * @throws \Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferTypeException
+     *
+     * @return void
+     */
+    protected function assertProductListTransferRequiredType($productListStorageTransfer): void
+    {
+        if (!$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
+            && !$productListStorageTransfer instanceof ProductConcreteProductListStorageTransfer
+        ) {
+            throw new NotSupportedProductListTransferTypeException();
+        }
     }
 
     /**
