@@ -21,7 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductLabelReader implements ProductLabelReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @var \Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface
@@ -122,6 +124,53 @@ class ProductLabelReader implements ProductLabelReaderInterface
         );
 
         return $this->prepareRestResourceCollection($productLabels);
+    }
+
+    /**
+     * @param string[] $concreteSkuList
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     */
+    public function findLabelByConcreteProductSkuList(array $concreteSkuList, string $localeName): array
+    {
+        $concreteProductDataList = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $concreteSkuList,
+            $localeName
+        );
+        $abstractProductIdsByProductConcreteSku = $this->mapConcreteProductDataListToAbstractProductIds($concreteProductDataList);
+        $productLabelsList = $this->productLabelStorageClient->getLabelsByProductAbstractIds(
+            array_unique($abstractProductIdsByProductConcreteSku),
+            $localeName
+        );
+        $restResourceCollections = array_map(function ($productLabels) {
+            return $this->prepareRestResourceCollection($productLabels);
+        }, $productLabelsList);
+        $restResourceCollectionsByProductConcreteSku = [];
+
+        foreach ($abstractProductIdsByProductConcreteSku as $productConcreteSku => $idProductAbstract) {
+            $restResourceCollectionsByProductConcreteSku[$productConcreteSku] = $restResourceCollections[$idProductAbstract];
+        }
+
+        return $restResourceCollectionsByProductConcreteSku;
+    }
+
+    /**
+     * @param array $concreteProductDataList
+     *
+     * @return int[]
+     */
+    protected function mapConcreteProductDataListToAbstractProductIds(array $concreteProductDataList): array
+    {
+        $abstractProductIds = [];
+
+        foreach ($concreteProductDataList as $concreteProductData) {
+            $abstractProductIds[$concreteProductData[static::PRODUCT_CONCRETE_MAPPING_TYPE]] =
+                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT];
+        }
+
+        return $abstractProductIds;
     }
 
     /**

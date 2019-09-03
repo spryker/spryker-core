@@ -33,6 +33,7 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addStore($container);
 
         return $container;

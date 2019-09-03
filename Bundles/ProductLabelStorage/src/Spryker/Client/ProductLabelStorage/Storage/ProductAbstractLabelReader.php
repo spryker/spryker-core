@@ -19,6 +19,8 @@ use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProduc
 
 class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 {
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     /**
      * @var \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface
      */
@@ -138,13 +140,13 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
         }
 
         $storageData = array_map(function ($storageData) {
-            return $this->utilEncodingService->decodeJson($storageData);
+            return $this->utilEncodingService->decodeJson($storageData, true);
         }, $this->storageClient->getMulti($storageKeys));
         $productLabelIds = [];
-        $abstractProductIdsByStorageKeys = array_flip($storageKeys);
 
-        foreach ($storageData as $storageKey => $storageDataItem) {
-            $productLabelIds[$abstractProductIdsByStorageKeys[$storageKey]] = $this->mapStorageDataToProductLabelIds($storageDataItem);
+        foreach ($storageData as $storageDataItem) {
+            $productLabelIds[$storageDataItem[static::KEY_ID_PRODUCT_ABSTRACT]] =
+                $this->mapStorageDataToProductLabelIds($storageDataItem);
         }
 
         return array_filter($productLabelIds);

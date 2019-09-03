@@ -127,7 +127,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }, $productConcreteIds);
 
         return array_map(function ($storageData) {
-            return $this->utilEncodingService->decodeJson($storageData);
+            return $this->utilEncodingService->decodeJson($storageData, true);
         }, $this->storageClient->getMulti($storageKeys));
     }
 
@@ -243,7 +243,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return $this->getStorageKey($mappingType . ':' . $identifier, $localeName);
         }, $identifiers);
         $mappingData = array_map(function ($storageData) {
-            return $this->utilEncodingService->decodeJson($storageData);
+            return $this->utilEncodingService->decodeJson($storageData, true);
         }, $this->storageClient->getMulti($mappingKeys));
 
         if (empty($mappingData)) {

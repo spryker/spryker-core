@@ -39,6 +39,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addStore($container);
         $container = $this->addProductViewExpanderPlugins($container);

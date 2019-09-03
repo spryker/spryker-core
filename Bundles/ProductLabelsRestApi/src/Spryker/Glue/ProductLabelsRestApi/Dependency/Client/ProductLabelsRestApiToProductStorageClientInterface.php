@@ -17,4 +17,17 @@ interface ProductLabelsRestApiToProductStorageClientInterface
      * @return array|null
      */
     public function findProductAbstractStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getProductConcreteStorageDataByMappingAndIdentifiers(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
 }
