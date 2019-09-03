@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Delegator;
 
 use Exception;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
@@ -38,11 +39,11 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        if (!method_exists($searchQuery, 'getIndexName')) {
-            throw new Exception(sprintf('Your query class "%s" must implement a "getIndexName()" method.', get_class($searchQuery)));
+        if (!method_exists($searchQuery, 'getSearchContext')) {
+            throw new Exception(sprintf('Your query class "%s" must implement a "getSearchContext()" method.', get_class($searchQuery)));
         }
 
-        return $this->getSearchAdapterByIndexName($searchQuery->getIndexName())->search($searchQuery, $resultFormatters, $requestParameters);
+        return $this->getSearchAdapterByIndexName($searchQuery->getSearchContext())->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
     /**
@@ -122,24 +123,23 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @throws \Spryker\Client\Search\Exception\SearchDelegatorException
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface
      */
-    protected function getSearchAdapterByIndexName(string $indexName): SearchAdapterPluginInterface
+    protected function getSearchAdapterByIndexName(SearchContextTransfer $searchContextTransfer): SearchAdapterPluginInterface
     {
         foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
-            if ($searchAdapterPlugin->isApplicable($indexName)) {
+            if ($searchAdapterPlugin->isApplicable($searchContextTransfer)) {
                 return $searchAdapterPlugin;
             }
         }
 
         throw new SearchDelegatorException(sprintf(
-            'None of the applied "%s"s is applicable. Please add one which is able to use the index "%s"',
-            SearchAdapterPluginInterface::class,
-            $indexName
+            'None of the applied "%s"s is applicable for the specified context.',
+            SearchAdapterPluginInterface::class
         ));
     }
 }

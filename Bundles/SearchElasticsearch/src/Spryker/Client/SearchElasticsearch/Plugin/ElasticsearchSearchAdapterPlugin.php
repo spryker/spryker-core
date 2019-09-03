@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch\Plugin;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
@@ -82,11 +83,15 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * @param string $indexName
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function isApplicable(string $indexName): bool
+    public function isApplicable(SearchContextTransfer $searchContextTransfer): bool
     {
         return true;
     }

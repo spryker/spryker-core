@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
+
 interface SearchAdapterPluginInterface
 {
     /**
@@ -90,13 +92,13 @@ interface SearchAdapterPluginInterface
 
     /**
      * Specification:
-     * - Returns if this Client can handle the current indexName.
+     * - Returns true if this Client can perform search within the specified context.
      *
      * @api
      *
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function isApplicable(string $indexName): bool;
+    public function isApplicable(SearchContextTransfer $searchContextTransfer): bool;
 }
