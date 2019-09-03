@@ -26,7 +26,7 @@ class Environment extends Module
         $rootDirectory = $this->getRootDirectory();
         $store = $this->getStore();
 
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', getenv('SPRYKER_TESTING_ENABLED') ? 'docker' : 'devtest');
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
