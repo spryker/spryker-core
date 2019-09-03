@@ -37,6 +37,24 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
     }
 
     /**
+     * @param string[] $urls
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     */
+    public function findUrlEntitiesByUrls(array $urls): array
+    {
+        if (count($urls) === 0) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getUrlQuery()
+            ->filterByUrl_In($urls)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param int[] $urlIds
      *
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
