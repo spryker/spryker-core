@@ -163,7 +163,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @param int $idPriceProductScheduleList
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array
     {

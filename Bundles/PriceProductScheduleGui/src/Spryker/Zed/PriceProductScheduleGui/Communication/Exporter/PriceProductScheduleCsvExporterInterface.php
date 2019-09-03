@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Exporter;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-interface PriceProductScheduleExporterInterface
+interface PriceProductScheduleCsvExporterInterface
 {
     /**
      * @param int $idPriceProductScheduleList

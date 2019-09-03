@@ -73,7 +73,7 @@ interface PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
     /**
      * @param int $idPriceProductScheduleList
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(
         int $idPriceProductScheduleList

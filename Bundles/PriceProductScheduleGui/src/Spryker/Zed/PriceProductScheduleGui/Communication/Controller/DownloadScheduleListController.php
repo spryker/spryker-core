@@ -28,7 +28,7 @@ class DownloadScheduleListController extends AbstractController
         $idPriceProductSchedulelist = $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST);
 
         $response = $this->getFactory()
-            ->createPriceProductScheduleExporter()
+            ->createPriceProductScheduleCsvExporter()
             ->exportToCsvFile($idPriceProductSchedulelist);
 
         return $response->send();

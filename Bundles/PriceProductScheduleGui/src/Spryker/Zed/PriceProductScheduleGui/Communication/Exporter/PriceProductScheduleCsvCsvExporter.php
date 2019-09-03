@@ -13,7 +13,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class PriceProductScheduleExporter implements PriceProductScheduleExporterInterface
+class PriceProductScheduleCsvCsvExporter implements PriceProductScheduleCsvExporterInterface
 {
     protected const HEADER_ABSTRACT_SKU = 'abstract_sku';
     protected const HEADER_CONCRETE_SKU = 'concrete_sku';
@@ -125,10 +125,11 @@ class PriceProductScheduleExporter implements PriceProductScheduleExporterInterf
         $priceProductScheduleTransfer->requireIdPriceProductSchedule()
             ->requirePriceProduct()
             ->getPriceProduct()
-            ->requireMoneyValue()
-            ->getMoneyValue()
-            ->requireStore()
-            ->requireCurrency();
+                ->requireMoneyValue()
+                ->getMoneyValue()
+                    ->requireStore()
+                    ->requireCurrency();
+
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
