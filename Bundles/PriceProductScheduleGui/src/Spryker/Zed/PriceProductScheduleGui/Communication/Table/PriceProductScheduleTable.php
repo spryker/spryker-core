@@ -32,8 +32,6 @@ class PriceProductScheduleTable extends AbstractTable
 
     protected const TABLE_IDENTIFIER = 'price-product-schedule-table:%s';
 
-    protected const DEFAULT_SORT_COLUMN = 'id_price_product_schedule';
-
     /**
      * @var int
      */
@@ -93,7 +91,6 @@ class PriceProductScheduleTable extends AbstractTable
         ]);
 
         $config->setSortable([
-            static::DEFAULT_SORT_COLUMN,
             static::COL_SKU_PRODUCT_ABSTRACT,
             static::COL_SKU_PRODUCT,
             static::COL_PRICE_TYPE,
@@ -104,8 +101,6 @@ class PriceProductScheduleTable extends AbstractTable
             static::COL_ACTIVE_FROM,
             static::COL_ACTIVE_TO,
         ]);
-
-        $config->setDefaultSortField(static::DEFAULT_SORT_COLUMN, TableConfiguration::SORT_DESC);
 
         return $config;
     }
