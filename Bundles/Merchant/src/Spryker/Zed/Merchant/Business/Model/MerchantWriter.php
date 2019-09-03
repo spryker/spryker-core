@@ -176,20 +176,6 @@ class MerchantWriter implements MerchantWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return void
-     */
-    public function delete(MerchantTransfer $merchantTransfer): void
-    {
-        $merchantTransfer->requireIdMerchant();
-
-        $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            $this->executeDeleteTransaction($merchantTransfer);
-        });
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
@@ -201,19 +187,6 @@ class MerchantWriter implements MerchantWriterInterface
         $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
 
         return $this->merchantEntityManager->saveMerchant($merchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    protected function executeDeleteTransaction(MerchantTransfer $merchantTransfer): void
-    {
-        $idMerchant = $merchantTransfer->getIdMerchant();
-
-        $this->merchantEntityManager->deleteMerchantAddressesByIdMerchant($idMerchant);
-        $this->merchantEntityManager->deleteMerchantByIdMerchant($idMerchant);
     }
 
     /**

@@ -53,56 +53,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchant(MerchantTransfer $merchantTransfer): void
-    {
-        $this->getFactory()
-            ->createMerchantWriter()
-            ->delete($merchantTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Use MerchantFacade::findOne() instead.
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantReader()
-            ->getMerchantById($merchantTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @deprecated Use MerchantFacade::find() instead.
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function getMerchants(): MerchantCollectionTransfer
-    {
-        return $this->getRepository()->getMerchants();
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @api
@@ -132,34 +82,6 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
         return $this->getFactory()
             ->createMerchantReader()
             ->findOne($merchantCriteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantReader()
-            ->findMerchantByIdMerchant($idMerchant);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function getMerchantCollection(): MerchantCollectionTransfer
-    {
-        return $this->getRepository()->getMerchantCollection();
     }
 
     /**

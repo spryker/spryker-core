@@ -13,20 +13,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 interface MerchantEntityManagerInterface
 {
     /**
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    public function deleteMerchantByIdMerchant(int $idMerchant): void;
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    public function deleteMerchantAddressesByIdMerchant(int $idMerchant): void;
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer

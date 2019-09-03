@@ -10,7 +10,6 @@ namespace Spryker\Zed\Merchant\Business\Model;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class MerchantReader implements MerchantReaderInterface
@@ -26,30 +25,6 @@ class MerchantReader implements MerchantReaderInterface
     public function __construct(MerchantRepositoryInterface $merchantRepository)
     {
         $this->merchantRepository = $merchantRepository;
-    }
-
-    /**
-     * @deprecated Use MerchantReader::findOne() instead.
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        $merchantTransfer->requireIdMerchant();
-
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
-
-        $merchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
-        if (!$merchantTransfer) {
-            throw new MerchantNotFoundException();
-        }
-
-        return $merchantTransfer;
     }
 
     /**
@@ -70,15 +45,5 @@ class MerchantReader implements MerchantReaderInterface
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
         return $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer
-    {
-        return $this->merchantRepository->findMerchantByIdMerchant($idMerchant);
     }
 }

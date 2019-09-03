@@ -71,48 +71,6 @@ interface MerchantFacadeInterface
     public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * Specification:
-     * - Finds a merchant record by ID in DB.
-     * - Removes the merchant record.
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchant(MerchantTransfer $merchantTransfer): void;
-
-    /**
-     * Specification:
-     * - Returns a MerchantTransfer by merchant id in provided transfer.
-     * - Throws an exception in case a record is not found.
-     *
-     * @api
-     *
-     * @deprecated Use MerchantFacade::findOne() instead.
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves collection of all merchants.
-     *
-     * @api
-     *
-     * @deprecated Use MerchantFacade::find() instead.
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function getMerchants(): MerchantCollectionTransfer;
-
-    /**
      * Specification:
      * - Returns collection of merchants by provided criteria.
      * - Pagination and ordering options can be passed to criteria.
@@ -137,29 +95,6 @@ interface MerchantFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
-
-    /**
-     * Specification:
-     * - Finds a merchant by merchant id.
-     * - Returns MerchantTransfer if found, NULL otherwise.
-     *
-     * @api
-     *
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves collection of all merchants.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
-     */
-    public function getMerchantCollection(): MerchantCollectionTransfer;
 
     /**
      * Specification:

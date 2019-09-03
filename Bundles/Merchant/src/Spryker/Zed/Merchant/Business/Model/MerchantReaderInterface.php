@@ -14,15 +14,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 interface MerchantReaderInterface
 {
     /**
-     * @deprecated Use MerchantReader::findOne() instead.
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
@@ -35,11 +26,4 @@ interface MerchantReaderInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function findMerchantByIdMerchant(int $idMerchant): ?MerchantTransfer;
 }

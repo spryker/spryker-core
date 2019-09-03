@@ -17,19 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantEntityManager extends AbstractEntityManager implements MerchantEntityManagerInterface
 {
     /**
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    public function deleteMerchantByIdMerchant(int $idMerchant): void
-    {
-        $this->getFactory()
-            ->createMerchantQuery()
-            ->filterByIdMerchant($idMerchant)
-            ->delete();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
@@ -77,18 +64,5 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
             ->mapMerchantAddressEntityToMerchantAddressTransfer($spyMerchantAddress, $merchantAddressTransfer);
 
         return $merchantAddressTransfer;
-    }
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    public function deleteMerchantAddressesByIdMerchant(int $idMerchant): void
-    {
-        $this->getFactory()
-            ->createMerchantAddressQuery()
-            ->filterByFkMerchant($idMerchant)
-            ->delete();
     }
 }

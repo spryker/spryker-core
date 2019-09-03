@@ -25,11 +25,4 @@ interface MerchantWriterInterface
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
     public function update(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    public function delete(MerchantTransfer $merchantTransfer): void;
 }
