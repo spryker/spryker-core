@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvCsvExporter;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
@@ -211,7 +211,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceProductScheduleCsvExporter(): PriceProductScheduleCsvExporterInterface
     {
-        return new PriceProductScheduleCsvCsvExporter(
+        return new PriceProductScheduleCsvExporter(
             $this->getPriceProductScheduleFacade(),
             $this->getUtilCsvService()
         );

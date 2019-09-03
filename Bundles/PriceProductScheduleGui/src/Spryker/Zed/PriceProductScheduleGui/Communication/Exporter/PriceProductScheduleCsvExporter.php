@@ -13,7 +13,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class PriceProductScheduleCsvCsvExporter implements PriceProductScheduleCsvExporterInterface
+class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporterInterface
 {
     protected const HEADER_ABSTRACT_SKU = 'abstract_sku';
     protected const HEADER_CONCRETE_SKU = 'concrete_sku';
