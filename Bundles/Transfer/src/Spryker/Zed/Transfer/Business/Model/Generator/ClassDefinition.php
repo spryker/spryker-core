@@ -572,7 +572,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getReturnType(array $property): string
     {
         if ($this->isDecimal($property)) {
-            return '\Spryker\DecimalObject\Decimal|null';
+            return sprintf('\%s|null', Decimal::class);
         }
 
         if ($this->isTypedArray($property)) {
