@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\OmsExtension\Dependency\Plugin;
 
-use ArrayObject;
-
 interface OmsManualEventGrouperPluginInterface
 {
     /**
@@ -18,9 +16,9 @@ interface OmsManualEventGrouperPluginInterface
      * @api
      *
      * @param array $events
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function group(array $events, ArrayObject $orderItemTransfers): array;
+    public function group(array $events, iterable $orderItemTransfers): array;
 }
