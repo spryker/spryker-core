@@ -44,6 +44,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Check customer password min and max length according to configuration if it is provided.
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
@@ -60,6 +61,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Checks customer password min and max length according to configuration if it is provided.
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
@@ -156,6 +158,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Updates password if NewPassword property is set in provided transfer object:
+     *      - Check customer password min and max length according to configuration.
      *      - Validates provided current plain text password using persistent storage.
      *      - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
@@ -174,6 +177,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Check customer password min and max length according to configuration if it is provided.
      * - Validates provided current plain text password using persistent storage.
      * - Encrypts provided plain text password and stores it in persistent storage.
      *

@@ -83,7 +83,13 @@
         <property name="hasCustomer" type="bool" />
         <property name="customerTransfer" type="Customer" />
         <property name="isSuccess" type="bool" />
+        <property name="message" type="Message"/>
         <property name="errors" type="CustomerError[]" singular="error" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="Order">

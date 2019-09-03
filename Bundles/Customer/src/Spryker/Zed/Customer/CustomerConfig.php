@@ -18,6 +18,15 @@ class CustomerConfig extends AbstractBundleConfig
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
     public const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
 
+    protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
+
+    /**
+     * @uses \Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder::MAX_PASSWORD_LENGTH
+     *
+     * @var int
+     */
+    protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
+
     /**
      * @return string
      */
@@ -78,6 +87,22 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomerPasswordMinLength(): int
+    {
+        return static::MIN_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomerPasswordMaxLength(): int
+    {
+        return static::MAX_LENGTH_CUSTOMER_PASSWORD;
     }
 
     /**
