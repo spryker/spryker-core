@@ -59,7 +59,6 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-
         $query = $this->getFactory()
             ->createCompanyUnitAddressQuery()
             ->innerJoinWithCountry()
