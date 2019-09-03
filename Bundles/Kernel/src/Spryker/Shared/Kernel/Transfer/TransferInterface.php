@@ -14,14 +14,14 @@ interface TransferInterface
      *
      * @return array
      */
-    public function toArray($isRecursive = true);
+    public function toArray(bool $isRecursive = true): array;
 
     /**
      * @param bool $isRecursive
      *
      * @return array
      */
-    public function modifiedToArray($isRecursive = true);
+    public function modifiedToArray(bool $isRecursive = true): array;
 
     /**
      * @param array $values
@@ -29,12 +29,12 @@ interface TransferInterface
      *
      * @return $this
      */
-    public function fromArray(array $values, $fuzzyMatch = false);
+    public function fromArray(array $values, bool $fuzzyMatch = false);
 
     /**
      * @param string $propertyName
      *
      * @return bool
      */
-    public function isPropertyModified($propertyName);
+    public function isPropertyModified(string $propertyName): bool;
 }
