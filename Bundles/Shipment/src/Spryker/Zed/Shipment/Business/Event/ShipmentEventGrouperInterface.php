@@ -7,15 +7,13 @@
 
 namespace Spryker\Zed\Shipment\Business\Event;
 
-use ArrayObject;
-
 interface ShipmentEventGrouperInterface
 {
     /**
      * @param array $events
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function groupEventsByShipment(array $events, ArrayObject $orderItemTransfers): array;
+    public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array;
 }

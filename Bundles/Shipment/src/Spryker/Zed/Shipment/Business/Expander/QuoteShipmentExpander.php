@@ -19,6 +19,7 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface;
 
 class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
 {
@@ -48,24 +49,32 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     protected $shipmentGroupsSanitizers;
 
     /**
+     * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface
+     */
+    protected $calculationFacade;
+
+    /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
      * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[] $shipmentGroupsSanitizers
+     * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface $calculationFacade
      */
     public function __construct(
         ShipmentServiceInterface $shipmentService,
         MethodReaderInterface $methodReader,
         ExpenseSanitizerInterface $expenseSanitizer,
         ShipmentMapperInterface $shipmentMapper,
-        array $shipmentGroupsSanitizers
+        array $shipmentGroupsSanitizers,
+        ShipmentToCalculationFacadeInterface $calculationFacade
     ) {
         $this->shipmentService = $shipmentService;
         $this->methodReader = $methodReader;
         $this->expenseSanitizer = $expenseSanitizer;
         $this->shipmentMapper = $shipmentMapper;
         $this->shipmentGroupsSanitizers = $shipmentGroupsSanitizers;
+        $this->calculationFacade = $calculationFacade;
     }
 
     /**
@@ -79,12 +88,11 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         $shipmentGroupCollection = $this->setAvailableShipmentMethodsToShipmentGroups($quoteTransfer, $shipmentGroupCollection);
         $shipmentGroupCollection = $this->setShipmentGroupsSelectedMethodTransfer($shipmentGroupCollection);
         $shipmentGroupCollection = $this->sanitizeShipmentGroupCollection($shipmentGroupCollection);
-        $shipmentGroupCollection = $this->sanitizeShipmentGroupsItemsShipment($shipmentGroupCollection);
 
         $quoteTransfer = $this->setShipmentExpenseTransfers($quoteTransfer, $shipmentGroupCollection);
         $quoteTransfer = $this->updateQuoteLevelShipment($quoteTransfer, $shipmentGroupCollection);
 
-        return $quoteTransfer;
+        return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }
 
     /**
@@ -282,32 +290,5 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         }
 
         return $shipmentGroupCollection;
-    }
-
-    /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
-     *
-     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
-     */
-    protected function sanitizeShipmentGroupsItemsShipment(iterable $shipmentGroupCollection): iterable
-    {
-        foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
-            $this->sanitizeShipmentGroupItemsShipment($shipmentGroupTransfer);
-        }
-
-        return $shipmentGroupCollection;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     *
-     * @return void
-     */
-    protected function sanitizeShipmentGroupItemsShipment(ShipmentGroupTransfer $shipmentGroupTransfer): void
-    {
-        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
-        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setShipment($shipmentTransfer);
-        }
     }
 }

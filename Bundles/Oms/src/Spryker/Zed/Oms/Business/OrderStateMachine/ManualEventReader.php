@@ -18,28 +18,28 @@ class ManualEventReader implements ManualEventReaderInterface
     protected $orderItemManualEventReader;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
-     */
-    protected $eventGrouperPlugins;
-
-    /**
      * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
      */
     protected $salesFacade;
 
     /**
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+     */
+    protected $eventGrouperPlugins;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderItemManualEventReaderInterface $orderItemManualEventReader
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[] $eventGrouperPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $salesFacade
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[] $eventGrouperPlugins
      */
     public function __construct(
         OrderItemManualEventReaderInterface $orderItemManualEventReader,
-        array $eventGrouperPlugins,
-        OmsToSalesInterface $salesFacade
+        OmsToSalesInterface $salesFacade,
+        array $eventGrouperPlugins
     ) {
         $this->orderItemManualEventReader = $orderItemManualEventReader;
-        $this->eventGrouperPlugins = $eventGrouperPlugins;
         $this->salesFacade = $salesFacade;
+        $this->eventGrouperPlugins = $eventGrouperPlugins;
     }
 
     /**
