@@ -124,9 +124,9 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     abstract protected function getProductListStorageTransfers(array $productIds): array;
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer
+     * @param mixed $productListStorageTransfer
      *
      * @return int
      */
-    abstract protected function getIdProduct(AbstractTransfer $productListStorageTransfer): int;
+    abstract protected function getIdProduct($productListStorageTransfer): int;
 }
