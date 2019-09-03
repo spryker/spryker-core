@@ -20,6 +20,9 @@ function PriceProductScheduleCreate(options) {
     };
 
     this.initActiveFromDatepicker = function() {
+        this.$activeFrom.click(function (event) {
+            event.preventDefault();
+        });
         this.$activeFrom.datepicker({
             altFormat: "yy-mm-dd",
             dateFormat: 'yy-mm-dd',
@@ -29,6 +32,9 @@ function PriceProductScheduleCreate(options) {
     };
 
     this.initActiveToDatepicker = function() {
+        this.$activeTo.click(function (event) {
+            event.preventDefault();
+        });
         this.$activeTo.datepicker({
             dateFormat: 'yy-mm-dd',
             changeMonth: true,
