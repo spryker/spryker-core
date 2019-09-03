@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DataImport\Communication\Console;
 
+use Exception;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -99,7 +100,11 @@ class DataImportConsole extends Console
      */
     protected function isAddedAsNamedDataImportCommand()
     {
-        return ($this->getName() !== null);
+        try {
+            return $this->getName() !== null;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     /**

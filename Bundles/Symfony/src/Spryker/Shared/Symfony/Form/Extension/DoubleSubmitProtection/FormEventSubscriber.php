@@ -45,7 +45,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     protected $translator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $translationDomain;
 

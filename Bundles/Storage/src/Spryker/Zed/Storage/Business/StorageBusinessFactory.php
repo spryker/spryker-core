@@ -41,7 +41,7 @@ class StorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createStorageExporter()
     {
-        return new StorageExporter($this->getConfig()->getRedisPort());
+        return new StorageExporter($this->getConfig());
     }
 
     /**
@@ -49,6 +49,6 @@ class StorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createStorageImporter()
     {
-        return new StorageImporter($this->getConfig()->getRdbDumpPath());
+        return new StorageImporter($this->getConfig());
     }
 }

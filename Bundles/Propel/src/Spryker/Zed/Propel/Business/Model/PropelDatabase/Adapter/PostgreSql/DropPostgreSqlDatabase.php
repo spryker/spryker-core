@@ -13,11 +13,25 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\DropDatabaseInterface;
+use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
 
 class DropPostgreSqlDatabase implements DropDatabaseInterface
 {
     protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
+
+    /**
+     * @var \Spryker\Zed\Propel\PropelConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Propel\PropelConfig $config
+     */
+    public function __construct(PropelConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return void
@@ -95,6 +109,7 @@ class DropPostgreSqlDatabase implements DropDatabaseInterface
     protected function runProcess($command)
     {
         $process = $this->getProcess($command);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run(null, $this->getEnvironmentVariables());
 
         if (!$process->isSuccessful()) {

@@ -38,4 +38,28 @@ interface CmsSlotFacadeInterface
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Activates cms slot by id.
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return void
+     */
+    public function activateByIdCmsSlot(int $idCmsSlot): void;
+
+    /**
+     * Specification:
+     * - Deactivates cms slot by id.
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return void
+     */
+    public function deactivateByIdCmsSlot(int $idCmsSlot): void;
 }
