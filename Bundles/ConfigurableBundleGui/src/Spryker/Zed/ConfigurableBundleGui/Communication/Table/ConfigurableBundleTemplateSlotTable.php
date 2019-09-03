@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Table;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlotTableMap;
-use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
-use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
@@ -147,7 +144,6 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     {
         $configurableBundleTemplateSlotRow = $configurableBundleTemplateSlotEntity->toArray();
         $configurableBundleTemplateSlotRow[static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateSlotEntity);
-
 
         $configurableBundleTemplateSlotRow[static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION] = 'hardcoded';
 

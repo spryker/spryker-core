@@ -8,10 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundleGui\Communication;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateEditTabs;
 use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
@@ -22,9 +24,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
+ * @method \SprykerEco\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiRepositoryInterface getRepository()
+ * @method \SprykerEco\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiEntityManagerInterface getEntityManager()
+ * @method \SprykerEco\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
+ * @method \SprykerEco\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
  */
 class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -46,6 +49,37 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider
+     */
+    public function createConfigurableBundleTemplateFormDataProvider(): ConfigurableBundleTemplateFormDataProvider
+    {
+        return new ConfigurableBundleTemplateFormDataProvider(
+            $this->getConfigurableBundleFacade(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateTable
+     */
+    public function createConfigurableBundleTemplateTable(): ConfigurableBundleTemplateTable
+    {
+        return new ConfigurableBundleTemplateTable(
+            $this->getConfigurableBundleTemplatePropelQuery(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable
+     */
+    public function createConfigurableBundleTemplateSlotTable(): ConfigurableBundleTemplateSlotTable
+    {
+        return new ConfigurableBundleTemplateSlotTable($this->getConfigurableBundleTemplateSlotPropelQuery());
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs
      */
     public function createConfigurableBundleTemplateCreateTabs(): ConfigurableBundleTemplateCreateTabs
@@ -62,29 +96,17 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
      */
-    public function createConfigurableBundleTemplateSlotTable(): ConfigurableBundleTemplateSlotTable
+    public function getConfigurableBundleTemplatePropelQuery(): SpyConfigurableBundleTemplateQuery
     {
-        return new ConfigurableBundleTemplateSlotTable($this->getConfigurableBundleTemplatePropelQuery());
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider
-     */
-    public function createConfigurableBundleTemplateFormDataProvider(): ConfigurableBundleTemplateFormDataProvider
-    {
-        return new ConfigurableBundleTemplateFormDataProvider(
-            $this->getConfigurableBundleFacade(),
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
-        );
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE);
     }
 
     /**
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
      */
-    public function getConfigurableBundleTemplatePropelQuery(): SpyConfigurableBundleTemplateSlotQuery
+    public function getConfigurableBundleTemplateSlotPropelQuery(): SpyConfigurableBundleTemplateSlotQuery
     {
         return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT);
     }

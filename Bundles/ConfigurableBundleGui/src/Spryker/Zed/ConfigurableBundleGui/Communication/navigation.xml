@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <product>
+        <pages>
+            <configurable-bundle-templates>
+                <label>Configurable Bundle Templates</label>
+                <title>Configurable Bundle Templates</title>
+                <bundle>configurable-bundle-gui</bundle>
+                <controller>template</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </configurable-bundle-templates>
+        </pages>
+    </product>
+</config>

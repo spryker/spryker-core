@@ -27,6 +27,19 @@ class TemplateController extends AbstractController
     protected const ERORR_MESSAGE_PARAM_ID = '%id%';
 
     /**
+     * @return array
+     */
+    public function indexAction(): array
+    {
+        $table = $this->getFactory()
+            ->createConfigurableBundleTemplateTable();
+
+        return $this->viewResponse([
+            'configurableBundleTemplateTable' => $table->render(),
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -158,6 +171,17 @@ class TemplateController extends AbstractController
     public function slotTableAction(): JsonResponse
     {
         $table = $this->getFactory()->createConfigurableBundleTemplateSlotTable();
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(): JsonResponse
+    {
+        $table = $this->getFactory()
+            ->createConfigurableBundleTemplateTable();
 
         return $this->jsonResponse($table->fetchData());
     }
