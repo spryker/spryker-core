@@ -44,37 +44,37 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     protected $shipmentMapper;
 
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[]
-     */
-    protected $shipmentGroupsSanitizers;
-
-    /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface
      */
     protected $calculationFacade;
+
+    /**
+     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[]
+     */
+    protected $shipmentGroupsSanitizers;
 
     /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface $methodReader
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
      * @param \Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface $shipmentMapper
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[] $shipmentGroupsSanitizers
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface $calculationFacade
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[] $shipmentGroupsSanitizers
      */
     public function __construct(
         ShipmentServiceInterface $shipmentService,
         MethodReaderInterface $methodReader,
         ExpenseSanitizerInterface $expenseSanitizer,
         ShipmentMapperInterface $shipmentMapper,
-        array $shipmentGroupsSanitizers,
-        ShipmentToCalculationFacadeInterface $calculationFacade
+        ShipmentToCalculationFacadeInterface $calculationFacade,
+        array $shipmentGroupsSanitizers
     ) {
         $this->shipmentService = $shipmentService;
         $this->methodReader = $methodReader;
         $this->expenseSanitizer = $expenseSanitizer;
         $this->shipmentMapper = $shipmentMapper;
-        $this->shipmentGroupsSanitizers = $shipmentGroupsSanitizers;
         $this->calculationFacade = $calculationFacade;
+        $this->shipmentGroupsSanitizers = $shipmentGroupsSanitizers;
     }
 
     /**

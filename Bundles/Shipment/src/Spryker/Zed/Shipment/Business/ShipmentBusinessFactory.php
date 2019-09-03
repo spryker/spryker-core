@@ -600,8 +600,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createMethodReader(),
             $this->createExpenseSanitizer(),
             $this->createShipmentMapper(),
-            $this->getShipmentGroupsSanitizerPlugins(),
-            $this->getCalculationFacade()
+            $this->getCalculationFacade(),
+            $this->getShipmentGroupsSanitizerPlugins()
         );
     }
 
