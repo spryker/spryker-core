@@ -35,4 +35,25 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
     ): ConfigurableBundleTemplateResponseTransfer {
         return $this->configurableBundleFacade->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function updateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateResponseTransfer {
+        return $this->configurableBundleFacade->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
+    {
+        return $this->configurableBundleFacade->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
 }

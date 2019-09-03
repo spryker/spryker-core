@@ -39,6 +39,19 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
 
     /**
      * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateTranslation($keyName, $locale, $value, $isActive = true)
+    {
+        return $this->glossaryFacade->updateTranslation($keyName, $locale, $value, $isActive);
+    }
+
+    /**
+     * @param string $keyName
      *
      * @return int
      */

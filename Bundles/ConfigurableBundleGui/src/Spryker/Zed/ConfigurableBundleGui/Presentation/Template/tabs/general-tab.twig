@@ -1,0 +1,15 @@
+<div class="well">
+    {{ 'Some template tips' | trans }}
+</div>
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+        {% embed '@ConfigurableBundleGui/Template/_partials/translations.twig' with {
+            currentLocale: currentLocale,
+            translations: form.translations
+        } %}
+        {% endembed %}
+
+<input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
+
+{{ form_end(form) }}

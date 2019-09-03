@@ -1,7 +1,7 @@
 {% for translation in translations %}
 
     {% set localeName = translation.vars.value.locale.localeName %}
-    {% set collapsed = (currentLocale != localeName) %}
+    {% set collapsed = (currentLocale.localeName != localeName) %}
 
     {% embed '@Gui/Partials/localized-ibox.twig' with {
         localeName: localeName,

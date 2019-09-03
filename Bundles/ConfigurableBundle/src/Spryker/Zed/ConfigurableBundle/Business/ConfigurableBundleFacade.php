@@ -34,4 +34,37 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
             ->createConfigurableBundleTemplateWriter()
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function updateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateResponseTransfer {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateWriter()
+            ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateReader()
+            ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
 }

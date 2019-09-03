@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Persistence;
+namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleRepositoryInterface
+interface ConfigurableBundleTemplateReaderInterface
 {
     /**
      * @param int $idConfigurableBundleTemplate

@@ -9,8 +9,8 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriter;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
@@ -31,17 +31,20 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateWriter(
             $this->getEntityManager(),
-            $this->createConfigurableBundleTemplateTranslationWriter(),
+            $this->getGlossaryFacade(),
             $this->createConfigurableBundleTemplateNameGenerator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
      */
-    public function createConfigurableBundleTemplateTranslationWriter(): ConfigurableBundleTemplateTranslationWriterInterface
+    public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
     {
-        return new ConfigurableBundleTemplateTranslationWriter($this->getGlossaryFacade());
+        return new ConfigurableBundleTemplateReader(
+            $this->getRepository(),
+            $this->createConfigurableBundleTemplateNameGenerator()
+        );
     }
 
     /**

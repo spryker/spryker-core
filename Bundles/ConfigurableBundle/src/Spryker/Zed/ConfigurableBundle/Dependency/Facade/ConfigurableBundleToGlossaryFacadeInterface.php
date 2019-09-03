@@ -23,6 +23,16 @@ interface ConfigurableBundleToGlossaryFacadeInterface
 
     /**
      * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateTranslation($keyName, $locale, $value, $isActive = true);
+
+    /**
+     * @param string $keyName
      *
      * @return int
      */

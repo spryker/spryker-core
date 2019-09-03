@@ -26,7 +26,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateTransferToeEntity($configurableBundleTemplateTransfer, new SpyConfigurableBundleTemplate());
+            ->mapConfigurableBundleTemplateTransferToEntity($configurableBundleTemplateTransfer, new SpyConfigurableBundleTemplate());
 
         $configurableBundleTemplateEntity->save();
         $configurableBundleTemplateTransfer->setIdConfigurableBundleTemplate(
@@ -34,5 +34,30 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
         );
 
         return $configurableBundleTemplateTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return bool
+     */
+    public function updateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): bool {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleQuery()
+            ->findOneByIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        if (!$configurableBundleTemplateEntity) {
+            return false;
+        }
+
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateTransferToEntity($configurableBundleTemplateTransfer, $configurableBundleTemplateEntity);
+
+        $configurableBundleTemplateEntity->save();
+
+        return true;
     }
 }

@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateEditTabs;
 use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -23,17 +27,36 @@ use Symfony\Component\Form\FormInterface;
 class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param array $options
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getConfigurableBundleTemplateForm(): FormInterface
-    {
-        $dataProvider = $this->createConfigurableBundleTemplateFormDataProvider();
-
+    public function getConfigurableBundleTemplateForm(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        array $options = []
+    ): FormInterface {
         return $this->getFormFactory()->create(
             ConfigurableBundleTemplateForm::class,
-            $dataProvider->getData(),
-            $dataProvider->getOptions()
+            $configurableBundleTemplateTransfer,
+            $options
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs
+     */
+    public function createConfigurableBundleTemplateCreateTabs(): ConfigurableBundleTemplateCreateTabs
+    {
+        return new ConfigurableBundleTemplateCreateTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateEditTabs
+     */
+    public function createConfigurableBundleTemplateEditTabs(): ConfigurableBundleTemplateEditTabs
+    {
+        return new ConfigurableBundleTemplateEditTabs();
     }
 
     /**
@@ -41,7 +64,11 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createConfigurableBundleTemplateFormDataProvider(): ConfigurableBundleTemplateFormDataProvider
     {
-        return new ConfigurableBundleTemplateFormDataProvider($this->getLocaleFacade());
+        return new ConfigurableBundleTemplateFormDataProvider(
+            $this->getConfigurableBundleFacade(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
     }
 
     /**
@@ -58,5 +85,13 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function getLocaleFacade(): ConfigurableBundleGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): ConfigurableBundleGuiToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_GLOSSARY);
     }
 }

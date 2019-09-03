@@ -3,7 +3,7 @@
 {% set widget_title = 'Template details' %}
 
 {% block section_title %}
-    {{ 'Create Configurable Bundle Template' | trans }}
+    {{ 'Edit Configurable Bundle Template' | trans }}
 {% endblock %}
 
 {% block head_title %}
@@ -12,6 +12,7 @@
 
 {% block action %}
     {{ backActionButton('/configurable-bunle-gui', 'Back to Template list' | trans) }}
+    {{ createActionButton('/configurable-bunle-gui/slots/create', 'Add Slot' | trans) }}
 {% endblock %}
 
 {% block content %}

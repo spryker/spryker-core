@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +15,26 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ConfigurableBundleRepository extends AbstractRepository implements ConfigurableBundleRepositoryInterface
 {
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleQuery()
+            ->leftJoinWithSpyConfigurableBundleTemplateSlot()
+            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->find()
+            ->getFirst();
+
+        if (!$configurableBundleTemplateEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+    }
 }

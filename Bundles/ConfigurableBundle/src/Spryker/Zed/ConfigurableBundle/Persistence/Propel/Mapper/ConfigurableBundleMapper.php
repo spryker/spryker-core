@@ -18,7 +18,7 @@ class ConfigurableBundleMapper
      *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate
      */
-    public function mapConfigurableBundleTemplateTransferToeEntity(
+    public function mapConfigurableBundleTemplateTransferToEntity(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
         SpyConfigurableBundleTemplate $configurableBundleTemplateEntity
     ): SpyConfigurableBundleTemplate {
@@ -27,5 +27,21 @@ class ConfigurableBundleMapper
         );
 
         return $configurableBundleTemplateEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate $configurableBundleTemplateEntiy
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function mapConfigurableBundleTemplateEntityToTransfer(
+        SpyConfigurableBundleTemplate $configurableBundleTemplateEntiy,
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateTransfer {
+        return $configurableBundleTemplateTransfer->fromArray(
+            $configurableBundleTemplateEntiy->toArray(),
+            true
+        );
     }
 }
