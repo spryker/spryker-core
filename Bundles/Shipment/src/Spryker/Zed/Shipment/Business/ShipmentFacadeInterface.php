@@ -367,9 +367,9 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Expand quote items with shipments.
-     * - Expand quote expenses with shipment expenses.
-     * - Execute CalculationFacadeInterface::recalculateQuote() method.
+     * - Expands quote items with shipments.
+     * - Expands quote expenses with shipment expenses.
+     * - Executes CalculationFacadeInterface::recalculateQuote() method.
      *
      * @api
      *
