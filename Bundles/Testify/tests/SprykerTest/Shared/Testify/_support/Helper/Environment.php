@@ -38,15 +38,18 @@ class Environment extends Module
     /**
      * @return string
      */
-    protected function getRootDirectory()
+    protected function getRootDirectory(): string
     {
         if (!$this->rootDirectory) {
             $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
             $srcDirectoryPosition = array_search('current', $pathParts);
 
             $rootDirPathParts = array_slice($pathParts, 1, $srcDirectoryPosition);
-
-            $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+            if ($rootDirPathParts) {
+                $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+            } else {
+                $this->rootDirectory = getcwd();
+            }
         }
 
         return $this->rootDirectory;
@@ -57,7 +60,7 @@ class Environment extends Module
      *
      * @return string
      */
-    protected function getStore()
+    protected function getStore(): string
     {
         if (getenv('APPLICATION_STORE')) {
             return getenv('APPLICATION_STORE');
@@ -83,23 +86,23 @@ class Environment extends Module
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    private function getDefaultStore()
+    private function getDefaultStore(): ?string
     {
-        $defaultStoreFile = $this->getRootDirectory() . '/Config/Shared/default_store.php';
+        $defaultStoreFile = $this->getRootDirectory() . '/config/Shared/default_store.php';
 
         if (file_exists($defaultStoreFile)) {
             return include $defaultStoreFile;
         }
 
-        return false;
+        return null;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    private function getFirstDefinedStore()
+    private function getFirstDefinedStore(): ?string
     {
         $storesFile = $this->getRootDirectory() . '/config/Shared/stores.php';
 
@@ -109,6 +112,6 @@ class Environment extends Module
             return current(array_keys($stores));
         }
 
-        return false;
+        return null;
     }
 }
