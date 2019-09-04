@@ -269,9 +269,9 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param mixed $value
      * @param bool $ignoreMissingProperty
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    protected function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false): TransferInterface
+    protected function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false): ?TransferInterface
     {
         $type = $this->transferMetadata[$property]['type'];
 
