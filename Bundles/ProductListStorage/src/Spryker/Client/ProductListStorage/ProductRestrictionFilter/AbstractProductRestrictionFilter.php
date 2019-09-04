@@ -15,6 +15,8 @@ use Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferT
 
 abstract class AbstractProductRestrictionFilter implements ProductRestrictionFilterInterface
 {
+    protected const ERROR_MESSAGE_NOT_SUPPORTED_PRODUCT_LIST_TRANSFER_TYPE = 'Type `%s` is not supported for product filtering. Please use `%s` instead.';
+
     /**
      * @var \Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface
      */
@@ -132,7 +134,10 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
         if (!$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
             && !$productListStorageTransfer instanceof ProductConcreteProductListStorageTransfer
         ) {
-            throw new NotSupportedProductListTransferTypeException();
+            $expectedType = implode(' or ', [ProductAbstractProductListStorageTransfer::class, ProductConcreteProductListStorageTransfer::class]);
+            $actualType = is_object($productListStorageTransfer) ? get_class($productListStorageTransfer) : gettype($productListStorageTransfer);
+
+            throw new NotSupportedProductListTransferTypeException(sprintf(static::ERROR_MESSAGE_NOT_SUPPORTED_PRODUCT_LIST_TRANSFER_TYPE, $actualType, $expectedType));
         }
     }
 

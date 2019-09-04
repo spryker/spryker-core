@@ -14,6 +14,8 @@ use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductL
 
 class ProductConcreteProductRestrictionFilter extends AbstractProductRestrictionFilter
 {
+    protected const ERROR_MESSAGE_WRONG_PRODUCT_LIST_TRANSFER_TYPE = 'Type `%s` is not supported for getting concrete product id. Please use `%s` instead.';
+
     /**
      * @var \Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface
      */
@@ -50,7 +52,9 @@ class ProductConcreteProductRestrictionFilter extends AbstractProductRestriction
     protected function getIdProduct($productListStorageTransfer): int
     {
         if (!$productListStorageTransfer instanceof ProductConcreteProductListStorageTransfer) {
-            throw new NotSupportedProductListTransferTypeException();
+            $actualType = is_object($productListStorageTransfer) ? get_class($productListStorageTransfer) : gettype($productListStorageTransfer);
+
+            throw new NotSupportedProductListTransferTypeException(sprintf(static::ERROR_MESSAGE_WRONG_PRODUCT_LIST_TRANSFER_TYPE, $actualType, ProductConcreteProductListStorageTransfer::class));
         }
         /** @var \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer $productListStorageTransfer */
         $productListStorageTransfer->requireIdProductConcrete();
