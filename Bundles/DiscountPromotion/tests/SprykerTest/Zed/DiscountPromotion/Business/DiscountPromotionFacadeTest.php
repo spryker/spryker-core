@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Auto-generated group annotations
@@ -126,7 +127,7 @@ class DiscountPromotionFacadeTest extends Unit
 
         $discountPromotionFacade->createPromotionDiscount($discountPromotionTransfer);
 
-        $this->getAvailabilityFacade()->saveProductAvailability('001_25904006', 0);
+        $this->getAvailabilityFacade()->saveProductAvailability('001_25904006', new Decimal(0));
 
         $collectedDiscounts = $discountPromotionFacade->collect($discountTransfer, $quoteTransfer);
 

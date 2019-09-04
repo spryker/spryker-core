@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
@@ -53,7 +54,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertTrue($attributesTransfer->getAvailability());
         $this->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $this->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $this->assertEquals($attributesTransfer->getQuantity(), new Decimal(static::PRODUCTS_AVAILABILITY_QUANTITY));
     }
 
     /**
@@ -70,7 +71,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertFalse($attributesTransfer->getAvailability());
         $this->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $this->assertEquals($attributesTransfer->getQuantity(), 0);
+        $this->assertTrue($attributesTransfer->getQuantity()->isZero());
     }
 
     /**
@@ -86,7 +87,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
 
         $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
         $this->assertTrue($attributesTransfer->getAvailability());
-        $this->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $this->assertEquals($attributesTransfer->getQuantity(), new Decimal(static::PRODUCTS_AVAILABILITY_QUANTITY));
     }
 
     /**

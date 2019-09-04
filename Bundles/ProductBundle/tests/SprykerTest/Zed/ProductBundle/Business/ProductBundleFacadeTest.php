@@ -360,7 +360,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(static::BUNDLE_SKU_3, static::ID_STORE)->findOne();
 
-        $this->assertSame(0, $bundledProductAvailability->getQuantity());
+        $this->assertSame('0', $bundledProductAvailability->getQuantity());
     }
 
     /**

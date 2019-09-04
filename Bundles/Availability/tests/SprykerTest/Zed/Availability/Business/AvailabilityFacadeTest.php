@@ -96,7 +96,7 @@ class AvailabilityFacadeTest extends Unit
 
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertSame($quantity, $calculatedQuantity);
+        $this->assertSame((string)$quantity, $calculatedQuantity->toString());
     }
 
     /**
@@ -151,7 +151,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame(50, $availabilityEntity->getQuantity());
+        $this->assertSame('50', $availabilityEntity->getQuantity());
     }
 
     /**
@@ -169,7 +169,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame(50, $availabilityEntity->getQuantity());
+        $this->assertSame('50', $availabilityEntity->getQuantity());
     }
 
     /**
@@ -183,14 +183,14 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = $this->createProductAvailability(5);
 
-        $this->assertSame(5, $availabilityEntity->getQuantity());
+        $this->assertSame('5', $availabilityEntity->getQuantity());
 
         $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
 
         $availabilityEntity = SpyAvailabilityQuery::create()
             ->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame(0, $availabilityEntity->getQuantity());
+        $this->assertSame('0', $availabilityEntity->getQuantity());
     }
 
     /**
@@ -212,7 +212,7 @@ class AvailabilityFacadeTest extends Unit
 
         $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
-        $this->assertSame(2, $productConcreteAvailabilityTransfer->getAvailability());
+        $this->assertSame('2', $productConcreteAvailabilityTransfer->getAvailability()->toString());
     }
 
     /**

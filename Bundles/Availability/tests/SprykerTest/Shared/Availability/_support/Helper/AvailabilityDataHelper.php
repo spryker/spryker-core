@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Availability\Helper;
 use Codeception\Module;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
@@ -21,17 +22,22 @@ class AvailabilityDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    protected const QUANTITY = 10;
+    protected const DEFAULT_QUANTITY = 10;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Spryker\DecimalObject\Decimal|null $quantity
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
-    public function haveAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer): SpyAvailabilityAbstract
+    public function haveAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer, ?Decimal $quantity = null): SpyAvailabilityAbstract
     {
         $availabilityFacade = $this->getAvailabilityFacade();
-        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability($productConcreteTransfer->getSku(), static::QUANTITY);
+        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability(
+            $productConcreteTransfer->getSku(),
+            $quantity ?? new Decimal(static::DEFAULT_QUANTITY)
+        );
+
         $idStore = $this->getStoreFacade()->getCurrentStore()->getIdStore();
 
         return $this

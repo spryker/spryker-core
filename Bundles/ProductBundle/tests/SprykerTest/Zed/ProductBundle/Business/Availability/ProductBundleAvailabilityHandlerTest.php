@@ -14,6 +14,7 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -42,8 +43,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
-        $bundledItemAvailability = 10;
-        $expectedBundleAvailability = $bundledItemAvailability / $bundleQuantity; //5
+        $bundledItemAvailability = new Decimal(10);
+        $expectedBundleAvailability = $bundledItemAvailability->multiply($bundleQuantity); //5
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
@@ -77,8 +78,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
-        $bundledItemAvailability = 10;
-        $expectedBundleAvailability = $bundledItemAvailability / $bundleQuantity; //5
+        $bundledItemAvailability = new Decimal(10);
+        $expectedBundleAvailability = $bundledItemAvailability->multiply($bundleQuantity); //5
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);

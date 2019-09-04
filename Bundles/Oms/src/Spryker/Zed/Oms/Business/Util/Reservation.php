@@ -103,7 +103,7 @@ class Reservation implements ReservationInterface
 
         $reservationQuantity = new Decimal(0);
         if ($reservationEntity !== null) {
-            $reservationQuantity = $reservationEntity->getReservationQuantity();
+            $reservationQuantity = new Decimal($reservationEntity->getReservationQuantity());
         }
 
         $reservationQuantity = $reservationQuantity->add($this->getReservationsFromOtherStores($sku, $storeTransfer));
