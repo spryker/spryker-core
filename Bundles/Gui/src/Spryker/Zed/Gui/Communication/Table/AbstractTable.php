@@ -17,6 +17,7 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -724,7 +725,10 @@ abstract class AbstractTable
      */
     protected function applyConditions(ModelCriteria $query, TableConfiguration $config, array $conditions): ModelCriteria
     {
-        $gluedCondition = implode(' OR ', $conditions);
+        $gluedCondition = implode(
+            sprintf(' %s ', Criteria::LOGICAL_OR),
+            $conditions
+        );
 
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
             return $query->having($gluedCondition);
