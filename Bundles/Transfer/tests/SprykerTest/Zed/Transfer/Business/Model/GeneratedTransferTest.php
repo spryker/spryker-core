@@ -263,7 +263,7 @@ class GeneratedTransferTest extends Unit
             'test_array' => null,
         ]);
 
-        $this->assertSame(['test_array' => []], $generatedTransfer->modifiedToArray());
+        $this->assertSame(['test_array' => null], $generatedTransfer->modifiedToArray());
     }
 
     /**

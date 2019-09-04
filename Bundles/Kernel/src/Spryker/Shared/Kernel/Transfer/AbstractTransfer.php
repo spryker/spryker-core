@@ -161,6 +161,13 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
             }
 
+            if ($this->transferMetadata[$property]['is_transfer'] || $this->transferMetadata[$property]['type'] === 'array') {
+                $this->$property = $value;
+                $this->modifiedProperties[$property] = true;
+
+                continue;
+            }
+
             $propertySetterMethod = $this->getSetterMethod($property);
             $this->$propertySetterMethod($value);
         }
