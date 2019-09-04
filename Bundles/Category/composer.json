@@ -32,7 +32,8 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Category\\Helper\\": "tests/SprykerTest/Zed/Category/_support/Helper/"
+      "SprykerTest\\Zed\\Category\\Helper\\": "tests/SprykerTest/Zed/Category/_support/Helper/",
+      "SprykerTest\\Zed\\Category\\PageObject\\": "tests/SprykerTest/Zed/Category/_support/PageObject/"
     }
   },
   "autoload-dev": {

@@ -26,7 +26,6 @@ class CompanyUnitAddressMapper implements CompanyUnitAddressMapperInterface
         SpyCompanyUnitAddressEntityTransfer $unitAddressEntityTransfer,
         CompanyUnitAddressTransfer $unitAddressTransfer
     ): CompanyUnitAddressTransfer {
-
         $companyUnitAddressTransfer = (new CompanyUnitAddressTransfer())->fromArray(
             $unitAddressEntityTransfer->toArray(),
             true
