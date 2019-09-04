@@ -41,8 +41,8 @@ class ConfigurableBundleTemplateFormDataProvider
         ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade,
         ConfigurableBundleGuiToGlossaryFacadeInterface $glossaryFacade
     ) {
-        $this->localeFacade = $localeFacade;
         $this->configurableBundleFacade = $configurableBundleFacade;
+        $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
     }
 
@@ -105,14 +105,14 @@ class ConfigurableBundleTemplateFormDataProvider
         $availableLocaleTransfers = $this->getAvailableLocales();
 
         $translationsByLocales = $this->getTranslationsForLocales(
-            $configurableBundleTemplateTransfer->getTranslationKey(),
+            $configurableBundleTemplateTransfer->getName(),
             $availableLocaleTransfers
         );
 
         foreach ($availableLocaleTransfers as $localeTransfer) {
-            $configurableBundleTemplateTranslationTransfer = new ConfigurableBundleTemplateTranslationTransfer();
-            $configurableBundleTemplateTranslationTransfer->setLocale($localeTransfer);
-            $configurableBundleTemplateTranslationTransfer->setName($translationsByLocales[$localeTransfer->getIdLocale()] ?? null);
+            $configurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())
+                ->setName($translationsByLocales[$localeTransfer->getIdLocale()] ?? null)
+                ->setLocale($localeTransfer);
 
             $configurableBundleTemplateTransfer->addTranslation($configurableBundleTemplateTranslationTransfer);
         }

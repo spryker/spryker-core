@@ -9,8 +9,8 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
-use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -18,15 +18,18 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
 {
     use TransactionTrait;
 
+    protected const ERROR_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface
      */
     protected $configurableBundleEntityManager;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
      */
-    protected $glossaryFacade;
+    protected $configurableBundleTemplateTranslationWriter;
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface
@@ -35,16 +38,16 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
-     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface $configurableBundleTemplateNameGenerator
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
-        ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade,
+        ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter,
         ConfigurableBundleTemplateNameGeneratorInterface $configurableBundleTemplateNameGenerator
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
-        $this->glossaryFacade = $glossaryFacade;
+        $this->configurableBundleTemplateTranslationWriter = $configurableBundleTemplateTranslationWriter;
         $this->configurableBundleTemplateNameGenerator = $configurableBundleTemplateNameGenerator;
     }
 
@@ -82,17 +85,12 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeCreateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
-        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator
-            ->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
         $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
-        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator
-            ->generateConfigurableBundleTemplateTranslationKey($configurableBundleTemplateTransfer);
-        $this->createConfigurableBundleTemplateTranslations($configurableBundleTemplateTransfer);
+        $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
 
-        return (new ConfigurableBundleTemplateResponseTransfer())
-            ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
-            ->setIsSuccessful(true);
+        return $this->createConfigurableBundleTemplateResponseTransfer($configurableBundleTemplateTransfer);
     }
 
     /**
@@ -103,57 +101,41 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeUpdateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
+        $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+
         if (!$this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer)) {
-            return (new ConfigurableBundleTemplateResponseTransfer())
-                ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
-                ->setIsSuccessful(false);
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::ERROR_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
+                ->setParameters([
+                    static::ERROR_MESSAGE_PARAM_ID => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+                ]);
+
+            return $this->createConfigurableBundleTemplateResponseTransfer($configurableBundleTemplateTransfer, $messageTransfer);
         }
 
-        if (!$configurableBundleTemplateTransfer->getTranslationKey()) {
-            $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator
-                ->generateConfigurableBundleTemplateTranslationKey($configurableBundleTemplateTransfer);
-        }
+        $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
 
-        $this->updateConfigurableBundleTemplateTranslations($configurableBundleTemplateTransfer);
+        return $this->createConfigurableBundleTemplateResponseTransfer($configurableBundleTemplateTransfer);
+    }
 
-        return (new ConfigurableBundleTemplateResponseTransfer())
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \Generated\Shared\Transfer\MessageTransfer|null $messageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    protected function createConfigurableBundleTemplateResponseTransfer(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        ?MessageTransfer $messageTransfer = null
+    ): ConfigurableBundleTemplateResponseTransfer {
+        $configurableBundleTemplateResponseTransfer = (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
-            ->setIsSuccessful(true);
-    }
+            ->setIsSuccessful($messageTransfer === null);
 
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return void
-     */
-    protected function createConfigurableBundleTemplateTranslations(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): void {
-        $this->glossaryFacade->createKey($configurableBundleTemplateTransfer->getTranslationKey());
-
-        foreach ($configurableBundleTemplateTransfer->getTranslations() as $configurableBundleTemplateTranslationTransfer) {
-            $this->glossaryFacade->createTranslation(
-                $configurableBundleTemplateTransfer->getTranslationKey(),
-                $configurableBundleTemplateTranslationTransfer->getLocale(),
-                $configurableBundleTemplateTranslationTransfer->getName()
-            );
+        if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
+            return $configurableBundleTemplateResponseTransfer;
         }
-    }
 
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return void
-     */
-    protected function updateConfigurableBundleTemplateTranslations(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): void {
-        foreach ($configurableBundleTemplateTransfer->getTranslations() as $configurableBundleTemplateTranslationTransfer) {
-            $this->glossaryFacade->updateTranslation(
-                $configurableBundleTemplateTransfer->getTranslationKey(),
-                $configurableBundleTemplateTranslationTransfer->getLocale(),
-                $configurableBundleTemplateTranslationTransfer->getName()
-            );
-        }
+        return $configurableBundleTemplateResponseTransfer->addMessage($messageTransfer);
     }
 }
