@@ -220,7 +220,7 @@ class CatFaceTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setItem(ItemTransfer $item = null)
+    public function setItem(?ItemTransfer $item = null)
     {
         $this->item = $item;
         $this->modifiedProperties[self::ITEM] = true;
@@ -309,7 +309,7 @@ class CatFaceTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setTypedArray(array $typedArray = null)
+    public function setTypedArray(?array $typedArray = null)
     {
         if ($typedArray === null) {
             $typedArray = [];

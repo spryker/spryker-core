@@ -191,7 +191,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setArrayField(array $arrayField = null)
+    public function setArrayField(?array $arrayField = null)
     {
         if ($arrayField === null) {
             $arrayField = [];
@@ -255,7 +255,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setTransferField(DeprecatedFooBarTransfer $transferField = null)
+    public function setTransferField(?DeprecatedFooBarTransfer $transferField = null)
     {
         $this->transferField = $transferField;
         $this->modifiedProperties[self::TRANSFER_FIELD] = true;

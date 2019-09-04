@@ -357,7 +357,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getPropertyType(array $property): string
     {
         if ($this->isDecimal($property)) {
-            return sprintf('%s|null', Decimal::class);
+            return sprintf('\%s|null', Decimal::class);
         }
 
         if ($this->isTypedArray($property)) {
@@ -724,7 +724,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $method = $this->addTypeHint($property, $method);
-        $method = $this->addDefaultNull($method['typeHint'], $property, $method);
+        $method = $this->addDefaultNull($method, $property);
 
         if ($this->isDecimal($property)) {
             $method['decimal'] = true;
@@ -791,17 +791,21 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $typeHint
-     * @param array $property
      * @param array $method
+     * @param array $property
      *
      * @return array
      */
-    protected function addDefaultNull($typeHint, array $property, array $method): array
+    protected function addDefaultNull(array $method, array $property): array
     {
         $method['hasDefaultNull'] = false;
 
-        if ($this->isDecimal($property) || ($typeHint && (!$this->isCollection($property) || $typeHint === 'array'))) {
+        if ($this->isDecimal($property)) {
+            $method['hasDefaultNull'] = true;
+        }
+
+        if ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array')) {
+            $method['typeHint'] = sprintf('?%s', $method['typeHint']);
             $method['hasDefaultNull'] = true;
         }
 
