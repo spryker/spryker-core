@@ -37,10 +37,6 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
             }
         }
 
-        if ($minPriceProductTransfer && !$this->isMinimumPriceHasValueForPriceMode($minPriceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
-            return null;
-        }
-
         return $minPriceProductTransfer;
     }
 
