@@ -268,4 +268,16 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Expands order transfers with shipment prices as array of `MoneyValueTransfer` objects.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithShipmentPrices(OrderTransfer $orderTransfer): OrderTransfer;
 }

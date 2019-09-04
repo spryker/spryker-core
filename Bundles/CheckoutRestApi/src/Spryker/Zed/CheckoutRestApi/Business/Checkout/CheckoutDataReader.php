@@ -97,8 +97,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setCurrentStore($quoteTransfer->getStore());
 
         return (new RestCheckoutDataResponseTransfer())
-                ->setIsSuccess(true)
-                ->setCheckoutData($checkoutDataTransfer);
+            ->setIsSuccess(true)
+            ->setCheckoutData($checkoutDataTransfer);
     }
 
     /**

@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
 {
@@ -313,5 +314,19 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         $this->getFactory()
             ->createShipmentExpenseFilter()
             ->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithShipmentPrices(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()->createShipmentPricesOrderExpander()->expandOrderWithShipmentPrices($orderTransfer);
     }
 }

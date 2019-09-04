@@ -13,6 +13,8 @@ use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderByOrderReferenceResourceR
 use Spryker\Glue\OrdersRestApi\Processor\Expander\OrderByOrderReferenceResourceRelationshipExpanderInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapper;
 use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapper;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapperInterface;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReader;
 use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
 
@@ -35,7 +37,15 @@ class OrdersRestApiFactory extends AbstractFactory
      */
     public function createOrderResourceMapper(): OrderResourceMapperInterface
     {
-        return new OrderResourceMapper();
+        return new OrderResourceMapper($this->createOrderResourceShipmentMapper());
+    }
+
+    /**
+     * @return \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapperInterface
+     */
+    public function createOrderResourceShipmentMapper(): OrderResourceShipmentMapperInterface
+    {
+        return new OrderResourceShipmentMapper();
     }
 
     /**

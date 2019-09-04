@@ -14,6 +14,19 @@ use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 class OrderResourceMapper implements OrderResourceMapperInterface
 {
     /**
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapperInterface
+     */
+    protected $orderResourceShipmentMapper;
+
+    /**
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapperInterface $orderResourceShipmentMapper
+     */
+    public function __construct(OrderResourceShipmentMapperInterface $orderResourceShipmentMapper)
+    {
+        $this->orderResourceShipmentMapper = $orderResourceShipmentMapper;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\RestOrdersAttributesTransfer
@@ -47,6 +60,10 @@ class OrderResourceMapper implements OrderResourceMapperInterface
 
         $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($orderTransfer->getShippingAddress()->getCountry()->getName());
         $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($orderTransfer->getShippingAddress()->getCountry()->getIso2Code());
+
+        $restOrderDetailsAttributesTransfer->setShipments(
+            $this->orderResourceShipmentMapper->mapShipmentMethodTransfersToRestOrderShipmentTransfers($orderTransfer)
+        );
 
         return $restOrderDetailsAttributesTransfer;
     }

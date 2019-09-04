@@ -20,6 +20,7 @@
         <property name="shippingAddress" type="RestOrderAddress"/>
         <property name="priceMode" type="string"/>
         <property name="payments" type="RestOrderPayment[]" singular="payment"/>
+        <property name="shipments" type="RestOrderShipment[]" singular="shipment"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
@@ -111,6 +112,15 @@
         <property name="amount" type="int"/>
         <property name="paymentProvider" type="string"/>
         <property name="paymentMethod" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderShipment">
+        <property name="shipmentMethodName" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="RestOrderItemMetadata">

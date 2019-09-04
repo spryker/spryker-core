@@ -62,7 +62,7 @@ class OrderReader implements OrderReaderInterface
         if ($restRequest->getResource()->getId()) {
             return $this->getOrderDetailsResourceAttributes(
                 $restRequest->getResource()->getId(),
-                $restRequest->getUser()->getNaturalIdentifier()
+                $restRequest->getRestUser()->getNaturalIdentifier()
             );
         }
 

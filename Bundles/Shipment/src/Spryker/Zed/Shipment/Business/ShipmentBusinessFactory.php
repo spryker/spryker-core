@@ -19,10 +19,13 @@ use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilter;
 use Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentPricesOrderExpander\ShipmentPricesOrderExpander;
+use Spryker\Zed\Shipment\Business\ShipmentPricesOrderExpander\ShipmentPricesOrderExpanderInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  */
 class ShipmentBusinessFactory extends AbstractBusinessFactory
@@ -168,5 +171,13 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentPricesOrderExpander\ShipmentPricesOrderExpanderInterface
+     */
+    public function createShipmentPricesOrderExpander(): ShipmentPricesOrderExpanderInterface
+    {
+        return new ShipmentPricesOrderExpander($this->getRepository());
     }
 }
