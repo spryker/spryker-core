@@ -99,7 +99,6 @@ class JsonPath extends Module
     public function seeResponseJsonPathContains(array $subArray, $jsonPath = '$'): void
     {
         $foundSegments = (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath);
-        file_put_contents('vcv1.txt', print_r($foundSegments, 1));
 
         Assert::assertIsArray($foundSegments, 'Requested response part should be an array to assert `contains`');
 
