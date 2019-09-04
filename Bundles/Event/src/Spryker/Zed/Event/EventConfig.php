@@ -63,7 +63,7 @@ class EventConfig extends AbstractBundleConfig
      */
     public function getMaxRetryAmount()
     {
-        $this->getConfig()->get(EventConstants::MAX_RETRY_ON_FAIL, function () {
+        return $this->getConfig()->get(EventConstants::MAX_RETRY_ON_FAIL, function () {
             if (!$this->isEventRetryQueueExists()) {
                 return 0;
             }
