@@ -666,18 +666,12 @@ abstract class AbstractTable
         $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
 
-        $isFirst = true;
-
         if (mb_strlen($searchTerm[self::PARAMETER_VALUE]) > 0) {
             $query->setIdentifierQuoting(true);
 
-            foreach ($config->getSearchable() as $value) {
-                if (!$isFirst) {
-                    $query->_or();
-                } else {
-                    $isFirst = false;
-                }
+            $conditions = [];
 
+            foreach ($config->getSearchable() as $value) {
                 $filter = '';
                 $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
                 // @todo fix this in CD-412
@@ -693,14 +687,10 @@ abstract class AbstractTable
                     Propel::getConnection()->quote($conditionParameter)
                 );
 
-                if (!$this->config->getHasSearchableFieldsWithAggregateFunctions()) {
-                    $query->where($condition);
-
-                    continue;
-                }
-
-                $query->having($condition);
+                $conditions[] = $condition;
             }
+
+            $query = $this->applyConditions($query, $config, $conditions);
 
             $this->filtered = $query->count();
         } else {
@@ -723,6 +713,24 @@ abstract class AbstractTable
         }
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param string[] $conditions
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyConditions(ModelCriteria $query, TableConfiguration $config, array $conditions): ModelCriteria
+    {
+        $gluedCondition = implode(' OR ', $conditions);
+
+        if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
+            return $query->having($gluedCondition);
+        }
+
+        return $query->where($gluedCondition);
     }
 
     /**
