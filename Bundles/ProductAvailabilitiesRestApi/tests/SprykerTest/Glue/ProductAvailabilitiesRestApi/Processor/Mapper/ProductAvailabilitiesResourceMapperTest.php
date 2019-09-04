@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapper;
@@ -51,10 +50,10 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         /** @var \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer $attributesTransfer */
         $attributesTransfer = $mapper->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($transfer);
 
-        $this->tester->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
-        $this->tester->assertTrue($attributesTransfer->getAvailability());
-        $this->tester->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $this->tester->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
+        $this->assertTrue($attributesTransfer->getAvailability());
+        $this->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
+        $this->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
     }
 
     /**
@@ -68,10 +67,10 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         /** @var \Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer $attributesTransfer */
         $attributesTransfer = $mapper->mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer($transfer);
 
-        $this->tester->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
-        $this->tester->assertFalse($attributesTransfer->getAvailability());
-        $this->tester->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
-        $this->tester->assertEquals($attributesTransfer->getQuantity(), 0);
+        $this->assertInstanceOf(RestConcreteProductAvailabilityAttributesTransfer::class, $attributesTransfer);
+        $this->assertFalse($attributesTransfer->getAvailability());
+        $this->assertEquals($attributesTransfer->getIsNeverOutOfStock(), static::PRODUCTS_AVAILABILITY_IS_NEVER_OUT_OF_STOCK);
+        $this->assertEquals($attributesTransfer->getQuantity(), 0);
     }
 
     /**
@@ -85,9 +84,9 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         /** @var \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer $attributesTransfer */
         $attributesTransfer = $mapper->mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer($transfer);
 
-        $this->tester->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
-        $this->tester->assertTrue($attributesTransfer->getAvailability());
-        $this->tester->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
+        $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
+        $this->assertTrue($attributesTransfer->getAvailability());
+        $this->assertEquals($attributesTransfer->getQuantity(), static::PRODUCTS_AVAILABILITY_QUANTITY);
     }
 
     /**
@@ -101,9 +100,10 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
         /** @var \Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer $attributesTransfer */
         $attributesTransfer = $mapper->mapAvailabilityTransferToRestAbstractProductAvailabilityAttributesTransfer($transfer);
 
-        $this->tester->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
-        $this->tester->assertFalse($attributesTransfer->getAvailability());
-        $this->tester->assertEquals($attributesTransfer->getQuantity(), 0);
+        $this->assertInstanceOf(RestAbstractProductAvailabilityAttributesTransfer::class, $attributesTransfer);
+        $this->assertFalse($attributesTransfer->getAvailability());
+        $this->assertNotNull($attributesTransfer->getQuantity());
+        $this->assertTrue($attributesTransfer->getQuantity()->isZero());
     }
 
     /**
@@ -165,7 +165,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getAbstractProductsAvailabilityResourceMapper(): AbstractProductAvailabilitiesResourceMapperInterface
     {
-        return new AbstractProductAvailabilitiesResourceMapper($this->getResourceBuilder());
+        return new AbstractProductAvailabilitiesResourceMapper();
     }
 
     /**
@@ -173,13 +173,13 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getConcreteProductsAvailabilityResourceMapper(): ConcreteProductAvailabilitiesResourceMapper
     {
-        return new ConcreteProductAvailabilitiesResourceMapper($this->getResourceBuilder());
+        return new ConcreteProductAvailabilitiesResourceMapper();
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected function getResourceBuilder(): RestResourceBuilderInterface
+    protected function getResourceBuilder()
     {
         return $this->getMockBuilder(RestResourceBuilder::class)
             ->enableProxyingToOriginalMethods()

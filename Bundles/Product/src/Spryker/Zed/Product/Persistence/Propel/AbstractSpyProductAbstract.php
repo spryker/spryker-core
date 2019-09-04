@@ -18,8 +18,8 @@ use Orm\Zed\Product\Persistence\Base\SpyProductAbstract as BaseSpyProductAbstrac
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @method int getAvailabilityQuantity()
- * @method int getReservationQuantity()
+ * @method string getAvailabilityQuantity()
+ * @method string getReservationQuantity()
  * @method string getConcreteNeverOutOfStockSet()
  */
 class AbstractSpyProductAbstract extends BaseSpyProductAbstract

@@ -13,6 +13,7 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
@@ -45,7 +46,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(0);
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProductWithStore')->willReturn(15);
+        $sellableMock->method('calculateStockForProductWithStore')->willReturn(new Decimal(15));
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -68,7 +69,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(5);
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProductWithStore')->willReturn(0);
+        $sellableMock->method('calculateStockForProductWithStore')->willReturn(new Decimal(0));
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');

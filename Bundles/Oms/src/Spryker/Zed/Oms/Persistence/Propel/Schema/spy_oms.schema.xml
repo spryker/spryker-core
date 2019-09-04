@@ -132,7 +132,7 @@
     <table name="spy_oms_product_reservation" phpName="SpyOmsProductReservation" identifierQuoting="true">
         <column name="id_oms_product_reservation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true" default="0"/>
+        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true" default="0"/>
         <column name="fk_store" required="false" type="INTEGER"/>
 
         <unique name="spy_oms_product_reservation-sku">
@@ -151,7 +151,7 @@
         <column name="id_oms_product_reservation_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="store" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
-        <column name="reservation_quantity" type="INTEGER" required="true"/>
+        <column name="reservation_quantity" type="DECIMAL" size="20" scale="10" required="true"/>
         <column name="version" type="BIGINT" required="true"/>
 
         <index name="spy_oms_product_reservation_store-version">

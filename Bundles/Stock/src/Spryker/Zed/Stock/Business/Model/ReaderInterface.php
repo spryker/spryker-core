@@ -47,9 +47,9 @@ interface ReaderInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Traversable
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
-    public function getStocksProduct($sku);
+    public function getStocksProduct(string $sku): array;
 
     /**
      * @param string $sku

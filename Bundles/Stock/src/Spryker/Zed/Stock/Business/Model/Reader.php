@@ -168,14 +168,15 @@ class Reader implements ReaderInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Traversable
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
-    public function getStocksProduct($sku)
+    public function getStocksProduct(string $sku): array
     {
         $productId = $this->productFacade->findProductConcreteIdBySku($sku);
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
-            ->find();
+            ->find()
+            ->getData();
 
         if (count($stockEntities) < 1) {
             throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);

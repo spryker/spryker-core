@@ -23,12 +23,12 @@ class AvailabilityToProductBridge implements AvailabilityToProductInterface
     }
 
     /**
-     * @param string $productConcreteSku
+     * @param string $sku
      *
      * @return string
      */
-    public function getAbstractSkuFromProductConcrete($productConcreteSku)
+    public function getAbstractSkuFromProductConcrete($sku)
     {
-        return $this->productFacade->getAbstractSkuFromProductConcrete($productConcreteSku);
+        return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
     }
 }

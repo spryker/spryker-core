@@ -53,12 +53,12 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
 
-        $isAbstractProductAvailable = $spyAvailabilityAbstractTransfer->getQuantity() > 0;
+        $isAbstractProductAvailable = $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
         $storageAvailabilityTransfer->setIsAbstractProductAvailable($isAbstractProductAvailable);
 
         $concreteAvailabilities = [];
         foreach ($spyAvailabilityAbstractTransfer->getSpyAvailabilities() as $spyAvailability) {
-            $isProductConcreteAvailable = $spyAvailability->getQuantity() > 0 || $spyAvailability->getIsNeverOutOfStock();
+            $isProductConcreteAvailable = $spyAvailability->getQuantity()->greaterThan(0) || $spyAvailability->getIsNeverOutOfStock();
             $concreteAvailabilities[$spyAvailability->getSku()] = $isProductConcreteAvailable;
             if ($isProductConcreteAvailable === true && $isAbstractProductAvailable === false) {
                 $storageAvailabilityTransfer->setIsAbstractProductAvailable(true);

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\OmsConfig;
@@ -153,7 +154,7 @@ class OmsFacadeTest extends Unit
         $omsFacade = $this->createOmsFacade();
         $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
         $productSku = 'xxx';
-        $reservationQuantity = 10;
+        $reservationQuantity = new Decimal(10);
 
         // Action
         $this->createOmsFacade()->saveReservation($productSku, $storeTransfer, $reservationQuantity);

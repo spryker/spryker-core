@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface AvailabilityHandlerInterface
 {
@@ -27,26 +28,26 @@ interface AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      *
      * @return int
      */
-    public function saveCurrentAvailability($sku, $quantity);
+    public function saveCurrentAvailability(string $sku, Decimal $quantity): int;
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
+    public function saveCurrentAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int;
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return mixed
+     * @return void
      */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
+    public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void;
 }

@@ -10,7 +10,9 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
+use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
@@ -20,6 +22,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
+use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
@@ -109,7 +112,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return void
      */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
+    public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void
     {
         $quantity = $this->sellable->calculateStockForProductWithStore($sku, $storeTransfer);
         $quantityWithReservedItems = $this->getQuantity($quantity);
@@ -119,11 +122,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      *
      * @return int
      */
-    public function saveCurrentAvailability($sku, $quantity)
+    public function saveCurrentAvailability(string $sku, Decimal $quantity): int
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
@@ -134,12 +137,12 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    public function saveCurrentAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
     {
         $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
 
@@ -148,17 +151,17 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
-    protected function saveAndTouchAvailability($sku, $quantity, StoreTransfer $storeTransfer)
+    protected function saveAndTouchAvailability(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): SpyAvailability
     {
-        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? 0;
+        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? new Decimal(0);
         $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity, $storeTransfer);
         $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
-        $isAvailabilityChanged = $this->isAvailabilityStatusChanged($currentQuantity, $quantity) || $isNeverOutOfStockModified;
+        $isAvailabilityChanged = $isNeverOutOfStockModified || $this->isAvailabilityStatusChanged($currentQuantity, $quantity);
 
         $spyAvailabilityEntity->save();
 
@@ -168,7 +171,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
         }
 
-        if ($isAvailabilityChanged && ($quantity > 0 || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
+        if ($isAvailabilityChanged && ($quantity->greaterThan(0) || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
             $this->triggerProductIsAvailableAgainEvent($sku, $storeTransfer);
         }
 
@@ -177,15 +180,14 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param string $sku
-     * @param string $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
-    protected function prepareAvailabilityEntityForSave($sku, $quantity, StoreTransfer $storeTransfer)
+    protected function prepareAvailabilityEntityForSave(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): SpyAvailability
     {
-        $spyAvailabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)
-            ->findOneOrCreate();
+        $spyAvailabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)->findOneOrCreate();
 
         if ($spyAvailabilityEntity->isNew()) {
             $availabilityAbstractEntity = $this->findOrCreateSpyAvailabilityAbstract($sku, $storeTransfer);
@@ -201,22 +203,22 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param int|null $currentQuantity
-     * @param int|null $quantityWithReservedItems
+     * @param \Spryker\DecimalObject\Decimal|null $currentQuantity
+     * @param \Spryker\DecimalObject\Decimal|null $quantityWithReservedItems
      *
      * @return bool
      */
-    protected function isAvailabilityStatusChanged($currentQuantity, $quantityWithReservedItems)
+    protected function isAvailabilityStatusChanged(?Decimal $currentQuantity, ?Decimal $quantityWithReservedItems): bool
     {
         if ($currentQuantity === null && $quantityWithReservedItems !== null) {
             return true;
         }
 
-        if ($currentQuantity === 0 && $quantityWithReservedItems > $currentQuantity) {
+        if ($currentQuantity->equals(0) && $quantityWithReservedItems->greaterThan($currentQuantity)) {
             return true;
         }
 
-        if ($currentQuantity !== 0 && $quantityWithReservedItems === 0) {
+        if (!$currentQuantity->equals(0) && $quantityWithReservedItems->equals(0)) {
             return true;
         }
 
@@ -245,32 +247,30 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getQuantity($quantity)
+    protected function getQuantity(Decimal $quantity): Decimal
     {
-        return $quantity > 0 ? $quantity : 0;
+        return $quantity->greaterThan(0) ? $quantity : new Decimal(0);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int|null
+     * @return \Spryker\DecimalObject\Decimal|null
      */
-    protected function findCurrentPhysicalQuantity($sku, StoreTransfer $storeTransfer)
+    protected function findCurrentPhysicalQuantity(string $sku, StoreTransfer $storeTransfer): ?Decimal
     {
-        $oldQuantity = null;
-        $availabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)
-            ->findOne();
+        $availabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)->findOne();
 
-        if ($availabilityEntity !== null) {
-            $oldQuantity = $availabilityEntity->getQuantity();
+        if ($availabilityEntity === null) {
+            return null;
         }
 
-        return $oldQuantity;
+        return new Decimal($availabilityEntity->getQuantity());
     }
 
     /**
@@ -299,21 +299,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
-     *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
-    protected function findOrCreateSpyAvailabilityAbstract($sku, StoreTransfer $storeTransfer)
+    protected function findOrCreateSpyAvailabilityAbstract(string $sku, StoreTransfer $storeTransfer): SpyAvailabilityAbstract
     {
-        /** @var string|null $abstractSku */
-        $abstractSku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-
-        if ($abstractSku === null) {
-            throw new ProductNotFoundException(
-                sprintf('The product was not found with this SKU: %s', $sku)
-            );
-        }
-
+        $abstractSku = $this->getAbstractSkuFromProductConcrete($sku);
         $availabilityAbstractEntity = $this->queryContainer
             ->querySpyAvailabilityAbstractByAbstractSku($abstractSku)
             ->filterByFkStore($storeTransfer->getIdStore())
@@ -327,12 +317,30 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
+     * @param string $sku
+     *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     *
+     * @return string
+     */
+    protected function getAbstractSkuFromProductConcrete(string $sku): string
+    {
+        try {
+            return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
+        } catch (MissingProductException $exception) {
+            throw new ProductNotFoundException(
+                sprintf('The product was not found with this SKU: %s', $sku)
+            );
+        }
+    }
+
+    /**
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
-    protected function createSpyAvailabilityAbstract($abstractSku, StoreTransfer $storeTransfer)
+    protected function createSpyAvailabilityAbstract(string $abstractSku, StoreTransfer $storeTransfer): SpyAvailabilityAbstract
     {
         $availableAbstractEntity = (new SpyAvailabilityAbstract())
             ->setAbstractSku($abstractSku)

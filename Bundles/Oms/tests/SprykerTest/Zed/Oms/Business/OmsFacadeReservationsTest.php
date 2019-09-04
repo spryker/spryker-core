@@ -53,7 +53,7 @@ class OmsFacadeReservationsTest extends Unit
 
        //other store
         $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reservedAmount = $omsFacade->getOmsReservedProductQuantityForSku(123, $storeTransfer);
+        $reservedAmount = $omsFacade->getOmsReservedProductQuantityForSku('123', $storeTransfer);
 
         $this->assertSame(1, $reservedAmount);
     }
@@ -110,7 +110,7 @@ class OmsFacadeReservationsTest extends Unit
         $omsFacade->importReservation($availabilityReservationRequestTransfer);
 
         $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reserved = $omsFacade->getReservationsFromOtherStores(123, $storeTransfer);
+        $reserved = $omsFacade->getReservationsFromOtherStores('123', $storeTransfer);
 
         $this->assertSame(1, $reserved);
     }

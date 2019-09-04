@@ -22,6 +22,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
 
 /**
@@ -49,7 +50,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['is_never_out_of_stock' => true]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, self::ID_STORE);
+        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, new Decimal(1));
 
         $this->assertTrue($isProductSellable);
     }
@@ -63,7 +64,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, self::ID_STORE);
+        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, new Decimal(1));
 
         $this->assertFalse($isProductSellable);
     }
@@ -77,7 +78,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 5]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, self::ID_STORE);
+        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, new Decimal(1));
 
         $this->assertTrue($isProductSellable);
     }
@@ -203,7 +204,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
 
-        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, 2, $storeTransfer);
+        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, new Decimal(2), $storeTransfer);
 
         $productConcreteAvailabilityRequestTransfer = (new ProductConcreteAvailabilityRequestBuilder([
             ProductConcreteAvailabilityRequestTransfer::SKU => self::CONCRETE_SKU,

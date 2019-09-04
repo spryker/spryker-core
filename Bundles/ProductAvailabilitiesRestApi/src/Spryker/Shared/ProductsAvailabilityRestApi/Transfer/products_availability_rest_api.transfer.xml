@@ -5,13 +5,13 @@
 
     <transfer name="RestConcreteProductAvailabilityAttributes">
         <property name="availability" type="bool"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="RestAbstractProductAvailabilityAttributes">
         <property name="availability" type="bool"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="decimal"/>
     </transfer>
 
 </transfers>

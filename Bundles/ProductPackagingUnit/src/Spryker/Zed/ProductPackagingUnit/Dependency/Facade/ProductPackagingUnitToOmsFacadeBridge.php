@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOmsFacadeInterface
 {
@@ -26,11 +27,11 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->omsFacade->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
@@ -38,11 +39,11 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
     {
         $this->omsFacade->saveReservation($sku, $storeTransfer, $reservationQuantity);
     }

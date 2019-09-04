@@ -8,21 +8,22 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface CalculatorInterface
 {
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku);
+    public function calculateStockForProduct(string $sku): Decimal;
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
+    public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 }

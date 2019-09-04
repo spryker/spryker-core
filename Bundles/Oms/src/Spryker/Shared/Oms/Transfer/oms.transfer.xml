@@ -19,7 +19,7 @@
 
     <transfer name="OmsAvailabilityReservationRequest">
         <property name="sku" type="string" />
-        <property name="reservationAmount" type="int" />
+        <property name="reservationAmount" type="decimal" />
         <property name="originStore" type="Store"/>
         <property name="synchronizeToStore" type="Store"/>
         <property name="version" type="string" />

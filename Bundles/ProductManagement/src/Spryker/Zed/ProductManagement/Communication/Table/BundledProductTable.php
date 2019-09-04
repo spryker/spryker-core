@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -189,7 +190,7 @@ class BundledProductTable extends AbstractTable
                 SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
                 static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
                 static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => $item->getStockQuantity(),
-                static::COL_AVAILABILITY => $this->getAvailability($item),
+                static::COL_AVAILABILITY => $this->getAvailability($item)->toString(),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
             ];
         }
@@ -262,15 +263,14 @@ class BundledProductTable extends AbstractTable
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAvailability(SpyProduct $productConcreteEntity)
+    protected function getAvailability(SpyProduct $productConcreteEntity): Decimal
     {
-        $availability = 0;
         if (!$productConcreteEntity->getIsNeverOutOfStock()) {
-            $availability = $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
+            return $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
         }
 
-        return $availability;
+        return new Decimal(0);
     }
 }

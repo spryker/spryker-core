@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
@@ -46,11 +47,11 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      *
      * @return bool
      */
-    public function isProductSellable($sku, $quantity)
+    public function isProductSellable(string $sku, Decimal $quantity): bool
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
@@ -60,9 +61,9 @@ class Sellable implements SellableInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku)
+    public function calculateStockForProduct(string $sku): Decimal
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
@@ -71,12 +72,12 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->calculateIsProductSellable($sku, $quantity, $storeTransfer);
     }
@@ -89,54 +90,54 @@ class Sellable implements SellableInterface
     public function isProductConcreteAvailable(int $idProductConcrete): bool
     {
         $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
-        if (empty($stockProductTransfers)) {
-            return false;
+
+        foreach ($stockProductTransfers as $stockProductTransfer) {
+            return $this->isProductSellable($stockProductTransfer->getSku(), new Decimal(1));
         }
 
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        return $this->calculateIsProductSellable($stockProductTransfers[0]->getSku(), 1, $storeTransfer);
+        return false;
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->calculateStock($sku, $storeTransfer);
     }
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function calculateIsProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
+    protected function calculateIsProductSellable(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
         if ($this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)) {
             return true;
         }
+
         $realStock = $this->calculateStock($sku, $storeTransfer);
 
-        return ($realStock >= $quantity);
+        return $realStock->greatherThanOrEquals($quantity);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateStock($sku, StoreTransfer $storeTransfer)
+    protected function calculateStock($sku, StoreTransfer $storeTransfer): Decimal
     {
         $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
         $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
 
-        return $physicalItems - $reservedItems;
+        return $physicalItems->subtract($reservedItems);
     }
 }

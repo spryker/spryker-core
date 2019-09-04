@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class AvailabilityToStockBridge implements AvailabilityToStockInterface
 {
@@ -28,9 +29,9 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku)
+    public function calculateStockForProduct(string $sku): Decimal
     {
         return $this->stockFacade->calculateStockForProduct($sku);
     }
@@ -39,9 +40,9 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
+    public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
     }

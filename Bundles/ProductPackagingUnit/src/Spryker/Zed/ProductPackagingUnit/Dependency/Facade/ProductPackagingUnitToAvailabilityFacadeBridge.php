@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackagingUnitToAvailabilityFacadeInterface
 {
@@ -28,33 +29,33 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): int
+    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
     }
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool
+    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailabilityForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int
+    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
     {
         return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
     }

@@ -30,7 +30,6 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         DiscountPromotionToAvailabilityInterface $availabilityFacade,
         DiscountPromotionToLocaleInterface $localeFacade
     ) {
-
         $this->availabilityFacade = $availabilityFacade;
         $this->localeFacade = $localeFacade;
     }
@@ -41,20 +40,20 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity)
+    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity): int
     {
         $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($idProductAbstract);
 
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
-            return (int)$maxQuantity;
+            return $maxQuantity;
         }
 
-        if ($productAbstractAvailabilityTransfer->getAvailability() <= 0) {
+        if ($productAbstractAvailabilityTransfer->getAvailability()->lessThanOrEquals(0)) {
             return 0;
         }
 
-        if ($maxQuantity > $productAbstractAvailabilityTransfer->getAvailability()) {
-            return (int)$productAbstractAvailabilityTransfer->getAvailability();
+        if ($productAbstractAvailabilityTransfer->getAvailability()->lessThan($maxQuantity)) {
+            return $productAbstractAvailabilityTransfer->getAvailability()->toInt();
         }
 
         return $maxQuantity;

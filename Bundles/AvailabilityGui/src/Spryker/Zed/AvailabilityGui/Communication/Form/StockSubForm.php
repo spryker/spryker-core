@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -46,11 +47,11 @@ class StockSubForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, NumberType::class, [
             'label' => 'Quantity',
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => '/[\d]+/']),
+                new Regex(['pattern' => '/(\d*\.)?\d+/']),
             ],
         ]);
 

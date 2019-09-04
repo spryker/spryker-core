@@ -15,5 +15,5 @@ interface PromotionAvailabilityCalculatorInterface
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability($idProductAbstract, $maxQuantity);
+    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity): int;
 }

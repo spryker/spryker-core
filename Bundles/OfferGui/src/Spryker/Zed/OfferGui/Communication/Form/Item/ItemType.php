@@ -250,12 +250,12 @@ class ItemType extends AbstractType
      */
     protected function addStockField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_STOCK, TextType::class, [
+        $builder->add(static::FIELD_STOCK, NumberType::class, [
             'label' => 'Stock',
             'required' => false,
             'disabled' => true,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createNumberConstraint($options, true),
             ],
         ]);
 
@@ -354,15 +354,16 @@ class ItemType extends AbstractType
 
     /**
      * @param array $options
+     * @param bool $decimal
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createNumberConstraint(array $options)
+    protected function createNumberConstraint(array $options, bool $decimal = false)
     {
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => '/^\d*$/',
+            'pattern' => $decimal ? '/(\d*\.)?\d+/' : '/^\d*$/',
             'message' => 'This field should contain digits.',
             'groups' => $validationGroup,
         ]);

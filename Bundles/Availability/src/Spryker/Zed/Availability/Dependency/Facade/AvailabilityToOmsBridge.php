@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
 {
@@ -29,21 +30,22 @@ class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
      * use AvailabilityToOmsInterface::getOmsReservedProductQuantityForSku() instead.
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku($sku)
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
-        return $this->omsFacade->sumReservedProductQuantitiesForSku($sku);
+        return $this->omsFacade->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }

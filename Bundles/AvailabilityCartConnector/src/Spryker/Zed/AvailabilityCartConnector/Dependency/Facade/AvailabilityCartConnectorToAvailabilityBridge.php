@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartConnectorToAvailabilityInterface
 {
@@ -28,11 +29,11 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      * @deprecated Use calculateStockForProductWithStore() instead.
      *
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      *
      * @return bool
      */
-    public function isProductSellable($sku, $quantity)
+    public function isProductSellable(string $sku, Decimal $quantity): bool
     {
         return $this->availabilityFacade->isProductSellable($sku, $quantity);
     }
@@ -42,9 +43,9 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      *
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku)
+    public function calculateStockForProduct(string $sku): Decimal
     {
         return $this->availabilityFacade->calculateStockForProduct($sku);
     }
@@ -55,9 +56,9 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         if (method_exists($this->availabilityFacade, 'calculateStockForProductWithStore')) {
             return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
@@ -70,12 +71,12 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      * The method check for "method_exists" is for BC for modules without multi store support.
      *
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
         if (method_exists($this->availabilityFacade, 'isProductSellableForStore')) {
             return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);

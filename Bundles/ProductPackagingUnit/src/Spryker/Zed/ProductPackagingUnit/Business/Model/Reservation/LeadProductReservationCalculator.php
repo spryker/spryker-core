@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
@@ -39,18 +40,17 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      * @param string $leadProductSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
+    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): Decimal
     {
         $reservedStateNames = $this->omsFacade->getReservedStateNames();
 
         $sumReservedLeadProductAmount = $this->productPackagingUnitRepository
             ->sumLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, $reservedStateNames);
 
-        $sumReservedLeadProductQuantity = $this->omsFacade
-            ->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
+        $sumReservedLeadProductQuantity = $this->omsFacade->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
-        return $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
+        return $sumReservedLeadProductQuantity->add($sumReservedLeadProductAmount);
     }
 }

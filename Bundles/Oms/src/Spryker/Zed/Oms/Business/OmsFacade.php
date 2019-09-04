@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -316,7 +317,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -331,9 +332,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()
@@ -593,9 +594,9 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $storeTransfer)
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
     }
@@ -634,11 +635,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
     {
         $this->getFactory()
             ->createUtilReservation()

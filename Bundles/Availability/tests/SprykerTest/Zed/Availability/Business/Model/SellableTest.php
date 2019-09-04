@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
@@ -39,7 +40,7 @@ class SellableTest extends Unit
             ->willReturn(true);
 
         $sellable = $this->createSellable(null, $stockFacadeMock);
-        $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, 1);
+        $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, new Decimal(1));
 
         $this->assertTrue($isSellable);
     }
@@ -49,8 +50,8 @@ class SellableTest extends Unit
      */
     public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable()
     {
-        $reservedItems = 5;
-        $existingStock = 10;
+        $reservedItems = new Decimal(5);
+        $existingStock = new Decimal(10);
 
         $stockFacadeMock = $this->createStockFacadeMock();
         $stockFacadeMock->method('isNeverOutOfStockForStore')
@@ -67,7 +68,7 @@ class SellableTest extends Unit
             ->willReturn($reservedItems);
 
         $sellable = $this->createSellable($omsFacadeMock, $stockFacadeMock);
-        $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, 1);
+        $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, new Decimal(1));
 
         $this->assertTrue($isSellable);
     }
