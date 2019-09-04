@@ -121,4 +121,16 @@ interface QuoteApprovalFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * -
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    public function getQuoteApprovalConfig(QuoteTransfer $quoteTransfer): array;
 }

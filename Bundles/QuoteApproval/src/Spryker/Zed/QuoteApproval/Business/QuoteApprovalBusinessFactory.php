@@ -18,6 +18,8 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalReader;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalReaderInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemover;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidator;
@@ -120,6 +122,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalReaderInterface
+     */
+    public function createQuoteApprovalFields(): QuoteApprovalReaderInterface
+    {
+        return new QuoteApprovalReader(
+            $this->createQuoteStatusCalculator(),
+            $this->getConfig()
         );
     }
 

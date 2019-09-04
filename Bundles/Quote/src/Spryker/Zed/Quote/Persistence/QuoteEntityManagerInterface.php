@@ -13,10 +13,11 @@ interface QuoteEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function saveQuote(QuoteTransfer $quoteTransfer);
+    public function saveQuote(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving);
 
     /**
      * @param int $idQuote

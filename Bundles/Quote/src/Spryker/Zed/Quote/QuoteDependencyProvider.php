@@ -49,6 +49,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteValidatorPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
         $container = $this->addQuoteExpandBeforeCreatePlugins($container);
+        $container = $this->addQuoteFieldsExpanderPlugins($container);
 
         return $container;
     }
@@ -61,7 +62,6 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addQuoteFieldsExpanderPlugins($container);
 
         return $container;
     }

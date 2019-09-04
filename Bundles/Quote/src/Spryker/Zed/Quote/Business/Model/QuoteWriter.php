@@ -50,11 +50,17 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteExpandBeforeCreatePlugins;
 
     /**
+     * @var \Spryker\Zed\Quote\Business\Model\QuoteOperationInterface
+     */
+    protected $quoteOperation;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface $quoteValidator
+     * @param \Spryker\Zed\Quote\Business\Model\QuoteOperationInterface $quoteOperation
      * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[] $quoteExpandBeforeCreatePlugins
      */
     public function __construct(
@@ -63,6 +69,7 @@ class QuoteWriter implements QuoteWriterInterface
         QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor,
         QuoteToStoreFacadeInterface $storeFacade,
         QuoteValidatorInterface $quoteValidator,
+        QuoteOperationInterface $quoteOperation,
         array $quoteExpandBeforeCreatePlugins = []
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
@@ -71,6 +78,7 @@ class QuoteWriter implements QuoteWriterInterface
         $this->quoteWriterPluginExecutor = $quoteWriterPluginExecutor;
         $this->quoteValidator = $quoteValidator;
         $this->quoteExpandBeforeCreatePlugins = $quoteExpandBeforeCreatePlugins;
+        $this->quoteOperation = $quoteOperation;
     }
 
     /**
@@ -110,8 +118,10 @@ class QuoteWriter implements QuoteWriterInterface
 
         $quoteTransfer = $this->reloadStoreForQuote($quoteTransfer);
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            return $this->executeCreateTransaction($quoteTransfer);
+        $quoteFieldsAllowedForSaving = $this->quoteOperation->getQuoteFieldsAllowedForSaving($quoteTransfer);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $quoteFieldsAllowedForSaving) {
+            return $this->executeCreateTransaction($quoteTransfer, $quoteFieldsAllowedForSaving);
         });
     }
 
@@ -136,20 +146,23 @@ class QuoteWriter implements QuoteWriterInterface
 
         $quoteTransfer = $this->reloadStoreForQuote($quoteTransfer);
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            return $this->executeUpdateTransaction($quoteTransfer);
+        $quoteFieldsAllowedForSaving = $this->quoteOperation->getQuoteFieldsAllowedForSaving($quoteTransfer);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $quoteFieldsAllowedForSaving) {
+            return $this->executeUpdateTransaction($quoteTransfer, $quoteFieldsAllowedForSaving);
         });
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function executeCreateTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function executeCreateTransaction(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving): QuoteResponseTransfer
     {
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateBeforePlugins($quoteTransfer);
-        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer, $quoteFieldsAllowedForSaving);
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateAfterPlugins($quoteTransfer);
 
         return $this->createQuoteResponseTransfer($quoteTransfer)
@@ -159,13 +172,14 @@ class QuoteWriter implements QuoteWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function executeUpdateTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function executeUpdateTransaction(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving): QuoteResponseTransfer
     {
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateBeforePlugins($quoteTransfer);
-        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer, $quoteFieldsAllowedForSaving);
         $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateAfterPlugins($quoteTransfer);
 
         return $this->createQuoteResponseTransfer($quoteTransfer)

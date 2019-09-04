@@ -5,21 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
+namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteFieldsAllowedForSavingProviderPluginInterface
+interface QuoteApprovalReaderInterface
 {
     /**
-     * Specification:
-     * - Fields allowed for saving.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function execute(QuoteTransfer $quoteTransfer): array;
+    public function getQuoteApprovalConfig(QuoteTransfer $quoteTransfer): array;
 }

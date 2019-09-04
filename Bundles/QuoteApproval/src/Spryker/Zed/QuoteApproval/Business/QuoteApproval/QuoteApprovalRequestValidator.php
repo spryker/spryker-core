@@ -89,7 +89,8 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     public function validateQuoteApprovalCreateRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
-        $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote());
+//        $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote()); // delete
+        $quoteTransfer = $quoteApprovalRequestTransfer->getQuote();
 
         if (!$quoteTransfer->getItems()->count()) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE);
@@ -187,7 +188,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     {
         $quoteApprovalRequestTransfer->requireApproverCompanyUserId()
             ->requireRequesterCompanyUserId()
-            ->requireIdQuote();
+            ->requireQuote();
     }
 
     /**
