@@ -13,6 +13,8 @@ namespace Spryker\Shared\Search;
 interface SearchConstants
 {
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     *
      * When executing boosted full text search queries the value of this config setting will be used as the boost factor.
      * I.e. to set the boost factor to 3 add this to your config: `$config[SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
      *
