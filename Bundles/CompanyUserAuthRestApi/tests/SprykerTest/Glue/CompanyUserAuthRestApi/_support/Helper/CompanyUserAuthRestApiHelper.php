@@ -154,7 +154,7 @@ class CompanyUserAuthRestApiHelper extends GlueRest
                 ],
             ],
         ]);
-        $this->seeResponseCodeIs(HttpCode::CREATED);
+
         $customerTransfer->setIdCustomer(
             $this->grabDataFromResponseByJsonPath('$.data.id')[0]
         );

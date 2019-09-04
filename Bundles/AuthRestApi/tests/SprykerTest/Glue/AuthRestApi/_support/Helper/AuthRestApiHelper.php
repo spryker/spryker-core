@@ -46,9 +46,9 @@ class AuthRestApiHelper extends GlueRest
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array ["tokenType" => string, "expiresIn" => int, "accessToken" => string, "refreshToken" => string]
+     * @return array|null
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): array
+    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): ?array
     {
         $this->sendPOST(static::RESOURCE_ACCESS_TOKENS, [
             'data' => [
@@ -59,7 +59,6 @@ class AuthRestApiHelper extends GlueRest
                 ],
             ],
         ]);
-        $this->seeResponseCodeIs(HttpCode::CREATED);
 
         return $this->grabDataFromResponseByJsonPath('$.data.attributes')[0];
     }
