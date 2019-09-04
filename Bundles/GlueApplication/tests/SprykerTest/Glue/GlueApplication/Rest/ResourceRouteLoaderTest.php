@@ -159,7 +159,6 @@ class ResourceRouteLoaderTest extends Unit
         array $plugins,
         VersionResolverInterface $versionResolverMock
     ): ResourceRouteLoaderInterface {
-
         return new ResourceRouteLoader($plugins, $versionResolverMock);
     }
 
