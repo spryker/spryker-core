@@ -12,8 +12,10 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -47,11 +49,20 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     protected $configurableBundleTemplateSlotPropelQuery;
 
     /**
-     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery
+     * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface
      */
-    public function __construct(SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery
+     * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery,
+        ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
+    ) {
         $this->configurableBundleTemplateSlotPropelQuery = $configurableBundleTemplateSlotPropelQuery;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -64,14 +75,19 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => 'Slot ID',
             static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION => 'Slot Name',
-//            static::COL_NUMBER_OF_ITEMS => 'Number of Items',
+            static::COL_NUMBER_OF_ITEMS => 'Number of Items',
             static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSortable([
             static::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
             static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION,
-//            static::COL_NUMBER_OF_ITEMS,
+            static::COL_NUMBER_OF_ITEMS,
+        ]);
+
+        $config->setSearchable([
+            static::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
+            SpyGlossaryTranslationTableMap::COL_VALUE,
         ]);
 
         $config->setRawColumns([
@@ -112,9 +128,25 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     protected function prepareQuery(SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery): SpyConfigurableBundleTemplateSlotQuery
     {
         $configurableBundleTemplateSlotPropelQuery
-            ->addJoin(SpyConfigurableBundleTemplateSlotTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::LEFT_JOIN)
-            ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::LEFT_JOIN)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION);
+            ->addJoin(SpyConfigurableBundleTemplateSlotTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::INNER_JOIN)
+            ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::INNER_JOIN)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION)
+            ->joinSpyProductList()
+            ->useSpyProductListQuery()
+                ->leftJoinSpyProductListProductConcrete()
+                ->withColumn(
+                    sprintf('COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT),
+                    static::COL_NUMBER_OF_ITEMS
+                )
+            ->endUse()
+            ->where(
+                sprintf(
+                    '%s = %s',
+                    SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
+                    $this->localeFacade->getCurrentLocale()->getIdLocale()
+                )
+            )
+            ->groupByIdConfigurableBundleTemplateSlot();
 
         return $configurableBundleTemplateSlotPropelQuery;
     }
@@ -144,8 +176,6 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     {
         $configurableBundleTemplateSlotRow = $configurableBundleTemplateSlotEntity->toArray();
         $configurableBundleTemplateSlotRow[static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateSlotEntity);
-
-        $configurableBundleTemplateSlotRow[static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION] = 'hardcoded';
 
         return $configurableBundleTemplateSlotRow;
     }

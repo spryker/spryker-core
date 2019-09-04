@@ -76,7 +76,10 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createConfigurableBundleTemplateSlotTable(): ConfigurableBundleTemplateSlotTable
     {
-        return new ConfigurableBundleTemplateSlotTable($this->getConfigurableBundleTemplateSlotPropelQuery());
+        return new ConfigurableBundleTemplateSlotTable(
+            $this->getConfigurableBundleTemplateSlotPropelQuery(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**

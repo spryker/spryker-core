@@ -24,6 +24,8 @@ class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
     {
         $this->addGeneralTab($tabsViewTransfer);
 
+        $tabsViewTransfer->setIsNavigable(true);
+
         return $tabsViewTransfer;
     }
 
@@ -35,7 +37,7 @@ class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
     protected function addGeneralTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = (new TabItemTransfer())
-            ->setName(static::GENERAL_TAB_NAME)
+            ->setName(strtolower(static::GENERAL_TAB_NAME))
             ->setTitle(static::GENERAL_TAB_NAME)
             ->setTemplate('@ConfigurableBundleGui/Template/tabs/general-tab.twig');
 
