@@ -124,8 +124,11 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
     {
         $oauthResponseTransfer
-            ->requireCustomerReference()
-            ->requireAnonymousCustomerReference();
+            ->requireCustomerReference();
+
+        if (!$oauthResponseTransfer->getAnonymousCustomerReference()) {
+            return;
+        }
 
         $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();
         $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
@@ -138,6 +141,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         }
 
         $questQuote = $guestQuotes[0];
+
         if (!$questQuote->getItems()->count()) {
             return;
         }

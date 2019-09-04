@@ -613,16 +613,6 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateGuestQuoteToCustomerQuoteWillNotUpdateGuestQuoteToCustomerQuoteWithoutAnonymousCustomerReference(): void
-    {
-        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
-        $this->expectException(RequiredTransferPropertyException::class);
-        $this->cartsRestApiFacade->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
-    }
-
-    /**
-     * @return void
-     */
     public function testAddGuestQuoteItemsToCustomerQuoteWillAddGuestQuoteItemsToCustomerQuote(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
@@ -644,16 +634,6 @@ class CartsRestApiFacadeTest extends Unit
     public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutAnonymousCustomerReference(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
-        $this->expectException(RequiredTransferPropertyException::class);
-        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutCustomerReference(): void
-    {
-        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
         $this->expectException(RequiredTransferPropertyException::class);
         $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
     }

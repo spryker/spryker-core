@@ -10,6 +10,7 @@ namespace Spryker\Zed\AuthRestApi\Business\AccessToken;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface;
+use TheSeer\fDOM\fDOMDocument;
 
 class AccessTokenProcessor implements AccessTokenProcessorInterface
 {
@@ -42,8 +43,6 @@ class AccessTokenProcessor implements AccessTokenProcessorInterface
      */
     public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        $oauthRequestTransfer->requireCustomerReference();
-
         $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
         $oauthResponseTransfer->setAnonymousCustomerReference($oauthRequestTransfer->getCustomerReference());
 

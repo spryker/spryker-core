@@ -7,14 +7,12 @@
 
 namespace SprykerTest\Glue\AuthRestApi\Helper;
 
-use Codeception\Module\REST;
 use Codeception\Util\HttpCode;
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerTest\Glue\Testify\Helper\GlueRest;
 
-class AuthRestApiHelper extends REST
+class AuthRestApiHelper extends GlueRest
 {
-    public const DEFAULT_PASSWORD = 'Pass$.123456';
-
     protected const RESOURCE_ACCESS_TOKENS = 'access-tokens';
 
     /**
@@ -23,31 +21,24 @@ class AuthRestApiHelper extends REST
      * @part json
      *
      * @param string $token
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return void
      */
-    public function amAuthorizedGlueUser(string $token, CustomerTransfer $customerTransfer): CustomerTransfer
+    public function amAuthorizedGlueUser(string $token): void
     {
         $this->amBearerAuthenticated($token);
-
-        return $customerTransfer;
     }
 
     /**
-     * Publishes access token
-     *
      * @part json
      *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string $anonymousCustomerReference
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return void
      */
-    public function amUnauthorizedGlueUser(CustomerTransfer $customerTransfer): CustomerTransfer
+    public function amUnauthorizedGlueUser(string $anonymousCustomerReference): void
     {
-        $this->haveHttpHeader('X-Anonymous-Customer-Unique-Id', $customerTransfer->getCustomerReference());
-
-        return $customerTransfer;
+        $this->haveHttpHeader('X-Anonymous-Customer-Unique-Id', $anonymousCustomerReference);
     }
 
     /**

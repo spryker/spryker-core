@@ -50,6 +50,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
         $priceProductFilters = $this->createPriceProductFilters($cartChangeTransfer);
+
         $validPriceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilters);
 
         return $this->checkProductWithoutPricesRestriction($validPriceProductTransfers, $cartChangeTransfer, $cartPreCheckResponseTransfer);
@@ -127,6 +128,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createPriceProductFilters(CartChangeTransfer $cartChangeTransfer): array
     {
         $priceProductFilters = [];
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $priceProductFilters[] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
         }

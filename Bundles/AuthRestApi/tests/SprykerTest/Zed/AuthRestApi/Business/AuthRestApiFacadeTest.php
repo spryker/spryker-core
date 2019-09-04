@@ -58,19 +58,7 @@ class AuthRestApiFacadeTest extends Unit
         $oauthResponseTransfer = $this->authRestApiFacade->processAccessToken($oauthRequestTransfer);
 
         $this->assertInstanceOf(OauthResponseTransfer::class, $oauthResponseTransfer);
-        $this->assertEquals($oauthResponseTransfer->getAnonymousCustomerReference(), $this->tester::TEST_ANONYMOUS_CUSTOMER_REFERENCE);
         $this->assertEquals($oauthResponseTransfer->getCustomerReference(), $this->tester::TEST_CUSTOMER_REFERENCE);
-    }
-
-    /**
-     * @return void
-     */
-    public function testProcessAccessTokenWillNotProcessAccessTokenWithoutCustomerReference(): void
-    {
-        $oauthRequestTransfer = $this->tester->prepareOauthRequestTransferWithoutCustomerReference();
-
-        $this->expectException(RequiredTransferPropertyException::class);
-        $this->authRestApiFacade->processAccessToken($oauthRequestTransfer);
     }
 
     /**

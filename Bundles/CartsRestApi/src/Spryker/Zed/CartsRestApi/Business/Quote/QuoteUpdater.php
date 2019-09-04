@@ -151,8 +151,11 @@ class QuoteUpdater implements QuoteUpdaterInterface
     public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
     {
         $oauthResponseTransfer
-            ->requireCustomerReference()
-            ->requireAnonymousCustomerReference();
+            ->requireCustomerReference();
+
+        if (!$oauthResponseTransfer->getAnonymousCustomerReference()) {
+            return;
+        }
 
         $guestQuoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
@@ -162,6 +165,10 @@ class QuoteUpdater implements QuoteUpdaterInterface
         if (!$guestQuoteCollectionTransfer->getQuotes()->count()) {
             return;
         }
+
+//        if (!$guestQuoteCollectionTransfer->getQuotes()[0]->getItems()->count()) {
+//            return;
+//        }
 
         $registeredCustomerReference = $oauthResponseTransfer->getCustomerReference();
         $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuoteCollectionTransfer);

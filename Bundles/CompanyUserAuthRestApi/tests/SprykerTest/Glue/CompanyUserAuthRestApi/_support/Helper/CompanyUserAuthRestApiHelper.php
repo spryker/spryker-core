@@ -8,19 +8,17 @@
 namespace SprykerTest\Glue\CompanyUserAuthRestApi\Helper;
 
 use Codeception\Exception\ModuleException;
-use Codeception\Module\REST;
 use Codeception\Util\HttpCode;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerTest\Glue\Testify\Helper\GlueRest;
 use SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Zed\Company\Helper\CompanyHelper;
 
-class CompanyUserAuthRestApiHelper extends REST
+class CompanyUserAuthRestApiHelper extends GlueRest
 {
-    public const DEFAULT_PASSWORD = 'Pass$.123456';
-
     protected const RESOURCE_CUSTOMERS = 'customers';
 
     /**
