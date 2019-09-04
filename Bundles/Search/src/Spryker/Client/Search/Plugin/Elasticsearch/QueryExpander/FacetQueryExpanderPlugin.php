@@ -18,6 +18,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin` instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface

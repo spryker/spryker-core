@@ -12,17 +12,15 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
-use Generated\Shared\Transfer\SearchContextTransfer;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
-class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface
+/**
+ * @deprecated `\Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery` instead.
+ */
+class SearchKeysQuery implements QueryInterface
 {
-    protected const SOURCE_NAME = 'page';
-
     /**
      * @var string
      */
@@ -51,11 +49,6 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
     }
 
     /**
-     * {@inheritdoc}
-     * - Returns a query object for keys search.
-     *
-     * @api
-     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()
@@ -76,22 +69,6 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
         $baseQuery->setExplain(true);
 
         return $baseQuery;
-    }
-
-    /**
-     * {@inheritdoc}
-     * - Defines a context for keys search.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    public function getSearchContext(): SearchContextTransfer
-    {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer = $this->expandWithVendorContext($searchContextTransfer);
-
-        return $searchContextTransfer;
     }
 
     /**
@@ -139,19 +116,5 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
         if ($this->offset !== null) {
             $baseQuery->setFrom($this->offset);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    protected function expandWithVendorContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
-    {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
-
-        return $searchContextTransfer;
     }
 }

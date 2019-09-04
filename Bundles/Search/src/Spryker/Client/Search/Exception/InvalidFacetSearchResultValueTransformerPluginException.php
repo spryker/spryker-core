@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Exception\InvalidFacetSearchResultValueTransformerPluginException` instead.
+ */
 class InvalidFacetSearchResultValueTransformerPluginException extends Exception
 {
 }

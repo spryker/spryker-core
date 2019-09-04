@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Shared\Search\SearchConfig;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryFactory` instead.
+ */
 class QueryFactory implements QueryFactoryInterface
 {
     /**
