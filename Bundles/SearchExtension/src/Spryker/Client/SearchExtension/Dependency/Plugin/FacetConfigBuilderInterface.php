@@ -4,13 +4,11 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Spryker\Client\Search\Dependency\Plugin;
+
+namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderInterface` instead.
- */
 interface FacetConfigBuilderInterface
 {
     /**
@@ -63,3 +61,5 @@ interface FacetConfigBuilderInterface
      */
     public function getActiveParamNames(array $requestParameters);
 }
+
+class_alias(FacetConfigBuilderInterface::class, 'Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface', false);

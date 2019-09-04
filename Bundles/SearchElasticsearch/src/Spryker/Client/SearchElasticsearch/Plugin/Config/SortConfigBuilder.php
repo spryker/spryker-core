@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Config;
+namespace Spryker\Client\SearchElasticsearch\Plugin\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigBuilderInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\Config\SortConfigBuilder` instead.
- */
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {
     public const DIRECTION_ASC = 'asc';
@@ -34,7 +31,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     /**
      * @param string $sortParamName
      */
-    public function __construct($sortParamName = self::DEFAULT_SORT_PARAM_KEY)
+    public function __construct(string $sortParamName = self::DEFAULT_SORT_PARAM_KEY)
     {
         $this->sortParamKey = $sortParamName;
     }
@@ -58,7 +55,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($parameterName)
+    public function get($parameterName): ?SortConfigTransfer
     {
         if (isset($this->sortConfigTransfers[$parameterName])) {
             return $this->sortConfigTransfers[$parameterName];
@@ -70,7 +67,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     /**
      * @return \Generated\Shared\Transfer\SortConfigTransfer[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->sortConfigTransfers;
     }
@@ -80,7 +77,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      *
      * @return string|null
      */
-    public function getActiveParamName(array $requestParameters)
+    public function getActiveParamName(array $requestParameters): ?string
     {
         $sortParamName = array_key_exists($this->sortParamKey, $requestParameters) ? $requestParameters[$this->sortParamKey] : null;
 
@@ -92,7 +89,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      *
      * @return string|null
      */
-    public function getSortDirection($sortParamName)
+    public function getSortDirection($sortParamName): ?string
     {
         $sortConfigTransfer = $this->get($sortParamName);
 
@@ -112,7 +109,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
      *
      * @return void
      */
-    protected function assertSortConfigTransfer(SortConfigTransfer $sortConfigTransfer)
+    protected function assertSortConfigTransfer(SortConfigTransfer $sortConfigTransfer): void
     {
         $sortConfigTransfer
             ->requireName()

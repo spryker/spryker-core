@@ -7,26 +7,11 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
-interface SearchConfigInterface
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigInterface as SearchExtensionSearchConfigInterface;
+
+/**
+ * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigInterface` instead.
+ */
+interface SearchConfigInterface extends SearchExtensionSearchConfigInterface
 {
-    /**
-     * @api
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
-     */
-    public function getFacetConfigBuilder();
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
-     */
-    public function getSortConfigBuilder();
-
-    /**
-     * @api
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
-     */
-    public function getPaginationConfigBuilder();
 }

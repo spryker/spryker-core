@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Config;
+namespace Spryker\Client\SearchElasticsearch\Plugin\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\Config\PaginationConfigBuilder` instead.
- */
 class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfigBuilderInterface
 {
     /**
@@ -26,7 +23,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
      *
      * @return void
      */
-    public function setPagination(PaginationConfigTransfer $paginationConfigTransfer)
+    public function setPagination(PaginationConfigTransfer $paginationConfigTransfer): void
     {
         $this->paginationConfigTransfer = $paginationConfigTransfer;
     }
@@ -34,7 +31,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
     /**
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
-    public function get()
+    public function get(): PaginationConfigTransfer
     {
         return $this->paginationConfigTransfer;
     }
@@ -44,7 +41,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
      *
      * @return int
      */
-    public function getCurrentPage(array $requestParameters)
+    public function getCurrentPage(array $requestParameters): int
     {
         $paramName = $this->paginationConfigTransfer
             ->requireParameterName()
@@ -58,7 +55,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
      *
      * @return int
      */
-    public function getCurrentItemsPerPage(array $requestParameters)
+    public function getCurrentItemsPerPage(array $requestParameters): int
     {
         $paramName = $this->paginationConfigTransfer->getItemsPerPageParameterName();
 
@@ -75,7 +72,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
      *
      * @return bool
      */
-    protected function isValidItemsPerPage($paramName, array $requestParameters)
+    protected function isValidItemsPerPage(string $paramName, array $requestParameters): bool
     {
         return (
             !empty($requestParameters[$paramName]) &&

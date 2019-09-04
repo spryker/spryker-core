@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Dependency\Plugin;
+namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderInterface` instead.
- */
 interface PaginationConfigBuilderInterface
 {
     /**
@@ -48,3 +45,5 @@ interface PaginationConfigBuilderInterface
      */
     public function getCurrentItemsPerPage(array $requestParameters);
 }
+
+class_alias(PaginationConfigBuilderInterface::class, 'Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface', false);

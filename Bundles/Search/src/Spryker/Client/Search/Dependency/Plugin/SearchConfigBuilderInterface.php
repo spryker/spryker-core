@@ -7,6 +7,11 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderInterface as SearchExtensionSearchConfigBuilderInterface;
+
+/**
+ * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderInterface` instead.
+ */
 interface SearchConfigBuilderInterface
 {
     /**
@@ -36,3 +41,5 @@ interface SearchConfigBuilderInterface
      */
     public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder);
 }
+
+class_alias(SearchConfigBuilderInterface::class, SearchExtensionSearchConfigBuilderInterface::class, false);

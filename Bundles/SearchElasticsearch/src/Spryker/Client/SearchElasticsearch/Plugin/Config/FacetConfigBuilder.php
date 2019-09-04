@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Config;
+namespace Spryker\Client\SearchElasticsearch\Plugin\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\Config\FacetConfigBuilder` instead.
- */
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
     /**
@@ -40,7 +37,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($facetName)
+    public function get($facetName): ?FacetConfigTransfer
     {
         return isset($this->facetConfigTransfers[$facetName]) ? $this->facetConfigTransfers[$facetName] : null;
     }
@@ -48,7 +45,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->facetConfigTransfers;
     }
@@ -56,7 +53,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     /**
      * @return array
      */
-    public function getParamNames()
+    public function getParamNames(): array
     {
         return array_keys($this->facetConfigTransfers);
     }
@@ -66,7 +63,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
-    public function getActive(array $requestParameters)
+    public function getActive(array $requestParameters): array
     {
         $activeFacets = [];
 
@@ -84,7 +81,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
      *
      * @return array
      */
-    public function getActiveParamNames(array $requestParameters)
+    public function getActiveParamNames(array $requestParameters): array
     {
         return array_keys($this->getActive($requestParameters));
     }
@@ -94,7 +91,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
      *
      * @return void
      */
-    protected function assertFacetConfigTransfer(FacetConfigTransfer $facetConfigTransfer)
+    protected function assertFacetConfigTransfer(FacetConfigTransfer $facetConfigTransfer): void
     {
         $facetConfigTransfer
             ->requireName()

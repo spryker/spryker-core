@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Dependency\Plugin;
+namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigBuilderInterface` instead.
- */
 interface SortConfigBuilderInterface
 {
     /**
@@ -57,3 +54,5 @@ interface SortConfigBuilderInterface
      */
     public function getSortDirection($sortParamName);
 }
+
+class_alias(SortConfigBuilderInterface::class, 'Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface', false);
