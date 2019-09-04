@@ -30,14 +30,6 @@ interface EventConstants
 
     /**
      * Specification:
-     * - Is event retrying activated for events (true|false)
-     *
-     * @api
-     */
-    public const EVENT_QUEUE_RETRY_ACTIVE = 'EVENT_QUEUE_RETRY_ACTIVE';
-
-    /**
-     * Specification:
      * - Maximum amount of retrying on failing message
      *
      * @api
