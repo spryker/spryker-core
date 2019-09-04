@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
@@ -22,52 +23,57 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var array
      */
-    private $constants = [];
+    protected $constants = [];
 
     /**
      * @var array
      */
-    private $properties = [];
+    protected $properties = [];
 
     /**
      * @var array
      */
-    private $normalizedProperties = [];
+    protected $normalizedProperties = [];
 
     /**
      * @var array
      */
-    private $methods = [];
+    protected $methods = [];
 
     /**
      * @var array
      */
-    private $constructorDefinition = [];
+    protected $constructorDefinition = [];
 
     /**
      * @var string|null
      */
-    private $deprecationDescription;
+    protected $deprecationDescription;
 
     /**
      * @var bool
      */
-    private $hasArrayObject = false;
+    protected $hasArrayObject = false;
+
+    /**
+     * @var bool
+     */
+    protected $hasDecimal = false;
 
     /**
      * @var array
      */
-    private $propertyNameMap = [];
+    protected $propertyNameMap = [];
 
     /**
      * @var string|null
      */
-    private $entityNamespace;
+    protected $entityNamespace;
 
     /**
      * @var \Spryker\Zed\Transfer\TransferConfig
@@ -113,7 +119,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return $this
      */
-    private function setName($name)
+    protected function setName($name)
     {
         if (!$this->transferConfig->isTransferNameValidated()) {
             return $this->setNameWithoutValidation($name);
@@ -136,7 +142,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return $this
      */
-    private function setNameWithoutValidation(string $name)
+    protected function setNameWithoutValidation(string $name)
     {
         if (strpos($name, 'Transfer') === false) {
             $name .= 'Transfer';
@@ -150,7 +156,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -158,9 +164,17 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return bool
      */
-    public function hasArrayObject()
+    public function hasArrayObject(): bool
     {
         return $this->hasArrayObject;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDecimal(): bool
+    {
+        return $this->hasDecimal;
     }
 
     /**
@@ -168,7 +182,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addConstants(array $properties)
+    protected function addConstants(array $properties): void
     {
         foreach ($properties as $property) {
             $this->addConstant($property);
@@ -180,7 +194,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addConstant(array $property)
+    protected function addConstant(array $property): void
     {
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
@@ -197,7 +211,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addProperties(array $properties)
+    protected function addProperties(array $properties): void
     {
         foreach ($properties as $property) {
             $this->addProperty($property);
@@ -209,7 +223,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addProperty(array $property)
+    protected function addProperty(array $property): void
     {
         $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
@@ -228,7 +242,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function setPropertyNameMap(array $properties)
+    protected function setPropertyNameMap(array $properties): void
     {
         foreach ($properties as $property) {
             $nameCamelCase = $this->getPropertyName($property);
@@ -245,7 +259,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    private function normalizePropertyTypes(array $properties)
+    protected function normalizePropertyTypes(array $properties): array
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
@@ -259,6 +273,10 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if ($this->isTransferOrTransferArray($property['type'])) {
                 $property = $this->buildTransferPropertyDefinition($property);
+            }
+
+            if ($this->isDecimal($property)) {
+                $property = $this->buildDecimalPropertyDefinition($property);
             }
 
             $property['is_typed_array'] = false;
@@ -281,7 +299,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    private function buildTransferPropertyDefinition(array $property)
+    protected function buildTransferPropertyDefinition(array $property): array
     {
         $property['is_transfer'] = true;
         $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
@@ -300,13 +318,35 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
+     * @param array $property
+     *
+     * @return array
+     */
+    protected function buildDecimalPropertyDefinition(array $property): array
+    {
+        $property[self::TYPE_FULLY_QUALIFIED] = Decimal::class;
+
+        return $property;
+    }
+
+    /**
      * @param string $type
      *
      * @return bool
      */
-    private function isTransferOrTransferArray($type)
+    protected function isTransferOrTransferArray($type): bool
     {
-        return (!preg_match('/^int|^integer|^float|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+        return (!preg_match('/^int|^integer|^float|^decimal|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isDecimal(array $property): bool
+    {
+        return $property['type'] === 'decimal';
     }
 
     /**
@@ -314,8 +354,12 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getPropertyType(array $property)
+    protected function getPropertyType(array $property): string
     {
+        if ($this->isDecimal($property)) {
+            return sprintf('\%s|null', Decimal::class);
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -342,7 +386,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isTypeTransferObject(array $property)
+    protected function isTypeTransferObject(array $property): bool
     {
         return ($property['is_transfer']);
     }
@@ -352,8 +396,12 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getSetVar(array $property)
+    protected function getSetVar(array $property): string
     {
+        if ($this->isDecimal($property)) {
+            return sprintf('string|int|float|\%s', Decimal::class);
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -380,7 +428,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getAddVar(array $property)
+    protected function getAddVar(array $property): string
     {
         if ($this->isTypedArray($property)) {
             return preg_replace('/\[\]/', '', $property['type']);
@@ -400,7 +448,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getConstants()
+    public function getConstants(): array
     {
         return $this->constants;
     }
@@ -408,7 +456,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getProperties()
+    public function getProperties(): array
     {
         return $this->properties;
     }
@@ -416,7 +464,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getPropertyNameMap()
+    public function getPropertyNameMap(): array
     {
         return $this->propertyNameMap;
     }
@@ -426,7 +474,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addMethods(array $properties)
+    protected function addMethods(array $properties): void
     {
         foreach ($properties as $property) {
             $this->addPropertyMethods($property);
@@ -438,7 +486,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function addPropertyMethods(array $property)
+    protected function addPropertyMethods(array $property): void
     {
         $this->buildGetterAndSetter($property);
 
@@ -452,7 +500,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getConstructorDefinition()
+    public function getConstructorDefinition(): array
     {
         return $this->constructorDefinition;
     }
@@ -460,7 +508,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         return $this->methods;
     }
@@ -468,7 +516,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
-    public function getNormalizedProperties()
+    public function getNormalizedProperties(): array
     {
         return $this->normalizedProperties;
     }
@@ -476,7 +524,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return string|null
      */
-    public function getDeprecationDescription()
+    public function getDeprecationDescription(): ?string
     {
         return $this->deprecationDescription;
     }
@@ -486,7 +534,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildGetterAndSetter(array $property)
+    protected function buildGetterAndSetter(array $property): void
     {
         $this->buildSetMethod($property);
         $this->buildGetMethod($property);
@@ -497,7 +545,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getPropertyConstantName(array $property)
+    protected function getPropertyConstantName(array $property): string
     {
         $filter = new CamelCaseToUnderscore();
 
@@ -509,7 +557,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getPropertyName(array $property)
+    protected function getPropertyName(array $property): string
     {
         $filter = new UnderscoreToCamelCase();
 
@@ -521,8 +569,12 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string
      */
-    private function getReturnType(array $property)
+    protected function getReturnType(array $property): string
     {
+        if ($this->isDecimal($property)) {
+            return sprintf('\%s|null', Decimal::class);
+        }
+
         if ($this->isTypedArray($property)) {
             $type = preg_replace('/\[\]/', '', $property['type']);
 
@@ -549,7 +601,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isCollection(array $property)
+    protected function isCollection(array $property): bool
     {
         return (bool)preg_match('/((.*?)\[\])/', $property['type']);
     }
@@ -559,7 +611,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isArray(array $property)
+    protected function isArray(array $property): bool
     {
         return ($property['type'] === 'array' || $property['type'] === '[]' || $this->isTypedArray($property));
     }
@@ -569,7 +621,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isAssociativeArray(array $property)
+    protected function isAssociativeArray(array $property): bool
     {
         return isset($property['associative']) && filter_var($property['associative'], FILTER_VALIDATE_BOOLEAN);
     }
@@ -579,9 +631,9 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    private function isTypedArray(array $property)
+    protected function isTypedArray(array $property): bool
     {
-        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
+        return (bool)preg_match('/array\[\]|callable\[\]|int\[\]|integer\[\]|float\[\]|decimal\[\]|string\[\]|bool\[\]|boolean\[\]|iterable\[\]|object\[\]|resource\[\]|mixed\[\]/', $property['type']);
     }
 
     /**
@@ -589,7 +641,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool|string
      */
-    private function getTypeHint(array $property)
+    protected function getTypeHint(array $property)
     {
         if ($this->isArray($property) && isset($property['associative'])) {
             return false;
@@ -597,6 +649,12 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isArray($property)) {
             return 'array';
+        }
+
+        if ($this->isDecimal($property)) {
+            $this->hasDecimal = true;
+
+            return false;
         }
 
         if (preg_match('/^(string|int|integer|float|bool|boolean)$/', $property['type'])) {
@@ -617,7 +675,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool|string
      */
-    private function getAddTypeHint(array $property)
+    protected function getAddTypeHint(array $property)
     {
         if (preg_match('/^(string|int|integer|float|bool|boolean|mixed|resource|callable|iterable|array|\[\])/', $property['type'])) {
             return false;
@@ -631,7 +689,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildGetMethod(array $property)
+    protected function buildGetMethod(array $property): void
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'get' . ucfirst($propertyName);
@@ -651,7 +709,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildSetMethod(array $property)
+    protected function buildSetMethod(array $property): void
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'set' . ucfirst($propertyName);
@@ -660,12 +718,17 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
+            'decimal' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
         ];
         $method = $this->addTypeHint($property, $method);
-        $method = $this->addDefaultNull($method['typeHint'], $property, $method);
+        $method = $this->addDefaultNull($method, $property);
+
+        if ($this->isDecimal($property)) {
+            $method['decimal'] = true;
+        }
 
         $this->methods[$methodName] = $method;
     }
@@ -675,7 +738,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildAddMethod(array $property)
+    protected function buildAddMethod(array $property): void
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);
@@ -717,7 +780,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    private function addTypeHint(array $property, array $method)
+    protected function addTypeHint(array $property, array $method): array
     {
         $typeHint = $this->getTypeHint($property);
         if ($typeHint) {
@@ -728,17 +791,21 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @param string $typeHint
-     * @param array $property
      * @param array $method
+     * @param array $property
      *
      * @return array
      */
-    private function addDefaultNull($typeHint, array $property, array $method)
+    protected function addDefaultNull(array $method, array $property): array
     {
         $method['hasDefaultNull'] = false;
 
-        if ($typeHint && (!$this->isCollection($property) || $typeHint === 'array')) {
+        if ($this->isDecimal($property)) {
+            $method['hasDefaultNull'] = true;
+        }
+
+        if ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array')) {
+            $method['typeHint'] = sprintf('?%s', $method['typeHint']);
             $method['hasDefaultNull'] = true;
         }
 
@@ -750,7 +817,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function buildRequireMethod(array $property)
+    protected function buildRequireMethod(array $property): void
     {
         $propertyName = $this->getPropertyName($property);
         $methodName = 'require' . ucfirst($propertyName);
@@ -770,7 +837,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertProperty(array $property)
+    protected function assertProperty(array $property): void
     {
         $this->assertPropertyName($property['name']);
         $this->assertPropertyAssociative($property);
@@ -783,7 +850,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyName($propertyName)
+    protected function assertPropertyName($propertyName): void
     {
         if (!preg_match('/^[a-zA-Z][a-zA-Z0-9]+$/', $propertyName)) {
             throw new InvalidNameException(sprintf(
@@ -799,7 +866,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyAssociative(array $property)
+    protected function assertPropertyAssociative(array $property): void
     {
         if (isset($property['associative'])) {
             $this->assertPropertyAssociativeType($property);
@@ -814,7 +881,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyAssociativeValue(array $property)
+    protected function assertPropertyAssociativeValue(array $property): void
     {
         if (!preg_match('(true|false|1|0)', $property['associative'])) {
             throw new InvalidAssociativeValueException(
@@ -830,7 +897,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    private function assertPropertyAssociativeType(array $property)
+    protected function assertPropertyAssociativeType(array $property): void
     {
         if (!$this->isArray($property) && !$this->isCollection($property)) {
             throw new InvalidAssociativeTypeException(sprintf(
@@ -845,7 +912,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return string|null
      */
-    private function getPropertyDeprecationDescription(array $property)
+    protected function getPropertyDeprecationDescription(array $property): ?string
     {
         return isset($property['deprecated']) ? $property['deprecated'] : null;
     }
@@ -855,7 +922,7 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return void
      */
-    protected function addEntityNamespace(array $definition)
+    protected function addEntityNamespace(array $definition): void
     {
         if (isset($definition['entity-namespace'])) {
             $this->entityNamespace = $definition['entity-namespace'];
@@ -863,9 +930,9 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEntityNamespace()
+    public function getEntityNamespace(): ?string
     {
         return $this->entityNamespace;
     }

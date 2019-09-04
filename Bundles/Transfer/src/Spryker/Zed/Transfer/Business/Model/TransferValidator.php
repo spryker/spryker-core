@@ -51,6 +51,7 @@ class TransferValidator implements TransferValidatorInterface
     protected $simpleTypeWhitelist = [
         'int',
         'float',
+        'decimal',
         'string',
         'bool',
         'callable',

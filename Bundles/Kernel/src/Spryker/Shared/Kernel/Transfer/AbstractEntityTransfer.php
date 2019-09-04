@@ -31,11 +31,12 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
      *
      * @return $this
      */
-    public function fromArray(array $data, $acceptVirtualProperties = false)
+    public function fromArray(array $data, bool $acceptVirtualProperties = false)
     {
         foreach ($data as $property => $value) {
             if ($this->hasProperty($property, $acceptVirtualProperties) === false) {
                 $this->virtualProperties[$property] = $value;
+
                 continue;
             }
 
@@ -48,8 +49,8 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
                 $value = $this->initializeNestedTransferObject($property, $value, $acceptVirtualProperties);
             }
 
-            $this->$property = $value;
-            $this->modifiedProperties[$property] = true;
+            $propertySetterMethod = $this->getSetterMethod($property);
+            $this->$propertySetterMethod($value);
         }
 
         return $this;
