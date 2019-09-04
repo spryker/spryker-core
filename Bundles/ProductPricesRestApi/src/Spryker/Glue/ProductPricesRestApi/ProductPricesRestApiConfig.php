@@ -11,6 +11,8 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ProductPricesRestApiConfig extends AbstractBundleConfig
 {
+    protected const PERMISSION_CHECK_ENABLED = false;
+
     public const RESOURCE_ABSTRACT_PRODUCT_PRICES = 'abstract-product-prices';
     public const RESOURCE_CONCRETE_PRODUCT_PRICES = 'concrete-product-prices';
 
@@ -25,4 +27,12 @@ class ProductPricesRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAILS_INVALID_CURRENCY = 'Currency is invalid.';
     public const RESPONSE_CODE_INVALID_PRICE_MODE = '314';
     public const RESPONSE_DETAILS_INVALID_PRICE_MODE = 'Price mode is invalid.';
+
+    /**
+     * @return bool
+     */
+    public function getPermissionCheckEnabled(): bool
+    {
+        return static::PERMISSION_CHECK_ENABLED;
+    }
 }

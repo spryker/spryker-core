@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductPricesRestApi\Processor\Expander;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\PermissionAwareTrait;
 use Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface;
+use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 
 class ConcreteProductPricesRelationshipExpander implements ConcreteProductPricesRelationshipExpanderInterface
 {
@@ -21,11 +22,20 @@ class ConcreteProductPricesRelationshipExpander implements ConcreteProductPrices
     protected $concreteProductPricesReader;
 
     /**
-     * @param \Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface $concreteProductPricesReader
+     * @var \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig
      */
-    public function __construct(ConcreteProductPricesReaderInterface $concreteProductPricesReader)
-    {
+    protected $productPricesRestApiConfig;
+
+    /**
+     * @param \Spryker\Glue\ProductPricesRestApi\Processor\ConcreteProductPrices\ConcreteProductPricesReaderInterface $concreteProductPricesReader
+     * @param \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig $productPricesRestApiConfig
+     */
+    public function __construct(
+        ConcreteProductPricesReaderInterface $concreteProductPricesReader,
+        ProductPricesRestApiConfig $productPricesRestApiConfig
+    ) {
         $this->concreteProductPricesReader = $concreteProductPricesReader;
+        $this->productPricesRestApiConfig = $productPricesRestApiConfig;
     }
 
     /**
@@ -36,7 +46,7 @@ class ConcreteProductPricesRelationshipExpander implements ConcreteProductPrices
      */
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): array
     {
-        if (!$this->can('SeePricePermissionPlugin')) {
+        if ($this->productPricesRestApiConfig->getPermissionCheckEnabled() && !$this->can('SeePricePermissionPlugin')) {
             return $resources;
         }
 

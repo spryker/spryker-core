@@ -119,7 +119,7 @@ class ConcreteProductPricesReader implements ConcreteProductPricesReaderInterfac
 
         $priceProductTransfers = $this
             ->priceProductStorageClient
-            ->resolvePriceProductConcrete(
+            ->getResolvedPriceProductConcreteTransfers(
                 $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
                 $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]
             );
