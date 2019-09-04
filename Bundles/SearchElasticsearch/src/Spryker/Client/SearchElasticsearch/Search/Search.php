@@ -108,8 +108,11 @@ class Search implements SearchInterface
     {
         $indexName = null;
 
-        if (method_exists($query, 'getIndexName')) {
-            $indexName = $this->indexNameResolver->resolve($query->getIndexName());
+        if (method_exists($query, 'getSearchContext')) {
+            /** @var \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer */
+            $searchContextTransfer = $query->getSearchContext();
+            $sourceName = $searchContextTransfer->getElasticsearchContext()->getSourceName();
+            $indexName = $this->indexNameResolver->resolve($sourceName);
         }
 
         return $indexName;
