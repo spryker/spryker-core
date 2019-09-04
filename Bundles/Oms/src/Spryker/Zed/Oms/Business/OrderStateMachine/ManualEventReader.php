@@ -50,10 +50,6 @@ class ManualEventReader implements ManualEventReaderInterface
     public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
-        if ($orderTransfer === null) {
-            return [];
-        }
-
         $itemTransfers = $orderTransfer->getItems();
         $events = $this->orderItemManualEventReader->getManualEventsByIdSalesOrder($itemTransfers);
 
