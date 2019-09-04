@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -31,41 +30,5 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         return $this->getFactory()
             ->createOrderItemMatrixMapper()
             ->mapOrderItemMatrix($orderItemsMatrixResult->getArrayCopy());
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    public function getSalesOrderItemsByIdSalesOrder(int $idSalesOrder): array
-    {
-        $orderItemEntities = $this->getFactory()
-            ->getSalesQueryContainer()
-            ->querySalesOrderItemsByIdSalesOrder($idSalesOrder)
-            ->find();
-
-        return $this->mapOrderItemEntitiesToItemTransfers($orderItemEntities);
-    }
-
-    /**
-     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItemEntities
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function mapOrderItemEntitiesToItemTransfers(iterable $orderItemEntities): array
-    {
-        $omsOrderItemMapper = $this->getFactory()->createOrderItemMapper();
-        $itemTransfers = [];
-
-        foreach ($orderItemEntities as $orderItemEntity) {
-            $itemTransfers[] = $omsOrderItemMapper->mapOrderItemEntityToItemTransfer($orderItemEntity, new ItemTransfer());
-
-            /**
-             * @todo Call additional shipment mapper or expander.
-             */
-        }
-
-        return $itemTransfers;
     }
 }

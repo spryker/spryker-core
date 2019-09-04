@@ -223,7 +223,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OrderHydratorWithMultiShippingAddress(
             $this->getQueryContainer(),
             $this->getOmsFacade(),
-            $this->createSalesOrderItemGrouper(),
             $this->getHydrateOrderPlugins()
         );
     }

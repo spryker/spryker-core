@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToPriceFacadeBridge;
@@ -40,6 +41,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_TAX = 'FACADE_TAX';
     public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
     public const SHIPMENT_GROUPS_SANITIZER_PLUGINS = 'SHIPMENT_GROUPS_SANITIZER_PLUGINS';
@@ -206,6 +208,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCalculationFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
+            return new ShipmentToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addShipmentService(Container $container): Container
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
@@ -248,6 +264,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDeliveryTimePlugins($container);
         $container = $this->addShipmentGroupsSanitizerPlugins($container);
         $container = $this->addPriceFacade($container);
+        $container = $this->addCalculationFacade($container);
 
         return $container;
     }

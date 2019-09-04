@@ -367,8 +367,9 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Expand quote items with shipments.
-     * - Expand quote expenses with shipment expenses.
+     * - Expands quote items with shipments.
+     * - Expands quote expenses with shipment expenses.
+     * - Executes CalculationFacadeInterface::recalculateQuote() method.
      *
      * @api
      *
@@ -411,9 +412,9 @@ interface ShipmentFacadeInterface
      * @api
      *
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function groupEventsByShipment(array $events, array $orderItemTransfers): array;
+    public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array;
 }

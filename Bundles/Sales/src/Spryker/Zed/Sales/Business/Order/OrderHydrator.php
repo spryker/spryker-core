@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Sales\Business\Order;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -17,34 +16,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator as OrderHydratorWithoutMultiShipping;
-use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
-use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderHydrator extends OrderHydratorWithoutMultiShipping
 {
-    /**
-     * @var \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface
-     */
-    protected $orderItemGrouper;
-
-    /**
-     * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface $orderItemGrouper
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
-     */
-    public function __construct(
-        SalesQueryContainerInterface $queryContainer,
-        SalesToOmsInterface $omsFacade,
-        SalesOrderItemGrouperInterface $orderItemGrouper,
-        array $hydrateOrderPlugins = []
-    ) {
-        parent::__construct($queryContainer, $omsFacade, $hydrateOrderPlugins);
-
-        $this->orderItemGrouper = $orderItemGrouper;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -96,35 +70,6 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
         }
 
         return $this->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getCustomerOrder(OrderTransfer $orderTransfer)
-    {
-        $orderTransfer = parent::getCustomerOrder($orderTransfer);
-
-        return $this->groupUniqueOrderItems($orderTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function groupUniqueOrderItems(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        $uniqueOrderItemCollection = $this->orderItemGrouper->getUniqueOrderItems($orderTransfer->getItems());
-
-        $orderItemsWithNumericIndexes = new ArrayObject();
-        foreach ($uniqueOrderItemCollection as $itemTransfer) {
-            $orderItemsWithNumericIndexes->append($itemTransfer);
-        }
-
-        return $orderTransfer->setItems($orderItemsWithNumericIndexes);
     }
 
     /**

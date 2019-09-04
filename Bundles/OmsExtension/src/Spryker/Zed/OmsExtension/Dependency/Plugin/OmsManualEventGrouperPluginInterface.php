@@ -16,9 +16,9 @@ interface OmsManualEventGrouperPluginInterface
      * @api
      *
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function group(array $events, array $orderItemTransfers): array;
+    public function group(array $events, iterable $orderItemTransfers): array;
 }

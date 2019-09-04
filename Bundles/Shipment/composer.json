@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/calculation": "^4.8.0",
     "spryker/calculation-extension": "^1.0.0",
     "spryker/country": "^3.0.0",
     "spryker/currency": "^3.1.0",
@@ -26,7 +27,6 @@
   },
   "require-dev": {
     "spryker/application": "*",
-    "spryker/calculation": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
@@ -37,7 +37,6 @@
     "spryker/zed-navigation": "*"
   },
   "suggest": {
-    "spryker/calculation": "If you want to use Calculation plugins.",
     "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {

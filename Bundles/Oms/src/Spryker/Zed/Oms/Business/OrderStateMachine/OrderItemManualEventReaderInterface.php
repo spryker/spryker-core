@@ -10,9 +10,9 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 interface OrderItemManualEventReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return string[][]
      */
-    public function getManualEventsByIdSalesOrder(array $orderItemTransfers): array;
+    public function getManualEventsByIdSalesOrder(iterable $orderItemTransfers): array;
 }

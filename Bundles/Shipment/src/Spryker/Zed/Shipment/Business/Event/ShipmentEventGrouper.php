@@ -11,11 +11,11 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
 {
     /**
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function groupEventsByShipment(array $events, array $orderItemTransfers): array
+    public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array
     {
         $events = $this->groupEventsByIdSalesShipment($events, $orderItemTransfers);
 
@@ -24,11 +24,11 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
 
     /**
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    protected function groupEventsByIdSalesShipment(array $events, array $orderItemTransfers): array
+    protected function groupEventsByIdSalesShipment(array $events, iterable $orderItemTransfers): array
     {
         $groupedEvents = [];
 

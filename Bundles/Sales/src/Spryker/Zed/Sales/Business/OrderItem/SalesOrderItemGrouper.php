@@ -21,6 +21,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
         $calculatedOrderItems = [];
         foreach ($itemTransfers as $itemTransfer) {
             $key = $itemTransfer->requireGroupKey()->getGroupKey();
+
             if (!isset($calculatedOrderItems[$key])) {
                 $calculatedOrderItems[$key] = clone $itemTransfer;
                 continue;

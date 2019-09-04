@@ -24,7 +24,7 @@ class SalesController extends AbstractController
      *
      * @return array
      */
-    public function shipmentExpensesAction(Request $request)
+    public function thresholdExpensesAction(Request $request)
     {
         /** @var \Generated\Shared\Transfer\OrderTransfer|null $orderTransfer */
         $orderTransfer = $request->attributes->get('orderTransfer');

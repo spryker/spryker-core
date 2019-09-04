@@ -74,6 +74,7 @@ use Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategy
 use Spryker\Zed\Shipment\Business\StrategyResolver\ShipmentExpenseFilterStrategyResolverInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
 use Spryker\Zed\Shipment\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
+use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToPriceFacadeInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
@@ -582,6 +583,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeInterface
+     */
+    public function getCalculationFacade(): ShipmentToCalculationFacadeInterface
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CALCULATION);
+    }
+
+    /**
      * @return \Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpanderInterface
      */
     public function createQuoteShipmentExpander(): QuoteShipmentExpanderInterface
@@ -591,6 +600,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->createMethodReader(),
             $this->createExpenseSanitizer(),
             $this->createShipmentMapper(),
+            $this->getCalculationFacade(),
             $this->getShipmentGroupsSanitizerPlugins()
         );
     }

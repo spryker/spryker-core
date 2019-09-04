@@ -11,9 +11,9 @@ interface ShipmentEventGrouperInterface
 {
     /**
      * @param array $events
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
      * @return array
      */
-    public function groupEventsByShipment(array $events, array $orderItemTransfers): array;
+    public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array;
 }
