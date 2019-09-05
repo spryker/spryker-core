@@ -20,6 +20,9 @@ use Twig\TwigFunction;
  */
 class PriceModeSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected static $functionName = 'spyPriceModeSwitch';
 
     /**

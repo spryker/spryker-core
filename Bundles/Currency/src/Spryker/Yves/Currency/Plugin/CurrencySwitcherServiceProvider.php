@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     protected static $functionName = 'spyCurrencySwitch';
 
     /**
