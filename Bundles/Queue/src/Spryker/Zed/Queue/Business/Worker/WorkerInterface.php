@@ -11,8 +11,9 @@ interface WorkerInterface
 {
     /**
      * @param string $command
+     * @param string[] $options
      *
      * @return void
      */
-    public function start($command);
+    public function start(string $command, array $options = []): void;
 }
