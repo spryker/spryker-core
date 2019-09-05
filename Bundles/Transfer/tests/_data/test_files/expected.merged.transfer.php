@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use ArrayObject;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -18,6 +19,8 @@ class FooBarTransfer extends AbstractTransfer
     public const NAME = 'name';
 
     public const BLA = 'bla';
+
+    public const NUMBER = 'number';
 
     public const SELF_REFERENCE = 'selfReference';
 
@@ -32,6 +35,11 @@ class FooBarTransfer extends AbstractTransfer
     protected $bla;
 
     /**
+     * @var \Spryker\DecimalObject\Decimal|null
+     */
+    protected $number;
+
+    /**
      * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
     protected $selfReference;
@@ -44,6 +52,8 @@ class FooBarTransfer extends AbstractTransfer
         'Name' => 'name',
         'bla' => 'bla',
         'Bla' => 'bla',
+        'number' => 'number',
+        'Number' => 'number',
         'self_reference' => 'selfReference',
         'selfReference' => 'selfReference',
         'SelfReference' => 'selfReference',
@@ -58,6 +68,7 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -67,6 +78,17 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'bla',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
+            'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
+        ],
+        self::NUMBER => [
+            'type' => 'Spryker\DecimalObject\Decimal',
+            'name_underscore' => 'number',
+            'is_collection' => false,
+            'is_transfer' => false,
+            'is_value_object' => true,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -76,6 +98,7 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'self_reference',
             'is_collection' => true,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -152,6 +175,47 @@ class FooBarTransfer extends AbstractTransfer
     public function requireBla()
     {
         $this->assertPropertyIsSet(self::BLA);
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string|int|float|\Spryker\DecimalObject\Decimal|null $number
+     *
+     * @return $this
+     */
+    public function setNumber($number = null)
+    {
+        if ($number !== null && !$number instanceof Decimal) {
+            $number = new Decimal($number);
+        }
+
+        $this->number = $number;
+        $this->modifiedProperties[self::NUMBER] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \Spryker\DecimalObject\Decimal|null
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireNumber()
+    {
+        $this->assertPropertyIsSet(self::NUMBER);
 
         return $this;
     }

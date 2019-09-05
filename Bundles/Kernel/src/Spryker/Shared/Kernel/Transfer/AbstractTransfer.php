@@ -161,18 +161,29 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
             }
 
-            if ($this->transferMetadata[$property]['is_transfer'] || $this->transferMetadata[$property]['type'] === 'array') {
-                $this->$property = $value;
-                $this->modifiedProperties[$property] = true;
-
-                continue;
-            }
-
-            $propertySetterMethod = $this->getSetterMethod($property);
-            $this->$propertySetterMethod($value);
+            $this->assignValue($property, $value);
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $propertyName
+     * @param \ArrayObject|mixed|\Spryker\Shared\Kernel\Transfer\TransferInterface|null $value
+     *
+     * @return void
+     */
+    protected function assignValue(string $propertyName, $value): void
+    {
+        if ($this->transferMetadata[$propertyName]['is_value_object'] ?? false) {
+            $propertySetterMethod = $this->getSetterMethod($propertyName);
+            $this->$propertySetterMethod($value);
+
+            return;
+        }
+
+        $this->$propertyName = $value;
+        $this->modifiedProperties[$propertyName] = true;
     }
 
     /**
@@ -269,9 +280,9 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param mixed $value
      * @param bool $ignoreMissingProperty
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    protected function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false): TransferInterface
+    protected function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false): ?TransferInterface
     {
         $type = $this->transferMetadata[$property]['type'];
 
