@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQueryExpanderPlugin;
+use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SpellingSuggestionQueryExpanderPlugin;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SpellingSuggestionResultFormatterPlugin` instead.
- *
- * @method \Spryker\Client\Search\SearchFactory getFactory()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
 class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
@@ -33,7 +31,7 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
      *
      * @return string|null
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
+    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): ?string
     {
         $suggests = $searchResult->getSuggests();
         $spellingSuggestion = $this->extractSpellingSuggestion($suggests);
@@ -46,7 +44,7 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
      *
      * @return string|null
      */
-    protected function extractSpellingSuggestion(array $suggests)
+    protected function extractSpellingSuggestion(array $suggests): ?string
     {
         if (!isset($suggests[SpellingSuggestionQueryExpanderPlugin::SUGGESTION_NAME])) {
             return null;

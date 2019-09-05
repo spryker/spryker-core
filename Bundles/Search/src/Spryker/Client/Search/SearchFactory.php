@@ -98,6 +98,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Elastica\Client
      */
     public function getElasticsearchClient()
@@ -203,6 +205,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface
      */
     public function createAggregationExtractorFactory()

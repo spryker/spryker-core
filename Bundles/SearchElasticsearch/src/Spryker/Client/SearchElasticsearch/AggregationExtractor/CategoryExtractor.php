@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use ArrayObject;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor` instead.
- */
 class CategoryExtractor implements AggregationExtractorInterface
 {
     public const DOC_COUNT = 'doc_count';
@@ -37,7 +35,7 @@ class CategoryExtractor implements AggregationExtractorInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters)
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         $name = $this->facetConfigTransfer->getName();
 
@@ -61,7 +59,7 @@ class CategoryExtractor implements AggregationExtractorInterface
      *
      * @return \ArrayObject
      */
-    protected function extractFacetData(array $aggregation)
+    protected function extractFacetData(array $aggregation): ArrayObject
     {
         $facetValues = new ArrayObject();
         foreach ($aggregation['buckets'] as $bucket) {

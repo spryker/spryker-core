@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpanderPlugin;
+use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\CompletionResultFormatterPlugin` instead.
- *
- * @method \Spryker\Client\Search\SearchFactory getFactory()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
 class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
@@ -45,7 +43,7 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
      *
      * @return array
      */
-    protected function getCompletionFromSuggests(ResultSet $searchResult)
+    protected function getCompletionFromSuggests(ResultSet $searchResult): array
     {
         $result = [];
         $aggregation = $searchResult->getAggregation(CompletionQueryExpanderPlugin::AGGREGATION_NAME);

@@ -5,23 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
-use Spryker\Shared\Search\SearchConfig;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory` instead.
- */
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
-    public function create(FacetConfigTransfer $facetConfigTransfer)
+    public function create(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         return $this->createByType($facetConfigTransfer);
     }
@@ -29,18 +27,18 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
-    protected function createByType(FacetConfigTransfer $facetConfigTransfer)
+    protected function createByType(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         switch ($facetConfigTransfer->getType()) {
-            case SearchConfig::FACET_TYPE_RANGE:
+            case SearchElasticsearchConfig::FACET_TYPE_RANGE:
                 return $this->createRangeExtractor($facetConfigTransfer);
 
-            case SearchConfig::FACET_TYPE_PRICE_RANGE:
+            case SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createPriceRangeExtractor($facetConfigTransfer);
 
-            case SearchConfig::FACET_TYPE_CATEGORY:
+            case SearchElasticsearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryExtractor($facetConfigTransfer);
 
             default:
@@ -51,9 +49,9 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
-    protected function createRangeExtractor(FacetConfigTransfer $facetConfigTransfer)
+    protected function createRangeExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         return new RangeExtractor($facetConfigTransfer);
     }
@@ -61,9 +59,9 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
-    protected function createPriceRangeExtractor(FacetConfigTransfer $facetConfigTransfer)
+    protected function createPriceRangeExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         return new PriceRangeExtractor($facetConfigTransfer, $this->createMoneyPlugin());
     }
@@ -71,9 +69,9 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
-    protected function createFacetExtractor(FacetConfigTransfer $facetConfigTransfer)
+    protected function createFacetExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         return new FacetExtractor($facetConfigTransfer, $this->createFacetValueTransformerFactory());
     }
@@ -81,9 +79,9 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorInterface
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface
      */
-    protected function createCategoryExtractor(FacetConfigTransfer $facetConfigTransfer)
+    protected function createCategoryExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         return new CategoryExtractor($facetConfigTransfer);
     }
@@ -91,15 +89,15 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     /**
      * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
      */
-    protected function createMoneyPlugin()
+    protected function createMoneyPlugin(): MoneyPluginInterface
     {
         return new MoneyPlugin();
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactory
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactory
      */
-    protected function createFacetValueTransformerFactory()
+    protected function createFacetValueTransformerFactory(): FacetValueTransformerFactoryInterface
     {
         return new FacetValueTransformerFactory();
     }

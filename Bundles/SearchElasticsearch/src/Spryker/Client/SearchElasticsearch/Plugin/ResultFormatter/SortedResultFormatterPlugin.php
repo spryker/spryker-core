@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SortedResultFormatterPlugin` instead.
- *
- * @method \Spryker\Client\Search\SearchFactory getFactory()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
 class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
@@ -33,7 +31,7 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
      *
      * @return \Generated\Shared\Transfer\SortSearchResultTransfer
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
+    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): SortSearchResultTransfer
     {
         $sortConfig = $this
             ->getFactory()

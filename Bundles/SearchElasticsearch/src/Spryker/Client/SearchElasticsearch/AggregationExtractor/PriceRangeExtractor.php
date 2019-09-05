@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\PriceRangeExtractor` instead.
- */
 class PriceRangeExtractor extends RangeExtractor
 {
     /**
@@ -37,7 +35,7 @@ class PriceRangeExtractor extends RangeExtractor
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters)
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         /** @var \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeResultTransfer */
         $rangeResultTransfer = parent::extractDataFromAggregations($aggregations, $requestParameters);

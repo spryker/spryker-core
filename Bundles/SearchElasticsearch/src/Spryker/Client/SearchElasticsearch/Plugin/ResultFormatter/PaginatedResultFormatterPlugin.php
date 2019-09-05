@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFormatterPlugin` instead.
- *
- * @method \Spryker\Client\Search\SearchFactory getFactory()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
 class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
@@ -33,7 +31,7 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
      *
      * @return \Generated\Shared\Transfer\PaginationSearchResultTransfer
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
+    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): PaginationSearchResultTransfer
     {
         $paginationConfig = $this
             ->getFactory()

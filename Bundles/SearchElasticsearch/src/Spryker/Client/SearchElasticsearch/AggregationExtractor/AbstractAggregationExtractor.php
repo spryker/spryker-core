@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AbstractAggregationExtractor\RangeExtractor` instead.
- */
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     public const PATH_SEPARATOR = '.';
@@ -23,7 +20,7 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
      *
      * @return string
      */
-    protected function getNestedFieldName(FacetConfigTransfer $facetConfigTransfer)
+    protected function getNestedFieldName(FacetConfigTransfer $facetConfigTransfer): string
     {
         $nestedFieldName = $facetConfigTransfer->getFieldName();
 
@@ -43,8 +40,8 @@ abstract class AbstractAggregationExtractor implements AggregationExtractorInter
      *
      * @return string
      */
-    protected function addNestedFieldPrefix($fieldName, $nestedFieldName)
+    protected function addNestedFieldPrefix(string $fieldName, string $nestedFieldName): string
     {
-        return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
+        return sprintf('%s%s%s', $fieldName, static::PATH_SEPARATOR, $nestedFieldName);
     }
 }

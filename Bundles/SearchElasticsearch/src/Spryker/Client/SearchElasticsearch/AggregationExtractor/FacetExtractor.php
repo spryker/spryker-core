@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use ArrayObject;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
-use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
+use Spryker\Client\SearchElasticsearch\Aggregation\StringFacetAggregation;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetExtractor` instead.
- */
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     public const DOC_COUNT = 'doc_count';
@@ -26,18 +24,18 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
     protected $facetConfigTransfer;
 
     /**
-     * @var \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface
+     * @var \Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface
      */
     protected $facetValueTransformerFactory;
 
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null
+     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null
      */
     protected $valueTransformerPlugin;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface $facetValueTransformerFactory
+     * @param \Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface $facetValueTransformerFactory
      */
     public function __construct(FacetConfigTransfer $facetConfigTransfer, FacetValueTransformerFactoryInterface $facetValueTransformerFactory)
     {
@@ -52,7 +50,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters)
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
         $name = $this->facetConfigTransfer->getName();

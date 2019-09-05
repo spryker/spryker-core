@@ -32,3 +32,5 @@ interface ResultFormatterPluginInterface
      */
     public function formatResult($searchResult, array $requestParameters = []);
 }
+
+class_alias(ResultFormatterPluginInterface::class, 'Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface', false);

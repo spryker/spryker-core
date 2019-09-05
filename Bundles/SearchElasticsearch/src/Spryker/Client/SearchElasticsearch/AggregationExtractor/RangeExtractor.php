@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
-use Spryker\Client\Search\Model\Elasticsearch\Aggregation\NumericFacetAggregation;
+use Spryker\Client\SearchElasticsearch\Aggregation\NumericFacetAggregation;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\RangeExtractor` instead.
- */
 class RangeExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     /**
@@ -35,7 +33,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters)
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         $rangeResultTransfer = new RangeSearchResultTransfer();
         $rangeResultTransfer

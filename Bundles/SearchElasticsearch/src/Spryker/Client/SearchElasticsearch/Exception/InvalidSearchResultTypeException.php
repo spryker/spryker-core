@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Exception;
+namespace Spryker\Client\SearchElasticsearch\Exception;
 
 use Exception;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Exception\InvalidSearchResultTypeException` instead.
- */
 class InvalidSearchResultTypeException extends Exception
 {
 }

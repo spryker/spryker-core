@@ -5,16 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
+namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
+use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\FacetResultFormatterPlugin` instead.
- *
- * @method \Spryker\Client\Search\SearchFactory getFactory()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
 class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
@@ -24,7 +22,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return static::NAME;
     }
@@ -68,7 +66,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      *
      * @return array
      */
-    protected function getAggregationRawData(array $aggregations, FacetConfigTransfer $facetConfigTransfer)
+    protected function getAggregationRawData(array $aggregations, FacetConfigTransfer $facetConfigTransfer): array
     {
         $fieldName = $this->getFieldName($facetConfigTransfer);
         $bucketName = $this->getBucketName($facetConfigTransfer);
@@ -89,7 +87,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      *
      * @return string
      */
-    protected function getBucketName(FacetConfigTransfer $facetConfigTransfer)
+    protected function getBucketName(FacetConfigTransfer $facetConfigTransfer): string
     {
         return FacetQueryExpanderPlugin::AGGREGATION_GLOBAL_PREFIX . $facetConfigTransfer->getName();
     }
@@ -99,7 +97,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      *
      * @return string
      */
-    protected function getFieldName(FacetConfigTransfer $facetConfigTransfer)
+    protected function getFieldName(FacetConfigTransfer $facetConfigTransfer): string
     {
         if ($facetConfigTransfer->getAggregationParams()) {
             return $this->addNestedFieldPrefix(
@@ -117,7 +115,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
      *
      * @return string
      */
-    protected function addNestedFieldPrefix($fieldName, $nestedFieldName)
+    protected function addNestedFieldPrefix(string $fieldName, string $nestedFieldName): string
     {
         return $fieldName . static::PATH_SEPARATOR . $nestedFieldName;
     }

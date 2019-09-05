@@ -14,6 +14,8 @@ use Spryker\Client\SearchElasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\SearchElasticsearch\Aggregation\AggregationBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\SearchElasticsearch\Aggregation\FacetAggregationFactoryInterface;
+use Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory;
+use Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface;
 use Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactory;
 use Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\Config\FacetConfigBuilder;
@@ -209,6 +211,14 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSuggestBuilder(): SuggestBuilderInterface
     {
         return new SuggestBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface
+     */
+    public function createAggregationExtractorFactory(): AggregationExtractorFactoryInterface
+    {
+        return new AggregationExtractorFactory();
     }
 
     /**

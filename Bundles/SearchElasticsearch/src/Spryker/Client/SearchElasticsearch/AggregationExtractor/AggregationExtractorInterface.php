@@ -5,11 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
+namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
-/**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorInterface` instead.
- */
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+
 interface AggregationExtractorInterface
 {
     /**
@@ -18,5 +17,5 @@ interface AggregationExtractorInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters);
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface;
 }
