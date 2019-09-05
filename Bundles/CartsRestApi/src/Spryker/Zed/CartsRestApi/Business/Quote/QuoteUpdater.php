@@ -132,13 +132,14 @@ class QuoteUpdater implements QuoteUpdaterInterface
                 ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
-        if (!$quoteCollectionTransfer->getQuotes()->count()) {
+        $guestQuotes = $quoteCollectionTransfer->getQuotes();
+        if (!$guestQuotes->count()) {
             return (new QuoteResponseTransfer())
                 ->setIsSuccessful(false);
         }
 
         $registeredCustomerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
-        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $quoteCollectionTransfer);
+        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuotes[0]);
 
         return $this->performUpdatingQuote($quoteTransfer);
     }
@@ -162,32 +163,32 @@ class QuoteUpdater implements QuoteUpdaterInterface
                 ->setCustomerReference($oauthResponseTransfer->getAnonymousCustomerReference())
         );
 
-        if (!$guestQuoteCollectionTransfer->getQuotes()->count()) {
+        $guestQuotes = $guestQuoteCollectionTransfer->getQuotes();
+        if (!$guestQuotes->count()) {
             return;
         }
 
-        if (!$guestQuoteCollectionTransfer->getQuotes()[0]->getItems()->count()) {
+        if (!$guestQuotes[0]->getItems()->count()) {
             return;
         }
 
         $registeredCustomerReference = $oauthResponseTransfer->getCustomerReference();
-        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuoteCollectionTransfer);
+        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuotes[0]);
 
         $this->performUpdatingQuote($quoteTransfer);
     }
 
     /**
      * @param string $registeredCustomerReference
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function createQuoteTransfer(
         string $registeredCustomerReference,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+        QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
         $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
-        $quoteTransfer = $quoteCollectionTransfer->getQuotes()[0];
         $quoteTransfer->setCustomerReference($registeredCustomerReference);
 
         return $quoteTransfer->setCustomer($registeredCustomer);
