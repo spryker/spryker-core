@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Oms\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderTransfer;
-
 class OmsToSalesBridge implements OmsToSalesInterface
 {
     /**
@@ -32,15 +30,5 @@ class OmsToSalesBridge implements OmsToSalesInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer|null
-     */
-    public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
-    {
-        $this->salesFacade->findOrderByIdSalesOrder($idSalesOrder);
     }
 }

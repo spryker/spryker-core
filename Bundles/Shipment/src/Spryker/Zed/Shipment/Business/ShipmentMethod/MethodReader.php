@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface as DeprecatedShipmentMethodFilterPluginInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 
@@ -46,13 +45,13 @@ class MethodReader implements MethodReaderInterface
     protected $methodDeliveryTimeReader;
 
     /**
-     * @var array|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]|\Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     * @var array|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
      */
     protected $shipmentMethodFilters;
 
     /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]|\Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface $methodAvailabilityChecker
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface $methodPriceReader
@@ -173,17 +172,6 @@ class MethodReader implements MethodReaderInterface
         iterable $shipmentGroupCollection
     ): void {
         foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
-            if (!($shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface)) {
-                $shipmentMethodCollection = $this->applyShipmentFilterWithShipmentMethodCollection(
-                    $quoteTransfer,
-                    $shipmentMethodsTransfer,
-                    $shipmentMethodFilter
-                );
-                $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
-
-                continue;
-            }
-
             $shipmentMethodCollection = $this->applyShipmentFilterWithShipmentGroup(
                 $quoteTransfer,
                 $shipmentMethodsTransfer,
@@ -221,28 +209,6 @@ class MethodReader implements MethodReaderInterface
 
         return $shipmentMethodFilter->filterShipmentMethods(
             $shipmentGroupTransfer,
-            $quoteTransfer
-        );
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface $shipmentMethodFilter
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
-     */
-    protected function applyShipmentFilterWithShipmentMethodCollection(
-        QuoteTransfer $quoteTransfer,
-        ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        DeprecatedShipmentMethodFilterPluginInterface $shipmentMethodFilter
-    ): ArrayObject {
-        $shipmentMethodCollection = $shipmentMethodsTransfer->getMethods();
-
-        return $shipmentMethodFilter->filterShipmentMethods(
-            $shipmentMethodCollection,
             $quoteTransfer
         );
     }

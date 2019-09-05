@@ -122,9 +122,6 @@ class TriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event');
-        $itemsList = $request->query->get('items');
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');

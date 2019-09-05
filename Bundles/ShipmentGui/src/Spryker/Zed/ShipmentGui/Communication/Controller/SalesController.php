@@ -20,7 +20,7 @@ class SalesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Spryker\Zed\Sales\Business\Exception\OrderNotFoundException
+     * @throws \Spryker\Zed\ShipmentGui\Communication\Exception\OrderNotFoundException
      *
      * @return array
      */
