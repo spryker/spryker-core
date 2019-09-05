@@ -10,7 +10,7 @@
         <id-method-parameter value="spy_cms_slot_template_pk_seq"/>
 
         <unique name="spy_cms_slot_template-path">
-            <unique-column name="path" size="767"/>
+            <unique-column name="path"/>
         </unique>
     </table>
 
