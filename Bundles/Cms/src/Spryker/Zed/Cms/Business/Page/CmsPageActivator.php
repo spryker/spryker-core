@@ -94,7 +94,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
             $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
         );
 
-        if (!$pageTemplatePlaceholders) {
+        if (!count($pageTemplatePlaceholders)) {
             return true;
         }
 
