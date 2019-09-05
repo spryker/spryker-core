@@ -27,8 +27,6 @@ class AuthRestApiZedStub implements AuthRestApiZedStubInterface
     }
 
     /**
-     * Specification: specification
-     *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
