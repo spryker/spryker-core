@@ -193,6 +193,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         return (new QuoteApprovalResponseTransfer())
             ->setIsSuccessful(true)
+            ->setQuoteApproval($quoteApprovalTransfer)
             ->addMessage(
                 $this->createMessageTransfer(
                     static::GLOSSARY_KEY_APPROVAL_CREATED,
