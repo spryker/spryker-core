@@ -13,7 +13,9 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 interface AuthRestApiClientInterface
 {
     /**
-     * Specification: specification
+     * Specification:
+     * - Returns new access token when user provider return valid user.
+     * - Makes call to Zed.
      *
      * @api
      *

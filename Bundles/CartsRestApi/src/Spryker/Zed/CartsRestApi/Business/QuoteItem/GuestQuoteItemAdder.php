@@ -141,7 +141,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         }
 
         $questQuote = $guestQuotes[0];
-
         if (!$questQuote->getItems()->count()) {
             return;
         }
@@ -158,6 +157,24 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $customerQuote = $customerQuotes[0];
 
+        $this->addGuestQuoteItemsToCustomerCart($questQuote, $customerQuote, $customerReference);
+
+        $questQuote->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
+        $this->quoteFacade->deleteQuote($questQuote);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $questQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $customerQuote
+     * @param string $customerReference
+     *
+     * @return void
+     */
+    protected function addGuestQuoteItemsToCustomerCart(
+        QuoteTransfer $questQuote,
+        QuoteTransfer $customerQuote,
+        string $customerReference
+    ): void {
         foreach ($questQuote->getItems() as $item) {
             $cartItemRequestTransfer = (new CartItemRequestTransfer())
                 ->setQuoteUuid($customerQuote->getUuid())
@@ -167,9 +184,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
             $this->addItem($cartItemRequestTransfer);
         }
-
-        $questQuote->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
-        $this->quoteFacade->deleteQuote($questQuote);
     }
 
     /**

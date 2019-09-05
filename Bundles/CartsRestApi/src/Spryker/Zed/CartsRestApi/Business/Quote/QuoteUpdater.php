@@ -166,9 +166,9 @@ class QuoteUpdater implements QuoteUpdaterInterface
             return;
         }
 
-//        if (!$guestQuoteCollectionTransfer->getQuotes()[0]->getItems()->count()) {
-//            return;
-//        }
+        if (!$guestQuoteCollectionTransfer->getQuotes()[0]->getItems()->count()) {
+            return;
+        }
 
         $registeredCustomerReference = $oauthResponseTransfer->getCustomerReference();
         $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuoteCollectionTransfer);

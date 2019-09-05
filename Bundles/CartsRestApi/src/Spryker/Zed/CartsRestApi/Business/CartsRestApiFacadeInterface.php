@@ -162,7 +162,8 @@ interface CartsRestApiFacadeInterface
     public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Adds items from guest quote to customer quote.
      *
      * @api
      *
@@ -173,7 +174,8 @@ interface CartsRestApiFacadeInterface
     public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Updates non-empty guest quote to new customer quote.
      *
      * @api
      *

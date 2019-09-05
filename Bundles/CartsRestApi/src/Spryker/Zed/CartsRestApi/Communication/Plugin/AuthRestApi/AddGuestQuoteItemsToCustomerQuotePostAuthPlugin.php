@@ -19,7 +19,7 @@ class AddGuestQuoteItemsToCustomerQuotePostAuthPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritdoc}
-     * -
+     * - Adds guest quote items to customer quote.
      *
      * @api
      *

@@ -19,7 +19,7 @@ class UpdateGuestQuoteToCustomerQuotePostAuthPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritdoc}
-     * -
+     * - Updates non-empty guest quote to new customer quote.
      *
      * @api
      *

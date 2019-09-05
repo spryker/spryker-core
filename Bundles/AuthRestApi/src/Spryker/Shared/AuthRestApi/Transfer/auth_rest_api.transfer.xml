@@ -32,12 +32,12 @@
     </transfer>
 
     <transfer name="OauthRequest">
-        <property name="customerReference" type="string"/>
+        <property name="customerReference" type="string" />
     </transfer>
 
     <transfer name="OauthResponse">
-        <property name="anonymousCustomerReference" type="string"/>
-        <property name="customerReference" type="string"/>
+        <property name="anonymousCustomerReference" type="string" />
+        <property name="customerReference" type="string" />
     </transfer>
 
 </transfers>

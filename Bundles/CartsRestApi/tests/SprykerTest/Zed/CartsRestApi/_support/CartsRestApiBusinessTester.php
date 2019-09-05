@@ -78,18 +78,6 @@ class CartsRestApiBusinessTester extends Actor
         ],
     ];
 
-    public const ITEMS = [
-        [
-            'sku' => 'test sku',
-            'quantity' => '666',
-
-        ],
-        [
-            'sku' => 'test sku 2',
-            'quantity' => '666',
-        ],
-    ];
-
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

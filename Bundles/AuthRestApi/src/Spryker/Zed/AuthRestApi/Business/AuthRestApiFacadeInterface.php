@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 interface AuthRestApiFacadeInterface
 {
     /**
+     * Specification:
+     *  - Process token request.
+     *  - Executes post auth plugins.
+     *  - Returns new access token when user provider return valid user.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
