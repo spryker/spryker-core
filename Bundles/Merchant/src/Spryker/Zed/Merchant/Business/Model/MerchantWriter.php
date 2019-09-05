@@ -164,7 +164,7 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantAddressCollectionTransfer = $merchantTransfer->getAddressCollection();
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->handleMerchantAddressCollectionSave(
+        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->saveMerchantAddressCollection(
             $merchantAddressCollectionTransfer,
             $merchantTransfer->getIdMerchant()
         );
@@ -180,7 +180,7 @@ class MerchantWriter implements MerchantWriterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->handleMerchantAddressCollectionSave(
+        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->saveMerchantAddressCollection(
             $merchantTransfer->getAddressCollection(),
             $merchantTransfer->getIdMerchant()
         );

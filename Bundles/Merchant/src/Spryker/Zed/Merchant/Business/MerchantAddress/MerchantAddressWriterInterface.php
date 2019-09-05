@@ -32,5 +32,5 @@ interface MerchantAddressWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
      */
-    public function handleMerchantAddressCollectionSave(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer;
+    public function saveMerchantAddressCollection(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer;
 }

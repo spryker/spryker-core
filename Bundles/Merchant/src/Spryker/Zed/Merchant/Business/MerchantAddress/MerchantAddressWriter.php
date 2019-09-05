@@ -56,13 +56,13 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
      */
-    public function handleMerchantAddressCollectionSave(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer
+    public function saveMerchantAddressCollection(MerchantAddressCollectionTransfer $merchantAddressCollectionTransfer, int $idMerchant): MerchantAddressCollectionTransfer
     {
         $savedMerchantAddressCollectionTransfer = new MerchantAddressCollectionTransfer();
 
         foreach ($merchantAddressCollectionTransfer->getAddresses() as $merchantAddressTransfer) {
             $merchantAddressTransfer->setFkMerchant($idMerchant);
-            $savedMerchantAddressCollectionTransfer->addAddress($this->saveMerchantAddressCollection($merchantAddressTransfer));
+            $savedMerchantAddressCollectionTransfer->addAddress($this->saveMerchantAddress($merchantAddressTransfer));
         }
 
         return $savedMerchantAddressCollectionTransfer;
@@ -73,7 +73,7 @@ class MerchantAddressWriter implements MerchantAddressWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantAddressTransfer
      */
-    protected function saveMerchantAddressCollection(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
+    protected function saveMerchantAddress(MerchantAddressTransfer $merchantAddressTransfer): MerchantAddressTransfer
     {
         if ($merchantAddressTransfer->getIdMerchantAddress() === null) {
             return $this->create($merchantAddressTransfer);
