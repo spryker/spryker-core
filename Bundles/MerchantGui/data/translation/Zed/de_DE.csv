@@ -9,18 +9,22 @@
 "Merchant updated successfully.","Händler erfolgreich aktualisiert."
 "Merchant with id %s doesn't exists.","Händler mit der ID %s existiert nicht."
 "Overview of Merchants","Übersicht der Händler"
-Save,Speichern,
-E-Mail,E-Mail
-City,Stadt
-Zip Code,Postleitzahl
-Country,Land
-Street,Straße
-Number,Nummer
-Addition to address,Zusatz zur Adresse
-Name,Name
-Registration number,Registrierungsnummer
-Contact person first name,Vorname des Ansprechpartners
-Contact person last name,Nachname des Ansprechpartners
-Contact person phone,Ansprechpartner Telefon
-Contact person title,Titel der Kontaktperson
-Email,Email
+"Save","Speichern"
+"waiting-for-approval","warten auf die bestätigung"
+"approved","genehmigt"
+"active","aktiv"
+"inactive","inaktiv"
+"E-Mail","E-Mail"
+"City","Stadt"
+"Zip Code","Postleitzahl"
+"Country","Land"
+"Street","Straße"
+"Number","Nummer"
+"Addition to address","Zusatz zur Adresse"
+"Name","Name"
+"Registration number","Registrierungsnummer"
+"Contact person first name","Vorname des Ansprechpartners"
+"Contact person last name","Nachname des Ansprechpartners"
+"Contact person phone","Ansprechpartner Telefon"
+"Contact person title","Titel der Kontaktperson"
+"Email","Email"
