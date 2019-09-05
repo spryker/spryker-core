@@ -39,8 +39,8 @@ class SessionClientServiceProvider extends AbstractPlugin implements ServiceProv
      */
     public function boot(Application $app)
     {
-        $searchClient = $this->getClient();
-        $searchClient->setContainer($this->getSessionService($app));
+        $sessionClient = $this->getClient();
+        $sessionClient->setContainer($this->getSessionService($app));
     }
 
     /**

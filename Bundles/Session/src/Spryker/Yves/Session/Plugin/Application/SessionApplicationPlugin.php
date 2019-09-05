@@ -116,8 +116,8 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      */
     public function boot(ContainerInterface $container): ContainerInterface
     {
-        $searchClient = $this->getClient();
-        $searchClient->setContainer($this->getSessionService($container));
+        $sessionClient = $this->getClient();
+        $sessionClient->setContainer($this->getSessionService($container));
 
         return $container;
     }

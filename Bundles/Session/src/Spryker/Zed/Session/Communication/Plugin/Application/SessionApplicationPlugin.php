@@ -60,8 +60,8 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
             return $container;
         }
 
-        $searchClient = $this->getFactory()->getSessionClient();
-        $searchClient->setContainer($this->getSessionService($container));
+        $sessionClient = $this->getFactory()->getSessionClient();
+        $sessionClient->setContainer($this->getSessionService($container));
 
         return $container;
     }
