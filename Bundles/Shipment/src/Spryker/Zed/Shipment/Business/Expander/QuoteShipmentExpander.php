@@ -163,7 +163,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
-            $this->updateItemShipmentReferences($shipmentGroupTransfer);
+            $this->updateItemLevelShipmentReferences($shipmentGroupTransfer);
         }
 
         return $shipmentGroupCollection;
@@ -174,7 +174,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
      *
      * @return void
      */
-    protected function updateItemShipmentReferences(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    protected function updateItemLevelShipmentReferences(ShipmentGroupTransfer $shipmentGroupTransfer): void
     {
         $shipmentTransfer = $shipmentGroupTransfer->getShipment();
         foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
