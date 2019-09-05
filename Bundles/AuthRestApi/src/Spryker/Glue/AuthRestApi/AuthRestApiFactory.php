@@ -35,7 +35,6 @@ class AuthRestApiFactory extends AbstractFactory
     public function createAccessTokensReader(): AccessTokensReaderInterface
     {
         return new AccessTokensReader(
-            $this->getOauthClient(),
             $this->getClient(),
             $this->getResourceBuilder(),
             $this->getConfig()
