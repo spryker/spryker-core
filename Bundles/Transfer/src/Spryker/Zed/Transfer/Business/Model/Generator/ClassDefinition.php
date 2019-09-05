@@ -268,6 +268,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $property[self::TYPE_FULLY_QUALIFIED] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
+            $property['is_value_object'] = false;
             $property['propertyConst'] = $this->getPropertyConstantName($property);
             $property['name_underscore'] = mb_strtolower($property['propertyConst']);
 
@@ -324,6 +325,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function buildDecimalPropertyDefinition(array $property): array
     {
+        $property['is_value_object'] = true;
         $property[self::TYPE_FULLY_QUALIFIED] = Decimal::class;
 
         return $property;
@@ -800,12 +802,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($this->isDecimal($property)) {
-            $method['hasDefaultNull'] = true;
-        }
-
-        if ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array')) {
-            $method['typeHint'] = sprintf('?%s', $method['typeHint']);
+        if ($this->isDecimal($property) || ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array'))) {
             $method['hasDefaultNull'] = true;
         }
 

@@ -21,6 +21,7 @@
             'name_underscore' => '{{ property.name_underscore }}',
             'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
             'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
+            'is_value_object' => {{ property.is_value_object ? 'true' : 'false' }},
             'rest_request_parameter' => '{{ property.restRequestParameter is defined ? property.restRequestParameter : 'no' }}',
             'is_associative' => {{ property.is_associative ? 'true' : 'false' }},
             'is_nullable' => {{ property.nullable ? 'true' : 'false' }},
@@ -80,7 +81,7 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }}{% if method.hasDefaultNull %} = null{% endif %})
     {
-        {% if method.typeHint == "?array" -%}
+        {% if method.typeHint == "array" -%}
         if (${{ method.property }} === null) {
             ${{ method.property }} = [];
         }

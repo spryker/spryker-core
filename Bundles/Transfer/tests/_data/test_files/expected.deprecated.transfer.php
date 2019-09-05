@@ -84,6 +84,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'scalar_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -93,6 +94,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'array_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -102,6 +104,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'transfer_field',
             'is_collection' => false,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -111,6 +114,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'transfer_collection_field',
             'is_collection' => true,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -169,7 +173,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setArrayField(?array $arrayField = null)
+    public function setArrayField(array $arrayField = null)
     {
         if ($arrayField === null) {
             $arrayField = [];
@@ -233,7 +237,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setTransferField(?DeprecatedFooBarTransfer $transferField = null)
+    public function setTransferField(DeprecatedFooBarTransfer $transferField = null)
     {
         $this->transferField = $transferField;
         $this->modifiedProperties[self::TRANSFER_FIELD] = true;

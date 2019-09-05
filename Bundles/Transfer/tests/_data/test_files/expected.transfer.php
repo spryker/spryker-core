@@ -107,6 +107,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -116,6 +117,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'item',
             'is_collection' => false,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -125,6 +127,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'items',
             'is_collection' => true,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -134,6 +137,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'typed_array',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -143,6 +147,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'typed_associative_string_array',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => true,
             'is_nullable' => false,
@@ -152,6 +157,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'typed_associative_collection',
             'is_collection' => true,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => true,
             'is_nullable' => false,
@@ -161,6 +167,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'typed_not_associative_string_array',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -170,6 +177,7 @@ class CatFaceTransfer extends AbstractTransfer
             'name_underscore' => 'typed_not_associative_array',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -220,7 +228,7 @@ class CatFaceTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setItem(?ItemTransfer $item = null)
+    public function setItem(ItemTransfer $item = null)
     {
         $this->item = $item;
         $this->modifiedProperties[self::ITEM] = true;
@@ -309,7 +317,7 @@ class CatFaceTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function setTypedArray(?array $typedArray = null)
+    public function setTypedArray(array $typedArray = null)
     {
         if ($typedArray === null) {
             $typedArray = [];
