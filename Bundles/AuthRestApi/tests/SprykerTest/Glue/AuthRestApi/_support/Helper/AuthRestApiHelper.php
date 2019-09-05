@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Glue\AuthRestApi\Helper;
 
-use Codeception\Util\HttpCode;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerTest\Glue\Testify\Helper\GlueRest;
 

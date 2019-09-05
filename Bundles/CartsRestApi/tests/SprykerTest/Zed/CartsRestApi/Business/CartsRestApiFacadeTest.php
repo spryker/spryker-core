@@ -585,19 +585,16 @@ class CartsRestApiFacadeTest extends Unit
     public function testUpdateGuestQuoteToCustomerQuoteWillUpdateGuestQuoteToCustomerQuote(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
-        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
-        $quoteTransferForGuest = $this->tester->prepareQuoteTransferForGuest();
-
-        $quoteCollectionTransfer1 = $this->cartsRestApiFacade
-            ->getQuoteCollection($quoteCriteriaFilterTransfer);
+        $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
 
         $this->cartsRestApiFacade
             ->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
 
-        $this->cartsRestApiFacade->createQuote($quoteTransferForGuest);
+        $quoteResponseTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid($quoteTransfer);
 
-        $quoteCollectionTransfer2 = $this->cartsRestApiFacade
-            ->getQuoteCollection($quoteCriteriaFilterTransfer);
+        $this->assertEquals($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(), $oauthResponseTransfer->getCustomerReference());
+        $this->assertNotEquals($quoteTransfer->getItems()->count(), $quoteResponseTransfer->getQuoteTransfer()->getItems()->count());
     }
 
     /**

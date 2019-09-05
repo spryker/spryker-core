@@ -52,17 +52,6 @@ class AuthRestApiBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OauthRequestTransfer
-     */
-    public function prepareOauthRequestTransferWithoutCustomerReference(): OauthRequestTransfer
-    {
-        /** @var \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer */
-        $oauthRequestTransfer = (new OauthRequestBuilder())->build();
-
-        return $oauthRequestTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
     public function prepareOauthResponseTransfer(): OauthResponseTransfer
@@ -71,6 +60,23 @@ class AuthRestApiBusinessTester extends Actor
         $oauthRequestTransfer = (new OauthResponseBuilder(
             [
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'isValid' => true,
+            ]
+        ))->build();
+
+        return $oauthRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function prepareInvalidOauthResponseTransfer(): OauthResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
+        $oauthRequestTransfer = (new OauthResponseBuilder(
+            [
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'isValid' => false,
             ]
         ))->build();
 

@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\AuthRestApi\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\AuthRestApi\Business\AuthRestApiBusinessFactory;
 use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeBridge;
 use Spryker\Zed\Oauth\Business\OauthFacade;
@@ -33,32 +32,38 @@ class AuthRestApiFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\AuthRestApi\Business\AuthRestApiFacadeInterface
-     */
-    protected $authRestApiFacade;
-
-    /**
      * @return void
      */
-    public function setUp(): void
+    public function testProcessAccessTokenWillProcessAccessToken(): void
     {
-        parent::setUp();
+        /**
+         * @var \Spryker\Zed\AuthRestApi\Business\AuthRestApiFacade $authRestApiFacade
+         */
+        $authRestApiFacade = $this->tester->getFacade();
+        $authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactory($authRestApiFacade));
+        $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
-        $this->authRestApiFacade = $this->tester->getFacade();
-        $this->authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactory());
+        $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
+
+        $this->assertInstanceOf(OauthResponseTransfer::class, $oauthResponseTransfer);
+        $this->assertTrue($oauthResponseTransfer->getIsValid());
     }
 
     /**
      * @return void
      */
-    public function testProcessAccessTokenWillProcessAccessToken(): void
+    public function testProcessAccessTokenWillNotProcessAccessToken(): void
     {
+        /**
+         * @var \Spryker\Zed\AuthRestApi\Business\AuthRestApiFacade $authRestApiFacade
+         */
+        $authRestApiFacade = $this->tester->getFacade();
+        $authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactoryWithInvalidProcessAccessTokenRequest());
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
-        $oauthResponseTransfer = $this->authRestApiFacade->processAccessToken($oauthRequestTransfer);
-
+        $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
         $this->assertInstanceOf(OauthResponseTransfer::class, $oauthResponseTransfer);
-        $this->assertEquals($oauthResponseTransfer->getCustomerReference(), $this->tester::TEST_CUSTOMER_REFERENCE);
+        $this->assertFalse($oauthResponseTransfer->getIsValid());
     }
 
     /**
@@ -80,6 +85,24 @@ class AuthRestApiFacadeTest extends Unit
     }
 
     /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getMockAuthRestApiBusinessFactoryWithInvalidProcessAccessTokenRequest(): MockObject
+    {
+        $authRestApiBusinessFactoryMock = $this->createPartialMock(
+            AuthRestApiBusinessFactory::class,
+            [
+                'getOauthFacade',
+                'getPostAuthPlugins',
+            ]
+        );
+
+        $authRestApiBusinessFactoryMock = $this->addMockOauthFacadeWithInvalidProcessAccessTokenRequest($authRestApiBusinessFactoryMock);
+
+        return $authRestApiBusinessFactoryMock;
+    }
+
+    /**
      * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -95,6 +118,29 @@ class AuthRestApiFacadeTest extends Unit
 
         $oauthFacadeMock->method('processAccessTokenRequest')
             ->willReturn($this->tester->prepareOauthResponseTransfer());
+
+        $authRestApiBusinessFactoryMock->method('getOauthFacade')
+            ->willReturn((new AuthRestApiToOauthFacadeBridge($oauthFacadeMock)));
+
+        return $authRestApiBusinessFactoryMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addMockOauthFacadeWithInvalidProcessAccessTokenRequest(MockObject $authRestApiBusinessFactoryMock): MockObject
+    {
+        $oauthFacadeMock = $this->createPartialMock(
+            OauthFacade::class,
+            [
+                'processAccessTokenRequest',
+            ]
+        );
+
+        $oauthFacadeMock->method('processAccessTokenRequest')
+            ->willReturn($this->tester->prepareInvalidOauthResponseTransfer());
 
         $authRestApiBusinessFactoryMock->method('getOauthFacade')
             ->willReturn((new AuthRestApiToOauthFacadeBridge($oauthFacadeMock)));
