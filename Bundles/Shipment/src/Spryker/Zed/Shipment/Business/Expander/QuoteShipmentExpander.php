@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
@@ -177,13 +178,34 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
         ShipmentTransfer $shipmentTransfer
     ): ?ShipmentMethodTransfer {
-        $shipmentSelection = (int)$shipmentTransfer->getShipmentSelection();
+        $shipmentSelection = $shipmentTransfer->getShipmentSelection();
+        if ($shipmentSelection === ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            return $this->findNoShipmentMethod($shipmentMethodsTransfer);
+        }
+
+        $shipmentSelection = (int)$shipmentSelection;
         if ($shipmentSelection === 0) {
             return null;
         }
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $shipmentSelection) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findNoShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer): ?ShipmentMethodTransfer
+    {
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getName() === ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
                 return $shipmentMethodTransfer;
             }
         }
