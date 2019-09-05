@@ -17,14 +17,7 @@ class EventConfig extends AbstractBundleConfig
     public const DEFAULT_EVENT_MESSAGE_CHUNK_SIZE = 1000;
     public const DEFAULT_EVENT_CHUNK_SIZE = 500;
     public const DEFAULT_MAX_RETRY = 1;
-
-    /**
-     * @deprecated This is added only for BC reason and will
-     * be removed in the next major.
-     *
-     * @var bool|null
-     */
-    protected static $eventRetryQueueActive;
+    public const NO_RETRY = 0;
 
     /**
      * @return string|null
@@ -63,13 +56,17 @@ class EventConfig extends AbstractBundleConfig
      */
     public function getMaxRetryAmount()
     {
-        return $this->getConfig()->get(EventConstants::MAX_RETRY_ON_FAIL, function () {
-            if (!$this->isEventRetryQueueExists()) {
-                return 0;
-            }
+        $maxRetry = $this->getConfig()->get(EventConstants::MAX_RETRY_ON_FAIL, false);
 
-            return static::DEFAULT_EVENT_MESSAGE_CHUNK_SIZE;
-        });
+        if ($maxRetry) {
+            return $maxRetry;
+        }
+
+        if (!$this->isEventRetryQueueExists()) {
+            return static::NO_RETRY;
+        }
+
+        return static::DEFAULT_MAX_RETRY;
     }
 
     /**
@@ -80,19 +77,15 @@ class EventConfig extends AbstractBundleConfig
      */
     protected function isEventRetryQueueExists(): bool
     {
-        if (static::$eventRetryQueueActive === null) {
-            static::$eventRetryQueueActive = false;
-            $bundleConfigResolver = new BundleConfigResolver();
-            try {
-                /** @var \Spryker\Client\RabbitMq\RabbitMqConfig $config */
-                $config = $bundleConfigResolver->resolve('\Spryker\Client\RabbitMq\RabbitMqFactory');
-                static::$eventRetryQueueActive = $this->hasEventRetryQueueConfig($config);
-            } catch (BundleConfigNotFoundException $exception) {
-                static::$eventRetryQueueActive = false;
-            }
-        }
+        $bundleConfigResolver = new BundleConfigResolver();
+        try {
+            /** @var \Spryker\Client\RabbitMq\RabbitMqConfig $config */
+            $config = $bundleConfigResolver->resolve('\Spryker\Client\RabbitMq\RabbitMqFactory');
 
-        return static::$eventRetryQueueActive;
+            return $this->hasEventRetryQueueConfig($config);
+        } catch (BundleConfigNotFoundException $exception) {
+            return false;
+        }
     }
 
     /**
