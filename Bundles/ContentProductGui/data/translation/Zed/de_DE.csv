@@ -1,13 +1,19 @@
-"Abstract Product List","Abstract Product List"
-Actions,Actions
-"Add more products","Add more products"
-Delete,Delete
+"Abstract Product List","Abstrakte Produktliste"
+Actions,Aktionen
+Active,Aktiv
+"Add more products","Weitere Produkte hinzufügen"
+"Add to list","Zur Liste hinzufügen"
+content_product_abstract_list.template.bottom-title,"Titel unten"
+content_product_abstract_list.template.default,Standard
+content_product_abstract_list.template.top-title,"Titel oben"
+Delete,Löschen
 ID,ID
-Image,Image
-"Move Down","Move Down"
-"Move Up","Move Up"
+Image,Bild
+Inactive,"Nicht aktiv"
+"Move Down",Runter
+"Move Up",Hoch
 Name,Name
-Selected,Selected
+Selected,Ausgewählt
 SKU,SKU
 Status,Status
 Stores,Stores

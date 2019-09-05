@@ -159,7 +159,6 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected function mapPriceProductStoreEntityToTransfer(
         SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductTransfer {
-
         $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
 
         $priceTypeTransfer = (new PriceTypeTransfer())
@@ -180,7 +179,8 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer)
-            ->setIsMergeable(true);
+            ->setIsMergeable(true)
+            ->setSkuProduct($this->findProductSku($priceProductEntity));
     }
 
     /**
@@ -191,7 +191,6 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected function getPriceProductDimensionTransfer(
         SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductDimensionTransfer {
-
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
@@ -199,5 +198,20 @@ class PriceProductMapper implements PriceProductMapperInterface
             );
 
         return $priceProductDimensionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity
+     *
+     * @return string|null
+     */
+    protected function findProductSku(SpyPriceProduct $priceProductEntity): ?string
+    {
+        $productEntity = $priceProductEntity->getProduct();
+        if ($productEntity === null) {
+            return null;
+        }
+
+        return $productEntity->getSku();
     }
 }

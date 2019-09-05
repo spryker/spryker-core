@@ -70,7 +70,6 @@ class ResponseBuilderTest extends Unit
         ResponsePaginationInterface $responsePaginationMock,
         ResponseRelationshipInterface $responseRelationshipMock
     ): ResponseBuilderInterface {
-
         return new ResponseBuilder('', $responsePaginationMock, $responseRelationshipMock);
     }
 

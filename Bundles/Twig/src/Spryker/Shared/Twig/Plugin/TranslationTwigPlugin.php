@@ -9,10 +9,13 @@ namespace Spryker\Shared\Twig\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Twig\Environment;
 
+/**
+ * @deprecated Use `\Spryker\Yves\Translator\Plugin\Twig\TranslatorTwigPlugin` instead.
+ * @deprecated Use `\Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin` instead.
+ */
 class TranslationTwigPlugin implements TwigPluginInterface
 {
     protected const SERVICE_TRANSLATOR = 'translator';
@@ -29,7 +32,7 @@ class TranslationTwigPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        if (!class_exists(RoutingExtension::class) || $container->has(static::SERVICE_TRANSLATOR) === false) {
+        if (!class_exists(TranslationExtension::class) || $container->has(static::SERVICE_TRANSLATOR) === false) {
             return $twig;
         }
 

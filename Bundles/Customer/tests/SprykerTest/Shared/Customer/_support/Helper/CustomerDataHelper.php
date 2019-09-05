@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Shared\Customer\Helper;
 
+use Codeception\Exception\TestRuntimeException;
 use Codeception\Module;
 use Codeception\Util\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
@@ -28,6 +29,8 @@ class CustomerDataHelper extends Module
     /**
      * @param array $override
      *
+     * @throws \Codeception\Exception\TestRuntimeException
+     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function haveCustomer(array $override = []): CustomerTransfer
@@ -37,14 +40,38 @@ class CustomerDataHelper extends Module
             ->withShippingAddress()
             ->build();
 
+        $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer);
+
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
+        if (!$customerResponseTransfer->getIsSuccess() || $customerResponseTransfer->getCustomerTransfer() === null) {
+            throw new TestRuntimeException(sprintf('Could not create customer %s', $customerTransfer->getEmail()));
+        }
+
         $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer) {
-            $this->getCustomerFacade()
-                ->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
+            $this->debug(sprintf('Deleting Customer: %s', $customerResponseTransfer->getCustomerTransfer()->getEmail()));
+            $this->getCustomerFacade()->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
 
-        return $customerTransfer;
+        return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function ensureCustomerWithReferenceDoesNotExist(CustomerTransfer $customerTransfer): void
+    {
+        if (!$customerTransfer->getCustomerReference()) {
+            return;
+        }
+
+        $customerTransferFound = $this->getCustomerFacade()->findByReference($customerTransfer->getCustomerReference());
+
+        if ($customerTransferFound) {
+            $this->getCustomerFacade()->deleteCustomer($customerTransferFound);
+        }
     }
 
     /**

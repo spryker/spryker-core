@@ -201,4 +201,14 @@ class StoreReader implements StoreReaderInterface
     {
         return $this->store->getCountries();
     }
+
+    /**
+     * @param string[] $storeNames
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        return $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
+    }
 }

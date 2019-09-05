@@ -41,6 +41,20 @@ interface DevelopmentFacadeInterface
     public function runTest($module, array $options = []);
 
     /**
+     * Specification:
+     * - Runs the vendor/bin/codecept fixtures command with options
+     * - If options contains "initialize", it will also run vendor/bin/codecept build
+     *
+     * @api
+     *
+     * @param string|null $module
+     * @param array $options
+     *
+     * @return void
+     */
+    public function runFixtures($module, array $options = []);
+
+    /**
      * @api
      *
      * @param string|null $module
@@ -414,4 +428,17 @@ interface DevelopmentFacadeInterface
      * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
      */
     public function getModuleOverview(): array;
+
+    /**
+     * Specification:
+     * - Returns the composer name for a module if module is not ambiguous.
+     * - Returns null when the module name was found in more than one organization.
+     *
+     * @api
+     *
+     * @param string $moduleName
+     *
+     * @return string|null
+     */
+    public function findComposerNameByModuleName(string $moduleName): ?string;
 }

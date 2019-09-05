@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,21 +63,6 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @param string $command
-     * @param array $arguments
-     *
-     * @return int
-     */
-    protected function runDependingCommand($command, array $arguments = [])
-    {
-        $command = $this->getApplication()->find($command);
-        $arguments['command'] = $command;
-        $input = new ArrayInput($arguments);
-
-        return $command->run($input, $this->output);
-    }
-
-    /**
      * @return string[]
      */
     protected function getDependingCommands()
@@ -86,17 +70,44 @@ class PropelInstallConsole extends Console
         $noDiffOption = $this->input->getOption(self::OPTION_NO_DIFF);
 
         $dependingCommands = [
-            ConvertConfigConsole::COMMAND_NAME,
             CreateDatabaseConsole::COMMAND_NAME,
             PostgresqlCompatibilityConsole::COMMAND_NAME,
             SchemaCopyConsole::COMMAND_NAME,
             BuildModelConsole::COMMAND_NAME,
+            EntityTransferGeneratorConsole::COMMAND_NAME,
         ];
         if ($noDiffOption === false) {
             $dependingCommands[] = DiffConsole::COMMAND_NAME;
         }
         $dependingCommands[] = MigrateConsole::COMMAND_NAME;
 
-        return $dependingCommands;
+        return $this->filterOutNonRegisteredCommands($dependingCommands);
+    }
+
+    /**
+     * @param string[] $commands
+     *
+     * @return string[]
+     */
+    protected function filterOutNonRegisteredCommands(array $commands): array
+    {
+        $filteredCommands = [];
+
+        foreach ($commands as $command) {
+            if ($this->getApplication()->has($command)) {
+                $filteredCommands[] = $command;
+
+                continue;
+            }
+
+            $this->output->writeln(
+                sprintf(
+                    '<fg=red>There is no command defined with the name "%s". Make sure the command was registered properly.</>',
+                    $command
+                )
+            );
+        }
+
+        return $filteredCommands;
     }
 }

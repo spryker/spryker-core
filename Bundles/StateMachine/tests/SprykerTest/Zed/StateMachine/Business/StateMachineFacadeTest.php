@@ -17,10 +17,13 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
+use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
 use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
 use SprykerTest\Zed\StateMachine\Mocks\StateMachineConfig;
@@ -53,7 +56,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerForNewStateMachineItemWhenInitialProcessIsSuccessShouldNotifyHandlerStateChange()
+    public function testTriggerForNewStateMachineItemWhenInitialProcessIsSuccessShouldNotifyHandlerStateChange(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -90,7 +93,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTriggerEventForItemWithManualEventShouldMoveToNextStateWithManualEvent()
+    public function testTriggerEventForItemWithManualEventShouldMoveToNextStateWithManualEvent(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -119,7 +122,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessesShouldReturnListOfProcessesAddedToHandler()
+    public function testGetProcessesShouldReturnListOfProcessesAddedToHandler(): void
     {
         $processName = static::TEST_PROCESS_NAME;
 
@@ -142,7 +145,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateMachineProcessIdShouldReturnIdStoredInPersistence()
+    public function testGetStateMachineProcessIdShouldReturnIdStoredInPersistence(): void
     {
         $processName = static::TEST_PROCESS_NAME;
 
@@ -166,7 +169,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetManualEventsForStateMachineItemShouldReturnAllManualEventsForProvidedState()
+    public function testGetManualEventsForStateMachineItemShouldReturnAllManualEventsForProvidedState(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -197,7 +200,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetManualEventForStateMachineItemsShouldReturnAllEventsForProvidedStates()
+    public function testGetManualEventForStateMachineItemsShouldReturnAllEventsForProvidedStates(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $firstItemIdentifier = 1985;
@@ -214,8 +217,12 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[$firstItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
 
+        $this->sleepIfMySql(1);
+
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
         $stateMachineItems[$secondItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
+
+        $this->sleepIfMySql(1);
 
         $stateMachineFacade->triggerEvent('ship order', $stateMachineItems[$secondItemIdentifier]);
 
@@ -239,7 +246,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessedStateMachineItemsShouldReturnItemsByProvidedStateIdsStoredInPersistence()
+    public function testGetProcessedStateMachineItemsShouldReturnItemsByProvidedStateIdsStoredInPersistence(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $firstItemIdentifier = 1985;
@@ -256,6 +263,8 @@ class StateMachineFacadeTest extends Unit
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
+
+        $this->sleepIfMySql(1);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -318,7 +327,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessedStateMachineItemTransferShouldReturnItemTransfer()
+    public function testGetProcessedStateMachineItemTransferShouldReturnItemTransfer(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $firstItemIdentifier = 1985;
@@ -364,7 +373,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateHistoryByStateItemIdentifierShouldReturnAllHistoryForThatItem()
+    public function testGetStateHistoryByStateItemIdentifierShouldReturnAllHistoryForThatItem(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -377,29 +386,30 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $this->sleepIfMySql(1);
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineItemsTransfer = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
+        $stateMachineItemTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
             $stateMachineItemTransfer->getIdStateMachineProcess(),
             $identifier
         );
 
-        $this->assertCount(3, $stateMachineItemsTransfer);
+        $this->assertCount(3, $stateMachineItemTransfers);
 
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[0];
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
 
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[1];
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
 
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[2];
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
     }
 
     /**
      * @return void
      */
-    public function testGetItemsWithFlagShouldReturnListOfStateMachineItemsWithGivenFlag()
+    public function testGetItemsWithFlagShouldReturnListOfStateMachineItemsWithGivenFlag(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -412,6 +422,8 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        $this->sleepIfMySql(1);
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
@@ -420,8 +432,8 @@ class StateMachineFacadeTest extends Unit
 
         $this->assertCount(2, $stateMachineItemsWithGivenFlag);
 
+        $this->assertContainsOnlyInstancesOf(StateMachineItemTransfer::class, $stateMachineItemsWithGivenFlag);
         $stateMachineItemTransfer = $stateMachineItemsWithGivenFlag[0];
-        $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
         $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
         $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
 
@@ -440,7 +452,47 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemsWithoutFlagShouldReturnListOfStateMachineItemsWithoutGivenFlag()
+    public function testGetItemsWithFlagShouldReturnSortedListOfStateMachineItemsWithGivenFlag(): void
+    {
+        $processName = static::TEST_PROCESS_NAME;
+        $identifier = 1985;
+        $identifier2 = 1986;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $this->sleepIfMySql(1);
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier2);
+
+        $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
+            $stateMachineProcessTransfer,
+            'Flag1'
+        );
+
+        foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
+            $this->assertEquals($identifier, $stateMachineItemTransfer->getIdentifier());
+        }
+
+        $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
+            $stateMachineProcessTransfer,
+            'Flag1',
+            'DESC'
+        );
+
+        foreach ($stateMachineItemsWithGivenFlag as $stateMachineItemTransfer) {
+            $this->assertEquals($identifier2, $stateMachineItemTransfer->getIdentifier());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetItemsWithoutFlagShouldReturnListOfStateMachineItemsWithoutGivenFlag(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -453,6 +505,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $this->sleepIfMySql(1);
 
         $stateMachineItemsWithoutGivenFlag = $stateMachineFacade->getItemsWithoutFlag(
             $stateMachineProcessTransfer,
@@ -485,7 +538,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckConditionsShouldProcessStatesWithConditionAndWithoutEvent()
+    public function testCheckConditionsShouldProcessStatesWithConditionAndWithoutEvent(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -515,7 +568,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTimeoutsShouldMoveStatesWithExpiredTimeouts()
+    public function testCheckTimeoutsShouldMoveStatesWithExpiredTimeouts(): void
     {
         $processName = static::TEST_PROCESS_NAME;
         $identifier = 1985;
@@ -554,7 +607,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks()
+    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks(): void
     {
         $identifier = '1985-07-01';
         $stateMachineHandler = new TestStateMachineHandler();
@@ -575,7 +628,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLoopDoesNotCauseExceptions()
+    public function testLoopDoesNotCauseExceptions(): void
     {
         $processName = static::TEST_PROCESS_WITH_LOOP_NAME;
         $identifier = 1985;
@@ -605,7 +658,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler()
+    public function testStateMachineExistsReturnsTrueWhenStateMachineHasHandler(): void
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
@@ -623,7 +676,7 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler()
+    public function testStateMachineExistsReturnsFalseWhenStateMachineHasNoHandler(): void
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
@@ -643,7 +696,7 @@ class StateMachineFacadeTest extends Unit
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
      */
-    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler)
+    protected function createStateMachineFacade(StateMachineHandlerInterface $stateMachineHandler): StateMachineFacadeInterface
     {
         $stateMachineBusinessFactory = new StateMachineBusinessFactory();
         $stateMachineConfig = new StateMachineConfig();
@@ -669,5 +722,17 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade->setFactory($stateMachineBusinessFactory);
 
         return $stateMachineFacade;
+    }
+
+    /**
+     * @param int $seconds
+     *
+     * @return void
+     */
+    protected function sleepIfMySql(int $seconds): void
+    {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+            sleep($seconds);
+        }
     }
 }

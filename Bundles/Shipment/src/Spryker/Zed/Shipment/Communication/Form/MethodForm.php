@@ -15,14 +15,17 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class MethodForm extends AbstractType
 {
@@ -43,6 +46,9 @@ class MethodForm extends AbstractType
     public const OPTION_TAX_SETS = 'option_tax_sets';
     public const OPTION_MONEY_FACADE = 'money facade';
     public const OPTION_DATA_CLASS = 'data_class';
+    protected const OPTION_DATA = 'data';
+
+    protected const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
 
     /**
      * @return string
@@ -71,7 +77,7 @@ class MethodForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCarrierField($builder, $options)
-            ->addNameField($builder)
+            ->addNameField($builder, $options)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
             ->addDeliveryTimePluginField($builder, $options)
@@ -112,7 +118,6 @@ class MethodForm extends AbstractType
             'label' => 'Carrier',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_CARRIER_CHOICES]),
-            'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
                 new Required(),
@@ -124,20 +129,38 @@ class MethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
                 new Required(),
+                new Callback([
+                    'callback' => $this->validateUniqueName($options),
+                ]),
             ],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return callable
+     */
+    protected function validateUniqueName(array $options): callable
+    {
+        return function ($name, ExecutionContextInterface $contextInterface) use ($options) {
+            if (!$this->getFacade()->isShipmentMethodUniqueForCarrier($options[static::OPTION_DATA])) {
+                $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
+            }
+        };
     }
 
     /**
@@ -171,7 +194,6 @@ class MethodForm extends AbstractType
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -190,7 +212,6 @@ class MethodForm extends AbstractType
             'label' => 'Price Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_PRICE_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -209,7 +230,6 @@ class MethodForm extends AbstractType
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
             'choices' => array_flip($options[self::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST]),
-            'choices_as_values' => true,
             'required' => false,
         ]);
 
@@ -256,7 +276,6 @@ class MethodForm extends AbstractType
             [
                 'label' => 'Tax set',
                 'choices' => array_flip($options[self::OPTION_TAX_SETS]),
-                'choices_as_values' => true,
             ]
         );
 

@@ -103,7 +103,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $options = $this->configurationBuilder->getConfiguration($directory, $options);
 
         if ($options === []) {
-            return $this->formatResult($options);
+            return [];
         }
 
         if ($this->isCoreModule($options)) {
@@ -128,13 +128,13 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     }
 
     /**
-     * @param string $command
+     * @param array $command
      *
      * @return \Symfony\Component\Process\Process
      */
-    protected function getProcess($command)
+    protected function getProcess(array $command)
     {
-        return new Process($command, null, null, null, 0);
+        return new Process($command, APPLICATION_ROOT_DIR, null, null, 0);
     }
 
     /**
@@ -147,39 +147,37 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function runCommand($directory, array $options = [])
     {
-        $command = str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command);
-
-        $command .= ' --minimumpriority ' . $options[static::OPTION_PRIORITY];
+        $command = explode(' ', str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command));
+        $command[] = '--minimumpriority';
+        $command[] = $options[static::OPTION_PRIORITY];
 
         if (!empty($options[static::OPTION_STRICT])) {
-            $command .= ' --strict';
+            $command[] = '--strict';
         }
 
         if (!empty($options[static::OPTION_DRY_RUN])) {
             $this->displayAndExit($command);
         }
 
-        $p = $this->getProcess($command);
-
-        $p->setWorkingDirectory(APPLICATION_ROOT_DIR);
-        $p->run();
-        if (substr($p->getOutput(), 0, 5) !== '<?xml') {
-            throw new Exception('Sniffer run was not successful: ' . $p->getExitCodeText());
+        $process = $this->getProcess($command);
+        $process->run();
+        if (substr($process->getOutput(), 0, 5) !== '<?xml') {
+            throw new Exception('Sniffer run was not successful: ' . $process->getExitCodeText());
         }
 
-        $output = $p->getOutput();
+        $output = $process->getOutput();
 
         return $output;
     }
 
     /**
-     * @param string $command
+     * @param array $command
      *
      * @return void
      */
-    protected function displayAndExit($command)
+    protected function displayAndExit(array $command)
     {
-        exit($command . PHP_EOL);
+        exit(implode(' ', $command) . PHP_EOL);
     }
 
     /**

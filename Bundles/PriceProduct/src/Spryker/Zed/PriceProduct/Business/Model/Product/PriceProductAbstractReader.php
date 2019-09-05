@@ -120,7 +120,6 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         string $sku,
         PriceProductDimensionTransfer $priceProductDimensionTransfer
     ): array {
-
         $abstractSku = $this->findAbstractSku($sku);
 
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
@@ -327,5 +326,36 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    public function getProductAbstractPricesByConcreteSkusAndCriteria(array $concreteSkus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        $priceProductTransfers = $this->priceProductRepository
+            ->getProductAbstractPricesByConcreteSkusAndCriteria($concreteSkus, $priceProductCriteriaTransfer);
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+        $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
+
+        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     */
+    protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
+    {
+        $indexedPriceProductTransfers = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
+        }
+
+        return $indexedPriceProductTransfers;
     }
 }

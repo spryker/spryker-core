@@ -56,7 +56,7 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
      */
     protected function findProductAbstractPackagingStorageEntities(array $ids): array
     {
-        if (empty($ids)) {
+        if ($ids === []) {
             return $this->getRepository()->findAllProductAbstractPackagingStorageEntities();
         }
 

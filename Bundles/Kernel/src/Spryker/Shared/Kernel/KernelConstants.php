@@ -33,8 +33,29 @@ interface KernelConstants
     public const AUTO_LOADER_CACHE_FILE_PATH = 'KERNEL:AUTO_LOADER_CACHE_FILE_PATH';
 
     /**
-     * A set of whitelist domains, that every external URL is checked against, before redirect.
+     * Specification:
+     * - Defines a set of whitelist domains, that every external URL is checked against, before redirect.
+     *
+     * @api
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
+
+    /**
+     * Specification:
+     * - Enables/disables strict external redirect check.
+     * - When enabled, only the domains from whitelist are allowed to be used as a destination for external redirect.
+     *
+     * @api
+     */
     public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
+
+    /**
+     * Specification:
+     * - Defines the mode when a dependency container can be overridden, e.g. for testing needs.
+     * - This should set to `true` to be able to use \Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals
+     *   via \SprykerTest\Shared\Testify\Helper\DependencyHelper for overriding dependencies in container for testing.
+     *
+     * @api
+     */
+    public const ENABLE_CONTAINER_OVERRIDING = 'KERNEL:ENABLE_CONTAINER_OVERRIDING';
 }

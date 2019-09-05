@@ -19,8 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManager implements PriceProductMerchantRelationshipEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface
@@ -93,7 +91,6 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         int $idPriceProductStore,
         int $idMerchantRelationship
     ): void {
-
         $priceProductMerchantRelationshipEnitity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->filterByFkPriceProductStore($idPriceProductStore)

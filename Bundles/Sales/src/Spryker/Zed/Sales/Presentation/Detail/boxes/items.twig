@@ -6,9 +6,14 @@
             {% block widget_content %}
 
                 <div>
-                    {% for event in events %}
-                        <a class="btn btn-primary trigger-order-event" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
-                    {% endfor %}
+                    {% include [
+                        '@Oms/RenderForm/_partial/order-actions.twig',
+                        '@Sales/Detail/_partial/order-actions.twig',
+                    ] ignore missing with {
+                        redirectUrl: changeStatusRedirectUrl,
+                        idSalesOrder: order.idSalesOrder,
+                        events: events,
+                    } only %}
                 </div>
 
             {% endblock %}
@@ -34,11 +39,17 @@
                 <th>{{ 'Trigger event' | trans }}</th>
             </tr>
             </thead>
-            {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
-              {% embed '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}{% endembed %}
-            {% else %}
-              {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}{% endembed %}
-            {% endif %}
+            <tbody>
+                {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
+                    {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order} %}
+                {% endif %}
+
+                {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
+                  {% include '@Sales/Detail/boxes/item-group.twig' with {groups: order.itemGroups} %}
+                {% else %}
+                  {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}
+                {% endif %}
+            </tbody>
         </table>
 
     {% endblock %}

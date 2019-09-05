@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DoubleSubmitFormType extends AbstractTypeExtension
@@ -49,7 +48,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected $translator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $translationDomain;
 
@@ -135,11 +134,11 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     /**
      * @deprecated Use `configureOptions()` instead.
      *
-     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolver $resolver)
     {
         $this->configureOptions($resolver);
     }

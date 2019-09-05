@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
+use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends ProductListAbstractController
 {
     public const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product List "%s" has been successfully updated.';
+
+    protected const ROUTE_REDIRTECT = '/product-list-gui/edit';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +50,12 @@ class EditController extends ProductListAbstractController
             ]);
         }
 
-        return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
+        $redirectUrl = Url::generate(
+            static::ROUTE_REDIRTECT,
+            [static::URL_PARAM_ID_PRODUCT_LIST => $productListTransfer->getIdProductList()]
+        )->build();
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

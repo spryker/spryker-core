@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Shipment\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -46,6 +48,14 @@ class ShipmentFacadeTest extends Test
 
     public const DEFAULT_DELIVERY_TIME = 'example delivery time';
     public const DEFAULT_PLUGIN_PRICE = 1500;
+
+    protected const VALUE_ANOTHER_EXPENSE_TYPE = 'VALUE_ANOTHER_EXPENSE_TYPE';
+
+    protected const NOT_UNIQUE_SHIPMENT_NAME_STANDART = 'Standard';
+    protected const NOT_UNIQUE_SHIPMENT_NAME_EXPRESS = 'Express';
+    protected const UNIQUE_SHIPMENT_NAME = 'Example unique shipment name';
+    protected const FK_SHIPMENT_CARRIER = 1;
+    protected const FK_SHIPMENT_METHOD = 1;
 
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
@@ -428,6 +438,76 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testFilterObsoleteShipmentExpensesShouldNotFilterExpensesWhenShipmentMethodIsSet(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer();
+
+        $shipmentExpenseTransfer = (new ExpenseTransfer())
+            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
+
+        // Act
+        $this->tester->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterObsoleteShipmentExpensesShouldFilterShipmentExpensesWhenShipmentMethodIsNotSet(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer([
+            QuoteTransfer::SHIPMENT => null,
+        ]);
+
+        $shipmentExpenseTransfer = (new ExpenseTransfer())
+            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
+
+        // Act
+        $this->tester->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+
+        // Assert
+        $this->assertFalse($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterObsoleteShipmentExpensesShouldNotFilterNonShipmentExpensesWhenShipmentMethodIsNotSet(): void
+    {
+        // Arrange
+        $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer([
+            QuoteTransfer::SHIPMENT => null,
+        ]);
+
+        $shipmentExpenseTransfer = (new ExpenseTransfer())
+            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
+
+        $anotherExpenseTransfer = (new ExpenseTransfer())
+            ->setType(static::VALUE_ANOTHER_EXPENSE_TYPE);
+
+        $calculableObjectTransfer->addExpense($anotherExpenseTransfer);
+
+        // Act
+        $this->tester->getFacade()->filterObsoleteShipmentExpenses($calculableObjectTransfer);
+
+        // Assert
+        $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $anotherExpenseTransfer));
+        $this->assertFalse($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
+    }
+
+    /**
      * @return array
      */
     public function multiCurrencyPrices()
@@ -436,6 +516,17 @@ class ShipmentFacadeTest extends Test
             ['EUR', 3100],
             ['USD', 3200],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
+     *
+     * @return bool
+     */
+    protected function hasShipmentExpense(CalculableObjectTransfer $calculableObjectTransfer, ExpenseTransfer $shipmentExpenseTransfer): bool
+    {
+        return in_array($shipmentExpenseTransfer, $calculableObjectTransfer->getExpenses()->getArrayCopy(), true);
     }
 
     /**
@@ -506,5 +597,83 @@ class ShipmentFacadeTest extends Test
         ];
 
         return $priceList;
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsNewShipmentMethodUniqueForCarrierMethodWitchExistingMethodShouldReturnFalseWhenNotUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertFalse($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsNewShipmentMethodUniqueForCarrierMethodWithNotExistingMethodShouldReturnTrueWhenUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::UNIQUE_SHIPMENT_NAME)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertTrue($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodUniqueForCarrierMethodWitchExistingMethodShouldReturnFalseWhenNotUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_EXPRESS)
+            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertFalse($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsShipmentMethodUniqueForCarrierMethodWithNotExistingMethodShouldReturnTrueWhenUnique(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::UNIQUE_SHIPMENT_NAME)
+            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertTrue($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testNoRenamingShipmentMethodUniqueForCarrierMethodShouldReturnTrue(): void
+    {
+        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
+            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
+            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+
+        $this->assertTrue($isShipmentMethodUniqueForCarrier);
     }
 }

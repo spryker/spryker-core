@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
@@ -40,30 +40,30 @@ class QuoteItemReader implements QuoteItemReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function readQuoteItem(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer
+    public function readItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid(
-            $this->quoteItemMapper->mapRestCartItemsAttributesTransferToQuoteTransfer(
-                $restCartItemsAttributesTransfer,
-                new QuoteTransfer()
-            )
+        $quoteTransfer = $this->quoteItemMapper->mapCartItemsRequestTransferToQuoteTransfer(
+            $cartItemRequestTransfer,
+            new QuoteTransfer()
         );
 
+        $quoteResponseTransfer = $this->quoteReader->findQuoteByUuid($quoteTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
         $ifRequestedItemIsInQuote = $this->checkRequestedItemIsInQuote(
-            $restCartItemsAttributesTransfer->getSku(),
+            $cartItemRequestTransfer->getSku(),
             $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
         );
 
         if (!$ifRequestedItemIsInQuote) {
             $quoteResponseTransfer
+                ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND));
         }

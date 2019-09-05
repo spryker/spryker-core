@@ -7,79 +7,23 @@
 
 namespace Spryker\Zed\ContentProductGui\Communication\Table;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ContentProductGui\Communication\Controller\ProductAbstractController;
-use Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface;
 use Spryker\Zed\ContentProductGui\ContentProductGuiConfig;
-use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class ProductAbstractSelectedTable extends AbstractTable
+class ProductAbstractSelectedTable extends AbstractProductAbstractTable
 {
     public const TABLE_IDENTIFIER = 'product-abstract-selected-table';
     public const TABLE_CLASS = 'product-abstract-selected-table gui-table-data';
     public const BASE_URL = '/content-product-gui/product-abstract/';
 
-    public const COL_ID_PRODUCT_ABSTRACT = 'ID';
-    public const COL_SKU = 'SKU';
-    public const COL_IMAGE = 'Image';
-    public const COL_NAME = 'Name';
-    public const COL_STORES = 'Stores';
-    public const COL_STATUS = 'Status';
     public const COL_ACTIONS = 'Actions';
 
     public const BUTTON_DELETE = 'Delete';
     public const BUTTON_MOVE_UP = 'Move Up';
     public const BUTTON_MOVE_DOWN = 'Move Down';
-
-    /**
-     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    protected $productQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface
-     */
-    protected $productAbstractTableColumnContentBuilder;
-
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected $localeTransfer;
-
-    /**
-     * @var string|null
-     */
-    protected $identifierSuffix;
-
-    /**
-     * @var array
-     */
-    protected $idProductAbstracts;
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productQueryContainer
-     * @param \Spryker\Zed\ContentProductGui\Communication\Table\Builder\ProductAbstractTableColumnContentBuilderInterface $productAbstractTableColumnContentBuilder
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string|null $identifierSuffix
-     * @param array $idProductAbstracts
-     */
-    public function __construct(
-        SpyProductAbstractQuery $productQueryContainer,
-        ProductAbstractTableColumnContentBuilderInterface $productAbstractTableColumnContentBuilder,
-        LocaleTransfer $localeTransfer,
-        ?string $identifierSuffix,
-        array $idProductAbstracts
-    ) {
-        $this->productQueryContainer = $productQueryContainer;
-        $this->productAbstractTableColumnContentBuilder = $productAbstractTableColumnContentBuilder;
-        $this->localeTransfer = $localeTransfer;
-        $this->identifierSuffix = $identifierSuffix;
-        $this->idProductAbstracts = $idProductAbstracts;
-    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -105,10 +49,10 @@ class ProductAbstractSelectedTable extends AbstractTable
         $this->disableSearch();
 
         $config->setHeader([
-            static::COL_ID_PRODUCT_ABSTRACT => static::COL_ID_PRODUCT_ABSTRACT,
-            static::COL_SKU => static::COL_SKU,
+            static::COL_ID_PRODUCT_ABSTRACT => static::HEADER_ID_PRODUCT_ABSTRACT,
+            static::COL_SKU => static::HEADER_SKU,
             static::COL_IMAGE => static::COL_IMAGE,
-            static::COL_NAME => static::COL_NAME,
+            static::COL_NAME => static::HEADER_NAME,
             static::COL_STORES => static::COL_STORES,
             static::COL_STATUS => static::COL_STATUS,
             static::COL_ACTIONS => static::COL_ACTIONS,
@@ -185,39 +129,53 @@ class ProductAbstractSelectedTable extends AbstractTable
         return [
             static::COL_ID_PRODUCT_ABSTRACT => $idProductAbstract,
             static::COL_SKU => $productAbstractEntity->getSku(),
-            static::COL_IMAGE => $this->productAbstractTableColumnContentBuilder->getProductPreview($productAbstractEntity),
+            static::COL_IMAGE => $this->getProductPreview($this->getProductPreviewUrl($productAbstractEntity)),
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),
-            static::COL_STORES => $this->productAbstractTableColumnContentBuilder->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
-            static::COL_STATUS => $this->productAbstractTableColumnContentBuilder->getAbstractProductStatusLabel($productAbstractEntity),
-            static::COL_ACTIONS => $this->getActionButtons($productAbstractEntity),
+            static::COL_STORES => $this->getStoreNames($productAbstractEntity->getSpyProductAbstractStores()->getArrayCopy()),
+            static::COL_STATUS => $this->getStatusLabel($this->getAbstractProductStatus($productAbstractEntity)),
+            static::COL_ACTIONS => $this->getActionButtons($productAbstractEntity->getIdProductAbstract()),
         ];
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param int $idProductAbstract
      *
      * @return string
      */
-    protected function getActionButtons(SpyProductAbstract $productAbstractEntity): string
+    protected function getActionButtons(int $idProductAbstract): string
     {
         $actionButtons = [];
-        $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" class="js-delete-product-abstract btn btn-sm btn-outline btn-danger"><i class="fa fa-trash"></i> %s</button>',
-            $idProductAbstract,
-            static::BUTTON_DELETE
+        $actionButtons[] = $this->generateButton(
+            '#',
+            static::BUTTON_DELETE,
+            [
+                'class' => 'js-delete-product-abstract btn-danger',
+                'data-id' => $idProductAbstract,
+                'icon' => 'fa-trash',
+                'onclick' => 'return false;',
+            ]
         );
-
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" data-direction="up" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-up"></i> %s</button>',
-            $idProductAbstract,
-            static::BUTTON_MOVE_UP
+        $actionButtons[] = $this->generateButton(
+            '#',
+            static::BUTTON_MOVE_UP,
+            [
+                'class' => 'js-reorder-product-abstract btn-create',
+                'data-id' => $idProductAbstract,
+                'data-direction' => 'up',
+                'icon' => 'fa-arrow-up',
+                'onclick' => 'return false;',
+            ]
         );
-
-        $actionButtons[] = sprintf(
-            '<button type="button" data-id="%s" data-direction="down" class="js-reorder-product-abstract btn btn-sm btn-outline btn-create"><i class="fa fa-arrow-down"></i> %s</button>',
-            $idProductAbstract,
-            static::BUTTON_MOVE_DOWN
+        $actionButtons[] = $this->generateButton(
+            '#',
+            static::BUTTON_MOVE_DOWN,
+            [
+                'class' => 'js-reorder-product-abstract btn-create',
+                'data-id' => $idProductAbstract,
+                'data-direction' => 'down',
+                'icon' => 'fa-arrow-down',
+                'onclick' => 'return false;',
+            ]
         );
 
         return implode(' ', $actionButtons);

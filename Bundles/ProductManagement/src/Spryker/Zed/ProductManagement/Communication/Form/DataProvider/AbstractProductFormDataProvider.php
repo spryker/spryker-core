@@ -602,7 +602,9 @@ class AbstractProductFormDataProvider
 
         $productValues = $this->getProductAttributesFormValues($productAttributes);
 
-        return array_merge($productValues, $result);
+        $result = $result + $productValues;
+
+        return $result;
     }
 
     /**
@@ -816,7 +818,6 @@ class AbstractProductFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer,
         array $formData
     ): ArrayObject {
-
         if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
             return $productTransfer->getPrices();
         }

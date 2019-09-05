@@ -9,7 +9,7 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
-use Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface;
+use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface;
 
 class ExtensionDependencyFinder extends AbstractFileDependencyFinder
 {
@@ -21,16 +21,21 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
     protected $executedModules = [];
 
     /**
-     * @var \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface
+     * @var \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface
      */
-    protected $moduleFinder;
+    protected $moduleFinderFacade;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Module\ModuleFinder\ModuleFinderInterface $moduleFinder
+     * @var \Zend\Filter\FilterChain|null
      */
-    public function __construct(ModuleFinderInterface $moduleFinder)
+    protected $filter;
+
+    /**
+     * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade
+     */
+    public function __construct(DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade)
     {
-        $this->moduleFinder = $moduleFinder;
+        $this->moduleFinderFacade = $moduleFinderFacade;
     }
 
     /**
@@ -67,7 +72,8 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
         $moduleExtensionKey = sprintf('%s.%sExtension', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
 
         if ($this->hasExtensionModule($moduleExtensionKey)) {
-            $dependencyContainer->addDependency(sprintf('%sExtension', $moduleTransfer->getName()), $this->getType());
+            $composerName = $this->buildComposerName($moduleTransfer->getOrganization()->getName(), sprintf('%sExtension', $moduleTransfer->getName()));
+            $dependencyContainer->addDependency($composerName, $this->getType());
         }
 
         $this->executedModules[spl_object_hash($moduleTransfer)] = true;
@@ -82,7 +88,7 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
      */
     protected function hasExtensionModule(string $moduleExtensionKey): bool
     {
-        $moduleTransferCollection = $this->moduleFinder->getModules();
+        $moduleTransferCollection = $this->moduleFinderFacade->getModules();
 
         return isset($moduleTransferCollection[$moduleExtensionKey]);
     }

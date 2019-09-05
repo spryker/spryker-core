@@ -18,9 +18,18 @@
         <property name="abstractSku" type="string" />
         <property name="amount" type="int" />
         <property name="calculations" type="RestCartItemCalculations" />
-        <property name="quoteUuid" type="string" />
-        <property name="customerReference" type="string" />
-        <property name="customer" type="Customer" />
+        <property name="quoteUuid" type="string" deprecated="Will be removed with next major" />
+        <property name="customerReference" type="string" deprecated="Will be removed with next major" />
+        <property name="customer" type="Customer" deprecated="Will be removed with next major" />
+    </transfer>
+
+    <transfer name="RestItemsAttributes">
+        <property name="sku" type="string" restRequestParameter="required" />
+        <property name="quantity" type="int" restRequestParameter="required" />
+        <property name="groupKey" type="string" />
+        <property name="abstractSku" type="string" />
+        <property name="amount" type="int" />
+        <property name="calculations" type="RestCartItemCalculations" />
     </transfer>
 
     <transfer name="RestCartVouchersAttributes">
@@ -84,6 +93,7 @@
         <property name="uuid" type="string" />
         <property name="customerReference" type="string" />
         <property name="companyUserId" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -93,6 +103,13 @@
     <transfer name="AssignGuestQuoteRequest">
         <property name="anonymousCustomerReference" type="string" />
         <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="sku" type="string" />
+        <property name="quantity" type="int" />
+        <property name="quoteUuid" type="string" />
+        <property name="customer" type="Customer" />
     </transfer>
 
     <transfer name="QuoteError">
@@ -113,6 +130,7 @@
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
         <property name="idStore" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>

@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Storage\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Storage\Business\StorageFacade;
 
 /**
  * Auto-generated group annotations
@@ -23,43 +22,31 @@ use Spryker\Zed\Storage\Business\StorageFacade;
 class StorageFacadeTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\Storage\BusinessTester
+     * @var \SprykerTest\Zed\Storage\StorageBusinessTester
      */
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Storage\Business\StorageFacade
-     */
-    protected $storageFacade;
-
-    /**
      * @return void
      */
-    public function setUp()
+    public function testGetTotalCount(): void
     {
-        parent::setUp();
-
-        $this->skipIfCircleCi();
-        $this->storageFacade = new StorageFacade();
+        $this->assertGreaterThan(0, $this->getStorageFacade()->getTotalCount());
     }
 
     /**
      * @return void
      */
-    protected function skipIfCircleCi()
+    public function testGetTimestamps(): void
     {
-        if (getenv('CIRCLECI') || getenv('TRAVIS')) {
-            $this->markTestSkipped('Circle ci not set up properly');
-        }
+        $this->assertIsArray($this->getStorageFacade()->getTimestamps());
     }
 
     /**
-     * @return void
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Storage\Business\StorageFacadeInterface
      */
-    public function testGetTotalCount()
+    protected function getStorageFacade()
     {
-        $count = $this->storageFacade->getTotalCount();
-
-        $this->assertTrue($count > 0);
+        return $this->tester->getFacade();
     }
 }

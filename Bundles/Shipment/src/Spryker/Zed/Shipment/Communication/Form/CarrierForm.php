@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
  */
 class CarrierForm extends AbstractType
 {

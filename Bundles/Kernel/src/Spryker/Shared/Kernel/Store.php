@@ -79,6 +79,13 @@ class Store
     protected static $defaultStore;
 
     /**
+     * Cache for data from stores.php to not open it too many times.
+     *
+     * @var array
+     */
+    protected $stores;
+
+    /**
      * Examples: EUR, PLN
      *
      * @link http://en.wikipedia.org/wiki/ISO_4217
@@ -149,13 +156,25 @@ class Store
      */
     protected function getStoreSetup($currentStoreName)
     {
-        $stores = require APPLICATION_ROOT_DIR . '/config/Shared/stores.php';
+        $stores = $this->getStores();
 
         if (array_key_exists($currentStoreName, $stores) === false) {
             throw new Exception('Missing setup for store: ' . $currentStoreName);
         }
 
         return $stores;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getStores(): array
+    {
+        if ($this->stores === null) {
+            $this->stores = require APPLICATION_ROOT_DIR . '/config/Shared/stores.php';
+        }
+
+        return $this->stores;
     }
 
     /**

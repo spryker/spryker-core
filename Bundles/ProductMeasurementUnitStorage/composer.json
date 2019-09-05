@@ -6,8 +6,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/event-behavior": "^1.8.0",
-    "spryker/kernel": "^3.21.0",
-    "spryker/product-measurement-unit": "^1.1.0 || ^2.2.0",
+    "spryker/kernel": "^3.37.0",
+    "spryker/product-measurement-unit": "^1.1.0 || ^2.2.0 || ^4.0.0",
     "spryker/quick-order-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",

@@ -94,7 +94,6 @@ class ScopeRepository implements ScopeRepositoryInterface
         ClientEntityInterface $clientEntity,
         ?string $userIdentifier = null
     ): OauthScopeRequestTransfer {
-
         $oauthScopeRequestTransfer = (new OauthScopeRequestTransfer())
             ->setGrantType($grantType)
             ->setClientId($clientEntity->getIdentifier())
@@ -126,10 +125,10 @@ class ScopeRepository implements ScopeRepositoryInterface
                 continue;
             }
 
-            $providedScopes = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
+            $providedScopes[] = $scopeProviderPlugin->getScopes($oauthScopeRequestTransfer);
         }
 
-        return $providedScopes;
+        return $providedScopes ? array_merge(...$providedScopes) : [];
     }
 
     /**

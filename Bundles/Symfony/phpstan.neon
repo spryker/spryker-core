@@ -1,4 +1,1 @@
 parameters:
-    ignoreErrors:
-    - '#.+ has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface.#'
-    - '#Parameter \#1 \$resolver of method .+FormType::configureOptions\(\) expects .+OptionsResolver, Symfony\\Component\\OptionsResolver\\OptionsResolverInterface given#'

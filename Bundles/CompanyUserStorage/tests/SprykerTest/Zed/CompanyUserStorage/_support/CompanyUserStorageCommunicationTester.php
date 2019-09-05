@@ -24,7 +24,7 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacade getFacade()
+ * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

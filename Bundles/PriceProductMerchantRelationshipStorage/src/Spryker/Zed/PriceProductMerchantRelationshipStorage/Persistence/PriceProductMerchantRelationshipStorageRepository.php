@@ -399,4 +399,46 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
+     */
+    public function getFilteredPriceProductConcreteMerchantRelationships(FilterTransfer $filterTransfer): array
+    {
+        $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
+            ->filterByFkProduct(null, Criteria::ISNOTNULL);
+
+        $priceProductMerchantRelationshipEntityTransfers = $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
+
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipMapper()
+            ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
+                $priceProductMerchantRelationshipEntityTransfers->getData()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]
+     */
+    public function getFilteredPriceProductAbstractMerchantRelationships(FilterTransfer $filterTransfer): array
+    {
+        $priceProductMerchantRelationshipQuery = $this->queryPriceProductMerchantRelationship()
+            ->filterByFkProductAbstract(null, Criteria::ISNOTNULL);
+
+        $priceProductMerchantRelationshipEntityTransfers = $this->buildQueryFromCriteria($priceProductMerchantRelationshipQuery, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find();
+
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipMapper()
+            ->mapEntitiesToPriceProductMerchantRelationshipTransferCollection(
+                $priceProductMerchantRelationshipEntityTransfers->getData()
+            );
+    }
 }

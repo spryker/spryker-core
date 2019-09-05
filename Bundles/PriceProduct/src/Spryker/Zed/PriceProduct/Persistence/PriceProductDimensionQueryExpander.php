@@ -12,20 +12,21 @@ use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionUnconditionalQueryCriteriaPluginInterface;
 
 class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryExpanderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
      */
-    protected $priceProductDimensionQueryExpanders = [];
+    protected $priceDimensionQueryCriteriaPlugins;
 
     /**
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[] $priceProductDimensionQueryExpanders
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[] $priceProductDimensionQueryCriteriaPlugins
      */
-    public function __construct(array $priceProductDimensionQueryExpanders)
+    public function __construct(array $priceProductDimensionQueryCriteriaPlugins)
     {
-        $this->priceProductDimensionQueryExpanders = $priceProductDimensionQueryExpanders;
+        $this->priceDimensionQueryCriteriaPlugins = $priceProductDimensionQueryCriteriaPlugins;
     }
 
     /**
@@ -38,7 +39,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductStoreQuery {
-
         if ($priceProductCriteriaTransfer->getPriceDimension()) {
             $this->runSinglePlugin($priceProductStoreQuery, $priceProductCriteriaTransfer);
 
@@ -60,22 +60,52 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductStoreQuery {
+        foreach ($this->priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
+            if (!($priceDimensionQueryCriteriaPlugin instanceof PriceDimensionUnconditionalQueryCriteriaPluginInterface)) {
+                $this->executePriceProductStoreQueryWithPriceDimensionForDeletePlugin(
+                    $priceProductStoreQuery,
+                    $priceProductCriteriaTransfer,
+                    $priceDimensionQueryCriteriaPlugin
+                );
 
-        foreach ($this->priceProductDimensionQueryExpanders as $priceDimensionQueryCriteriaPlugin) {
-            $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
-                $priceProductStoreQuery,
-                $priceProductCriteriaTransfer,
-                $priceDimensionQueryCriteriaPlugin
-            );
-
-            if (!$priceDimensionQueryCriteriaTransfer) {
                 continue;
             }
 
-            $this->filterEmptyDimensions($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer);
+            $queryCriteriaTransfer = $priceDimensionQueryCriteriaPlugin->buildUnconditionalPriceDimensionQueryCriteria();
+
+            $this->addJoin($priceProductStoreQuery, $queryCriteriaTransfer);
+            $this->addWithColumns($priceProductStoreQuery, $queryCriteriaTransfer);
+            $this->filterEmptyDimensions($priceProductStoreQuery, $queryCriteriaTransfer);
         }
 
         return $priceProductStoreQuery;
+    }
+
+    /**
+     * @deprecated this method exists for BC reasons only.
+     *
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceDimensionQueryCriteriaPlugin
+     *
+     * @return void
+     */
+    protected function executePriceProductStoreQueryWithPriceDimensionForDeletePlugin(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
+        PriceDimensionQueryCriteriaPluginInterface $priceDimensionQueryCriteriaPlugin
+    ): void {
+        $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
+            $priceProductStoreQuery,
+            $priceProductCriteriaTransfer,
+            $priceDimensionQueryCriteriaPlugin
+        );
+
+        if (!$priceDimensionQueryCriteriaTransfer) {
+            return;
+        }
+
+        $this->filterEmptyDimensions($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer);
     }
 
     /**
@@ -85,7 +115,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
      */
     protected function findPriceDimensionCriteriaPluginByName(string $priceDimensionName): ?PriceDimensionQueryCriteriaPluginInterface
     {
-        foreach ($this->priceProductDimensionQueryExpanders as $priceDimensionQueryCriteriaPlugin) {
+        foreach ($this->priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
             if ($priceDimensionQueryCriteriaPlugin->getDimensionName() === $priceDimensionName) {
                 return $priceDimensionQueryCriteriaPlugin;
             }
@@ -104,8 +134,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): void {
-
-        foreach ($this->priceProductDimensionQueryExpanders as $priceDimensionQueryCriteriaPlugin) {
+        foreach ($this->priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
             $this->runPlugin($priceProductStoreQuery, $priceProductCriteriaTransfer, $priceDimensionQueryCriteriaPlugin);
         }
     }
@@ -120,7 +149,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): void {
-
         $priceDimensionQueryCriteriaPlugin = $this->findPriceDimensionCriteriaPluginByName(
             $priceProductCriteriaTransfer->getPriceDimension()->getType()
         );
@@ -173,7 +201,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         QueryCriteriaTransfer $queryCriteriaTransfer,
         $joinType = null
     ): void {
-
         foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
             if ($queryJoinTransfer->getRelation()) {
                 $joinDirection = $joinType ?? $queryJoinTransfer->getJoinType();
