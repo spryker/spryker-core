@@ -55,13 +55,6 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->joinWithSpyProductAbstract()
             ->useSpyProductAbstractQuery()
                 ->joinWithSpyProduct()
-                ->joinWithSpyProductCategory()
-                ->useSpyProductCategoryQuery()
-                    ->joinWithSpyCategory()
-                    ->useSpyCategoryQuery()
-                        ->joinWithNode()
-                    ->endUse()
-                ->endUse()
                 ->joinWithSpyProductAbstractStore()
                 ->useSpyProductAbstractStoreQuery()
                     ->joinWithSpyStore()
@@ -84,7 +77,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->rightJoinWith('SpyProduct.SpyProductSearch')
             ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
 
-        if($storeTransfer !== null) {
+        if ($storeTransfer !== null) {
             $storeLocaleIsoCodes = array_map(function (string $localeIsoCode) {
                 return $localeIsoCode;
             }, $storeTransfer->getAvailableLocaleIsoCodes());
@@ -401,5 +394,26 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->endUse();
 
         return $productImageSetToProductImageQuery;
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryAllProductCategories(array $productAbstractIds)
+    {
+        $query = $this->getFactory()->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->joinWithSpyCategory()
+                ->useSpyCategoryQuery()
+                ->joinWithNode()
+                ->endUse()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        return $query;
     }
 }

@@ -150,6 +150,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productAbstractIds, $productAbstractLocalizedEntities);
 
         if (!$productAbstractLocalizedEntities) {
             $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
@@ -420,6 +421,39 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         return $productAbstractLocalizedEntities;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param array $productAbstractLocalizedEntities
+     *
+     * @return mixed
+     */
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductCategories(array $productAbstractIds, array $productAbstractLocalizedEntities)
+    {
+        $productCategories = $this->findProductCategories($productAbstractIds);
+        $productCategoriesByProductAbstractId = [];
+
+        foreach ($productCategories as $productCategory) {
+            $productCategoriesByProductAbstractId[$productCategory['fk_product_abstract']][] = $productCategory;
+        }
+
+        foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories'] = $productCategoriesByProductAbstractId[$productAbstractId];
+        }
+
+        return $productAbstractLocalizedEntities;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function findProductCategories(array $productAbstractIds)
+    {
+        return $this->queryContainer->queryAllProductCategories($productAbstractIds)->find()->getData();
     }
 
     /**
