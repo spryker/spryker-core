@@ -1,6 +1,6 @@
-"waiting-for-approval","warten auf die bestätigung"
-"approved","genehmigt"
-"active","aktiv"
-"inactive","inaktiv"
+waiting-for-approval,"warten auf die bestätigung"
+approved,genehmigt
+active,aktiv
+inactive,inaktiv
 "Merchant is not found.","Händler wurde nicht gefunden."
 "Merchant status transition is not valid.","Der Händler Statusübergang ist ungültig."
