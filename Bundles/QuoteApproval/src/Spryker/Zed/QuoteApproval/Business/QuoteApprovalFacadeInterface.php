@@ -124,7 +124,7 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * -
+     * - Gets fields from config allowed for saving.
      *
      * @api
      *

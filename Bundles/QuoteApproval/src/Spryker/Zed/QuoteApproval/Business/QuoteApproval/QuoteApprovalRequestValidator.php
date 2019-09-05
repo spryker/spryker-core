@@ -89,7 +89,6 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     public function validateQuoteApprovalCreateRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
-//        $quoteTransfer = $this->getQuoteById($quoteApprovalRequestTransfer->getIdQuote()); // delete
         $quoteTransfer = $quoteApprovalRequestTransfer->getQuote();
 
         if (!$quoteTransfer->getItems()->count()) {
@@ -145,7 +144,11 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $this->assertQuoteApprovalRequestValid($quoteApprovalRequestTransfer);
         $quoteApprovalTransfer = $this->quoteApprovalRepository
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
-        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
+
+        $quoteTransfer = $this->mergeQuotes(
+            $quoteApprovalRequestTransfer->getQuote(),
+            $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval())
+        );
 
         if ($this->isQuoteApprovalRequestCanceled($quoteTransfer)) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_CANCELLED);
@@ -166,6 +169,23 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         return $this->createSuccessfullValidationResponseTransfer()
             ->setQuote($quoteTransfer)
             ->setQuoteApproval($quoteApprovalTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $persistentQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function mergeQuotes(QuoteTransfer $persistentQuoteTransfer, ?QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        if (!$quoteTransfer) {
+            return $persistentQuoteTransfer;
+        }
+
+        $quoteTransfer->fromArray($persistentQuoteTransfer->toArray(), true);
+
+        return $quoteTransfer;
     }
 
     /**
