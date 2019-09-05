@@ -29,7 +29,7 @@ class PriceProductScheduleListTable extends AbstractTable
 
     protected const COL_IMPORT_ID = 'id_price_product_schedule_list';
     protected const COL_NAME = 'name';
-    protected const COL_IMPORTED_BY = 'imported_by';
+    protected const COL_IMPORTED_BY = 'created_at';
     protected const COL_STATUS = 'status';
     protected const COL_NUMBER_OF_PRICES = 'number_of_prices';
     protected const COL_NUMBER_OF_PRODUCTS = 'number_of_products';

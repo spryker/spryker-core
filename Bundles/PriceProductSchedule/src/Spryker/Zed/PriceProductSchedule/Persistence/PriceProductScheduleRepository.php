@@ -355,21 +355,21 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->createPriceProductScheduleListQuery()
             ->filterByIdPriceProductScheduleList($priceProductScheduleListTransfer->getIdPriceProductScheduleList())
             ->usePriceProductScheduleQuery()
-                ->addAsColumn(
-                    static::ALIAS_NUMBER_OF_PRICES,
-                    sprintf(
-                        static::EXPRESSION_NUMBER_OF_PRICES,
-                        static::COL_ID_PRICE_PRODUCT_SCHEDULE
-                    )
+            ->addAsColumn(
+                static::ALIAS_NUMBER_OF_PRICES,
+                sprintf(
+                    static::EXPRESSION_NUMBER_OF_PRICES,
+                    static::COL_ID_PRICE_PRODUCT_SCHEDULE
                 )
-                ->addAsColumn(
-                    static::ALIAS_NUMBER_OF_PRODUCTS,
-                    sprintf(
-                        static::EXPRESSION_NUMBER_OF_PRODUCTS,
-                        static::COL_FK_PRODUCT,
-                        static::COL_FK_PRODUCT_ABSTRACT
-                    )
+            )
+            ->addAsColumn(
+                static::ALIAS_NUMBER_OF_PRODUCTS,
+                sprintf(
+                    static::EXPRESSION_NUMBER_OF_PRODUCTS,
+                    static::COL_FK_PRODUCT,
+                    static::COL_FK_PRODUCT_ABSTRACT
                 )
+            )
             ->endUse()
             ->groupByIdPriceProductScheduleList()
             ->findOne();
@@ -382,6 +382,36 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->mapPriceProductScheduleListEntityToPriceProductScheduleListTransfer(
                 $priceProductScheduleListEntity,
                 new PriceProductScheduleListTransfer()
+            );
+    }
+
+    /**
+     * @module Store
+     * @module Currency
+     * @module PriceProduct
+     * @module Product
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array {
+        $priceProductScheduleEntityCollection = $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->leftJoinWithStore()
+            ->leftJoinWithCurrency()
+            ->leftJoinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByFkPriceProductScheduleList($idPriceProductScheduleList)
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
+                $priceProductScheduleEntityCollection
             );
     }
 }

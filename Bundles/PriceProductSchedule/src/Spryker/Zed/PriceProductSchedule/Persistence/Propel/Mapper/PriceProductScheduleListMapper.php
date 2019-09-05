@@ -63,8 +63,17 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
         SpyPriceProductScheduleList $priceProductScheduleListEntity,
         PriceProductScheduleListMetaDataTransfer $priceProductScheduleListMetadataTransfer
     ): PriceProductScheduleListMetaDataTransfer {
-        $priceProductScheduleListMetadataTransfer->setNumberOfPrices($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRICES))
-            ->setNumberOfProducts($priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRODUCTS));
+        if ($priceProductScheduleListEntity->hasVirtualColumn(static::COL_NUMBER_OF_PRICES)) {
+            $priceProductScheduleListMetadataTransfer->setNumberOfPrices(
+                $priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRICES)
+            );
+        }
+
+        if ($priceProductScheduleListEntity->hasVirtualColumn(static::COL_NUMBER_OF_PRODUCTS)) {
+            $priceProductScheduleListMetadataTransfer->setNumberOfProducts(
+                $priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRODUCTS)
+            );
+        }
 
         return $priceProductScheduleListMetadataTransfer;
     }

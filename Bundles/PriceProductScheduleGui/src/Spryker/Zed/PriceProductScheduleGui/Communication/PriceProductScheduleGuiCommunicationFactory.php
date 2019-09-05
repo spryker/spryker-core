@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporter;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleListForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleListFormDataProvider;
@@ -42,6 +44,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -207,6 +210,17 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporterInterface
+     */
+    public function createPriceProductScheduleCsvExporter(): PriceProductScheduleCsvExporterInterface
+    {
+        return new PriceProductScheduleCsvExporter(
+            $this->getPriceProductScheduleFacade(),
+            $this->getUtilCsvService()
+        );
+    }
+
+    /**
      * @param int $idPriceProductScheduleList
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleTable
@@ -312,5 +326,13 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getPriceProductScheduleListPropelQuery(): SpyPriceProductScheduleListQuery
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface
+     */
+    public function getUtilCsvService(): PriceProductScheduleGuiToUtilCsvServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::SERVICE_UTIL_CSV);
     }
 }

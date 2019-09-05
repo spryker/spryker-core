@@ -3,6 +3,9 @@
     <price>
         <label>Prices</label>
         <title>Prices</title>
+        <bundle>price-product-schedule-gui</bundle>
+        <controller>import</controller>
+        <action>index</action>
         <icon>fa-angle-double-right</icon>
         <pages>
             <price-product-schedule>

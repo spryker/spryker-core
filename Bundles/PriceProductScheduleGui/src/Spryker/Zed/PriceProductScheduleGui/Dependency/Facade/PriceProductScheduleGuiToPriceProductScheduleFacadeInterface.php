@@ -69,4 +69,13 @@ interface PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductScheduleCsvValidationResultTransfer
      */
     public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer;
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array;
 }
