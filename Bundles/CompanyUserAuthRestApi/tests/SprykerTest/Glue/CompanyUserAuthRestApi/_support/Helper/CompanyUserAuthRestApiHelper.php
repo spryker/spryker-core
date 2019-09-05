@@ -8,7 +8,6 @@
 namespace SprykerTest\Glue\CompanyUserAuthRestApi\Helper;
 
 use Codeception\Exception\ModuleException;
-use Codeception\Util\HttpCode;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
