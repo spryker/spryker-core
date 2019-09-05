@@ -31,6 +31,24 @@
                         <icon>fa-angle-double-right</icon>
                         <visible>0</visible>
                     </price-product-schedule-publish>
+                    <price-product-schedule-list-view>
+                        <label>View</label>
+                        <title>View</title>
+                        <bundle>price-product-schedule-gui</bundle>
+                        <controller>view-schedule-list</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </price-product-schedule-list-view>
+                    <price-product-schedule-list-edit>
+                        <label>Edit</label>
+                        <title>Edit</title>
+                        <bundle>price-product-schedule-gui</bundle>
+                        <controller>edit-schedule-list</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </price-product-schedule-list-edit>
                 </pages>
             </price-product-schedule>
         </pages>
