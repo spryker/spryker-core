@@ -30,50 +30,70 @@ class CreateMerchantTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchant(): void
+    public function testCreateMerchantStatus(): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
 
+        // Act
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
 
-        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateMerchantCreatesMerchantWithCorrectStatus(): void
-    {
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
-
-        $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
-
+        // Assert
         $this->assertEquals($this->tester->createMerchantConfig()->getDefaultMerchantStatus(), $merchantResponseTransfer->getMerchant()->getStatus());
+        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
+        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantKey());
     }
 
     /**
      * @return void
      */
-    public function testCreateMerchantWithEmptyNameThrowsException(): void
+    public function testCreateMerchantWithEmptyMerchantKeyStatus(): void
     {
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer()
-            ->setName(null);
+        // Arrange
+        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer->setMerchantKey(null);
 
+        // Act
+        $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
+
+        // Assert
+        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
+        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantWithEmptyRequiredFieldsThrowsException(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantWithEmptyNameTransfer = clone $merchantTransfer;
+        $merchantWithEmptyNameTransfer->setName(null);
+
+        $merchantWithEmptyRegistrationNumberTransfer = clone $merchantTransfer;
+        $merchantWithEmptyRegistrationNumberTransfer->setRegistrationNumber(null);
+        $merchantWithEmptyContactPersonTitleTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonTitleTransfer->setContactPersonTitle(null);
+        $merchantWithEmptyContactPersonFirstNameTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonFirstNameTransfer->setContactPersonFirstName(null);
+        $merchantWithEmptyContactPersonLastNameTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonLastNameTransfer->setContactPersonLastName(null);
+        $merchantWithEmptyContactPersonPhoneTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonPhoneTransfer->setContactPersonPhone(null);
+        $merchantWithEmptyEmailTransfer = clone $merchantTransfer;
+        $merchantWithEmptyEmailTransfer->setEmail(null);
+
+        // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
-        $this->tester->getFacade()->createMerchant($merchantTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCreateMerchantWithNotUniqueName(): void
-    {
-        $merchantTransfer = $this->tester->haveMerchant();
-        $newMerchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer()
-            ->setName($merchantTransfer->getName());
-
-        $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($newMerchantTransfer);
-        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
+        // Act
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyNameTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyRegistrationNumberTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonTitleTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonLastNameTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonPhoneTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyEmailTransfer);
     }
 }

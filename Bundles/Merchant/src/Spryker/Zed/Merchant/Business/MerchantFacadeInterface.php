@@ -30,10 +30,11 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
-     *   - address
-     * - Uses incoming transfer to set entity fields.
+     * - Generates merchant key if doesn't exist.
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
+     * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.idMerchant is set from newly created entity.
      *
      * @api
      *
@@ -55,12 +56,11 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
-     *   - address
-     * - Returns MerchantResponseTransfer with 'isSuccessful=false' and error messages if merchant not found.
-     * - Returns MerchantResponseTransfer with 'isSuccessful=false' and error messages if merchant status transition is not valid.
-     * - Uses incoming transfer to update entity fields.
+     * - Generates merchant key if doesn't exist.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant not found.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
      * - Persists the entity to DB.
-     * - Returns MerchantResponseTransfer with 'isSuccessful=true' and updated MerchantTransfer.
+     * - Returns MerchantResponseTransfer.isSuccessful=true and updated MerchantTransfer.
      *
      * @api
      *
@@ -73,7 +73,10 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Returns collection of merchants by provided criteria.
-     * - Pagination and ordering options can be passed to criteria.
+     * - Pagination, filter and ordering options can be passed to criteria.
+     * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
+     * - Filter supports ordering by field.
+     * - Default order by merchant name.
      *
      * @api
      *
@@ -99,6 +102,7 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Gets the available merchant statuses for the current merchant status.
+     * - Returns empty array if no available statuses exist.
      *
      * @api
      *

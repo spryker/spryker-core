@@ -203,8 +203,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireContactPersonFirstName()
             ->requireContactPersonLastName()
             ->requireContactPersonPhone()
-            ->requireEmail()
-            ->requireAddressCollection();
+            ->requireEmail();
     }
 
     /**

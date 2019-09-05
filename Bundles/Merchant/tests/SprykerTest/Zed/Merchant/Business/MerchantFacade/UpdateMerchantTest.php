@@ -35,6 +35,7 @@ class UpdateMerchantTest extends Unit
      */
     public function testUpdateMerchant(): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant([
             'one-key',
             'One Company',
@@ -45,9 +46,11 @@ class UpdateMerchantTest extends Unit
             ->setMerchantKey('second-key')
             ->setName('Second Company');
 
+        // Act
         $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
         $updatedMerchant = $merchantResponseTransfer->getMerchant();
 
+        // Assert
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
         $this->assertEquals('Second Company', $updatedMerchant->getName());
@@ -63,11 +66,14 @@ class UpdateMerchantTest extends Unit
      */
     public function testUpdateMerchantWithCorrectStatusWorks(array $presetStatuses): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $expectedStatus = end($presetStatuses);
 
+        // Act
         $merchantResponseTransfer = $this->updateMerchantWithStatuses($merchantTransfer, $presetStatuses);
 
+        // Assert
         $this->assertTrue($merchantResponseTransfer->getIsSuccess());
         $this->assertSame($expectedStatus, $merchantResponseTransfer->getMerchant()->getStatus());
     }
@@ -81,25 +87,52 @@ class UpdateMerchantTest extends Unit
      */
     public function testUpdateMerchantWithIncorrectStatusReturnsIsSuccessFalse(array $presetStatuses): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
 
+        // Act
         $merchantResponseTransfer = $this->updateMerchantWithStatuses($merchantTransfer, $presetStatuses);
 
+        // Assert
         $this->assertFalse($merchantResponseTransfer->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function testUpdateMerchantWithoutDataThrowsException(): void
+    public function testUpdateMerchantWithEmptyRequiredFieldsThrowsException(): void
     {
-        $merchantTransfer = $this->tester->haveMerchant();
-        $merchantTransfer
-            ->setName(null);
+        // Arrange
+        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantWithEmptyNameTransfer = clone $merchantTransfer;
+        $merchantWithEmptyNameTransfer->setName(null);
 
+        $merchantWithEmptyRegistrationNumberTransfer = clone $merchantTransfer;
+        $merchantWithEmptyRegistrationNumberTransfer->setRegistrationNumber(null);
+        $merchantWithEmptyContactPersonTitleTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonTitleTransfer->setContactPersonTitle(null);
+        $merchantWithEmptyContactPersonFirstNameTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonFirstNameTransfer->setContactPersonFirstName(null);
+        $merchantWithEmptyContactPersonLastNameTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonLastNameTransfer->setContactPersonLastName(null);
+        $merchantWithEmptyContactPersonPhoneTransfer = clone $merchantTransfer;
+        $merchantWithEmptyContactPersonPhoneTransfer->setContactPersonPhone(null);
+        $merchantWithEmptyEmailTransfer = clone $merchantTransfer;
+        $merchantWithEmptyEmailTransfer->setEmail(null);
+        $merchantTransfer->setIdMerchant(null);
+
+        // Assert
         $this->expectException(RequiredTransferPropertyException::class);
 
-        $this->tester->getFacade()->updateMerchant($merchantTransfer);
+        // Act
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyNameTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyRegistrationNumberTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonTitleTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonLastNameTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonPhoneTransfer);
+        $this->tester->getFacade()->createMerchant($merchantWithEmptyEmailTransfer);
+        $this->tester->getFacade()->createMerchant($merchantTransfer);
     }
 
     /**
@@ -107,12 +140,15 @@ class UpdateMerchantTest extends Unit
      */
     public function testUpdateMerchantWithWrongIdReturnsIsSuccessFalse(): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $merchantTransfer
             ->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
 
+        // Act
         $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
 
+        // Assert
         $this->assertFalse($merchantResponseTransfer->getIsSuccess());
     }
 

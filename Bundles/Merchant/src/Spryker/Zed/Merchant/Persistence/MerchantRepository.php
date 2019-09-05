@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantRepository extends AbstractRepository implements MerchantRepositoryInterface
 {
+    protected const DEFAULT_ORDER_COLUMN = SpyMerchantTableMap::COL_NAME;
+
     /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
      *
@@ -34,11 +36,11 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         }
         $merchantQuery = $this->getFactory()
             ->createMerchantQuery()
-            ->leftJoinWithSpyMerchantAddress();
+            ->leftJoinSpyMerchantAddress();
 
         $filterTransfer = $merchantCriteriaFilterTransfer->getFilter();
         if ($filterTransfer === null || empty($filterTransfer->getOrderBy())) {
-            $filterTransfer = (new FilterTransfer())->setOrderBy(SpyMerchantTableMap::COL_NAME);
+            $filterTransfer = (new FilterTransfer())->setOrderBy(static::DEFAULT_ORDER_COLUMN);
         }
 
         $merchantQuery = $this->buildQueryFromCriteria($merchantQuery, $filterTransfer);

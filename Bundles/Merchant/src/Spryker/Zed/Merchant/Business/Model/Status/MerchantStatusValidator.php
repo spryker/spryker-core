@@ -31,7 +31,7 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
      */
     public function isMerchantStatusTransitionValid(string $newStatus, string $currentStatus): bool
     {
-        if ($newStatus === $currentStatus) {
+        if ($currentStatus === $newStatus) {
             return true;
         }
 

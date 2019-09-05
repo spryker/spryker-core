@@ -32,13 +32,16 @@ class FindMerchantByIdMerchantTest extends Unit
      */
     public function testFindMerchantByIdWillFindExistingMerchant(): void
     {
+        // Arrange
         $expectedMerchant = $this->tester->haveMerchant();
 
         $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         $merchantCriteriaFilterTransfer->setIdMerchant($expectedMerchant->getIdMerchant());
 
+        // Act
         $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
 
+        // Assert
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
 
@@ -47,13 +50,16 @@ class FindMerchantByIdMerchantTest extends Unit
      */
     public function testFindMerchantByIdWillNotFindMerchant(): void
     {
+        // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
 
         $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
 
+        // Act
         $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
 
+        // Assert
         $this->assertNull($actualMerchant);
     }
 }
