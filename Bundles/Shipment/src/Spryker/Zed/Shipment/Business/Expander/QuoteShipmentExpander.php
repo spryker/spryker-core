@@ -162,9 +162,24 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
                 $shipmentTransfer
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+            $this->updateItemShipmentReferences($shipmentGroupTransfer);
         }
 
         return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    protected function updateItemShipmentReferences(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
     }
 
     /**
