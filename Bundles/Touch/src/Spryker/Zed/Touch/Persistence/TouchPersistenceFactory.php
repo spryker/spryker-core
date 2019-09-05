@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\Touch\TouchConfig getConfig()
  * @method \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface getEntityManager()
  */
 class TouchPersistenceFactory extends AbstractPersistenceFactory
 {

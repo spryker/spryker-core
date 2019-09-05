@@ -395,6 +395,40 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
+     * @part json
+     *
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function seeSingleResourceHasAttribute(string $attribute): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath(
+            sprintf(
+                '$.data.attributes.%s',
+                $attribute
+            )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function seeResourceCollectionHasAttribute(string $attribute): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath(
+            sprintf(
+                '$.data[*].attributes.%s',
+                $attribute
+            )
+        );
+    }
+
+    /**
      * @inheritdoc
      */
     protected function resetVariables(): void
