@@ -10,7 +10,7 @@
 "Merchant with id %s doesn't exists.","Merchant with id %s doesn't exists."
 "Overview of Merchants","Overview of Merchants"
 Save,Save
-waiting-for-approval,waiting for approval
+waiting-for-approval,"waiting for approval"
 approved,approved
 active,active
 inactive,inactive
