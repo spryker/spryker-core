@@ -34,10 +34,11 @@ interface QueueFacadeInterface
      *
      * @param string $command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param array $options
      *
      * @return void
      */
-    public function startWorker($command, OutputInterface $output);
+    public function startWorker($command, OutputInterface $output, array $options = []);
 
     /**
      * Specification:
