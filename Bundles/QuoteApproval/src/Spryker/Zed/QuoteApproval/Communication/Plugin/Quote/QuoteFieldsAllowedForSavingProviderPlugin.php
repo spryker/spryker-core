@@ -19,15 +19,16 @@ class QuoteFieldsAllowedForSavingProviderPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
+     * - Returns required quote fields from config if approval request not canceled.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function execute(QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFacade()->getQuoteApprovalConfig($quoteTransfer);
+        return $this->getFacade()->getQuoteFieldsAllowedForSaving($quoteTransfer);
     }
 }

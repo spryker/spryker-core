@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Business\Model;
+namespace Spryker\Zed\Quote\Business\Operation;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -14,7 +14,7 @@ interface QuoteOperationInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array;
 }

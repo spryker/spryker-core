@@ -124,13 +124,13 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Gets fields from config allowed for saving.
+     * - Returns fields from config allowed for saving.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return string[]
      */
-    public function getQuoteApprovalConfig(QuoteTransfer $quoteTransfer): array;
+    public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array;
 }

@@ -12,14 +12,14 @@ use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleter;
 use Spryker\Zed\Quote\Business\GuestQuote\GuestQuoteDeleterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleter;
 use Spryker\Zed\Quote\Business\Model\QuoteDeleterInterface;
-use Spryker\Zed\Quote\Business\Model\QuoteOperation;
-use Spryker\Zed\Quote\Business\Model\QuoteOperationInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteReader;
 use Spryker\Zed\Quote\Business\Model\QuoteReaderInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
+use Spryker\Zed\Quote\Business\Operation\QuoteOperation;
+use Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface;
 use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
@@ -130,13 +130,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Model\QuoteOperationInterface
+     * @return \Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface
      */
     public function createQuoteOperation(): QuoteOperationInterface
     {
         return new QuoteOperation(
             $this->getBundleConfig(),
-            $this->getQuoteFieldsPlugins()
+            $this->getQuoteFieldsAllowedForSavingProviderPlugins()
         );
     }
 
@@ -231,7 +231,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
      */
-    protected function getQuoteFieldsPlugins(): array
+    protected function getQuoteFieldsAllowedForSavingProviderPlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_EXPANDER);
     }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Quote\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface;
 use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
@@ -50,7 +51,7 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteExpandBeforeCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\Quote\Business\Model\QuoteOperationInterface
+     * @var \Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface
      */
     protected $quoteOperation;
 
@@ -60,7 +61,7 @@ class QuoteWriter implements QuoteWriterInterface
      * @param \Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface $quoteWriterPluginExecutor
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface $quoteValidator
-     * @param \Spryker\Zed\Quote\Business\Model\QuoteOperationInterface $quoteOperation
+     * @param \Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface $quoteOperation
      * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[] $quoteExpandBeforeCreatePlugins
      */
     public function __construct(
@@ -155,7 +156,7 @@ class QuoteWriter implements QuoteWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $quoteFieldsAllowedForSaving
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */

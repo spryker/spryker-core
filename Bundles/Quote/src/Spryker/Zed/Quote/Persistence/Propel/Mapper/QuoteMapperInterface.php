@@ -23,7 +23,7 @@ interface QuoteMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Quote\Persistence\SpyQuote $quoteEntity
-     * @param array $quoteFieldsAllowedForSaving
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return \Orm\Zed\Quote\Persistence\SpyQuote
      */

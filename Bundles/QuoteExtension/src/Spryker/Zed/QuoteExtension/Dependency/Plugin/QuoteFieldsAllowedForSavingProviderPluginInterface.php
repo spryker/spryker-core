@@ -13,13 +13,13 @@ interface QuoteFieldsAllowedForSavingProviderPluginInterface
 {
     /**
      * Specification:
-     * - Fields allowed for saving.
+     * - Returns Quote fields allowed for saving.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function execute(QuoteTransfer $quoteTransfer): array;
 }

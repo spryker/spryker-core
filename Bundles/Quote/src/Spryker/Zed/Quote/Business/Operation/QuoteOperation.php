@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Business\Model;
+namespace Spryker\Zed\Quote\Business\Operation;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Quote\QuoteConfig;
@@ -15,7 +15,7 @@ class QuoteOperation implements QuoteOperationInterface
     /**
      * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
      */
-    protected $getQuoteFieldsPlugins;
+    protected $quoteFieldsAllowedForSavingProviderPlugins;
 
     /**
      * @var \Spryker\Zed\Quote\QuoteConfig
@@ -24,24 +24,24 @@ class QuoteOperation implements QuoteOperationInterface
 
     /**
      * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
-     * @param array $getQuoteFieldsPlugins
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[] $quoteFieldsAllowedForSavingProviderPlugins
      */
     public function __construct(
         QuoteConfig $quoteConfig,
-        array $getQuoteFieldsPlugins = []
+        array $quoteFieldsAllowedForSavingProviderPlugins = []
     ) {
         $this->quoteConfig = $quoteConfig;
-        $this->getQuoteFieldsPlugins = $getQuoteFieldsPlugins;
+        $this->quoteFieldsAllowedForSavingProviderPlugins = $quoteFieldsAllowedForSavingProviderPlugins;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
-        $quoteFields = array_merge($this->quoteConfig->getQuoteFieldsAllowedForSaving(), $this->executeQuoteFieldsPlugins($quoteTransfer));
+        $quoteFields = array_merge($this->quoteConfig->getQuoteFieldsAllowedForSaving(), $this->executeQuoteFieldsAllowedForSavingProviderPlugins($quoteTransfer));
 
         return array_unique($quoteFields);
     }
@@ -51,13 +51,13 @@ class QuoteOperation implements QuoteOperationInterface
      *
      * @return array
      */
-    protected function executeQuoteFieldsPlugins(QuoteTransfer $quoteTransfer): array
+    protected function executeQuoteFieldsAllowedForSavingProviderPlugins(QuoteTransfer $quoteTransfer): array
     {
-        $quoteFields = [];
-        foreach ($this->getQuoteFieldsPlugins as $quoteFieldsPlugin) {
-            $quoteFields = array_merge($quoteFieldsPlugin->execute($quoteTransfer));
+        $quoteFieldsAllowedForSaving = [];
+        foreach ($this->quoteFieldsAllowedForSavingProviderPlugins as $quoteFieldsAllowedForSavingProviderPlugin) {
+            $quoteFieldsAllowedForSaving[] = $quoteFieldsAllowedForSavingProviderPlugin->execute($quoteTransfer);
         }
 
-        return $quoteFields;
+        return array_merge(...$quoteFieldsAllowedForSaving);
     }
 }

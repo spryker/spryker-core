@@ -38,9 +38,9 @@ class QuoteApprovalReader implements QuoteApprovalReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return string[]
      */
-    public function getQuoteApprovalConfig(QuoteTransfer $quoteTransfer): array
+    public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
         if (!$this->isQuoteApprovalRequestCanceled($quoteTransfer)) {
             return $this->quoteApprovalConfig->getRequiredQuoteFields();
