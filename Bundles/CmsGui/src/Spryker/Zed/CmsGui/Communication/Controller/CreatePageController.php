@@ -87,6 +87,13 @@ class CreatePageController extends AbstractController
                 ->getCmsFacade()
                 ->createPage($pageForm->getData());
 
+            $cmsGlossaryTransfer = $this->getFactory()
+                ->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
+
+            if ($cmsGlossaryTransfer && $cmsGlossaryTransfer->getGlossaryAttributes()->count() === 0) {
+                return Url::generate('/content-gui/list-content');
+            }
+
             return Url::generate(
                 '/cms-gui/create-glossary/index',
                 [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]

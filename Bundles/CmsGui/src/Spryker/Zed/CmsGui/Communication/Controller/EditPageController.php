@@ -81,6 +81,10 @@ class EditPageController extends AbstractController
             ->findCmsPageById($idCmsPage);
 
         $pageTabs = $this->getFactory()->createPageTabs();
+        $cmsGlossaryTransfer = $this->getFactory()
+            ->getCmsFacade()
+            ->findPageGlossaryAttributes($idCmsPage);
+        $isPageTemplatePlaceholdersExists = $cmsGlossaryTransfer ? $cmsGlossaryTransfer->getGlossaryAttributes()->count() > 0 : false;
 
         return [
             'pageTabs' => $pageTabs->createView(),
@@ -89,6 +93,7 @@ class EditPageController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
+            'isPageTemplatePlaceholdersExists' => $isPageTemplatePlaceholdersExists,
         ];
     }
 
