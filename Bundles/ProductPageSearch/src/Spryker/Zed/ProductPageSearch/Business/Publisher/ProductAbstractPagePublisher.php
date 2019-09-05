@@ -411,7 +411,15 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        return $this->queryContainer->queryProductAbstractByIds($productAbstractIds)->find()->getData();
+        $productAbstractLocalizedEntities = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $productAbstractLocalizedEntities = array_merge(
+                $productAbstractLocalizedEntities,
+                $this->queryContainer->queryProductAbstractByIds($productAbstractIds, $storeTransfer)->find()->getData()
+            );
+        }
+
+        return $productAbstractLocalizedEntities;
     }
 
     /**
@@ -489,10 +497,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
             unset($mappedProductAbstractPageSearchEntities[$idProductAbstract][$storeName][$localeName]);
 
-            if (!$this->isValidStoreLocale($storeName, $localeName)) {
-                continue;
-            }
-
             $pairs[] = [
                 static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY => $productAbstractLocalizedEntity,
                 static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY => $searchEntity,
@@ -502,16 +506,5 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];
-    }
-
-    /**
-     * @param string $storeName
-     * @param string $localeName
-     *
-     * @return bool
-     */
-    protected function isValidStoreLocale(string $storeName, string $localeName): bool
-    {
-        return in_array($localeName, $this->storeFacade->getStoreByName($storeName)->getAvailableLocaleIsoCodes());
     }
 }

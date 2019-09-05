@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
@@ -42,10 +43,11 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      * @api
      *
      * @param array $productAbstractIds
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractByIds(array $productAbstractIds)
+    public function queryProductAbstractByIds(array $productAbstractIds, ?StoreTransfer $storeTransfer = null)
     {
         $query = $this->getFactory()->getProductQueryContainer()
             ->queryAllProductAbstractLocalizedAttributes()
@@ -81,6 +83,24 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
         $query
             ->rightJoinWith('SpyProduct.SpyProductSearch')
             ->addJoinCondition('SpyProductSearch', sprintf('spy_product_search.fk_locale = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE));
+
+        if($storeTransfer !== null) {
+            $storeLocaleIsoCodes = array_map(function (string $localeIsoCode) {
+                return $localeIsoCode;
+            }, $storeTransfer->getAvailableLocaleIsoCodes());
+
+            $query
+                ->useLocaleQuery()
+                    ->filterByLocaleName_In($storeLocaleIsoCodes)
+                ->endUse()
+                ->useSpyProductAbstractQuery()
+                    ->useSpyProductAbstractStoreQuery()
+                        ->useSpyStoreQuery()
+                            ->filterByIdStore($storeTransfer->getIdStore())
+                        ->endUse()
+                    ->endUse()
+                ->endUse();
+        }
 
         return $query;
     }

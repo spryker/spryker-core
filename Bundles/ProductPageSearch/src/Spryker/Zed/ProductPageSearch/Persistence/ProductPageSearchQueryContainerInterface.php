@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -18,10 +19,11 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @api
      *
      * @param array $productAbstractIds
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractByIds(array $productAbstractIds);
+    public function queryProductAbstractByIds(array $productAbstractIds, ?StoreTransfer $storeTransfer = null);
 
     /**
      * @api
