@@ -22,4 +22,14 @@ class ProductsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT = 'Concrete product is not found.';
     public const RESPONSE_CODE_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED = '312';
     public const RESPONSE_DETAIL_CONCRETE_PRODUCT_SKU_IS_NOT_SPECIFIED = 'Concrete product sku is not specified.';
+
+    protected const ALLOW_PRODUCT_CONCRETE_EAGER_RELATIONSHIP = true;
+
+    /**
+     * @return bool
+     */
+    public function getAllowedProductConcreteEagerRelationship(): bool
+    {
+        return static::ALLOW_PRODUCT_CONCRETE_EAGER_RELATIONSHIP;
+    }
 }

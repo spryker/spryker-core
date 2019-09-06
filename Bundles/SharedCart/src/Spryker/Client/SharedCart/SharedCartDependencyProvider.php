@@ -14,6 +14,7 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientBridge
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientBridge;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientBridge;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientBridge;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientBridge;
 
 class SharedCartDependencyProvider extends AbstractDependencyProvider
 {
@@ -23,6 +24,7 @@ class SharedCartDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
     public const CLIENT_CART = 'CLIENT_CART';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -37,6 +39,7 @@ class SharedCartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addMultiCartClient($container);
         $container = $this->addPersistentCartClient($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addQuoteClient($container);
 
         return $container;
     }
@@ -121,6 +124,20 @@ class SharedCartDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
+            return new SharedCartToQuoteClientBridge($container->getLocator()->quote()->client());
+        });
 
         return $container;
     }

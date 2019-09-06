@@ -8,4 +8,4 @@
     {{ ('product.attribute.' ~ name) | trans }}: {{ value }}
 {% endfor %}
 
-{{ 'availability_notification_subscription.mail.footer'|trans({'%link%': mail.availabilityNotificationSubscriptionMailData.availabilityUnsubscriptionLink})|raw }}
+{% embed '@AvailabilityNotification/mail/footer.text.twig' %}{% endembed %}

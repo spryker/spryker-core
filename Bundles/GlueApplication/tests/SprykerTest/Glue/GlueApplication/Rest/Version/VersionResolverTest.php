@@ -113,7 +113,6 @@ class VersionResolverTest extends Unit
     protected function createVersionResolver(
         ContentTypeResolverInterface $contentTypeResolverMock
     ): VersionResolverInterface {
-
         return new VersionResolver($contentTypeResolverMock);
     }
 

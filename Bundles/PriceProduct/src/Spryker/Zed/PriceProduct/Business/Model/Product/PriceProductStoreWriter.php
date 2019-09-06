@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
@@ -165,37 +164,48 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->requireFieldsBaseOnProductType($priceProductTransfer);
 
         if ($priceProductTransfer->getIdProduct() !== null) {
-            $idPriceProduct = $this->priceProductRepository
-                ->findIdPriceProductForProductConcrete($priceProductTransfer);
-
-            if ($idPriceProduct !== null) {
-                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
-
-                return $priceProductTransfer;
-            }
+            return $this->preparePriceProductForProductConcrete($priceProductTransfer);
         }
 
-        if ($priceProductTransfer->getIdProductAbstract() !== null) {
-            $idPriceProduct = $this->priceProductRepository
-                ->findIdPriceProductForProductAbstract($priceProductTransfer);
+        return $this->preparePriceProductForProductAbstract($priceProductTransfer);
+    }
 
-            if ($idPriceProduct !== null) {
-                $priceProductTransfer->setIdPriceProduct($idPriceProduct);
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function preparePriceProductForProductConcrete(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $idPriceProduct = $this->priceProductRepository
+            ->findIdPriceProductForProductConcrete($priceProductTransfer);
 
-                return $priceProductTransfer;
-            }
+        if ($idPriceProduct === null) {
+            $idPriceProduct = $this->priceProductEntityManager
+                ->savePriceProductForProductConcrete($priceProductTransfer);
         }
 
-        $priceProductEntity = (new SpyPriceProduct())
-            ->setFkPriceType($priceProductTransfer->getFkPriceType())
-            ->setFkProduct($priceProductTransfer->getIdProduct())
-            ->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+        return $priceProductTransfer
+            ->setIdPriceProduct($idPriceProduct);
+    }
 
-        $priceProductEntity->save();
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function preparePriceProductForProductAbstract(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        $idPriceProduct = $this->priceProductRepository
+            ->findIdPriceProductForProductAbstract($priceProductTransfer);
 
-        $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+        if ($idPriceProduct === null) {
+            $idPriceProduct = $this->priceProductEntityManager
+                ->savePriceProductForProductAbstract($priceProductTransfer);
+        }
 
-        return $priceProductTransfer;
+        return $priceProductTransfer
+            ->setIdPriceProduct($idPriceProduct);
     }
 
     /**
@@ -290,7 +300,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
-
         return $this->priceProductQueryContainer
             ->queryPriceProductStoreByProductCurrencyStore(
                 $priceProductTransfer->getIdPriceProduct(),
