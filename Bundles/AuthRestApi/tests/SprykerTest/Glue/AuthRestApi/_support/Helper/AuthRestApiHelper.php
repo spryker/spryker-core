@@ -12,7 +12,7 @@ use SprykerTest\Glue\Testify\Helper\GlueRest;
 
 class AuthRestApiHelper extends GlueRest
 {
-    protected const RESOURCE_ACCESS_TOKENS = 'access-tokens';
+    protected const RESOURCE_TYPE_ACCESS_TOKENS = 'access-tokens';
 
     /**
      * Specification:
@@ -57,9 +57,9 @@ class AuthRestApiHelper extends GlueRest
      */
     public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): ?array
     {
-        $this->sendPOST(static::RESOURCE_ACCESS_TOKENS, [
+        $this->sendPOST(static::RESOURCE_TYPE_ACCESS_TOKENS, [
             'data' => [
-                'type' => static::RESOURCE_ACCESS_TOKENS,
+                'type' => static::RESOURCE_TYPE_ACCESS_TOKENS,
                 'attributes' => [
                     'username' => $customerTransfer->getEmail(),
                     'password' => $customerTransfer->getNewPassword() ?: static::DEFAULT_PASSWORD,

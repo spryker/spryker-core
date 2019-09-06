@@ -18,7 +18,7 @@ use SprykerTest\Zed\Company\Helper\CompanyHelper;
 
 class CompanyUserAuthRestApiHelper extends GlueRest
 {
-    protected const RESOURCE_CUSTOMERS = 'customers';
+    protected const RESOURCE_TYPE_CUSTOMERS = 'customers';
 
     /**
      * @var \SprykerTest\Zed\Company\Helper\CompanyHelper|null
@@ -133,9 +133,9 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     {
         $customerTransfer = $this->createCustomerTransfer($withEmail, $withPassword);
 
-        $this->sendPOST(static::RESOURCE_CUSTOMERS, [
+        $this->sendPOST(static::RESOURCE_TYPE_CUSTOMERS, [
             'data' => [
-                'type' => static::RESOURCE_CUSTOMERS,
+                'type' => static::RESOURCE_TYPE_CUSTOMERS,
                 'attributes' => [
                     'salutation' => $customerTransfer->getSalutation(),
                     'firstName' => $customerTransfer->getFirstName(),
