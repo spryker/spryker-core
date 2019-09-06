@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductPackagingUnitToStoreFacadeBridge implements ProductPackagingUnitToStoreFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductPackagingUnitToStoreFacadeBridge implements ProductPackagingUnitToS
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }
@@ -35,7 +37,7 @@ class ProductPackagingUnitToStoreFacadeBridge implements ProductPackagingUnitToS
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName(string $storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }
