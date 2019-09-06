@@ -45,14 +45,11 @@
             {% if eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment] is defined %}
                 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states of order inside this shipment' } %}
                     {% block widget_content %}
-                        {% include [
-                            '@Oms/RenderForm/_partial/order-actions.twig',
-                            '@Sales/Detail/_partial/order-actions.twig',
-                            ] ignore missing with {
-                                redirectUrl: changeStatusRedirectUrl,
-                                idSalesOrder: order.idSalesOrder,
-                                events: eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment],
-                                idSalesShipment: shipmentOrderItems.shipment.idSalesShipment
+                        {% include '@Oms/RenderForm/_partial/order-actions.twig' with {
+                            redirectUrl: changeStatusRedirectUrl,
+                            idSalesOrder: order.idSalesOrder,
+                            events: eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment],
+                            idSalesShipment: shipmentOrderItems.shipment.idSalesShipment
                         } only %}
                     {% endblock %}
                 {% endembed %}
@@ -60,15 +57,15 @@
 
             <table class="footable table toggle-arrow-tiny shipment-item-table-{{ shipmentOrderItems.shipment.idSalesShipment }}" data-qa="order-item-list">
                 <thead>
-                <tr class="text-left">
-                    <th><input type="checkbox" class="check-all-orders" /></th>
-                    <th colspan="2">{{ 'Product' | trans }}</th>
-                    <th>{{ 'Quantity' | trans }}</th>
-                    <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
-                    <th>{{ 'Total' | trans }}</th>
-                    <th>{{ 'State' | trans }}</th>
-                    <th>{{ 'Trigger event' | trans }}</th>
-                </tr>
+                    <tr class="text-left">
+                        <th><input type="checkbox" class="check-all-orders" /></th>
+                        <th colspan="2">{{ 'Product' | trans }}</th>
+                        <th>{{ 'Quantity' | trans }}</th>
+                        <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+                        <th>{{ 'Total' | trans }}</th>
+                        <th>{{ 'State' | trans }}</th>
+                        <th>{{ 'Trigger event' | trans }}</th>
+                    </tr>
                 </thead>
 
                 {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items} %}{% endembed %}

@@ -76,13 +76,10 @@
             <div class="col-md-12">
                 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states inside this order' } %}
                     {% block widget_content %}
-                        {% include [
-                            '@Oms/RenderForm/_partial/order-actions.twig',
-                            '@Sales/Detail/_partial/order-actions-for-all-items.twig',
-                            ] ignore missing with {
-                                redirectUrl: changeStatusRedirectUrl,
-                                idSalesOrder: order.idSalesOrder,
-                                events: events,
+                        {% include '@Oms/RenderForm/_partial/order-actions.twig' with {
+                            redirectUrl: changeStatusRedirectUrl,
+                            idSalesOrder: order.idSalesOrder,
+                            events: events,
                         } only %}
                     {% endblock %}
                 {% endembed %}
