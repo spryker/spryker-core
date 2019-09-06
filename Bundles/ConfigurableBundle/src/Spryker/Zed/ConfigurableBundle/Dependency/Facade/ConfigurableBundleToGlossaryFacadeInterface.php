@@ -37,4 +37,19 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      * @return int
      */
     public function createKey($keyName);
+
+    /**
+     * @param string $keyName
+     *
+     * @return bool
+     */
+    public function hasKey($keyName);
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
+     *
+     * @return bool
+     */
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 }

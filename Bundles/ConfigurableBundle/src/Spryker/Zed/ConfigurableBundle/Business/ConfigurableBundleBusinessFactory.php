@@ -13,6 +13,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplate
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriter;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
@@ -33,10 +35,17 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateWriter(
             $this->getEntityManager(),
-            $this->getGlossaryFacade(),
-            $this->createConfigurableBundleTemplateNameGenerator(),
-            $this->getRepository()
+            $this->createConfigurableBundleTemplateTranslationWriter(),
+            $this->createConfigurableBundleTemplateNameGenerator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
+     */
+    public function createConfigurableBundleTemplateTranslationWriter(): ConfigurableBundleTemplateTranslationWriterInterface
+    {
+        return new ConfigurableBundleTemplateTranslationWriter($this->getGlossaryFacade());
     }
 
     /**
@@ -44,10 +53,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
     {
-        return new ConfigurableBundleTemplateReader(
-            $this->getRepository(),
-            $this->createConfigurableBundleTemplateNameGenerator()
-        );
+        return new ConfigurableBundleTemplateReader($this->getRepository());
     }
 
     /**

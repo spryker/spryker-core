@@ -36,7 +36,7 @@ class ConfigurableBundleTemplateEditTabs extends AbstractConfigurableBundleTempl
     protected function addSlotsTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = (new TabItemTransfer())
-            ->setName(static::SLOTS_TAB_NAME)
+            ->setName(strtolower(static::SLOTS_TAB_NAME))
             ->setTitle(static::SLOTS_TAB_NAME)
             ->setTemplate('@ConfigurableBundleGui/Template/tabs/slots-tab.twig');
 

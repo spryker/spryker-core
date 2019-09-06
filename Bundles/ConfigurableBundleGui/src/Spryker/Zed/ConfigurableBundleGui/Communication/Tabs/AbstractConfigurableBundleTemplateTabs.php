@@ -22,7 +22,10 @@ class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
      */
     protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        $this->addGeneralTab($tabsViewTransfer);
+        $this->addGeneralTab($tabsViewTransfer)
+            ->setFooterTemplate($tabsViewTransfer);
+
+        $tabsViewTransfer->setIsNavigable(true);
 
         return $tabsViewTransfer;
     }
@@ -35,11 +38,23 @@ class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
     protected function addGeneralTab(TabsViewTransfer $tabsViewTransfer)
     {
         $tabItemTransfer = (new TabItemTransfer())
-            ->setName(static::GENERAL_TAB_NAME)
+            ->setName(strtolower(static::GENERAL_TAB_NAME))
             ->setTitle(static::GENERAL_TAB_NAME)
             ->setTemplate('@ConfigurableBundleGui/Template/tabs/general-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function setFooterTemplate(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabsViewTransfer->setFooterTemplate('@ConfigurableBundleGui/Template/_partials/submit-button.twig');
 
         return $this;
     }
