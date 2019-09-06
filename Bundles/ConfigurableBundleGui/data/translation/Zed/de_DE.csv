@@ -8,3 +8,22 @@ Status,Status
 "Configurable Bundle Templates","Vorlagen der konfigurierbaren Bündel"
 "# of Slots","# der Slots"
 "Create New Template","Neue Vorlage erstellen"
+General, Allgemeines
+Slots, Slots
+"Template details", "Vorlagendetails"
+"Create Configurable Bundle Template", "Konfigurierbares Bündel-Vorlage erstellen"
+"Edit Configurable Bundle Template", "Konfigurierbares Bündel-Vorlage bearbeiten"
+"Back to Template list", "Zurück zur Vorlagenliste"
+"Add Slot", "Slot hinzufügen"
+Save, Speichern
+Next, Weiter
+"Slot ID", "Slot ID"
+"Slot Name", "Slot Name"
+"Number of Items", "Anzahl der Artikel"
+Edit, Bearbeiten
+Delete, Löschen
+SKU, SKU
+"Product ID", "Produkt ID"
+"At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","Erstellen Sie zunächst ein konfigurierbares Bündel-Vorlage. Anschließend werden Sie zu der Seite weitergeleitet, auf der Sie Slots erstellen und Produkte für jedes einzelne definieren können."
+"You can change name and define locals on this page.","Auf dieser Seite können Sie den Namen ändern und Einheimische definieren."
+"You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","Sie können Slots auf dieser Seite hinzufügen. Während der Slot-Erstellung können Sie diesem Slot nacheinander Produkte aus einem Katalog zuweisen, eine CSV-Datei importieren oder mehrere Kategorien zuweisen."

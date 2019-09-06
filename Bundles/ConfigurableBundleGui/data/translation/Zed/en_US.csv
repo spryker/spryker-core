@@ -8,3 +8,22 @@ Status,Status
 "Configurable Bundle Templates","Configurable Bundle Templates"
 "# of Slots","# of Slots"
 "Create New Template","Create New Template"
+General,General
+Slots,Slots
+"Template details","Template details"
+"Create Configurable Bundle Template","Create Configurable Bundle Template"
+"Edit Configurable Bundle Template","Edit Configurable Bundle Template"
+"Back to Template list","Back to Template list"
+"Add Slot","Add Slot"
+Save,Save
+Next,Next
+"Slot ID","Slot ID"
+"Slot Name","Slot Name"
+"Number of Items","Number of Items"
+Edit,Edit
+Delete,Delete
+SKU,SKU
+"Product ID","Product ID"
+"At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them."
+"You can change name and define locals on this page.","You can change name and define locals on this page."
+"You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories."

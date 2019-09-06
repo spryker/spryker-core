@@ -20,11 +20,14 @@
         {% block widget_content %}
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
+            {% set tips = 'You can change name and define locals on this page.' %}
+
             {{ tabs(tabs, {
                 form: form,
                 currentLocale: currentLocale,
                 slotTable: slotTable,
-                slotProductsTable: slotProductsTable
+                slotProductsTable: slotProductsTable,
+                tips: tips
             }) }}
 
             {{ form_end(form) }}

@@ -19,9 +19,12 @@
         {% block widget_content %}
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
+            {% set tips = 'At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.' %}
+
             {{ tabs(tabs, {
                 form: form,
                 currentLocale: currentLocale,
+                tips: tips
             }) }}
 
             {{ form_end(form) }}

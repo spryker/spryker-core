@@ -61,7 +61,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
-            SpyProductTableMap::COL_ID_PRODUCT => 'ID',
+            SpyProductTableMap::COL_ID_PRODUCT => 'Product ID',
             SpyProductTableMap::COL_SKU => 'SKU',
             SpyProductLocalizedAttributesTableMap::COL_NAME => 'Name',
         ]);
