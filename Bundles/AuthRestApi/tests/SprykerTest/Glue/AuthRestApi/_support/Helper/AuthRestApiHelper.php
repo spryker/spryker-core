@@ -69,6 +69,6 @@ class AuthRestApiHelper extends GlueRest
 
         $responseData = $this->grabDataFromResponseByJsonPath('$.data.attributes')[0];
 
-        return $responseData ? $responseData : [];
+        return $responseData ?: [];
     }
 }
