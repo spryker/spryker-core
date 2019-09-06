@@ -24,18 +24,18 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
     }
 
     /**
-     * @param string $newStatus
      * @param string $currentStatus
+     * @param string $newStatus
      *
      * @return bool
      */
-    public function isMerchantStatusTransitionValid(string $newStatus, string $currentStatus): bool
+    public function isMerchantStatusTransitionValid(string $currentStatus, string $newStatus): bool
     {
         if ($currentStatus === $newStatus) {
             return true;
         }
 
-        if (!$this->isTransitionToStatusAllowed($newStatus, $currentStatus)) {
+        if (!$this->isTransitionToStatusAllowed($currentStatus, $newStatus)) {
             return false;
         }
 
@@ -43,12 +43,12 @@ class MerchantStatusValidator implements MerchantStatusValidatorInterface
     }
 
     /**
-     * @param string $newStatus
      * @param string $currentStatus
+     * @param string $newStatus
      *
      * @return bool
      */
-    protected function isTransitionToStatusAllowed(string $newStatus, string $currentStatus): bool
+    protected function isTransitionToStatusAllowed(string $currentStatus, string $newStatus): bool
     {
         $applicableMerchantStatuses = $this->merchantStatusReader->getApplicableMerchantStatuses($currentStatus);
 

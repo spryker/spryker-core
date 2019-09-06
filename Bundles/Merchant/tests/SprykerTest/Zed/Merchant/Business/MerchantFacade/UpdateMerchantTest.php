@@ -125,14 +125,14 @@ class UpdateMerchantTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyRegistrationNumberTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonTitleTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonLastNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonPhoneTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyEmailTransfer);
-        $this->tester->getFacade()->createMerchant($merchantTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyNameTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyRegistrationNumberTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonTitleTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonLastNameTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonPhoneTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantWithEmptyEmailTransfer);
+        $this->tester->getFacade()->updateMerchant($merchantTransfer);
     }
 
     /**

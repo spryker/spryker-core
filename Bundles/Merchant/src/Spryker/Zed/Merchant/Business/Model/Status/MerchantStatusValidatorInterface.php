@@ -10,10 +10,10 @@ namespace Spryker\Zed\Merchant\Business\Model\Status;
 interface MerchantStatusValidatorInterface
 {
     /**
-     * @param string $newStatus
      * @param string $currentStatus
+     * @param string $newStatus
      *
      * @return bool
      */
-    public function isMerchantStatusTransitionValid(string $newStatus, string $currentStatus): bool;
+    public function isMerchantStatusTransitionValid(string $currentStatus, string $newStatus): bool;
 }
