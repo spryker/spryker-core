@@ -14,8 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
@@ -47,11 +47,11 @@ class StockSubForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_QUANTITY, NumberType::class, [
+        $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => '/(\d*\.)?\d+/']),
+                new Type('numeric'),
             ],
         ]);
 

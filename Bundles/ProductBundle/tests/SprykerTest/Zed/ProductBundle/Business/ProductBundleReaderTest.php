@@ -15,7 +15,9 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -57,7 +59,7 @@ class ProductBundleReaderTest extends Unit
         $productForBundleTransfer = $bundledProductsTransferCollection[0];
         $this->assertSame($this->fixtures['bundledProductSku'], $productForBundleTransfer->getSku());
         $this->assertSame($this->fixtures['fkBundledProduct'], $productForBundleTransfer->getIdProductConcrete());
-        $this->assertSame($this->fixtures['bundledProductQuantity'], $productForBundleTransfer->getQuantity());
+        $this->assertSame((new Decimal($this->fixtures['bundledProductQuantity']))->toString(), $productForBundleTransfer->getQuantity()->toString());
         $this->assertSame($this->fixtures['idProductBundle'], $productForBundleTransfer->getIdProductBundle());
     }
 
@@ -66,7 +68,7 @@ class ProductBundleReaderTest extends Unit
      */
     public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability()
     {
-        $bundleAvailability = 5;
+        $bundleAvailability = '5';
 
         $productBundleReaderMock = $this->createProductBundleReader();
 
@@ -87,7 +89,7 @@ class ProductBundleReaderTest extends Unit
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
 
         $this->assertNotNull($productBundleTransfer);
-        $this->assertEquals($bundleAvailability, $productBundleTransfer->getAvailability());
+        $this->assertEquals($bundleAvailability, $productBundleTransfer->getAvailability()->toString());
         $this->assertCount(1, $productBundleTransfer->getBundledProducts());
     }
 
@@ -96,14 +98,13 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
      */
     protected function createProductBundleReader(
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
         ?ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
-
         if ($productBundleQueryContainerMock === null) {
             $productBundleQueryContainerMock = $this->createProductQueryContainerMock();
         }
@@ -156,11 +157,11 @@ class ProductBundleReaderTest extends Unit
 
     /**
      * @param array $fixtures
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit\Framework\MockObject\MockObject $productBundleReaderMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleReaderMock
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, ProductBundleReader $productBundleReaderMock)
+    protected function setupFindBundledProducts(array $fixtures, ProductBundleReaderInterface $productBundleReaderMock)
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);

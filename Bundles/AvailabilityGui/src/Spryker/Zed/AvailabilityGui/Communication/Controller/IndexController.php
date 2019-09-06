@@ -260,7 +260,7 @@ class IndexController extends AbstractController
      */
     protected function isStockProductTransferValid(StockProductTransfer $stockProductTransfer)
     {
-        return $stockProductTransfer->getIdStockProduct() === null && ((int)$stockProductTransfer->getQuantity() !== 0) || $stockProductTransfer->getIsNeverOutOfStock();
+        return $stockProductTransfer->getIdStockProduct() === null && (!$stockProductTransfer->getQuantity()->isZero()) || $stockProductTransfer->getIsNeverOutOfStock();
     }
 
     /**

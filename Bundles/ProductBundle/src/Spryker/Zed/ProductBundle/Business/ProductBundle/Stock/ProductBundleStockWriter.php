@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToStockQueryContainerInterface;
@@ -192,13 +193,13 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     {
         $bundleTotalStockPerWarehouse = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
-            $bundleStock = 0;
+            $bundleStock = new Decimal(0);
             $isAllNeverOutOfStock = true;
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (int)floor($productStockQuantity[static::QUANTITY] / $bundleItemQuantity);
+                $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->multiply($bundleItemQuantity);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;
@@ -219,15 +220,15 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param int $bundleStock
-     * @param int $itemStock
+     * @param \Spryker\DecimalObject\Decimal $bundleStock
+     * @param \Spryker\DecimalObject\Decimal $itemStock
      * @param bool $isNeverOutOfStock
      *
      * @return bool
      */
-    protected function isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)
+    protected function isCurrentStockIsLowestWithingBundle(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
     {
-        if (($bundleStock > $itemStock || $bundleStock == 0) && !$isNeverOutOfStock) {
+        if (($bundleStock->greaterThan($itemStock) || $bundleStock->isZero()) && !$isNeverOutOfStock) {
             return true;
         }
 

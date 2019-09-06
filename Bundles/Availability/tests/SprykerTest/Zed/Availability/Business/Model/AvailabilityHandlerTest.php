@@ -43,7 +43,7 @@ class AvailabilityHandlerTest extends Unit
      */
     public function testUpdateAvailabilityShouldTouchWhenStockUpdated()
     {
-        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(0);
+        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock();
 
         $sellableMock = $this->createSellableMock();
         $sellableMock->method('calculateStockForProductWithStore')->willReturn(new Decimal(15));
@@ -66,7 +66,7 @@ class AvailabilityHandlerTest extends Unit
      */
     public function testUpdateAvailabilityShouldTouchAndUpdateNewStock()
     {
-        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(5);
+        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock('5');
 
         $sellableMock = $this->createSellableMock();
         $sellableMock->method('calculateStockForProductWithStore')->willReturn(new Decimal(0));
@@ -183,11 +183,11 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @param int $availabilityQuantity
+     * @param string $availabilityQuantity
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
-    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0)
+    protected function createAvailabilityQueryContainerMock(string $availabilityQuantity = '0')
     {
         $availabilityContainerMock = $this->getMockBuilder(AvailabilityQueryContainerInterface::class)
             ->getMock();

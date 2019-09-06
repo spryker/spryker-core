@@ -5,7 +5,7 @@
 
     <transfer name="ProductBundle">
         <property name="idProductConcreteBundle" type="int" />
-        <property name="availability" type="int" />
+        <property name="availability" type="decimal" />
         <property name="isNeverOutOfStock" type="bool" />
         <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct" />
         <property name="bundlesToRemove" type="array" singular="bundleToRemove"/>
@@ -22,7 +22,7 @@
     <transfer name="ProductForBundle">
         <property name="idProductBundle" type="int" />
         <property name="idProductConcrete" type="int" />
-        <property name="quantity" type="int" />
+        <property name="quantity" type="decimal" />
         <property name="sku" type="string" />
         <property name="isActive" type="bool" />
     </transfer>

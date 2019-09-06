@@ -291,7 +291,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             ->findOne();
 
         $availabilityAbstractEntity->setFkStore($storeTransfer->getIdStore());
-        $availabilityAbstractEntity->setQuantity((int)$sumQuantity);
+        $availabilityAbstractEntity->setQuantity($sumQuantity);
         $availabilityAbstractEntity->save();
     }
 

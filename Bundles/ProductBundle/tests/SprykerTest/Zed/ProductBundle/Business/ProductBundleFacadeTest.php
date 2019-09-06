@@ -360,7 +360,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProductAvailability = $availabilityQueryContainer->querySpyAvailabilityBySku(static::BUNDLE_SKU_3, static::ID_STORE)->findOne();
 
-        $this->assertSame('0', $bundledProductAvailability->getQuantity());
+        $this->assertSame(0.0, (float)$bundledProductAvailability->getQuantity());
     }
 
     /**
@@ -392,7 +392,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProductEntity = $bundledProducts[0];
 
-        $this->assertSame($bundledProductTransfer->getQuantity(), $bundledProductEntity->getQuantity());
+        $this->assertSame($bundledProductTransfer->getQuantity()->toFloat(), (float)$bundledProductEntity->getQuantity());
         $this->assertSame($productConcreteToAssignTransfer->getIdProductConcrete(), $bundledProductEntity->getFkBundledProduct());
         $this->assertSame($productConcreteBundleTransfer->getIdProductConcrete(), $bundledProductEntity->getFkProduct());
     }

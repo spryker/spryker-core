@@ -46,13 +46,15 @@ class SellableTest extends Unit
     }
 
     /**
+     * @dataProvider provideReservedItemsAndExistingStock
+     *
+     * @param \Spryker\DecimalObject\Decimal $reservedItems
+     * @param \Spryker\DecimalObject\Decimal $existingStock
+     *
      * @return void
      */
-    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable()
+    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable(Decimal $reservedItems, Decimal $existingStock): void
     {
-        $reservedItems = new Decimal(5);
-        $existingStock = new Decimal(10);
-
         $stockFacadeMock = $this->createStockFacadeMock();
         $stockFacadeMock->method('isNeverOutOfStockForStore')
             ->with(self::SKU_PRODUCT)
@@ -71,6 +73,19 @@ class SellableTest extends Unit
         $isSellable = $sellable->isProductSellable(self::SKU_PRODUCT, new Decimal(1));
 
         $this->assertTrue($isSellable);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideReservedItemsAndExistingStock(): array
+    {
+        return [
+            'int stock' => [new Decimal(5), new Decimal(10)],
+            'float stcok' => [new Decimal(5.5), new Decimal(9.8)],
+            'float stock high precision' => [new Decimal(1.4444444444444), new Decimal(2.5)],
+            'mixed type stock' => [new Decimal(5), new Decimal(9.8)],
+        ];
     }
 
     /**

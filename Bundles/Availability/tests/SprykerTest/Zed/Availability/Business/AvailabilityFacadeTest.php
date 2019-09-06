@@ -23,7 +23,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\Availability\Business\AvailabilityFacade;
 
 /**
  * Auto-generated group annotations
@@ -84,19 +83,32 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider provideTestDecimalQuantity
+     *
+     * @param \Spryker\DecimalObject\Decimal $quantity
+     *
      * @return void
      */
-    public function testCalculateStockForProductShouldReturnPersistedStock()
+    public function testCalculateStockForProductShouldReturnPersistedStock(Decimal $quantity)
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $quantity = 5;
-
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => $quantity]);
+        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => $quantity->toString()]);
 
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertSame((string)$quantity, $calculatedQuantity->toString());
+        $this->assertSame($quantity->toString(), $calculatedQuantity->toString());
+    }
+
+    /**
+     * @return array
+     */
+    public function provideTestDecimalQuantity(): array
+    {
+        return [
+            'int stock' => [new Decimal(5)],
+            'float stock' => [new Decimal(5.5)],
+        ];
     }
 
     /**
@@ -220,7 +232,7 @@ class AvailabilityFacadeTest extends Unit
      */
     protected function createAvailabilityFacade()
     {
-        return new AvailabilityFacade();
+        return $this->tester->getFacade();
     }
 
     /**

@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
@@ -250,12 +251,12 @@ class ItemType extends AbstractType
      */
     protected function addStockField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_STOCK, NumberType::class, [
+        $builder->add(static::FIELD_STOCK, TextType::class, [
             'label' => 'Stock',
             'required' => false,
             'disabled' => true,
             'constraints' => [
-                $this->createNumberConstraint($options, true),
+                new Type('numeric'),
             ],
         ]);
 
@@ -354,16 +355,15 @@ class ItemType extends AbstractType
 
     /**
      * @param array $options
-     * @param bool $decimal
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createNumberConstraint(array $options, bool $decimal = false)
+    protected function createNumberConstraint(array $options)
     {
         $validationGroup = $this->getValidationGroup($options);
 
         return new Regex([
-            'pattern' => $decimal ? '/(\d*\.)?\d+/' : '/^\d*$/',
+            'pattern' => '/^\d*$/',
             'message' => 'This field should contain digits.',
             'groups' => $validationGroup,
         ]);

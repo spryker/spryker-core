@@ -6,7 +6,7 @@
 
         <column name="fk_bundled_product" type="INTEGER" required="true" description="Representation of the single item in this bundle" />
         <column name="fk_product" type="INTEGER" required="true" description="Relation to the main bundle product" />
-        <column name="quantity" required="true" type="INTEGER" default="1" description="Number of items bundled. For instance when you have 5000 equal items you will have quantity 5000"/>
+        <column name="quantity" required="true" type="DECIMAL" size="20" scale="10" default="1" description="Number of items bundled. For instance when you have 5000 equal items you will have quantity 5000"/>
 
         <behavior name="timestampable"/>
 
