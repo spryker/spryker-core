@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executor\PriceProductScheduleApplyTransactionExecutorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
@@ -15,6 +16,8 @@ use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryI
 
 class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPriceProductScheduleApplierInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface
      */
@@ -59,6 +62,18 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
      * @return void
      */
     public function applyScheduledPrices(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($priceProductScheduleTransfer) {
+            $this->executeApplyScheduledPrices($priceProductScheduleTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return void
+     */
+    protected function executeApplyScheduledPrices(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
