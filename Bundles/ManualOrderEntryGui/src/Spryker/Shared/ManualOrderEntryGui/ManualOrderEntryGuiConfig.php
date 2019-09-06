@@ -7,13 +7,17 @@
 
 namespace Spryker\Shared\ManualOrderEntryGui;
 
-/**
- * Declares global environment configuration keys. Do not use it for other class constants.
- */
-interface ManualOrderEntryGuiConstants
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ManualOrderEntryGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @see \Spryker\Shared\Shipment\ShipmentConstants::SHIPMENT_EXPENSE_TYPE const.
+     * Specification:
+     * - Shipment expense type name.
+     *
+     * @api
+     *
+     * @see \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
      */
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 }

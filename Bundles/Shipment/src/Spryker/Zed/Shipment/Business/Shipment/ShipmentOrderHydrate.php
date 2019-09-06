@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -171,7 +171,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer): OrderTransfer
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() !== ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 

@@ -15,7 +15,7 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -221,7 +221,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $shipmentExpense = (new ExpenseBuilder())->build();
-        $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense->setType(ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpense->setShipment($shipmentTransfer);
 
         $itemTransfer = (new ItemBuilder())->build();

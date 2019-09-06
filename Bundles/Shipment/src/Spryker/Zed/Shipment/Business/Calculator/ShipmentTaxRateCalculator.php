@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -98,7 +98,7 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
         $itemShipmentKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->shipmentService->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
                 && $expenseTransfer->getShipment() !== null
                 && $expenseShipmentKey === $itemShipmentKey
             ) {

@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -153,7 +154,7 @@ class ShipmentCartExpanderTest extends Test
                     ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
                     ->withExpense(
                         (new ExpenseBuilder([
-                            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                            ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                             ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
                             ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
                         ]))
@@ -197,7 +198,7 @@ class ShipmentCartExpanderTest extends Test
                     ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
                     ->withExpense(
                         (new ExpenseBuilder([
-                            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                            ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                             ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
                             ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
                         ]))
@@ -300,14 +301,14 @@ class ShipmentCartExpanderTest extends Test
                     ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
                 ->withExpense(
                     (new ExpenseBuilder([
-                        ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                        ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                         ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur1,
                         ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur1,
                     ]))
                 )
                 ->withAnotherExpense(
                     (new ExpenseBuilder([
-                        ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                        ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
                         ExpenseTransfer::UNIT_PRICE => $netPriceAmountEur2,
                         ExpenseTransfer::UNIT_NET_PRICE => $netPriceAmountEur2,
                     ]))

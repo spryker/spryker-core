@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Shipment\ShipmentConfig;
-use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
@@ -237,7 +236,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     {
         $quoteExpenseForRemoveIndexes = [];
         foreach ($quoteTransfer->getExpenses() as $expenseTransferIndex => $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 $quoteExpenseForRemoveIndexes[] = $expenseTransferIndex;
             }
         }
@@ -258,7 +257,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     protected function createShipmentExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
     {
         $shipmentExpenseTransfer = $this->shipmentMapper->mapShipmentMethodTransferToShipmentExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpenseTransfer->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setQuantity(1);
 
         $shipmentMethodTransfer->requireStoreCurrencyPrice();

@@ -8,7 +8,7 @@
                 {% for shipmentGroup in shipmentGroups %}
                     {% set sumPriceToPayAggregation = null %}
                     {% for expense in order.expenses %}
-                        {% if expense.type == constant('\\Spryker\\Shared\\Shipment\\ShipmentConstants::SHIPMENT_EXPENSE_TYPE')
+                        {% if expense.type == shipmentExpenseType
                             and expense.shipment is not empty
                             and expense.shipment.idSalesShipment == shipmentGroup.shipment.idSalesShipment
                         %}

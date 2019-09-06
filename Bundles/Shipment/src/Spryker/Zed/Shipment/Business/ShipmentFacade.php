@@ -320,7 +320,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConstants::SHIPMENT_EXPENSE_TYPE constant.
+     * @deprecated Use \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE instead.
      *
      * @return string
      */
