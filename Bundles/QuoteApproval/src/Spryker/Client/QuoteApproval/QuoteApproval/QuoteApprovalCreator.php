@@ -36,7 +36,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     public function createQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        if (!$quoteApprovalRequestTransfer->getQuote()) {
+        if (!$quoteApprovalRequestTransfer->getQuote()->getIdQuote()) {
             return (new QuoteApprovalResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL));

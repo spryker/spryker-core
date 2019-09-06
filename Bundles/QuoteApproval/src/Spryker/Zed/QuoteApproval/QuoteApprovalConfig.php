@@ -11,11 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class QuoteApprovalConfig extends AbstractBundleConfig
 {
-    /**
-     * @return array
-     */
-    public function getRequiredQuoteFields(): array
-    {
-        return [];
-    }
 }
