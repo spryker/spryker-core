@@ -7,14 +7,28 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer;
 
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class PriceTransformer implements DataTransformerInterface
 {
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface
+     */
+    protected $moneyFacade;
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade
+     */
+    public function __construct(PriceProductScheduleGuiToMoneyFacadeInterface $moneyFacade)
+    {
+        $this->moneyFacade = $moneyFacade;
+    }
+
+    /**
      * @param mixed $value
      *
-     * @return int|null
+     * @return float|null
      */
     public function transform($value)
     {
@@ -22,7 +36,7 @@ class PriceTransformer implements DataTransformerInterface
             return null;
         }
 
-        return $value / 100;
+        return $this->moneyFacade->convertIntegerToDecimal($value);
     }
 
     /**
@@ -36,6 +50,6 @@ class PriceTransformer implements DataTransformerInterface
             return null;
         }
 
-        return (int)($value * 100);
+        return $this->moneyFacade->convertDecimalToInteger($value);
     }
 }

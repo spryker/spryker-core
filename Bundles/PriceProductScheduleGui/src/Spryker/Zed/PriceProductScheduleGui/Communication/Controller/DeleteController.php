@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,39 +20,70 @@ use Symfony\Component\HttpFoundation\Request;
 class DeleteController extends AbstractController
 {
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
-    protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
     protected const PARAM_REDIRECT_URL = 'redirectUrl';
+    protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
+    protected const PARAM_TEMPLATE_FORM = 'form';
     protected const SUCCESS_MESSAGE = 'Scheduled price was successfully removed';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): array
+    public function indexAction(Request $request)
     {
-        $idPriceProductSchedule = $this->castId($request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE));
+        $priceProductScheduleTransfer = $this->createPriceProductScheduleTransfer($request);
+        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL);
+        $dataProvider = $this->getFactory()
+            ->createPriceProductScheduleDeleteFormDataProvider();
+        $form = $this->getFactory()
+            ->createPriceProductScheduleDeleteForm(
+                $dataProvider,
+                $priceProductScheduleTransfer,
+                $redirectUrl
+            );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->handleSubmitForm($form);
+        }
 
         return $this->viewResponse([
-            static::PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE => $idPriceProductSchedule,
+            static::PARAM_TEMPLATE_FORM => $form->createView(),
+            static::PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE => $priceProductScheduleTransfer->getIdPriceProductSchedule(),
         ]);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    public function confirmAction(Request $request): RedirectResponse
+    protected function createPriceProductScheduleTransfer(Request $request): PriceProductScheduleTransfer
     {
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL);
         $idPriceProductSchedule = $this->castId($request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE));
 
+        return (new PriceProductScheduleTransfer())->setIdPriceProductSchedule($idPriceProductSchedule);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function handleSubmitForm(FormInterface $form): RedirectResponse
+    {
+        /** @var \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer */
+        $priceProductScheduleTransfer = $form->getData();
+        $priceProductScheduleTransfer->requireIdPriceProductSchedule();
         $this->getFactory()
             ->getPriceProductScheduleFacade()
-            ->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
+            ->removeAndApplyPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
 
         $this->addSuccessMessage(static::SUCCESS_MESSAGE);
+
+        $redirectUrl = $form->getConfig()
+            ->getOption(PriceProductScheduleDeleteFormDataProvider::OPTION_REDIRECT_URL);
 
         return $this->redirectResponse($redirectUrl);
     }

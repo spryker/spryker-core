@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Table;
 
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -15,7 +16,8 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInte
 
 class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
 {
-    protected const TABLE_IDENTIFIER = 'price-product-schedule-abstract:';
+    protected const PATTERN_TABLE_IDENTIFIER = 'price-product-schedule-abstract:%s:%s';
+    protected const PATTERN_REDIRECT_URL = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
 
     /**
      * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
@@ -25,32 +27,32 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
     /**
      * @var int
      */
-    protected $fkProductAbstract;
+    protected $idProductAbstract;
 
     /**
      * @var int
      */
-    protected $fkPriceType;
+    protected $idPriceType;
 
     /**
-     * @param int $fkProductAbstract
-     * @param int $fkPriceType
+     * @param int $idProductAbstract
+     * @param int $idPriceType
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface $rowFormatter
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      */
     public function __construct(
-        int $fkProductAbstract,
-        int $fkPriceType,
+        int $idProductAbstract,
+        int $idPriceType,
         RowFormatterInterface $rowFormatter,
         SpyPriceProductScheduleQuery $priceProductScheduleQuery
     ) {
         parent::__construct($rowFormatter);
-        $this->fkProductAbstract = $fkProductAbstract;
-        $this->fkPriceType = $fkPriceType;
+        $this->idProductAbstract = $idProductAbstract;
+        $this->idPriceType = $idPriceType;
         $this->baseUrl = '/';
         $this->defaultUrl = Url::generate('price-product-schedule-gui/index/abstract-product-table', [
-            IndexController::REQUEST_KEY_ID_PRODUCT_ABSTRACT => $fkProductAbstract,
-            IndexController::REQUEST_KEY_ID_PRICE_TYPE => $fkPriceType,
+            IndexController::REQUEST_KEY_ID_PRODUCT_ABSTRACT => $idProductAbstract,
+            IndexController::REQUEST_KEY_ID_PRICE_TYPE => $idPriceType,
         ])->build();
         $this->priceProductScheduleQuery = $priceProductScheduleQuery;
     }
@@ -63,7 +65,7 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = parent::configure($config);
-        $this->setTableIdentifier(static::TABLE_IDENTIFIER . $this->fkProductAbstract . ':' . $this->fkPriceType);
+        $this->setTableIdentifier(sprintf(static::PATTERN_TABLE_IDENTIFIER, $this->idProductAbstract, $this->idPriceType));
 
         return $config;
     }
@@ -76,7 +78,23 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
         return (new SpyPriceProductScheduleQuery())
             ->leftJoinWithCurrency()
             ->leftJoinWithStore()
-            ->filterByFkProductAbstract($this->fkProductAbstract)
-            ->filterByFkPriceType($this->fkPriceType);
+            ->filterByFkProductAbstract($this->idProductAbstract)
+            ->filterByFkPriceType($this->idPriceType);
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $item
+     *
+     * @return string
+     */
+    protected function generatePriceProductScheduleRemoveButton(SpyPriceProductSchedule $item): string
+    {
+        return $this->generateRemoveButton(
+            Url::generate('/price-product-schedule-gui/delete', [
+                'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
+                'redirectUrl' => sprintf(static::PATTERN_REDIRECT_URL, $item->getFkProductAbstract()),
+            ]),
+            'Delete'
+        );
     }
 }

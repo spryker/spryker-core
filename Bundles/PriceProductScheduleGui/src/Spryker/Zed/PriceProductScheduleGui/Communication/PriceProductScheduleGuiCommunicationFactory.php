@@ -17,8 +17,10 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Extractor\PriceProductSche
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductSchedulePriceConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleUniqueConstraint;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProdductScheduleDeleteForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\DateTransformer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\PriceTransformer;
@@ -137,16 +139,19 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
 
     /**
      * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param int $idPriceType
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable
      */
     public function createPriceProductScheduleConcreteTable(
         int $idProductConcrete,
+        int $idProductAbstract,
         int $idPriceType
     ): PriceProductScheduleConcreteTable {
         return new PriceProductScheduleConcreteTable(
             $idProductConcrete,
+            $idProductAbstract,
             $idPriceType,
             $this->createRowFormatter(),
             $this->getPriceProductScheduleQuery()
@@ -237,6 +242,33 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider
+     */
+    public function createPriceProductScheduleDeleteFormDataProvider(): PriceProductScheduleDeleteFormDataProvider
+    {
+        return new PriceProductScheduleDeleteFormDataProvider();
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider $dataProvider
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param string $redirectUrl
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPriceProductScheduleDeleteForm(
+        PriceProductScheduleDeleteFormDataProvider $dataProvider,
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        string $redirectUrl
+    ): FormInterface {
+        return $this->getFormFactory()->create(
+            PriceProdductScheduleDeleteForm::class,
+            $dataProvider->getData($priceProductScheduleTransfer),
+            $dataProvider->getOptions($redirectUrl)
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint
      */
     public function createPriceProductScheduleDateConstraint(): PriceProductScheduleDateConstraint
@@ -270,7 +302,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function createPriceTransformer(): DataTransformerInterface
     {
-        return new PriceTransformer();
+        return new PriceTransformer($this->getMoneyFacade());
     }
 
     /**
