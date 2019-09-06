@@ -379,6 +379,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         $quoteApprovalCreateRequestTransfer = new QuoteApprovalRequestTransfer();
         $quoteApprovalCreateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteApprovalCreateRequestTransfer->setQuote($quoteTransfer);
         $quoteApprovalCreateRequestTransfer->setApproverCompanyUserId($companyUserTransfer->getIdCompanyUser());
 
         return $quoteApprovalCreateRequestTransfer;

@@ -93,17 +93,4 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 
         return $quoteTransfer === QuoteApprovalConfig::STATUS_APPROVED;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
-    {
-        $quoteTransfer = $this->quoteStatusCalculator
-            ->calculateQuoteStatus($quoteTransfer);
-
-        return $quoteTransfer === QuoteApprovalConfig::STATUS_DECLINED;
-    }
 }

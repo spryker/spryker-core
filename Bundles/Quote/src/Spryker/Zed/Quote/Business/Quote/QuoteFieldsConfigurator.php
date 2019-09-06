@@ -58,6 +58,6 @@ class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
             $quoteFieldsAllowedForSaving[] = $quoteFieldsAllowedForSavingProviderPlugin->execute($quoteTransfer);
         }
 
-        return array_merge(...$quoteFieldsAllowedForSaving);
+        return $quoteFieldsAllowedForSaving ? array_merge(...$quoteFieldsAllowedForSaving) : [];
     }
 }
