@@ -108,6 +108,9 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
+     * @module Merchant
+     * @module CompanyBusinessUnit
+     *
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
@@ -117,6 +120,8 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship[] $merchantRelationshipEntities */
         $merchantRelationshipEntities = $this->getFactory()
             ->createMerchantRelationshipQuery()
+            ->joinWithCompanyBusinessUnit()
+            ->joinWithMerchant()
             ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
                 ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()

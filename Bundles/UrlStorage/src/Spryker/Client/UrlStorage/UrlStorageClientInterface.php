@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\UrlStorage;
 
+use Generated\Shared\Transfer\UrlRedirectStorageTransfer;
+
 interface UrlStorageClientInterface
 {
     /**
@@ -35,4 +37,17 @@ interface UrlStorageClientInterface
      * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
      */
     public function findUrlStorageTransferByUrl($url);
+
+    /**
+     * Specification:
+     * - Looks up the redirect entity in key-value storage.
+     * - Returns UrlRedirectStorageTransfer in case redirect is found in the storage and null otherwise.
+     *
+     * @api
+     *
+     * @param int $idRedirectUrl
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectStorageTransfer|null
+     */
+    public function findUrlRedirectStorageById(int $idRedirectUrl): ?UrlRedirectStorageTransfer;
 }
