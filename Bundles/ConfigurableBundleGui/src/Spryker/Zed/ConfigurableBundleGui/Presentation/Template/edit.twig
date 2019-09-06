@@ -11,18 +11,28 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton('/configurable-bunle-gui', 'Back to Template list' | trans) }}
+    {{ backActionButton('/configurable-bunle-gui/template', 'Back to Template list' | trans) }}
     {{ createActionButton('/configurable-bunle-gui/slot/create', 'Add Slot' | trans) }}
 {% endblock %}
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
             {{ tabs(tabs, {
                 form: form,
                 currentLocale: currentLocale,
-                slotTable: slotTable
+                slotTable: slotTable,
+                slotProductsTable: slotProductsTable
             }) }}
+
+            {{ form_end(form) }}
         {% endblock %}
     {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-configurable-bundle-template-slot.js"></script>
 {% endblock %}

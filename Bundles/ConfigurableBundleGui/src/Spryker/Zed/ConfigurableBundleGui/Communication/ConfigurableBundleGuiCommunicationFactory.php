@@ -12,6 +12,7 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs;
@@ -72,11 +73,28 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
      * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable
      */
-    public function createConfigurableBundleTemplateSlotTable(): ConfigurableBundleTemplateSlotTable
+    public function createConfigurableBundleTemplateSlotTable(int $idConfigurableBundleTemplate): ConfigurableBundleTemplateSlotTable
     {
         return new ConfigurableBundleTemplateSlotTable(
+            $idConfigurableBundleTemplate,
+            $this->getConfigurableBundleTemplateSlotPropelQuery(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable
+     */
+    public function createConfigurableBundleTemplateSlotProductsTable(int $idConfigurableBundleTemplateSlot): ConfigurableBundleTemplateSlotProductsTable
+    {
+        return new ConfigurableBundleTemplateSlotProductsTable(
+            $idConfigurableBundleTemplateSlot,
             $this->getConfigurableBundleTemplateSlotPropelQuery(),
             $this->getLocaleFacade()
         );

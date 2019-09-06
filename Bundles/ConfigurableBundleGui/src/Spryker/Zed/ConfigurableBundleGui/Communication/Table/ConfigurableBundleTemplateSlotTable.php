@@ -26,12 +26,14 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     protected const COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION = 'configurable_bundle_template_slot_name_translation';
     protected const COL_NUMBER_OF_ITEMS = 'number_of_items';
     protected const COL_ACTIONS = 'actions';
-    protected const URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
+
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::slotTableAction()
      */
-    protected const ROUTE_TABLE_RENDERING = '/slot-table';
+    protected const ROUTE_TABLE_RENDERING = '/slot-table?%s=%s';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
@@ -41,7 +43,12 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::deleteAction()
      */
-    protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE = '/configurable-bundle-gui/template/delete';
+    protected const ROUTE_DELETE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/delete';
+
+    /**
+     * @var int
+     */
+    protected $idConfigurableBundleTemplate;
 
     /**
      * @var \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
@@ -54,13 +61,16 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     protected $localeFacade;
 
     /**
+     * @param int $idConfigurableBundleTemplate
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
+        int $idConfigurableBundleTemplate,
         SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery,
         ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
     ) {
+        $this->idConfigurableBundleTemplate = $idConfigurableBundleTemplate;
         $this->configurableBundleTemplateSlotPropelQuery = $configurableBundleTemplateSlotPropelQuery;
         $this->localeFacade = $localeFacade;
     }
@@ -94,7 +104,13 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             static::COL_ACTIONS,
         ]);
 
-        $config->setUrl(static::ROUTE_TABLE_RENDERING);
+        $config->setUrl(
+            sprintf(
+                static::ROUTE_TABLE_RENDERING,
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE,
+                $this->idConfigurableBundleTemplate
+            )
+        );
 
         return $config;
     }
@@ -128,6 +144,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     protected function prepareQuery(SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery): SpyConfigurableBundleTemplateSlotQuery
     {
         $configurableBundleTemplateSlotPropelQuery
+            ->filterByFkConfigurableBundleTemplate($this->idConfigurableBundleTemplate)
             ->addJoin(SpyConfigurableBundleTemplateSlotTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::INNER_JOIN)
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::INNER_JOIN)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION)
@@ -190,13 +207,13 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
         $buttons = [];
         $buttons[] = $this->generateEditButton(
             Url::generate(static::ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, [
-                static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot(),
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot(),
             ]),
             'Edit'
         );
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, [
-                static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot(),
+            Url::generate(static::ROUTE_DELETE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot(),
             ]),
             'Delete'
         );

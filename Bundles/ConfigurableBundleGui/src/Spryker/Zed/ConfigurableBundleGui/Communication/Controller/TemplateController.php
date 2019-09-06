@@ -19,9 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TemplateController extends AbstractController
 {
-    protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/';
+    protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
-    protected const URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
     protected const ERORR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found';
     protected const ERORR_MESSAGE_PARAM_ID = '%id%';
@@ -97,7 +98,7 @@ class TemplateController extends AbstractController
                     ->getIdConfigurableBundleTemplate();
 
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-                    static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
                 ]);
 
                 return $this->redirectResponse($redirectUrl);
@@ -121,7 +122,7 @@ class TemplateController extends AbstractController
     public function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateFormDataProvider();
@@ -135,7 +136,10 @@ class TemplateController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
-        $configurableBundleTemplateSlotTable = $this->getFactory()->createConfigurableBundleTemplateSlotTable();
+        $configurableBundleTemplateSlotTable = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotTable($idConfigurableBundleTemplate);
+        $configurableBundleTemplateSlotProductsTable = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotProductsTable(0);
 
         $form = $this->getFactory()
             ->getConfigurableBundleTemplateForm(
@@ -150,7 +154,7 @@ class TemplateController extends AbstractController
 
             if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-                    static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
                 ]);
 
                 return $this->redirectResponse($redirectUrl);
@@ -162,15 +166,38 @@ class TemplateController extends AbstractController
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
             'slotTable' => $configurableBundleTemplateSlotTable->render(),
+            'slotProductsTable' => $configurableBundleTemplateSlotProductsTable->render(),
         ];
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function slotTableAction(): JsonResponse
+    public function slotTableAction(Request $request): JsonResponse
     {
-        $table = $this->getFactory()->createConfigurableBundleTemplateSlotTable();
+        $idConfigurableBundleTemplate = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+        );
+
+        $table = $this->getFactory()->createConfigurableBundleTemplateSlotTable($idConfigurableBundleTemplate);
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function slotProductsTableAction(Request $request): JsonResponse
+    {
+        $idConfigurableBundleTemplateSlot = $this->castId(
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+        );
+
+        $table = $this->getFactory()->createConfigurableBundleTemplateSlotProductsTable($idConfigurableBundleTemplateSlot);
 
         return $this->jsonResponse($table->fetchData());
     }
