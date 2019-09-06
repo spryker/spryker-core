@@ -18,9 +18,6 @@ function getSelectedItems(idOrderItem) {
     return selectedItems;
 }
 
-/**
- * @deprecated not used any more
- */
 function createTriggerUrl(idOrder, eventName) {
     var url = '/oms/trigger/trigger-event-for-order';
     var parameters = {
@@ -36,11 +33,21 @@ function createTriggerUrl(idOrder, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
-/**
- * @deprecated not used any more
- */
+function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
+    var url = '/oms/trigger/submit-trigger-event-for-order-items';
+    var parameters = {
+        event: eventName,
+        'id-sales-order-item': idOrderItem,
+        redirect: '/sales/detail?id-sales-order=' + idOrder,
+    };
+
+    var finalUrl = url + '?' + $.param(parameters);
+
+    return decodeURIComponent(finalUrl);
+}
+
 function createTriggerItemsUrl(idOrder, idOrderItems, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order-items';
+    var url = '/oms/trigger/submit-trigger-event-for-order-items';
     var parameters = {
         event: eventName,
         redirect: '/sales/detail?id-sales-order=' + idOrder,
@@ -54,9 +61,6 @@ function createTriggerItemsUrl(idOrder, idOrderItems, eventName) {
     return decodeURIComponent(finalUrl);
 }
 
-/**
- * @deprecated not used any more
- */
 function disableTrigger($item) {
     $item
         .prop('disabled', true)
@@ -84,7 +88,7 @@ $(document).ready(function () {
         var eventName = $item.data('event');
         var idOrderItem = $item.data('id-item');
 
-        window.location = createTriggerItemsUrl(idOrder, [idOrderItem], eventName);
+        window.location = createTriggerItemUrl(idOrder, idOrderItem, eventName);
     });
 
     $('.trigger-order-event-for-all-items').click(function (e) {
@@ -135,12 +139,12 @@ $(document).ready(function () {
         var totalCheckboxItems = $('.item-check').length;
 
         if (totalCheckboxItems === countChecked) {
-            $('#check-all-orders').prop('checked', true);
+            $('.check-all-orders').prop('checked', true);
 
             return true;
         }
 
-        $('#check-all-orders').prop('checked', false);
+        $('.check-all-orders').prop('checked', false);
 
         return true;
     });

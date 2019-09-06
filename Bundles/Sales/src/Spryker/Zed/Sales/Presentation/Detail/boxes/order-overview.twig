@@ -74,14 +74,18 @@
             </div>
 
             <div class="col-md-12">
-                <div class="ibox-title">
-                    <h5>{{ 'Trigger all matching states inside this order' | trans }}</h5>
-                </div>
-                <div class="ibox-content">
-                    {% for event in events %}
-                        <a class="btn btn-primary trigger-order-event-for-all-items" data-id-sales-order="{{ order.idSalesOrder }}" data-event="{{ event }}" href="#">{{ event }}</a>
-                    {% endfor %}
-                </div>
+                {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states inside this order' } %}
+                    {% block widget_content %}
+                        {% include [
+                            '@Oms/RenderForm/_partial/order-actions.twig',
+                            '@Sales/Detail/_partial/order-actions-for-all-items.twig',
+                            ] ignore missing with {
+                                redirectUrl: changeStatusRedirectUrl,
+                                idSalesOrder: order.idSalesOrder,
+                                events: events,
+                        } only %}
+                    {% endblock %}
+                {% endembed %}
             </div>
         </div>
 
