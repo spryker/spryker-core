@@ -236,4 +236,18 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
             ->createQuoteApprovalReader()
             ->isCompanyUserInQuoteApproverList($quoteTransfer, $idCompanyUser);
     }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalChecker()
+            ->isQuoteApplicableForApprovalProcess($quoteTransfer);
+    }
 }

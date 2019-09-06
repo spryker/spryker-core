@@ -10,6 +10,7 @@ namespace Spryker\Client\QuoteApproval\QuoteApproval;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
+use Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
 class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
@@ -22,11 +23,20 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     protected $quoteApprovalStub;
 
     /**
-     * @param \Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface $quoteApprovalStub
+     * @var \Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface
      */
-    public function __construct(QuoteApprovalStubInterface $quoteApprovalStub)
-    {
+    protected $quoteApprovalChecker;
+
+    /**
+     * @param \Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface $quoteApprovalStub
+     * @param \Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface $quoteApprovalChecker
+     */
+    public function __construct(
+        QuoteApprovalStubInterface $quoteApprovalStub,
+        QuoteApprovalCheckerInterface $quoteApprovalChecker
+    ) {
         $this->quoteApprovalStub = $quoteApprovalStub;
+        $this->quoteApprovalChecker = $quoteApprovalChecker;
     }
 
     /**
@@ -36,7 +46,9 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     public function createQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        if (!$quoteApprovalRequestTransfer->getIdQuote()) {
+        if (!$quoteApprovalRequestTransfer->getQuote()->getIdQuote()
+            && $this->quoteApprovalChecker->isQuoteApplicableForApprovalProcess($quoteApprovalRequestTransfer->getQuote())
+        ) {
             return (new QuoteApprovalResponseTransfer())
                 ->setIsSuccessful(false)
                 ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL));
