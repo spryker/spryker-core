@@ -160,7 +160,7 @@ class OmsFacadeTest extends Unit
         ];
 
         // Action
-        $stateNames = array_keys($this->createOmsFacade()->getReservedStates()->getStates()->getArrayCopy());
+        $stateNames = array_keys($this->createOmsFacade()->getOmsReservedStateCollection()->getStates()->getArrayCopy());
 
         // Assert
         $this->assertSame($expected, $stateNames);

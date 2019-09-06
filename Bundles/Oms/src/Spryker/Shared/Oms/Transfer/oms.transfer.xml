@@ -26,19 +26,21 @@
     </transfer>
 
     <transfer name="OmsStateCollection">
-        <property name="states" type="OmsState[]" associative="true" singular="state"/>
+        <property name="states" type="OmsState[]" associative="true" singular="state"
+                  description="State name is used as a key"/>
     </transfer>
 
     <transfer name="OmsState">
         <property name="name" type="string"/>
-        <property name="processes" type="OmsProcess[]" associative="true" singular="process"/>
+        <property name="processes" type="OmsProcess[]" associative="true" singular="process"
+                  description="Process name is used as a key"/>
     </transfer>
 
     <transfer name="OmsProcess">
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="ProductSalesAggregation">
+    <transfer name="SalesOrderItemAggregation">
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>

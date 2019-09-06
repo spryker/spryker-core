@@ -51,8 +51,8 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     /**
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): OmsStateCollectionTransfer
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
-        return $this->omsFacade->getReservedStates();
+        return $this->omsFacade->getOmsReservedStateCollection();
     }
 }

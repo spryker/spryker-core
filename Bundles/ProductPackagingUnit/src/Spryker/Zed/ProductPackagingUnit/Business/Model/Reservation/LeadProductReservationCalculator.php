@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
-use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -44,14 +44,14 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      */
     public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
     {
-        $reservedStates = $this->omsFacade->getReservedStates()->getStates();
+        $reservedStates = $this->omsFacade->getOmsReservedStateCollection()->getStates();
 
         $reservedLeadProductAmountAggregations = $this->productPackagingUnitRepository
             ->aggregateLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, array_keys($reservedStates->getArrayCopy()));
 
         $sumReservedLeadProductAmount = 0;
         foreach ($reservedLeadProductAmountAggregations as $reservedLeadProductAmountAggregation) {
-            $this->validateAggregationTransfer($reservedLeadProductAmountAggregation);
+            $this->assertAggregationTransfer($reservedLeadProductAmountAggregation);
 
             $processName = $reservedLeadProductAmountAggregation->getProcessName();
             $stateName = $reservedLeadProductAmountAggregation->getStateName();
@@ -69,11 +69,11 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSalesAggregationTransfer $salesAggregationTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer $salesAggregationTransfer
      *
      * @return void
      */
-    protected function validateAggregationTransfer(ProductSalesAggregationTransfer $salesAggregationTransfer): void
+    protected function assertAggregationTransfer(SalesOrderItemAggregationTransfer $salesAggregationTransfer): void
     {
         $salesAggregationTransfer
             ->requireSku()

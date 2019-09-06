@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
-use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -93,7 +93,7 @@ class Reservation implements ReservationInterface
     public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->sumProductQuantitiesForSku(
-            $this->getReservedStates()->getStates(),
+            $this->getOmsReservedStateCollection()->getStates(),
             $sku,
             $storeTransfer
         );
@@ -164,7 +164,7 @@ class Reservation implements ReservationInterface
     /**
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): OmsStateCollectionTransfer
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
         $reservedStatesTransfer = new OmsStateCollectionTransfer();
         $stateProcessMap = [];
@@ -201,7 +201,7 @@ class Reservation implements ReservationInterface
         );
 
         foreach ($salesAggregationTransfers as $salesAggregationTransfer) {
-            $this->validateAggregationTransfer($salesAggregationTransfer);
+            $this->assertAggregationTransfer($salesAggregationTransfer);
 
             $stateName = $salesAggregationTransfer->getStateName();
             $processName = $salesAggregationTransfer->getProcessName();
@@ -217,11 +217,11 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSalesAggregationTransfer $salesAggregationTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer $salesAggregationTransfer
      *
      * @return void
      */
-    protected function validateAggregationTransfer(ProductSalesAggregationTransfer $salesAggregationTransfer): void
+    protected function assertAggregationTransfer(SalesOrderItemAggregationTransfer $salesAggregationTransfer): void
     {
         $salesAggregationTransfer
             ->requireSku()

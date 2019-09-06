@@ -655,7 +655,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getReservedStates()` instead.
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getOmsReservedStateCollection()` instead.
      *
      * @return string[]
      */
@@ -671,8 +671,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): OmsStateCollectionTransfer
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
-        return $this->getFactory()->createUtilReservation()->getReservedStates();
+        return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
     }
 }

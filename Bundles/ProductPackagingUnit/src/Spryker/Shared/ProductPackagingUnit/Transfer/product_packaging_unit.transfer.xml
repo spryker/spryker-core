@@ -55,7 +55,7 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="ProductSalesAggregation">
+    <transfer name="SalesOrderItemAggregation">
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>

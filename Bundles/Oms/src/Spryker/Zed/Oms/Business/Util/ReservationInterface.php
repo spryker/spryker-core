@@ -60,5 +60,5 @@ interface ReservationInterface
     /**
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): OmsStateCollectionTransfer;
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
 }

@@ -593,7 +593,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getReservedStates()` instead.
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getOmsReservedStateCollection()` instead.
      *
      * @return string[]
      */
@@ -608,5 +608,5 @@ interface OmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStates(): OmsStateCollectionTransfer;
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
 }

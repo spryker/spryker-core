@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
@@ -47,7 +47,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductSalesAggregationTransfer[]
+     * @return \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer[]
      */
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array
     {
@@ -77,7 +77,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new ProductSalesAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;

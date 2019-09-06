@@ -24,7 +24,7 @@ interface OmsRepositoryInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductSalesAggregationTransfer[]
+     * @return \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer[]
      */
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array;
 }

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
-use Generated\Shared\Transfer\ProductSalesAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
@@ -297,7 +297,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      * @param string $sku
      * @param string[] $reservedStateNames
      *
-     * @return \Generated\Shared\Transfer\ProductSalesAggregationTransfer[]
+     * @return \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer[]
      */
     public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array
     {
@@ -321,7 +321,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new ProductSalesAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;
