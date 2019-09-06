@@ -8,6 +8,6 @@ Status,Status
 "Configurable Bundle Templates","Vorlagen der konfigurierbaren Bündel"
 "# of Slots","# der Slots"
 "Create New Template","Neue Vorlage erstellen"
-"Are you sure you want to delete template","Are you sure you want to delete template"
-"Delete Template","Delete Template"
-Cancel,Cancel
+"Are you sure you want to delete template","Möchten Sie die Vorlage wirklich löschen"
+"Delete Template","Vorlage löschen"
+Cancel,"Vorlage löschen"

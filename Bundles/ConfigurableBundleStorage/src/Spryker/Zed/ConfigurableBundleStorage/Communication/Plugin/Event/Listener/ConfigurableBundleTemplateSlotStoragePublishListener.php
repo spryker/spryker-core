@@ -22,6 +22,8 @@ class ConfigurableBundleTemplateSlotStoragePublishListener extends AbstractPlugi
      * {@inheritdoc}
      * - Publishes slot's active configurable bundle template changes to Store.
      *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
