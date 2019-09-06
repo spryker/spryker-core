@@ -148,9 +148,10 @@ class CompanyUserAuthRestApiHelper extends GlueRest
             ],
         ]);
 
-        $customerTransfer->setIdCustomer(
-            $this->grabDataFromResponseByJsonPath('$.data.id')[0]
-        );
+        $customerId = $this->grabDataFromResponseByJsonPath('$.data.id')[0];
+        if ($customerId) {
+            $customerTransfer->setIdCustomer($customerId);
+        }
 
         return $customerTransfer;
     }

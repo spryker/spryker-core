@@ -47,6 +47,7 @@ class AuthRestApiHelper extends GlueRest
     /**
      * Specification:
      * - Authorizes customer and returns access token data.
+     * - Returns empty array if authorization failed.
      *
      * @part json
      *
@@ -66,6 +67,8 @@ class AuthRestApiHelper extends GlueRest
             ],
         ]);
 
-        return $this->grabDataFromResponseByJsonPath('$.data.attributes')[0];
+        $responseData = $this->grabDataFromResponseByJsonPath('$.data.attributes')[0];
+
+        return $responseData ? $responseData : [];
     }
 }
