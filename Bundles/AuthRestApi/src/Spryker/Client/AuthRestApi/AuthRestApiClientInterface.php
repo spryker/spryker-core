@@ -14,6 +14,7 @@ interface AuthRestApiClientInterface
 {
     /**
      * Specification:
+     * - Processes token request.
      * - Returns new access token when user provider return valid user.
      * - Makes call to Zed.
      *

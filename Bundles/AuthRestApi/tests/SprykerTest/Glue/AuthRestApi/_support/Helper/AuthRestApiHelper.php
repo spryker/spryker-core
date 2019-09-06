@@ -15,7 +15,8 @@ class AuthRestApiHelper extends GlueRest
     protected const RESOURCE_ACCESS_TOKENS = 'access-tokens';
 
     /**
-     * Publishes access token
+     * Specification:
+     * - Sets bearer token.
      *
      * @part json
      *
@@ -29,6 +30,9 @@ class AuthRestApiHelper extends GlueRest
     }
 
     /**
+     * Specification:
+     * - Sets X-Anonymous-Customer-Unique-Id header.
+     *
      * @part json
      *
      * @param string $anonymousCustomerReference
@@ -41,6 +45,9 @@ class AuthRestApiHelper extends GlueRest
     }
 
     /**
+     * Specification:
+     * - Authorizes customer and returns access token data.
+     *
      * @part json
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

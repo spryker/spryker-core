@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AuthRestApiFacade extends AbstractFacade implements AuthRestApiFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer

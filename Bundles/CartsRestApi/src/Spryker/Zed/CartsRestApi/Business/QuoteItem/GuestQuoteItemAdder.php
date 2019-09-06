@@ -126,41 +126,49 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         $oauthResponseTransfer
             ->requireCustomerReference();
 
-        if (!$oauthResponseTransfer->getAnonymousCustomerReference()) {
-            return;
-        }
-
         $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();
-        $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($anonymousCustomerReference)
-        );
-
-        $guestQuotes = $guestQuoteCollection->getQuotes();
-        if (!$guestQuotes->count()) {
+        if (!$anonymousCustomerReference) {
             return;
         }
 
-        $questQuote = $guestQuotes[0];
+        $questQuote = $this->findQuoteFromQuoteCollection($anonymousCustomerReference);
+        if (!$questQuote) {
+            return;
+        }
+
         if (!$questQuote->getItems()->count()) {
             return;
         }
 
         $customerReference = $oauthResponseTransfer->getCustomerReference();
-        $customerQuoteCollection = $this->quoteReader->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
-        );
-
-        $customerQuotes = $customerQuoteCollection->getQuotes();
-        if (!$customerQuotes->count()) {
+        $customerQuote = $this->findQuoteFromQuoteCollection($customerReference);
+        if (!$customerQuote) {
             return;
         }
-
-        $customerQuote = $customerQuotes[0];
 
         $this->addGuestQuoteItemsToCustomerCart($questQuote, $customerQuote, $customerReference);
 
         $questQuote->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
         $this->quoteFacade->deleteQuote($questQuote);
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function findQuoteFromQuoteCollection(string $customerReference): ?QuoteTransfer
+    {
+        $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
+        );
+
+        $guestQuotes = $guestQuoteCollection->getQuotes();
+        if (!$guestQuotes->count()) {
+            return null;
+        }
+
+        return $guestQuotes[0];
     }
 
     /**

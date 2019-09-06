@@ -593,8 +593,15 @@ class CartsRestApiFacadeTest extends Unit
         $quoteResponseTransfer = $this->cartsRestApiFacade
             ->findQuoteByUuid($quoteTransfer);
 
-        $this->assertEquals($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(), $oauthResponseTransfer->getCustomerReference());
-        $this->assertNotEquals($quoteTransfer->getItems()->count(), $quoteResponseTransfer->getQuoteTransfer()->getItems()->count());
+        $this->assertEquals(
+            $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
+            $oauthResponseTransfer->getCustomerReference()
+        );
+
+        $this->assertNotEquals(
+            $quoteTransfer->getItems()->count(),
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->count()
+        );
     }
 
     /**

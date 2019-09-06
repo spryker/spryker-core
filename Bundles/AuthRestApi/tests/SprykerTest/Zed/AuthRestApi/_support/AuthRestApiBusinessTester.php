@@ -42,13 +42,11 @@ class AuthRestApiBusinessTester extends Actor
     public function prepareOauthRequestTransfer(): OauthRequestTransfer
     {
         /** @var \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer */
-        $oauthRequestTransfer = (new OauthRequestBuilder(
+        return (new OauthRequestBuilder(
             [
                 'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
             ]
         ))->build();
-
-        return $oauthRequestTransfer;
     }
 
     /**
@@ -57,14 +55,12 @@ class AuthRestApiBusinessTester extends Actor
     public function prepareOauthResponseTransfer(): OauthResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
-        $oauthRequestTransfer = (new OauthResponseBuilder(
+        return (new OauthResponseBuilder(
             [
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'isValid' => true,
             ]
         ))->build();
-
-        return $oauthRequestTransfer;
     }
 
     /**
@@ -73,13 +69,11 @@ class AuthRestApiBusinessTester extends Actor
     public function prepareInvalidOauthResponseTransfer(): OauthResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
-        $oauthRequestTransfer = (new OauthResponseBuilder(
+        return (new OauthResponseBuilder(
             [
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'isValid' => false,
             ]
         ))->build();
-
-        return $oauthRequestTransfer;
     }
 }

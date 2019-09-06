@@ -34,13 +34,13 @@ class AuthRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProcessAccessTokenWillProcessAccessToken(): void
+    public function testProcessAccessTokenWillGetValidOauthResponseTransfer(): void
     {
         /**
          * @var \Spryker\Zed\AuthRestApi\Business\AuthRestApiFacade $authRestApiFacade
          */
         $authRestApiFacade = $this->tester->getFacade();
-        $authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactory($authRestApiFacade));
+        $authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactory());
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
         $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
@@ -52,7 +52,7 @@ class AuthRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProcessAccessTokenWillNotProcessAccessToken(): void
+    public function testProcessAccessTokenWillGetInvalidOauthResponseTransfer(): void
     {
         /**
          * @var \Spryker\Zed\AuthRestApi\Business\AuthRestApiFacade $authRestApiFacade

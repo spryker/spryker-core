@@ -167,12 +167,13 @@ class QuoteUpdater implements QuoteUpdaterInterface
             return;
         }
 
-        if (!$guestQuotes[0]->getItems()->count()) {
+        $questQuote = $guestQuotes[0];
+        if (!$questQuote->getItems()->count()) {
             return;
         }
 
         $registeredCustomerReference = $oauthResponseTransfer->getCustomerReference();
-        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuotes[0]);
+        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $questQuote);
 
         $this->performUpdatingQuote($quoteTransfer);
     }

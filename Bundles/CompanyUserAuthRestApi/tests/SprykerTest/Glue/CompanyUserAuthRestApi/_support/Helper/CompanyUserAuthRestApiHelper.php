@@ -42,25 +42,21 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     {
         parent::_initialize();
 
-        $this->companyProvider = $this->findCompanyProvider();
-        $this->companyUserProvider = $this->findCompanyUserProvider();
+        $this->companyProvider = $this->getCompanyProvider();
+        $this->companyUserProvider = $this->getCompanyUserProvider();
         $this->customerProvider = $this->findCustomerProvider();
     }
 
     /**
-     * Creates company, company user and customer
+     * Specification:
+     * - Creates company, company user and customer.
      *
      * @part json
-     *
-     * @throws \Codeception\Exception\ModuleException
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function amCompanyUser(): CustomerTransfer
     {
-        if ($this->companyProvider === null) {
-            throw new ModuleException('GlueRest', 'The module requires CompanyHelper');
-        }
         $company = uniqid('c-', true);
         $companyTransfer = $this->companyProvider->haveCompany([
             CompanyTransfer::KEY => $company,
@@ -70,6 +66,9 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     }
 
     /**
+     * Specification:
+     * - Creates customer.
+     *
      * @part json
      *
      * @param string $withEmail
@@ -81,7 +80,7 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     {
         $withEmail = $withEmail ?: sprintf('%s@test.local.com', uniqid('glue-', true));
 
-        if ($this->customerProvider === null) {
+        if (!$this->customerProvider) {
             return $this->haveCustomerByApi($withEmail, $withPassword);
         }
 
@@ -95,21 +94,17 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     }
 
     /**
-     * Creates company user and customer
+     * Specification:
+     * - Creates company user and customer.
      *
      * @part json
      *
      * @param int $idCompany
      *
-     * @throws \Codeception\Exception\ModuleException
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function amCompanyUserInCompany(int $idCompany): CustomerTransfer
     {
-        if ($this->companyUserProvider === null) {
-            throw new ModuleException('GlueRest', 'The module requires CompanyUserHelper');
-        }
         $companyUserUuid = uniqid('cu-', true);
         $customerTransfer = $this->amUser();
         $companyUserTransfer = $this->companyUserProvider->haveCompanyUser([
@@ -124,6 +119,9 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     }
 
     /**
+     * Specification:
+     * - Creates customer via REST API.
+     *
      * @part json
      *
      * @param string $withEmail
@@ -133,12 +131,8 @@ class CompanyUserAuthRestApiHelper extends GlueRest
      */
     public function haveCustomerByApi(string $withEmail, string $withPassword = ''): CustomerTransfer
     {
-        $customerTransfer = (new CustomerTransfer())
-            ->setFirstName('John')
-            ->setLastName('Doe')
-            ->setSalutation('Mr')
-            ->setEmail($withEmail)
-            ->setNewPassword($withPassword ?: static::DEFAULT_PASSWORD);
+        $customerTransfer = $this->createCustomerTransfer($withEmail, $withPassword);
+
         $this->sendPOST(static::RESOURCE_CUSTOMERS, [
             'data' => [
                 'type' => static::RESOURCE_CUSTOMERS,
@@ -162,6 +156,22 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     }
 
     /**
+     * @param string $withEmail
+     * @param string $withPassword
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function createCustomerTransfer(string $withEmail, string $withPassword): CustomerTransfer
+    {
+        return (new CustomerTransfer())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setSalutation('Mr')
+            ->setEmail($withEmail)
+            ->setNewPassword($withPassword ?: static::DEFAULT_PASSWORD);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -176,9 +186,11 @@ class CompanyUserAuthRestApiHelper extends GlueRest
     }
 
     /**
-     * @return \SprykerTest\Zed\Company\Helper\CompanyHelper|null
+     * @throws \Codeception\Exception\ModuleException
+     *
+     * @return \SprykerTest\Zed\Company\Helper\CompanyHelper
      */
-    protected function findCompanyProvider(): ?CompanyHelper
+    protected function getCompanyProvider(): CompanyHelper
     {
         foreach ($this->getModules() as $module) {
             if ($module instanceof CompanyHelper) {
@@ -186,13 +198,15 @@ class CompanyUserAuthRestApiHelper extends GlueRest
             }
         }
 
-        return null;
+        throw new ModuleException('GlueRest', 'The module requires CompanyHelper');
     }
 
     /**
+     * @throws \Codeception\Exception\ModuleException
+     *
      * @return \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper|null
      */
-    protected function findCompanyUserProvider(): ?CompanyUserHelper
+    protected function getCompanyUserProvider(): ?CompanyUserHelper
     {
         foreach ($this->getModules() as $module) {
             if ($module instanceof CompanyUserHelper) {
@@ -200,7 +214,7 @@ class CompanyUserAuthRestApiHelper extends GlueRest
             }
         }
 
-        return null;
+        throw new ModuleException('GlueRest', 'The module requires CompanyUserHelper');
     }
 
     /**
