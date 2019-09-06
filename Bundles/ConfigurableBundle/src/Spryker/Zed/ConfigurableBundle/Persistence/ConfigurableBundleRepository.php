@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,7 +24,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
     {
         $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleQuery()
+            ->createConfigurableBundleTemplateQuery()
             ->leftJoinWithSpyConfigurableBundleTemplateSlot()
             ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
             ->find()
@@ -36,5 +37,21 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         return $this->getFactory()
             ->createConfigurableBundleMapper()
             ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+    }
+
+    /**
+     * @param string[] $allowedTemplateUuids
+     *
+     * @return string[]
+     */
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuids): array
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
+            ->filterByUuid_In($allowedTemplateUuids)
+            ->filterByIsActive(true)
+            ->find()
+            ->toArray();
     }
 }

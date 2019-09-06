@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ConfigurableBundleGuiToGlossaryFacadeBridge implements ConfigurableBundleGuiToGlossaryFacadeInterface
 {
     /**

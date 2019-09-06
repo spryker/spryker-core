@@ -1,5 +1,8 @@
 namespace: SprykerTest
 
+include:
+- tests/SprykerTest/Zed/ConfigurableBundle
+
 paths:
   tests: tests
   support: .
@@ -8,7 +11,6 @@ paths:
   envs: tests/_envs
 
 settings:
-  bootstrap: _bootstrap.php
   suite_class: \PHPUnit_Framework_TestSuite
   colors: true
   memory_limit: 1024M

@@ -49,9 +49,9 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE = '/configurable-bundle-gui/template/deactivate';
 
     /**
-     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deleteAction()
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::confirmDeleteAction()
      */
-    protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE = '/configurable-bundle-gui/template/delete';
+    protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE = '/configurable-bundle-gui/template/confirm-delete';
 
     /**
      * @var \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery

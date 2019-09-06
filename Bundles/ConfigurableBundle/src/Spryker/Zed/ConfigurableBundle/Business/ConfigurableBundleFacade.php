@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

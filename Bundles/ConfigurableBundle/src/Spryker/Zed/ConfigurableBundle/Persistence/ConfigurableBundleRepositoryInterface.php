@@ -17,4 +17,11 @@ interface ConfigurableBundleRepositoryInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
     public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer;
+
+    /**
+     * @param string[] $allowedTemplateUuid
+     *
+     * @return string[]
+     */
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
 }

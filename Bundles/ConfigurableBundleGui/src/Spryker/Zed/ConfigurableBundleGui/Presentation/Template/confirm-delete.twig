@@ -1,0 +1,29 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Configurable Bundle Template deletion confirmation' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <p>Are you sure you want to delete template: <b>{{ configurableBundleTemplateTransfer.name | trans }}</b>?</p>
+            <div>
+                <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
+                <a href="{{ url(
+                    '/configurable-bundle-gui/template/delete',
+                    {'id-configurable-bundle-template': configurableBundleTemplateTransfer.idConfigurableBundleTemplate}
+                )}}" class="btn btn-danger safe-submit">{{ 'Delete Template' | trans }}</a>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

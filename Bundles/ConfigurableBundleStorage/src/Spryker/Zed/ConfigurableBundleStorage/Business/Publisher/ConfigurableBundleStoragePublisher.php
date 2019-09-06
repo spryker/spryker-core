@@ -40,16 +40,20 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
     }
 
     /**
-     * @param int[] $configurableBundleIds
+     * @param int[] $configurableBundleTemplateIds
      *
      * @return void
      */
-    public function publishConfigurableBundleTemplates(array $configurableBundleIds): void
+    public function publishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void
     {
-        $configurableBundleTemplateEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateEntityMap($configurableBundleIds);
-        $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleIds);
+        $configurableBundleTemplateEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateEntityMap($configurableBundleTemplateIds);
+        $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleTemplateIds);
 
         foreach ($configurableBundleTemplateEntityMap as $configurableBundleTemplateEntity) {
+            if (!$configurableBundleTemplateEntity->isActive()) {
+                continue;
+            }
+
             $idConfigurableBundleTemplate = $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate();
             $configurableBundleTemplateStorageEntity = $configurableBundleTemplateStorageEntityMap[$idConfigurableBundleTemplate]
                 ?? new SpyConfigurableBundleTemplateStorage();

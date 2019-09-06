@@ -15,11 +15,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ConfigurableBundleStorage\Communication\ConfigurableBundleStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig getConfig()
  */
-class ConfigurableBundleTemplateStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ConfigurableBundleTemplateStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
-     * - Publishes active configurable bundle template changes to Store.
+     * - Unpublishes inactive or removed configurable bundle templates from Store.
      *
      * @api
      *
@@ -35,6 +35,6 @@ class ConfigurableBundleTemplateStoragePublishListener extends AbstractPlugin im
             ->getEventTransferIds($eventTransfers);
 
         $this->getFacade()
-            ->publishConfigurableBundleTemplate($configurableBundleTemplateIds);
+            ->unpublishConfigurableBundleTemplate($configurableBundleTemplateIds);
     }
 }

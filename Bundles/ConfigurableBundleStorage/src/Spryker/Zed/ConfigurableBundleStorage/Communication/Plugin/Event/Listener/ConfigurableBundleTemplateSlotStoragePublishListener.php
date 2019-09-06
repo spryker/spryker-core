@@ -19,7 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfigurableBundleTemplateSlotStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * @api
+     * {@inheritdoc}
+     * - Publishes slot's active configurable bundle template changes to Store.
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
