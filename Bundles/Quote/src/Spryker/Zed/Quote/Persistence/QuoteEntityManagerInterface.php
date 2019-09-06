@@ -13,7 +13,7 @@ interface QuoteEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $quoteFieldsAllowedForSaving
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

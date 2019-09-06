@@ -18,8 +18,8 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalReader;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalReaderInterface;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalProvider;
+use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalProviderInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemover;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidator;
@@ -126,11 +126,11 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalReaderInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalProviderInterface
      */
-    public function createQuoteApprovalFields(): QuoteApprovalReaderInterface
+    public function createQuoteApprovalProvider(): QuoteApprovalProviderInterface
     {
-        return new QuoteApprovalReader(
+        return new QuoteApprovalProvider(
             $this->createQuoteStatusCalculator(),
             $this->getConfig()
         );

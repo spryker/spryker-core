@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
 use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
-class QuoteApprovalReader implements QuoteApprovalReaderInterface
+class QuoteApprovalProvider implements QuoteApprovalProviderInterface
 {
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface

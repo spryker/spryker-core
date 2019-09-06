@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteApprovalReaderInterface
+interface QuoteApprovalProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

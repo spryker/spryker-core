@@ -17,7 +17,7 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $quoteFieldsAllowedForSaving
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

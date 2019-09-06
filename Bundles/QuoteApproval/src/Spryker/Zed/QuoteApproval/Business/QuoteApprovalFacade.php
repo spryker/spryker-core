@@ -152,7 +152,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
         return $this->getFactory()
-            ->createQuoteApprovalFields()
+            ->createQuoteApprovalProvider()
             ->getQuoteFieldsAllowedForSaving($quoteTransfer);
     }
 }

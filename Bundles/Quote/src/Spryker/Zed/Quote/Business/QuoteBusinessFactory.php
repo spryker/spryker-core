@@ -135,7 +135,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     public function createQuoteFieldsConfigurator(): QuoteFieldsConfiguratorInterface
     {
         return new QuoteFieldsConfigurator(
-            $this->getBundleConfig(),
+            $this->getConfig(),
             $this->getQuoteFieldsAllowedForSavingProviderPlugins()
         );
     }
@@ -233,6 +233,6 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
      */
     protected function getQuoteFieldsAllowedForSavingProviderPlugins(): array
     {
-        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_EXPANDER);
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER);
     }
 }
