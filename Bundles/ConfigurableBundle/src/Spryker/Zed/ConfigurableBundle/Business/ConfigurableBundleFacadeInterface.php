@@ -58,7 +58,7 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template by id.
+     * - Retrieves configurable bundle template by id.
      * - Removes configurable bundle template from Persistence.
      * - Removes configurable bundle template slots from Persistence.
      *
