@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\DataImport\Business\Model\DataSet;
 
 use Codeception\Test\Unit;
-use Exception;
+use Spryker\Zed\DataImport\Business\Exception\DataSetBrokerTransactionFailedException;
 use Spryker\Zed\DataImport\Business\Exception\TransactionException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
@@ -187,8 +187,8 @@ class DataSetStepBrokerTransactionAwareTest extends Unit
         $dataImportStepMockBuilder = $this->getMockBuilder(DataImportStepInterface::class)
             ->setMethods(['execute']);
         $dataImportStepMock = $dataImportStepMockBuilder->getMock();
-        $dataImportStepMock->expects($this->once())->method('execute')->willThrowException(new Exception());
-        $this->expectException(Exception::class);
+        $dataImportStepMock->expects($this->once())->method('execute')->willThrowException(new DataSetBrokerTransactionFailedException(10));
+        $this->expectException(DataSetBrokerTransactionFailedException::class);
 
         return $dataImportStepMock;
     }
