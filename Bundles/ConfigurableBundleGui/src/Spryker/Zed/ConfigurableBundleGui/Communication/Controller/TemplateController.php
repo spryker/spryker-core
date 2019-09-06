@@ -11,6 +11,7 @@ use ArrayObject;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,12 +20,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TemplateController extends AbstractController
 {
-    protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/';
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     */
+    protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
+
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
-    protected const URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
 
     protected const ERORR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found';
     protected const ERORR_MESSAGE_PARAM_ID = '%id%';
+
+    protected const MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" was activated.';
+    protected const MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" was deactivated.';
+
+    protected const MESSAGE_PARAM_TEMPLATE_NAME = '%template_name%';
 
     /**
      * @return array
@@ -97,7 +110,7 @@ class TemplateController extends AbstractController
                     ->getIdConfigurableBundleTemplate();
 
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-                    static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
                 ]);
 
                 return $this->redirectResponse($redirectUrl);
@@ -121,7 +134,7 @@ class TemplateController extends AbstractController
     public function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateFormDataProvider();
@@ -150,7 +163,7 @@ class TemplateController extends AbstractController
 
             if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-                    static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
                 ]);
 
                 return $this->redirectResponse($redirectUrl);

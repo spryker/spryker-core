@@ -55,4 +55,31 @@ interface ConfigurableBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
     public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer;
+
+    /**
+     * Specification:
+     * - Finds configurable bundle template by id.
+     * - Removes configurable bundle template from Persistence.
+     * - Removes configurable bundle template slots from Persistence.
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+
+    /**
+     * Specification:
+     * - Removes item from QuoteTransfer if it's configurable bundle is removed.
+     * - Removes item from QuoteTransfer if it's configurable bundle is inactive.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

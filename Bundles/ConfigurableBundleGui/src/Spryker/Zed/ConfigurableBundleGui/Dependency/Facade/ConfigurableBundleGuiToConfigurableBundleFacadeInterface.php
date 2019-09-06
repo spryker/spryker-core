@@ -13,22 +13,25 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 interface ConfigurableBundleGuiToConfigurableBundleFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param int $idConfigurableBundleTemplate
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return void
      */
-    public function createConfigurableBundleTemplate(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer;
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function updateConfigurableBundleTemplate(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer;
+    public function createConfigurableBundleTemplate(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): ConfigurableBundleTemplateResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function updateConfigurableBundleTemplate(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * @param int $idConfigurableBundleTemplate

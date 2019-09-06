@@ -34,7 +34,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new ConfigurableBundleTemplateWriter(
             $this->getEntityManager(),
             $this->getGlossaryFacade(),
-            $this->createConfigurableBundleTemplateNameGenerator()
+            $this->createConfigurableBundleTemplateNameGenerator(),
+            $this->getRepository()
         );
     }
 

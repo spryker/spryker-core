@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\ConfigurableBundleMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -32,5 +33,13 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
     public function createConfigurableBundleTemplateQuery(): SpyConfigurableBundleTemplateQuery
     {
         return new SpyConfigurableBundleTemplateQuery();
+    }
+
+    /**
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
+     */
+    public function createConfigurableBundleTemplateSlotQuery(): SpyConfigurableBundleTemplateSlotQuery
+    {
+        return new SpyConfigurableBundleTemplateSlotQuery();
     }
 }

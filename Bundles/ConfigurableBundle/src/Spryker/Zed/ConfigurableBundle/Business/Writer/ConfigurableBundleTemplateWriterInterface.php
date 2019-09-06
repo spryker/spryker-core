@@ -29,4 +29,11 @@ interface ConfigurableBundleTemplateWriterInterface
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
 }

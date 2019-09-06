@@ -26,13 +26,22 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
     }
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleFacade->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function createConfigurableBundleTemplate(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer {
+    public function createConfigurableBundleTemplate(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): ConfigurableBundleTemplateResponseTransfer
+    {
         return $this->configurableBundleFacade->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
     }
 
@@ -41,9 +50,8 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function updateConfigurableBundleTemplate(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer {
+    public function updateConfigurableBundleTemplate(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): ConfigurableBundleTemplateResponseTransfer
+    {
         return $this->configurableBundleFacade->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
     }
 

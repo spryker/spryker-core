@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
+use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWriterInterface
@@ -34,18 +35,28 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected $configurableBundleTemplateNameGenerator;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface
+     */
+    protected $configurableBundleRepository;
+
+    /**
+     * '
+     *
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface $configurableBundleTemplateNameGenerator
+     * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
         ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade,
-        ConfigurableBundleTemplateNameGeneratorInterface $configurableBundleTemplateNameGenerator
+        ConfigurableBundleTemplateNameGeneratorInterface $configurableBundleTemplateNameGenerator,
+        ConfigurableBundleRepositoryInterface $configurableBundleRepository
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
         $this->glossaryFacade = $glossaryFacade;
         $this->configurableBundleTemplateNameGenerator = $configurableBundleTemplateNameGenerator;
+        $this->configurableBundleRepository = $configurableBundleRepository;
     }
 
     /**
@@ -155,5 +166,40 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
                 $configurableBundleTemplateTranslationTransfer->getName()
             );
         }
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($idConfigurableBundleTemplate): void {
+            $this->executeDeleteConfigurableBundleTemplateByIdTransaction($idConfigurableBundleTemplate);
+        });
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($idConfigurableBundleTemplate): void {
+            $this->executeDeleteConfigurableBundleTemplateByIdTransaction($idConfigurableBundleTemplate);
+        });
     }
 }
