@@ -20,7 +20,7 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     public const PERMISSION_CONTEXT_CURRENCY_CODE = 'PERMISSION_CONTEXT_CURRENCY_CODE';
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getRequiredQuoteFields(): array
     {

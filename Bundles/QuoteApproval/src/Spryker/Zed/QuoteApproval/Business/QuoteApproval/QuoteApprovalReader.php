@@ -42,20 +42,10 @@ class QuoteApprovalReader implements QuoteApprovalReaderInterface
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
-        if (!$this->isQuoteApprovalRequestCanceled($quoteTransfer)) {
+        if (!$this->quoteStatusCalculator->isQuoteApprovalRequestWaitingOrApproval($quoteTransfer)) {
             return $this->quoteApprovalConfig->getRequiredQuoteFields();
         }
 
         return [];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteApprovalRequestCanceled(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer) === null;
     }
 }

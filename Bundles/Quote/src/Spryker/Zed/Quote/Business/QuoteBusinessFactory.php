@@ -18,8 +18,8 @@ use Spryker\Zed\Quote\Business\Model\QuoteWriter;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutor;
 use Spryker\Zed\Quote\Business\Model\QuoteWriterPluginExecutorInterface;
-use Spryker\Zed\Quote\Business\Operation\QuoteOperation;
-use Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator;
+use Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface;
 use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
@@ -47,7 +47,7 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteWriterPluginExecutor(),
             $this->getStoreFacade(),
             $this->createQuoteValidator(),
-            $this->createQuoteOperation(),
+            $this->createQuoteFieldsConfigurator(),
             $this->getQuoteExpandBeforeCreatePlugins()
         );
     }
@@ -130,11 +130,11 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Quote\Business\Operation\QuoteOperationInterface
+     * @return \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfigurator
      */
-    public function createQuoteOperation(): QuoteOperationInterface
+    public function createQuoteFieldsConfigurator(): QuoteFieldsConfiguratorInterface
     {
-        return new QuoteOperation(
+        return new QuoteFieldsConfigurator(
             $this->getBundleConfig(),
             $this->getQuoteFieldsAllowedForSavingProviderPlugins()
         );

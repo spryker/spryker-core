@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Business\Operation;
+namespace Spryker\Zed\Quote\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Quote\QuoteConfig;
 
-class QuoteOperation implements QuoteOperationInterface
+class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
 {
     /**
      * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
