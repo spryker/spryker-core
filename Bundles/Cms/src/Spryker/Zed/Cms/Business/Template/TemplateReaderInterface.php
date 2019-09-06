@@ -17,5 +17,5 @@ interface TemplateReaderInterface
      *
      * @return array
      */
-    public function findPlaceholders(string $templatePath): array;
+    public function getPlaceholdersByTemplatePath(string $templatePath): array;
 }

@@ -32,7 +32,7 @@ class TemplateReader implements TemplateReaderInterface
      *
      * @return array
      */
-    public function findPlaceholders(string $templatePath): array
+    public function getPlaceholdersByTemplatePath(string $templatePath): array
     {
         $templateFiles = $this->cmsConfig->getTemplateRealPaths($templatePath);
 

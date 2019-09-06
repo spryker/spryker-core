@@ -90,7 +90,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
             ->queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
             ->findOne();
 
-        $pageTemplatePlaceholders = $this->templateReader->findPlaceholders(
+        $pageTemplatePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
             $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
         );
 

@@ -68,7 +68,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             return null;
         }
 
-        $pagePlaceholders = $this->templateReader->findPlaceholders(
+        $pagePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
             $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
         );
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pagePlaceholders, $idCmsPage);
