@@ -227,7 +227,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteFieldsExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER, function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER, function () {
             return $this->getQuoteFieldsAllowedForSavingProviderPlugins();
         });
 
