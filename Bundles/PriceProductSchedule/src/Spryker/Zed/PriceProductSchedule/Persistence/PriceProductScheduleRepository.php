@@ -12,44 +12,12 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactory getFactory()
  */
 class PriceProductScheduleRepository extends AbstractRepository implements PriceProductScheduleRepositoryInterface
 {
-    protected const COL_PRODUCT_ID = 'product_id';
-    protected const COL_RESULT = 'result';
-
-    protected const ALIAS_CONCATENATED = 'concatenated';
-    protected const ALIAS_FILTERED = 'filtered';
-
-    protected const MESSAGE_NOT_SUPPORTED_DB_ENGINE = 'DB engine "%s" is not supported. Please extend EXPRESSION_CONCATENATED_RESULT_MAP';
-
-    protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
-        PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) AS INT), \'.\'), %s + %s) as DECIMAL)',
-        PropelConfig::DB_ENGINE_MYSQL => 'CONCAT(CONCAT(CAST(TIMESTAMPDIFF(minute, %s, now()) + TIMESTAMPDIFF(minute, now(), %s) AS BINARY), \'.\'), %s + %s) + 0',
-    ];
-
-    protected const EXPRESSION_CONCATENATED_PRODUCT_ID = 'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, 0), \'_\', COALESCE(%s, 0))';
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
-     */
-    protected $priceProductScheduleMapper;
-
-    /**
-     * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface
-     */
-    protected $propelFacade;
-
-    public function __construct()
-    {
-        $this->priceProductScheduleMapper = $this->getFactory()->createPriceProductScheduleMapper();
-        $this->propelFacade = $this->getFactory()->getPropelFacade();
-    }
-
     /**
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
      */

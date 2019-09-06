@@ -30,7 +30,7 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface getRepository()
  */
-class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
+class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory implements PriceProductSchedulePersistenceFactoryInterface
 {
     /**
      * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
@@ -85,7 +85,7 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     {
         return new PriceProductScheduleEnableFinder(
             $this->getPropelFacade(),
-            $this->createPriceProductScheduleQuery(),
+            $this,
             $this->getConfig(),
             $this->createPriceProductScheduleMapper()
         );

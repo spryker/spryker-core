@@ -12,6 +12,7 @@ use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException;
+use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 use Spryker\Zed\Propel\PropelConfig;
@@ -39,9 +40,9 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     protected $propelFacade;
 
     /**
-     * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface
      */
-    protected $priceProductScheduleQuery;
+    protected $factory;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
@@ -55,18 +56,18 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface $propelFacade
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface $factory
      * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $config
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      */
     public function __construct(
         PriceProductScheduleToPropelFacadeInterface $propelFacade,
-        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
+        PriceProductSchedulePersistenceFactoryInterface $factory,
         PriceProductScheduleConfig $config,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper
     ) {
         $this->propelFacade = $propelFacade;
-        $this->priceProductScheduleQuery = $priceProductScheduleQuery;
+        $this->factory = $factory;
         $this->config = $config;
         $this->priceProductScheduleMapper = $priceProductScheduleMapper;
     }
@@ -154,7 +155,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
             $currentDatabaseEngineName
         );
 
-        return $this->priceProductScheduleQuery
+        return $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($priceProductScheduleConcatenatedSubQuery, static::ALIAS_CONCATENATED, false)
             ->addAsColumn(static::COL_PRODUCT_ID, static::ALIAS_CONCATENATED . '.' . static::COL_PRODUCT_ID)
             ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT))
@@ -174,7 +175,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     ): SpyPriceProductScheduleQuery {
         $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($currentDatabaseEngineName);
 
-        return $this->priceProductScheduleQuery
+        return $this->factory->createPriceProductScheduleQuery()
             ->select([static::COL_PRODUCT_ID])
             ->addAsColumn(
                 static::COL_PRODUCT_ID,
@@ -236,7 +237,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      */
     protected function findPriceProductSchedulesToEnableByStoreResult(SpyPriceProductScheduleQuery $subQuery, StoreTransfer $storeTransfer, string $dbEngineName): array
     {
-        $priceProductScheduleEntities = $this->priceProductScheduleQuery
+        $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
             ->joinWithPriceType()
@@ -314,7 +315,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         string $dbEngineName,
         int $idProductAbstract
     ): array {
-        $priceProductScheduleEntities = $this->priceProductScheduleQuery
+        $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
             ->joinWithPriceType()
@@ -348,7 +349,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      */
     protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(SpyPriceProductScheduleQuery $subQuery, StoreTransfer $storeTransfer, string $dbEngineName, int $idProductConcrete): array
     {
-        $priceProductScheduleEntities = $this->priceProductScheduleQuery
+        $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
             ->joinWithPriceType()
