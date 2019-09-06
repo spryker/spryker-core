@@ -42,7 +42,7 @@ class QuoteApprovalCheckerTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteApplicableForApprovalProcessCheckFullFilledQuoteTransfer(): void
+    public function testIsQuoteApplicableForApprovalProcessChecksFullFilledQuoteTransfer(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
@@ -62,7 +62,7 @@ class QuoteApprovalCheckerTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteApplicableForApprovalProcessCheckNotFilledQuoteTransfer(): void
+    public function testIsQuoteApplicableForApprovalProcessChecksNotFilledQuoteTransfer(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->build();
@@ -77,7 +77,7 @@ class QuoteApprovalCheckerTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteApplicableForApprovalProcessCheckQuoteTransferWithoutRequredField(): void
+    public function testIsQuoteApplicableForApprovalProcessChecksQuoteTransferWithoutRequiredField(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())

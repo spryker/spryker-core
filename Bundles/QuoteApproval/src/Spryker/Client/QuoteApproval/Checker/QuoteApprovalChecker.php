@@ -35,7 +35,7 @@ class QuoteApprovalChecker implements QuoteApprovalCheckerInterface
         $quoteData = $quoteTransfer->toArray(false, true);
 
         foreach ($this->quoteApprovalConfig->getRequiredQuoteFields() as $requiredQuoteField) {
-            if (!$quoteData[$requiredQuoteField]) {
+            if ($quoteData[$requiredQuoteField] === null) {
                 return false;
             }
         }
