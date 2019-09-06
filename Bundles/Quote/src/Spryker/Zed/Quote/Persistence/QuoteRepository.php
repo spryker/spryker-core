@@ -30,7 +30,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
      *
      * @param string $customerReference
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer
     {
