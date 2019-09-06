@@ -1,0 +1,29 @@
+namespace: SprykerTest\Zed\ConfigurableBundleDataImport
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Communication:
+        path: Communication
+        class_name: ConfigurableBundleDataImportCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Zed\ConfigurableBundleDataImport\Helper\ConfigurableBundleDataImportHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper

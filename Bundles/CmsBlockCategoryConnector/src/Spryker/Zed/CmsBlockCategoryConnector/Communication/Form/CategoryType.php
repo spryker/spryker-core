@@ -30,6 +30,9 @@ class CategoryType extends AbstractType
     public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
     public const OPTION_WRONG_CMS_BLOCK_LIST = 'option-wrong-cms-block-list';
     public const OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST = 'option-assigned-cms-block-template-list';
+    public const OPTION_CATEGORY_TEMPLATES = 'option-category-templates';
+
+    protected const LABEL_CMS_BLOCKS = 'CMS Blocks:';
 
     /**
      * @var array
@@ -48,12 +51,7 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addWarningParagraphs($builder, $options[static::OPTION_WRONG_CMS_BLOCK_LIST]);
-        $this->addCmsBlockFields(
-            $builder,
-            $options[static::OPTION_CMS_BLOCK_POSITION_LIST],
-            $options[static::OPTION_CMS_BLOCK_LIST],
-            $options[static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST]
-        );
+        $this->addCmsBlockFields($builder, $options);
     }
 
     /**
@@ -67,45 +65,55 @@ class CategoryType extends AbstractType
             ->setRequired(static::OPTION_CMS_BLOCK_LIST)
             ->setRequired(static::OPTION_CMS_BLOCK_POSITION_LIST)
             ->setRequired(static::OPTION_WRONG_CMS_BLOCK_LIST)
-            ->setRequired(static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST);
+            ->setRequired(static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST)
+            ->setRequired(static::OPTION_CATEGORY_TEMPLATES);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $positions
-     * @param array $choices
-     * @param array $assignedCmsBlocksForTemplates
+     * @param array $options
      *
      * @return $this
      */
-    protected function addCmsBlockFields(FormBuilderInterface $builder, array $positions, array $choices, array $assignedCmsBlocksForTemplates)
+    protected function addCmsBlockFields(FormBuilderInterface $builder, array $options)
     {
-        foreach ($positions as $idCmsBlockCategoryPosition => $positionName) {
-            $assignedForPosition = isset($assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition]) ?
-                $assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition] : [];
+        $assignedCmsBlocksForTemplates = $options[static::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST];
 
-            $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
-                'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idCmsBlockCategoryPosition . ']',
-                'label' => 'CMS Blocks: ' . $positionName,
-                'choices' => array_flip($choices),
-                'multiple' => true,
-                'required' => false,
-                'attr' => [
-                    'data-assigned-cms-blocks' => $this->getFactory()->getUtilEncodingService()->encodeJson($assignedForPosition),
-                    'data-supported-templates' => $this->getFactory()->getUtilEncodingService()->encodeJson(static::SUPPORTED_CATEGORY_TEMPLATE_LIST),
-                ],
-            ])->get(static::FIELD_CMS_BLOCKS . '_' . $idCmsBlockCategoryPosition)->addEventListener(
-                FormEvents::PRE_SUBMIT,
-                function (FormEvent $event) {
-                    if (!$event->getData()) {
-                        return;
-                    }
-                    // Symfony Forms requires reset keys from Select2ComboBoxType to get correct items order
-                    $ids = array_values($event->getData());
-                    $event->setData($ids);
-                    $event->getForm()->setData($ids);
+        foreach ($options[static::OPTION_CATEGORY_TEMPLATES] as $idTemplate => $templateName) {
+            if (!in_array($templateName, static::SUPPORTED_CATEGORY_TEMPLATE_LIST, true)) {
+                continue;
+            }
+
+            foreach ($options[static::OPTION_CMS_BLOCK_POSITION_LIST] as $idCmsBlockCategoryPosition => $positionName) {
+                $assignedForPosition = [];
+
+                if (isset($assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition][$idTemplate])) {
+                    $assignedForPosition = $assignedCmsBlocksForTemplates[$idCmsBlockCategoryPosition][$idTemplate];
                 }
-            );
+
+                $builder->add(static::FIELD_CMS_BLOCKS . '_' . $idTemplate . '_' . $idCmsBlockCategoryPosition, Select2ComboBoxType::class, [
+                    'property_path' => static::FIELD_CMS_BLOCKS . '[' . $idTemplate . '][' . $idCmsBlockCategoryPosition . ']',
+                    'label' => static::LABEL_CMS_BLOCKS . $positionName,
+                    'choices' => array_flip($options[static::OPTION_CMS_BLOCK_LIST]),
+                    'multiple' => true,
+                    'required' => false,
+                    'attr' => [
+                        'data-assigned-cms-blocks' => $this->getFactory()->getUtilEncodingService()->encodeJson($assignedForPosition),
+                        'data-template' => $templateName,
+                    ],
+                ])->get(static::FIELD_CMS_BLOCKS . '_' . $idTemplate . '_' . $idCmsBlockCategoryPosition)->addEventListener(
+                    FormEvents::PRE_SUBMIT,
+                    function (FormEvent $event) {
+                        if (!$event->getData()) {
+                            return;
+                        }
+                        // Symfony Forms requires reset keys from Select2ComboBoxType to get correct items order
+                        $ids = array_values($event->getData());
+                        $event->setData($ids);
+                        $event->getForm()->setData($ids);
+                    }
+                );
+            }
         }
 
         return $this;
