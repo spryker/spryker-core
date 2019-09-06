@@ -20,8 +20,8 @@ class CartConfigurableBundlePreReloadPlugin extends AbstractPlugin implements Pr
 {
     /**
      * {@inheritdoc}
-     * - Removes item from QuoteTransfer if it's configurable bundle template is removed.
-     * - Removes item from QuoteTransfer if it's configurable bundle template is inactive.
+     * - Removes item from QuoteTransfer if its configurable bundle template is removed.
+     * - Removes item from QuoteTransfer if its configurable bundle template is inactive.
      *
      * @api
      *

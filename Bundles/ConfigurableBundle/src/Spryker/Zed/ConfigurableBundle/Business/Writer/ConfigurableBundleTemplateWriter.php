@@ -40,8 +40,6 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected $configurableBundleRepository;
 
     /**
-     * '
-     *
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface $configurableBundleTemplateNameGenerator
@@ -189,17 +187,5 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     {
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idConfigurableBundleTemplate): void {
-            $this->executeDeleteConfigurableBundleTemplateByIdTransaction($idConfigurableBundleTemplate);
-        });
     }
 }

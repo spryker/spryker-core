@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
@@ -90,9 +91,22 @@ class ConfigurableBundleBusinessTester extends Actor
             $configurableBundleTemplateTranslationTransfers[] = [
                 ConfigurableBundleTemplateTranslationTransfer::NAME => 'test-name',
                 ConfigurableBundleTemplateTranslationTransfer::LOCALE => $localeTransfer,
-                ];
+            ];
         }
 
         return $configurableBundleTemplateTranslationTransfers;
+    }
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransferWithConfigurableBundleTemplate(string $uuid): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->addItem(
+                $this->createItemTransferWithConfigurableBundleTemplateUuid($uuid)
+            );
     }
 }

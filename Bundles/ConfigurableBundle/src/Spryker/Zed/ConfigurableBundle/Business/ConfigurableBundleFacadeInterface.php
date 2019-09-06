@@ -72,8 +72,8 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Removes item from QuoteTransfer if it's configurable bundle is removed.
-     * - Removes item from QuoteTransfer if it's configurable bundle is inactive.
+     * - Removes item from QuoteTransfer if its configurable bundle template is removed.
+     * - Removes item from QuoteTransfer if its configurable bundle template is inactive.
      *
      * @api
      *

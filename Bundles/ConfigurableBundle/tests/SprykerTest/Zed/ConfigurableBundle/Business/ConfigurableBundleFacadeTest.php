@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
@@ -52,12 +51,7 @@ class ConfigurableBundleFacadeTest extends Unit
     protected function filterInactiveItemsFiltersDeletedItems(): void
     {
         // Arrange
-        $quoteTransfer = (new QuoteTransfer())
-            ->addItem(
-                $this->tester->createItemTransferWithConfigurableBundleTemplateUuid(
-                    'not-existing-template-uuid'
-                )
-            );
+        $quoteTransfer = $this->tester->createQuoteTransferWithConfigurableBundleTemplate('not-existing-template-uuid');
 
         // Act
         $filteredQuoteTransfer = $this->tester->getFacade()
@@ -74,13 +68,7 @@ class ConfigurableBundleFacadeTest extends Unit
     {
         // Arrange
         $configurableBundleTemplate = $this->tester->createDeactivatedConfigurableBundleTemplate();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->addItem(
-                $this->tester->createItemTransferWithConfigurableBundleTemplateUuid(
-                    $configurableBundleTemplate->getUuid()
-                )
-            );
+        $quoteTransfer = $this->tester->createQuoteTransferWithConfigurableBundleTemplate($configurableBundleTemplate->getUuid());
 
         // Act
         $filteredQuoteTransfer = $this->tester->getFacade()
@@ -97,13 +85,7 @@ class ConfigurableBundleFacadeTest extends Unit
     {
         // Arrange
         $configurableBundleTemplate = $this->tester->createActiveConfigurableBundleTemplate();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->addItem(
-                $this->tester->createItemTransferWithConfigurableBundleTemplateUuid(
-                    $configurableBundleTemplate->getUuid()
-                )
-            );
+        $quoteTransfer = $this->tester->createQuoteTransferWithConfigurableBundleTemplate($configurableBundleTemplate->getUuid());
 
         // Act
         $filteredQuoteTransfer = $this->tester->getFacade()

@@ -11,7 +11,7 @@ interface ConfigurableBundleStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Publishes configurable bundle template changes to storage.
+     * - Publishes configurable bundle template changes to Storage.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface ConfigurableBundleStorageFacadeInterface
 
     /**
      * Specification:
-     * - Unpublishes configurable bundle templates from storage if they removed or deactivated.
+     * - Unpublishes deactivated and removed configurable bundle templates from the Storage.
      *
      * @api
      *

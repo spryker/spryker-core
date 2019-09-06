@@ -31,8 +31,8 @@ class TemplateController extends AbstractController
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
 
-    protected const ERORR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found';
-    protected const ERORR_MESSAGE_PARAM_ID = '%id%';
+    protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     protected const MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" was activated.';
     protected const MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" was deactivated.';
@@ -141,8 +141,8 @@ class TemplateController extends AbstractController
         $configurableBundleTemplateTransfer = $formDataProvider->getData($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()) {
-            $this->addErrorMessage(static::ERORR_MESSAGE_TEMPLATE_NOT_FOUND, [
-                static::ERORR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -204,8 +204,8 @@ class TemplateController extends AbstractController
             ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
-            $this->addErrorMessage(static::ERORR_MESSAGE_TEMPLATE_NOT_FOUND, [
-                static::ERORR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -234,8 +234,8 @@ class TemplateController extends AbstractController
             ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
-            $this->addErrorMessage(static::ERORR_MESSAGE_TEMPLATE_NOT_FOUND, [
-                static::ERORR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -278,8 +278,8 @@ class TemplateController extends AbstractController
             ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
-            $this->addErrorMessage(static::ERORR_MESSAGE_TEMPLATE_NOT_FOUND, [
-                static::ERORR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -322,8 +322,8 @@ class TemplateController extends AbstractController
             ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
-            $this->addErrorMessage(static::ERORR_MESSAGE_TEMPLATE_NOT_FOUND, [
-                static::ERORR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);

@@ -12,7 +12,7 @@ use Generated\Shared\DataBuilder\ConfigurableBundleTemplateTranslationBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
-class ConfigurableBundleHelper extends Module
+class ConfigurableBundleDataHelper extends Module
 {
     use LocatorHelperTrait;
 
@@ -23,9 +23,10 @@ class ConfigurableBundleHelper extends Module
      */
     public function haveConfigurableBundleTemplate(array $seed = []): ConfigurableBundleTemplateTransfer
     {
-        $configurableBundleTemplateBuilder = (new ConfigurableBundleTemplateBuilder($seed));
+        $configurableBundleTemplateBuilder = new ConfigurableBundleTemplateBuilder($seed);
+        $configurableBundleTemplateTranslationSeeds = $seed[ConfigurableBundleTemplateTransfer::TRANSLATIONS] ?? [];
 
-        foreach ($seed[ConfigurableBundleTemplateTransfer::TRANSLATIONS] ?? [] as $configurableBundleTemplateTranslationSeed) {
+        foreach ($configurableBundleTemplateTranslationSeeds as $configurableBundleTemplateTranslationSeed) {
             $configurableBundleTemplateBuilder->withTranslation(
                 new ConfigurableBundleTemplateTranslationBuilder($configurableBundleTemplateTranslationSeed)
             );
@@ -34,8 +35,7 @@ class ConfigurableBundleHelper extends Module
         return $this->getLocator()
             ->configurableBundle()
             ->facade()
-            ->createConfigurableBundleTemplate(
-                $configurableBundleTemplateBuilder->build()
-            )->getConfigurableBundleTemplate();
+            ->createConfigurableBundleTemplate($configurableBundleTemplateBuilder->build())
+            ->getConfigurableBundleTemplate();
     }
 }
