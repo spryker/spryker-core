@@ -81,7 +81,7 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      *
      * @return string|null
      */
-    public function extractConfigurableBundleItemTemplateUuid(ItemTransfer $itemTransfer): ?string
+    protected function extractConfigurableBundleItemTemplateUuid(ItemTransfer $itemTransfer): ?string
     {
         if (!$itemTransfer->getConfiguredBundle()) {
             return null;

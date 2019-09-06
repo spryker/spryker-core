@@ -86,12 +86,9 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
      */
     public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
     {
-        $configurableBundleTemplateSlotEntities = $this->getFactory()
+        $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()
-            ->findByFkConfigurableBundleTemplate($idConfigurableBundleTemplate);
-
-        foreach ($configurableBundleTemplateSlotEntities as $configurableBundleTemplateSlotEntity) {
-            $configurableBundleTemplateSlotEntity->delete();
-        }
+            ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->delete();
     }
 }

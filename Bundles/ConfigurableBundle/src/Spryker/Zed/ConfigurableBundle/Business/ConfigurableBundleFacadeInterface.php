@@ -31,7 +31,7 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Persists configurable bundle template.
-     * - Updates configurable bundle template name translations.
+     * - Updates configurable bundle template name translations if provided.
      *
      * @api
      *

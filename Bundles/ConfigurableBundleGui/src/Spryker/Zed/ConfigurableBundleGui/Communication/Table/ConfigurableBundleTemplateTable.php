@@ -36,7 +36,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
      */
-    protected const PARAM_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
+    protected const ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
@@ -207,7 +207,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(static::PARAM_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE, [
+            Url::generate(static::ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Edit'

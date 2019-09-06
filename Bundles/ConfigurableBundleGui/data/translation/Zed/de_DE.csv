@@ -11,6 +11,11 @@ Status,Status
 "Are you sure you want to delete template","Möchten Sie die Vorlage wirklich löschen"
 "Delete Template","Vorlage löschen"
 Cancel,"Vorlage löschen"
+"Configurable bundle template with id ""%id%"" was not found.","Konfigurierbares Bündel-Vorlage mit der ID ""%id%"" wurde nicht gefunden."
+"Configurable Bundle Template deletion confirmation","Löschbestätigung für Konfigurierbares Bündel-Vorlage"
+"Back","Zurück"
+"Template ""%template_name%"" was activated.","Vorlage ""%template_name%"" wurde aktiviert."
+"Template ""%template_name%"" was deactivated."
 General, Allgemeines
 Slots, Slots
 "Template details", "Vorlagendetails"

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
-use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWriterInterface
@@ -102,7 +101,14 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeUpdateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
-        $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+        $hasTranslations = $configurableBundleTemplateTransfer->getTranslations()
+            ? $configurableBundleTemplateTransfer->getTranslations()->count()
+            : false;
+
+        if ($hasTranslations) {
+            $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+            $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
+        }
 
         if (!$this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer)) {
             $messageTransfer = (new MessageTransfer())
@@ -113,8 +119,6 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
 
             return $this->createConfigurableBundleTemplateResponseTransfer($configurableBundleTemplateTransfer, $messageTransfer);
         }
-
-        $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
 
         return $this->createConfigurableBundleTemplateResponseTransfer($configurableBundleTemplateTransfer);
     }
@@ -157,7 +161,7 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
      *
      * @return void
      */
-    public function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
+    protected function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
     {
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);

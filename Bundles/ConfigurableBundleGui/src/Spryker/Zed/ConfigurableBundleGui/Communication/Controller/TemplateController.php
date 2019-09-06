@@ -28,7 +28,7 @@ class TemplateController extends AbstractController
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
      */
-    protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
@@ -279,7 +279,7 @@ class TemplateController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_TEMPLATE_DEACTIVATED, [
                 static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
                     ->getGlossaryFacade()
-                    ->translate($configurableBundleTemplateTransfer->getTranslationKey()),
+                    ->translate($configurableBundleTemplateTransfer->getName()),
                 ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -323,7 +323,7 @@ class TemplateController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_TEMPLATE_ACTIVATED, [
                 static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
                     ->getGlossaryFacade()
-                    ->translate($configurableBundleTemplateTransfer->getTranslationKey()),
+                    ->translate($configurableBundleTemplateTransfer->getName()),
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
