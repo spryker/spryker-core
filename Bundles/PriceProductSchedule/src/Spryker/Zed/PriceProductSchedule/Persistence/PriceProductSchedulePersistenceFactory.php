@@ -11,6 +11,14 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Disable\PriceProductScheduleDisableFinder;
+use Spryker\Zed\PriceProductSchedule\Persistence\Disable\PriceProductScheduleDisableFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Enable\PriceProductScheduleEnableFinder;
+use Spryker\Zed\PriceProductSchedule\Persistence\Enable\PriceProductScheduleEnableFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleFinder;
+use Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleFinderInterface;
+use Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleListFinder;
+use Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleListFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapper;
 use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleListMapperInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapper;
@@ -57,6 +65,52 @@ class PriceProductSchedulePersistenceFactory extends AbstractPersistenceFactory
     public function createPriceProductScheduleListMapper(): PriceProductScheduleListMapperInterface
     {
         return new PriceProductScheduleListMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Disable\PriceProductScheduleDisableFinderInterface
+     */
+    public function createPriceProductScheduleDisableFinder(): PriceProductScheduleDisableFinderInterface
+    {
+        return new PriceProductScheduleDisableFinder(
+            $this->createPriceProductScheduleQuery(),
+            $this->createPriceProductScheduleMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Enable\PriceProductScheduleEnableFinderInterface
+     */
+    public function createPriceProductScheduleEnableFinder(): PriceProductScheduleEnableFinderInterface
+    {
+        return new PriceProductScheduleEnableFinder(
+            $this->getPropelFacade(),
+            $this->createPriceProductScheduleQuery(),
+            $this->getConfig(),
+            $this->createPriceProductScheduleMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleFinderInterface
+     */
+    public function createPriceProductScheduleFinder(): PriceProductScheduleFinderInterface
+    {
+        return new PriceProductScheduleFinder(
+            $this->createPriceProductScheduleQuery(),
+            $this->createPriceProductScheduleMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleListFinderInterface
+     */
+    public function createPriceProductScheduleListFinder(): PriceProductScheduleListFinderInterface
+    {
+        return new PriceProductScheduleListFinder(
+            $this->createPriceProductScheduleListQuery(),
+            $this->createPriceProductScheduleListMapper()
+        );
     }
 
     /**
