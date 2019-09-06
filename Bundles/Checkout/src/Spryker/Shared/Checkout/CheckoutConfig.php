@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\CheckoutPage;
+namespace Spryker\Shared\Checkout;
 
 use Spryker\Shared\Kernel\AbstractBundleConfig;
 
