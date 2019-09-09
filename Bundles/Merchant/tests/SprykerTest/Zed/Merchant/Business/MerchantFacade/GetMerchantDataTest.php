@@ -56,6 +56,24 @@ class GetMerchantDataTest extends Unit
     /**
      * @return void
      */
+    public function testFindMerchantByIdWillNotFindMerchant(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
+
+        // Act
+        $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNull($actualMerchant);
+    }
+
+    /**
+     * @return void
+     */
     public function testFindMerchants(): void
     {
         // Arrange
@@ -97,7 +115,10 @@ class GetMerchantDataTest extends Unit
         $this->assertCount(1, $merchantCollectionWithPaginationTransfer->getMerchants());
         $this->assertCount(1, $merchantCollectionOrderByNameDescTransfer->getMerchants());
 
-        $this->assertNotEquals($merchantCollectionOrderByNameDescTransfer->getMerchants()[0]->getIdMerchant(), $merchantCollectionWithPaginationTransfer->getMerchants()[0]->getIdMerchant());
+        $this->assertNotEquals(
+            $merchantCollectionOrderByNameDescTransfer->getMerchants()[0]->getIdMerchant(),
+            $merchantCollectionWithPaginationTransfer->getMerchants()[0]->getIdMerchant()
+        );
     }
 
     /**

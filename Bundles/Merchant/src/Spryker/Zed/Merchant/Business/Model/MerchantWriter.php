@@ -132,7 +132,7 @@ class MerchantWriter implements MerchantWriterInterface
             return $merchantResponseTransfer;
         }
 
-        if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($merchantTransfer->getStatus(), $existingMerchantTransfer->getStatus())) {
+        if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($existingMerchantTransfer->getStatus(), $merchantTransfer->getStatus())) {
             $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID);
 
             return $merchantResponseTransfer;
