@@ -138,7 +138,7 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
             static::HEADER_CONCRETE_SKU => $priceProductTransfer->getSkuProduct(),
             static::HEADER_PRICE_TYPE => $priceProductTransfer->getPriceTypeName(),
             static::HEADER_STORE => $moneyValueTransfer->getStore()->getName(),
-            static::HEADER_CURRENCY => $moneyValueTransfer->getCurrency()->getName(),
+            static::HEADER_CURRENCY => $moneyValueTransfer->getCurrency()->getCode(),
             static::HEADER_NET_PRICE => $moneyValueTransfer->getNetAmount(),
             static::HEADER_GROSS_PRICE => $moneyValueTransfer->getGrossAmount(),
             static::HEADER_FROM => $priceProductScheduleTransfer->getActiveFrom(),
