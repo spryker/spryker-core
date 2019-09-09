@@ -20,7 +20,7 @@ class FooBarTransfer extends AbstractTransfer
 
     public const BLA = 'bla';
 
-    public const NUMBER = 'number';
+    public const STOCK = 'stock';
 
     public const SELF_REFERENCE = 'selfReference';
 
@@ -37,7 +37,7 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @var \Spryker\DecimalObject\Decimal|null
      */
-    protected $number;
+    protected $stock;
 
     /**
      * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
@@ -52,8 +52,8 @@ class FooBarTransfer extends AbstractTransfer
         'Name' => 'name',
         'bla' => 'bla',
         'Bla' => 'bla',
-        'number' => 'number',
-        'Number' => 'number',
+        'stock' => 'stock',
+        'Stock' => 'stock',
         'self_reference' => 'selfReference',
         'selfReference' => 'selfReference',
         'SelfReference' => 'selfReference',
@@ -83,9 +83,9 @@ class FooBarTransfer extends AbstractTransfer
             'is_associative' => false,
             'is_nullable' => false,
         ],
-        self::NUMBER => [
+        self::STOCK => [
             'type' => 'Spryker\DecimalObject\Decimal',
-            'name_underscore' => 'number',
+            'name_underscore' => 'stock',
             'is_collection' => false,
             'is_transfer' => false,
             'is_value_object' => true,
@@ -182,18 +182,18 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
-     * @param string|int|float|\Spryker\DecimalObject\Decimal|null $number
+     * @param string|int|float|\Spryker\DecimalObject\Decimal|null $stock
      *
      * @return $this
      */
-    public function setNumber($number = null)
+    public function setStock($stock = null)
     {
-        if ($number !== null && !$number instanceof Decimal) {
-            $number = new Decimal($number);
+        if ($stock !== null && !$stock instanceof Decimal) {
+            $stock = new Decimal($stock);
         }
 
-        $this->number = $number;
-        $this->modifiedProperties[self::NUMBER] = true;
+        $this->stock = $stock;
+        $this->modifiedProperties[self::STOCK] = true;
 
         return $this;
     }
@@ -203,9 +203,9 @@ class FooBarTransfer extends AbstractTransfer
      *
      * @return \Spryker\DecimalObject\Decimal|null
      */
-    public function getNumber()
+    public function getStock()
     {
-        return $this->number;
+        return $this->stock;
     }
 
     /**
@@ -213,9 +213,9 @@ class FooBarTransfer extends AbstractTransfer
      *
      * @return $this
      */
-    public function requireNumber()
+    public function requireStock()
     {
-        $this->assertPropertyIsSet(self::NUMBER);
+        $this->assertPropertyIsSet(self::STOCK);
 
         return $this;
     }

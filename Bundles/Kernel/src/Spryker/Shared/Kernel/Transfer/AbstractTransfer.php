@@ -41,24 +41,24 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param bool $isRecursive
-     * @param bool $camelCasedKeys Set to true for camelCased keys, defaults to under_scored keys.
+     * @param bool $useCamelCasedKeys Set to true for camelCased keys, defaults to under_scored keys.
      *
      * @return array
      */
-    public function toArray(bool $isRecursive = true, bool $camelCasedKeys = false): array
+    public function toArray(bool $isRecursive = true, bool $useCamelCasedKeys = false): array
     {
-        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray', $camelCasedKeys);
+        return $this->propertiesToArray($this->getPropertyNames(), $isRecursive, 'toArray', $useCamelCasedKeys);
     }
 
     /**
      * @param bool $isRecursive
-     * @param bool $camelCasedKeys
+     * @param bool $useCamelCasedKeys
      *
      * @return array
      */
-    public function modifiedToArray(bool $isRecursive = true, bool $camelCasedKeys = false): array
+    public function modifiedToArray(bool $isRecursive = true, bool $useCamelCasedKeys = false): array
     {
-        return $this->propertiesToArray(array_keys($this->modifiedProperties), $isRecursive, 'modifiedToArray', $camelCasedKeys);
+        return $this->propertiesToArray(array_keys($this->modifiedProperties), $isRecursive, 'modifiedToArray', $useCamelCasedKeys);
     }
 
     /**
@@ -87,26 +87,26 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param array $properties
      * @param bool $isRecursive
      * @param string $childConvertMethodName
-     * @param bool $camelCasedKeys
+     * @param bool $useCamelCasedKeys
      *
      * @return array
      */
-    protected function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName, $camelCasedKeys = false): array
+    protected function propertiesToArray(array $properties, $isRecursive, $childConvertMethodName, $useCamelCasedKeys = false): array
     {
         $values = [];
 
         foreach ($properties as $property) {
             $value = $this->$property;
 
-            $arrayKey = $this->getArrayKey($property, $camelCasedKeys);
+            $arrayKey = $this->getArrayKey($property, $useCamelCasedKeys);
 
             if ($isRecursive && $value instanceof TransferInterface) {
-                $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $camelCasedKeys);
+                $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $useCamelCasedKeys);
                 continue;
             }
 
             if ($isRecursive && $this->transferMetadata[$property]['is_collection'] && count($value) >= 1) {
-                $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
+                $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $useCamelCasedKeys);
                 continue;
             }
 
@@ -118,13 +118,13 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param string $propertyName
-     * @param bool $camelCasedKeys
+     * @param bool $useCamelCasedKeys
      *
      * @return string
      */
-    protected function getArrayKey(string $propertyName, bool $camelCasedKeys): string
+    protected function getArrayKey(string $propertyName, bool $useCamelCasedKeys): string
     {
-        if ($camelCasedKeys) {
+        if ($useCamelCasedKeys) {
             return $propertyName;
         }
 
@@ -280,9 +280,9 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param mixed $value
      * @param bool $ignoreMissingProperty
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|mixed|null
      */
-    protected function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false): ?TransferInterface
+    protected function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false)
     {
         $type = $this->transferMetadata[$property]['type'];
 
@@ -336,11 +336,11 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param string $arrayKey
      * @param bool $isRecursive
      * @param string $childConvertMethodName
-     * @param bool $camelCasedKeys
+     * @param bool $useCamelCasedKeys
      *
      * @return array
      */
-    protected function addValuesToCollection($value, array $values, string $arrayKey, bool $isRecursive, string $childConvertMethodName, bool $camelCasedKeys = false): array
+    protected function addValuesToCollection($value, array $values, string $arrayKey, bool $isRecursive, string $childConvertMethodName, bool $useCamelCasedKeys = false): array
     {
         foreach ($value as $elementKey => $arrayElement) {
             if (is_array($arrayElement) || is_scalar($arrayElement)) {
@@ -348,7 +348,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
                 continue;
             }
-            $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive, $camelCasedKeys);
+            $values[$arrayKey][$elementKey] = $arrayElement->$childConvertMethodName($isRecursive, $useCamelCasedKeys);
         }
 
         return $values;
