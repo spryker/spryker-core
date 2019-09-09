@@ -12,6 +12,7 @@
         <property name="order" type="int"/>
         <property name="name" type="string"/>
         <property name="children" type="RestCategoryTreesAttributes[]"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="RestCategoryNodesAttributes">
@@ -24,6 +25,26 @@
         <property name="children" type="RestCategoryNodesAttributes[]"/>
         <property name="parents" type="RestCategoryNodesAttributes[]"/>
         <property name="order" type="int"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryNodeStorage">
+        <property name="idCategory" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="fkResourceCategorynode" type="int" />
+    </transfer>
+
+    <transfer name="RestUrlResolverAttributes">
+        <property name="entityType" type="string" />
+        <property name="entityId" type="string" />
     </transfer>
 
 </transfers>
