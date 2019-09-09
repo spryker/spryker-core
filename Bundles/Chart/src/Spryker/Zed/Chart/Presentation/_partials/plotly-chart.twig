@@ -9,7 +9,7 @@
         }) %}
         <div id="{{ chartDivId }}"></div>
 
-        <script src="/assets/js/spryker-zed-chart-plotly-main.js"></script>
+        <script src="{{ assetsPath('js/spryker-zed-chart-plotly-main.js') }}"></script>
         <script>/*<![CDATA[*/
             document.addEventListener('DOMContentLoaded', function(event) {
                 ChartPlotly.newPlot('{{ chartDivId }}', {{ chartData | json_encode | raw }}, {{ layout | json_encode | raw }}, { displayModeBar: false });

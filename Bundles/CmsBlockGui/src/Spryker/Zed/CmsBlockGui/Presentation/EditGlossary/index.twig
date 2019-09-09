@@ -39,7 +39,7 @@
         {{ render(controller('/content-gui/assets/index'), {'ignore_errors':true}) }}
         {{ parent() }}
     {% endblock %}
-    <script src="/assets/js/spryker-zed-cms-block-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-cms-block-gui-main.js') }}"></script>
 {% endblock %}
 
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Gui;
 
+use Spryker\Shared\Gui\GuiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GuiConfig extends AbstractBundleConfig
@@ -41,5 +42,13 @@ class GuiConfig extends AbstractBundleConfig
     public function getDefaultTemplateFileNames(): array
     {
         return static::FORM_DEFAULT_TEMPLATE_FILE_NAMES;
+    }
+
+    /**
+     * @return string
+     */
+    public function getZedAssetsPath(): string
+    {
+        return $this->get(GuiConstants::ZED_ASSETS_PATH, '/assets/');
     }
 }
