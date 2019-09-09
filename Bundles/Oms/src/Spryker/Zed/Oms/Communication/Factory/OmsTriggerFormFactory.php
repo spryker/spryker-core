@@ -48,13 +48,14 @@ class OmsTriggerFormFactory implements OmsTriggerFormFactoryInterface
      * @param string $redirectUrl
      * @param string $event
      * @param int $idSalesOrder
+     * @param string $submitButtonExtraClass
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrder): FormInterface
+    public function getOrderOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrder, string $submitButtonExtraClass): FormInterface
     {
         $options = $this->createOrderOmsTriggerFormDataProvider()
-            ->getOptions($redirectUrl, $event, $idSalesOrder);
+            ->getOptions($redirectUrl, $event, $idSalesOrder, $submitButtonExtraClass);
 
         return $this->formFactory->create(OmsTriggerForm::class, null, $options);
     }

@@ -18,13 +18,5 @@ abstract class AbstractOmsTriggerFormDataProvider
     public const QUERY_PARAM_REDIRECT = 'redirect';
 
     public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm';
-
-    /**
-     * @param string $redirectUrl
-     * @param string $event
-     * @param int $idSalesOrderItem
-     *
-     * @return array
-     */
-    abstract public function getOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array;
+    public const SUBMIT_BUTTON_EXTRA_CLASS = 'btn btn-primary btn-sm';
 }

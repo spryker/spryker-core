@@ -13,10 +13,11 @@ interface OmsTriggerFormCollectionBuilderInterface
      * @param string $redirectUrl
      * @param string[] $events
      * @param int $idSalesOrder
+     * @param string $submitButtonExtraClass
      *
      * @return \Symfony\Component\Form\FormView[]
      */
-    public function buildOrderOmsTriggerFormCollection(string $redirectUrl, array $events, int $idSalesOrder): array;
+    public function buildOrderOmsTriggerFormCollection(string $redirectUrl, array $events, int $idSalesOrder, string $submitButtonExtraClass = ''): array;
 
     /**
      * @param string $redirectUrl
