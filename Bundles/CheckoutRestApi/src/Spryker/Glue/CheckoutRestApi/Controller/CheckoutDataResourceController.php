@@ -39,6 +39,7 @@ class CheckoutDataResourceController extends AbstractController
      *              }
      *          ],
      *          "responses": {
+     *              "200": "OK.",
      *              "400": "Bad Response.",
      *              "422": "Unprocessable entity."
      *          },
