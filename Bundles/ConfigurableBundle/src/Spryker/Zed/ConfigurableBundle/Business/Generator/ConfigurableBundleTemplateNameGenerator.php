@@ -47,7 +47,8 @@ class ConfigurableBundleTemplateNameGenerator implements ConfigurableBundleTempl
         ];
 
         $name = implode(static::PARTS_CONCATENATOR, $nameParts);
-        $name = str_replace(' ', static::SPACE_REPLACEMENT, $name);
+        $name = preg_replace('/[^ \w-_.]/', '', $name);
+        $name = preg_replace('!\s+!', static::SPACE_REPLACEMENT, $name);
 
         return strtolower($name);
     }

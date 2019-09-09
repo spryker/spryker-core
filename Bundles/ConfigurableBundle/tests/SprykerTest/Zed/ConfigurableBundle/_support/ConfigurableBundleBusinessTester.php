@@ -55,7 +55,6 @@ class ConfigurableBundleBusinessTester extends Actor
      */
     public function createTranslationsForAvailableLocales(array $data = []): array
     {
-
         $availableLocaleTransfers = $this->getLocator()
             ->locale()
             ->facade()
