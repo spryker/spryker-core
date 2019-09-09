@@ -5,6 +5,7 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -108,11 +108,8 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     {
         $configurableBundleTemplateSlotPropelQuery
             ->filterByIdConfigurableBundleTemplateSlot($this->idConfigurableBundleTemplateSlot)
-            ->joinSpyProductList()
             ->useSpyProductListQuery()
-                ->joinSpyProductListProductConcrete()
                 ->useSpyProductListProductConcreteQuery()
-                    ->joinSpyProduct()
                     ->useSpyProductQuery()
                         ->joinSpyProductLocalizedAttributes()
                         ->where(sprintf(

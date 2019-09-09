@@ -64,7 +64,7 @@ class ConfigurableBundleTemplateFormDataProvider
             return $this->createEmptyConfigurableBundleTemplateTransfer();
         }
 
-        return $this->updateConfigurableBundleTemplateTransferWithExistingTranslations($configurableBundleTemplateTransfer);
+        return $this->expandConfigurableBundleTemplateTransferWithExistingTranslations($configurableBundleTemplateTransfer);
     }
 
     /**
@@ -73,7 +73,7 @@ class ConfigurableBundleTemplateFormDataProvider
     public function getOptions(): array
     {
         return [
-            ConfigurableBundleTemplateForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
+            ConfigurableBundleTemplateForm::OPTION_AVAILABLE_LOCALES => $this->localeFacade->getLocaleCollection(),
         ];
     }
 
@@ -84,7 +84,7 @@ class ConfigurableBundleTemplateFormDataProvider
     {
         $configurableBundleTemplateTransfer = new ConfigurableBundleTemplateTransfer();
 
-        foreach ($this->getAvailableLocales() as $localeTransfer) {
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $configurableBundleTemplateTranslationTransfer = new ConfigurableBundleTemplateTranslationTransfer();
             $configurableBundleTemplateTranslationTransfer->setLocale($localeTransfer);
 
@@ -99,12 +99,12 @@ class ConfigurableBundleTemplateFormDataProvider
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    protected function updateConfigurableBundleTemplateTransferWithExistingTranslations(
+    protected function expandConfigurableBundleTemplateTransferWithExistingTranslations(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer {
-        $availableLocaleTransfers = $this->getAvailableLocales();
+        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
 
-        $translationsByLocales = $this->getTranslationsForLocales(
+        $translationsByLocales = $this->getTranslationsByLocales(
             $configurableBundleTemplateTransfer->getName(),
             $availableLocaleTransfers
         );
@@ -121,20 +121,12 @@ class ConfigurableBundleTemplateFormDataProvider
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
-     */
-    protected function getAvailableLocales(): array
-    {
-        return $this->localeFacade->getLocaleCollection();
-    }
-
-    /**
      * @param string $translationKey
      * @param array $localeTransfers
      *
      * @return string[]
      */
-    protected function getTranslationsForLocales(string $translationKey, array $localeTransfers): array
+    protected function getTranslationsByLocales(string $translationKey, array $localeTransfers): array
     {
         $translationsByLocales = [];
 

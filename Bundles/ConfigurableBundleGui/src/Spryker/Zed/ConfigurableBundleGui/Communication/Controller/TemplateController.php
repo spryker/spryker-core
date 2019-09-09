@@ -122,7 +122,7 @@ class TemplateController extends AbstractController
     public function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateFormDataProvider();
@@ -178,7 +178,7 @@ class TemplateController extends AbstractController
     public function slotTableAction(Request $request): JsonResponse
     {
         $idConfigurableBundleTemplate = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
         $table = $this->getFactory()->createConfigurableBundleTemplateSlotTable($idConfigurableBundleTemplate);

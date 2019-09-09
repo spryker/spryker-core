@@ -27,3 +27,4 @@ SKU,SKU
 "At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them."
 "You can change name and define locals on this page.","You can change name and define locals on this page."
 "You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories."
+"Configurable bundle template with id '%id%' was not found.","Configurable bundle template with id '%id%' was not found."

@@ -56,7 +56,7 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
 
         // Act
         $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateNameGenerator()
-            ->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+            ->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
         // Assert
         $this->assertEquals($expectedGeneratedName, $configurableBundleTemplateTransfer->getName());

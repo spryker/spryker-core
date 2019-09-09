@@ -32,7 +32,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConfigurableBundleTemplateByIdWillReturnNull(): void
+    public function testFindConfigurableBundleTemplateByIdWillReturnNullIfTemplateNotFound(): void
     {
         // Act
         $configurableBundleTemplateTransfer = $this->tester->getFacade()->findConfigurableBundleTemplateById(0);
@@ -96,7 +96,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateConfigurableBundleTemplateWillReturnNotSuccessfulResponse(): void
+    public function testUpdateConfigurableBundleTemplateWillReturnNotSuccessfulResponseIfTemplateNotFound(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
@@ -117,26 +117,19 @@ class ConfigurableBundleFacadeTest extends Unit
      */
     public function testCreateConfigurableBundleTemplate(): void
     {
-        $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateTransfer();
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplateTransfer();
 
+        // Act
         $configurableBundleTemplateResponseTransfer = $this->tester
             ->getFacade()
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
+        // Assert
         $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $configurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
         $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $configurableBundleTemplateTransfer);
         $this->assertGreaterThan(0, $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    protected function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
-    {
-        $configurableBundleTemplateTranslationTransfers = $this->tester->createTranslationTransfersForAvailableLocales();
-
-        return (new ConfigurableBundleTemplateTransfer())->setTranslations($configurableBundleTemplateTranslationTransfers);
     }
 }

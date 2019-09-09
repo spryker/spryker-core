@@ -75,6 +75,16 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
+    {
+        $configurableBundleTemplateTranslationTransfers = $this->createTranslationTransfersForAvailableLocales();
+
+        return (new ConfigurableBundleTemplateTransfer())->setTranslations($configurableBundleTemplateTranslationTransfers);
+    }
+
+    /**
      * @param array $data
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer[]

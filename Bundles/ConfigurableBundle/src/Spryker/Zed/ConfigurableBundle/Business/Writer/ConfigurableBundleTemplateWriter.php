@@ -20,6 +20,7 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
 
     protected const ERROR_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+    protected const ERROR_MESSAGE_TYPE = 'error';
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface
@@ -85,7 +86,7 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeCreateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
-        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
         $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
         $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
@@ -101,11 +102,12 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeUpdateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
-        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
         if (!$this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer)) {
             $messageTransfer = (new MessageTransfer())
                 ->setValue(static::ERROR_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
+                ->setType(static::ERROR_MESSAGE_TYPE)
                 ->setParameters([
                     static::ERROR_MESSAGE_PARAM_ID => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
                 ]);
