@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Communication\Controller;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,19 +43,13 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
-
-        /**
-         * Exists for Backward Compatibility reasons only.
-         */
-        $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
-        if ($idOrderItems === null && $idOrderItem !== null) {
-            $idOrderItems = [$idOrderItem];
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
+        $idOrderItems = $this->getRequestIdSalesOrderItems($request);
+        if ($idOrderItems === []) {
+            return $this->redirectResponse($redirect);
         }
 
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
-
         $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
         $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
@@ -66,21 +61,23 @@ class TriggerController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitTriggerEventForOrderItemsAction(Request $request)
+    public function submitTriggerEventForOrderItemsAction(Request $request): RedirectResponse
     {
-        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
-
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
         if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
             return $this->redirectResponse($redirect);
         }
 
-        $idOrderItem = $this->castId($request->query->getInt('id-sales-order-item'));
-        $event = $request->query->get('event');
+        $idOrderItems = $this->getRequestIdSalesOrderItems($request);
+        if ($idOrderItems === []) {
+            return $this->redirectResponse($redirect);
+        }
 
-        $this->getFacade()->triggerEventForOrderItems($event, [$idOrderItem]);
-        $this->addInfoMessage('Status change triggered successfully.');
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
     }
@@ -122,9 +119,6 @@ class TriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event');
-        $itemsList = $request->query->get('items');
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
@@ -180,5 +174,28 @@ class TriggerController extends AbstractController
             ->handleRequest($request);
 
         return $form->isSubmitted() && $form->isValid();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function getRequestIdSalesOrderItems(Request $request): array
+    {
+        $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
+        if (is_array($idOrderItems) === false) {
+            $idOrderItems = [];
+        }
+
+        /**
+         * Exists for Backward Compatibility reasons only.
+         */
+        $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
+        if ($idOrderItems === [] && $idOrderItem !== null) {
+            $idOrderItems = [$idOrderItem];
+        }
+
+        return $idOrderItems;
     }
 }

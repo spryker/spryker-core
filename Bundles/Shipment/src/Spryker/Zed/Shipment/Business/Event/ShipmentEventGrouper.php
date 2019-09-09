@@ -7,13 +7,28 @@
 
 namespace Spryker\Zed\Shipment\Business\Event;
 
+use Spryker\Service\Shipment\ShipmentServiceInterface;
+
 class ShipmentEventGrouper implements ShipmentEventGrouperInterface
 {
+    /**
+     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     */
+    protected $shipmentService;
+
+    /**
+     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     */
+    public function __construct(ShipmentServiceInterface $shipmentService)
+    {
+        $this->shipmentService = $shipmentService;
+    }
+
     /**
      * @param array $events
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
-     * @return array
+     * @return string[][]
      */
     public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array
     {
@@ -26,21 +41,27 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
      * @param array $events
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
      *
-     * @return array
+     * @return string[][]
      */
     protected function groupEventsByIdSalesShipment(array $events, iterable $orderItemTransfers): array
     {
         $groupedEvents = [];
-
-        foreach ($orderItemTransfers as $itemTransfer) {
-            $itemTransfer->requireShipment();
-            $idSalesShipment = $itemTransfer->getShipment()->getIdSalesShipment();
-
-            if ($idSalesShipment === null || !isset($events[$idSalesShipment])) {
+        $shipmentGroupTransferCollection = $this->shipmentService->groupItemsByShipment($orderItemTransfers);
+        foreach ($shipmentGroupTransferCollection as $shipmentGroupTransfer) {
+            $shipmentGroupTransfer->requireShipment();
+            $idSalesShipment = $shipmentGroupTransfer->getShipment()->getIdSalesShipment();
+            if ($idSalesShipment === null) {
                 continue;
             }
 
-            $groupedEvents[(int)$idSalesShipment][] = $events[$idSalesShipment];
+            $idSalesShipment = (int)$idSalesShipment;
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                if (isset($events[$itemTransfer->getIdSalesOrderItem()]) === false) {
+                    continue;
+                }
+
+                $groupedEvents[$idSalesShipment][] = $events[$itemTransfer->getIdSalesOrderItem()];
+            }
         }
 
         return $groupedEvents;
@@ -49,7 +70,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
     /**
      * @param array $events
      *
-     * @return string[]
+     * @return string[][]
      */
     protected function retrieveEventNamesFromEventList(array $events): array
     {
@@ -67,7 +88,7 @@ class ShipmentEventGrouper implements ShipmentEventGrouperInterface
      * @param array $eventNameCollection
      * @param int $shipmentId
      *
-     * @return array
+     * @return string[][]
      */
     protected function expandEventListEventNameCollectionForShipment(
         array $eventList,
