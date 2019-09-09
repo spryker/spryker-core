@@ -15,6 +15,7 @@
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="attributeNames" type="array"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="ConcreteProductsRestAttributes">
@@ -27,6 +28,21 @@
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="attributeNames" type="array"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="fkResourceProductAbstract" type="int" />
+    </transfer>
+
+    <transfer name="RestUrlResolverAttributes">
+        <property name="entityType" type="string" />
+        <property name="entityId" type="string" />
     </transfer>
 
 </transfers>
