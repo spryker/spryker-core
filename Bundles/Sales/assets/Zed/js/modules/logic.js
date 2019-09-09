@@ -1,37 +1,53 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 'use strict';
 
-function getSelectedItems(idOrderItem) {
-    var selectedItems = [];
+$(document).ready(function () {
+    $('.trigger-order-shipment-event').click(function (e) {
+        e.preventDefault();
+        var idShipment = $(this).closest('.sales-order-shipment').data('id-sales-shipment');
+        var $shipmentTable = $('.shipment-item-table-' + idShipment);
+        var $idOrderItems = $shipmentTable.find('input[name="order-item"]');
+        var idOrderItemsCheckedList = [];
+        var idOrderItemsFullList = [];
+        var $form = $(this).closest('form');
+        var formAction = $form.attr('action');
 
-    if (parseInt(idOrderItem) > 0) {
-        selectedItems.push(idOrderItem);
+        $idOrderItems.each(function () {
+            idOrderItemsFullList.push($(this).val());
 
-        return selectedItems;
-    }
+            if ($(this).prop('checked')) {
+                idOrderItemsCheckedList.push($(this).val());
+            }
+        });
 
-    $('.item-check').each(function(){
-        if ($(this).prop('checked') === true) {
-            selectedItems.push($(this).val());
+        if (!idOrderItemsCheckedList.length) {
+            idOrderItemsCheckedList = idOrderItemsFullList;
         }
+
+        var finalUrl = formAction + '&' + $.param({items: idOrderItemsCheckedList});
+
+        $(this).prop('disabled', true).addClass('disabled');
+        $form.attr('action', finalUrl);
+        $form.submit();
     });
 
-    return selectedItems;
-}
-
-$(document).ready(function () {
     $('.item-check').click(function(){
-        var countChecked = $(".item-check[type='checkbox']:checked").length;
-        var totalCheckboxItems = $('.item-check').length;
+        var $table = $(this).closest('table');
+        var $checkAllOrders = $table.find('.check-all-orders');
+        var countChecked = $table.find('.item-check[type="checkbox"]:checked').length;
+        var totalCheckboxItems = $table.find('.item-check').length;
 
         if (totalCheckboxItems === countChecked) {
-            $('.check-all-orders').prop('checked', true);
+            $checkAllOrders.prop('checked', true);
 
-            return true;
+            return;
         }
 
-        $('.check-all-orders').prop('checked', false);
-
-        return true;
+        $checkAllOrders.prop('checked', false);
     });
 
     $('.more-attributes').click(function(e){

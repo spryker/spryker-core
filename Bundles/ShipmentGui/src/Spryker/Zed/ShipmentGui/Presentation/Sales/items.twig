@@ -45,12 +45,14 @@
             {% if eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment] is defined %}
                 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states of order inside this shipment' } %}
                     {% block widget_content %}
-                        {% include '@Oms/RenderForm/_partial/order-actions.twig' with {
-                            redirectUrl: changeStatusRedirectUrl,
-                            idSalesOrder: order.idSalesOrder,
-                            events: eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment],
-                            submitButtonClass: 'any-new-class'
-                        } only %}
+                        <div class="sales-order-shipment" data-id-sales-shipment="{{ shipmentOrderItems.shipment.idSalesShipment }}">
+                            {% include '@Oms/RenderForm/_partial/order-actions.twig' with {
+                                redirectUrl: changeStatusRedirectUrl,
+                                idSalesOrder: order.idSalesOrder,
+                                events: eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment],
+                                submitButtonClass: 'trigger-order-shipment-event',
+                            } only %}
+                        </div>
                     {% endblock %}
                 {% endembed %}
             {% endif %}
