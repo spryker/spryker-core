@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Exporter;
 
+use DateTime;
 use Generated\Shared\Transfer\CsvFileTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
@@ -27,6 +28,8 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
 
     protected const FORMAT_FILE_NAME = '%s.csv';
     protected const PARAM_FILE_NAME = 'price_product_schedule_export';
+
+    protected const PATTERN_DATE_TIME = 'Y-m-d\TH:i:sO';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
@@ -133,6 +136,9 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
+        $dateFrom = new DateTime($priceProductScheduleTransfer->getActiveFrom());
+        $dateTo = new DateTime($priceProductScheduleTransfer->getActiveTo());
+
         return [
             static::HEADER_ABSTRACT_SKU => $priceProductTransfer->getSkuProductAbstract(),
             static::HEADER_CONCRETE_SKU => $priceProductTransfer->getSkuProduct(),
@@ -141,8 +147,8 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
             static::HEADER_CURRENCY => $moneyValueTransfer->getCurrency()->getCode(),
             static::HEADER_NET_PRICE => $moneyValueTransfer->getNetAmount(),
             static::HEADER_GROSS_PRICE => $moneyValueTransfer->getGrossAmount(),
-            static::HEADER_FROM => $priceProductScheduleTransfer->getActiveFrom(),
-            static::HEADER_TO => $priceProductScheduleTransfer->getActiveTo(),
+            static::HEADER_FROM => $dateFrom->format(static::PATTERN_DATE_TIME),
+            static::HEADER_TO => $dateTo->format(static::PATTERN_DATE_TIME),
         ];
     }
 }
