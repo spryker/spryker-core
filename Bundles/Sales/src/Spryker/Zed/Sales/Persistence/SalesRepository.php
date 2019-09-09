@@ -46,6 +46,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         $orderListQuery = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByCustomerReference($orderListTransfer->getCustomerReference());
+
         $ordersCount = $orderListQuery->count();
         if (!$ordersCount) {
             return $orderListTransfer;
@@ -58,10 +59,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             );
         }
 
-        $orderListTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createOrderListTransferMapper()
             ->mapPaginatedOrderListTransfer($orderListTransfer, $orderListQuery->find()->getArrayCopy(), $ordersCount);
-
-        return $orderListTransfer;
     }
 }

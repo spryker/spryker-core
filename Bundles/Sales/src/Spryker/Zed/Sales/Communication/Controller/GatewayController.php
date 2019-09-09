@@ -64,10 +64,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getFilteredCustomerOrderListAction(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getOffsetPaginatedCustomerOrderListAction(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        return $this->getFacade()
-            ->getFilteredCustomerOrderList($orderListTransfer);
+        return $this->getFacade()->getOffsetPaginatedCustomerOrderList($orderListTransfer);
     }
 
     /**
@@ -91,7 +90,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder($idSalesOrder)
+    public function getOrderByIdSalesOrderAction($idSalesOrder)
     {
         return $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
     }

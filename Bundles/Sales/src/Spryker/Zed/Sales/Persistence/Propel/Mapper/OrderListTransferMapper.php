@@ -15,16 +15,16 @@ class OrderListTransferMapper
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orders
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderEntities
      * @param int $ordersCount
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orders, int $ordersCount): OrderListTransfer
+    public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderEntities, int $ordersCount): OrderListTransfer
     {
-        foreach ($orders as $order) {
+        foreach ($orderEntities as $orderEntity) {
             $orderListTransfer->addOrder(
-                (new OrderTransfer())->fromArray($order->toArray(), true)
+                (new OrderTransfer())->fromArray($orderEntity->toArray(), true)
             );
         }
 

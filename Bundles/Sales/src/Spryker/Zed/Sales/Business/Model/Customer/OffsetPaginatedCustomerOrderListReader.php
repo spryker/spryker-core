@@ -13,7 +13,7 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
-class FilteredCustomerOrderListReader implements FilteredCustomerOrderListReaderInterface
+class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerOrderListReaderInterface
 {
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface
@@ -53,36 +53,32 @@ class FilteredCustomerOrderListReader implements FilteredCustomerOrderListReader
     public function getOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         $orderListTransfer->requireCustomerReference();
-        $orderList = $this->salesRepository->getCustomerOrderListByCustomerReference($orderListTransfer)->getOrders();
+        $orderListTransfer = $this->salesRepository->getCustomerOrderListByCustomerReference($orderListTransfer);
 
-        if (!$orderList->count()) {
+        if (!$orderListTransfer->getOrders()->count()) {
             return $orderListTransfer;
         }
 
-        $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderList->getArrayCopy());
-        $orderListTransfer->setOrders(new ArrayObject($orders));
-
-        return $orderListTransfer;
+        return $this->hydrateOrderListCollectionTransfer($orderListTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderList
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function hydrateOrderListCollectionTransferFromEntityCollection(array $orderList): array
+    protected function hydrateOrderListCollectionTransfer(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orders = [];
-        foreach ($orderList as $order) {
-            $idSalesOrder = $order->getIdSalesOrder();
+        $orderTransfers = [];
+        foreach ($orderListTransfer->getOrders() as $orderTransfer) {
+            $idSalesOrder = $orderTransfer->getIdSalesOrder();
             if ($this->omsFacade->isOrderFlaggedExcludeFromCustomer($idSalesOrder)) {
                 continue;
             }
 
-            $orderTransfer = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
-            $orders[] = $orderTransfer;
+            $orderTransfers[] = $this->orderHydrator->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
         }
 
-        return $orders;
+        return $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
     }
 }

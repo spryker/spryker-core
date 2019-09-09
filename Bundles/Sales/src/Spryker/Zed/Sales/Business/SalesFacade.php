@@ -137,10 +137,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getOffsetPaginatedCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         return $this->getFactory()
-            ->createFilteredCustomerOrderListReader()
+            ->createOffsetPaginatedCustomerOrderListReader()
             ->getOrders($orderListTransfer);
     }
 

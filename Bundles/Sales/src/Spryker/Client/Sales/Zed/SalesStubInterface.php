@@ -31,7 +31,7 @@ interface SalesStubInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
+    public function getOffsetPaginatedCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer

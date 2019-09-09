@@ -40,9 +40,9 @@ class OrdersRestApiToSalesClientBridge implements OrdersRestApiToSalesClientInte
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getFilteredCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getOffsetPaginatedCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        return $this->salesClient->getFilteredCustomerOrderList($orderListTransfer);
+        return $this->salesClient->getOffsetPaginatedCustomerOrderList($orderListTransfer);
     }
 
     /**
