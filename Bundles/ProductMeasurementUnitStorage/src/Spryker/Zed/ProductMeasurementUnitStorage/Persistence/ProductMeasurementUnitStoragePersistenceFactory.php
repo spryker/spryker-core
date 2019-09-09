@@ -46,7 +46,9 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
      */
     public function createProductMeasurementUnitStorageMapper(): ProductMeasurementUnitStorageMapperInterface
     {
-        return new ProductMeasurementUnitStorageMapper();
+        return new ProductMeasurementUnitStorageMapper(
+            $this->getConfig()
+        );
     }
 
     /**
@@ -54,7 +56,9 @@ class ProductMeasurementUnitStoragePersistenceFactory extends AbstractPersistenc
      */
     public function createProductConcreteMeasurementUnitStorageMapper(): ProductConcreteMeasurementUnitStorageMapperInterface
     {
-        return new ProductConcreteMeasurementUnitStorageMapper();
+        return new ProductConcreteMeasurementUnitStorageMapper(
+            $this->getConfig()
+        );
     }
 
     /**

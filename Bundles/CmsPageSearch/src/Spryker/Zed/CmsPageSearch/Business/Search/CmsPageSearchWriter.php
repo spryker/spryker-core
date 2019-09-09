@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface;
@@ -153,11 +154,11 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param array $cmsPageSearchEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch[] $cmsPageSearchEntities
      *
      * @return void
      */
-    protected function deleteCmsPageSearchEntities(array $cmsPageSearchEntities): void
+    protected function deleteCmsPageSearchEntities(ObjectCollection $cmsPageSearchEntities): void
     {
         foreach ($cmsPageSearchEntities as $cmsPageSearchEntity) {
             $this->deleteSearchEntity($cmsPageSearchEntity);
