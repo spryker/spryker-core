@@ -17,6 +17,7 @@ function PriceProductScheduleCreate(options) {
         this.initActiveToDatepicker();
         this.hideTimezoneMessage();
         this.initDependentSelectBox();
+        this.preventDoubleSubmission();
     };
 
     this.initActiveFromDatepicker = function() {
@@ -68,6 +69,12 @@ function PriceProductScheduleCreate(options) {
 
         self.fillTimezoneMessage(data);
         self.toggleVisibility(true);
+    };
+
+    this.preventDoubleSubmission = function () {
+        this.form.submit(function () {
+            self.submit.prop('disabled', true);
+        });
     };
 
     this.initDependentSelectBox = function() {

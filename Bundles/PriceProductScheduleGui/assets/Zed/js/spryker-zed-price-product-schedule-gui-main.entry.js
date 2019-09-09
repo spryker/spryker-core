@@ -24,6 +24,8 @@ $(document).ready(function() {
             response: 'currencies',
             value: 'id_currency',
             text: 'code'
-        }
+        },
+        submit: $('#price_product_schedule_submit'),
+        form: $('#price_product_schedule_form'),
     });
 });
