@@ -38,9 +38,10 @@ interface SalesClientInterface
 
     /**
      * Specification:
-     *  - Returns a transfer with the filtered list of orders for the given customer.
-     *  - customerReference must be set in the OrderListTransfer.
-     *  - Updates the total number of orders for the customer to the pagination transfer.
+     * - Makes Zed request.
+     * - Returns a transfer with the filtered list of orders for the given customer.
+     * - customerReference must be set in the OrderListTransfer.
+     * - Updates the total number of orders for the customer to the pagination transfer.
      *
      * @api
      *
