@@ -8,8 +8,8 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\QuoteApproval\Checker\QuoteApprovalChecker;
-use Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface;
+use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
+use Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
@@ -51,11 +51,11 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface
+     * @return \Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface
      */
-    public function createQuoteApprovalChecker(): QuoteApprovalCheckerInterface
+    public function createQuoteChecker(): QuoteCheckerInterface
     {
-        return new QuoteApprovalChecker(
+        return new QuoteChecker(
             $this->getConfig()
         );
     }
@@ -101,7 +101,7 @@ class QuoteApprovalFactory extends AbstractFactory
     {
         return new QuoteApprovalCreator(
             $this->createQuoteApprovalStub(),
-            $this->createQuoteApprovalChecker()
+            $this->createQuoteChecker()
         );
     }
 

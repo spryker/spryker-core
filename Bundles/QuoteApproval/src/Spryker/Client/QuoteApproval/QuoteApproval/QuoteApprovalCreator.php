@@ -10,7 +10,7 @@ namespace Spryker\Client\QuoteApproval\QuoteApproval;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
-use Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface;
+use Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
 class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
@@ -23,20 +23,20 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     protected $quoteApprovalStub;
 
     /**
-     * @var \Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface
+     * @var \Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface
      */
-    protected $quoteApprovalChecker;
+    protected $quoteChecker;
 
     /**
      * @param \Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface $quoteApprovalStub
-     * @param \Spryker\Client\QuoteApproval\Checker\QuoteApprovalCheckerInterface $quoteApprovalChecker
+     * @param \Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface $quoteChecker
      */
     public function __construct(
         QuoteApprovalStubInterface $quoteApprovalStub,
-        QuoteApprovalCheckerInterface $quoteApprovalChecker
+        QuoteCheckerInterface $quoteChecker
     ) {
         $this->quoteApprovalStub = $quoteApprovalStub;
-        $this->quoteApprovalChecker = $quoteApprovalChecker;
+        $this->quoteChecker = $quoteChecker;
     }
 
     /**
@@ -47,7 +47,7 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     public function createQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         if (!$quoteApprovalRequestTransfer->getQuote()->getIdQuote()
-            && $this->quoteApprovalChecker->isQuoteApplicableForApprovalProcess($quoteApprovalRequestTransfer->getQuote())
+            && $this->quoteChecker->isQuoteApplicableForApprovalProcess($quoteApprovalRequestTransfer->getQuote())
         ) {
             return (new QuoteApprovalResponseTransfer())
                 ->setIsSuccessful(false)

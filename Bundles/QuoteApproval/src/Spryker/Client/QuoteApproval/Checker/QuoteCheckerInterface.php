@@ -9,7 +9,7 @@ namespace Spryker\Client\QuoteApproval\Checker;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteApprovalCheckerInterface
+interface QuoteCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

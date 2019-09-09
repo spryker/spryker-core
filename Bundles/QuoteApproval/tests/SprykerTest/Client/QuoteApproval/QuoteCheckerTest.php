@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Client\QuoteApproval\Checker\QuoteApprovalChecker;
+use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
 use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
 
 /**
@@ -19,15 +19,15 @@ use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
  * @group SprykerTest
  * @group Client
  * @group QuoteApproval
- * @group QuoteApprovalCheckerTest
+ * @group QuoteCheckerTest
  * Add your own group annotations below this line
  */
-class QuoteApprovalCheckerTest extends Unit
+class QuoteCheckerTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteApproval\Checker\QuoteApprovalChecker
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\QuoteApproval\Checker\QuoteChecker
      */
-    protected $quoteApprovalCheckerMock;
+    protected $quoteCheckerMock;
 
     /**
      * @return void
@@ -36,7 +36,7 @@ class QuoteApprovalCheckerTest extends Unit
     {
         parent::setUp();
 
-        $this->quoteApprovalCheckerMock = $this->createQuoteApprovalCheckerMock();
+        $this->quoteCheckerMock = $this->createQuoteCheckerMock();
     }
 
     /**
@@ -53,7 +53,7 @@ class QuoteApprovalCheckerTest extends Unit
             ->build();
 
         // Act
-        $isQuoteApplicableForApproval = $this->quoteApprovalCheckerMock->isQuoteApplicableForApprovalProcess($quoteTransfer);
+        $isQuoteApplicableForApproval = $this->quoteCheckerMock->isQuoteApplicableForApprovalProcess($quoteTransfer);
 
         // Assert
         $this->assertTrue($isQuoteApplicableForApproval);
@@ -68,7 +68,7 @@ class QuoteApprovalCheckerTest extends Unit
         $quoteTransfer = (new QuoteBuilder())->build();
 
         // Act
-        $isQuoteApplicableForApproval = $this->quoteApprovalCheckerMock->isQuoteApplicableForApprovalProcess($quoteTransfer);
+        $isQuoteApplicableForApproval = $this->quoteCheckerMock->isQuoteApplicableForApprovalProcess($quoteTransfer);
 
         // Assert
         $this->assertFalse($isQuoteApplicableForApproval);
@@ -87,7 +87,7 @@ class QuoteApprovalCheckerTest extends Unit
             ->build();
 
         // Act
-        $isQuoteApplicableForApproval = $this->quoteApprovalCheckerMock->isQuoteApplicableForApprovalProcess($quoteTransfer);
+        $isQuoteApplicableForApproval = $this->quoteCheckerMock->isQuoteApplicableForApprovalProcess($quoteTransfer);
 
         // Assert
         $this->assertFalse($isQuoteApplicableForApproval);
@@ -96,9 +96,9 @@ class QuoteApprovalCheckerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQuoteApprovalCheckerMock(): MockObject
+    protected function createQuoteCheckerMock(): MockObject
     {
-        return $this->getMockBuilder(QuoteApprovalChecker::class)
+        return $this->getMockBuilder(QuoteChecker::class)
             ->setConstructorArgs([
                 $this->createQuoteApprovalConfigMock(),
             ])

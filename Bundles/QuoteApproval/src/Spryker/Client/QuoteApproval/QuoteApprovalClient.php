@@ -249,7 +249,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteApprovalChecker()
+            ->createQuoteChecker()
             ->isQuoteApplicableForApprovalProcess($quoteTransfer);
     }
 }
