@@ -10,7 +10,7 @@ namespace Spryker\Client\QuoteApproval\Checker;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
 
-class QuoteApprovalChecker implements QuoteApprovalCheckerInterface
+class QuoteChecker implements QuoteCheckerInterface
 {
     /**
      * @var \Spryker\Client\QuoteApproval\QuoteApprovalConfig
