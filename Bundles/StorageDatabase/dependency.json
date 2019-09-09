@@ -1,5 +1,5 @@
 {
   "include": {
-    "SynchronizationBehavior": "SynchronizationBehavior provides Propel behavior for Storage and Search modules, this behavior adds required columns and pre/post save hooks to aggregated Propel entities."
+    "spryker/synchronization-behavior": "SynchronizationBehavior adds the alias_keys column, which is required key mappings resolving."
   }
 }
