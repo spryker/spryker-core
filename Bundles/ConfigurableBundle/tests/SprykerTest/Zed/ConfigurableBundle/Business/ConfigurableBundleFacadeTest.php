@@ -115,7 +115,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateConfigurableBundleTemplate(): void
+    public function testCreateConfigurableBundleTemplateWillCreateTemplate(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplateTransfer();

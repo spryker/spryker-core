@@ -31,25 +31,14 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
     protected $tester;
 
     /**
-     * @return void
-     */
-    public function testGenerateConfigurableBundleTemplateName(): void
-    {
-        $this->performGenerateConfigurableBundleTemplateNameTest('My bundle', 'configurable_bundle.template.my_bundle.name');
-        $this->performGenerateConfigurableBundleTemplateNameTest('Alot    of    spaces', 'configurable_bundle.template.alot_of_spaces.name');
-        $this->performGenerateConfigurableBundleTemplateNameTest('another "template" example', 'configurable_bundle.template.another_template_example.name');
-        $this->performGenerateConfigurableBundleTemplateNameTest('Template 1', 'configurable_bundle.template.template_1.name');
-        $this->performGenerateConfigurableBundleTemplateNameTest('Example !@#$%^&&*() name', 'configurable_bundle.template.example_name.name');
-        $this->performGenerateConfigurableBundleTemplateNameTest('Allowed_name-symbols', 'configurable_bundle.template.allowed_name-symbols.name');
-    }
-
-    /**
+     * @dataProvider getGenerateConfigurableBundleTemplateNameData
+     *
      * @param string $rawName
      * @param string $expectedGeneratedName
      *
      * @return void
      */
-    protected function performGenerateConfigurableBundleTemplateNameTest(string $rawName, string $expectedGeneratedName): void
+    public function testGenerateConfigurableBundleTemplateName(string $rawName, string $expectedGeneratedName): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateTransfer($rawName);
@@ -60,6 +49,21 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
 
         // Assert
         $this->assertEquals($expectedGeneratedName, $configurableBundleTemplateTransfer->getName());
+    }
+
+    /**
+     * @return array
+     */
+    public function getGenerateConfigurableBundleTemplateNameData(): array
+    {
+        return [
+            ['My bundle', 'configurable_bundle.template.my_bundle.name'],
+            ['Alot    of    spaces', 'configurable_bundle.template.alot_of_spaces.name'],
+            ['another "template" example', 'configurable_bundle.template.another_template_example.name'],
+            ['Template 1', 'configurable_bundle.template.template_1.name'],
+            ['Example !@#$%^&&*() name', 'configurable_bundle.template.example_name.name'],
+            ['Allowed_name-symbols', 'configurable_bundle.template.allowed_name-symbols.name'],
+        ];
     }
 
     /**
