@@ -8,9 +8,17 @@
 namespace Spryker\Zed\Shipment\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
 interface ShipmentRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
+
     /**
      * @param int $idShipmentMethod
      *

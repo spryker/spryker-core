@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Shipment\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,6 +18,24 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShipmentRepository extends AbstractRepository implements ShipmentRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    {
+        $shipmentMethodTransfer->requireName()
+            ->requireFkShipmentCarrier();
+
+        return !$this->getFactory()
+            ->createShipmentMethodQuery()
+            ->filterByName($shipmentMethodTransfer->getName())
+            ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)
+            ->filterByFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier())
+            ->exists();
+    }
+
     /**
      * @param int $idShipmentMethod
      *

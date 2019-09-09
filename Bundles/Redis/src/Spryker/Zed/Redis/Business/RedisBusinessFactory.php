@@ -13,6 +13,9 @@ use Spryker\Zed\Redis\Business\Export\RedisExporterInterface;
 use Spryker\Zed\Redis\Business\Import\RedisImporter;
 use Spryker\Zed\Redis\Business\Import\RedisImporterInterface;
 
+/**
+ * @method \Spryker\Zed\Redis\RedisConfig getConfig()
+ */
 class RedisBusinessFactory extends AbstractBusinessFactory
 {
     /**
@@ -20,7 +23,7 @@ class RedisBusinessFactory extends AbstractBusinessFactory
      */
     public function createRedisImporter(): RedisImporterInterface
     {
-        return new RedisImporter();
+        return new RedisImporter($this->getConfig());
     }
 
     /**
@@ -28,6 +31,6 @@ class RedisBusinessFactory extends AbstractBusinessFactory
      */
     public function createRedisExporter(): RedisExporterInterface
     {
-        return new RedisExporter();
+        return new RedisExporter($this->getConfig());
     }
 }
