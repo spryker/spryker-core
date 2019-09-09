@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface;
@@ -162,9 +162,24 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
                 $shipmentTransfer
             );
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+            $this->updateItemLevelShipmentReferences($shipmentGroupTransfer);
         }
 
         return $shipmentGroupCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return void
+     */
+    protected function updateItemLevelShipmentReferences(ShipmentGroupTransfer $shipmentGroupTransfer): void
+    {
+        $shipmentTransfer = $shipmentGroupTransfer->getShipment();
+        foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment($shipmentTransfer);
+        }
     }
 
     /**
@@ -177,13 +192,34 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
         ShipmentTransfer $shipmentTransfer
     ): ?ShipmentMethodTransfer {
-        $shipmentSelection = (int)$shipmentTransfer->getShipmentSelection();
+        $shipmentSelection = $shipmentTransfer->getShipmentSelection();
+        if ($shipmentSelection === ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
+            return $this->findNoShipmentMethod($shipmentMethodsTransfer);
+        }
+
+        $shipmentSelection = (int)$shipmentSelection;
         if ($shipmentSelection === 0) {
             return null;
         }
 
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $shipmentSelection) {
+                return $shipmentMethodTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    protected function findNoShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer): ?ShipmentMethodTransfer
+    {
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getName() === ShipmentConfig::SHIPMENT_METHOD_NAME_NO_SHIPMENT) {
                 return $shipmentMethodTransfer;
             }
         }
@@ -200,7 +236,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     {
         $quoteExpenseForRemoveIndexes = [];
         foreach ($quoteTransfer->getExpenses() as $expenseTransferIndex => $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 $quoteExpenseForRemoveIndexes[] = $expenseTransferIndex;
             }
         }
@@ -221,7 +257,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
     protected function createShipmentExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, $priceMode): ExpenseTransfer
     {
         $shipmentExpenseTransfer = $this->shipmentMapper->mapShipmentMethodTransferToShipmentExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpenseTransfer->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setQuantity(1);
 
         $shipmentMethodTransfer->requireStoreCurrencyPrice();

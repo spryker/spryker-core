@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/gui": "^3.17.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/oms": "^8.0.0 || ^10.0.0 || ^11.0.0",
+    "spryker/oms": "^8.0.0 || ^10.0.0",
     "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/sales-extension": "^1.0.0",
     "spryker/sales-reclamation": "^1.0.0",

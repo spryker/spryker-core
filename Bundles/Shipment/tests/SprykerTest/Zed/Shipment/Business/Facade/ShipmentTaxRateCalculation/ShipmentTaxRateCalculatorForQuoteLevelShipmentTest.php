@@ -15,7 +15,7 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
@@ -143,7 +143,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         $shipmentTransfer->setShippingAddress($addressTransfer);
 
         $expenseTransfer = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
             ExpenseTransfer::NAME => $shipmentTransfer->getMethod()->getName(),
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
@@ -169,7 +169,7 @@ class ShipmentTaxRateCalculatorForQuoteLevelShipmentTest extends Test
         $shipmentTransfer->setShippingAddress($addressTransfer);
 
         $expenseTransfer = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
             ExpenseTransfer::NAME => $shipmentTransfer->getMethod()->getName(),
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);

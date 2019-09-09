@@ -20,7 +20,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesExpenseTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 
 /**
  * Auto-generated group annotations
@@ -86,7 +86,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
 
         $idSalesShipmentExpenseQuery = SpySalesExpenseQuery::create()
             ->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder())
-            ->filterByType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE)
+            ->filterByType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE)
             ->select(SpySalesExpenseTableMap::COL_ID_SALES_EXPENSE)
             ->setFormatter(SimpleArrayFormatter::class);
 
@@ -136,7 +136,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
             ->withMethod();
 
         $expenseBuilder = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
         ]))->withShipment($shipmentBuilder);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -165,7 +165,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
             ->build();
 
         $expenseTransfer = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
 
@@ -203,12 +203,12 @@ class ShipmentPersistenceWithExpensesTest extends Test
             ->build();
 
         $expenseTransfer1 = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer1->setShipment($shipmentTransfer1);
 
         $expenseTransfer2 = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer2->setShipment($shipmentTransfer2);
 

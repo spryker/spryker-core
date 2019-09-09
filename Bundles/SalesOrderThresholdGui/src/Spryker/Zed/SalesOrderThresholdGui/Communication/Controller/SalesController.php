@@ -9,18 +9,18 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Controller;
 
 use Spryker\Shared\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ShipmentGui\Communication\Exception\OrderNotFoundException;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\OrderNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesOrderThresholdGui\Communication\SalesOrderThresholdGuiCommunicationFactory getFactory()
  */
 class SalesController extends AbstractController
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Spryker\Zed\Sales\Business\Exception\OrderNotFoundException
+     * @throws \Spryker\Zed\SalesOrderThresholdGui\Communication\Exception\OrderNotFoundException
      *
      * @return array
      */

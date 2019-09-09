@@ -19,6 +19,6 @@ class ShipmentConfig extends AbstractBundleConfig
      */
     public function getShipmentExpenseType(): string
     {
-        return $this->getSharedConfig()->getShipmentExpenseType();
+        return $this->getSharedConfig()::SHIPMENT_EXPENSE_TYPE;
     }
 }

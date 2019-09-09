@@ -244,7 +244,7 @@ interface GiftCardFacadeInterface
 
     /**
      * Specification:
-     * - Sanitize shipment group collection.
+     * - Sanitizes shipment in the shipment group collection which contains gift cards only.
      *
      * @api
      *

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 
 /**
  * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilter instead
@@ -43,7 +43,7 @@ class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
     {
         $filteredExpenseTransferCollection = new ArrayObject();
         foreach ($expenseTransferCollection as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() !== ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 $filteredExpenseTransferCollection->append($expenseTransfer);
             }
         }

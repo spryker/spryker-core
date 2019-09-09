@@ -5,27 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Shipment;
+namespace Spryker\Shared\Checkout;
 
-use Spryker\Shared\Kernel\AbstractSharedConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
-class ShipmentConfig extends AbstractSharedConfig
+class CheckoutConfig extends AbstractBundleConfig
 {
-    public const SHIPMENT_METHOD_NAME_NO_SHIPMENT = 'NoShipment';
-
     /**
      * Specification:
      * - Shipment expense type name.
      *
      * @api
+     *
+     * @see \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
      */
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
-
-    /**
-     * @return bool
-     */
-    public function isMultiShipmentSelectionEnabled(): bool
-    {
-        return false;
-    }
 }

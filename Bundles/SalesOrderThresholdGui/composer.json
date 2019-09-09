@@ -12,7 +12,6 @@
     "spryker/money": "^2.1.0",
     "spryker/sales-order-threshold": "^1.0.0",
     "spryker/sales-order-threshold-gui-extension": "^1.1.0",
-    "spryker/shipment-gui": "^1.0.0",
     "spryker/store": "^1.2.0",
     "spryker/symfony": "^3.1.0",
     "spryker/tax": "^5.0.0"

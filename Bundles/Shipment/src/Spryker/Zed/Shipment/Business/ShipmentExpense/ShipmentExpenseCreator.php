@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
@@ -54,7 +55,7 @@ class ShipmentExpenseCreator implements ShipmentExpenseCreatorInterface
             ->mapShipmentMethodTransferToExpenseTransfer($shipmentMethodTransfer, new ExpenseTransfer());
 
         $expenseTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $expenseTransfer->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
         $expenseTransfer = $this->setExpenseSetPrice($expenseTransfer, 0, $orderTransfer->getPriceMode());
         $expenseTransfer->setQuantity(1);
         $expenseTransfer->setShipment($shipmentTransfer);

@@ -202,7 +202,7 @@ class MethodPriceReader implements MethodPriceReaderInterface
     protected function getStore(QuoteTransfer $quoteTransfer): StoreTransfer
     {
         $storeTransfer = $quoteTransfer->getStore();
-        if ($storeTransfer !== null) {
+        if ($storeTransfer !== null && $storeTransfer->getIdStore() !== null) {
             return $storeTransfer;
         }
 

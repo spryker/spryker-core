@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
@@ -123,7 +123,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         SaveOrderTransfer $saveOrderTransfer
     ): OrderTransfer {
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== ShipmentConstants::SHIPMENT_EXPENSE_TYPE) {
+            if ($expenseTransfer->getType() !== ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
@@ -207,7 +207,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     protected function findShipmentExpense(SaveOrderTransfer $saveOrderTransfer, $shipmentMethodName): ?ExpenseTransfer
     {
         foreach ($saveOrderTransfer->getOrderExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE && $shipmentMethodName === $expenseTransfer->getName()) {
+            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE && $shipmentMethodName === $expenseTransfer->getName()) {
                 return $expenseTransfer;
             }
         }

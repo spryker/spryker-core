@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
@@ -196,7 +196,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
         $itemTransfer->setShipment($shipmentTransfer);
 
         $expenseTransfer = (new ExpenseBuilder([
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentConfig::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
 
@@ -261,7 +261,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
         $itemShipmentKey = $this->tester->getShipmentService()->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             $expenseShipmentKey = $this->tester->getShipmentService()->getShipmentHashKey($expenseTransfer->getShipment());
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+            if ($expenseTransfer->getType() === ShipmentConfig::SHIPMENT_EXPENSE_TYPE
                 && $expenseTransfer->getShipment() !== null
                 && $expenseShipmentKey === $itemShipmentKey
             ) {

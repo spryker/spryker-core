@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Spryker\Shared\ShipmentGui\ShipmentGuiConstants;
+use Spryker\Shared\ShipmentGui\ShipmentGuiConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ShipmentGui\Communication\Exception\OrderNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class SalesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Spryker\Zed\Sales\Business\Exception\OrderNotFoundException
+     * @throws \Spryker\Zed\ShipmentGui\Communication\Exception\OrderNotFoundException
      *
      * @return array
      */
@@ -68,7 +68,7 @@ class SalesController extends AbstractController
 
         return $this->viewResponse([
             'order' => $orderTransfer,
-            'shipmentExpenseType' => ShipmentGuiConstants::SHIPMENT_EXPENSE_TYPE,
+            'shipmentExpenseType' => ShipmentGuiConfig::SHIPMENT_EXPENSE_TYPE,
         ]);
     }
 }

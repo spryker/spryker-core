@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 /**
@@ -93,7 +93,7 @@ class ShipmentPriceDecisionRuleTest extends Test
             ->withItem()
             ->withExpense((new ExpenseBuilder([
                 ExpenseTransfer::UNIT_GROSS_PRICE => 1000, // Cents
-                ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                ExpenseTransfer::TYPE => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             ])))
             ->build();
 
@@ -174,7 +174,7 @@ class ShipmentPriceDecisionRuleTest extends Test
 
         $expenseTransfer = (new ExpenseBuilder([
             ExpenseTransfer::UNIT_GROSS_PRICE => $unitGrossPrice,
-            ExpenseTransfer::TYPE => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            ExpenseTransfer::TYPE => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
         ]))->build();
         $expenseTransfer->setShipment($shipmentTransfer);
 
