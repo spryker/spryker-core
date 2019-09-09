@@ -17,13 +17,6 @@ interface OrdersRestApiToSalesClientInterface
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getPaginatedOrder(OrderListTransfer $orderListTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
     public function getOffsetPaginatedCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
 
     /**
