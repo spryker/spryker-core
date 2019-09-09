@@ -61,7 +61,7 @@ class TriggerController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitTriggerEventForOrderItemsAction(Request $request): RedirectResponse
+    public function submitTriggerEventForOrderItemsAction(Request $request)
     {
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
         if (!$this->isValidPostRequest($request)) {

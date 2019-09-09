@@ -21,10 +21,12 @@ class OrderOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
      */
     public function getOptions(string $redirectUrl, string $event, int $idSalesOrder, string $submitButtonExtraClass): array
     {
+        $submitButtonExtraCssClass = $submitButtonExtraClass === '' ? '' : ' ' . $submitButtonExtraClass;
+
         return [
             OmsTriggerForm::OPTION_OMS_ACTION => static::OMS_ACTION_ORDER_TRIGGER,
             OmsTriggerForm::OPTION_EVENT => $event,
-            OmsTriggerForm::OPTION_SUBMIT_BUTTON_CLASS => static::SUBMIT_BUTTON_CLASS . ' ' . $submitButtonExtraClass,
+            OmsTriggerForm::OPTION_SUBMIT_BUTTON_CLASS => static::SUBMIT_BUTTON_CLASS . $submitButtonExtraCssClass,
             OmsTriggerForm::OPTION_QUERY_PARAMS => [
                 static::QUERY_PARAM_EVENT => $event,
                 static::QUERY_PARAM_ID_SALES_ORDER => $idSalesOrder,
