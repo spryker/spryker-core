@@ -112,7 +112,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             $this->quoteMapper->mapQuoteTransferToOriginalQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
 
-        return $this->performUpdatingQuote($quoteTransfer);
+        return $this->performQuoteUpdate($quoteTransfer);
     }
 
     /**
@@ -137,10 +137,10 @@ class QuoteUpdater implements QuoteUpdaterInterface
                 ->setIsSuccessful(false);
         }
 
-        $registeredCustomerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
-        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $guestQuotes[0]);
+        $customerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
+        $quoteTransfer = $this->updateQuoteTransferWithCustomerReference($customerReference, $guestQuotes[0]);
 
-        return $this->performUpdatingQuote($quoteTransfer);
+        return $this->performQuoteUpdate($quoteTransfer);
     }
 
     /**
@@ -150,46 +150,43 @@ class QuoteUpdater implements QuoteUpdaterInterface
      */
     public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
     {
-        $oauthResponseTransfer
-            ->requireCustomerReference();
+        $customerReference = $oauthResponseTransfer->getCustomerReference();
+        $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();
 
-        if (!$oauthResponseTransfer->getAnonymousCustomerReference()) {
+        if (!$customerReference || !$anonymousCustomerReference) {
             return;
         }
 
         $guestQuoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
-                ->setCustomerReference($oauthResponseTransfer->getAnonymousCustomerReference())
+                ->setCustomerReference($anonymousCustomerReference)
         );
 
-        $guestQuotes = $guestQuoteCollectionTransfer->getQuotes();
-        if (!$guestQuotes->count()) {
+        $guestQuoteTransfers = $guestQuoteCollectionTransfer->getQuotes();
+        if (!$guestQuoteTransfers->count()) {
             return;
         }
 
-        $questQuote = $guestQuotes[0];
-        if (!$questQuote->getItems()->count()) {
+        $guestQuoteTransfer = $guestQuoteTransfers[0];
+        if (!$guestQuoteTransfer->getItems()->count()) {
             return;
         }
 
-        $registeredCustomerReference = $oauthResponseTransfer->getCustomerReference();
-        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $questQuote);
-
-        $this->performUpdatingQuote($quoteTransfer);
+        $this->performQuoteUpdate($this->updateQuoteTransferWithCustomerReference($customerReference, $guestQuoteTransfer));
     }
 
     /**
-     * @param string $registeredCustomerReference
+     * @param string $customerReference
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(
-        string $registeredCustomerReference,
+    protected function updateQuoteTransferWithCustomerReference(
+        string $customerReference,
         QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
-        $quoteTransfer->setCustomerReference($registeredCustomerReference);
+        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $quoteTransfer->setCustomerReference($customerReference);
 
         return $quoteTransfer->setCustomer($registeredCustomer);
     }
@@ -223,7 +220,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function performQuoteUpdate(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->persistentCartFacade
             ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer, new QuoteUpdateRequestTransfer()));

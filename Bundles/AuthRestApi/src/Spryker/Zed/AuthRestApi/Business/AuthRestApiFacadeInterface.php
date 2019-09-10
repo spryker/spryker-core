@@ -14,9 +14,9 @@ interface AuthRestApiFacadeInterface
 {
     /**
      * Specification:
-     *  - Processes token request.
-     *  - Executes post auth plugins.
-     *  - Returns new access token when user provider return valid user.
+     * - Processes token request.
+     * - Executes post auth plugins.
+     * - Returns new access token when user provider return valid user.
      *
      * @api
      *

@@ -201,8 +201,8 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
     {
         $this->getFactory()
-            ->createGuestQuoteItemAdder()
-            ->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+            ->createQuoteMerger()
+            ->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
     }
 
     /**
@@ -214,7 +214,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
      *
      * @return void
      */
-    public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    public function convertGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
     {
         $this->getFactory()
             ->createQuoteUpdater()

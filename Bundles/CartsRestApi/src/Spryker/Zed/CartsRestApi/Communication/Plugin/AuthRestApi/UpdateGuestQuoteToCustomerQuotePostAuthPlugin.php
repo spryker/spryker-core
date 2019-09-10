@@ -20,6 +20,9 @@ class UpdateGuestQuoteToCustomerQuotePostAuthPlugin extends AbstractPlugin imple
     /**
      * {@inheritdoc}
      * - Updates non-empty guest quote to new customer quote.
+     * - OauthResponseTransfer.customerReference and OauthResponseTransfer.anonymousCustomerReference must be set.
+     * - Anonymous customer has to have a cart.
+     * - Anonymous customer's cart has to contain items. Otherwise method terminates without errors.
      *
      * @api
      *
@@ -29,6 +32,6 @@ class UpdateGuestQuoteToCustomerQuotePostAuthPlugin extends AbstractPlugin imple
      */
     public function postAuth(OauthResponseTransfer $oauthResponseTransfer): void
     {
-        $this->getFacade()->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+        $this->getFacade()->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
     }
 }

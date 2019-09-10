@@ -10,14 +10,12 @@ namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
-use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 
 class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
@@ -43,29 +41,21 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface
-     */
-    protected $quoteFacade;
-
-    /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface $quoteItemAdder
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         QuoteItemAdderInterface $quoteItemAdder,
         QuoteCreatorInterface $quoteCreator,
-        CartsRestApiToStoreFacadeInterface $storeFacade,
-        CartsRestApiToQuoteFacadeInterface $quoteFacade
+        CartsRestApiToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteReader = $quoteReader;
         $this->quoteItemAdder = $quoteItemAdder;
         $this->quoteCreator = $quoteCreator;
         $this->storeFacade = $storeFacade;
-        $this->quoteFacade = $quoteFacade;
     }
 
     /**
@@ -114,84 +104,6 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
 
         return $this->addItem($cartItemRequestTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
-     *
-     * @return void
-     */
-    public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
-    {
-        $oauthResponseTransfer
-            ->requireCustomerReference();
-
-        $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();
-        if (!$anonymousCustomerReference) {
-            return;
-        }
-
-        $questQuote = $this->findQuoteFromQuoteCollection($anonymousCustomerReference);
-        if (!$questQuote) {
-            return;
-        }
-
-        if (!$questQuote->getItems()->count()) {
-            return;
-        }
-
-        $customerReference = $oauthResponseTransfer->getCustomerReference();
-        $customerQuote = $this->findQuoteFromQuoteCollection($customerReference);
-        if (!$customerQuote) {
-            return;
-        }
-
-        $this->addGuestQuoteItemsToCustomerCart($questQuote, $customerQuote, $customerReference);
-
-        $questQuote->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
-        $this->quoteFacade->deleteQuote($questQuote);
-    }
-
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|null
-     */
-    protected function findQuoteFromQuoteCollection(string $customerReference): ?QuoteTransfer
-    {
-        $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
-        );
-
-        $guestQuotes = $guestQuoteCollection->getQuotes();
-        if (!$guestQuotes->count()) {
-            return null;
-        }
-
-        return $guestQuotes[0];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $questQuote
-     * @param \Generated\Shared\Transfer\QuoteTransfer $customerQuote
-     * @param string $customerReference
-     *
-     * @return void
-     */
-    protected function addGuestQuoteItemsToCustomerCart(
-        QuoteTransfer $questQuote,
-        QuoteTransfer $customerQuote,
-        string $customerReference
-    ): void {
-        foreach ($questQuote->getItems() as $item) {
-            $cartItemRequestTransfer = (new CartItemRequestTransfer())
-                ->setQuoteUuid($customerQuote->getUuid())
-                ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
-                ->setSku($item->getSku())
-                ->setQuantity($item->getQuantity());
-
-            $this->addItem($cartItemRequestTransfer);
-        }
     }
 
     /**

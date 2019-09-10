@@ -429,6 +429,16 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
+     * @part json
+     *
+     * @return void
+     */
+    public function seeResponseDataIsEmpty(): void
+    {
+        $this->assertEmpty($this->grabDataFromResponseByJsonPath('$.data')[0]);
+    }
+
+    /**
      * @inheritdoc
      */
     protected function resetVariables(): void

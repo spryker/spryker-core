@@ -585,10 +585,15 @@ class CartsRestApiFacadeTest extends Unit
     public function testUpdateGuestQuoteToCustomerQuoteWillUpdateGuestQuoteToCustomerQuote(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
+
+        $quoteCriteriaFilterTransfer = $this->tester->prepareEmptyQuoteCriteriaFilterTransfer();
+        $quoteCriteriaFilterTransfer->setCustomerReference($this->tester::TEST_ANONYMOUS_CUSTOMER_REFERENCE);
+        $questQuoteCollectionTransfer = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
         $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
 
         $this->cartsRestApiFacade
-            ->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
+            ->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiFacade
             ->findQuoteByUuid($quoteTransfer);
@@ -597,21 +602,6 @@ class CartsRestApiFacadeTest extends Unit
             $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
             $oauthResponseTransfer->getCustomerReference()
         );
-
-        $this->assertNotEquals(
-            $quoteTransfer->getItems()->count(),
-            $quoteResponseTransfer->getQuoteTransfer()->getItems()->count()
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateGuestQuoteToCustomerQuoteWillNotUpdateGuestQuoteToCustomerQuoteWithoutCustomerReference(): void
-    {
-        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
-        $this->expectException(RequiredTransferPropertyException::class);
-        $this->cartsRestApiFacade->updateGuestQuoteToCustomerQuote($oauthResponseTransfer);
     }
 
     /**
@@ -630,16 +620,6 @@ class CartsRestApiFacadeTest extends Unit
 
         $this->assertEquals($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(), $oauthResponseTransfer->getCustomerReference());
         $this->assertNotEquals($quoteTransfer->getItems()->count(), $quoteResponseTransfer->getQuoteTransfer()->getItems()->count());
-    }
-
-    /**
-     * @return void
-     */
-    public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutAnonymousCustomerReference(): void
-    {
-        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
-        $this->expectException(RequiredTransferPropertyException::class);
-        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
     }
 
     /**

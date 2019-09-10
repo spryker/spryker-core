@@ -33,9 +33,9 @@ class AuthRestApiBusinessTester extends Actor
 {
     use _generated\AuthRestApiBusinessTesterActions;
 
-    public const TEST_CUSTOMER_REFERENCE = 'DE--666';
+    protected const TEST_CUSTOMER_REFERENCE = 'DE--666';
 
-    public const TEST_ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:DE--666';
+    protected const TEST_ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:DE--666';
 
     /**
      * @return \Generated\Shared\Transfer\OauthRequestTransfer
@@ -69,7 +69,6 @@ class AuthRestApiBusinessTester extends Actor
     {
         return (new OauthResponseBuilder(
             [
-                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'isValid' => false,
             ]
         ))->build();

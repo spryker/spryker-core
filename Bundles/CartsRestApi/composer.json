@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/auth-rest-api-extension": "^1.0.0",
+    "spryker/auth-rest-api-extension": "^1.1.0",
     "spryker/cart": "^7.0.0",
     "spryker/carts-rest-api-extension": "^1.4.0",
     "spryker/customers-rest-api-extension": "^1.2.0",

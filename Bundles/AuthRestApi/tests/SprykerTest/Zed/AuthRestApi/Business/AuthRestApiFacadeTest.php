@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\AuthRestApi\Business\AuthRestApiBusinessFactory;
 use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeBridge;
+use Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface;
 use Spryker\Zed\Oauth\Business\OauthFacade;
 
 /**
@@ -42,7 +43,7 @@ class AuthRestApiFacadeTest extends Unit
 
         $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
 
-        $this->assertInstanceOf(OauthResponseTransfer::class, $oauthResponseTransfer);
+        $this->assertEquals($oauthResponseTransfer->getAnonymousCustomerReference(), $oauthRequestTransfer->getCustomerReference());
         $this->assertTrue($oauthResponseTransfer->getIsValid());
     }
 
@@ -56,7 +57,6 @@ class AuthRestApiFacadeTest extends Unit
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
         $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
-        $this->assertInstanceOf(OauthResponseTransfer::class, $oauthResponseTransfer);
         $this->assertFalse($oauthResponseTransfer->getIsValid());
     }
 
@@ -141,4 +141,5 @@ class AuthRestApiFacadeTest extends Unit
 
         return $authRestApiBusinessFactoryMock;
     }
+
 }

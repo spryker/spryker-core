@@ -66,9 +66,9 @@ class AccessTokensReader implements AccessTokensReaderInterface
         $oauthRequestTransfer
             ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_PASSWORD);
 
-        $restUser = $restRequest->getRestUser();
-        if ($restUser) {
-            $oauthRequestTransfer->setCustomerReference($restUser->getNaturalIdentifier());
+        $restUserTransfer = $restRequest->getRestUser();
+        if ($restUserTransfer) {
+            $oauthRequestTransfer->setCustomerReference($restUserTransfer->getNaturalIdentifier());
         }
 
         $oauthResponseTransfer = $this->authRestApiClient->processAccessToken($oauthRequestTransfer);
