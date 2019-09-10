@@ -101,6 +101,7 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeUpdateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateNameGenerator->generateConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
         $hasTranslations = $configurableBundleTemplateTransfer->getTranslations()
             ? $configurableBundleTemplateTransfer->getTranslations()->count()
             : false;
