@@ -52,7 +52,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteLocker(),
             $this->getSharedCartFacade(),
             $this->createQuoteApprovalRequestValidator(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
@@ -98,7 +99,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->createQuoteApprovalMessageBuilder(),
             $this->getEntityManager(),
-            $this->createQuoteLocker()
+            $this->createQuoteLocker(),
+            $this->getRepository()
         );
     }
 
@@ -119,7 +121,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteLocker(),
             $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
