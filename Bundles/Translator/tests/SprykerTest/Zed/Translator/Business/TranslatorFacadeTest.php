@@ -139,11 +139,11 @@ class TranslatorFacadeTest extends Test
         $localeFacadeMock = $this->getMockBuilder(TranslatorToLocaleFacadeBridge::class)
             ->enableOriginalConstructor()
             ->setConstructorArgs([$this->tester->getLocator()->locale()->facade()])
-            ->setMethods(['getCurrentLocale', 'getAvailableLocales'])
+            ->setMethods(['getCurrentLocale', 'getAvailableLocaleNames'])
             ->getMock();
 
         $localeFacadeMock->method('getCurrentLocale')->willReturn('de_DE');
-        $localeFacadeMock->method('getAvailableLocales')->willReturn(['de_DE']);
+        $localeFacadeMock->method('getAvailableLocaleNames')->willReturn(['de' => 'de_DE']);
 
         return $localeFacadeMock;
     }
