@@ -291,8 +291,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @module State
-     * @module Oms
+     * @uses State
      *
      * @param string $sku
      * @param string[] $reservedStateNames
@@ -315,9 +314,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
             ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN)
-            ->select([
-                SpySalesOrderItemTableMap::COL_SKU,
-            ])->find();
+            ->select([SpySalesOrderItemTableMap::COL_SKU])
+            ->find();
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
