@@ -29,7 +29,7 @@ class TranslatorToGlossaryStorageClientBridge implements TranslatorToGlossarySto
      *
      * @return string
      */
-    public function translate(string $id, string $localeName, array $parameters = []): string
+    public function translate($id, $localeName, array $parameters = [])
     {
         return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }

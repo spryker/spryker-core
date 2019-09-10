@@ -19,7 +19,7 @@ interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagI
      *
      * @return void
      */
-    public function addLoader(string $format, LoaderInterface $loader): void;
+    public function addLoader($format, LoaderInterface $loader);
 
     /**
      * @param string $format
@@ -29,7 +29,7 @@ interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagI
      *
      * @return void
      */
-    public function addResource(string $format, $resource, string $locale, ?string $domain = null): void;
+    public function addResource($format, $resource, $locale, $domain = null);
 
     /**
      * @param string $keyName

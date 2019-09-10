@@ -16,5 +16,5 @@ interface TranslatorToGlossaryStorageClientInterface
      *
      * @return string
      */
-    public function translate(string $id, string $localeName, array $parameters = []): string;
+    public function translate($id, $localeName, array $parameters = []);
 }
