@@ -60,7 +60,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
         }
 
         return $this->getFactory()
-            ->createOrderListTransferMapper()
+            ->createSalesOrderMapper()
             ->mapPaginatedOrderListTransfer($orderListTransfer, $orderListQuery->find()->getArrayCopy(), $ordersCount);
     }
 }

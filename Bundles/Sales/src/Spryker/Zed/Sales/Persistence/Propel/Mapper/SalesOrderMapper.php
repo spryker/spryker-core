@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 
-class OrderListTransferMapper
+class SalesOrderMapper
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer

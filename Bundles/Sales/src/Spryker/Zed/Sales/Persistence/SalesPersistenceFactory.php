@@ -14,9 +14,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Sales\Persistence\Propel\Mapper\OrderListTransferMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
+use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderMapper;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -85,10 +85,10 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\OrderListTransferMapper
+     * @return \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderMapper
      */
-    public function createOrderListTransferMapper(): OrderListTransferMapper
+    public function createSalesOrderMapper(): SalesOrderMapper
     {
-        return new OrderListTransferMapper();
+        return new SalesOrderMapper();
     }
 }
