@@ -17,7 +17,6 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInte
 class PriceProductScheduleConcreteTable extends AbstractScheduledPriceTable
 {
     protected const PATTERN_TABLE_IDENTIFIER = 'price-product-schedule-concrete:%s:%s';
-    protected const PATTERN_REDIRECT_URL = '/product-management/edit/variant?id-product-abstract=%s&id-product=%s#tab-content-scheduled_prices';
 
     /**
      * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
