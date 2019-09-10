@@ -70,7 +70,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     protected function translateConfigurableBundleTemplateNames(ArrayObject $salesOrderConfiguredBundleTransfers): ArrayObject
     {
         foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
-            $salesOrderConfiguredBundleTransfer->setName(
+            $salesOrderConfiguredBundleTransfer->setTranslatedName(
                 $this->glossaryFacade->translate(
                     $salesOrderConfiguredBundleTransfer->getName()
                 )
