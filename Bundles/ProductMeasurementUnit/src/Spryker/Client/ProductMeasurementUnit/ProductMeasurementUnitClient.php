@@ -24,7 +24,6 @@ class ProductMeasurementUnitClient extends AbstractClient implements ProductMeas
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
      * @param array $params
      *
-     *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
     public function expandSingleItemQuantitySalesUnitForPersistentCartChange(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
