@@ -133,6 +133,10 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
             $priceProductFilterTransfer
         );
 
-        return $priceProductTransfersForUpdate ?? $priceProductTransfer;
+        if ($priceProductTransfersForUpdate === null) {
+            return $this->priceProductFacade->createPriceForProduct($priceProductTransfer);
+        }
+
+        return $priceProductTransfersForUpdate;
     }
 }

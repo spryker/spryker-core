@@ -101,4 +101,14 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
     {
         return $this->priceProductFacade->findPriceTypeByName($priceTypeName);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
+    {
+        return $this->priceProductFacade->createPriceForProduct($priceProductTransfer);
+    }
 }
