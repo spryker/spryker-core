@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
-use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
-    protected const SUM_COLUMN = 'aggregationSum';
+    protected const SUM_COLUMN = 'sumAmount';
     protected const SKU_COLUMN = 'sku';
     protected const PROCESS_NAME_COLUMN = 'processName';
     protected const STATE_NAME_COLUMN = 'stateName';
@@ -47,7 +47,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer[]
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array
     {
@@ -77,7 +77,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new SalesOrderItemAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;

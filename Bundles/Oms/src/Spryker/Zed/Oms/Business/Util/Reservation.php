@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
-use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -209,19 +209,19 @@ class Reservation implements ReservationInterface
                 continue;
             }
 
-            $salesAggregationTransfer->requireAggregationSum();
-            $sumQuantity += $salesAggregationTransfer->getAggregationSum();
+            $salesAggregationTransfer->requireSumAmount();
+            $sumQuantity += $salesAggregationTransfer->getSumAmount();
         }
 
         return $sumQuantity;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer $salesAggregationTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer $salesAggregationTransfer
      *
      * @return void
      */
-    protected function assertAggregationTransfer(SalesOrderItemAggregationTransfer $salesAggregationTransfer): void
+    protected function assertAggregationTransfer(SalesOrderItemStateAggregationTransfer $salesAggregationTransfer): void
     {
         $salesAggregationTransfer
             ->requireSku()

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
-use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
@@ -25,7 +25,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
-    protected const SUM_COLUMN = 'aggregationSum';
+    protected const SUM_COLUMN = 'sumAmount';
     protected const SKU_COLUMN = 'sku';
     protected const PROCESS_NAME_COLUMN = 'processName';
     protected const STATE_NAME_COLUMN = 'stateName';
@@ -296,7 +296,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      * @param string $sku
      * @param string[] $reservedStateNames
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer[]
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array
     {
@@ -320,7 +320,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new SalesOrderItemAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;

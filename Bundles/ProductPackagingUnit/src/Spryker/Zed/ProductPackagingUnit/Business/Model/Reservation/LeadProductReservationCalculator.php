@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
-use Generated\Shared\Transfer\SalesOrderItemAggregationTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -59,8 +59,8 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
                 continue;
             }
 
-            $reservedLeadProductAmountAggregation->requireAggregationSum();
-            $sumReservedLeadProductAmount += $reservedLeadProductAmountAggregation->getAggregationSum();
+            $reservedLeadProductAmountAggregation->requireSumAmount();
+            $sumReservedLeadProductAmount += $reservedLeadProductAmountAggregation->getSumAmount();
         }
 
         $sumReservedLeadProductQuantity = $this->omsFacade->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
@@ -69,11 +69,11 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemAggregationTransfer $salesAggregationTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer $salesAggregationTransfer
      *
      * @return void
      */
-    protected function assertAggregationTransfer(SalesOrderItemAggregationTransfer $salesAggregationTransfer): void
+    protected function assertAggregationTransfer(SalesOrderItemStateAggregationTransfer $salesAggregationTransfer): void
     {
         $salesAggregationTransfer
             ->requireSku()
