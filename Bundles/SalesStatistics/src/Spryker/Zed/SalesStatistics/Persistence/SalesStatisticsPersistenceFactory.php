@@ -22,7 +22,7 @@ class SalesStatisticsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function createSalesOrderQuery(): SpySalesOrderQuery
+    public function getSalesOrderQuery(): SpySalesOrderQuery
     {
         return $this->getProvidedDependency(SalesStatisticsDependencyProvider::PROPEL_SALES_ORDER_QUERY);
     }
@@ -30,7 +30,7 @@ class SalesStatisticsPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
+    public function getSalesOrderItemQuery(): SpySalesOrderItemQuery
     {
         return $this->getProvidedDependency(SalesStatisticsDependencyProvider::PROPEL_SALES_ORDER_ITEM_QUERY);
     }
