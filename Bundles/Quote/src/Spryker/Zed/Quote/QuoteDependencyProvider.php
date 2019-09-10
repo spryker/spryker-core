@@ -49,7 +49,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteValidatorPlugins($container);
         $container = $this->addQuoteExpanderPlugins($container);
         $container = $this->addQuoteExpandBeforeCreatePlugins($container);
-        $container = $this->addQuoteFieldsExpanderPlugins($container);
+        $container = $this->addQuoteFieldsAllowedForSavingProviderPlugins($container);
 
         return $container;
     }
@@ -225,7 +225,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteFieldsExpanderPlugins(Container $container): Container
+    protected function addQuoteFieldsAllowedForSavingProviderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER, function () {
             return $this->getQuoteFieldsAllowedForSavingProviderPlugins();
