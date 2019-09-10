@@ -1,5 +1,7 @@
 <?php
 
+//ini_set('memory_limit', '512M');
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -20,9 +22,12 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalBusinessFactory;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacade;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalExpanderPlugin;
+use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * Auto-generated group annotations
@@ -40,6 +45,22 @@ class QuoteApprovalFacadeTest extends Unit
      * @var \SprykerTest\Zed\QuoteApproval\QuoteApprovalBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function testQuoteFieldsAllowedForSaving()
+    {
+        //Assign
+        $quoteTransfer = $this->createQuoteWithGrandTotal(10);
+
+        //Act
+        $QuoteFieldsAllowedForSaving = $this->getFacadeMock()
+            ->getQuoteFieldsAllowedForSaving($quoteTransfer);
+
+        //Assert
+        $this->assertEquals($QuoteFieldsAllowedForSaving, $this->getRequiredQuoteFields());
+    }
 
     /**
      * @return void
@@ -86,7 +107,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         //Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
-            $quoteApprovalCreateRequestTransfer->getIdQuote()
+            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()
         );
 
         $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
@@ -111,7 +132,7 @@ class QuoteApprovalFacadeTest extends Unit
         //Assert
         $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
 
-        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $this->assertCount(1, $quoteTransfer->getQuoteApprovals());
     }
@@ -202,7 +223,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         //Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
-            $quoteApprovalCreateRequestTransfer->getIdQuote()
+            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()
         );
 
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
@@ -227,7 +248,7 @@ class QuoteApprovalFacadeTest extends Unit
         //Assert
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
 
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $this->assertCount(0, $quoteApprovalTransfers);
     }
@@ -261,11 +282,11 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Act
         $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Assert
         $this->assertEmpty($quoteTransfer->getQuoteApprovals());
@@ -281,12 +302,12 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
         $quoteTransfer->setIdQuote(null);
 
         //Act
         $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Assert
         $this->assertEmpty($quoteTransfer->getQuoteApprovals());
@@ -304,7 +325,7 @@ class QuoteApprovalFacadeTest extends Unit
         $this->getFacade()
             ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRequestTransfer();
         $quoteApprovalRemoveRequestTransfer->setRequesterCompanyUserId($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
@@ -324,7 +345,7 @@ class QuoteApprovalFacadeTest extends Unit
         $this->getFacade()
             ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
         $quoteApprovalRequestTransfer->setApproverCompanyUserId($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
@@ -531,5 +552,59 @@ class QuoteApprovalFacadeTest extends Unit
         ]);
 
         return $companyUserTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface
+     */
+    protected function getFacadeMock()
+    {
+        $facade = new QuoteApprovalFacade();
+        $facade->setFactory($this->getFactoryMock());
+
+        return $facade;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getFactoryMock()
+    {
+        $factoryMock = $this->getMockBuilder(QuoteApprovalBusinessFactory::class)
+            ->setMethods(['getConfig'])
+            ->getMock();
+
+        $factoryMock->method('getConfig')
+            ->willReturn($this->getConfigMock());
+
+        return $factoryMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getConfigMock()
+    {
+        $configMock = $this->getMockBuilder(QuoteApprovalConfig::class)
+            ->setMethods(['getRequiredQuoteFields'])
+            ->getMock();
+
+        $configMock->method('getRequiredQuoteFields')
+            ->willReturn($this->getRequiredQuoteFields());
+
+        return $configMock;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getRequiredQuoteFields(): array
+    {
+        return [
+            QuoteTransfer::BILLING_ADDRESS,
+            QuoteTransfer::SHIPPING_ADDRESS,
+            QuoteTransfer::PAYMENTS,
+            QuoteTransfer::SHIPMENT,
+        ];
     }
 }
