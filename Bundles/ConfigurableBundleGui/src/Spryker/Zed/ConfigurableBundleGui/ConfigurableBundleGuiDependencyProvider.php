@@ -51,7 +51,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addConfigurableBundleFacade(Container $container): Container
+    protected function addConfigurableBundleFacade(Container $container): Container
     {
         $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container): ConfigurableBundleGuiToConfigurableBundleFacadeInterface {
             return new ConfigurableBundleGuiToConfigurableBundleFacadeBridge(
@@ -67,7 +67,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addLocaleFacade(Container $container): Container
+    protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, function (Container $container): ConfigurableBundleGuiToLocaleFacadeInterface {
             return new ConfigurableBundleGuiToLocaleFacadeBridge(
@@ -83,7 +83,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addGlossaryFacade(Container $container): Container
+    protected function addGlossaryFacade(Container $container): Container
     {
         $container->set(static::FACADE_GLOSSARY, function (Container $container): ConfigurableBundleGuiToGlossaryFacadeInterface {
             return new ConfigurableBundleGuiToGlossaryFacadeBridge(
@@ -113,7 +113,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addConfigurableBundleTemplateSlotPropelQuery(Container $container): Container
+    protected function addConfigurableBundleTemplateSlotPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, $container->factory(function (): SpyConfigurableBundleTemplateSlotQuery {
             return SpyConfigurableBundleTemplateSlotQuery::create();
