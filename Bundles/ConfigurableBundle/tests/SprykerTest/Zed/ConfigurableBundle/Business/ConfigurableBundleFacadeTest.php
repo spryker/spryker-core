@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 
@@ -86,7 +85,6 @@ class ConfigurableBundleFacadeTest extends Unit
             ->updateConfigurableBundleTemplate($updatedConfigurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $updatedConfigurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
         $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $updatedConfigurableBundleTemplateTransfer);
@@ -108,7 +106,6 @@ class ConfigurableBundleFacadeTest extends Unit
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
     }
 
@@ -126,7 +123,6 @@ class ConfigurableBundleFacadeTest extends Unit
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $configurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
         $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $configurableBundleTemplateTransfer);

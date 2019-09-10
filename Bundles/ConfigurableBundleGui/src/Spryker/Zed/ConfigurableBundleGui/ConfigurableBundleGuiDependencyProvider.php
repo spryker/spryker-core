@@ -101,9 +101,9 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addConfigurableBundleTemplatePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, function () {
+        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, $container->factory(function (): SpyConfigurableBundleTemplateQuery {
             return SpyConfigurableBundleTemplateQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -115,9 +115,9 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     public function addConfigurableBundleTemplateSlotPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, function (Container $container): SpyConfigurableBundleTemplateSlotQuery {
+        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, $container->factory(function (): SpyConfigurableBundleTemplateSlotQuery {
             return SpyConfigurableBundleTemplateSlotQuery::create();
-        });
+        }));
 
         return $container;
     }

@@ -148,7 +148,6 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             ->addJoin(SpyConfigurableBundleTemplateSlotTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::INNER_JOIN)
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::INNER_JOIN)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION)
-            ->joinSpyProductList()
             ->useSpyProductListQuery()
                 ->leftJoinSpyProductListProductConcrete()
                 ->withColumn(
