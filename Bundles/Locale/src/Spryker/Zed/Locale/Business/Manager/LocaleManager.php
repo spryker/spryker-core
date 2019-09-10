@@ -218,7 +218,7 @@ class LocaleManager
     /**
      * @return string[]
      */
-    public function getAvailableLocalesAsString(): array
+    public function getAvailableLocaleNames(): array
     {
         return Store::getInstance()->getLocales();
     }

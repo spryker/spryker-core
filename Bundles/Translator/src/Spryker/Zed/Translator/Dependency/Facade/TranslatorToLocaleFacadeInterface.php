@@ -17,5 +17,5 @@ interface TranslatorToLocaleFacadeInterface
     /**
      * @return string[]
      */
-    public function getAvailableLocalesAsString(): array;
+    public function getAvailableLocaleNames(): array;
 }

@@ -33,8 +33,8 @@ class TranslatorToLocaleFacadeBridge implements TranslatorToLocaleFacadeInterfac
     /**
      * @return string[]
      */
-    public function getAvailableLocalesAsString(): array
+    public function getAvailableLocaleNames(): array
     {
-        return $this->localeFacade->getAvailableLocalesAsString();
+        return $this->localeFacade->getAvailableLocaleNames();
     }
 }

@@ -223,8 +223,8 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return string[]
      */
-    public function getAvailableLocalesAsString(): array
+    public function getAvailableLocaleNames(): array
     {
-        return $this->getFactory()->createLocaleManager()->getAvailableLocalesAsString();
+        return $this->getFactory()->createLocaleManager()->getAvailableLocaleNames();
     }
 }
