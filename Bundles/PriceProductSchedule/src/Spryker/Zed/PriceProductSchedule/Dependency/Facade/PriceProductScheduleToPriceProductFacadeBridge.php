@@ -111,4 +111,16 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
     {
         return $this->priceProductFacade->createPriceForProduct($priceProductTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(
+        PriceProductTransfer $priceProductTransfer
+    ): bool {
+        return $this->priceProductFacade
+            ->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer);
+    }
 }
