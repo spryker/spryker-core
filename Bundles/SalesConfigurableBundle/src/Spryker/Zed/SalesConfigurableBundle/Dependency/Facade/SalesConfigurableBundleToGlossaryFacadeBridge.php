@@ -31,7 +31,7 @@ class SalesConfigurableBundleToGlossaryFacadeBridge implements SalesConfigurable
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
