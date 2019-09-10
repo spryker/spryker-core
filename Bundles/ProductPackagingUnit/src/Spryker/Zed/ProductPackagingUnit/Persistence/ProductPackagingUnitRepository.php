@@ -291,7 +291,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @uses State
+     * @module State
+     * @module Oms
      *
      * @param string $sku
      * @param string[] $reservedStateNames
