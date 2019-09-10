@@ -20,6 +20,8 @@ interface QuoteApprovalFacadeInterface
      * - Share cart to approver with read only access.
      * - Removes all existing cart sharing.
      * - Locks quote.
+     * - Creates new QuoteApproval request in status `waiting`.
+     * - Merges `Quote` from `QuoteApprovalRequest` to `Quote` in database.
      *
      * @api
      *
