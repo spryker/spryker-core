@@ -26,6 +26,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addGlossaryFacade($container);
 
         return $container;
