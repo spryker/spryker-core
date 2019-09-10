@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider;
 use Symfony\Component\Form\FormInterface;
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 class DeleteController extends AbstractController
 {
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
+    protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    protected const PARAM_ID_PRODUCT = 'id-product';
     protected const PARAM_REDIRECT_URL = 'redirectUrl';
     protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
     protected const PARAM_TEMPLATE_FORM = 'form';
@@ -33,7 +36,9 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         $priceProductScheduleTransfer = $this->createPriceProductScheduleTransfer($request);
-        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL);
+        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
+        $idProduct = $request->query->get(static::PARAM_ID_PRODUCT);
+        $redirectUrl = $this->makeRedirectUrl($idProductAbstract, $idProduct);
         $dataProvider = $this->getFactory()
             ->createPriceProductScheduleDeleteFormDataProvider();
         $form = $this->getFactory()
@@ -86,5 +91,22 @@ class DeleteController extends AbstractController
             ->getOption(PriceProductScheduleDeleteFormDataProvider::OPTION_REDIRECT_URL);
 
         return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int|null $idProduct
+     *
+     * @return string
+     */
+    protected function makeRedirectUrl(int $idProductAbstract, ?int $idProduct): string
+    {
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setIdProductAbstract($idProductAbstract)
+            ->setIdProduct($idProduct);
+
+        return $this->getFactory()
+            ->createPriceProductScheduleDataFormatter()
+            ->formatRedirectUrl($priceProductTransfer);
     }
 }

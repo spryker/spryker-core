@@ -92,7 +92,7 @@ class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
         return $this->generateRemoveButton(
             Url::generate('/price-product-schedule-gui/delete', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
-                'redirectUrl' => sprintf(static::PATTERN_REDIRECT_URL, $item->getFkProductAbstract()),
+                'id-product-abstract' => $this->idProductAbstract,
             ]),
             'Delete'
         );
