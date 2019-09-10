@@ -23,6 +23,7 @@ class UserTableActionExpanderPlugin extends AbstractPlugin implements UserTableA
 {
     /**
      * {@inheritdoc}
+     *
      * @api
      *
      * @param array $user
