@@ -162,7 +162,7 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->assertNotSame($configurableBundleTemplateTransfer->getName(), $updatedConfigurableBundleTemplateTransfer->getName());
     }
 
-    /**а
+    /**
      * @return void
      */
     public function testUpdateConfigurableBundleTemplateWillReturnNotSuccessfulResponse(): void

@@ -7,11 +7,13 @@
 
 namespace SprykerTest\Zed\ConfigurableBundle;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use ArrayObject;
 
 /**
  * Inherited Methods
@@ -50,6 +52,19 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function createDeactivatedConfigurableBundleTemplate(): ConfigurableBundleTemplateTransfer
+    {
+        return $this->haveConfigurableBundleTemplate([
+            ConfigurableBundleTemplateTransfer::NAME => 'template.test-name',
+            ConfigurableBundleTemplateTransfer::IS_ACTIVE => false,
+            ConfigurableBundleTemplateTransfer::UUID => uniqid(),
+            ConfigurableBundleTemplateTransfer::TRANSLATIONS => $this->createTranslationsForAvailableLocales(),
+        ]);
+    }
+
+    /**
      * @param array $data
      *
      * @return array
@@ -74,6 +89,23 @@ class ConfigurableBundleBusinessTester extends Actor
         }
 
         return $configurableBundleTemplateTranslationTransfers;
+    }
+
+    /**
+     * @param string $templateUuid
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function createItemTransferWithConfigurableBundleTemplateUuid(string $templateUuid): ItemTransfer
+    {
+        return (new ItemTransfer())
+            ->setConfiguredBundle(
+                (new ConfiguredBundleTransfer())
+                    ->setTemplate(
+                        (new ConfigurableBundleTemplateTransfer())
+                            ->setUuid($templateUuid)
+                    )
+            );
     }
 
     /**
