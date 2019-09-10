@@ -91,4 +91,42 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
             ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplate)
             ->delete();
     }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateEntity->setIsActive(true)
+            ->save();
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateEntity->setIsActive(false)
+            ->save();
+    }
 }

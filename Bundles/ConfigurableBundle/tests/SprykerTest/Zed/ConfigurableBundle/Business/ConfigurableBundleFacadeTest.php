@@ -200,6 +200,48 @@ class ConfigurableBundleFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testActivateConfigurableBundleTemplateActivatesTemplate(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createDeactivatedConfigurableBundleTemplate();
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->activateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Assert
+        $updatedConfigurableBundleTemplateTransfer = $this->tester
+            ->getFacade()
+            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), true);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeactivateConfigurableBundleTemplateDeactivatesTemplate(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->deactivateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Assert
+        $updatedConfigurableBundleTemplateTransfer = $this->tester
+            ->getFacade()
+            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), false);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
     protected function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer

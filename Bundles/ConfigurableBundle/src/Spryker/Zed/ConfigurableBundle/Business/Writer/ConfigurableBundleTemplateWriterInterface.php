@@ -36,4 +36,18 @@ interface ConfigurableBundleTemplateWriterInterface
      * @return void
      */
     public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
 }

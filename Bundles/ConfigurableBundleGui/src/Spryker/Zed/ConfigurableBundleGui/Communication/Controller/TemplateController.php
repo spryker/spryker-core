@@ -269,23 +269,15 @@ class TemplateController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
-        $configurableBundleTemplateTransfer->setIsActive(false);
-
-        $configurableBundleTemplateResponseTransfer = $this->getFactory()
+        $this->getFactory()
             ->getConfigurableBundleFacade()
-            ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+            ->deactivateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
-        if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_TEMPLATE_DEACTIVATED, [
-                static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
-                    ->getGlossaryFacade()
-                    ->translate($configurableBundleTemplateTransfer->getName()),
-                ]);
-
-            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
-        }
-
-        $this->handleErrors($configurableBundleTemplateResponseTransfer->getMessages());
+        $this->addSuccessMessage(static::MESSAGE_TEMPLATE_DEACTIVATED, [
+            static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
+                ->getGlossaryFacade()
+                ->translate($configurableBundleTemplateTransfer->getName()),
+            ]);
 
         return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
     }
@@ -313,23 +305,15 @@ class TemplateController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
-        $configurableBundleTemplateTransfer->setIsActive(true);
-
-        $configurableBundleTemplateResponseTransfer = $this->getFactory()
+        $this->getFactory()
             ->getConfigurableBundleFacade()
-            ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+            ->activateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
-        if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_TEMPLATE_ACTIVATED, [
-                static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
-                    ->getGlossaryFacade()
-                    ->translate($configurableBundleTemplateTransfer->getName()),
-            ]);
-
-            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
-        }
-
-        $this->handleErrors($configurableBundleTemplateResponseTransfer->getMessages());
+        $this->addSuccessMessage(static::MESSAGE_TEMPLATE_ACTIVATED, [
+            static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
+                ->getGlossaryFacade()
+                ->translate($configurableBundleTemplateTransfer->getName()),
+        ]);
 
         return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
     }

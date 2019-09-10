@@ -82,4 +82,28 @@ interface ConfigurableBundleFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Updates isActive configurable bundle template property property to true in Persistence.
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
+
+    /**
+     * Specification:
+     * - Updates isActive configurable bundle template property to false in Persistence.
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
 }

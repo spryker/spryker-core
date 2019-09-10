@@ -78,6 +78,26 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     }
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleEntityManager->activateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleEntityManager->deactivateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer

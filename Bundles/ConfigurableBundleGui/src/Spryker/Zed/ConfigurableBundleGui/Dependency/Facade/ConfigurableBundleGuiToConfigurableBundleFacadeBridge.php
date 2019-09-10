@@ -30,6 +30,26 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
      *
      * @return void
      */
+    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleFacade->deactivateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleFacade->activateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
     public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $this->configurableBundleFacade->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
