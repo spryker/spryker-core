@@ -13,6 +13,8 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
+    protected const TESTING_APPLICATION_ENV_NAME = 'devtest';
+
     /**
      * @var string
      */
@@ -25,8 +27,9 @@ class Environment extends Module
     {
         $rootDirectory = $this->getRootDirectory();
         $store = $this->getStore();
+        $applicationEnv = $this->getApplicationEnvironment();
 
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', getenv('SPRYKER_TESTING_ENABLED') ? getenv('APPLICATION_ENV') : 'devtest');
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', $applicationEnv);
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
         putenv('APPLICATION_STORE=' . $store);
         defined('APPLICATION') || define('APPLICATION', 'ZED');
@@ -84,6 +87,18 @@ class Environment extends Module
         throw new StoreNotFoundException(
             'Could not find a defined store name. Please make sure that you have a "stores.php" and a "default_store.php" in the configuration directory "config/Shared/".'
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getApplicationEnvironment(): string
+    {
+        if (getenv('SPRYKER_TESTING_ENABLED')) {
+            return getenv('APPLICATION_ENV');
+        }
+
+        return static::TESTING_APPLICATION_ENV_NAME;
     }
 
     /**
