@@ -98,7 +98,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      *
      * @param string $locale
      *
-     * @@return void
+     * @return void
      */
     public function setLocale($locale): void
     {
