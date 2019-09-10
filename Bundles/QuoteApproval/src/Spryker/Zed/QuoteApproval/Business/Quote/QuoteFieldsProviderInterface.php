@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
+namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteApprovalProviderInterface
+interface QuoteFieldsProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

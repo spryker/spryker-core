@@ -10,6 +10,8 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProvider;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProviderInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
@@ -18,8 +20,6 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilderInterface;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalProvider;
-use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalProviderInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemover;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRemoverInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidator;
@@ -126,11 +126,11 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalProviderInterface
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProviderInterface
      */
-    public function createQuoteApprovalProvider(): QuoteApprovalProviderInterface
+    public function createQuoteFieldsProvider(): QuoteFieldsProviderInterface
     {
-        return new QuoteApprovalProvider(
+        return new QuoteFieldsProvider(
             $this->createQuoteStatusCalculator(),
             $this->getConfig()
         );

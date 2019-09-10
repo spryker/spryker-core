@@ -19,7 +19,7 @@ class QuoteFieldsAllowedForSavingProviderPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
-     * - Returns required quote fields from config if approval request not canceled.
+     * - Returns required quote fields from config if approval request is not canceled.
      *
      * @api
      *

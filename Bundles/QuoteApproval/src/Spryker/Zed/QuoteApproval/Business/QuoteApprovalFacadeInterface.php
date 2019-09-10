@@ -124,7 +124,7 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Returns Quote fields allowed for saving.
+     * - Returns Quote fields allowed for saving to the persistence.
      *
      * @api
      *

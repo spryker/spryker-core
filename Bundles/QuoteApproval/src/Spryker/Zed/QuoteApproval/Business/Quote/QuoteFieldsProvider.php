@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
+namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
 use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
-class QuoteApprovalProvider implements QuoteApprovalProviderInterface
+class QuoteFieldsProvider implements QuoteFieldsProviderInterface
 {
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
