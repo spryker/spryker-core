@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 
 /**
@@ -54,7 +53,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $foundConfigurableBundleTemplateTransfer);
+        $this->assertNotNull($foundConfigurableBundleTemplateTransfer);
         $this->assertSame(
             $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
             $foundConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()
@@ -87,7 +86,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Assert
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $updatedConfigurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
-        $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $updatedConfigurableBundleTemplateTransfer);
+        $this->assertNotNull($updatedConfigurableBundleTemplateTransfer);
         $this->assertNotSame($configurableBundleTemplateTransfer->getName(), $updatedConfigurableBundleTemplateTransfer->getName());
     }
 
@@ -125,7 +124,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Assert
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $configurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
-        $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $configurableBundleTemplateTransfer);
+        $this->assertNotNull($configurableBundleTemplateTransfer);
         $this->assertGreaterThan(0, $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
     }
 }

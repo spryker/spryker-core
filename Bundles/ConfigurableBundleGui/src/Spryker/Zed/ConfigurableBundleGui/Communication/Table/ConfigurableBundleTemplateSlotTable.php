@@ -149,9 +149,11 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::INNER_JOIN)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION)
             ->useSpyProductListQuery()
-                ->leftJoinSpyProductListProductConcrete()
+                ->leftJoinSpyProductListProductConcrete('test')
+            ->leftJoinSpyProductListCategory()
+            ->
                 ->withColumn(
-                    sprintf('COUNT(%s)', SpyProductListProductConcreteTableMap::COL_FK_PRODUCT),
+                    sprintf('COUNT(%s)', 'test.fk_product'),
                     static::COL_NUMBER_OF_ITEMS
                 )
             ->endUse()
@@ -164,6 +166,7 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             )
             ->groupByIdConfigurableBundleTemplateSlot();
 
+        echo $configurableBundleTemplateSlotPropelQuery->toString(); die;
         return $configurableBundleTemplateSlotPropelQuery;
     }
 
