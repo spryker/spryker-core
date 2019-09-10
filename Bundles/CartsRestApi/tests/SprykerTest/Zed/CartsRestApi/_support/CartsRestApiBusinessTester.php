@@ -272,6 +272,18 @@ class CartsRestApiBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function prepareOauthResponseTransferWithoutAnonymousCustomerReference(): OauthResponseTransfer
+    {
+        return (new OauthResponseBuilder(
+            [
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
     public function prepareCartItemRequestTransferWithoutQuantity(): CartItemRequestTransfer

@@ -7,19 +7,26 @@
 
 namespace SprykerTest\Glue\CustomersRestApi\Helper;
 
+use Codeception\Exception\ModuleException;
+use Codeception\Module;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use SprykerTest\Glue\Testify\Helper\GlueRest;
 use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 
-class CustomersRestApiHelper extends GlueRest
+class CustomersRestApiHelper extends Module
 {
     protected const FIRST_NAME = 'John';
 
     protected const LAST_NAME = 'Doe';
 
     protected const SALUTATION = 'Mr';
+
+    /**
+     * @var \SprykerTest\Glue\Testify\Helper\GlueRest|null
+     */
+    protected $glueRestProvider;
 
     /**
      * @var \SprykerTest\Shared\Customer\Helper\CustomerDataHelper|null
@@ -31,9 +38,8 @@ class CustomersRestApiHelper extends GlueRest
      */
     public function _initialize(): void
     {
-        parent::_initialize();
-
         $this->customerProvider = $this->findCustomerProvider();
+        $this->glueRestProvider = $this->getGlueRestProvider();
     }
 
     /**
@@ -59,8 +65,8 @@ class CustomersRestApiHelper extends GlueRest
             CustomerTransfer::FIRST_NAME => static::FIRST_NAME,
             CustomerTransfer::LAST_NAME => static::LAST_NAME,
             CustomerTransfer::EMAIL => $withEmail,
-            CustomerTransfer::PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
-            CustomerTransfer::NEW_PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
+            CustomerTransfer::PASSWORD => $withPassword ?: $this->glueRestProvider::DEFAULT_PASSWORD,
+            CustomerTransfer::NEW_PASSWORD => $withPassword ?: $this->glueRestProvider::DEFAULT_PASSWORD,
         ]);
     }
 
@@ -79,7 +85,7 @@ class CustomersRestApiHelper extends GlueRest
     {
         $customerTransfer = $this->createCustomerTransfer($withEmail, $withPassword);
 
-        $this->sendPOST(CustomersRestApiConfig::RESOURCE_CUSTOMERS, [
+        $this->glueRestProvider->sendPOST(CustomersRestApiConfig::RESOURCE_CUSTOMERS, [
             'data' => [
                 'type' => CustomersRestApiConfig::RESOURCE_CUSTOMERS,
                 'attributes' => [
@@ -94,7 +100,7 @@ class CustomersRestApiHelper extends GlueRest
             ],
         ]);
 
-        $customerReference = $this->grabDataFromResponseByJsonPath('$.data.id')[0];
+        $customerReference = $this->glueRestProvider->grabDataFromResponseByJsonPath('$.data.id')[0];
         if (!$customerReference) {
             return $customerTransfer;
         }
@@ -119,7 +125,7 @@ class CustomersRestApiHelper extends GlueRest
             CustomerTransfer::LAST_NAME => static::LAST_NAME,
             CustomerTransfer::SALUTATION => static::SALUTATION,
             CustomerTransfer::EMAIL => $withEmail,
-            CustomerTransfer::NEW_PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
+            CustomerTransfer::NEW_PASSWORD => $withPassword ?: $this->glueRestProvider::DEFAULT_PASSWORD,
         ]))->build();
     }
 
@@ -135,5 +141,21 @@ class CustomersRestApiHelper extends GlueRest
         }
 
         return null;
+    }
+
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     *
+     * @return \SprykerTest\Glue\Testify\Helper\GlueRest
+     */
+    protected function getGlueRestProvider(): GlueRest
+    {
+        foreach ($this->getModules() as $module) {
+            if ($module instanceof GlueRest) {
+                return $module;
+            }
+        }
+
+        throw new ModuleException('CompanyUserAuthRestApi', 'The module requires GlueRest.');
     }
 }

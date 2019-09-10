@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
@@ -586,18 +587,16 @@ class CartsRestApiFacadeTest extends Unit
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
 
-        $quoteCriteriaFilterTransfer = $this->tester->prepareEmptyQuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($this->tester::TEST_ANONYMOUS_CUSTOMER_REFERENCE);
-        $questQuoteCollectionTransfer = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
-
-        $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
+        $guestQuoteTransfer = $this->tester->prepareQuoteTransferForGuest();
 
         $this->cartsRestApiFacade
             ->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiFacade
-            ->findQuoteByUuid($quoteTransfer);
+            ->findQuoteByUuid($guestQuoteTransfer);
 
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $this->assertEquals($quoteResponseTransfer->getErrors()[0]->getErrorIdentifier(), CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND);
         $this->assertEquals(
             $quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
             $oauthResponseTransfer->getCustomerReference()
@@ -607,19 +606,97 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateGuestQuoteToCustomerQuoteWillNotUpdateGuestQuoteToCustomerQuoteWithoutAnonymousCustomerReference(): void
+    {
+        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
+        $customerQuoteCollectionTransfer1 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
+
+        $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
+
+        $customerQuoteCollectionTransfer2 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        $this->assertEquals(
+            $customerQuoteCollectionTransfer1->getQuotes()->count(),
+            $customerQuoteCollectionTransfer2->getQuotes()->count()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateGuestQuoteToCustomerQuoteWillNotUpdateGuestQuoteToCustomerQuoteWithoutCustomerReference(): void
+    {
+        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
+        $customerQuoteCollectionTransfer1 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
+
+        $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
+
+        $customerQuoteCollectionTransfer2 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        $this->assertEquals(
+            $customerQuoteCollectionTransfer1->getQuotes()->count(),
+            $customerQuoteCollectionTransfer2->getQuotes()->count()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testAddGuestQuoteItemsToCustomerQuoteWillAddGuestQuoteItemsToCustomerQuote(): void
     {
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransfer();
-        $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
+        $guestQuoteTransfer = $this->tester->prepareQuoteTransferForGuest();
 
         $this->cartsRestApiFacade
             ->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiFacade
-            ->findQuoteByUuid($quoteTransfer);
+            ->findQuoteByUuid($guestQuoteTransfer);
 
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $this->assertEquals($quoteResponseTransfer->getErrors()[0]->getErrorIdentifier(), CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND);
         $this->assertEquals($quoteResponseTransfer->getQuoteTransfer()->getCustomerReference(), $oauthResponseTransfer->getCustomerReference());
-        $this->assertNotEquals($quoteTransfer->getItems()->count(), $quoteResponseTransfer->getQuoteTransfer()->getItems()->count());
+        $this->assertNotEquals($guestQuoteTransfer->getItems()->count(), $quoteResponseTransfer->getQuoteTransfer()->getItems()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutCustomerReference(): void
+    {
+        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
+        $customerQuoteTransfer1 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer)->getQuotes()[0];
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
+
+        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+
+        $customerQuoteTransfer2 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer)->getQuotes()[0];
+
+        $this->assertEquals(
+            $customerQuoteTransfer1->getItems()->count(),
+            $customerQuoteTransfer2->getItems()->count()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddGuestQuoteItemsToCustomerQuoteWillNotAddGuestQuoteItemsToCustomerQuoteWithoutAnonymousCustomerReference(): void
+    {
+        $quoteCriteriaFilterTransfer = $this->tester->prepareQuoteCriteriaFilterTransfer();
+        $customerQuoteTransfer1 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer)->getQuotes()[0];
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
+
+        $this->cartsRestApiFacade->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+
+        $customerQuoteTransfer2 = $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer)->getQuotes()[0];
+
+        $this->assertEquals(
+            $customerQuoteTransfer1->getItems()->count(),
+            $customerQuoteTransfer2->getItems()->count()
+        );
     }
 
     /**

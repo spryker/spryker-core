@@ -8,11 +8,9 @@
 namespace SprykerTest\Zed\AuthRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\OauthResponseTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\AuthRestApi\Business\AuthRestApiBusinessFactory;
 use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeBridge;
-use Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface;
 use Spryker\Zed\Oauth\Business\OauthFacade;
 
 /**
@@ -141,5 +139,4 @@ class AuthRestApiFacadeTest extends Unit
 
         return $authRestApiBusinessFactoryMock;
     }
-
 }
