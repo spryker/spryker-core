@@ -39,7 +39,6 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
 
         $facetConfig = $this
             ->getFactory()
-            ->getSearchConfig()
             ->getFacetConfigBuilder();
 
         $aggregations = $searchResult->getAggregations();

@@ -11,7 +11,6 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface;
 
 /**
@@ -40,11 +39,9 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        $searchConfig = $this->getFactory()->getSearchConfig();
-
         if ($this->isFullTextSearch($searchQuery)
-            || $this->hasActiveSortParam($requestParameters, $searchConfig)
-            || !$this->hasActiveCategoryFacet($requestParameters, $searchConfig)
+            || $this->hasActiveSortParam($requestParameters)
+            || !$this->hasActiveCategoryFacet($requestParameters)
         ) {
             return $searchQuery;
         }
@@ -72,13 +69,12 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
 
     /**
      * @param array $requestParameters
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigInterface $searchConfig
      *
      * @return bool
      */
-    protected function hasActiveSortParam(array $requestParameters, SearchConfigInterface $searchConfig): bool
+    protected function hasActiveSortParam(array $requestParameters): bool
     {
-        $sortConfig = $searchConfig->getSortConfigBuilder();
+        $sortConfig = $this->getFactory()->getSortConfigBuilder();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 
         return !empty($sortParamName);
@@ -86,13 +82,12 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
 
     /**
      * @param array $requestParameters
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigInterface $searchConfig
      *
      * @return bool
      */
-    protected function hasActiveCategoryFacet(array $requestParameters, SearchConfigInterface $searchConfig): bool
+    protected function hasActiveCategoryFacet(array $requestParameters): bool
     {
-        $facetConfig = $searchConfig->getFacetConfigBuilder();
+        $facetConfig = $this->getFactory()->getFacetConfigBuilder();
         $activeFacetParamNames = $facetConfig->getActiveParamNames($requestParameters);
 
         return in_array($this->categoryParamName, $activeFacetParamNames);

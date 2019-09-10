@@ -14,7 +14,7 @@ use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -40,8 +40,8 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        $searchConfig = $this->getFactory()->getSearchConfig();
-        $facetConfig = $searchConfig->getFacetConfigBuilder();
+        $facetConfig = $this->getFactory()->getFacetConfigBuilder();
+
         $query = $searchQuery->getSearchQuery();
 
         $facetFilters = $this->getFacetFilters($facetConfig, $requestParameters);
@@ -53,7 +53,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface $facetConfig
      * @param array $requestParameters
      *
      * @return \Elastica\Query\AbstractQuery[]
@@ -134,17 +134,14 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             $filterValue = $valueTransformerPlugin->transformFromDisplay($filterValue);
         }
 
-        $query = $this
-            ->getFactory()
-            ->createQueryFactory()
-            ->create($facetConfigTransfer, $filterValue);
+        $query = $this->getFactory()->createQueryFactory()->create($facetConfigTransfer, $filterValue);
 
         return $query;
     }
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface $facetConfig
      * @param \Elastica\Query\AbstractQuery[] $facetFilters
      * @param array $requestParameters
      *

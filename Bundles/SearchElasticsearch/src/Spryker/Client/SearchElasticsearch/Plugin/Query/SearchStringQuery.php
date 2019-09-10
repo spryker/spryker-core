@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchExtension\Plugin\Elasticsearch\Query;
+namespace Spryker\Client\SearchExtension\Plugin\Query;
 
 use Elastica\Query;
 use Elastica\Query\MatchAll;

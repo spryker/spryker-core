@@ -5,45 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchExtension\Dependency\Plugin;
+namespace Spryker\Client\SearchExtension\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 
 interface PaginationConfigBuilderInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PaginationConfigTransfer $paginationConfigTransfer
      *
      * @return void
      */
-    public function setPagination(PaginationConfigTransfer $paginationConfigTransfer);
+    public function setPagination(PaginationConfigTransfer $paginationConfigTransfer): void;
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
-    public function get();
+    public function get(): PaginationConfigTransfer;
 
     /**
-     * @api
-     *
      * @param array $requestParameters
      *
      * @return int
      */
-    public function getCurrentPage(array $requestParameters);
+    public function getCurrentPage(array $requestParameters): int;
 
     /**
-     * @api
-     *
      * @param array $requestParameters
      *
      * @return int
      */
-    public function getCurrentItemsPerPage(array $requestParameters);
+    public function getCurrentItemsPerPage(array $requestParameters): int;
 }
-
-class_alias(PaginationConfigBuilderInterface::class, 'Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface', false);

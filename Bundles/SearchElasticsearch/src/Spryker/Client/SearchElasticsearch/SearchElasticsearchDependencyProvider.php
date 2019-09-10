@@ -7,19 +7,31 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Spryker\Client\Catalog\Plugin\Config\FacetConfigBuilderPlugin;
+use Spryker\Client\Catalog\Plugin\Config\PaginationConfigBuilderPlugin;
+use Spryker\Client\Catalog\Plugin\Config\SortConfigBuilderPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderInterface;
+use Spryker\Client\Money\Plugin\MoneyPlugin;
+use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  */
 class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
 {
-    public const SEARCH_CONFIG_BUILDER = 'SEARCH_CONFIG_BUILDER';
     public const STORE = 'STORE';
-    public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'STORE';
+    public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'SEARCH_CONFIG_EXPANDER_PLUGINS';
+    public const SEARCH_FACET_CONFIG_BUILDER_PLUGIN = 'SEARCH_FACET_CONFIG_BUILDER_PLUGIN';
+    public const SEARCH_PAGINATION_CONFIG_BUILDER_PLUGIN = 'SEARCH_PAGINATION_CONFIG_BUILDER_PLUGIN';
+    public const SEARCH_SORT_CONFIG_BUILDER_PLUGIN = 'SEARCH_SORT_CONFIG_BUILDER_PLUGIN';
+
+    public const PLUGIN_MONEY = 'PLUGIN_MONEY';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,8 +40,11 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = $this->addSearchConfigBuilder($container);
         $container = $this->addStore($container);
+        $container = $this->addSearchConfigExpanderPlugins($container);
+        $container = $this->addFacetSearchConfigBuilder($container);
+        $container = $this->addPaginationSearchConfigBuilder($container);
+        $container = $this->addSortSearchConfigBuilder($container);
 
         return $container;
     }
@@ -39,10 +54,10 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSearchConfigBuilder(Container $container): Container
+    protected function addFacetSearchConfigBuilder(Container $container): Container
     {
-        $container->set(static::SEARCH_CONFIG_BUILDER, function (Container $container) {
-            return $this->getSearchConfigBuilderPlugin($container);
+        $container->set(static::SEARCH_FACET_CONFIG_BUILDER_PLUGIN, function (Container $container) {
+            return $this->getFacetSearchConfigBuilderPlugin($container);
         });
 
         return $container;
@@ -51,11 +66,59 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface|null
      */
-    protected function getSearchConfigBuilderPlugin(Container $container): ?SearchConfigBuilderInterface
+    protected function getFacetSearchConfigBuilderPlugin(Container $container): ?FacetSearchConfigBuilderPluginInterface
     {
-        return null;
+        return new FacetConfigBuilderPlugin();
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPaginationSearchConfigBuilder(Container $container): Container
+    {
+        $container->set(static::SEARCH_PAGINATION_CONFIG_BUILDER_PLUGIN, function (Container $container) {
+            return $this->getPaginationSearchConfigBuilderPlugin($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface|null
+     */
+    protected function getPaginationSearchConfigBuilderPlugin(Container $container): ?PaginationSearchConfigBuilderPluginInterface
+    {
+        return new PaginationConfigBuilderPlugin();
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSortSearchConfigBuilder(Container $container): Container
+    {
+        $container->set(static::SEARCH_SORT_CONFIG_BUILDER_PLUGIN, function (Container $container) {
+            return $this->getSortSearchConfigBuilderPlugin($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface|null
+     */
+    protected function getSortSearchConfigBuilderPlugin(Container $container): ?SortSearchConfigBuilderPluginInterface
+    {
+        return new SortConfigBuilderPlugin();
     }
 
     /**
@@ -93,6 +156,30 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function getSearchConfigExpanderPlugins(Container $container): array
     {
-        return [];
+        return [
+            new ProductSearchConfigExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addMoneyPlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_MONEY, function () {
+            return $this->getMoneyPlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     */
+    protected function getMoneyPlugin(): MoneyPluginInterface
+    {
+        return new MoneyPlugin();
     }
 }

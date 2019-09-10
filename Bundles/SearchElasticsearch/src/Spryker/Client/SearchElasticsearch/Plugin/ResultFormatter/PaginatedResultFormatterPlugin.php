@@ -35,7 +35,6 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
     {
         $paginationConfig = $this
             ->getFactory()
-            ->getSearchConfig()
             ->getPaginationConfigBuilder();
 
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);

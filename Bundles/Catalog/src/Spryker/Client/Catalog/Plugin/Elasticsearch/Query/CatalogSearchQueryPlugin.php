@@ -153,7 +153,6 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
         return $boolQuery;
     }
 
-
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *

@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchExtension\Dependency\Plugin;
+namespace Spryker\Client\SearchExtension\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 
 interface SortConfigBuilderInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SortConfigTransfer $sortConfigTransfer
      *
      * @return $this
@@ -21,38 +19,28 @@ interface SortConfigBuilderInterface
     public function addSort(SortConfigTransfer $sortConfigTransfer);
 
     /**
-     * @api
-     *
      * @param string $parameterName
      *
      * @return \Generated\Shared\Transfer\SortConfigTransfer|null
      */
-    public function get($parameterName);
+    public function get($parameterName): ?SortConfigTransfer;
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer[]
      */
-    public function getAll();
+    public function getAll(): array;
 
     /**
-     * @api
-     *
      * @param array $requestParameters
      *
      * @return string|null
      */
-    public function getActiveParamName(array $requestParameters);
+    public function getActiveParamName(array $requestParameters): ?string;
 
     /**
-     * @api
-     *
      * @param string $sortParamName
      *
      * @return string|null
      */
-    public function getSortDirection($sortParamName);
+    public function getSortDirection($sortParamName): ?string;
 }
-
-class_alias(SortConfigBuilderInterface::class, 'Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface', false);

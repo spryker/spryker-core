@@ -5,15 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchExtension\Dependency\Plugin;
+namespace Spryker\Client\SearchExtension\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 interface FacetConfigBuilderInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return $this
@@ -21,45 +19,33 @@ interface FacetConfigBuilderInterface
     public function addFacet(FacetConfigTransfer $facetConfigTransfer);
 
     /**
-     * @api
-     *
      * @param string $facetName
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($facetName);
+    public function get($facetName): ?FacetConfigTransfer;
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
-    public function getAll();
+    public function getAll(): array;
 
     /**
-     * @api
-     *
-     * @return array
+     * @return string[]
      */
-    public function getParamNames();
+    public function getParamNames(): array;
 
     /**
-     * @api
-     *
      * @param array $requestParameters
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
-    public function getActive(array $requestParameters);
+    public function getActive(array $requestParameters): array;
 
     /**
-     * @api
-     *
      * @param array $requestParameters
      *
      * @return array
      */
-    public function getActiveParamNames(array $requestParameters);
+    public function getActiveParamNames(array $requestParameters): array;
 }
-
-class_alias(FacetConfigBuilderInterface::class, 'Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface', false);

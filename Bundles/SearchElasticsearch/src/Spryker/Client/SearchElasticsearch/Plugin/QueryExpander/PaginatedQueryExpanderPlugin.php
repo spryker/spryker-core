@@ -9,7 +9,6 @@ namespace Spryker\Client\SearchElasticsearch\Plugin\QueryExpander;
 
 use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -26,22 +25,20 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        $searchConfig = $this->getFactory()->getSearchConfig();
-        $paginationConfig = $searchConfig->getPaginationConfigBuilder();
-        $this->addPaginationToQuery($searchQuery->getSearchQuery(), $paginationConfig, $requestParameters);
+        $this->addPaginationToQuery($searchQuery->getSearchQuery(), $requestParameters);
 
         return $searchQuery;
     }
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfig
      * @param array $requestParameters
      *
      * @return void
      */
-    protected function addPaginationToQuery(Query $query, PaginationConfigBuilderInterface $paginationConfig, array $requestParameters): void
+    protected function addPaginationToQuery(Query $query, array $requestParameters): void
     {
+        $paginationConfig = $this->getFactory()->getPaginationConfigBuilder();
         $currentPage = $paginationConfig->getCurrentPage($requestParameters);
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
 
