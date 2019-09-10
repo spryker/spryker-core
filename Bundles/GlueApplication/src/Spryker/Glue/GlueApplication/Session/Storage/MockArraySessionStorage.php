@@ -120,6 +120,7 @@ class MockArraySessionStorage implements SessionStorageInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws \LogicException
      */
     public function setId($id)
@@ -149,6 +150,7 @@ class MockArraySessionStorage implements SessionStorageInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws \RuntimeException
      */
     public function save()
@@ -188,6 +190,7 @@ class MockArraySessionStorage implements SessionStorageInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws \InvalidArgumentException
      */
     public function getBag($name)
