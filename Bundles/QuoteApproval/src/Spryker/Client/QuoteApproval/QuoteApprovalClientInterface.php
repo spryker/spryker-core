@@ -40,6 +40,7 @@ interface QuoteApprovalClientInterface
      * - Removes all existing cart sharing.
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
+     * - Merges `Quote` from `QuoteApprovalRequest` to `Quote` in database.
      *
      * @api
      *
@@ -213,4 +214,16 @@ interface QuoteApprovalClientInterface
      * @return bool
      */
     public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
+
+    /**
+     * Specification:
+     * - Returns false if one of the required field does not exist in QuoteTransfer - true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

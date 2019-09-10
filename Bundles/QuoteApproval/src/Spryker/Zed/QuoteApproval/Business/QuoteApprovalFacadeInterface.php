@@ -21,6 +21,7 @@ interface QuoteApprovalFacadeInterface
      * - Removes all existing cart sharing.
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
+     * - Merges `Quote` from `QuoteApprovalRequest` to `Quote` in database.
      *
      * @api
      *
@@ -124,7 +125,7 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Returns Quote fields allowed for saving to the persistence.
+     * - Returns Quote fields allowed for saving if quote approval request is waiting or approved.
      *
      * @api
      *

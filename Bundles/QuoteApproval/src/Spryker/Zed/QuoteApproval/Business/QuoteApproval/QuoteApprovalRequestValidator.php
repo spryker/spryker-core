@@ -89,7 +89,11 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     public function validateQuoteApprovalCreateRequest(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
-        $quoteTransfer = $quoteApprovalRequestTransfer->getQuote();
+
+        $quoteTransfer = $this->mergeQuotes(
+            $this->getQuoteById($quoteApprovalRequestTransfer->getQuote()->getIdQuote()),
+            $quoteApprovalRequestTransfer->getQuote()
+        );
 
         if (!$quoteTransfer->getItems()->count()) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE);
@@ -145,10 +149,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteApprovalTransfer = $this->quoteApprovalRepository
             ->findQuoteApprovalById($quoteApprovalRequestTransfer->getIdQuoteApproval());
 
-        $quoteTransfer = $this->mergeQuotes(
-            $quoteApprovalRequestTransfer->getQuote(),
-            $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval())
-        );
+        $quoteTransfer = $this->findQuoteByIdQuoteApproval($quoteApprovalTransfer->getIdQuoteApproval());
 
         if ($this->isQuoteApprovalRequestCanceled($quoteTransfer)) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_QUOTE_ALREADY_CANCELLED);
@@ -173,16 +174,12 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $persistentQuoteTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mergeQuotes(QuoteTransfer $persistentQuoteTransfer, ?QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function mergeQuotes(QuoteTransfer $persistentQuoteTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$quoteTransfer) {
-            return $persistentQuoteTransfer;
-        }
-
         $quoteTransfer->fromArray($persistentQuoteTransfer->toArray(), true);
 
         return $quoteTransfer;

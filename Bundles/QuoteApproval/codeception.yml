@@ -1,6 +1,7 @@
 namespace: SprykerTest
 
 include:
+    - tests/SprykerTest/Client/QuoteApproval
     - tests/SprykerTest/Zed/QuoteApproval
 
 paths:

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\QuoteApproval\Business\Quote;
+namespace Spryker\Client\QuoteApproval\Checker;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteStatusCalculatorInterface
+interface QuoteCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string|null
+     * @return bool
      */
-    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
+    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }
