@@ -130,13 +130,14 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     {
         $configurableBundleTemplateSlotProductIds = $this->getConfigurableBundleTemplateSlotProductIds();
 
-        $this->productPropelQuery->filterByIdProduct_In($configurableBundleTemplateSlotProductIds)
+        $this->productPropelQuery
             ->joinSpyProductLocalizedAttributes()
             ->where(sprintf(
                 '%s = %s',
                 SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE,
                 $this->localeFacade->getCurrentLocale()->getIdLocale()
             ))
+            ->filterByIdProduct_In($configurableBundleTemplateSlotProductIds)
             ->select([
                 SpyProductTableMap::COL_ID_PRODUCT,
                 SpyProductTableMap::COL_SKU,
