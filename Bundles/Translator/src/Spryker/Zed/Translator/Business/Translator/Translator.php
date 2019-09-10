@@ -58,7 +58,7 @@ class Translator extends SymfonyTranslator implements TranslatorInterface
      *
      * @return void
      */
-    protected function initializeCatalogue($locale)
+    protected function initializeCatalogue(string $locale): void
     {
         if (!$this->resourcesInitialised) {
             $this->translatorBuilder->buildTranslator($this);

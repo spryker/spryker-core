@@ -12,10 +12,10 @@ interface TranslatorToLocaleFacadeInterface
     /**
      * @return string
      */
-    public function getCurrentLocaleName();
+    public function getCurrentLocaleName(): string;
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getAvailableLocales();
+    public function getAvailableLocalesAsString(): array;
 }

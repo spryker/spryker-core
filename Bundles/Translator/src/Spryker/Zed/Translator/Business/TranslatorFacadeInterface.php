@@ -56,7 +56,7 @@ interface TranslatorFacadeInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string;
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:
@@ -72,7 +72,7 @@ interface TranslatorFacadeInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string;
+    public function transChoice(string $id, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * @see \Symfony\Contracts\Translation\TranslatorInterface
@@ -88,7 +88,7 @@ interface TranslatorFacadeInterface extends TranslatorInterface
      *
      * @return void
      */
-    public function setLocale($locale): void;
+    public function setLocale(string $locale): void;
 
     /**
      * @see \Symfony\Contracts\Translation\TranslatorInterface

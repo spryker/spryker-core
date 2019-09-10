@@ -23,6 +23,7 @@ use Spryker\Zed\Translator\Business\TranslationResource\CsvResourceFileLoader;
 use Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface;
 use Spryker\Zed\Translator\Business\TranslationResource\ValidatorResourceFileLoader;
 use Spryker\Zed\Translator\Business\Translator\Translator;
+use Spryker\Zed\Translator\Business\Translator\TranslatorInterface;
 use Spryker\Zed\Translator\Business\Translator\TranslatorPreparator;
 use Spryker\Zed\Translator\Business\Translator\TranslatorPreparatorInterface;
 use Spryker\Zed\Translator\Business\TranslatorBuilder\TranslatorBuilder;
@@ -103,7 +104,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createTranslatorCollection(): array
     {
-        $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
+        $availableLocales = $this->getLocaleFacade()->getAvailableLocalesAsString();
 
         return array_map(function ($availableLocale) {
             return $this->createTranslator($availableLocale);
@@ -115,7 +116,7 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Translator\Business\Translator\TranslatorInterface
      */
-    public function createTranslator(?string $localeName = null)
+    public function createTranslator(?string $localeName = null): TranslatorInterface
     {
         $localeName = $localeName ?? $this->getLocaleFacade()->getCurrentLocaleName();
         $translator = new Translator(

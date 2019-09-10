@@ -48,7 +48,7 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
      *
      * @return string The translated string
      */
-    public function trans($identifier, array $parameters = [], $domain = null, $locale = null)
+    public function trans(string $identifier, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->getLocaleName();
@@ -72,7 +72,7 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
      *
      * @return string The translated string
      */
-    public function transChoice($identifier, $number, array $parameters = [], $domain = null, $locale = null)
+    public function transChoice(string $identifier, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if ($locale === null) {
             $locale = $this->getLocaleName();
@@ -112,7 +112,7 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
      *
      * @return $this
      */
-    public function setLocale($localeName)
+    public function setLocale(string $localeName)
     {
         $this->localeName = $localeName;
 
@@ -126,7 +126,7 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->getLocaleName();
     }

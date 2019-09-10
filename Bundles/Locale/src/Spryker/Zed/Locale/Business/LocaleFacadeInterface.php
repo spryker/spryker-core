@@ -160,4 +160,14 @@ interface LocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer;
+
+    /**
+     * Specification:
+     * - Returns an associative array of available locales. Without access to the database.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAvailableLocalesAsString(): array;
 }

@@ -25,7 +25,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addLocaleClient($container);

@@ -215,4 +215,16 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 
         return $localeTransfer;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAvailableLocalesAsString(): array
+    {
+        return $this->getFactory()->createLocaleManager()->getAvailableLocalesAsString();
+    }
 }

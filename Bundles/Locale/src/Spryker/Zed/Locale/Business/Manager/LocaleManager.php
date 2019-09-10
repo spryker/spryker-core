@@ -216,6 +216,14 @@ class LocaleManager
     }
 
     /**
+     * @return string[]
+     */
+    public function getAvailableLocalesAsString(): array
+    {
+        return Store::getInstance()->getLocales();
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Store $store
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
