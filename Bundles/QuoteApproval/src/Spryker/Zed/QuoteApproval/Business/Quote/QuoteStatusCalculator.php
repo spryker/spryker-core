@@ -39,19 +39,6 @@ class QuoteStatusCalculator implements QuoteStatusCalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return bool
-     */
-    public function isQuoteApprovalRequestWaitingOrApproval(QuoteTransfer $quoteTransfer): bool
-    {
-        return in_array($this->calculateQuoteStatus($quoteTransfer), [
-            QuoteApprovalConfig::STATUS_WAITING,
-            QuoteApprovalConfig::STATUS_APPROVED,
-        ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
      * @return array
      */
     protected function flattenApprovalStatuses(QuoteTransfer $quoteTransfer): array

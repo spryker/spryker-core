@@ -8,6 +8,7 @@
 namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig as SharedApprovalConfig;
 use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 class QuoteFieldsProvider implements QuoteFieldsProviderInterface
@@ -41,10 +42,23 @@ class QuoteFieldsProvider implements QuoteFieldsProviderInterface
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
-        if (!$this->quoteStatusCalculator->isQuoteApprovalRequestWaitingOrApproval($quoteTransfer)) {
+        if (!$this->isQuoteApprovalRequestWaitingOrApproved($quoteTransfer)) {
             return $this->quoteApprovalConfig->getRequiredQuoteFields();
         }
 
         return [];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApprovalRequestWaitingOrApproved(QuoteTransfer $quoteTransfer): bool
+    {
+        return in_array($this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer), [
+            SharedApprovalConfig::STATUS_WAITING,
+            SharedApprovalConfig::STATUS_APPROVED,
+        ]);
     }
 }

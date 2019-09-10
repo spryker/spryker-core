@@ -17,11 +17,4 @@ interface QuoteStatusCalculatorInterface
      * @return string|null
      */
     public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteApprovalRequestWaitingOrApproval(QuoteTransfer $quoteTransfer): bool;
 }

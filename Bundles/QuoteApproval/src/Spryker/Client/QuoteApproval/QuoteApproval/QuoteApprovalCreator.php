@@ -36,13 +36,12 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
      */
     public function createQuoteApproval(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteApprovalResponseTransfer
     {
-        $quoteTransfer = $quoteApprovalRequestTransfer->getQuote();
-        if (!$quoteTransfer || !$quoteTransfer->getIdQuote()) {
-            return (new QuoteApprovalResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL));
+        if ($quoteApprovalRequestTransfer->getQuote() && $quoteApprovalRequestTransfer->getQuote()->getIdQuote()) {
+            return $this->quoteApprovalStub->createQuoteApproval($quoteApprovalRequestTransfer);
         }
 
-        return $this->quoteApprovalStub->createQuoteApproval($quoteApprovalRequestTransfer);
+        return (new QuoteApprovalResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue(static::GLOSSARY_KEY_CART_CANT_BE_SENT_FOR_APPROVAL));
     }
 }

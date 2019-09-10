@@ -20,7 +20,6 @@ interface QuoteApprovalFacadeInterface
      * - Share cart to approver with read only access.
      * - Removes all existing cart sharing.
      * - Locks quote.
-     * - Creates new QuoteApproval request in status `waiting`.
      *
      * @api
      *
@@ -124,7 +123,7 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Returns Quote fields allowed for saving to the persistence.
+     * - Returns Quote fields allowed for saving if quote approval request is waiting or approved.
      *
      * @api
      *

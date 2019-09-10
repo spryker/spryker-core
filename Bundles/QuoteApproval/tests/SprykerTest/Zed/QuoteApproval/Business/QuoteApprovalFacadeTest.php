@@ -86,7 +86,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         //Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
-            $quoteApprovalCreateRequestTransfer->getIdQuote()
+            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()
         );
 
         $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
@@ -111,7 +111,7 @@ class QuoteApprovalFacadeTest extends Unit
         //Assert
         $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
 
-        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $this->assertCount(1, $quoteTransfer->getQuoteApprovals());
     }
@@ -202,7 +202,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         //Assert
         $shareDeatailCollectionTransfer = $this->getShareDetailsByIdQuote(
-            $quoteApprovalCreateRequestTransfer->getIdQuote()
+            $quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()
         );
 
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
@@ -227,7 +227,7 @@ class QuoteApprovalFacadeTest extends Unit
         //Assert
         $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
 
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $this->assertCount(0, $quoteApprovalTransfers);
     }
@@ -261,11 +261,11 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Act
         $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Assert
         $this->assertEmpty($quoteTransfer->getQuoteApprovals());
@@ -281,12 +281,12 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
         $quoteTransfer->setIdQuote(null);
 
         //Act
         $quoteTransfer = $this->getFacade()->sanitizeQuoteApproval($quoteTransfer);
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Assert
         $this->assertEmpty($quoteTransfer->getQuoteApprovals());
@@ -304,7 +304,7 @@ class QuoteApprovalFacadeTest extends Unit
         $this->getFacade()
             ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $quoteApprovalRemoveRequestTransfer = new QuoteApprovalRequestTransfer();
         $quoteApprovalRemoveRequestTransfer->setRequesterCompanyUserId($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
@@ -324,7 +324,7 @@ class QuoteApprovalFacadeTest extends Unit
         $this->getFacade()
             ->createQuoteApproval($quoteApprovalCreateRequestTransfer);
 
-        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getIdQuote());
+        $quoteApprovalTransfers = $this->getFacade()->getQuoteApprovalsByIdQuote($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         $quoteApprovalRequestTransfer = new QuoteApprovalRequestTransfer();
         $quoteApprovalRequestTransfer->setApproverCompanyUserId($quoteApprovalCreateRequestTransfer->getRequesterCompanyUserId());
