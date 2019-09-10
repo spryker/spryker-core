@@ -22,6 +22,8 @@ class MaintenanceController extends AbstractController
     {
         $this->getFactory()->getCollectorFacade()->deleteSearchTimestamps();
 
+        $this->addInfoMessage('Search collectors timestamps deleted');
+
         return $this->redirectResponse(SearchMaintenanceController::URL_SEARCH_MAINTENANCE);
     }
 }

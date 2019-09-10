@@ -43,7 +43,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest,
         ?string $parentResourceId = null
     ): void {
-
         if (!$this->canLoadResource($resourceName, $restRequest, $parentResourceId)) {
             return;
         }
@@ -90,7 +89,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest,
         array &$included
     ): void {
-
         /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources */
         foreach ($resourceRelationships as $resourceType => $resources) {
             if (!$this->hasRelationship($resourceType, $restRequest)) {

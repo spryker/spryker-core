@@ -72,12 +72,12 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
     {
         $dependencyModules = $this->getDependencyModules($context);
 
-        foreach ($dependencyModules as $filePath => $modules) {
-            foreach ($modules as $dependentModule) {
+        foreach ($dependencyModules as $filePath => $composerNames) {
+            foreach ($composerNames as $composerName) {
                 $dependencyContainer->addDependency(
-                    $dependentModule,
+                    $composerName,
                     $this->getType(),
-                    $this->isOptional($filePath, $dependentModule),
+                    $this->isOptional($filePath, $composerName),
                     $this->isTestFile($filePath)
                 );
             }
@@ -107,10 +107,10 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
         $dependencyModules = [];
         $useStatements = $this->useStatementParser->getUseStatements($context->getFileInfo());
 
-        $modules = $this->getModuleNamesFromUseStatements($useStatements, $context->getModule()->getName());
+        $composerNames = $this->getNamesFromUseStatements($useStatements, $context->getModule()->getName());
 
-        if (count($modules) > 0) {
-            $dependencyModules[$context->getFileInfo()->getRealPath()] = array_unique($modules);
+        if (count($composerNames) > 0) {
+            $dependencyModules[$context->getFileInfo()->getRealPath()] = array_unique($composerNames);
         }
 
         return $dependencyModules;
@@ -122,21 +122,29 @@ class InternalDependencyFinder extends AbstractFileDependencyFinder
      *
      * @return array
      */
-    protected function getModuleNamesFromUseStatements(array $useStatements, string $module): array
+    protected function getNamesFromUseStatements(array $useStatements, string $module): array
     {
-        $dependentModules = [];
+        $dependentComposerNames = [];
         foreach ($useStatements as $useStatement) {
             $useStatementFragments = explode('\\', $useStatement);
             if ($this->isIgnorableUseStatement($useStatementFragments)) {
                 continue;
             }
+
             $foreignModule = $useStatementFragments[2];
-            if ($foreignModule !== $module) {
-                $dependentModules[] = $foreignModule;
+            if ($foreignModule === $module) {
+                continue;
             }
+
+            if ($useStatementFragments[0] === 'Orm') {
+                $dependentComposerNames[] = $useStatementFragments[2];
+                continue;
+            }
+
+            $dependentComposerNames[] = $this->buildComposerName($useStatementFragments[0], $useStatementFragments[2]);
         }
 
-        return $dependentModules;
+        return $dependentComposerNames;
     }
 
     /**
