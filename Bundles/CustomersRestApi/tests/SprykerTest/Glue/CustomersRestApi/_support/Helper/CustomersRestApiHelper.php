@@ -156,6 +156,6 @@ class CustomersRestApiHelper extends Module
             }
         }
 
-        throw new ModuleException('CompanyUserAuthRestApi', 'The module requires GlueRest.');
+        throw new ModuleException('CustomersRestApi', 'The module requires GlueRest.');
     }
 }
