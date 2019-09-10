@@ -8,35 +8,30 @@
 namespace SprykerTest\Glue\CompanyUserAuthRestApi\Helper;
 
 use Codeception\Exception\ModuleException;
-use Codeception\Module\REST;
-use Codeception\Util\HttpCode;
+use Codeception\Module;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Glue\CompanyUserAuthRestApi\CompanyUserAuthRestApiConfig;
+use SprykerTest\Glue\Testify\Helper\GlueRest;
 use SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper;
-use SprykerTest\Shared\Customer\Helper\CustomerDataHelper;
 use SprykerTest\Zed\Company\Helper\CompanyHelper;
 
-class CompanyUserAuthRestApiHelper extends REST
+class CompanyUserAuthRestApiHelper extends Module
 {
-    public const DEFAULT_PASSWORD = 'Pass$.123456';
-
-    protected const RESOURCE_CUSTOMERS = 'customers';
-
     /**
      * @var \SprykerTest\Zed\Company\Helper\CompanyHelper|null
      */
     protected $companyProvider;
 
     /**
+     * @var \SprykerTest\Glue\Testify\Helper\GlueRest|null
+     */
+    protected $glueRestProvider;
+
+    /**
      * @var \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper|null
      */
     protected $companyUserProvider;
-
-    /**
-     * @var \SprykerTest\Shared\Customer\Helper\CustomerDataHelper|null
-     */
-    protected $customerProvider;
 
     /**
      * @inheritdoc
@@ -45,161 +40,79 @@ class CompanyUserAuthRestApiHelper extends REST
     {
         parent::_initialize();
 
-        $this->companyProvider = $this->findCompanyProvider();
-        $this->companyUserProvider = $this->findCompanyUserProvider();
-        $this->customerProvider = $this->findCustomerProvider();
+        $this->companyProvider = $this->getCompanyProvider();
+        $this->companyUserProvider = $this->getCompanyUserProvider();
+        $this->glueRestProvider = $this->getGlueRestProvider();
     }
 
     /**
-     * Publishes access token
+     * Specification:
+     * - Creates company.
      *
      * @part json
      *
-     * @param array $glueToken
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function amAuthorizedGlueCompanyUser(array $glueToken, CustomerTransfer $customerTransfer): CustomerTransfer
+    public function amCompany(): CompanyTransfer
     {
-        $this->haveHttpHeader('X-Company-User-Id', $customerTransfer->getCompanyUserTransfer()->getUuid());
-        $this->haveHttpHeader('Authorization', sprintf('%s %s', $glueToken['tokenType'], $glueToken['accessToken']));
-
-        return $customerTransfer;
-    }
-
-    /**
-     * Creates company, company user and customer
-     *
-     * @part json
-     *
-     * @throws \Codeception\Exception\ModuleException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function amCompanyUser(): CustomerTransfer
-    {
-        if ($this->companyProvider === null) {
-            throw new ModuleException('GlueRest', 'The module requires CompanyHelper');
-        }
-        $company = uniqid('c-', true);
-        $companyTransfer = $this->companyProvider->haveCompany([
-            CompanyTransfer::KEY => $company,
-        ]);
-
-        return $this->amCompanyUserInCompany($companyTransfer->getIdCompany());
-    }
-
-    /**
-     * @part json
-     *
-     * @param string $withEmail
-     * @param string $withPassword
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    public function amUser(string $withEmail = '', string $withPassword = ''): CustomerTransfer
-    {
-        $withEmail = $withEmail ?: sprintf('%s@test.local.com', uniqid('glue-', true));
-
-        if ($this->customerProvider === null) {
-            return $this->haveCustomerByApi($withEmail, $withPassword);
-        }
-
-        return $this->customerProvider->haveCustomer([
-            CustomerTransfer::FIRST_NAME => 'John',
-            CustomerTransfer::LAST_NAME => 'Doe',
-            CustomerTransfer::EMAIL => $withEmail,
-            CustomerTransfer::PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
-            CustomerTransfer::NEW_PASSWORD => $withPassword ?: static::DEFAULT_PASSWORD,
+        return $companyTransfer = $this->companyProvider->haveCompany([
+            CompanyTransfer::KEY => uniqid('c-', true),
         ]);
     }
 
     /**
-     * Creates company user and customer
+     * Specification:
+     * - Creates company user.
      *
      * @part json
      *
      * @param int $idCompany
      *
-     * @throws \Codeception\Exception\ModuleException
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function amCompanyUserInCompany(int $idCompany): CustomerTransfer
+    public function amCompanyUserInCompany(int $idCompany): CompanyUserTransfer
     {
-        if ($this->companyUserProvider === null) {
-            throw new ModuleException('GlueRest', 'The module requires CompanyUserHelper');
-        }
         $companyUserUuid = uniqid('cu-', true);
-        $customerTransfer = $this->amUser();
         $companyUserTransfer = $this->companyUserProvider->haveCompanyUser([
             CompanyUserTransfer::KEY => $companyUserUuid,
             CompanyUserTransfer::UUID => $companyUserUuid,
             CompanyUserTransfer::FK_COMPANY => $idCompany,
-            CompanyUserTransfer::CUSTOMER => $customerTransfer,
         ]);
-        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 
-        return $this->removeCyclicLinksInCustomerTransfer($customerTransfer);
+        return $companyUserTransfer;
     }
 
     /**
+     * Specification:
+     * - Authorizes company user and returns access token data.
+     * - Returns empty array if authorization failed.
+     *
      * @part json
      *
-     * @param string $withEmail
-     * @param string $withPassword
+     * @param string $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return array
      */
-    public function haveCustomerByApi(string $withEmail, string $withPassword = ''): CustomerTransfer
+    public function haveAuthorizationToGlueAsCompanyUser(string $idCompanyUser): ?array
     {
-        $customerTransfer = (new CustomerTransfer())
-            ->setFirstName('John')
-            ->setLastName('Doe')
-            ->setSalutation('Mr')
-            ->setEmail($withEmail)
-            ->setNewPassword($withPassword ?: static::DEFAULT_PASSWORD);
-        $this->sendPOST(static::RESOURCE_CUSTOMERS, [
+        $this->glueRestProvider->sendPOST(CompanyUserAuthRestApiConfig::RESOURCE_COMPANY_USER_ACCESS_TOKENS, [
             'data' => [
-                'type' => static::RESOURCE_CUSTOMERS,
+                'type' => CompanyUserAuthRestApiConfig::RESOURCE_COMPANY_USER_ACCESS_TOKENS,
                 'attributes' => [
-                    'salutation' => $customerTransfer->getSalutation(),
-                    'firstName' => $customerTransfer->getFirstName(),
-                    'lastName' => $customerTransfer->getLastName(),
-                    'email' => $customerTransfer->getEmail(),
-                    'password' => $customerTransfer->getNewPassword(),
-                    'confirmPassword' => $customerTransfer->getNewPassword(),
-                    'acceptedTerms' => true,
+                    'idCompanyUser' => $idCompanyUser,
                 ],
             ],
         ]);
-        $this->seeResponseCodeIs(HttpCode::CREATED);
-        $customerTransfer->setIdCustomer(
-            $this->grabDataFromResponseByJsonPath('$.data.id')[0]
-        );
 
-        return $customerTransfer;
+        return $this->glueRestProvider->grabDataFromResponseByJsonPath('$.data.attributes')[0] ?: [];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @throws \Codeception\Exception\ModuleException
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
+     * @return \SprykerTest\Zed\Company\Helper\CompanyHelper
      */
-    protected function removeCyclicLinksInCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        if ($customerTransfer->getCompanyUserTransfer()) {
-            $customerTransfer->getCompanyUserTransfer()->setCustomer();
-        }
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @return \SprykerTest\Zed\Company\Helper\CompanyHelper|null
-     */
-    protected function findCompanyProvider(): ?CompanyHelper
+    protected function getCompanyProvider(): CompanyHelper
     {
         foreach ($this->getModules() as $module) {
             if ($module instanceof CompanyHelper) {
@@ -207,13 +120,31 @@ class CompanyUserAuthRestApiHelper extends REST
             }
         }
 
-        return null;
+        throw new ModuleException('CompanyUserAuthRestApi', 'The module requires CompanyHelper.');
     }
 
     /**
-     * @return \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper|null
+     * @throws \Codeception\Exception\ModuleException
+     *
+     * @return \SprykerTest\Glue\Testify\Helper\GlueRest
      */
-    protected function findCompanyUserProvider(): ?CompanyUserHelper
+    protected function getGlueRestProvider(): GlueRest
+    {
+        foreach ($this->getModules() as $module) {
+            if ($module instanceof GlueRest) {
+                return $module;
+            }
+        }
+
+        throw new ModuleException('CompanyUserAuthRestApi', 'The module requires GlueRest.');
+    }
+
+    /**
+     * @throws \Codeception\Exception\ModuleException
+     *
+     * @return \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
+     */
+    protected function getCompanyUserProvider(): CompanyUserHelper
     {
         foreach ($this->getModules() as $module) {
             if ($module instanceof CompanyUserHelper) {
@@ -221,20 +152,6 @@ class CompanyUserAuthRestApiHelper extends REST
             }
         }
 
-        return null;
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Customer\Helper\CustomerDataHelper|null
-     */
-    protected function findCustomerProvider(): ?CustomerDataHelper
-    {
-        foreach ($this->getModules() as $module) {
-            if ($module instanceof CustomerDataHelper) {
-                return $module;
-            }
-        }
-
-        return null;
+        throw new ModuleException('CompanyUserAuthRestApi', 'The module requires CompanyUserHelper.');
     }
 }
