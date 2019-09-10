@@ -38,9 +38,9 @@ class SalesConfigurableBundleDependencyProvider extends AbstractBundleDependency
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new SalesConfigurableBundleToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
