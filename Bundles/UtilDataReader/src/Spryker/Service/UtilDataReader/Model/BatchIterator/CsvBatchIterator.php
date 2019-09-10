@@ -82,7 +82,7 @@ class CsvBatchIterator implements CountableIteratorInterface
 
     /**
      * {@inheritdoc}
-     * x
+     *
      * @return void
      */
     public function next()

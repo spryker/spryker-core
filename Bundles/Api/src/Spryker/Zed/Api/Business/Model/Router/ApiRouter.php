@@ -71,6 +71,7 @@ class ApiRouter implements RouterInterface
      * {@inheritdoc}
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
      * @return void
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)

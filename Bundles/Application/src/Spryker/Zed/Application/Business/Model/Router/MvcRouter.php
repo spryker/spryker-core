@@ -70,6 +70,7 @@ class MvcRouter implements RouterInterface
      * {@inheritdoc}
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     *
      * @return void
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
@@ -79,6 +80,7 @@ class MvcRouter implements RouterInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
     public function match($pathinfo)
