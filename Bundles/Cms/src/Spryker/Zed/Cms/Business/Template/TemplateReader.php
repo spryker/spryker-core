@@ -30,7 +30,7 @@ class TemplateReader implements TemplateReaderInterface
     /**
      * @param string $templatePath
      *
-     * @return array
+     * @return string[]
      */
     public function getPlaceholdersByTemplatePath(string $templatePath): array
     {
@@ -54,7 +54,7 @@ class TemplateReader implements TemplateReaderInterface
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException
      * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
      *
-     * @return array
+     * @return string[]
      */
     protected function getTemplatePlaceholders(string $templateFile): array
     {
@@ -67,7 +67,7 @@ class TemplateReader implements TemplateReaderInterface
         $templateContent = $this->readTemplateContents($templateFile);
 
         preg_match_all($this->cmsConfig->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
-        if (count($cmsPlaceholderLine) === 0) {
+        if (count($cmsPlaceholderLine[0]) === 0) {
             throw new MissingPlaceholdersException(
                 sprintf(
                     'No placeholders found in "%s" template.',
