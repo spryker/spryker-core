@@ -205,7 +205,7 @@ class LocaleManager
      */
     public function getAvailableLocales()
     {
-        $availableLocales = Store::getInstance()->getLocales();
+        $availableLocales = $this->getAvailableLocaleNames();
         $locales = [];
         foreach ($availableLocales as $localeName) {
             $localeInfo = $this->getLocale($localeName);
