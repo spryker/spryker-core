@@ -14,13 +14,13 @@ use Generated\Shared\Transfer\PaginationTransfer;
 class SalesOrderMapper
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderEntities
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param int $ordersCount
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function mapSalesOrderEntitiesToOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderEntities, int $ordersCount): OrderListTransfer
+    public function mapSalesOrderEntitiesToOrderListTransfer(array $orderEntities, OrderListTransfer $orderListTransfer, int $ordersCount): OrderListTransfer
     {
         foreach ($orderEntities as $orderEntity) {
             $orderListTransfer->addOrder(
