@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Touch\Business\TouchBusinessFactory getFactory()
+ * @method \Spryker\Zed\Touch\Persistence\TouchEntityManagerInterface getEntityManager()
  */
 class TouchFacade extends AbstractFacade implements TouchFacadeInterface
 {
@@ -152,6 +153,8 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use TouchFacadeInterface::cleanTouchEntitiesForDeletedItemEvent() instead.
+     *
      * @return int
      */
     public function removeTouchEntriesMarkedAsDeleted()
@@ -159,5 +162,19 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
         $touchRecordModel = $this->getFactory()->createTouchRecordModel();
 
         return $touchRecordModel->removeTouchEntriesMarkedAsDeleted();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function cleanTouchEntitiesForDeletedItemEvent(): int
+    {
+        return $this->getFactory()
+            ->createTouchWriter()
+            ->cleanTouchEntitiesForDeletedItemEvent();
     }
 }
