@@ -111,8 +111,8 @@ class LocaleFacadeTest extends Unit
     public function testGetAvailableLocaleNames(): void
     {
         $this->assertSame(
-            array_keys($this->availableLocales),
-            array_keys($this->localeFacade->getAvailableLocaleNames())
+            array_values($this->availableLocales),
+            array_values($this->localeFacade->getAvailableLocaleNames())
         );
     }
 }
