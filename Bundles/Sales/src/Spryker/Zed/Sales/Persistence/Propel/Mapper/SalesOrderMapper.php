@@ -20,7 +20,7 @@ class SalesOrderMapper
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function mapPaginatedOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderEntities, int $ordersCount): OrderListTransfer
+    public function mapSalesOrderEntitiesToOrderListTransfer(OrderListTransfer $orderListTransfer, array $orderEntities, int $ordersCount): OrderListTransfer
     {
         foreach ($orderEntities as $orderEntity) {
             $orderListTransfer->addOrder(

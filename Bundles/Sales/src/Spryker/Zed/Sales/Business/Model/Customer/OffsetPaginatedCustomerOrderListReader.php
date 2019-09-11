@@ -59,7 +59,7 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
             return $orderListTransfer;
         }
 
-        return $this->hydrateOrderListCollectionTransfer($orderListTransfer);
+        return $this->hydrateOrderTransfersInOrderListTransfer($orderListTransfer);
     }
 
     /**
@@ -67,7 +67,7 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    protected function hydrateOrderListCollectionTransfer(OrderListTransfer $orderListTransfer): OrderListTransfer
+    protected function hydrateOrderTransfersInOrderListTransfer(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         $orderTransfers = [];
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
