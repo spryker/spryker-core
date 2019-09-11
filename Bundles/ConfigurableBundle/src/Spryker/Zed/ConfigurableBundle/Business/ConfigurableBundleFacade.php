@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -57,14 +58,15 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @api
      *
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
-    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
-    {
+    public function findConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
         return $this->getFactory()
             ->createConfigurableBundleTemplateReader()
-            ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
     }
 }

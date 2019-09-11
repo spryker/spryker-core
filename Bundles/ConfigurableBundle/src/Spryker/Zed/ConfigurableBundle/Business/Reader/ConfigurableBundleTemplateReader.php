@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
@@ -26,12 +27,13 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
-    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
-    {
-        return $this->configurableBundleRepository->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    public function findConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
+        return $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
     }
 }

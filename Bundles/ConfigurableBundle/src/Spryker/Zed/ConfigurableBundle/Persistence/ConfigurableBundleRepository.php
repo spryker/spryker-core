@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,17 +18,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ConfigurableBundleRepository extends AbstractRepository implements ConfigurableBundleRepositoryInterface
 {
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
-    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleQuery()
-            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->find()
-            ->getFirst();
+    public function findConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleQuery();
+        $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
+            $configurableBundleTemplateQuery,
+            $configurableBundleTemplateFilterTransfer
+        );
+
+        $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->find()->getFirst();
 
         if (!$configurableBundleTemplateEntity) {
             return null;
@@ -35,5 +40,24 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         return $this->getFactory()
             ->createConfigurableBundleMapper()
             ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
+     */
+    protected function setConfigurableBundleTemplateFilters(
+        SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery,
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): SpyConfigurableBundleTemplateQuery {
+        if ($configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate()) {
+            $configurableBundleTemplateQuery->filterByIdConfigurableBundleTemplate(
+                $configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate()
+            );
+        }
+
+        return $configurableBundleTemplateQuery;
     }
 }

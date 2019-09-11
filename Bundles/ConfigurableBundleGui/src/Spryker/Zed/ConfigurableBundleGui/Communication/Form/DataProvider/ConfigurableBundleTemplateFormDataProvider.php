@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
@@ -57,8 +58,11 @@ class ConfigurableBundleTemplateFormDataProvider
             return $this->createEmptyConfigurableBundleTemplateTransfer();
         }
 
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+
         $configurableBundleTemplateTransfer = $this->configurableBundleFacade
-            ->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateTransfer) {
             return $this->createEmptyConfigurableBundleTemplateTransfer();

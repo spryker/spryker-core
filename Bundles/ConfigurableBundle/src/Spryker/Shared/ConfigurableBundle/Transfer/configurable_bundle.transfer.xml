@@ -37,6 +37,10 @@
         <property name="uuid" type="string" />
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateFilter">
+        <property name="idConfigurableBundleTemplate" type="int" />
+    </transfer>
+
     <transfer name="ConfigurableBundleTemplateResponse">
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
         <property name="isSuccessful" type="bool" />
