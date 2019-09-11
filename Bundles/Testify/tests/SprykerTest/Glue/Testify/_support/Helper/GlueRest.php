@@ -197,6 +197,20 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
+     * @param string $type
+     *
+     * @return void
+     */
+    public function dontSeeSingleResourceHasRelationshipByType(string $type): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
+            sprintf('$.data.relationships.%1$s', $type)
+        );
+    }
+
+    /**
+     * @part json
+     *
      * @param string $link
      *
      * @return void
@@ -318,6 +332,20 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 json_encode($id),
                 json_encode($type)
             )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
+     *
+     * @return void
+     */
+    public function dontSeeIncludesContainsResourceByType(string $type): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
+            sprintf('$.included[?(@.type == %1$s)]', $type)
         );
     }
 
