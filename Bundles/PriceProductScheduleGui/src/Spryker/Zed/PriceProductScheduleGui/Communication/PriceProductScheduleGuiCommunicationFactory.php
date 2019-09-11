@@ -262,7 +262,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createPriceProdcutScheduleListForm(
+    public function createPriceProductScheduleListForm(
         PriceProductScheduleListFormDataProvider $dataProvider,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): FormInterface {

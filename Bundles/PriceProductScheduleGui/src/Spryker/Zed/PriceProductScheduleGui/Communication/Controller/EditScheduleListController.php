@@ -40,6 +40,13 @@ class EditScheduleListController extends AbstractController
         $priceProductScheduleListResponseTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()
             ->findPriceProductScheduleList($priceProductScheduleListTransfer);
+
+        if (!$priceProductScheduleListResponseTransfer->getIsSuccess()) {
+            $this->setErrors($priceProductScheduleListResponseTransfer);
+
+            return $this->redirectResponse(static::REDIRECT_URL);
+        }
+
         $priceProductScheduleListResponseTransfer->requirePriceProductScheduleList();
 
         $form = $this->getForm($priceProductScheduleListResponseTransfer);
@@ -47,12 +54,6 @@ class EditScheduleListController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->handleSubmitForm($form);
-        }
-
-        if (!$priceProductScheduleListResponseTransfer->getIsSuccess()) {
-            $this->setErrors($priceProductScheduleListResponseTransfer);
-
-            return $this->redirectResponse(static::REDIRECT_URL);
         }
 
         $priceProductScheduleTable = $this->getFactory()
@@ -76,7 +77,7 @@ class EditScheduleListController extends AbstractController
             ->createPriceProductScheduleListFormDataProvider();
 
         return $this->getFactory()
-            ->createPriceProdcutScheduleListForm(
+            ->createPriceProductScheduleListForm(
                 $dataProvider,
                 $priceProductScheduleListResponseTransfer->getPriceProductScheduleList()
             );
@@ -104,9 +105,7 @@ class EditScheduleListController extends AbstractController
             return $this->redirectResponse(sprintf(static::URL_PATTERN_EDIT_LIST, $idPriceProductScheduleList));
         }
 
-        foreach ($priceProductScheduleListResponseTransfer->getErrors() as $errorTransfer) {
-            $this->addErrorMessage($errorTransfer->getMessage());
-        }
+        $this->setErrors($priceProductScheduleListResponseTransfer);
 
         return $this->redirectResponse(sprintf(static::URL_PATTERN_EDIT_LIST, $idPriceProductScheduleList));
     }

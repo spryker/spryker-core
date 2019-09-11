@@ -27,7 +27,7 @@ class PriceProductScheduleListForm extends AbstractType
     public const FIELD_PRICE_PRODUCT_SCHEDULE_NAME_MAX_LENGTH = 255;
     public const FIELD_SUBMIT = 'submit';
 
-    public const BLOCK_PREFIX = 'priceProductScheduleList';
+    protected const BLOCK_PREFIX = 'priceProductScheduleList';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
