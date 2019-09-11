@@ -40,9 +40,6 @@ class SalesController extends AbstractController
         return $this->viewResponse([
             'events' => $request->attributes->get('events', []),
             'eventsGroupedByShipment' => $request->attributes->get('eventsGroupedByShipment', []),
-            /**
-             * @todo Check is it possible to get rid of this parameter
-             */
             'eventsGroupedByItem' => $request->attributes->get('eventsGroupedByItem', []),
             'order' => $orderTransfer,
             'groupedOrderItemsByShipment' => $shipmentGroupsCollection,
