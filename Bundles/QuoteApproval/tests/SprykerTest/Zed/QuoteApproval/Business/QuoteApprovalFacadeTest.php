@@ -53,7 +53,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testQuoteFieldsAllowedForSavingGetConfigSuccess()
+    public function testQuoteFieldsAllowedForSavingGetConfig()
     {
         //Assign
         $quoteTransfer = $this->createQuoteWithGrandTotal(10);
@@ -76,7 +76,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testQuoteFieldsAllowedForSavingGetConfigForApprovedQuoteApprovalSuccess()
+    public function testQuoteFieldsAllowedForSavingGetConfigForApprovedQuoteApproval()
     {
         //Assign
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
@@ -121,7 +121,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testQuoteFieldsAllowedForSavingSaveShippingAddressUnsuccess()
+    public function testQuoteFieldsAllowedForSavingSaveShippingAddressFails()
     {
         //Assign
         $quoteTransfer = $this->createQuoteWithGrandTotal(10);
@@ -136,7 +136,7 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteTransfer = $this->findQuoteById($quoteTransfer->getIdQuote());
 
         //Assert
-        $this->assertEquals($quoteTransfer->getShippingAddress(), $addressTransfer);
+        $this->assertNotEquals($quoteTransfer->getShippingAddress(), $addressTransfer);
     }
 
     /**
@@ -544,6 +544,8 @@ class QuoteApprovalFacadeTest extends Unit
                 ],
             ]
         );
+
+        $companyUserTransfer->setCustomer(null);
 
         $quoteTransfer->getCustomer()->setCompanyUserTransfer(
             $companyUserTransfer
