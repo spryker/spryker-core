@@ -22,6 +22,7 @@ abstract class Descriptor implements DescriptorInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws \InvalidArgumentException
      */
     public function describe(OutputInterface $output, $object, array $options = [])

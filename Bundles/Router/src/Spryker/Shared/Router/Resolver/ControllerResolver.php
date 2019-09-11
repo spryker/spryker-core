@@ -32,7 +32,6 @@ class ControllerResolver implements ControllerResolverInterface
      *
      * This method looks for a '_controller' request attribute that represents
      * the controller.
-     *
      */
     public function getController(Request $request)
     {
