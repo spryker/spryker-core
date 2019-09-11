@@ -79,7 +79,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     protected function getDataTopOrderStatistic(int $countProduct): array
     {
-        return $this->getFactory()->getSalesOrderItemQuery()
+        return $this->getFactory()->createSalesOrderItemQuery()
             ->select([static::ITEM_NAME, static::ITEM_SKU, static::COUNT])
             ->withColumn('COUNT(' . SpySalesOrderItemTableMap::COL_NAME . ')', static::COUNT)
             ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::ITEM_NAME)
@@ -105,7 +105,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     protected function getDataStatusOrderStatistic(): array
     {
-        return $this->getFactory()->getSalesOrderItemQuery()
+        return $this->getFactory()->createSalesOrderItemQuery()
             ->joinWithState()
             ->select([static::STATUS_NAME, static::TOTAL])
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATUS_NAME)
