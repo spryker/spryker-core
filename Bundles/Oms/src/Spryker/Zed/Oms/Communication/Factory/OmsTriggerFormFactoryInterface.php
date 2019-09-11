@@ -27,11 +27,10 @@ interface OmsTriggerFormFactoryInterface
      * @param string $redirectUrl
      * @param string $event
      * @param int $idSalesOrder
-     * @param string $submitButtonExtraClass
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOrderOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrder, string $submitButtonExtraClass): FormInterface;
+    public function getOrderOmsTriggerForm(string $redirectUrl, string $event, int $idSalesOrder): FormInterface;
 
     /**
      * @param string $redirectUrl

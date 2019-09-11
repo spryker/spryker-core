@@ -28,17 +28,16 @@ class OmsTriggerFormCollectionBuilder implements OmsTriggerFormCollectionBuilder
      * @param string $redirectUrl
      * @param string[] $events
      * @param int $idSalesOrder
-     * @param string $submitButtonExtraClass
      *
      * @return \Symfony\Component\Form\FormView[]
      */
-    public function buildOrderOmsTriggerFormCollection(string $redirectUrl, array $events, int $idSalesOrder, string $submitButtonExtraClass = ''): array
+    public function buildOrderOmsTriggerFormCollection(string $redirectUrl, array $events, int $idSalesOrder): array
     {
         $orderOmsTriggerFormCollection = [];
 
         foreach ($events as $event) {
             $orderOmsTriggerFormCollection[$event] = $this->omsTriggerFormFactory
-                ->getOrderOmsTriggerForm($redirectUrl, $event, $idSalesOrder, $submitButtonExtraClass)
+                ->getOrderOmsTriggerForm($redirectUrl, $event, $idSalesOrder)
                 ->createView();
         }
 
