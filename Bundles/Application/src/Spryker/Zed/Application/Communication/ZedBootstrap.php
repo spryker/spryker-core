@@ -140,7 +140,7 @@ class ZedBootstrap
      */
     protected function registerServiceProviderForInternalRequestWithAuthentication()
     {
-        $serviceProviders = $this->getInternalCallServiceProviderWithAuthentication();
+        $serviceProviders = $this->getMergedInternalRequestServiceProviders();
 
         /** @deprecated This added to keep Backward Compatibility and will be removed in major release */
         if (!$serviceProviders) {
@@ -155,9 +155,29 @@ class ZedBootstrap
     /**
      * @return \Silex\ServiceProviderInterface[]
      */
+    protected function getMergedInternalRequestServiceProviders(): array
+    {
+        $internalCallServiceProvidersWithAuth = $this->getInternalCallServiceProviderWithAuthentication();
+        $internalCallServiceProviders = $this->getInternalCallServiceProvider();
+        $mergedInternalCallServiceProviders = array_merge($internalCallServiceProvidersWithAuth, $internalCallServiceProviders);
+
+        return array_unique($mergedInternalCallServiceProviders, SORT_REGULAR);
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
     protected function getServiceProvider()
     {
         return $this->getProvidedDependency(ApplicationDependencyProvider::SERVICE_PROVIDER);
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getInternalCallServiceProvider()
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::INTERNAL_CALL_SERVICE_PROVIDER);
     }
 
     /**
