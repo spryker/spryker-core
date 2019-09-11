@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Order;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -112,7 +112,7 @@ class OrderReader implements OrderReaderInterface
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();
 
-            $orderListTransfer->setPagination($this->createPaginationTransfer(++$offset, $limit));
+            $orderListTransfer->setFilter($this->createFilterTransfer(++$offset, $limit));
         }
 
         $orderListTransfer = $this->salesClient->getPaginatedOrder($orderListTransfer);
@@ -176,12 +176,12 @@ class OrderReader implements OrderReaderInterface
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\PaginationTransfer
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function createPaginationTransfer(int $offset, int $limit): PaginationTransfer
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
-        return (new PaginationTransfer())
-            ->setPage($offset)
-            ->setMaxPerPage($limit);
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }
