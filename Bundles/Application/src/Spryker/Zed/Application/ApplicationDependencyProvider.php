@@ -163,7 +163,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::INTERNAL_CALL_SERVICE_PROVIDER] = function (Container $container) {
             return $this->getInternalCallServiceProviders($container);
         };
-        
+
         return $container;
     }
 
