@@ -9,6 +9,25 @@
                 <controller>template</controller>
                 <action>index</action>
                 <visible>1</visible>
+                <pages>
+                    <configurable-bundle-template-create>
+                        <label>Create Configurable Bundle Template</label>
+                        <title>Create Configurable Bundle Template</title>
+                        <bundle>configurable-bundle-gui</bundle>
+                        <controller>template</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </configurable-bundle-template-create>
+
+                    <configurable-bundle-template-edit>
+                        <label>Edit Configurable Bundle Template</label>
+                        <title>Edit Configurable Bundle Template</title>
+                        <bundle>configurable-bundle-gui</bundle>
+                        <controller>template</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </configurable-bundle-template-edit>
+                </pages>
             </configurable-bundle-templates>
         </pages>
     </product>
