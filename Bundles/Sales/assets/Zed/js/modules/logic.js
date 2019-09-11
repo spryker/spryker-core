@@ -6,29 +6,29 @@
 'use strict';
 
 $(document).ready(function () {
-    $('.sales-order-item-group-element button').click(function (e) {
+    $('.sales-order-item-group-element button').click(function(e) {
         e.preventDefault();
         var keyItemGroup = $(this).closest('.sales-order-item-group-element').data('group-key');
-        var $shipmentTable = $('.shipment-item-table-' + keyItemGroup);
-        var $idOrderItems = $shipmentTable.find('input[name="order-item"]');
-        var idOrderItemsCheckedList = [];
-        var idOrderItemsFullList = [];
+        var $groupTable = $('.order-group-items-table-' + keyItemGroup);
+        var $idGroupItems = $groupTable.find('input[name="order-item"]');
+        var idGroupItemsCheckedList = [];
+        var idGroupItemsFullList = [];
         var $form = $(this).closest('form');
         var formAction = $form.attr('action');
 
-        $idOrderItems.each(function () {
-            idOrderItemsFullList.push($(this).val());
+        $idGroupItems.each(function () {
+            idGroupItemsFullList.push($(this).val());
 
             if ($(this).prop('checked')) {
-                idOrderItemsCheckedList.push($(this).val());
+                idGroupItemsCheckedList.push($(this).val());
             }
         });
 
-        if (!idOrderItemsCheckedList.length) {
-            idOrderItemsCheckedList = idOrderItemsFullList;
+        if (!idGroupItemsCheckedList.length) {
+            idGroupItemsCheckedList = idGroupItemsFullList;
         }
 
-        var finalUrl = formAction + '&' + $.param({items: idOrderItemsCheckedList});
+        var finalUrl = formAction + '&' + $.param({items: idGroupItemsCheckedList});
 
         $(this).prop('disabled', true).addClass('disabled');
         $form.attr('action', finalUrl);
