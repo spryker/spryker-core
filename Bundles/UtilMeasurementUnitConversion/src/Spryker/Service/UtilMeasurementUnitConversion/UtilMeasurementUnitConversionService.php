@@ -20,7 +20,6 @@ class UtilMeasurementUnitConversionService extends AbstractService implements Ut
      * @param string $fromCode
      * @param string $toCode
      *
-     *
      * @return float
      */
     public function getMeasurementUnitExchangeRatio(string $fromCode, string $toCode): float
