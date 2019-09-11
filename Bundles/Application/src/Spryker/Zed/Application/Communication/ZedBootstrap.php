@@ -84,14 +84,6 @@ class ZedBootstrap
     protected function setUp()
     {
         $this->optimizeApp();
-
-        // For BC
-        if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
-            $this->registerServiceProviderForInternalRequest();
-            $this->setupApplication();
-
-            return;
-        }
         // For BC
         if ($this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequestWithAuthentication();
@@ -146,16 +138,6 @@ class ZedBootstrap
     /**
      * @return void
      */
-    protected function registerServiceProviderForInternalRequest()
-    {
-        foreach ($this->getInternalCallServiceProvider() as $provider) {
-            $this->application->register($provider);
-        }
-    }
-
-    /**
-     * @return void
-     */
     protected function registerServiceProviderForInternalRequestWithAuthentication()
     {
         $serviceProviders = $this->getInternalCallServiceProviderWithAuthentication();
@@ -176,14 +158,6 @@ class ZedBootstrap
     protected function getServiceProvider()
     {
         return $this->getProvidedDependency(ApplicationDependencyProvider::SERVICE_PROVIDER);
-    }
-
-    /**
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getInternalCallServiceProvider()
-    {
-        return $this->getProvidedDependency(ApplicationDependencyProvider::INTERNAL_CALL_SERVICE_PROVIDER);
     }
 
     /**
@@ -292,19 +266,5 @@ class ZedBootstrap
     protected function isInternalRequest()
     {
         return array_key_exists('HTTP_X_INTERNAL_REQUEST', $_SERVER);
-    }
-
-    /**
-     * For performance reasons you can disable this in your project
-     * Set `AuthConstants::AUTH_ZED_ENABLED` in your config to false
-     * if you don't need authentication enabled.
-     *
-     * If set to false only a subset of ServiceProvider will be added.
-     *
-     * @return bool
-     */
-    protected function isAuthenticationEnabled()
-    {
-        return true;
     }
 }

@@ -12,6 +12,9 @@ namespace Spryker\Shared\ZedRequest;
  */
 interface ZedRequestConstants
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
     public const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
 
