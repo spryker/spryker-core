@@ -43,33 +43,30 @@
             </div>
 
             {% if eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment] is defined %}
-                <div class="ibox-title bottom-border">
-                    <h4>{{ 'Trigger all matching states of order inside this shipment' | trans }}</h4>
-                    <div>
-                        {% for event in eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment] %}
-                            <a class="btn btn-primary trigger-order-event"
-                               data-id-sales-order="{{ order.idSalesOrder }}"
-                               data-id-sales-shipment="{{ shipmentOrderItems.shipment.idSalesShipment }}"
-                               data-event="{{ event }}"
-                               href="#">
-                                {{ event }}
-                            </a>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states of order inside this shipment' } %}
+                    {% block widget_content %}
+                        <div class="sales-order-item-group-element" data-group-key="{{ shipmentOrderItems.shipment.idSalesShipment }}">
+                            {% include '@Oms/RenderForm/_partial/order-actions.twig' with {
+                                redirectUrl: changeStatusRedirectUrl,
+                                idSalesOrder: order.idSalesOrder,
+                                events: eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment],
+                            } only %}
+                        </div>
+                    {% endblock %}
+                {% endembed %}
             {% endif %}
 
-            <table class="footable table toggle-arrow-tiny shipment-item-table-{{ shipmentOrderItems.shipment.idSalesShipment }}" data-qa="order-item-list">
+            <table class="footable table toggle-arrow-tiny order-group-items-table-{{ shipmentOrderItems.shipment.idSalesShipment }}" data-qa="order-item-list">
                 <thead>
-                <tr class="text-left">
-                    <th><input type="checkbox" class="check-all-orders" /></th>
-                    <th colspan="2">{{ 'Product' | trans }}</th>
-                    <th>{{ 'Quantity' | trans }}</th>
-                    <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
-                    <th>{{ 'Total' | trans }}</th>
-                    <th>{{ 'State' | trans }}</th>
-                    <th>{{ 'Trigger event' | trans }}</th>
-                </tr>
+                    <tr class="text-left">
+                        <th><input type="checkbox" class="check-all-orders" /></th>
+                        <th colspan="2">{{ 'Product' | trans }}</th>
+                        <th>{{ 'Quantity' | trans }}</th>
+                        <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+                        <th>{{ 'Total' | trans }}</th>
+                        <th>{{ 'State' | trans }}</th>
+                        <th>{{ 'Trigger event' | trans }}</th>
+                    </tr>
                 </thead>
 
                 {% embed '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items} %}{% endembed %}

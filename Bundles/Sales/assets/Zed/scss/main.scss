@@ -217,3 +217,12 @@ a.edit_billing_address {
 dd {
     margin-bottom: 5px;
 }
+
+.oms-trigger-form {
+    display: inline-block;
+    margin-right: 3px;
+
+    .form-group {
+        margin-bottom: 0;
+    }
+}

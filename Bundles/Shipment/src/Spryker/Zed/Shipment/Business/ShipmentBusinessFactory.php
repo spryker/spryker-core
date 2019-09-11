@@ -618,9 +618,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentOrderMailExpander(): ShipmentOrderMailExpanderInterface
     {
-        return new ShipmentOrderMailExpander(
-            $this->getShipmentService()
-        );
+        return new ShipmentOrderMailExpander($this->getShipmentService());
     }
 
     /**
@@ -628,6 +626,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createShipmentEventGrouper(): ShipmentEventGrouperInterface
     {
-        return new ShipmentEventGrouper();
+        return new ShipmentEventGrouper($this->getShipmentService());
     }
 }

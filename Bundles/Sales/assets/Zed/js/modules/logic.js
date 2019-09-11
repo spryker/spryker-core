@@ -1,148 +1,53 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 'use strict';
 
-function getSelectedItems(idOrderItem) {
-    var selectedItems = [];
-
-    if (parseInt(idOrderItem) > 0) {
-        selectedItems.push(idOrderItem);
-
-        return selectedItems;
-    }
-
-    $('.item-check').each(function(){
-        if ($(this).prop('checked') === true) {
-            selectedItems.push($(this).val());
-        }
-    });
-
-    return selectedItems;
-}
-
-/**
- * @deprecated not used any more
- */
-function createTriggerUrl(idOrder, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order';
-    var parameters = {
-        event: eventName,
-        'id-sales-order': idOrder,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
-/**
- * @deprecated not used any more
- */
-function createTriggerItemsUrl(idOrder, idOrderItems, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order-items';
-    var parameters = {
-        event: eventName,
-        redirect: '/sales/detail?id-sales-order=' + idOrder,
-        items: idOrderItems,
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
-/**
- * @deprecated not used any more
- */
-function disableTrigger($item) {
-    $item
-        .prop('disabled', true)
-        .addClass('disabled');
-}
-
 $(document).ready(function () {
-    $('.trigger-event').click(function (e) {
+    $('.sales-order-item-group-element button').click(function(e) {
         e.preventDefault();
-
-        $(this).prop('disabled', true).addClass('disabled');
-
+        var keyItemGroup = $(this).closest('.sales-order-item-group-element').data('group-key');
+        var $groupTable = $('.order-group-items-table-' + keyItemGroup);
+        var $idGroupItems = $groupTable.find('input[name="order-item"]');
+        var idGroupItemsCheckedList = [];
+        var idGroupItemsFullList = [];
         var $form = $(this).closest('form');
         var formAction = $form.attr('action');
-        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
 
-        $form.attr('action', finalUrl);
-
-        $(this).parents('form').first().submit();
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idOrderItem = $item.data('id-item');
-
-        window.location = createTriggerItemsUrl(idOrder, [idOrderItem], eventName);
-    });
-
-    $('.trigger-order-event-for-all-items').click(function (e) {
-        e.preventDefault();
-
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-
-        window.location = createTriggerUrl(idOrder, eventName);
-    });
-
-    $('.trigger-order-event').click(function (e) {
-        e.preventDefault();
-
-        var $item = $(this);
-
-        disableTrigger($item);
-
-        var idOrder = $item.data('id-sales-order');
-        var eventName = $item.data('event');
-        var idShipment = $item.data('id-sales-shipment');
-        var $shipmentTable = $('.shipment-item-table-' + idShipment);
-        var $idOrderItems = $shipmentTable.find('input[name="order-item"]');
-        var idOrderItemsCheckedList = [];
-        var idOrderItemsFullList = [];
-
-        $idOrderItems.each(function () {
-            idOrderItemsFullList.push($(this).val());
+        $idGroupItems.each(function () {
+            idGroupItemsFullList.push($(this).val());
 
             if ($(this).prop('checked')) {
-                idOrderItemsCheckedList.push($(this).val());
+                idGroupItemsCheckedList.push($(this).val());
             }
         });
 
-        if (!idOrderItemsCheckedList.length) {
-            idOrderItemsCheckedList = idOrderItemsFullList;
+        if (!idGroupItemsCheckedList.length) {
+            idGroupItemsCheckedList = idGroupItemsFullList;
         }
 
-        window.location = createTriggerItemsUrl(idOrder, idOrderItemsCheckedList, eventName);
+        var finalUrl = formAction + '&' + $.param({items: idGroupItemsCheckedList});
+
+        $(this).prop('disabled', true).addClass('disabled');
+        $form.attr('action', finalUrl);
+        $form.submit();
     });
 
     $('.item-check').click(function(){
-        var countChecked = $(".item-check[type='checkbox']:checked").length;
-        var totalCheckboxItems = $('.item-check').length;
+        var $table = $(this).closest('table');
+        var $checkAllOrders = $table.find('.check-all-orders');
+        var countChecked = $table.find('.item-check[type="checkbox"]:checked').length;
+        var totalCheckboxItems = $table.find('.item-check').length;
 
         if (totalCheckboxItems === countChecked) {
-            $('#check-all-orders').prop('checked', true);
+            $checkAllOrders.prop('checked', true);
 
-            return true;
+            return;
         }
 
-        $('#check-all-orders').prop('checked', false);
-
-        return true;
+        $checkAllOrders.prop('checked', false);
     });
 
     $('.more-attributes').click(function(e){
