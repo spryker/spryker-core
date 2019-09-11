@@ -205,7 +205,7 @@ class LocaleManager
      */
     public function getAvailableLocales()
     {
-        $availableLocales = $this->getAvailableLocaleNames();
+        $availableLocales = Store::getInstance()->getLocales();
         $locales = [];
         foreach ($availableLocales as $localeName) {
             $localeInfo = $this->getLocale($localeName);
@@ -216,19 +216,19 @@ class LocaleManager
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSupportedLocaleCodes(): array
     {
-        $supportedLocaleCodes = [];
-        $supportedStores = Store::getInstance()->getAllowedStores();
+        $localeCodes = [];
+        $allowedStores = Store::getInstance()->getAllowedStores();
 
-        foreach ($supportedStores as $supportedStore) {
-            $supportedLocalesPerStore = Store::getInstance()->getLocalesPerStore($supportedStore);
-            $supportedLocaleCodes = array_merge($supportedLocaleCodes, array_values($supportedLocalesPerStore));
+        foreach ($allowedStores as $allowedStore) {
+            $localesPerStore = Store::getInstance()->getLocalesPerStore($allowedStore);
+            $localeCodes[] = array_values($localesPerStore);
         }
 
-        return array_unique($supportedLocaleCodes);
+        return array_unique(array_merge(...$localeCodes));
     }
 
     /**

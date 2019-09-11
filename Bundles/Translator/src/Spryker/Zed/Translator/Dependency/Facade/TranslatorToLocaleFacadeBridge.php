@@ -31,7 +31,7 @@ class TranslatorToLocaleFacadeBridge implements TranslatorToLocaleFacadeInterfac
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSupportedLocaleCodes(): array
     {

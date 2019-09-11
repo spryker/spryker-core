@@ -221,7 +221,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getSupportedLocaleCodes(): array
     {
