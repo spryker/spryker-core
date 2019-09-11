@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
 {
