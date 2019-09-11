@@ -6,10 +6,10 @@
 'use strict';
 
 $(document).ready(function () {
-    $('.trigger-order-shipment-event').click(function (e) {
+    $('.sales-order-item-group-element button').click(function (e) {
         e.preventDefault();
-        var idShipment = $(this).closest('.sales-order-shipment').data('id-sales-shipment');
-        var $shipmentTable = $('.shipment-item-table-' + idShipment);
+        var keyItemGroup = $(this).closest('.sales-order-item-group-element').data('group-key');
+        var $shipmentTable = $('.shipment-item-table-' + keyItemGroup);
         var $idOrderItems = $shipmentTable.find('input[name="order-item"]');
         var idOrderItemsCheckedList = [];
         var idOrderItemsFullList = [];
