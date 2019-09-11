@@ -21,7 +21,7 @@ class CompanyBusinessUnitGuiFacade extends AbstractFacade implements CompanyBusi
      *
      * @param int $idCompanyUser
      *
-     * @return null|string
+     * @return string|null
      */
     public function findCompanyBusinessUnitName(int $idCompanyUser): ?string
     {
