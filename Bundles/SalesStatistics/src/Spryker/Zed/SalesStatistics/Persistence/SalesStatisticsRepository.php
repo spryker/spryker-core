@@ -131,7 +131,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
      */
     protected function getDataOrderCountStatisticByDays($date): array
     {
-        return $this->getFactory()->getSalesOrderQuery()
+        return $this->getFactory()->createSalesOrderQuery()
             ->select([static::DATE, static::COUNT])
             ->withColumn('COUNT(' . SpySalesOrderTableMap::COL_ID_SALES_ORDER . ')', static::COUNT)
             ->withColumn('DATE(' . SpySalesOrderTableMap::COL_CREATED_AT . ')', static::DATE)
