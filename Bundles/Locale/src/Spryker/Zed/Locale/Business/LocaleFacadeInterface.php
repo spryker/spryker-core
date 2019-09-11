@@ -163,8 +163,8 @@ interface LocaleFacadeInterface
 
     /**
      * Specification:
-     * - Returns an array of locale codes.
-     * - The locales returned are read from the store configuration.
+     * - Returns an array of locale ISO codes.
+     * - The list of locales is read from the configuration.
      *
      * @api
      *
