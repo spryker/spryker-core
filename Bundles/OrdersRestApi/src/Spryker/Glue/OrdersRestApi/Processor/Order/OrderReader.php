@@ -112,7 +112,7 @@ class OrderReader implements OrderReaderInterface
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();
 
-            $orderListTransfer->setFilter($this->createFilterTransfer(++$offset, $limit));
+            $orderListTransfer->setFilter($this->createFilterTransfer($offset, $limit));
         }
 
         $orderListTransfer = $this->salesClient->getPaginatedOrder($orderListTransfer);
