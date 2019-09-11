@@ -91,8 +91,8 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
 
         $quoteTransfer = $this->mergeQuotes(
-            $this->getQuoteById($quoteApprovalRequestTransfer->getQuote()->getIdQuote()),
-            $quoteApprovalRequestTransfer->getQuote()
+            $quoteApprovalRequestTransfer->getQuote(),
+            $this->getQuoteById($quoteApprovalRequestTransfer->getQuote()->getIdQuote())
         );
 
         if (!$quoteTransfer->getItems()->count()) {
