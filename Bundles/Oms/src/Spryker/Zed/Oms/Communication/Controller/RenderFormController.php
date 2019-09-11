@@ -34,7 +34,6 @@ class RenderFormController extends AbstractController
         $idSalesOrder = $request->attributes->get(static::KEY_ID_SALES_ORDER);
         $events = $request->attributes->get(static::KEY_EVENTS);
         $redirectUrl = $request->attributes->get(static::KEY_REDIRECT_URL);
-
         $orderOmsTriggerFormCollection = $this->getFactory()
             ->createOmsTriggerFormCollectionBuilder()
             ->buildOrderOmsTriggerFormCollection($redirectUrl, $events, $idSalesOrder);
@@ -54,7 +53,6 @@ class RenderFormController extends AbstractController
         $redirectUrl = $request->attributes->get(static::KEY_REDIRECT_URL);
         $eventsGroupedByItem = $request->attributes->get(static::KEY_EVENTS_GROUPED_BY_ITEM);
         $idSalesOrderItem = $request->attributes->get(static::KEY_ID_SALES_ORDER_ITEM);
-
         $orderItemOmsTriggerFormCollection = $this->getFactory()
             ->createOmsTriggerFormCollectionBuilder()
             ->buildOrderItemOmsTriggerFormCollection($redirectUrl, $eventsGroupedByItem, $idSalesOrderItem);

@@ -17,6 +17,14 @@ abstract class AbstractOmsTriggerFormDataProvider
     public const QUERY_PARAM_ID_SALES_ORDER_ITEM = 'id-sales-order-item';
     public const QUERY_PARAM_REDIRECT = 'redirect';
 
-    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm';
-    public const SUBMIT_BUTTON_EXTRA_CLASS = 'btn btn-primary btn-sm';
+    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
+
+    /**
+     * @param string $redirectUrl
+     * @param string $event
+     * @param int $idSalesOrderItem
+     *
+     * @return array
+     */
+    abstract public function getOptions(string $redirectUrl, string $event, int $idSalesOrderItem): array;
 }
