@@ -24,7 +24,6 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleQuery()
-            ->leftJoinWithSpyConfigurableBundleTemplateSlot()
             ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
             ->find()
             ->getFirst();
