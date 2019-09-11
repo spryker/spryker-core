@@ -23,7 +23,6 @@ class DeleteController extends AbstractController
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     protected const PARAM_ID_PRODUCT = 'id-product';
-    protected const PARAM_REDIRECT_URL = 'redirectUrl';
     protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
     protected const PARAM_TEMPLATE_FORM = 'form';
     protected const SUCCESS_MESSAGE = 'Scheduled price was successfully removed';
