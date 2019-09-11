@@ -104,15 +104,4 @@ class LocaleFacadeTest extends Unit
         //Assert
         $this->assertSame($currentLocale->getLocaleName(), $newCurrentLocale->getLocaleName());
     }
-
-    /**
-     * @return void
-     */
-    public function testGetAvailableLocaleNames(): void
-    {
-        $this->assertSame(
-            array_values($this->availableLocales),
-            array_values($this->localeFacade->getAvailableLocaleNames())
-        );
-    }
 }

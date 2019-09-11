@@ -216,11 +216,19 @@ class LocaleManager
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    public function getAvailableLocaleNames(): array
+    public function getSupportedLocaleCodes(): array
     {
-        return Store::getInstance()->getLocales();
+        $supportedLocaleCodes = [];
+        $supportedStores = Store::getInstance()->getAllowedStores();
+
+        foreach ($supportedStores as $supportedStore) {
+            $supportedLocalesPerStore = Store::getInstance()->getLocalesPerStore($supportedStore);
+            $supportedLocaleCodes = array_merge($supportedLocaleCodes, array_values($supportedLocalesPerStore));
+        }
+
+        return array_unique($supportedLocaleCodes);
     }
 
     /**

@@ -163,11 +163,11 @@ interface LocaleFacadeInterface
 
     /**
      * Specification:
-     * - Returns a string array of names of available locales without accessing the database.
+     * - Returns aa array of locale codes for supported stores without accessing the database.
      *
      * @api
      *
-     * @return string[]
+     * @return array
      */
-    public function getAvailableLocaleNames(): array;
+    public function getSupportedLocaleCodes(): array;
 }

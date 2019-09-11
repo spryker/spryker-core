@@ -31,10 +31,10 @@ class TranslatorToLocaleFacadeBridge implements TranslatorToLocaleFacadeInterfac
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    public function getAvailableLocaleNames(): array
+    public function getSupportedLocaleCodes(): array
     {
-        return $this->localeFacade->getAvailableLocaleNames();
+        return $this->localeFacade->getSupportedLocaleCodes();
     }
 }

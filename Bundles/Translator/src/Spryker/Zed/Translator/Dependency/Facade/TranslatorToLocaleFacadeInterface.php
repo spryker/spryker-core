@@ -15,7 +15,7 @@ interface TranslatorToLocaleFacadeInterface
     public function getCurrentLocaleName();
 
     /**
-     * @return string[]
+     * @return array
      */
-    public function getAvailableLocaleNames(): array;
+    public function getSupportedLocaleCodes(): array;
 }
