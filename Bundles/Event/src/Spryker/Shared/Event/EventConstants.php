@@ -67,4 +67,12 @@ interface EventConstants
      * @api
      */
     public const EVENT_QUEUE_ERROR = 'event.error';
+
+    /**
+     * Specification:
+     *  - Enable processing of errored bulk events.
+     *
+     * @api
+     */
+    public const EVENT_HANDLE_ERROR_BULK_OPERATION_BY_ITEMS = 'EVENT:EVENT_HANDLE_ERROR_BULK_OPERATION_BY_ITEMS';
 }

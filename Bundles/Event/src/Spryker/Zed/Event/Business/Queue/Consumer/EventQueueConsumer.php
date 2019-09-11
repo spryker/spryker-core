@@ -125,25 +125,68 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         if (!($listener instanceof EventBulkHandlerInterface)) {
             return;
         }
-
         foreach ($eventItems as $eventName => $eventItem) {
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
             } catch (Throwable $throwable) {
-                $errorMessage = sprintf(
-                    'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
-                    $eventName,
-                    $listenerClassName,
-                    $throwable->getMessage(),
-                    $throwable->getTraceAsString()
-                );
-                $this->logConsumerAction($errorMessage, $throwable);
-                if (!$this->eventConfig->isLoggerActivated()) {
-                    $errorMessage = '';
+                if ($this->eventConfig->isHandleErrorBulkOperationByItemsActive()) {
+                    $this->handleBulkByItems($eventItem, $eventName, $listener, $listenerClassName);
+
+                    return;
                 }
-                $this->handleFailedMessages($eventItem, $errorMessage);
+                $this->handleFailedEventItem($eventItem, $eventName, $listenerClassName, $throwable);
             }
         }
+    }
+
+    /**
+     * @param array $eventItem
+     * @param string $eventName
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface $listener
+     * @param string $listenerClassName
+     *
+     * @return void
+     */
+    protected function handleBulkByItems(array $eventItem, string $eventName, EventBulkHandlerInterface $listener, string $listenerClassName): void
+    {
+        foreach ($eventItem[static::EVENT_TRANSFERS] as $key => $eventItemTransfer) {
+            try {
+                $listener->handleBulk([$eventItemTransfer], $eventName);
+            } catch (Throwable $throwable) {
+                $failedEventItem = [
+                    static::EVENT_TRANSFERS => [$eventItemTransfer],
+                    static::EVENT_MESSAGES => [$eventItem[static::EVENT_MESSAGES][$key]],
+                ];
+
+                $this->handleFailedEventItem($failedEventItem, $eventName, $listenerClassName, $throwable);
+            }
+        }
+    }
+
+    /**
+     * @param array $eventItem
+     * @param string $eventName
+     * @param string $listenerClassName
+     * @param \Throwable $throwable
+     *
+     * @return void
+     */
+    protected function handleFailedEventItem(array $eventItem, string $eventName, string $listenerClassName, Throwable $throwable): void
+    {
+        $errorMessage = sprintf(
+            'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+            $eventName,
+            $listenerClassName,
+            $throwable->getMessage(),
+            $throwable->getTraceAsString()
+        );
+
+        $this->logConsumerAction($errorMessage, $throwable);
+        if (!$this->eventConfig->isLoggerActivated()) {
+            $errorMessage = 'Please enable the event logger in the config_* files to see the error message: `$config[EventConstants::LOGGER_ACTIVE] = true;`';
+        }
+
+        $this->handleFailedMessages($eventItem, $errorMessage);
     }
 
     /**
