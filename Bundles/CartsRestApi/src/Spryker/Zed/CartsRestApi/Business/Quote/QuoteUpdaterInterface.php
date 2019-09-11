@@ -33,5 +33,5 @@ interface QuoteUpdaterInterface
      *
      * @return void
      */
-    public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
+    public function convertGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
 }

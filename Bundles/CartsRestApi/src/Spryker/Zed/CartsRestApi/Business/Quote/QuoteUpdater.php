@@ -131,14 +131,14 @@ class QuoteUpdater implements QuoteUpdaterInterface
                 ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
-        $guestQuotes = $quoteCollectionTransfer->getQuotes();
-        if (!$guestQuotes->count()) {
+        $guestQuotesTransfers = $quoteCollectionTransfer->getQuotes();
+        if (!$guestQuotesTransfers->count()) {
             return (new QuoteResponseTransfer())
                 ->setIsSuccessful(false);
         }
 
         $customerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
-        $quoteTransfer = $this->updateQuoteTransferWithCustomerReference($customerReference, $guestQuotes[0]);
+        $quoteTransfer = $this->updateQuoteTransferWithCustomerReference($customerReference, $guestQuotesTransfers[0]);
 
         return $this->performQuoteUpdate($quoteTransfer);
     }
@@ -148,7 +148,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      *
      * @return void
      */
-    public function updateGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    public function convertGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
     {
         $customerReference = $oauthResponseTransfer->getCustomerReference();
         $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();

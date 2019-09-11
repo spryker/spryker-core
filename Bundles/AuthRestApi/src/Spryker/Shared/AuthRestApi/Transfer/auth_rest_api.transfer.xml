@@ -59,4 +59,10 @@
         <property name="type" type="string" />
     </transfer>
 
+    <transfer name="OauthAccessTokenValidationResponse">
+        <property name="isValid" type="bool" />
+        <property name="oauthScopes" type="array" />
+        <property name="oauthUserId" type="string" />
+    </transfer>
+
 </transfers>

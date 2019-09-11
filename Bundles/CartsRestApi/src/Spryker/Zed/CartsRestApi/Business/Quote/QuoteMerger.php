@@ -60,12 +60,12 @@ class QuoteMerger implements QuoteMergerInterface
             return;
         }
 
-        $questQuoteTransfer = $this->findQuoteByCustomerReference($anonymousCustomerReference);
-        if (!$questQuoteTransfer) {
+        $guestQuoteTransfer = $this->findQuoteByCustomerReference($anonymousCustomerReference);
+        if (!$guestQuoteTransfer) {
             return;
         }
 
-        if (!$questQuoteTransfer->getItems()->count()) {
+        if (!$guestQuoteTransfer->getItems()->count()) {
             return;
         }
 
@@ -74,10 +74,10 @@ class QuoteMerger implements QuoteMergerInterface
             return;
         }
 
-        $this->addGuestQuoteItemsToCustomerCart($questQuoteTransfer, $customerQuoteTransfer, $customerReference);
+        $this->addGuestQuoteItemsToCustomerCart($guestQuoteTransfer, $customerQuoteTransfer, $customerReference);
 
-        $questQuoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
-        $this->quoteFacade->deleteQuote($questQuoteTransfer);
+        $guestQuoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
+        $this->quoteFacade->deleteQuote($guestQuoteTransfer);
     }
 
     /**
@@ -91,30 +91,30 @@ class QuoteMerger implements QuoteMergerInterface
             (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
         );
 
-        $guestQuoteTransfers = $quoteCollectionTransfer->getQuotes();
-        if (!$guestQuoteTransfers->count()) {
+        $quoteTransfers = $quoteCollectionTransfer->getQuotes();
+        if (!$quoteTransfers->count()) {
             return null;
         }
 
-        return $guestQuoteTransfers[0];
+        return $quoteTransfers[0];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $questQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $guestQuoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $customerQuoteTransfer
      * @param string $customerReference
      *
      * @return void
      */
     protected function addGuestQuoteItemsToCustomerCart(
-        QuoteTransfer $questQuoteTransfer,
+        QuoteTransfer $guestQuoteTransfer,
         QuoteTransfer $customerQuoteTransfer,
         string $customerReference
     ): void {
         $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
             ->setIdQuote($customerQuoteTransfer->getIdQuote())
-            ->setItems($questQuoteTransfer->getItems());
+            ->setItems($guestQuoteTransfer->getItems());
 
         $this->persistentCartFacade->add($persistentCartChangeTransfer);
     }

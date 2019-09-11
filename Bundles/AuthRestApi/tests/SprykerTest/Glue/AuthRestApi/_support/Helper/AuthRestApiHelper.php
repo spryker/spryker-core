@@ -52,13 +52,13 @@ class AuthRestApiHelper extends Module
      *
      * @part json
      *
-     * @param string $anonymousCustomerReference
+     * @param string $value
      *
      * @return void
      */
-    public function amUnauthorizedGlueUser(string $anonymousCustomerReference): void
+    public function amUnauthorizedGlueUser(string $value): void
     {
-        $this->glueRestProvider->haveHttpHeader('X-Anonymous-Customer-Unique-Id', $anonymousCustomerReference);
+        $this->glueRestProvider->haveHttpHeader('X-Anonymous-Customer-Unique-Id', $value);
     }
 
     /**
@@ -70,9 +70,9 @@ class AuthRestApiHelper extends Module
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array|null
+     * @return array
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): ?array
+    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): array
     {
         $this->glueRestProvider->sendPOST(AuthRestApiConfig::RESOURCE_ACCESS_TOKENS, [
             'data' => [
