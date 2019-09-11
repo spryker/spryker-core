@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage;
 
+use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ConfigurableBundleStorageConfig extends AbstractBundleConfig
@@ -16,7 +17,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return $this->get(ConfigurableBundleStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 
     /**

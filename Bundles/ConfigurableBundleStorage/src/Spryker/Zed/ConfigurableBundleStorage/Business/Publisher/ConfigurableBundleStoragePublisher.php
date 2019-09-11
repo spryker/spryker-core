@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage;
+use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface;
 
@@ -28,15 +29,23 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
     protected $configurableBundleStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager
+     * @param \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig $config
      */
     public function __construct(
         ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository,
-        ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager
+        ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager,
+        ConfigurableBundleStorageConfig $config
     ) {
         $this->configurableBundleStorageRepository = $configurableBundleStorageRepository;
         $this->configurableBundleStorageEntityManager = $configurableBundleStorageEntityManager;
+        $this->config = $config;
     }
 
     /**
@@ -57,6 +66,10 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
             $configurableBundleTemplateStorageEntity = $this->mapConfigurableBundleTemplateEntityToConfigurableBundleTemplateStorageEntity(
                 $configurableBundleTemplateEntity,
                 $configurableBundleTemplateStorageEntity
+            );
+
+            $configurableBundleTemplateStorageEntity->setIsSendingToQueue(
+                $this->config->isSendingToQueue()
             );
 
             $this->saveStorageEntity($configurableBundleTemplateStorageEntity);
