@@ -42,8 +42,10 @@ class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
      */
     public function convertTwigExpressionsToHtml(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        $cmsGlossaryTransfer->requireGlossaryAttributes();
         $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
+        if ($cmsGlossaryAttributesTransfers->count() === 0) {
+            return $cmsGlossaryTransfer;
+        }
 
         foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransfer) {
             $cmsGlossaryAttributesTransfer->requireTranslations();
@@ -73,8 +75,10 @@ class CmsGuiGlossaryConverter implements CmsGuiGlossaryConverterInterface
      */
     public function convertHtmlToTwigExpressions(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
-        $cmsGlossaryTransfer->requireGlossaryAttributes();
         $cmsGlossaryAttributesTransfers = $cmsGlossaryTransfer->getGlossaryAttributes();
+        if ($cmsGlossaryAttributesTransfers->count() === 0) {
+            return $cmsGlossaryTransfer;
+        }
 
         foreach ($cmsGlossaryAttributesTransfers as $cmsGlossaryAttributesTransfer) {
             $cmsGlossaryAttributesTransfer->requireTranslations();

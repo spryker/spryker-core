@@ -19,6 +19,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
+    protected const BUTTON_LABEL_EDIT = 'Edit';
+
     /**
      * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
      */
@@ -285,18 +287,33 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createEditButtonGroup(array $item)
+    protected function createEditButtonGroup(array $item): string
     {
+        $cmsGlossaryTransfer = $this->cmsFacade
+            ->findPageGlossaryAttributes($item[CmsPageTableConstants::COL_ID_CMS_PAGE]);
+
+        $buttonOptions = [
+            'class' => 'btn-edit',
+            'icon' => 'fa-pencil-square-o',
+        ];
+
+        if ($cmsGlossaryTransfer && $cmsGlossaryTransfer->getGlossaryAttributes()->count() === 0) {
+            return $this->generateButton(
+                Url::generate('/cms-gui/edit-page/index', [
+                    CmsPageTableConstants::EDIT_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
+                ]),
+                static::BUTTON_LABEL_EDIT,
+                $buttonOptions
+            );
+        }
+
         return $this->generateButtonGroup(
             [
                 $this->createEditPageButtonItem($item),
                 $this->createEditGlossaryButtonItem($item),
             ],
-            'Edit',
-            [
-                'class' => 'btn-edit',
-                'icon' => 'fa-pencil-square-o',
-            ]
+            static::BUTTON_LABEL_EDIT,
+            $buttonOptions
         );
     }
 

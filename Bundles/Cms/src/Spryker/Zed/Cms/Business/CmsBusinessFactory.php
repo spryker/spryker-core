@@ -39,6 +39,8 @@ use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriter;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
+use Spryker\Zed\Cms\Business\Template\TemplateReader;
+use Spryker\Zed\Cms\Business\Template\TemplateReaderInterface;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface;
 use Spryker\Zed\Cms\Business\Version\Migration\CmsGlossaryKeyMappingMigration;
@@ -192,7 +194,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsGlossaryReader(): CmsGlossaryReaderInterface
     {
-        return new CmsGlossaryReader($this->getQueryContainer(), $this->getLocaleFacade(), $this->getConfig());
+        return new CmsGlossaryReader($this->getQueryContainer(), $this->getLocaleFacade(), $this->createTemplateReader());
     }
 
     /**
@@ -353,7 +355,12 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsPageActivator(): CmsPageActivatorInterface
     {
-        return new CmsPageActivator($this->getQueryContainer(), $this->getTouchFacade(), $this->getCmsPagePostActivatorPlugins());
+        return new CmsPageActivator(
+            $this->getQueryContainer(),
+            $this->getTouchFacade(),
+            $this->getCmsPagePostActivatorPlugins(),
+            $this->createTemplateReader()
+        );
     }
 
     /**
@@ -427,5 +434,13 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCmsPageStoreRelationReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Template\TemplateReaderInterface
+     */
+    public function createTemplateReader(): TemplateReaderInterface
+    {
+        return new TemplateReader($this->getConfig());
     }
 }

@@ -13,15 +13,18 @@ use Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
-use Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException;
-use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
-use Spryker\Zed\Cms\CmsConfig;
+use Spryker\Zed\Cms\Business\Template\TemplateReaderInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
-use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class CmsGlossaryReader implements CmsGlossaryReaderInterface
 {
+    /**
+     * @var string
+     * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::TEMPLATE_PATH
+     */
+    protected const COLUMN_TEMPLATE_PATH = 'template_path';
+
     /**
      * @var \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
@@ -33,23 +36,23 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\CmsConfig
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateReaderInterface
      */
-    protected $cmsConfig;
+    protected $templateReader;
 
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\Cms\CmsConfig $cmsConfig
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateReaderInterface $templateReader
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsToLocaleFacadeInterface $localeFacade,
-        CmsConfig $cmsConfig
+        TemplateReaderInterface $templateReader
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->localeFacade = $localeFacade;
-        $this->cmsConfig = $cmsConfig;
+        $this->templateReader = $templateReader;
     }
 
     /**
@@ -65,7 +68,9 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             return null;
         }
 
-        $pagePlaceholders = $this->findPagePlaceholders($cmsPageEntity);
+        $pagePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
+            $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
+        );
         $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pagePlaceholders, $idCmsPage);
 
         $cmsGlossaryTransfer = new CmsGlossaryTransfer();
@@ -76,77 +81,6 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         }
 
         return $cmsGlossaryTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPlaceholderPattern(): string
-    {
-        return $this->cmsConfig->getPlaceholderPattern();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getPlaceholderValuePattern(): string
-    {
-        return $this->cmsConfig->getPlaceholderValuePattern();
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
-     *
-     * @return array
-     */
-    protected function findPagePlaceholders(SpyCmsPage $cmsPageEntity): array
-    {
-        $cmsPageArray = $cmsPageEntity->toArray();
-        $templateFiles = $this->cmsConfig->getTemplateRealPaths($cmsPageArray[CmsQueryContainer::TEMPLATE_PATH]);
-
-        $placeholders = [];
-        foreach ($templateFiles as $templateFile) {
-            if (!$this->fileExists($templateFile)) {
-                continue;
-            }
-
-            $placeholders = $this->getTemplatePlaceholders($templateFile);
-        }
-
-        return $placeholders;
-    }
-
-    /**
-     * @param string $templateFile
-     *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException
-     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
-     *
-     * @return array
-     */
-    protected function getTemplatePlaceholders(string $templateFile): array
-    {
-        if (!$this->fileExists($templateFile)) {
-            throw new TemplateFileNotFoundException(
-                sprintf('Template file not found in "%s"', $templateFile)
-            );
-        }
-
-        $templateContent = $this->readTemplateContents($templateFile);
-
-        preg_match_all($this->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
-        if (count($cmsPlaceholderLine) === 0) {
-            throw new MissingPlaceholdersException(
-                sprintf(
-                    'No placeholders found in "%s" template.',
-                    $templateFile
-                )
-            );
-        }
-
-        preg_match_all($this->getPlaceholderValuePattern(), implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
-
-        return $placeholderMap[1];
     }
 
     /**
@@ -283,27 +217,5 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
         $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
         $translationValue = $this->findTranslation($glossaryKeyEntity, $cmsPlaceholderTranslationTransfer->getFkLocale());
         $cmsPlaceholderTranslationTransfer->setTranslation($translationValue);
-    }
-
-    /**
-     * @param string $templateFile
-     *
-     * @return string
-     */
-    protected function readTemplateContents(string $templateFile): string
-    {
-        $templateFileContent = file_get_contents($templateFile);
-
-        return $templateFileContent;
-    }
-
-    /**
-     * @param string $templateFile
-     *
-     * @return bool
-     */
-    protected function fileExists(string $templateFile): bool
-    {
-        return file_exists($templateFile);
     }
 }
