@@ -16,6 +16,7 @@
     "spryker/availability": "*",
     "spryker/availability-storage": "*",
     "spryker/code-sniffer": "*",
+    "spryker/config": "*",
     "spryker/product": "*",
     "spryker/product-quantity": "*",
     "spryker/product-quantity-storage": "*",

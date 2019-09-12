@@ -10,7 +10,14 @@ namespace SprykerTest\Client\StorageDatabase;
 use Codeception\Test\Unit;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Client\StorageDatabase\Plugin\MySqlStorageReaderProviderPlugin;
+use Spryker\Client\StorageDatabase\Plugin\PostgreSqlStorageReaderProviderPlugin;
 use Spryker\Client\StorageDatabase\StorageDatabaseClient;
+use Spryker\Client\StorageDatabase\StorageDatabaseDependencyProvider;
+use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 /**
@@ -47,11 +54,7 @@ class StorageDatabaseClientTest extends Unit
         parent::setUp();
         $this->tester->setupStorageReaderPlugins();
 
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
+        $this->setUpDependencies();
 
         $this->storageDatabaseClient = new StorageDatabaseClient();
     }
@@ -164,5 +167,33 @@ class StorageDatabaseClientTest extends Unit
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpDependencies(): void
+    {
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+
+        $this->tester->setDependency(StorageDatabaseDependencyProvider::PLUGIN_STORAGE_READER_PROVIDER, function () {
+            return $this->getStorageReaderProviderPlugin();
+        });
+    }
+
+    /**
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface
+     */
+    protected function getStorageReaderProviderPlugin(): StorageReaderProviderPluginInterface
+    {
+        if (Config::get(StorageDatabaseConstants::DB_ENGINE) === StorageDatabaseConfig::DB_ENGINE_MYSQL) {
+            return new MySqlStorageReaderProviderPlugin();
+        }
+
+        return new PostgreSqlStorageReaderProviderPlugin();
     }
 }
