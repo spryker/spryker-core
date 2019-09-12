@@ -45,6 +45,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductS
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriter;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleWriterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinder;
@@ -63,6 +65,7 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCur
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
@@ -149,7 +152,18 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     public function createPriceProductScheduleListCreator(): PriceProductScheduleListCreatorInterface
     {
         return new PriceProductScheduleListCreator(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createPriceProductScheduleListExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListExpanderInterface
+     */
+    public function createPriceProductScheduleListExpander(): PriceProductScheduleListExpanderInterface
+    {
+        return new PriceProductScheduleListExpander(
+            $this->getUserFacade()
         );
     }
 
@@ -385,6 +399,14 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->getUtilCsvService(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeInterface
+     */
+    public function getUserFacade(): PriceProductScheduleToUserFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_USER);
     }
 
     /**

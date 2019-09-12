@@ -14,6 +14,7 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPri
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeBridge;
+use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeBridge;
 use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceBridge;
 
 /**
@@ -26,6 +27,7 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_PROPEL = 'FACADE_PROPEL';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_USER = 'FACADE_USER';
 
     public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
@@ -41,6 +43,7 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addProductFacade($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addUtilCsvService($container);
+        $container = $this->addUserFacade($container);
 
         return $container;
     }
@@ -53,6 +56,22 @@ class PriceProductScheduleDependencyProvider extends AbstractBundleDependencyPro
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addPropelFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_USER, function (Container $container) {
+            return new PriceProductScheduleToUserFacadeBridge(
+                $container->getLocator()->user()->facade()
+            );
+        });
 
         return $container;
     }

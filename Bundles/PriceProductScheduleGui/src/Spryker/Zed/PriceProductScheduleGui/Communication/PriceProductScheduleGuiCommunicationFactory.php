@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleListForm;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleListFormDataProvider;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
@@ -31,6 +33,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductSchedule
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleListTable;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleTable;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleTableForEditList;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpander;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\AbstractProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpander;
@@ -228,6 +231,44 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
             $this->createRowFormatter(),
             $this->getPriceProductScheduleQuery(),
             $idPriceProductScheduleList
+        );
+    }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleTableForEditList
+     */
+    public function createPriceProductScheduleTableForEditList(int $idPriceProductScheduleList): PriceProductScheduleTableForEditList
+    {
+        return new PriceProductScheduleTableForEditList(
+            $this->createRowFormatter(),
+            $this->getPriceProductScheduleQuery(),
+            $idPriceProductScheduleList
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleListFormDataProvider
+     */
+    public function createPriceProductScheduleListFormDataProvider(): PriceProductScheduleListFormDataProvider
+    {
+        return new PriceProductScheduleListFormDataProvider();
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleListFormDataProvider $dataProvider
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPriceProductScheduleListForm(
+        PriceProductScheduleListFormDataProvider $dataProvider,
+        PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+    ): FormInterface {
+        return $this->getFormFactory()->create(
+            PriceProductScheduleListForm::class,
+            $dataProvider->getData($priceProductScheduleListTransfer)
         );
     }
 
