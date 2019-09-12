@@ -8,7 +8,7 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Order;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -102,15 +102,15 @@ class OrderReader implements OrderReaderInterface
     protected function getOrderListAttributes(RestRequestInterface $restRequest): RestResponseInterface
     {
         $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
-        $orderListTransfer = (new OrderListTransfer())->setCustomerReference($customerReference);
+        $orderListRequestTransfer = (new OrderListRequestTransfer())->setCustomerReference($customerReference);
 
         $limit = 0;
         if ($restRequest->getPage()) {
             $limit = $restRequest->getPage()->getLimit();
-            $orderListTransfer->setFilter($this->createFilterTransfer($restRequest));
+            $orderListRequestTransfer->setFilter($this->createFilterTransfer($restRequest));
         }
 
-        $orderListTransfer = $this->salesClient->getOffsetPaginatedCustomerOrderList($orderListTransfer);
+        $orderListTransfer = $this->salesClient->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
 
         $totalItems = $orderListTransfer->getPagination() ? $orderListTransfer->getPagination()->getNbResults() : 0;
 

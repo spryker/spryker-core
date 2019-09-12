@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Sales;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
@@ -48,11 +49,11 @@ interface SalesClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOffsetPaginatedCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
 
     /**
      * Specification:

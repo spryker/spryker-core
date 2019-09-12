@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -60,13 +61,13 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOffsetPaginatedCustomerOrderListAction(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getOffsetPaginatedCustomerOrderListAction(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
     {
-        return $this->getFacade()->getOffsetPaginatedCustomerOrderList($orderListTransfer);
+        return $this->getFacade()->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
     }
 
     /**

@@ -45,6 +45,12 @@
         <property name="pagination" type="Pagination" />
     </transfer>
 
+    <transfer name="OrderListRequest">
+        <property name="customerReference" type="string" />
+        <property name="filter" type="Filter" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
     <transfer name="Address">
         <property name="idSalesOrderAddress" type="int" />
         <property name="idCustomerAddress" type="int" />

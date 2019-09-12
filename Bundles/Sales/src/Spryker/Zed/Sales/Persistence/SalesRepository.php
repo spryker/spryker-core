@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
@@ -37,22 +38,22 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getCustomerOrderListByCustomerReference(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getCustomerOrderListByCustomerReference(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
     {
         $orderListQuery = $this->getFactory()
             ->createSalesOrderQuery()
-            ->filterByCustomerReference($orderListTransfer->getCustomerReference());
+            ->filterByCustomerReference($orderListRequestTransfer->getCustomerReference());
 
         $ordersCount = $orderListQuery->count();
         if (!$ordersCount) {
-            return $orderListTransfer;
+            return new OrderListTransfer();
         }
 
-        $filterTransfer = $orderListTransfer->getFilter();
+        $filterTransfer = $orderListRequestTransfer->getFilter();
         if ($filterTransfer) {
             $orderListQuery->mergeWith(
                 (new PropelFilterCriteria($filterTransfer))->toCriteria()
@@ -61,6 +62,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 
         return $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), $orderListTransfer, $ordersCount);
+            ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), new OrderListTransfer(), $ordersCount);
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -153,18 +154,18 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Returns a transfer with the filtered list of orders for the given customer.
-     * - Uses OrderListTransfer::$filter to pull params for offset-based pagination strategy.
-     * - customerReference must be set in the OrderListTransfer.
+     * - Uses OrderListRequestTransfer::$filter to pull params for offset-based pagination strategy.
+     * - customerReference must be set in the OrderListRequestTransfer.
      * - Hydrates OrderTransfer with data from persistence by idSaleOrder.
      * - Updates the total number of orders for the customer to the pagination transfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOffsetPaginatedCustomerOrderList(OrderListTransfer $orderListTransfer): OrderListTransfer;
+    public function getOffsetPaginatedCustomerOrderList(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
 
     /**
      * Specification:

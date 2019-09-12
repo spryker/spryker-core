@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Customer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
@@ -46,14 +47,14 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    public function getOrders(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer
     {
-        $orderListTransfer->requireCustomerReference();
-        $orderListTransfer = $this->salesRepository->getCustomerOrderListByCustomerReference($orderListTransfer);
+        $orderListRequestTransfer->requireCustomerReference();
+        $orderListTransfer = $this->salesRepository->getCustomerOrderListByCustomerReference($orderListRequestTransfer);
 
         if (!$orderListTransfer->getOrders()->count()) {
             return $orderListTransfer;

@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Customer;
 
+use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 
 interface OffsetPaginatedCustomerOrderListReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+    public function getOrders(OrderListRequestTransfer $orderListRequestTransfer): OrderListTransfer;
 }
