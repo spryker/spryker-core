@@ -79,12 +79,8 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
             $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
         );
-        $this->assertEmpty(
-            $findQuoteResponseTransfer->getErrors()
-        );
-        $this->assertEmpty(
-            $guestQuoteCollectionTransfer->getQuotes()
-        );
+        $this->assertEmpty($findQuoteResponseTransfer->getErrors());
+        $this->assertEmpty($guestQuoteCollectionTransfer->getQuotes());
     }
 
     /**
@@ -114,12 +110,8 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
             $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
         );
-        $this->assertNotEmpty(
-            $findQuoteResponseTransfer->getErrors()
-        );
-        $this->assertNotEmpty(
-            $guestQuoteCollectionTransfer->getQuotes()
-        );
+        $this->assertNotEmpty($findQuoteResponseTransfer->getErrors());
+        $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());
     }
 
     /**
