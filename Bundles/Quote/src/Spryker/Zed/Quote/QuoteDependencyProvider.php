@@ -307,7 +307,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsProviderPluginInterface[]
      */
     protected function getQuoteFieldsAllowedForSavingProviderPlugins(): array
     {

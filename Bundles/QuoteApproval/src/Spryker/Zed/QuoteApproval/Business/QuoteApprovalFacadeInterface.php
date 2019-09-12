@@ -19,9 +19,10 @@ interface QuoteApprovalFacadeInterface
      * - Returns unsuccessful response with corresponding message if target quote has no items.
      * - Share cart to approver with read only access.
      * - Removes all existing cart sharing.
+     * - Merges `Quote` loaded from persistance with `QuoteApprovalRequest::quote` if it is provided.
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
-     * - Merges `Quote` from `QuoteApprovalRequest` to `Quote` in database.
+     * - Requires QuoteApprovalRequestTransfer::quote field to be set.
      *
      * @api
      *
