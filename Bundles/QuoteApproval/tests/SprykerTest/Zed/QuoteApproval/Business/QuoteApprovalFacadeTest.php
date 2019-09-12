@@ -104,7 +104,7 @@ class QuoteApprovalFacadeTest extends Unit
     {
         // Arrange
         $this->prepareEnvForQuoteApprovalCreation();
-        $this->setGrantTypeConfigurationProviderPluginMock();
+        $this->setQuoteFieldsAllowedForSavingProviderPluginMock();
         $addressTransfer = (new AddressBuilder())->build();
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $quoteApprovalCreateRequestTransfer->getQuote()->setShippingAddress($addressTransfer);
@@ -643,7 +643,7 @@ class QuoteApprovalFacadeTest extends Unit
             ->method('getRequiredQuoteFields')
             ->willReturn($this->requiredQuoteFields);
 
-        /** @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface $quoteApprovalFacade */
+        /** @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacade $quoteApprovalFacade */
         $quoteApprovalFacade = $this->getFacade();
         $quoteApprovalFacade->setFactory((new QuoteApprovalBusinessFactory())->setConfig($quoteApprovalConfigMock));
 
@@ -653,7 +653,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setGrantTypeConfigurationProviderPluginMock(): void
+    protected function setQuoteFieldsAllowedForSavingProviderPluginMock(): void
     {
         $quoteFieldsAllowedForSavingProviderPluginMock = $this->getMockBuilder(QuoteFieldsAllowedForSavingProviderPlugin::class)
             ->setMethods(['execute'])
