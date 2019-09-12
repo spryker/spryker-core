@@ -5,10 +5,12 @@
 
     <transfer name="RestCheckoutData">
         <property name="addresses" type="Addresses" singular="address"/>
-        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod" deprecated="Use selectedShipmentMethods instead."/>
+        <property name="selectedShipmentMethods" type="ShipmentMethods" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
         <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
+        <property name="currentStore" type="Store"/>
     </transfer>
 
     <transfer name="RestCheckoutError">
@@ -73,9 +75,11 @@
 
     <transfer name="RestCheckoutDataResponseAttributes">
         <property name="addresses" type="RestAddress[]" singular="address"/>
+        <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider"/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Use selectedShipmentMethods instead."/>
+        <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Use selectedPaymentMethods instead"/>
         <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
-        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod"/>
     </transfer>
 
     <transfer name="RestPaymentProvider">
@@ -91,12 +95,15 @@
     </transfer>
 
     <transfer name="RestShipmentMethod">
-        <property name="carrierName" type="string"/>
         <property name="id" type="int"/>
         <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
         <property name="price" type="int"/>
-        <property name="taxRate" type="float"/>
+        <property name="taxRate" type="float" deprecated="Will be removed with next major release."/>
         <property name="deliveryTime" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="RestCheckoutResponseAttributes">
@@ -188,4 +195,12 @@
         <property name="customerTransfer" type="Customer" />
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="fkStore" type="int"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
 </transfers>
