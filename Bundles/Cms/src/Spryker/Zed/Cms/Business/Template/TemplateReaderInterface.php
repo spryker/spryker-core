@@ -12,9 +12,6 @@ interface TemplateReaderInterface
     /**
      * @param string $templatePath
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException
-     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
-     *
      * @return string[]
      */
     public function getPlaceholdersByTemplatePath(string $templatePath): array;

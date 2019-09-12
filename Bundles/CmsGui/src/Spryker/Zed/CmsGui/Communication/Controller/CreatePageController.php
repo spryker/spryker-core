@@ -91,7 +91,7 @@ class CreatePageController extends AbstractController
                 ->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
 
             if ($cmsGlossaryTransfer && $cmsGlossaryTransfer->getGlossaryAttributes()->count() === 0) {
-                return Url::generate('/content-gui/list-content');
+                return Url::generate('/cms-gui/list-page');
             }
 
             return Url::generate(

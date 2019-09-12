@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Template;
 
-use Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException;
-use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
 
 class TemplateReader implements TemplateReaderInterface
@@ -51,29 +49,15 @@ class TemplateReader implements TemplateReaderInterface
     /**
      * @param string $templateFile
      *
-     * @throws \Spryker\Zed\Cms\Business\Exception\MissingPlaceholdersException
-     * @throws \Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException
-     *
      * @return string[]
      */
     protected function getTemplatePlaceholders(string $templateFile): array
     {
-        if (!$this->fileExists($templateFile)) {
-            throw new TemplateFileNotFoundException(
-                sprintf('Template file not found in "%s"', $templateFile)
-            );
-        }
-
         $templateContent = $this->readTemplateContents($templateFile);
 
         preg_match_all($this->cmsConfig->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
         if (count($cmsPlaceholderLine[0]) === 0) {
-            throw new MissingPlaceholdersException(
-                sprintf(
-                    'No placeholders found in "%s" template.',
-                    $templateFile
-                )
-            );
+            return [];
         }
 
         preg_match_all($this->cmsConfig->getPlaceholderValuePattern(), implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
