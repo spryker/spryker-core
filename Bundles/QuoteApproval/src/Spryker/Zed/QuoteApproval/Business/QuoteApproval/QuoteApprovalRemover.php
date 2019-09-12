@@ -101,7 +101,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->executeQuoteApprovalRemoval($quoteApprovalResponse, $quoteApprovalRequestTransfer);
 
         return $quoteApprovalResponseTransfer->setIsSuccessful(true)
-            ->setQuote($this->createQuoteWithQuoteApprovals($quoteApprovalResponse->getQuote()->getIdQuote()))
+            ->setQuote($this->expandQuoteWithQuoteApprovals($quoteApprovalResponseTransfer->getQuote()))
             ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
     }
 
@@ -126,6 +126,18 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function expandQuoteWithQuoteApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $quoteTransfer->setQuoteApprovals(
+            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote()))
+        );
+    }
+
+    /**
      * @param string $message
      * @param array $parameters
      *
@@ -138,17 +150,5 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $messageTransfer->setParameters($parameters);
 
         return $messageTransfer;
-    }
-
-    /**
-     * @param int $idQuote
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createQuoteWithQuoteApprovals(int $idQuote): QuoteTransfer
-    {
-        return (new QuoteTransfer())->setQuoteApprovals(
-            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($idQuote))
-        );
     }
 }

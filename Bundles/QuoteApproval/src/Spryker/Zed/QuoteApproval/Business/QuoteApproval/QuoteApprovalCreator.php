@@ -112,7 +112,10 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
             $quoteApprovalRequestTransfer
         );
 
-        return $this->createSuccessfulQuoteApprovalResponseTransfer($quoteApprovalTransfer);
+        return $this->createSuccessfulQuoteApprovalResponseTransfer($quoteApprovalTransfer)
+            ->setQuote(
+                $this->expandQuoteWithQuoteApprovals($quoteApprovalResponseTransfer->getQuote())
+            );
     }
 
     /**
@@ -203,7 +206,6 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
         return (new QuoteApprovalResponseTransfer())
             ->setIsSuccessful(true)
-            ->setQuote($this->createQuoteWithQuoteApprovals($quoteApprovalTransfer->getFkQuote()))
             ->addMessage(
                 $this->createMessageTransfer(
                     static::GLOSSARY_KEY_APPROVAL_CREATED,
@@ -229,14 +231,14 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
     }
 
     /**
-     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteWithQuoteApprovals(int $idQuote): QuoteTransfer
+    protected function expandQuoteWithQuoteApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return (new QuoteTransfer())->setQuoteApprovals(
-            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($idQuote))
+        return $quoteTransfer->setQuoteApprovals(
+            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote()))
         );
     }
 

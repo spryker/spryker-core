@@ -40,7 +40,7 @@ interface QuoteApprovalClientInterface
      * - Removes all existing cart sharing.
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
-     * - Returns quote approvals in quote.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -58,7 +58,7 @@ interface QuoteApprovalClientInterface
      * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      * - Removes cart sharing with approver.
      * - Removes quote approval request.
-     * - Returns quote approvals in quote.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -153,7 +153,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Sends Zed request to approve quote approval request.
-     * - Returns quote approvals in quote.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -169,7 +169,7 @@ interface QuoteApprovalClientInterface
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Declined" if checks are true.
      * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
-     * - Returns quote approvals in quote.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
