@@ -25,7 +25,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     public const EVENT_MESSAGES = 'eventMessages';
     public const RETRY_KEY = 'retry';
 
-    public const ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT = 'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".';
+    protected const ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT = 'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
