@@ -262,7 +262,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * {@inheritdoc}
      *
-     *
      * @api
      *
      * @return void
