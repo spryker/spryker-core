@@ -8,34 +8,26 @@
 namespace Spryker\Zed\Merchant\Persistence;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantRepositoryInterface
 {
     /**
-     * Specification:
-     * - Returns a MerchantTransfer by merchant id.
-     * - Returns null in case a record is not found.
-     *
-     * @param int $idMerchant
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer|null
-     */
-    public function getMerchantById(int $idMerchant): ?MerchantTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves collection of all merchants.
-     * - List of merchants is ordered by merchant name.
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer;
+    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer;
 
     /**
-     * Specification:
-     * - Checks whether merchant key already exists.
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
+     */
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
+
+    /**
      * @param string $key
      *
      * @return bool

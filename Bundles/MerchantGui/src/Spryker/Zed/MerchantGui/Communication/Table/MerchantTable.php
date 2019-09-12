@@ -15,6 +15,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class MerchantTable extends AbstractTable
 {
+    protected const STATUS_CLASS_MAPPING = [
+        'waiting-for-approval' => 'label-info',
+        'approved' => 'label-success',
+        'active' => 'label-warning',
+        'inactive' => 'label-danger',
+    ];
+
     /**
      * @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
@@ -37,19 +44,23 @@ class MerchantTable extends AbstractTable
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
-        $config = $this->setHeader($config);
 
         $config->setSortable([
             MerchantTableConstants::COL_ID_MERCHANT,
             MerchantTableConstants::COL_NAME,
+            MerchantTableConstants::COL_STATUS,
         ]);
 
-        $config->addRawColumn(MerchantTableConstants::COL_ACTIONS);
+        $config->setRawColumns([
+            MerchantTableConstants::COL_ACTIONS,
+            MerchantTableConstants::COL_STATUS,
+        ]);
         $config->setDefaultSortField(MerchantTableConstants::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
             MerchantTableConstants::COL_ID_MERCHANT,
             MerchantTableConstants::COL_NAME,
+            MerchantTableConstants::COL_STATUS,
         ]);
 
         return $config;
@@ -65,6 +76,7 @@ class MerchantTable extends AbstractTable
         $baseData = [
             MerchantTableConstants::COL_ID_MERCHANT => 'Merchant Id',
             MerchantTableConstants::COL_NAME => 'Name',
+            MerchantTableConstants::COL_STATUS => 'Status',
         ];
 
         $actions = [MerchantTableConstants::COL_ACTIONS => 'Actions'];
@@ -88,6 +100,7 @@ class MerchantTable extends AbstractTable
             $rowData = [
                 MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
                 MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
+                MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
                 MerchantTableConstants::COL_ACTIONS => $this->buildLinks($item),
             ];
             $results[] = $rowData;
@@ -111,11 +124,23 @@ class MerchantTable extends AbstractTable
             Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, $urlParams),
             'Edit'
         );
-        $buttons[] = $this->generateRemoveButton(
-            Url::generate(MerchantTableConstants::URL_MERCHANT_DELETE, $urlParams),
-            'Delete'
-        );
 
         return implode(' ', $buttons);
+    }
+
+    /**
+     * @param array $merchant
+     *
+     * @return string
+     */
+    public function createStatusLabel(array $merchant): string
+    {
+        $currentStatus = $merchant[SpyMerchantTableMap::COL_STATUS];
+
+        if (!isset(static::STATUS_CLASS_MAPPING[$currentStatus])) {
+            return '';
+        }
+
+        return $this->generateLabel($currentStatus, static::STATUS_CLASS_MAPPING[$currentStatus]);
     }
 }

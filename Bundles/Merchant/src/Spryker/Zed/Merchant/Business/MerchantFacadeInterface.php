@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
@@ -20,79 +22,93 @@ interface MerchantFacadeInterface
     /**
      * Specification:
      * - Creates a new merchant entity.
-     * - Uses incoming transfer to set entity fields.
+     * - Requires the following data set on the MerchantTransfer:
+     *   - name
+     *   - registrationNumber
+     *   - contactPersonTitle
+     *   - contactPersonFirstName
+     *   - contactPersonLastName
+     *   - contactPersonPhone
+     *   - email
+     * - Generates merchant key if doesn't exist.
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
+     * - Returns MerchantResponseTransfer.isSuccessful=true and MerchantResponseTransfer.merchant.idMerchant is set from newly created entity.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:
      * - Finds a merchant record by ID in DB.
-     * - Uses incoming transfer to update entity fields.
+     * - Requires the following data set on the MerchantTransfer:
+     *   - idMerchant
+     *   - name
+     *   - registrationNumber
+     *   - contactPersonTitle
+     *   - contactPersonFirstName
+     *   - contactPersonLastName
+     *   - contactPersonPhone
+     *   - email
+     * - Generates merchant key if doesn't exist.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant not found.
+     * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
      * - Persists the entity to DB.
-     * - Throws MerchantNotFoundException in case a record is not found.
+     * - Returns MerchantResponseTransfer.isSuccessful=true and updated MerchantTransfer.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:
-     * - Finds a merchant record by ID in DB.
-     * - Removes the merchant record.
+     * - Returns collection of merchants by provided criteria.
+     * - Pagination, filter and ordering options can be passed to criteria.
+     * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
+     * - Filter supports ordering by field.
+     * - Default order by merchant name.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    public function deleteMerchant(MerchantTransfer $merchantTransfer): void;
-
-    /**
-     * Specification:
-     * - Returns a MerchantTransfer by merchant id in provided transfer.
-     * - Throws an exception in case a record is not found.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves collection of all merchants.
-     *
-     * @api
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer;
+    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer;
 
     /**
      * Specification:
-     * - Finds a merchant by merchant id in provided transfer.
+     * - Returns merchant which can filtered by merchant id and email.
      * - Returns MerchantTransfer if found, NULL otherwise.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer;
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
+
+    /**
+     * Specification:
+     * - Gets the available merchant statuses for the current merchant status.
+     * - Returns empty array if no available statuses exist.
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getApplicableMerchantStatuses(string $currentStatus): array;
 }

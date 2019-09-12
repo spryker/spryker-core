@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTableConstants;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,6 @@ class EditMerchantController extends AbstractController
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant updated successfully.';
-    protected const MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,7 +30,7 @@ class EditMerchantController extends AbstractController
     {
         $idMerchant = $this->castId($request->get(MerchantTableConstants::REQUEST_ID_MERCHANT));
 
-        $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
+        $dataProvider = $this->getFactory()->createMerchantUpdateFormDataProvider();
         $merchantTransfer = $dataProvider->getData($idMerchant);
 
         if ($merchantTransfer === null) {
@@ -42,9 +40,9 @@ class EditMerchantController extends AbstractController
         }
 
         $merchantForm = $this->getFactory()
-            ->getMerchantForm(
+            ->getMerchantUpdateForm(
                 $merchantTransfer,
-                $dataProvider->getOptions()
+                $dataProvider->getOptions($merchantTransfer)
             )
             ->handleRequest($request);
 
@@ -68,14 +66,19 @@ class EditMerchantController extends AbstractController
     {
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
-        try {
-            $this->getFactory()
-                ->getMerchantFacade()
-                ->updateMerchant($merchantTransfer);
 
+        $merchantResponseTransfer = $this->getFactory()
+            ->getMerchantFacade()
+            ->updateMerchant($merchantTransfer);
+
+        if ($merchantResponseTransfer->getIsSuccess()) {
             $this->addSuccessMessage(static::MESSAGE_MERCHANT_UPDATE_SUCCESS);
-        } catch (MerchantNotFoundException $exception) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_NOT_FOUND);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
+            $this->addErrorMessage($merchantErrorTransfer->getMessage());
         }
 
         return $this->redirectResponse($redirectUrl);

@@ -1,2 +1,2 @@
-merchant_key,merchant_name
-kudu-merchant-1,Kudu Merchant
+merchant_key,merchant_name,registration_number,status,contact_person_title,contact_person_first_name,contact_person_last_name,contact_person_phone,email
+kudu-merchant-1,Kudu Merchant,123456,waiting-for-approval,Mr	,Tester,Tested,9183533523,tester@test.test

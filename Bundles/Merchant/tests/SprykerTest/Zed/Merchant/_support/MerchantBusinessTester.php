@@ -8,6 +8,12 @@
 namespace SprykerTest\Zed\Merchant;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\MerchantAddressBuilder;
+use Generated\Shared\DataBuilder\MerchantAddressCollectionBuilder;
+use Generated\Shared\DataBuilder\MerchantBuilder;
+use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
+use Generated\Shared\Transfer\MerchantAddressTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
 /**
@@ -22,6 +28,7 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -39,6 +46,42 @@ class MerchantBusinessTester extends Actor
     public function truncateMerchantRelations(): void
     {
         $this->truncateTableRelations($this->getMerchantQuery());
+    }
+
+    /**
+     * @param int|null $merchantId
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function createMerchantTransferWithAddressTransfer(?int $merchantId = null): MerchantTransfer
+    {
+        $merchantTransfer = (new MerchantBuilder())
+            ->build()
+            ->setIdMerchant($merchantId);
+
+        $merchantTransfer->setAddressCollection($this->createMerchantAddressCollectionTransfer());
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
+     */
+    public function createMerchantAddressCollectionTransfer(): MerchantAddressCollectionTransfer
+    {
+        $merchantAddressCollectionTransfer = (new MerchantAddressCollectionBuilder())->build();
+        $merchantAddressCollectionTransfer->addAddress($this->createMerchantAddressTransfer());
+
+        return $merchantAddressCollectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
+     */
+    public function createMerchantAddressTransfer(): MerchantAddressTransfer
+    {
+        return (new MerchantAddressBuilder())
+            ->build();
     }
 
     /**

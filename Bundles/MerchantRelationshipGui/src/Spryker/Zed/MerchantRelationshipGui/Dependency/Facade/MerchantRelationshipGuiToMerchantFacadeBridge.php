@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 
 class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelationshipGuiToMerchantFacadeInterface
 {
@@ -25,10 +26,12 @@ class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelations
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchants(): MerchantCollectionTransfer
+    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->getMerchants();
+        return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
     }
 }

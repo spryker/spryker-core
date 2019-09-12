@@ -15,7 +15,7 @@ class MerchantKeyGenerator implements MerchantKeyGeneratorInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRepository;
 
     /**
      * @var \Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface
@@ -23,14 +23,14 @@ class MerchantKeyGenerator implements MerchantKeyGeneratorInterface
     protected $utilTextService;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $repository
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface $utilTextService
      */
     public function __construct(
-        MerchantRepositoryInterface $repository,
+        MerchantRepositoryInterface $merchantRepository,
         MerchantToUtilTextServiceInterface $utilTextService
     ) {
-        $this->repository = $repository;
+        $this->merchantRepository = $merchantRepository;
         $this->utilTextService = $utilTextService;
     }
 
@@ -48,7 +48,7 @@ class MerchantKeyGenerator implements MerchantKeyGeneratorInterface
                 $this->utilTextService->generateSlug($name),
                 ++$index
             );
-        } while ($this->repository->hasKey($candidate));
+        } while ($this->merchantRepository->hasKey($candidate));
 
         return $candidate;
     }

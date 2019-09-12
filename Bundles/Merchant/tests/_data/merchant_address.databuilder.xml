@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantAddress">
+        <property name="key" dataBuilderRule="word" />
+        <property name="fkCountry" dataBuilderRule="=60" />
+        <property name="address1" dataBuilderRule="word" />
+        <property name="address2" dataBuilderRule="word" />
+        <property name="address3" dataBuilderRule="word" />
+        <property name="city" dataBuilderRule="word" />
+        <property name="zipCode" dataBuilderRule="word" />
+        <property name="fkMerchant" dataBuilderRule="=" />
+    </transfer>
+
+</transfers>
+

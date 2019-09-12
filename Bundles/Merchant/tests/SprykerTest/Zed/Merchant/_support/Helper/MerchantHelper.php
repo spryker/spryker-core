@@ -8,9 +8,12 @@
 namespace SprykerTest\Zed\Merchant\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\MerchantAddressBuilder;
+use Generated\Shared\DataBuilder\MerchantAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Spryker\Zed\Merchant\MerchantConfig;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -26,36 +29,21 @@ class MerchantHelper extends Module
      */
     public function haveMerchant(array $seedData = []): MerchantTransfer
     {
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
+        $merchantTransfer->setIdMerchant(null);
+        $merchantAddressTransfer = (new MerchantAddressBuilder())->build();
+        $merchantAddressCollection = (new MerchantAddressCollectionBuilder())->build();
+        $merchantAddressCollection->addAddress($merchantAddressTransfer);
+        $merchantTransfer->setAddressCollection($merchantAddressCollection);
 
-        $merchantTransfer = $this->getLocator()
+        $merchantResponseTransfer = $this->getLocator()
             ->merchant()
             ->facade()
             ->createMerchant($merchantTransfer);
-
-        $this->debug(sprintf('Created Merchant: %d', $merchantTransfer->getIdMerchant()));
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
-            $this->debug(sprintf('Deleting Merchant: %s', $merchantTransfer->getIdMerchant()));
-            $this->cleanupMerchant($merchantTransfer);
-        });
+        $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
         return $merchantTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return void
-     */
-    protected function cleanupMerchant(MerchantTransfer $merchantTransfer): void
-    {
-        $this->debug(sprintf('Deleting Merchant: %d', $merchantTransfer->getIdMerchant()));
-
-        $this->getLocator()
-            ->merchant()
-            ->facade()
-            ->deleteMerchant($merchantTransfer);
     }
 
     /**
@@ -67,6 +55,14 @@ class MerchantHelper extends Module
     {
         $query = $this->getMerchantQuery()->filterByIdMerchant($idMerchant);
         $this->assertSame(0, $query->count());
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\MerchantConfig
+     */
+    public function createMerchantConfig(): MerchantConfig
+    {
+        return new MerchantConfig();
     }
 
     /**

@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class MerchantReader implements MerchantReaderInterface
@@ -16,44 +17,33 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRepository;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $repository
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      */
-    public function __construct(MerchantRepositoryInterface $repository)
+    public function __construct(MerchantRepositoryInterface $merchantRepository)
     {
-        $this->repository = $repository;
+        $this->merchantRepository = $merchantRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
      *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
     {
-        $merchantTransfer->requireIdMerchant();
-
-        $merchantTransfer = $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
-        if (!$merchantTransfer) {
-            throw new MerchantNotFoundException();
-        }
-
-        return $merchantTransfer;
+        return $this->merchantRepository->find($merchantCriteriaFilterTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
-        $merchantTransfer->requireIdMerchant();
-
-        return $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
+        return $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
     }
 }

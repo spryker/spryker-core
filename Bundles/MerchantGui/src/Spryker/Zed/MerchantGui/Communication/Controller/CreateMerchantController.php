@@ -56,20 +56,20 @@ class CreateMerchantController extends AbstractController
     {
         $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
-        $merchantTransfer = $this->getFactory()
+        $merchantResponseTransfer = $this->getFactory()
             ->getMerchantFacade()
             ->createMerchant($merchantTransfer);
 
-        if (!$merchantTransfer->getIdMerchant()) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
+        if ($merchantResponseTransfer->getIsSuccess() && $merchantResponseTransfer->getMerchant()->getIdMerchant()) {
+            $this->addSuccessMessage(static::MESSAGE_MERCHANT_CREATE_SUCCESS);
 
-            return $this->viewResponse([
-                'form' => $merchantForm->createView(),
-            ]);
+            return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addSuccessMessage(static::MESSAGE_MERCHANT_CREATE_SUCCESS);
+        $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->viewResponse([
+            'form' => $merchantForm->createView(),
+        ]);
     }
 }
