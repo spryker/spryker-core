@@ -77,14 +77,18 @@ interface ProductListFacadeInterface
      * - Deletes Product List.
      * - Deletes relations to categories.
      * - Deletes relations to concrete products.
+     * - Executes ProductListDeletePreCheckPluginInterface plugin stack before delete.
+     * - Returns ProductListResponseTransfer.
+     * - ProductListResponseTransfer::isSuccessful indicates operation success.
+     * - ProductListResponseTransfer::messages contains error messages if deletion was not performed.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void;
+    public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:

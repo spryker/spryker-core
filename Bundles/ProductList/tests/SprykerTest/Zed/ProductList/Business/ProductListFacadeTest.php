@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductList\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductListBuilder;
-use Propel\Runtime\Exception\PropelException;
 
 /**
  * Auto-generated group annotations
@@ -191,13 +190,11 @@ class ProductListFacadeTest extends Unit
         // Assign
         $productListTransfer = $this->tester->haveProductList();
 
-        // Assert
-        $this->expectException(PropelException::class);
-        $this->expectExceptionMessage('Cannot insert a value for auto-increment primary key (spy_product_list.id_product_list)');
-
         // Act
-        $this->getFacade()->deleteProductList($productListTransfer);
-        $this->getFacade()->createProductList($productListTransfer);
+        $productListResponseTransfer = $this->getFacade()->deleteProductList($productListTransfer);
+
+        // Assert
+        $this->assertTrue($productListResponseTransfer->getIsSuccessful());
     }
 
     /**

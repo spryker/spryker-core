@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends ProductListAbstractController
 {
-    public const MESSAGE_PRODUCT_LIST_DELETE_SUCCESS = 'Product List has been successfully removed.';
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -50,11 +48,11 @@ class DeleteController extends ProductListAbstractController
         $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $productListTransfer = (new ProductListTransfer())->setIdProductList($idProductList);
 
-        $this->getFactory()
+        $productListResponseTransfer = $this->getFactory()
             ->getProductListFacade()
             ->deleteProductList($productListTransfer);
 
-        $this->addSuccessMessage(self::MESSAGE_PRODUCT_LIST_DELETE_SUCCESS);
+        $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
 
         return $this->redirectResponse($redirectUrl);
     }

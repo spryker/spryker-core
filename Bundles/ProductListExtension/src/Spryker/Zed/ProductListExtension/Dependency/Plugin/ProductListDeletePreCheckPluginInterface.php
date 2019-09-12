@@ -5,17 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade;
+namespace Spryker\Zed\ProductListExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
-interface MerchantRelationshipProductListToProductListFacadeInterface
+interface ProductListDeletePreCheckPluginInterface
 {
     /**
+     * Specification:
+     * - Executes plugins before a product list is deleted.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function execute(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }
