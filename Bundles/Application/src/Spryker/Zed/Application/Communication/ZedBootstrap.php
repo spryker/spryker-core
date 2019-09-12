@@ -142,11 +142,6 @@ class ZedBootstrap
     {
         $serviceProviders = $this->getMergedInternalRequestServiceProviders();
 
-        /** @deprecated This added to keep Backward Compatibility and will be removed in major release */
-        if (!$serviceProviders) {
-            $serviceProviders = $this->getServiceProvider();
-        }
-
         foreach ($serviceProviders as $provider) {
             $this->application->register($provider);
         }
@@ -157,11 +152,12 @@ class ZedBootstrap
      */
     protected function getMergedInternalRequestServiceProviders(): array
     {
+        $serviceProviders = $this->getServiceProvider();
         $internalCallServiceProvidersWithAuth = $this->getInternalCallServiceProviderWithAuthentication();
         $internalCallServiceProviders = $this->getInternalCallServiceProvider();
-        $mergedInternalCallServiceProviders = array_merge($internalCallServiceProvidersWithAuth, $internalCallServiceProviders);
+        $mergedServiceProviders = array_merge($serviceProviders, $internalCallServiceProvidersWithAuth, $internalCallServiceProviders);
 
-        return array_unique($mergedInternalCallServiceProviders, SORT_REGULAR);
+        return array_unique($mergedServiceProviders, SORT_REGULAR);
     }
 
     /**

@@ -152,7 +152,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addInternalCallServiceProvidersWithAuthentication()` instead.
+     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -168,6 +168,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -206,6 +208,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]
@@ -216,7 +220,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::getInternalCallServiceProvidersWithAuthentication()` instead.
+     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
