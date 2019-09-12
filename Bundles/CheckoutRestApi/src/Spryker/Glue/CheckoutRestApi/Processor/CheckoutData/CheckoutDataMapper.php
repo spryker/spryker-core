@@ -48,19 +48,19 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     ): RestCheckoutDataResponseAttributesTransfer {
         $restCheckoutDataResponseAttributesTransfer = new RestCheckoutDataResponseAttributesTransfer();
 
-        $restCheckoutDataResponseAttributesTransfer = $this->mapAddresses(
+        $restCheckoutDataResponseAttributesTransfer = $this->addRestAddressTransfer(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
+        $restCheckoutDataResponseAttributesTransfer = $this->addRestPaymentProviderTransfers(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
+        $restCheckoutDataResponseAttributesTransfer = $this->addRestShipmentMethodTransfers(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedShipmentMethods(
+        $restCheckoutDataResponseAttributesTransfer = $this->addSelectedRestShipmentMethodTransfers(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
@@ -74,7 +74,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapAddresses(
+    protected function addRestAddressTransfer(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -97,7 +97,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapPaymentProviders(
+    protected function addRestPaymentProviderTransfers(
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -161,14 +161,14 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @deprecated Use `mapSelectedShipmentMethods` instead.
+     * @deprecated Use `addSelectedRestShipmentMethodTransfers` instead.
      *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapShipmentMethods(
+    protected function addRestShipmentMethodTransfers(
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -176,8 +176,15 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         foreach ($shipmentMethods as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
-                $checkoutDataTransfer->getCurrentStore()
+                new RestShipmentMethodTransfer()
             );
+
+            $defaultGrossPrice = $this->findDefaultGrossPrice($shipmentMethodTransfer, $checkoutDataTransfer->getCurrentStore());
+            $defaultNetPrice = $this->findDefaultNetPrice($shipmentMethodTransfer, $checkoutDataTransfer->getCurrentStore());
+
+            $restShipmentMethodTransfer->setDefaultGrossPrice($defaultGrossPrice);
+            $restShipmentMethodTransfer->setDefaultNetPrice($defaultNetPrice);
+
             $restCheckoutDataResponseAttributesTransfer->addShipmentMethod($restShipmentMethodTransfer);
         }
 
@@ -186,20 +193,18 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer $restShipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodTransfer
      */
     protected function mapShipmentMethodTransferToRestShipmentMethodTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $currentStoreTransfer
+        RestShipmentMethodTransfer $restShipmentMethodTransfer
     ): RestShipmentMethodTransfer {
-        return (new RestShipmentMethodTransfer())
+        return $restShipmentMethodTransfer
             ->fromArray($shipmentMethodTransfer->toArray(), true)
             ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
-            ->setId($shipmentMethodTransfer->getIdShipmentMethod())
-            ->setDefaultGrossPrice($this->findDefaultGrossPrice($shipmentMethodTransfer, $currentStoreTransfer))
-            ->setDefaultNetPrice($this->findDefaultNetPrice($shipmentMethodTransfer, $currentStoreTransfer));
+            ->setId($shipmentMethodTransfer->getIdShipmentMethod());
     }
 
     /**
@@ -270,7 +275,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapSelectedShipmentMethods(
+    protected function addSelectedRestShipmentMethodTransfers(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -278,8 +283,15 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         foreach ($shipmentMethods as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
-                $restCheckoutDataTransfer->getCurrentStore()
+                new RestShipmentMethodTransfer()
             );
+
+            $defaultGrossPrice = $this->findDefaultGrossPrice($shipmentMethodTransfer, $restCheckoutDataTransfer->getCurrentStore());
+            $defaultNetPrice = $this->findDefaultNetPrice($shipmentMethodTransfer, $restCheckoutDataTransfer->getCurrentStore());
+
+            $restShipmentMethodTransfer->setDefaultGrossPrice($defaultGrossPrice);
+            $restShipmentMethodTransfer->setDefaultNetPrice($defaultNetPrice);
+
             $restCheckoutDataResponseAttributesTransfer->addSelectedShipmentMethod($restShipmentMethodTransfer);
         }
 

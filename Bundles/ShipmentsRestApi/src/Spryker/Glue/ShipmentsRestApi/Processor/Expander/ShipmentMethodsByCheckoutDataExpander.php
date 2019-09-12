@@ -7,9 +7,11 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -138,11 +140,20 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         StoreTransfer $currentStoreTransfer,
         RestRequestInterface $restRequest
     ): array {
+        $restShipmentMethodAttributesTransfers = [];
+        $shipmentMethodTransfers = $shipmentMethodsTransfer->getMethods()->getArrayCopy();
+
         $restShipmentMethodAttributesTransfers = $this->shipmentMethodMapper
             ->mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
-                $shipmentMethodsTransfer->getMethods(),
-                $currentStoreTransfer
+                $shipmentMethodTransfers,
+                $restShipmentMethodAttributesTransfers
             );
+
+        $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodAttributesTransfers(
+            $restShipmentMethodAttributesTransfers,
+            $shipmentMethodTransfers,
+            $currentStoreTransfer
+        );
 
         return $this->shipmentMethodsSorter
             ->sortShipmentMethodAttributesTransfers($restShipmentMethodAttributesTransfers, $restRequest);
@@ -161,7 +172,7 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         foreach ($restShipmentMethodAttributesTransfers as $idShipmentMethod => $restShipmentMethodAttributesTransfer) {
             $shipmentMethodRestResource = $this->createShipmentMethodRestResourceByCheckoutDataExpander(
                 $restShipmentMethodAttributesTransfer,
-                $idShipmentMethod
+                (string)$idShipmentMethod
             );
 
             $resource->addRelationship($shipmentMethodRestResource);
@@ -169,19 +180,106 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer[] $restShipmentMethodAttributesTransfers
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return array
+     */
+    protected function addShipmentMethodPricesToRestShipmentMethodAttributesTransfers(
+        array $restShipmentMethodAttributesTransfers,
+        array $shipmentMethodTransfers,
+        StoreTransfer $storeTransfer
+    ): array {
+        foreach ($restShipmentMethodAttributesTransfers as $restShipmentMethodAttributesTransfer) {
+            foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
+                $defaultGrossPrice = $this->findDefaultGrossPrice($shipmentMethodTransfer, $storeTransfer);
+                $defaultNetPrice = $this->findDefaultNetPrice($shipmentMethodTransfer, $storeTransfer);
+
+                $restShipmentMethodAttributesTransfer->setDefaultGrossPrice($defaultGrossPrice);
+                $restShipmentMethodAttributesTransfer->setDefaultNetPrice($defaultNetPrice);
+            }
+        }
+
+        return $restShipmentMethodAttributesTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer
-     * @param int $idShipmentMethod
+     * @param string $idShipmentMethod
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     protected function createShipmentMethodRestResourceByCheckoutDataExpander(
         RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer,
-        int $idShipmentMethod
+        string $idShipmentMethod
     ): RestResourceInterface {
         return $this->shipmentMethodRestResponseBuilder
             ->createShipmentMethodRestResource(
                 $restShipmentMethodAttributesTransfer,
-                (string)$idShipmentMethod
+                $idShipmentMethod
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int|null
+     */
+    protected function findDefaultGrossPrice(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): ?int {
+        foreach ($shipmentMethodTransfer->getPrices() as $priceTransfer) {
+            if ($this->checkPriceTransferByCurrencyIsoCodeAndStoreId(
+                $priceTransfer,
+                $storeTransfer,
+                $shipmentMethodTransfer
+            )) {
+                return $priceTransfer->getGrossAmount();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    protected function checkPriceTransferByCurrencyIsoCodeAndStoreId(
+        MoneyValueTransfer $priceTransfer,
+        StoreTransfer $storeTransfer,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): bool {
+        return $priceTransfer->getFkStore() === $storeTransfer->getIdStore()
+            && $priceTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int|null
+     */
+    protected function findDefaultNetPrice(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): ?int {
+        foreach ($shipmentMethodTransfer->getPrices() as $priceTransfer) {
+            if ($this->checkPriceTransferByCurrencyIsoCodeAndStoreId(
+                $priceTransfer,
+                $storeTransfer,
+                $shipmentMethodTransfer
+            )) {
+                return $priceTransfer->getNetAmount();
+            }
+        }
+
+        return null;
     }
 }

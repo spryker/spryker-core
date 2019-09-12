@@ -124,7 +124,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $restShipmentTransfer = $restCheckoutRequestAttributesTransfer->getShipment();
 
-        if ($restShipmentTransfer === null) {
+        if (!$restShipmentTransfer) {
             return $shipmentMethodsTransfer;
         }
 

@@ -70,9 +70,9 @@ class AuthRestApiHelper extends Module
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array|null
+     * @return array
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): ?array
+    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): array
     {
         $this->glueRestProvider->sendPOST(AuthRestApiConfig::RESOURCE_ACCESS_TOKENS, [
             'data' => [

@@ -7,19 +7,16 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
-use ArrayObject;
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface ShipmentMethodsMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param array $restShipmentMethodAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
      */
     public function mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
-        ArrayObject $shipmentMethodTransfers,
-        StoreTransfer $storeTransfer
+        array $shipmentMethodTransfers,
+        array $restShipmentMethodAttributesTransfers
     ): array;
 }

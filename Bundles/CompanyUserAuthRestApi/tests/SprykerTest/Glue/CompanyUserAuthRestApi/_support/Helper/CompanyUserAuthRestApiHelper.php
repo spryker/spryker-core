@@ -93,7 +93,7 @@ class CompanyUserAuthRestApiHelper extends Module
      *
      * @return array
      */
-    public function haveAuthorizationToGlueAsCompanyUser(string $idCompanyUser): ?array
+    public function haveAuthorizationToGlueAsCompanyUser(string $idCompanyUser): array
     {
         $this->glueRestProvider->sendPOST(CompanyUserAuthRestApiConfig::RESOURCE_COMPANY_USER_ACCESS_TOKENS, [
             'data' => [
