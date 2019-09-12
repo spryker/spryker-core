@@ -60,6 +60,6 @@ class EventConfig extends AbstractBundleConfig
      */
     public function isHandleErrorBulkOperationByItemsActive(): bool
     {
-        return $this->getConfig()->get(EventConstants::EVENT_HANDLE_ERROR_BULK_OPERATION_BY_ITEMS, false);
+        return $this->get(EventConstants::EVENT_HANDLE_ERROR_BULK_OPERATION_BY_ITEMS, false);
     }
 }

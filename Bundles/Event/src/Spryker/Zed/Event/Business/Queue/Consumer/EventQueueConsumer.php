@@ -24,6 +24,8 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     public const EVENT_TRANSFERS = 'eventTransfers';
     public const EVENT_MESSAGES = 'eventMessages';
     public const RETRY_KEY = 'retry';
+
+    public const ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT = 'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -94,7 +96,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 $queueMessageTransfer->setAcknowledge(true);
             } catch (Throwable $exception) {
                 $errorMessage = sprintf(
-                    'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+                    static::ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT,
                     $eventQueueSentMessageBodyTransfer->getEventName(),
                     $eventQueueSentMessageBodyTransfer->getListenerClassName(),
                     $exception->getMessage(),
@@ -174,7 +176,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected function handleFailedEventItem(array $eventItem, string $eventName, string $listenerClassName, Throwable $throwable): void
     {
         $errorMessage = sprintf(
-            'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+            static::ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT,
             $eventName,
             $listenerClassName,
             $throwable->getMessage(),
