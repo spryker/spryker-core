@@ -140,7 +140,7 @@ class ZedBootstrap
      */
     protected function registerServiceProviderForInternalRequestWithAuthentication()
     {
-        $serviceProviders = $this->getMergedInternalRequestServiceProviders();
+        $serviceProviders = $this->getMergedServiceProviders();
 
         foreach ($serviceProviders as $provider) {
             $this->application->register($provider);
@@ -150,7 +150,7 @@ class ZedBootstrap
     /**
      * @return \Silex\ServiceProviderInterface[]
      */
-    protected function getMergedInternalRequestServiceProviders(): array
+    protected function getMergedServiceProviders(): array
     {
         $serviceProviders = $this->getServiceProvider();
         $internalCallServiceProvidersWithAuth = $this->getInternalCallServiceProviderWithAuthentication();
