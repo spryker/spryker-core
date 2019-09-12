@@ -281,22 +281,14 @@ abstract class AbstractStorageReader implements StorageReaderInterface
      *
      * @return string
      */
-    protected function buildKeyEqualsValuePredicateFragment(string $keyPlaceholder): string
-    {
-        return sprintf('%s = %s', static::FIELD_KEY, $keyPlaceholder);
-    }
+    abstract protected function buildKeyEqualsValuePredicateFragment(string $keyPlaceholder): string;
 
     /**
      * @param string[] $keyPlaceholders
      *
      * @return string
      */
-    protected function buildKeyInValuesPredicateFragment(array $keyPlaceholders): string
-    {
-        $keyInCriterion = implode(',', $keyPlaceholders);
-
-        return sprintf('%s IN (%s)', static::FIELD_KEY, $keyInCriterion);
-    }
+    abstract protected function buildKeyInValuesPredicateFragment(array $keyPlaceholders): string;
 
     /**
      * @param array $keyPlaceholders
