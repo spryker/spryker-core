@@ -110,6 +110,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     protected function createSchemaMerger()
     {
         $propelSchemaMerger = new PropelSchemaMerger(
+            $this->getUtilTextService(),
             $this->getConfig()
         );
 
