@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -22,10 +22,11 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
 use Spryker\Zed\QuoteApproval\Business\QuoteApprovalBusinessFactory;
-use Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacade;
+use Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalExpanderPlugin;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteFieldsAllowedForSavingProviderPlugin;
 use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 /**
@@ -100,19 +101,15 @@ class QuoteApprovalFacadeTest extends Unit
     public function testQuoteFieldsAllowedForSavingSaveShippingAddressSuccess()
     {
         //Assign
-        $quoteTransfer = $this->createQuoteWithGrandTotal(10);
-        $addressTransfer = new AddressTransfer();
-        $addressTransfer->setAddress1('add1');
-        $quoteTransfer->setShippingAddress($addressTransfer);
-        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
-        $quoteApprovalCreateRequestTransfer->setRequesterCompanyUserId($quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
-        $this->requiredQuoteFields = [
-            QuoteTransfer::SHIPPING_ADDRESS,
-        ];
+        $this->prepareEnvForQuoteApprovalCreation();
+        $this->setGrantTypeConfigurationProviderPluginMock();
+        $addressTransfer = (new AddressBuilder())->build();
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $quoteApprovalCreateRequestTransfer->getQuote()->setShippingAddress($addressTransfer);
 
         //Act
-        $this->getFacadeMock()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
-        $quoteTransfer = $this->findQuoteById($quoteTransfer->getIdQuote());
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Assert
         $this->assertEquals($quoteTransfer->getShippingAddress(), $addressTransfer);
@@ -124,16 +121,14 @@ class QuoteApprovalFacadeTest extends Unit
     public function testQuoteFieldsAllowedForSavingSaveShippingAddressFails()
     {
         //Assign
-        $quoteTransfer = $this->createQuoteWithGrandTotal(10);
-        $addressTransfer = new AddressTransfer();
-        $addressTransfer->setAddress1('add1');
-        $quoteTransfer->setShippingAddress($addressTransfer);
-        $quoteApprovalCreateRequestTransfer = $this->createQuoteApprovalCreateRequestTransfer($quoteTransfer);
-        $quoteApprovalCreateRequestTransfer->setRequesterCompanyUserId($quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser());
+        $this->prepareEnvForQuoteApprovalCreation();
+        $addressTransfer = (new AddressBuilder())->build();
+        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
+        $quoteApprovalCreateRequestTransfer->getQuote()->setShippingAddress($addressTransfer);
 
         //Act
-        $this->getFacadeMock()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
-        $quoteTransfer = $this->findQuoteById($quoteTransfer->getIdQuote());
+        $this->getFacade()->createQuoteApproval($quoteApprovalCreateRequestTransfer);
+        $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         //Assert
         $this->assertNotEquals($quoteTransfer->getShippingAddress(), $addressTransfer);
@@ -633,9 +628,9 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacade
+     * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface
      */
-    protected function getFacadeMock(): QuoteApprovalFacade
+    protected function getFacadeMock(): QuoteApprovalFacadeInterface
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfigMock */
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
@@ -647,10 +642,38 @@ class QuoteApprovalFacadeTest extends Unit
             ->method('getRequiredQuoteFields')
             ->willReturn($this->requiredQuoteFields);
 
-        /** @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeIn $quoteApprovaFacade */
-        $quoteApprovaFacade = $this->tester->getFacade();
-        $quoteApprovaFacade->setFactory((new QuoteApprovalBusinessFactory())->setConfig($quoteApprovalConfigMock));
+        /** @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface $quoteApprovaFacade */
+        $quoteApprovalFacade = $this->getFacade();
+        $quoteApprovalFacade->setFactory((new QuoteApprovalBusinessFactory())->setConfig($quoteApprovalConfigMock));
 
-        return $quoteApprovaFacade;
+        return $quoteApprovalFacade;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setGrantTypeConfigurationProviderPluginMock(): void
+    {
+        /** @var \PHPUnit\Framework\MockObject\MockObject $quoteFieldsAllowedForSavingProviderPluginMock */
+        $quoteFieldsAllowedForSavingProviderPluginMock = $this->getMockBuilder(QuoteFieldsAllowedForSavingProviderPlugin::class)
+            ->setMethods(['execute'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $quoteFieldsAllowedForSavingProviderPluginMock
+            ->method('execute')
+            ->willReturn([
+                QuoteTransfer::BILLING_ADDRESS,
+                QuoteTransfer::SHIPPING_ADDRESS,
+                QuoteTransfer::PAYMENTS,
+                QuoteTransfer::SHIPMENT,
+            ]);
+
+        $this->tester->setDependency(
+            QuoteDependencyProvider::PLUGINS_QUOTE_FIELDS_ALLOWED_FOR_SAVING_PROVIDER,
+            [
+                $quoteFieldsAllowedForSavingProviderPluginMock,
+            ]
+        );
     }
 }
