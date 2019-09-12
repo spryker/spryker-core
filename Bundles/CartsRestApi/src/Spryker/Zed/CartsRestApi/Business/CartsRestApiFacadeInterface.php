@@ -177,7 +177,7 @@ interface CartsRestApiFacadeInterface
      *
      * @return void
      */
-    public function addGuestQuoteItemsToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
+    public function mergeGuestQuoteAndCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
 
     /**
      * Specification:

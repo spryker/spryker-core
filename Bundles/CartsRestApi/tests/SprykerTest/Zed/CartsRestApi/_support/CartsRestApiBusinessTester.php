@@ -78,6 +78,18 @@ class CartsRestApiBusinessTester extends Actor
         ],
     ];
 
+    public const ITEMS = [
+        [
+            'sku' => 'test sku',
+            'quantity' => '666',
+
+        ],
+        [
+            'sku' => 'test sku 2',
+            'quantity' => '666',
+        ],
+    ];
+
     /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -123,6 +135,15 @@ class CartsRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer
      */
+    public function prepareQuoteCriteriaFilterTransferForGuest(): QuoteCriteriaFilterTransfer
+    {
+        return (new QuoteCriteriaFilterBuilder(['customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE]))
+            ->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer
+     */
     public function prepareEmptyQuoteCriteriaFilterTransfer(): QuoteCriteriaFilterTransfer
     {
         return (new QuoteCriteriaFilterBuilder())->build();
@@ -146,6 +167,21 @@ class CartsRestApiBusinessTester extends Actor
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function prepareQuoteTransferForGuest(): QuoteTransfer
+    {
+        return (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_ANONYMOUS_CUSTOMER_REFERENCE),
+                'items' => static::ITEMS,
+            ]
+        ))->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function prepareEmptyQuoteTransferForGuest(): QuoteTransfer
     {
         return (new QuoteBuilder(
             [
@@ -425,5 +461,35 @@ class CartsRestApiBusinessTester extends Actor
         }
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function buildQuoteTransfer(CustomerTransfer $customerTransfer): QuoteTransfer
+    {
+        return (new QuoteBuilder(
+            [
+                'customerReference' => $customerTransfer->getCustomerReference(),
+                'customer' => $customerTransfer,
+            ]
+        ))->build();
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
+     */
+    public function buildOauthResponseTransfer(string $customerReference): OauthResponseTransfer
+    {
+        return (new OauthResponseBuilder(
+            [
+                'customerReference' => $customerReference,
+                'anonymousCustomerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
+            ]
+        ))->build();
     }
 }

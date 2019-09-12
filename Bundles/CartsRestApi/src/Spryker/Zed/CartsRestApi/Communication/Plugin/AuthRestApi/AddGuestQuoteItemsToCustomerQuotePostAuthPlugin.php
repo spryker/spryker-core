@@ -35,6 +35,6 @@ class AddGuestQuoteItemsToCustomerQuotePostAuthPlugin extends AbstractPlugin imp
      */
     public function postAuth(OauthResponseTransfer $oauthResponseTransfer): void
     {
-        $this->getFacade()->addGuestQuoteItemsToCustomerQuote($oauthResponseTransfer);
+        $this->getFacade()->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
     }
 }
