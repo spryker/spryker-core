@@ -16,7 +16,7 @@ class MySqlStorageReader extends AbstractStorageReader
      */
     protected function buildValueInAliasKeysPredicateFragment(string $keyPlaceholder): string
     {
-        return sprintf('JSON_CONTAINS(%s, \'":%s"\')', static::FIELD_ALIAS_KEYS, $keyPlaceholder);
+        return sprintf('JSON_CONTAINS(%s, %s)', static::FIELD_ALIAS_KEYS, $keyPlaceholder);
     }
 
     /**
