@@ -42,13 +42,22 @@ class ProductBundleStockWriterTest extends Unit
     /**
      * @return void
      */
+    public function setUp()
+    {
+        parent::setUp();
+        Decimal::setDefaultScale(20);
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateStockShouldCalculatedStockBasedOnBundledProducts()
     {
         $idProductBundle = 1;
         $bundleQuantity = new Decimal(2);
         $idRelatedProductId = 2;
         $relatedProductSku = 'sku-321';
-        $relatedProductStock = new Decimal(10);
+        $relatedProductStock = new Decimal(15);
 
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandlerMock();
         $productBundleAvailabilityHandlerMock->expects($this->once())->method('updateBundleAvailability');
@@ -71,10 +80,12 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame($relatedProductStock->multiply($bundleQuantity)->toString(), $stockTransfer->getQuantity()->toString());
+        $this->assertSame($stockTransfer->getQuantity()->trim()->toString(), '7.5');
+        $this->assertSame($relatedProductStock->divide($bundleQuantity)->toString(), $stockTransfer->getQuantity()->toString());
 
         $stockTransfer = $stocks[1];
-        $this->assertSame($relatedProductStock->multiply($bundleQuantity)->toString(), $stockTransfer->getQuantity()->toString());
+        $this->assertSame($stockTransfer->getQuantity()->trim()->toString(), '7.5');
+        $this->assertSame($relatedProductStock->divide($bundleQuantity)->trim()->toString(), $stockTransfer->getQuantity()->trim()->toString());
     }
 
     /**

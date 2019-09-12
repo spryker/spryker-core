@@ -275,7 +275,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return new Decimal(0);
         }
 
-        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->multiply($bundleItemEntity->getQuantity());
+        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->divide($bundleItemEntity->getQuantity());
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }

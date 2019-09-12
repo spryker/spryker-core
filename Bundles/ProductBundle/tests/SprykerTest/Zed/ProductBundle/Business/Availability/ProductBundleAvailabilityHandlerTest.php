@@ -38,13 +38,22 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
+    public function setUp()
+    {
+        parent::setUp();
+        Decimal::setDefaultScale(20);
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
-        $bundledItemAvailability = new Decimal(10);
-        $expectedBundleAvailability = $bundledItemAvailability->multiply($bundleQuantity); //5
+        $bundledItemAvailability = new Decimal(15);
+        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity); // 7.5
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
@@ -78,8 +87,8 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
-        $bundledItemAvailability = new Decimal(10);
-        $expectedBundleAvailability = $bundledItemAvailability->multiply($bundleQuantity); //5
+        $bundledItemAvailability = new Decimal(15);
+        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity); // 7.5
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
