@@ -8,9 +8,6 @@
 namespace SprykerTest\Zed\CartsRestApisRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\OauthResponseTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade;
 
 /**
@@ -37,7 +34,7 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -47,43 +44,36 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testGuestQuoteWillBeConvertedToCustomerQuote()
+    public function testGuestQuoteWillBeConvertedToCustomerQuote(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
-        $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($quoteTransfer);
+        $createQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareQuoteTransferForGuest());
+        $quoteTransfer = $createQuoteResponseTransfer->getQuoteTransfer();
         $customerTransfer = $this->tester->haveCustomer();
         $customerReference = $customerTransfer->getCustomerReference();
-        $oauthResponseTransfer = (new OauthResponseTransfer())
-            ->setCustomerReference($customerReference)
-            ->setAnonymousCustomerReference($this->tester::TEST_ANONYMOUS_CUSTOMER_REFERENCE);
+        $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerReference);
 
-        $customerQuoteCollectionTransfer1 = $this->cartsRestApiFacade->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
+        $customerQuoteCollectionTransferBeforeAct = $this->cartsRestApiFacade->getQuoteCollection(
+            $this->tester->buildQuoteCriteriaFilterTransfer($customerReference)
         );
 
         // Act
         $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
-
-        $customerQuoteCollectionTransfer2 = $this->cartsRestApiFacade->getQuoteCollection(
-            (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference)
+        $customerQuoteCollectionTransferAfterAct = $this->cartsRestApiFacade->getQuoteCollection(
+            $this->tester->buildQuoteCriteriaFilterTransfer($customerReference)
         );
-
         $guestQuoteCollectionTransfer = $this->cartsRestApiFacade
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
-
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            (new QuoteTransfer())
-                ->setCustomerReference($customerReference)
-                ->setCustomer($customerTransfer)
-                ->setUuid($createQuoteResponseTransfer->getQuoteTransfer()->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
         );
 
         // Assert
         $this->assertTrue($findQuoteResponseTransfer->getIsSuccessful());
         $this->assertGreaterThan(
-            $customerQuoteCollectionTransfer1->getQuotes()->count(),
-            $customerQuoteCollectionTransfer2->getQuotes()->count()
+            $customerQuoteCollectionTransferBeforeAct->getQuotes()->count(),
+            $customerQuoteCollectionTransferAfterAct->getQuotes()->count()
         );
         $this->assertNotEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
@@ -100,15 +90,14 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testEmptyGuestQuoteWillNotBeConvertedToCustomerQuote()
+    public function testEmptyGuestQuoteWillNotBeConvertedToCustomerQuote(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->prepareEmptyQuoteTransferForGuest();
-        $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($quoteTransfer);
+        $createQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareEmptyQuoteTransferForGuest());
+        $quoteTransfer = $createQuoteResponseTransfer->getQuoteTransfer();
         $customerTransfer = $this->tester->haveCustomer();
-        $oauthResponseTransfer = (new OauthResponseTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference())
-            ->setAnonymousCustomerReference($this->tester::TEST_ANONYMOUS_CUSTOMER_REFERENCE);
+        $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerTransfer->getCustomerReference());
 
         // Act
         $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
@@ -116,10 +105,7 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
 
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            (new QuoteTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setCustomer($customerTransfer)
-                ->setUuid($createQuoteResponseTransfer->getQuoteTransfer()->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
         );
 
         // Assert
@@ -142,11 +128,11 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
     public function testGuestQuoteWillNotBeConvertedToCustomerQuoteWithoutAnonymousCustomerReference(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
-        $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($quoteTransfer);
+        $createQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareQuoteTransferForGuest());
+        $quoteTransfer = $createQuoteResponseTransfer->getQuoteTransfer();
         $customerTransfer = $this->tester->haveCustomer();
-        $oauthResponseTransfer = (new OauthResponseTransfer())
-            ->setCustomerReference($customerTransfer->getCustomerReference());
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
 
         // Act
         $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
@@ -154,10 +140,7 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
 
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            (new QuoteTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setCustomer($customerTransfer)
-                ->setUuid($createQuoteResponseTransfer->getQuoteTransfer()->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
         );
 
         // Assert
@@ -166,12 +149,8 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
             $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
         );
-        $this->assertNotEmpty(
-            $findQuoteResponseTransfer->getErrors()
-        );
-        $this->assertNotEmpty(
-            $guestQuoteCollectionTransfer->getQuotes()
-        );
+        $this->assertNotEmpty($findQuoteResponseTransfer->getErrors());
+        $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());
     }
 
     /**
@@ -182,33 +161,25 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransferForGuest();
         $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($quoteTransfer);
+        $quoteTransfer = $createQuoteResponseTransfer->getQuoteTransfer();
         $customerTransfer = $this->tester->haveCustomer();
-        $oauthResponseTransfer = (new OauthResponseTransfer())
-            ->setAnonymousCustomerReference($this->tester::TEST_ANONYMOUS_CUSTOMER_REFERENCE);
+        $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
 
         // Act
         $this->cartsRestApiFacade->convertGuestQuoteToCustomerQuote($oauthResponseTransfer);
         $guestQuoteCollectionTransfer = $this->cartsRestApiFacade
             ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
-
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid(
-            (new QuoteTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setCustomer($customerTransfer)
-                ->setUuid($createQuoteResponseTransfer->getQuoteTransfer()->getUuid())
+            $this->tester->buildQuoteTransfer($customerTransfer)->setUuid($quoteTransfer->getUuid())
         );
 
         // Assert
         $this->assertFalse($findQuoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
-            $createQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
+            $quoteTransfer->getCustomerReference()
         );
-        $this->assertNotEmpty(
-            $findQuoteResponseTransfer->getErrors()
-        );
-        $this->assertNotEmpty(
-            $guestQuoteCollectionTransfer->getQuotes()
-        );
+        $this->assertNotEmpty($findQuoteResponseTransfer->getErrors());
+        $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());
     }
 }

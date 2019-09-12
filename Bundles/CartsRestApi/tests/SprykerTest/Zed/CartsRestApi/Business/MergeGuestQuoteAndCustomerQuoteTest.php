@@ -34,7 +34,7 @@ class MergeGuestQuoteAndCustomerQuoteTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -44,13 +44,13 @@ class MergeGuestQuoteAndCustomerQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testGuestQuoteAndCustomerQuoteWillBeMerged()
+    public function testGuestQuoteAndCustomerQuoteWillBeMerged(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
-        $guestQuoteTransfer = $this->tester->prepareQuoteTransferForGuest();
         $customerQuoteTransfer = $this->tester->buildQuoteTransfer($customerTransfer);
-        $createGuestQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($guestQuoteTransfer);
+        $createGuestQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareQuoteTransferForGuest());
         $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($customerQuoteTransfer);
         $quoteTransfer = $createQuoteResponseTransfer->getQuoteTransfer();
         $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerTransfer->getCustomerReference());
@@ -68,89 +68,80 @@ class MergeGuestQuoteAndCustomerQuoteTest extends Unit
             $findQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference(),
             $createGuestQuoteResponseTransfer->getQuoteTransfer()->getCustomerReference()
         );
-        $this->assertEmpty(
-            $findQuoteResponseTransfer->getErrors()
-        );
-        $this->assertEmpty(
-            $guestQuoteCollectionTransfer->getQuotes()
-        );
+        $this->assertEmpty($findQuoteResponseTransfer->getErrors());
+        $this->assertEmpty($guestQuoteCollectionTransfer->getQuotes());
     }
 
     /**
      * @return void
      */
-    public function testGuestQuoteAndCustomerQuoteWillNotBeMergedWithoutCustomerReference()
+    public function testGuestQuoteAndCustomerQuoteWillNotBeMergedWithoutCustomerReference(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
-        $guestQuoteTransfer = $this->tester->prepareQuoteTransferForGuest();
         $customerQuoteTransfer = $this->tester->buildQuoteTransfer($customerTransfer);
-        $createQuestQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($guestQuoteTransfer);
+        $createQuestQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareQuoteTransferForGuest());
         $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($customerQuoteTransfer);
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutCustomerReference();
 
         // Act
         $this->cartsRestApiFacade->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
-        $findGuestQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($createQuestQuoteResponseTransfer->getQuoteTransfer());
-
-        $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($createQuoteResponseTransfer->getQuoteTransfer());
+        $findGuestQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid($createQuestQuoteResponseTransfer->getQuoteTransfer());
+        $findQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid($createQuoteResponseTransfer->getQuoteTransfer());
 
         // Assert
         $this->assertEmpty($findQuoteResponseTransfer->getQuoteTransfer()->getItems());
-        $this->assertTrue(
-            $findGuestQuoteResponseTransfer->getIsSuccessful()
-        );
+        $this->assertTrue($findGuestQuoteResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testGuestQuoteAndCustomerQuoteWillNotBeMergedWithoutAnonymousCustomerReference()
+    public function testGuestQuoteAndCustomerQuoteWillNotBeMergedWithoutAnonymousCustomerReference(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
-        $guestQuoteTransfer = $this->tester->prepareQuoteTransferForGuest();
         $customerQuoteTransfer = $this->tester->buildQuoteTransfer($customerTransfer);
-        $createQuestQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($guestQuoteTransfer);
+        $createQuestQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareQuoteTransferForGuest());
         $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($customerQuoteTransfer);
         $oauthResponseTransfer = $this->tester->prepareOauthResponseTransferWithoutAnonymousCustomerReference();
 
         // Act
         $this->cartsRestApiFacade->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
-        $findGuestQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($createQuestQuoteResponseTransfer->getQuoteTransfer());
-
-        $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($createQuoteResponseTransfer->getQuoteTransfer());
+        $findGuestQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid($createQuestQuoteResponseTransfer->getQuoteTransfer());
+        $findQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->findQuoteByUuid($createQuoteResponseTransfer->getQuoteTransfer());
 
         // Assert
         $this->assertEmpty($findQuoteResponseTransfer->getQuoteTransfer()->getItems());
-        $this->assertTrue(
-            $findGuestQuoteResponseTransfer->getIsSuccessful()
-        );
+        $this->assertTrue($findGuestQuoteResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testEmptyGuestQuoteAndCustomerQuoteWillNotBeMerged()
+    public function testEmptyGuestQuoteAndCustomerQuoteWillNotBeMerged(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
-        $guestQuoteTransfer = $this->tester->prepareEmptyQuoteTransferForGuest();
         $customerQuoteTransfer = $this->tester->buildQuoteTransfer($customerTransfer);
-        $createQuestQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($guestQuoteTransfer);
+        $createQuestQuoteResponseTransfer = $this->cartsRestApiFacade
+            ->createQuote($this->tester->prepareEmptyQuoteTransferForGuest());
         $createQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($customerQuoteTransfer);
         $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerTransfer->getCustomerReference());
 
         // Act
         $this->cartsRestApiFacade->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
         $findGuestQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($createQuestQuoteResponseTransfer->getQuoteTransfer());
-
         $findQuoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($createQuoteResponseTransfer->getQuoteTransfer());
 
         // Assert
         $this->assertEmpty($findQuoteResponseTransfer->getQuoteTransfer()->getItems());
-        $this->assertTrue(
-            $findGuestQuoteResponseTransfer->getIsSuccessful()
-        );
+        $this->assertTrue($findGuestQuoteResponseTransfer->getIsSuccessful());
     }
 }
