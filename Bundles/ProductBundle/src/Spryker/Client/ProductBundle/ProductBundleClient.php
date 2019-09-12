@@ -39,7 +39,8 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
     {
