@@ -101,7 +101,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->executeQuoteApprovalRemoval($quoteApprovalResponse, $quoteApprovalRequestTransfer);
 
         return $quoteApprovalResponseTransfer->setIsSuccessful(true)
-            ->setQuote($this->expandQuoteWithQuoteApprovals($quoteApprovalResponseTransfer->getQuote()))
+            ->setQuote($this->expandQuoteWithQuoteApprovals($quoteApprovalResponse->getQuote()))
             ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
     }
 
