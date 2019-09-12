@@ -9,7 +9,7 @@ namespace Spryker\Zed\QuoteExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteFieldsAllowedForSavingProviderPluginInterface
+interface QuoteFieldsProviderPluginInterface
 {
     /**
      * Specification:

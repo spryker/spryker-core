@@ -13,7 +13,7 @@ use Spryker\Zed\Quote\QuoteConfig;
 class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[]
+     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsProviderPluginInterface[]
      */
     protected $quoteFieldsAllowedForSavingProviderPlugins;
 
@@ -24,7 +24,7 @@ class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
 
     /**
      * @param \Spryker\Zed\Quote\QuoteConfig $quoteConfig
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface[] $quoteFieldsAllowedForSavingProviderPlugins
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsProviderPluginInterface[] $quoteFieldsAllowedForSavingProviderPlugins
      */
     public function __construct(
         QuoteConfig $quoteConfig,

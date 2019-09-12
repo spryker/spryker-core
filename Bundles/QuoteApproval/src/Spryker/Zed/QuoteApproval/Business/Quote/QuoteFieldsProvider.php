@@ -54,7 +54,7 @@ class QuoteFieldsProvider implements QuoteFieldsProviderInterface
      *
      * @return bool
      */
-    public function isQuoteApprovalRequestWaitingOrApproved(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteApprovalRequestWaitingOrApproved(QuoteTransfer $quoteTransfer): bool
     {
         return in_array($this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer), [
             SharedApprovalConfig::STATUS_WAITING,

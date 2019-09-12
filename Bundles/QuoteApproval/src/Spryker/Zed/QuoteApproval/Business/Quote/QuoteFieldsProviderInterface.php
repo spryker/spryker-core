@@ -17,11 +17,4 @@ interface QuoteFieldsProviderInterface
      * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteApprovalRequestWaitingOrApproved(QuoteTransfer $quoteTransfer): bool;
 }
