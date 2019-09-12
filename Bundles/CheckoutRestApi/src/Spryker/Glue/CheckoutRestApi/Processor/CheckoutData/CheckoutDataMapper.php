@@ -67,7 +67,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutDataResponseAttributesTransfer
         );
 
-        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedPaymentMethods(
+        $restCheckoutDataResponseAttributesTransfer = $this->addSelectedRestPaymentMethodTransfers(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer,
             $restCheckoutRequestAttributesTransfer
@@ -175,7 +175,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapSelectedPaymentMethods(
+    protected function addSelectedRestPaymentMethodTransfers(
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
