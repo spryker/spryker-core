@@ -25,7 +25,8 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleStoragePublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 }
