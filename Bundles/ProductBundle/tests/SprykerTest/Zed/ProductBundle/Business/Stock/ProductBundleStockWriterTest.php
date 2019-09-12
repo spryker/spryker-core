@@ -42,15 +42,6 @@ class ProductBundleStockWriterTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
-    {
-        parent::setUp();
-        Decimal::setDefaultScale(20);
-    }
-
-    /**
-     * @return void
-     */
     public function testUpdateStockShouldCalculatedStockBasedOnBundledProducts()
     {
         $idProductBundle = 1;
@@ -81,11 +72,11 @@ class ProductBundleStockWriterTest extends Unit
 
         $stockTransfer = $stocks[0];
         $this->assertSame($stockTransfer->getQuantity()->trim()->toString(), '7.5');
-        $this->assertSame($relatedProductStock->divide($bundleQuantity)->toString(), $stockTransfer->getQuantity()->toString());
+        $this->assertSame($relatedProductStock->divide($bundleQuantity, 10)->toString(), $stockTransfer->getQuantity()->toString());
 
         $stockTransfer = $stocks[1];
         $this->assertSame($stockTransfer->getQuantity()->trim()->toString(), '7.5');
-        $this->assertSame($relatedProductStock->divide($bundleQuantity)->trim()->toString(), $stockTransfer->getQuantity()->trim()->toString());
+        $this->assertSame($relatedProductStock->divide($bundleQuantity, 10)->trim()->toString(), $stockTransfer->getQuantity()->trim()->toString());
     }
 
     /**

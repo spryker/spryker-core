@@ -18,6 +18,8 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
+    protected const DIVISION_SCALE = 10;
+
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
@@ -275,7 +277,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return new Decimal(0);
         }
 
-        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->divide($bundleItemEntity->getQuantity());
+        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->divide($bundleItemEntity->getQuantity(), static::DIVISION_SCALE);
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }

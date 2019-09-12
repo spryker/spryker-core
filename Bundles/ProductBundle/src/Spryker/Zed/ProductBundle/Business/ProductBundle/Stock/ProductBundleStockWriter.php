@@ -24,6 +24,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
     public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
     public const QUANTITY = 'quantity';
+    protected const DIVISION_SCALE = 10;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -199,7 +200,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
                 $isNeverOutOfStock = $productStockQuantity[static::IS_NEVER_OUT_OF_STOCK];
 
-                $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity);
+                $itemStock = (new Decimal($productStockQuantity[static::QUANTITY]))->divide($bundleItemQuantity, static::DIVISION_SCALE);
 
                 if ($this->isCurrentStockIsLowestWithingBundle($bundleStock, $itemStock, $isNeverOutOfStock)) {
                     $bundleStock = $itemStock;

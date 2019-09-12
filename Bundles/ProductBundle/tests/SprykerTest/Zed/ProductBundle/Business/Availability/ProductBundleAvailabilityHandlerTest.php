@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use PHPUnit\Framework\MockObject\MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
@@ -38,22 +39,13 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
-    {
-        parent::setUp();
-        Decimal::setDefaultScale(20);
-    }
-
-    /**
-     * @return void
-     */
     public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
         $bundledItemAvailability = new Decimal(15);
-        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity); // 7.5
+        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity, 10); // 7.5
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
@@ -66,7 +58,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $productBundleEntity->setSpyProductRelatedByFkProduct($productEntity);
         $bundledProducts->append($productBundleEntity);
 
-        $productBundleAvailabilityHandlerMock->method('getBundlesUsingProductBySku')
+            $productBundleAvailabilityHandlerMock->method('getBundlesUsingProductBySku')
             ->willReturn($bundledProducts);
 
         $this->setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, $productBundleAvailabilityHandlerMock);
@@ -88,7 +80,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
         $bundledItemAvailability = new Decimal(15);
-        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity); // 7.5
+        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity, 10); // 7.5
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
@@ -111,7 +103,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface|null $availabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface
      */
     protected function createProductBundleAvailabilityHandler(
         ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
@@ -175,11 +167,11 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @param int $bundleQuantity
      * @param string $bundledItemSku
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
      *
      * @return void
      */
-    protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
+    protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, MockObject $productBundleAvailabilityHandlerMock)
     {
         $bundleItems = new ObjectCollection();
         $productBundleEntity = new SpyProductBundle();
@@ -195,15 +187,15 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @param int $bundledItemAvailability
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock
+     * @param \Spryker\DecimalObject\Decimal $bundledItemAvailability
+     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
      *
      * @return void
      */
-    protected function setupProductBundleAvailability($bundledItemAvailability, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
+    protected function setupProductBundleAvailability(Decimal $bundledItemAvailability, MockObject $productBundleAvailabilityHandlerMock): void
     {
         $availabilityEntity = new SpyAvailability();
-        $availabilityEntity->setQuantity($bundledItemAvailability);
+        $availabilityEntity->setQuantity($bundledItemAvailability->toString());
 
         $productBundleAvailabilityHandlerMock->method('findBundledItemAvailabilityEntityBySku')
             ->willReturn($availabilityEntity);
