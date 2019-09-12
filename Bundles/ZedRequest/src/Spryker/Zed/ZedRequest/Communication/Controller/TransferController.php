@@ -14,6 +14,7 @@ use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
@@ -52,6 +53,31 @@ class TransferController extends AbstractController
 
         $request->request->replace($repeatData);
 
-        return $this->getApplication()->handle($request, HttpKernelInterface::SUB_REQUEST);
+        return $this->handle($request, HttpKernelInterface::SUB_REQUEST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $type
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function handle(Request $request, int $type): Response
+    {
+        $current = $this->getApplication()->get('request');
+        $this->getApplication()->set('request', $request);
+
+        $response = $this->getKernel()->handle($request, $type);
+        $this->getApplication()->set('request', $current);
+
+        return $response;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\KernelInterface
+     */
+    protected function getKernel(): KernelInterface
+    {
+        return $this->getApplication()->get('kernel');
     }
 }
