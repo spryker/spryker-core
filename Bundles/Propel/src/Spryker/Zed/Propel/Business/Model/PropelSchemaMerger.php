@@ -19,6 +19,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    protected const RANDOM_STRING_LENGTH = 32;
+
     /**
      * @var \Spryker\Zed\Propel\PropelConfig|null
      */
@@ -255,7 +257,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         }
 
         if (empty($elementName) || is_array($elementName)) {
-            $elementName = 'anonymous_' . $this->utilTextService->generateRandomString(32);
+            $elementName = 'anonymous_' . $this->utilTextService->generateRandomString(static::RANDOM_STRING_LENGTH);
         }
 
         return $elementName;
