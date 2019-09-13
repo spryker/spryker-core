@@ -51,16 +51,18 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param int|null $idPriceProductScheduleList
      *
      * @return string
      */
     public function extractRedirectUrlFromPriceProductScheduleTransfer(
-        PriceProductScheduleTransfer $priceProductScheduleTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        ?int $idPriceProductScheduleList
     ): string {
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
-        return $this->priceProductScheduleDataFormatter->formatRedirectUrl($priceProductTransfer);
+        return $this->priceProductScheduleDataFormatter->formatRedirectUrl($priceProductTransfer, $idPriceProductScheduleList);
     }
 
     /**

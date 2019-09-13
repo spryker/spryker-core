@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends AbstractController
 {
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
+    protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
     protected const KEY_HEADER_REFERER = 'referer';
     protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
@@ -36,6 +37,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPriceProductSchedule = $this->castId($request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE));
+        $idPriceProductScheduleList = $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST);
 
         $priceProductScheduleTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()
@@ -51,7 +53,7 @@ class EditController extends AbstractController
             ->createPriceProductScheduleForm($priceProductScheduleFormDataProvider, $priceProductScheduleTransfer);
         $form->handleRequest($request);
 
-        $viewData = $this->prepareViewResponseData($form, $priceProductScheduleTransfer);
+        $viewData = $this->prepareViewResponseData($form, $priceProductScheduleTransfer, $idPriceProductScheduleList);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->handleSubmitForm($form, $viewData[static::KEY_REDIRECT_URL]);
@@ -63,12 +65,14 @@ class EditController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param int|null $idPriceProductScheduleList
      *
      * @return array
      */
     protected function prepareViewResponseData(
         FormInterface $form,
-        PriceProductScheduleTransfer $priceProductScheduleTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        ?int $idPriceProductScheduleList
     ): array {
         $dataExtractor = $this->getFactory()
             ->createPriceProductScheduleDataExtractor();
@@ -76,7 +80,7 @@ class EditController extends AbstractController
             ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
         $timezoneText = $dataExtractor
             ->extractTimezoneTextFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
-        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
+        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductScheduleTransfer($priceProductScheduleTransfer, $idPriceProductScheduleList);
 
         return [
             static::KEY_FORM => $form->createView(),

@@ -22,11 +22,13 @@ interface PriceProductScheduleDataExtractorInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param int|null $idPriceProductScheduleList
      *
      * @return string
      */
     public function extractRedirectUrlFromPriceProductScheduleTransfer(
-        PriceProductScheduleTransfer $priceProductScheduleTransfer
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        ?int $idPriceProductScheduleList
     ): string;
 
     /**
