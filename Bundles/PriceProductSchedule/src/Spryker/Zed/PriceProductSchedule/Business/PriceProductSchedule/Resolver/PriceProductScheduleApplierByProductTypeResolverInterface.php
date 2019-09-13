@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
+namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 
-interface PriceProductScheduleWriterInterface
+interface PriceProductScheduleApplierByProductTypeResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     * @return void
      */
-    public function savePriceProductSchedule(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer;
+    public function applyPriceProductScheduleByProductType(PriceProductScheduleTransfer $priceProductScheduleTransfer): void;
 }
