@@ -128,6 +128,20 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()->createQuoteStatusChecker()->isQuoteDeclined($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null

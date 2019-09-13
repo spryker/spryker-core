@@ -38,4 +38,11 @@ interface QuoteStatusCheckerInterface
      * @return bool
      */
     public function isQuoteApproved(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool;
 }

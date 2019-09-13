@@ -125,6 +125,18 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
+     * - Returns true if quote status is `declined`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
      * - Returns highest limit calculated from all ApproveQuotePermissionPlugin permissions assigned to company user.
      * - Returns null if no permissions found.
      *
