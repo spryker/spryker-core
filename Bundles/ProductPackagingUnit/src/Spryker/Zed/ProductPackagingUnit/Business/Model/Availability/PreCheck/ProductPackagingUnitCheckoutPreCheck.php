@@ -61,7 +61,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
                 $storeTransfer
             );
 
-            if ($itemTransfer->getAmount() > 0 && !$isPackagingUnitLeadProductSellable) {
+            if ($itemTransfer->getAmount()->greaterThan(0) && !$isPackagingUnitLeadProductSellable) {
                 $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
                     static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
                 );

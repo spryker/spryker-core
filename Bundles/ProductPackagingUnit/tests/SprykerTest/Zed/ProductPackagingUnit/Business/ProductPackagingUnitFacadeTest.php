@@ -740,7 +740,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
-        $this->assertSame($itemTransfer->getAmount(), $salesOrderItemEntity->getAmount()->toInt());
+        $this->assertSame($itemTransfer->getAmount()->toString(), $salesOrderItemEntity->getAmount()->toString());
         $this->assertSame($itemTransfer->getAmountLeadProduct()->getProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
@@ -1052,7 +1052,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertCount(1, $quoteTransfer->getItems());
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertEquals(2, $itemTransfer->getQuantity());
-            $this->assertEquals(2, $itemTransfer->getAmount());
+            $this->assertEquals('2', $itemTransfer->getAmount()->toString());
         }
 
         // Action
@@ -1065,7 +1065,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->assertCount(1, $quoteTransfer->getItems());
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $this->assertEquals(1, $itemTransfer->getQuantity());
-            $this->assertEquals(1, $itemTransfer->getAmount());
+            $this->assertEquals('1', $itemTransfer->getAmount()->toString());
         }
 
         // Action

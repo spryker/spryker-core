@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
@@ -99,22 +100,25 @@ class ProductMeasurementUnitFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCalculateQuantityNormalizedSalesUnitValueCalculatesCorrectValues($quantity, $conversion, $precision, $expectedResult)
+    public function testCalculateQuantitySalesUnitValueCalculatesCorrectValues(int $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
-        $itemTransfer = (new ItemTransfer())
-            ->setQuantity($quantity)
-            ->setQuantitySalesUnit(
-                (new ProductMeasurementSalesUnitTransfer())
-                    ->setConversion($conversion)
-                    ->setPrecision($precision)
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setQuantity($quantity)
+                    ->setQuantitySalesUnit(
+                        (new ProductMeasurementSalesUnitTransfer())
+                            ->setConversion($conversion)
+                            ->setPrecision($precision)
+                    )
             );
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->calculateQuantityNormalizedSalesUnitValue($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->calculateQuantitySalesUnitValueInQuote($quoteTransfer);
 
         // Assert
-        $this->assertSame($expectedResult, $actualResult);
+        $this->assertSame($expectedResult, $actualResult->getItems()[0]->getQuantitySalesUnit()->getValue());
     }
 
     /**

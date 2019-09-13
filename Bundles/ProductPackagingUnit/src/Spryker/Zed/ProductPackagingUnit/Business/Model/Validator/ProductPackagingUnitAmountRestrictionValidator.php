@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class ProductPackagingUnitAmountRestrictionValidator implements ProductPackagingUnitAmountRestrictionValidatorInterface
@@ -19,6 +20,8 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     protected const ERROR_AMOUNT_MAX_NOT_FULFILLED = 'cart.pre.check.amount.max.failed';
     protected const ERROR_AMOUNT_INTERVAL_NOT_FULFILLED = 'cart.pre.check.amount.interval.failed';
     protected const ERROR_AMOUNT_IS_NOT_VARIABLE = 'cart.pre.check.amount.is_not_variable.failed';
+
+    protected const DIVISION_SCALE = 10;
 
     protected const PRODUCT_PACKAGING_UNIT_AMOUNT_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::AMOUNT_INTERVAL => 1,
@@ -116,20 +119,23 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return \Spryker\DecimalObject\Decimal[]
      */
     protected function getItemAddCartAmountMap(array $itemTransfers, CartChangeTransfer $cartChangeTransfer): array
     {
         $quoteAmountMapByGroupKey = $this->getQuoteAmountMap($cartChangeTransfer);
+        /** @var \Spryker\DecimalObject\Decimal[] $cartAmountMap */
         $cartAmountMap = [];
 
         foreach ($itemTransfers as $itemTransfer) {
             $productGroupKey = $itemTransfer->getGroupKey();
-            $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-            $cartAmountMap[$productGroupKey] = (int)$amountPerQuantity;
+            $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
+            $cartAmountMap[$productGroupKey] = $amountPerQuantity;
 
             if (isset($quoteAmountMapByGroupKey[$productGroupKey])) {
-                $cartAmountMap[$productGroupKey] += (int)$quoteAmountMapByGroupKey[$productGroupKey];
+                $cartAmountMap[$productGroupKey] = $cartAmountMap[$productGroupKey]->add(
+                    $quoteAmountMapByGroupKey[$productGroupKey]
+                );
             }
         }
 
@@ -145,8 +151,11 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     {
         $quoteAmountMap = [];
         foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
-            $quoteAmountMap[$itemTransfer->getGroupKey()] = (int)$amountPerQuantity;
+            if (!$itemTransfer->getAmount()) {
+                continue;
+            }
+            $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
+            $quoteAmountMap[$itemTransfer->getGroupKey()] = $amountPerQuantity;
         }
 
         return $quoteAmountMap;
@@ -169,33 +178,39 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
 
     /**
      * @param string $sku
-     * @param int $amount
+     * @param \Spryker\DecimalObject\Decimal $amount
      * @param \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function validateItem(string $sku, int $amount, ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer, CartPreCheckResponseTransfer $responseTransfer): void
-    {
+    protected function validateItem(
+        string $sku,
+        Decimal $amount,
+        ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer,
+        CartPreCheckResponseTransfer $responseTransfer
+    ): void {
+        $productPackagingUnitAmountTransfer->requireAmountMin();
+
         $min = $productPackagingUnitAmountTransfer->getAmountMin();
         $max = $productPackagingUnitAmountTransfer->getAmountMax();
         $interval = $productPackagingUnitAmountTransfer->getAmountInterval();
         $defaultAmount = $productPackagingUnitAmountTransfer->getDefaultAmount();
         $isVariable = $productPackagingUnitAmountTransfer->getIsVariable();
 
-        if ($amount != 0 && $amount < $min) {
+        if (!$amount->isZero() && $amount->lessThan($min)) {
             $this->addViolation(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount, $responseTransfer);
         }
 
-        if ($amount != 0 && $interval != null && ($amount - $min) % $interval != 0) {
+        if (!$amount->isZero() && $interval != null && !$amount->subtract($min)->mod($interval)->isZero()) {
             $this->addViolation(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount, $responseTransfer);
         }
 
-        if ($max != null && $amount > $max) {
+        if ($max != null && $amount->greaterThan($max)) {
             $this->addViolation(static::ERROR_AMOUNT_MAX_NOT_FULFILLED, $sku, $max, $amount, $responseTransfer);
         }
 
-        if (!$isVariable && $amount != $defaultAmount) {
+        if (!$isVariable && !$amount->equals($defaultAmount)) {
             $this->addViolation(static::ERROR_AMOUNT_IS_NOT_VARIABLE, $sku, $defaultAmount, $amount, $responseTransfer);
         }
     }
@@ -203,19 +218,19 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     /**
      * @param string $message
      * @param string $sku
-     * @param float $restrictionValue
-     * @param float $actualValue
+     * @param \Spryker\DecimalObject\Decimal $restrictionValue
+     * @param \Spryker\DecimalObject\Decimal $actualValue
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function addViolation(string $message, string $sku, float $restrictionValue, float $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolation(string $message, string $sku, Decimal $restrictionValue, Decimal $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $responseTransfer->setIsSuccess(false);
         $responseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue($message)
-                ->setParameters(['%sku%' => $sku, '%restrictionValue%' => $restrictionValue, '%actualValue%' => $actualValue])
+                ->setParameters(['%sku%' => $sku, '%restrictionValue%' => $restrictionValue->toString(), '%actualValue%' => $actualValue->toString()])
         );
     }
 

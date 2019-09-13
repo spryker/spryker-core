@@ -10,10 +10,13 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
 {
+    protected const DIVISION_SCALE = 10;
+
     /**
      * @uses CalculationPriceMode::PRICE_MODE_NET
      */
@@ -70,20 +73,20 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
             ->getProductPackagingUnitAmount()
             ->getDefaultAmount();
 
-        $amountPerQuantity = (int)($itemTransfer->getAmount() / $itemTransfer->getQuantity());
+        $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
 
-        if ($amountPerQuantity === $defaultAmount) {
+        if ($amountPerQuantity->equals($defaultAmount)) {
             return $itemTransfer;
         }
 
         if ($quoteTransfer->getPriceMode() === static::PRICE_MODE_NET) {
             $unitNetPrice = $itemTransfer->getUnitNetPrice();
-            $newUnitNetPrice = (int)round((($amountPerQuantity / $defaultAmount) * $unitNetPrice));
-            $itemTransfer->setUnitNetPrice($newUnitNetPrice);
+            $newUnitNetPrice = $amountPerQuantity->divide($defaultAmount, static::DIVISION_SCALE)->multiply($unitNetPrice);
+            $itemTransfer->setUnitNetPrice($newUnitNetPrice->round(0, Decimal::ROUND_HALF_UP)->toInt());
         } else {
             $unitGrossPrice = $itemTransfer->getUnitGrossPrice();
-            $newUnitGrossPrice = (int)round((($amountPerQuantity / $defaultAmount) * $unitGrossPrice));
-            $itemTransfer->setUnitGrossPrice($newUnitGrossPrice);
+            $newUnitGrossPrice = $amountPerQuantity->divide($defaultAmount, static::DIVISION_SCALE)->multiply($unitGrossPrice);
+            $itemTransfer->setUnitGrossPrice($newUnitGrossPrice->round(0, Decimal::ROUND_HALF_UP)->toInt());
         }
 
         return $itemTransfer;

@@ -44,11 +44,11 @@
     <table name="spy_product_packaging_unit_amount" phpName="SpyProductPackagingUnitAmount">
         <column name="id_product_packaging_unit_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_packaging_unit" type="INTEGER" required="true"/>
-        <column name="default_amount" type="INTEGER" required="true"/>
+        <column name="default_amount" type="DECIMAL" size="20" scale="10" required="true"/>
         <column name="is_variable" type="BOOLEAN" default="false" required="true"/>
-        <column name="amount_min" type="INTEGER" required="false"/>
-        <column name="amount_max" type="INTEGER" required="false"/>
-        <column name="amount_interval" type="INTEGER" required="false"/>
+        <column name="amount_min" type="DECIMAL" size="20" scale="10" required="false"/>
+        <column name="amount_max" type="DECIMAL" size="20" scale="10" required="false"/>
+        <column name="amount_interval" type="DECIMAL" size="20" scale="10" required="false"/>
 
         <behavior name="timestampable"/>
 
