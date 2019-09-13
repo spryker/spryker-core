@@ -66,7 +66,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
         $reservationQuantity = $omsFacade->getOmsReservedProductQuantityForSku(self::ORDER_ITEM_SKU, $storeTransfer);
 
-        $this->assertSame('50', $reservationQuantity->toString());
+        $this->assertTrue($reservationQuantity->equals(50));
     }
 
     /**

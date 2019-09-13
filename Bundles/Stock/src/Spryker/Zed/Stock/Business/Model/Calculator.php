@@ -55,7 +55,7 @@ class Calculator implements CalculatorInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateTotalQuantity(iterable $productEntities): Decimal
+    protected function calculateTotalQuantity(array $productEntities): Decimal
     {
         $quantity = new Decimal(0);
         foreach ($productEntities as $productEntity) {

@@ -72,7 +72,7 @@ class ProductBundleStockWriterTest extends Unit
 
         $stockTransfer = $stocks[0];
         $this->assertTrue($stockTransfer->getQuantity()->equals(7.5));
-        $this->assertSame($relatedProductStock->divide($bundleQuantity, 10)->toString(), $stockTransfer->getQuantity()->toString());
+        $this->assertTrue($relatedProductStock->divide($bundleQuantity, 10)->equals($stockTransfer->getQuantity()->toString()));
 
         $stockTransfer = $stocks[1];
         $this->assertTrue($stockTransfer->getQuantity()->equals(7.5));
@@ -106,10 +106,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame('0', $stockTransfer->getQuantity()->toString());
+        $this->assertTrue($stockTransfer->getQuantity()->isZero());
 
         $stockTransfer = $stocks[1];
-        $this->assertSame('0', $stockTransfer->getQuantity()->toString());
+        $this->assertTrue($stockTransfer->getQuantity()->isZero());
     }
 
     /**

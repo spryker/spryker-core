@@ -119,7 +119,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function getBundleItemsByIdProduct($idConcreteProduct): iterable
+    protected function getBundleItemsByIdProduct($idConcreteProduct): array
     {
         if (!isset(static::$bundleItemEntityCache[$idConcreteProduct]) || count(static::$bundleItemEntityCache[$idConcreteProduct]) == 0) {
             static::$bundleItemEntityCache[$idConcreteProduct] = $this->productBundleQueryContainer
@@ -153,7 +153,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    protected function updateBundleProductAvailability(iterable $bundleItems, string $bundleProductSku): void
+    protected function updateBundleProductAvailability(array $bundleItems, string $bundleProductSku): void
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 

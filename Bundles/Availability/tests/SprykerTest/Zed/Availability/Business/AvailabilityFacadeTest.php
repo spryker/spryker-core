@@ -168,7 +168,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
 
-        $this->assertSame('50.0000000000', $availabilityEntity->getQuantity());
+        $this->assertTrue((new Decimal($availabilityEntity->getQuantity()))->equals(50));
     }
 
     /**
@@ -186,7 +186,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
 
-        $this->assertSame('50.0000000000', $availabilityEntity->getQuantity());
+        $this->assertTrue((new Decimal($availabilityEntity->getQuantity()))->equals(50));
     }
 
     /**
@@ -207,7 +207,7 @@ class AvailabilityFacadeTest extends Unit
         $availabilityEntity = SpyAvailabilityQuery::create()
             ->findOneBySku(static::CONCRETE_SKU);
 
-        $this->assertSame('0.0000000000', $availabilityEntity->getQuantity());
+        $this->assertTrue((new Decimal($availabilityEntity->getQuantity()))->isZero());
     }
 
     /**

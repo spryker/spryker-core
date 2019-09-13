@@ -394,7 +394,7 @@ class GeneratedTransferTest extends Unit
 
         // Assert
         $this->assertInstanceOf(Decimal::class, $generatedTransfer->getTestDecimal());
-        $this->assertSame('1', $generatedTransfer->getTestDecimal()->toString());
+        $this->assertTrue($generatedTransfer->getTestDecimal()->equals(1));
     }
 
     /**
