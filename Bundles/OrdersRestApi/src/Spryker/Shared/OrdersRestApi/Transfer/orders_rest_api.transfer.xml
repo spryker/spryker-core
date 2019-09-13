@@ -136,12 +136,39 @@
     </transfer>
 
     <transfer name="Address">
+        <property name="iso2Code" type="string" />
         <property name="country" type="Country" />
     </transfer>
 
     <transfer name="Country">
         <property name="iso2Code" type="string" />
         <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="totals" type="Totals"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="taxTotal" type="TaxTotal" />
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int" />
     </transfer>
 
 </transfers>
