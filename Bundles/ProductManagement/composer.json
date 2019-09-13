@@ -33,6 +33,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/propel": "*",
     "spryker/store": "*",

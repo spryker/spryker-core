@@ -41,6 +41,11 @@ class AvailabilityFacadeTest extends Unit
     public const ID_STORE = 1;
 
     /**
+     * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess()
@@ -97,7 +102,7 @@ class AvailabilityFacadeTest extends Unit
 
         $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertSame($quantity->toString(), $calculatedQuantity->toString());
+        $this->assertSame($quantity->toString(), $calculatedQuantity->trim()->toString());
     }
 
     /**
@@ -163,7 +168,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame('50', $availabilityEntity->getQuantity());
+        $this->assertSame('50.0000000000', $availabilityEntity->getQuantity());
     }
 
     /**
@@ -181,7 +186,7 @@ class AvailabilityFacadeTest extends Unit
 
         $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame('50', $availabilityEntity->getQuantity());
+        $this->assertSame('50.0000000000', $availabilityEntity->getQuantity());
     }
 
     /**
@@ -202,7 +207,7 @@ class AvailabilityFacadeTest extends Unit
         $availabilityEntity = SpyAvailabilityQuery::create()
             ->findOneBySku(self::CONCRETE_SKU);
 
-        $this->assertSame('0', $availabilityEntity->getQuantity());
+        $this->assertSame('0.0000000000', $availabilityEntity->getQuantity());
     }
 
     /**
@@ -224,7 +229,7 @@ class AvailabilityFacadeTest extends Unit
 
         $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
-        $this->assertSame('2', $productConcreteAvailabilityTransfer->getAvailability()->toString());
+        $this->assertSame('2', $productConcreteAvailabilityTransfer->getAvailability()->trim()->toString());
     }
 
     /**
