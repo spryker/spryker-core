@@ -66,8 +66,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 new PriceProductScheduleListTransfer()
             );
 
+        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+            $priceProductScheduleEntity->getStore(),
+            new StoreTransfer()
+        );
+
         return $priceProductScheduleTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
+            ->setStore($storeTransfer)
             ->setPriceProduct($priceProductTransfer)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
     }
@@ -82,6 +88,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleTransfer $priceProductScheduleTransfer,
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): SpyPriceProductSchedule {
+        $priceProductScheduleEntity->fromArray($priceProductScheduleTransfer->toArray());
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         if ($priceProductTransfer === null) {
@@ -93,6 +100,10 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         if ($moneyValueTransfer === null) {
             return $priceProductScheduleEntity;
         }
+        $priceProductScheduleEntity->fromArray($priceProductScheduleTransfer->toArray());
+
+        $idStore = $moneyValueTransfer->getFkStore();
+        $idCurrency = $moneyValueTransfer->getFkCurrency();
 
         if ($priceProductTransfer->getIdProductAbstract() !== null) {
             $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
@@ -102,11 +113,25 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
         }
 
+        if ($idStore === null && $moneyValueTransfer->getStore() !== null) {
+            $idStore = $moneyValueTransfer->getStore()->getIdStore();
+        }
+
+        if ($idCurrency === null && $moneyValueTransfer->getCurrency() !== null) {
+            $idCurrency = $moneyValueTransfer->getCurrency()->getIdCurrency();
+        }
+
+        $idPriceProductScheduleList = null;
+        $priceProductScheduleListTransfer = $priceProductScheduleTransfer->getPriceProductScheduleList();
+        if ($priceProductScheduleListTransfer !== null) {
+            $idPriceProductScheduleList = (string)$priceProductScheduleListTransfer->getIdPriceProductScheduleList();
+        }
+
         return $priceProductScheduleEntity
-            ->setFkCurrency($moneyValueTransfer->getFkCurrency())
-            ->setFkStore($moneyValueTransfer->getFkStore())
+            ->setFkCurrency($idCurrency)
+            ->setFkStore($idStore)
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
-            ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
+            ->setFkPriceProductScheduleList($idPriceProductScheduleList)
             ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
@@ -172,6 +197,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
             $priceProductTransfer->setIdProduct($productConcreteEntity->getIdProduct());
             $priceProductTransfer->setSkuProduct($productConcreteEntity->getSku());
+            $priceProductTransfer->setSkuProductAbstract($productConcreteEntity->getSku());
         }
 
         if ($priceProductScheduleEntity->getFkProductAbstract()) {

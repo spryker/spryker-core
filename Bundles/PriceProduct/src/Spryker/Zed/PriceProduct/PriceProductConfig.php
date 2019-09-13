@@ -45,4 +45,20 @@ class PriceProductConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getPriceDimensionDefaultName();
     }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForNetType(): string
+    {
+        return $this->getSharedConfig()->getPriceModeIdentifierForNetType();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForGrossType(): string
+    {
+        return $this->getSharedConfig()->getPriceModeIdentifierForGrossType();
+    }
 }

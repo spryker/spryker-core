@@ -123,6 +123,19 @@ interface SalesFacadeInterface
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
     /**
+     * Specification:
+     * - Creates new order address with values from the addresses transfer.
+     * - Returns addresses transfer with id of newly created order address.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer;
+
+    /**
      * Returns a list of of orders for the given customer id and (optional) filters.
      *
      * @api
@@ -167,11 +180,14 @@ interface SalesFacadeInterface
     /**
      * Specification:
      *  - Returns the order for the given customer id and sales order id.
-     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Aggregates order totals calls -> SalesAggregator.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -179,11 +195,15 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales order id.
+     *  - Returns persisted order information for the given sales order id.
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
      * @param int $idSalesOrder
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -191,7 +211,9 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Returns the order for the given sales order id.
+     *  - Returns persisted order information for the given sales order id.
+     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
@@ -204,6 +226,7 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Returns the order for the given sales order item id.
+     * - Hydrates order using quote level (BC) or item level shipping addresses.
      *
      * @api
      *
@@ -255,4 +278,40 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function createSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * Specification:
+     * - Updates sales expense entity from transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer;
+
+    /**
+     * Specification:
+     * - Returns a collection of order items grouped by unique group key.
+     *
+     * @api
+     *
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueOrderItems(iterable $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands AddressTransfer with customer address data or sales address data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer;
 }

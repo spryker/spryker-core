@@ -99,9 +99,9 @@ class LocaleFacadeTest extends Unit
 
         //Act
         $this->localeFacade->setCurrentLocale($newLocale);
-        $newCurentLocale = $this->localeFacade->getCurrentLocale();
+        $newCurrentLocale = $this->localeFacade->getCurrentLocale();
 
         //Assert
-        $this->assertSame($currentLocale->getLocaleName(), $newCurentLocale->getLocaleName());
+        $this->assertSame($currentLocale->getLocaleName(), $newCurrentLocale->getLocaleName());
     }
 }

@@ -127,4 +127,21 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="country" type="Country" />
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string" />
+        <property name="name" type="string" />
+    </transfer>
+
 </transfers>
