@@ -138,11 +138,16 @@
 
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method" />
+        <property name="shipmentHash" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
         <property name="storeCurrencyPrice" type="int" />
+    </transfer>
+
+    <transfer name="ShipmentMethodsCollection">
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="ShipmentMethods"/>
     </transfer>
 
     <transfer name="PaymentProviderCollection">
