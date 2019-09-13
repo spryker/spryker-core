@@ -174,6 +174,10 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer

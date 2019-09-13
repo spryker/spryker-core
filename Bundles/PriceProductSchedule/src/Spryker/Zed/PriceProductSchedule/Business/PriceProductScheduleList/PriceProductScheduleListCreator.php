@@ -39,8 +39,7 @@ class PriceProductScheduleListCreator implements PriceProductScheduleListCreator
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
         PriceProductScheduleListExpanderInterface $priceProductScheduleListExpander,
         PriceProductScheduleConfig $priceProductScheduleConfig
-    )
-    {
+    ) {
         $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
         $this->priceProductScheduleListExpander = $priceProductScheduleListExpander;
         $this->priceProductScheduleConfig = $priceProductScheduleConfig;

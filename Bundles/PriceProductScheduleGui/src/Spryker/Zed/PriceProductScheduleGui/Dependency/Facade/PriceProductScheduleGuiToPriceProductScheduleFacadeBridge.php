@@ -110,8 +110,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(
         int $idPriceProductScheduleList
-    ): array
-    {
+    ): array {
         return $this->priceProductScheduleFacade
             ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
     }
