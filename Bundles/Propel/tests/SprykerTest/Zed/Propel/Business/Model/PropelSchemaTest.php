@@ -12,7 +12,9 @@ use Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
+use Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -27,6 +29,11 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelSchemaTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Zed\Propel\PropelBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -60,7 +67,7 @@ class PropelSchemaTest extends Unit
         $finder = new PropelSchemaFinder([$this->getFixtureDirectory()]);
         $groupedFinder = new PropelGroupedSchemaFinder($finder);
         $writer = new PropelSchemaWriter(new Filesystem(), $this->getFixtureTargetDirectory());
-        $merger = new PropelSchemaMerger();
+        $merger = $this->createPropelSchemaMerger();
 
         $this->assertFalse(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_foo.schema.xml'));
         $schema = new PropelSchema($groupedFinder, $writer, $merger);
@@ -80,12 +87,24 @@ class PropelSchemaTest extends Unit
         ]);
         $groupedFinder = new PropelGroupedSchemaFinder($finder);
         $writer = new PropelSchemaWriter(new Filesystem(), $this->getFixtureTargetDirectory());
-        $merger = new PropelSchemaMerger();
+        $merger = $this->createPropelSchemaMerger();
 
         $this->assertFalse(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml'));
         $schema = new PropelSchema($groupedFinder, $writer, $merger);
         $schema->copy();
 
         $this->assertTrue(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml'));
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface
+     */
+    protected function createPropelSchemaMerger(): PropelSchemaMergerInterface
+    {
+        return new PropelSchemaMerger(
+            new PropelToUtilTextServiceBridge(
+                $this->tester->getLocator()->utilText()->service()
+            )
+        );
     }
 }
