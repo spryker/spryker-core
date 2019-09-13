@@ -52,9 +52,9 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['is_never_out_of_stock' => true]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['is_never_out_of_stock' => true]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, new Decimal(1));
+        $isProductSellable = $availabilityFacade->isProductSellable(static::CONCRETE_SKU, new Decimal(1));
 
         $this->assertTrue($isProductSellable);
     }
@@ -66,9 +66,9 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, new Decimal(1));
+        $isProductSellable = $availabilityFacade->isProductSellable(static::CONCRETE_SKU, new Decimal(1));
 
         $this->assertFalse($isProductSellable);
     }
@@ -80,9 +80,9 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 5]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 5]);
 
-        $isProductSellable = $availabilityFacade->isProductSellable(self::CONCRETE_SKU, new Decimal(1));
+        $isProductSellable = $availabilityFacade->isProductSellable(static::CONCRETE_SKU, new Decimal(1));
 
         $this->assertTrue($isProductSellable);
     }
@@ -98,11 +98,11 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => $quantity->toString()]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => $quantity->toString()]);
 
-        $calculatedQuantity = $availabilityFacade->calculateStockForProduct(self::CONCRETE_SKU);
+        $calculatedQuantity = $availabilityFacade->calculateStockForProduct(static::CONCRETE_SKU);
 
-        $this->assertSame($quantity->toString(), $calculatedQuantity->trim()->toString());
+        $this->assertTrue($calculatedQuantity->equals($quantity));
     }
 
     /**
@@ -123,7 +123,7 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 5]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 5]);
 
         $quoteTransfer = $this->createQuoteTransfer();
 
@@ -141,7 +141,7 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
         $quoteTransfer = $this->createQuoteTransfer();
 
@@ -159,14 +159,14 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $stockProductEntity = $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 5]);
+        $stockProductEntity = $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 5]);
 
         $stockProductEntity->setQuantity(50);
         $stockProductEntity->save();
 
-        $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
+        $availabilityFacade->updateAvailability(static::CONCRETE_SKU);
 
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
+        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
 
         $this->assertSame('50.0000000000', $availabilityEntity->getQuantity());
     }
@@ -178,13 +178,13 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 50]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 50]);
 
         $this->createProductAvailability();
 
-        $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
+        $availabilityFacade->updateAvailability(static::CONCRETE_SKU);
 
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(self::CONCRETE_SKU);
+        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
 
         $this->assertSame('50.0000000000', $availabilityEntity->getQuantity());
     }
@@ -196,16 +196,16 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
         $availabilityEntity = $this->createProductAvailability(5);
 
         $this->assertSame('5', $availabilityEntity->getQuantity());
 
-        $availabilityFacade->updateAvailability(self::CONCRETE_SKU);
+        $availabilityFacade->updateAvailability(static::CONCRETE_SKU);
 
         $availabilityEntity = SpyAvailabilityQuery::create()
-            ->findOneBySku(self::CONCRETE_SKU);
+            ->findOneBySku(static::CONCRETE_SKU);
 
         $this->assertSame('0.0000000000', $availabilityEntity->getQuantity());
     }
@@ -217,19 +217,19 @@ class AvailabilityFacadeTest extends Unit
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
-        $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE', StoreTransfer::ID_STORE => self::ID_STORE]))->build();
+        $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE', StoreTransfer::ID_STORE => static::ID_STORE]))->build();
 
-        $this->createProductWithStock(self::ABSTRACT_SKU, self::CONCRETE_SKU, ['quantity' => 0]);
+        $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
-        $availabilityFacade->saveProductAvailabilityForStore(self::CONCRETE_SKU, new Decimal(2), $storeTransfer);
+        $availabilityFacade->saveProductAvailabilityForStore(static::CONCRETE_SKU, new Decimal(2), $storeTransfer);
 
         $productConcreteAvailabilityRequestTransfer = (new ProductConcreteAvailabilityRequestBuilder([
-            ProductConcreteAvailabilityRequestTransfer::SKU => self::CONCRETE_SKU,
+            ProductConcreteAvailabilityRequestTransfer::SKU => static::CONCRETE_SKU,
         ]))->build();
 
         $productConcreteAvailabilityTransfer = $availabilityFacade->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
 
-        $this->assertSame('2', $productConcreteAvailabilityTransfer->getAvailability()->trim()->toString());
+        $this->assertTrue($productConcreteAvailabilityTransfer->getAvailability()->equals(2));
     }
 
     /**
@@ -284,8 +284,8 @@ class AvailabilityFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku(self::CONCRETE_SKU);
-        $itemTransfer->setQuantity(self::ID_STORE);
+        $itemTransfer->setSku(static::CONCRETE_SKU);
+        $itemTransfer->setQuantity(static::ID_STORE);
         $quoteTransfer->addItem($itemTransfer);
 
         return $quoteTransfer;
@@ -299,7 +299,7 @@ class AvailabilityFacadeTest extends Unit
     protected function createProductAvailability($quantity = 0)
     {
         $availabilityAbstractEntity = new SpyAvailabilityAbstract();
-        $availabilityAbstractEntity->setAbstractSku(self::ABSTRACT_SKU);
+        $availabilityAbstractEntity->setAbstractSku(static::ABSTRACT_SKU);
         $availabilityAbstractEntity->setQuantity($quantity);
         $availabilityAbstractEntity->setFkStore(static::ID_STORE);
         $availabilityAbstractEntity->save();
@@ -308,7 +308,7 @@ class AvailabilityFacadeTest extends Unit
         $availabilityEntity->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
         $availabilityEntity->setQuantity($quantity);
         $availabilityEntity->setFkStore(static::ID_STORE);
-        $availabilityEntity->setSku(self::CONCRETE_SKU);
+        $availabilityEntity->setSku(static::CONCRETE_SKU);
         $availabilityEntity->save();
 
         return $availabilityEntity;

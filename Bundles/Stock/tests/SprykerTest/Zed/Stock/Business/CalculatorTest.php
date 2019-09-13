@@ -54,7 +54,7 @@ class CalculatorTest extends Unit
     public function testCalculateStock()
     {
         $stock = $this->stockFacade->calculateStockForProduct($this->productEntity->getSku());
-        $this->assertSame('30', $stock->trim()->toString());
+        $this->assertTrue($stock->equals(30));
     }
 
     /**

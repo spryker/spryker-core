@@ -26,6 +26,8 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
+    protected const PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -329,7 +331,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         } catch (MissingProductException $exception) {
             throw new ProductNotFoundException(
-                sprintf('The product was not found with this SKU: %s', $sku)
+                sprintf(static::PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $sku)
             );
         }
     }

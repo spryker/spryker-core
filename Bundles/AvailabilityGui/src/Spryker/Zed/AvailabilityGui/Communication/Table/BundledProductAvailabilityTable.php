@@ -216,10 +216,10 @@ class BundledProductAvailabilityTable extends AbstractTable
      */
     protected function calculateReservation(array $productItem): Decimal
     {
-        $quantity = new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY]);
-        $quantity = $quantity->add($this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer));
+        $reservation = $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
 
-        return $quantity;
+        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY]))
+            ->add($reservation);
     }
 
     /**

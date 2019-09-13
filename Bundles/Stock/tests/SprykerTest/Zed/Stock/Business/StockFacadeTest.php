@@ -123,7 +123,7 @@ class StockFacadeTest extends Unit
     {
         $productStock = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertEquals('100.2', $productStock->trim()->toString());
+        $this->assertTrue($productStock->equals('100.2'));
     }
 
     /**
@@ -230,7 +230,7 @@ class StockFacadeTest extends Unit
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertEquals('90.2', $stockSize->trim()->toString());
+        $this->assertTrue($stockSize->equals('90.2'));
     }
 
     /**
@@ -246,7 +246,7 @@ class StockFacadeTest extends Unit
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertEquals('110.2', $stockSize->trim()->toString());
+        $this->assertTrue($stockSize->equals('110.2'));
     }
 
     /**
