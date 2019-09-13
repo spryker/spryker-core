@@ -9,13 +9,13 @@ namespace Spryker\Zed\QuoteApproval\Communication\Plugin\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsProviderPluginInterface;
+use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteFieldsAllowedForSavingProviderPluginInterface;
 
 /**
  * @method \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface getFacade()
  * @method \Spryker\Zed\QuoteApproval\QuoteApprovalConfig getConfig()
  */
-class QuoteFieldsAllowedForSavingProviderPlugin extends AbstractPlugin implements QuoteFieldsProviderPluginInterface
+class QuoteApprovalQuoteFieldsAllowedForSavingProviderPlugin extends AbstractPlugin implements QuoteFieldsAllowedForSavingProviderPluginInterface
 {
     /**
      * {@inheritdoc}
