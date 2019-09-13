@@ -76,7 +76,7 @@
     <table name="spy_sales_order" phpName="SpySalesOrder">
         <column name="id_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_address_billing" type="INTEGER" required="true"/>
-        <column name="fk_sales_order_address_shipping" type="INTEGER" required="true"/>
+        <column name="fk_sales_order_address_shipping" type="INTEGER" required="false"/>
         <column name="fk_locale" type="INTEGER"/>
 
         <column name="email" required="false" size="255" type="VARCHAR"/>

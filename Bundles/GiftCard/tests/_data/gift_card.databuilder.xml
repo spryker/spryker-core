@@ -14,5 +14,21 @@
         <property name="isActive" dataBuilderRule="boolean()"/>
     </transfer>
 
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" dataBuilderRule="word"/>
+    </transfer>
+
+    <transfer name="Item" >
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
+    </transfer>
+
+    <transfer name="GiftCardMetadata">
+        <property name="isGiftCard" dataBuilderRule="boolean()"/>
+    </transfer>
+
 </transfers>
 

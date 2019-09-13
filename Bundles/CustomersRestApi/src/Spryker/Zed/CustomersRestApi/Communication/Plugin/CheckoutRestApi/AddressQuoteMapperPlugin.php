@@ -20,7 +20,8 @@ class AddressQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPlug
 {
     /**
      * {@inheritdoc}
-     * - Maps rest request billing and shipping addresses to quote.
+     * - Maps rest request billing address information to quote.
+     * - Maps rest request shipping address information to quote level (BC) and item level shipping addresses.
      *
      * @api
      *

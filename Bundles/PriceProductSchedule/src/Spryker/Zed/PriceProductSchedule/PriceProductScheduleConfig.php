@@ -40,6 +40,8 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     protected const KEY_FROM_INCLUDED = 'from_included';
     protected const KEY_TO_INCLUDED = 'to_included';
 
+    protected const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'Default list';
+
     /**
      * @return array
      */
@@ -100,5 +102,13 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     public function getPriceDimensionDefault(): string
     {
         return static::PRICE_DIMENSION_DEFAULT;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceProductScheduleListDefaultName(): string
+    {
+        return static::PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME;
     }
 }
