@@ -11,7 +11,7 @@ interface CmsSlotClientInterface
 {
     /**
      * Specification:
-     * - Returns an array with keys from $dataKeys and values which are provided by Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface plugins.
+     * - Returns an array with keys from $dataKeys and values which are provided by Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface plugins.
      *
      * @api
      *

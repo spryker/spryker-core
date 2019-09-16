@@ -12,16 +12,16 @@ use Spryker\Client\CmsSlot\Exception\CmsSlotExternalDataProviderMissingException
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
     /**
-     * @var \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface[]
+     * @var \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[]
      */
-    protected $cmsSlotExternalDataProviderStrategyPlugins;
+    protected $externalDataProviderStrategyPlugins;
 
     /**
-     * @param \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface[] $cmsSlotExternalDataProviderStrategyPlugins
+     * @param \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[] $externalDataProviderStrategyPlugins
      */
-    public function __construct(array $cmsSlotExternalDataProviderStrategyPlugins)
+    public function __construct(array $externalDataProviderStrategyPlugins)
     {
-        $this->cmsSlotExternalDataProviderStrategyPlugins = $cmsSlotExternalDataProviderStrategyPlugins;
+        $this->externalDataProviderStrategyPlugins = $externalDataProviderStrategyPlugins;
     }
 
     /**
@@ -34,7 +34,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         $externalData = [];
 
         foreach ($dataKeys as $dataKey) {
-            $externalData[$dataKey] = $this->executeCmsSlotExternalDataProviderStrategyPlugin($dataKey);
+            $externalData[$dataKey] = $this->executeExternalDataProviderStrategyPlugins($dataKey);
         }
 
         return $externalData;
@@ -47,11 +47,11 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
      *
      * @return mixed
      */
-    protected function executeCmsSlotExternalDataProviderStrategyPlugin(string $dataKey)
+    protected function executeExternalDataProviderStrategyPlugins(string $dataKey)
     {
-        foreach ($this->cmsSlotExternalDataProviderStrategyPlugins as $cmsSlotExternalDataProviderStrategyPlugin) {
-            if ($cmsSlotExternalDataProviderStrategyPlugin->isApplicable($dataKey)) {
-                return $cmsSlotExternalDataProviderStrategyPlugin->getDataForKey();
+        foreach ($this->externalDataProviderStrategyPlugins as $externalDataProviderStrategyPlugin) {
+            if ($externalDataProviderStrategyPlugin->isApplicable($dataKey)) {
+                return $externalDataProviderStrategyPlugin->getDataForKey();
             }
         }
 

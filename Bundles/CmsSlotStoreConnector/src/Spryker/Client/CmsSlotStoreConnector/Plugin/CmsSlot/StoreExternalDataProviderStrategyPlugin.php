@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\CmsSlotStoreConnector\Plugin\CmsSlot;
 
-use Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface;
+use Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\CmsSlotStoreConnector\CmsSlotStoreConnectorFactory getFactory()
  * @method \Spryker\Client\Store\StoreClientInterface getClient()
  */
-class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin implements CmsSlotExternalDataProviderStrategyPluginInterface
+class StoreExternalDataProviderStrategyPlugin extends AbstractPlugin implements ExternalDataProviderStrategyPluginInterface
 {
     protected const DATA_KEY = 'store';
 
@@ -34,14 +34,14 @@ class StoreCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin impl
 
     /**
      * {@inheritdoc}
-     *  - Returns the current store as StoreTransfer.
+     *  - Returns the current store name.
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|mixed
+     * @return string
      */
-    public function getDataForKey()
+    public function getDataForKey(): string
     {
-        return $this->getFactory()->getStoreClient()->getCurrentStore();
+        return $this->getFactory()->getStoreClient()->getCurrentStore()->getName();
     }
 }

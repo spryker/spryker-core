@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\CmsSlotLocaleConnector\Plugin\CmsSlot;
 
-use Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface;
+use Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\CmsSlotLocaleConnector\CmsSlotLocaleConnectorFactory getFactory()
  * @method \Spryker\Client\Locale\LocaleClientInterface getClient()
  */
-class LocaleCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin implements CmsSlotExternalDataProviderStrategyPluginInterface
+class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements ExternalDataProviderStrategyPluginInterface
 {
     protected const DATA_KEY = 'locale';
 
@@ -38,9 +38,9 @@ class LocaleCmsSlotExternalDataProviderStrategyPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @return string|mixed
+     * @return string
      */
-    public function getDataForKey()
+    public function getDataForKey(): string
     {
         return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }

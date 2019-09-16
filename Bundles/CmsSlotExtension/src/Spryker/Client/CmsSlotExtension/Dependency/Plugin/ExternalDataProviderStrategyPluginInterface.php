@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotExtension\Dependency\Plugin;
 
-interface CmsSlotExternalDataProviderStrategyPluginInterface
+interface ExternalDataProviderStrategyPluginInterface
 {
     /**
      * Specification:
@@ -27,7 +27,7 @@ interface CmsSlotExternalDataProviderStrategyPluginInterface
      *
      * @api
      *
-     * @return mixed
+     * @return string
      */
-    public function getDataForKey();
+    public function getDataForKey(): string;
 }

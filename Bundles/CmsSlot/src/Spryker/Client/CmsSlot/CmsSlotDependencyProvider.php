@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 
 class CmsSlotDependencyProvider extends AbstractDependencyProvider
 {
-    public const CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS = 'CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS';
+    public const EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS = 'EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -21,7 +21,7 @@ class CmsSlotDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = $this->addCmsSlotExternalDataProviderStrategyPlugin($container);
+        $container = $this->addExternalDataProviderStrategyPlugins($container);
 
         return $container;
     }
@@ -31,19 +31,19 @@ class CmsSlotDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCmsSlotExternalDataProviderStrategyPlugin(Container $container): Container
+    protected function addExternalDataProviderStrategyPlugins(Container $container): Container
     {
-        $container->set(static::CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS, function () {
-            return $this->getCmsSlotExternalDataProviderStrategyPlugin();
+        $container->set(static::EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS, function () {
+            return $this->getExternalDataProviderStrategyPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface[]
+     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[]
      */
-    public function getCmsSlotExternalDataProviderStrategyPlugin(): array
+    public function getExternalDataProviderStrategyPlugins(): array
     {
         return [];
     }

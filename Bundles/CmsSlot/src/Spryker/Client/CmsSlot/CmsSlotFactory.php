@@ -18,14 +18,14 @@ class CmsSlotFactory extends AbstractFactory
      */
     public function createCmsSlotDataProvider(): CmsSlotDataProviderInterface
     {
-        return new CmsSlotDataProvider($this->getCmsSlotExternalDataProviderStrategyPlugin());
+        return new CmsSlotDataProvider($this->getExternalDataProviderStrategyPlugins());
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\CmsSlotExternalDataProviderStrategyPluginInterface[]
+     * @return \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[]
      */
-    public function getCmsSlotExternalDataProviderStrategyPlugin(): array
+    public function getExternalDataProviderStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(CmsSlotDependencyProvider::CMS_SLOT_EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS);
+        return $this->getProvidedDependency(CmsSlotDependencyProvider::EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS);
     }
 }
