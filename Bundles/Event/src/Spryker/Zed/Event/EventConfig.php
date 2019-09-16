@@ -57,7 +57,7 @@ class EventConfig extends AbstractBundleConfig
     {
         $maxRetry = $this->getConfig()->get(EventConstants::MAX_RETRY_ON_FAIL, false);
 
-        if ($maxRetry) {
+        if ($maxRetry !== false) {
             return $maxRetry;
         }
 
