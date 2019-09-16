@@ -27,10 +27,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \SprykerEco\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiRepositoryInterface getRepository()
- * @method \SprykerEco\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiEntityManagerInterface getEntityManager()
- * @method \SprykerEco\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
- * @method \SprykerEco\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
  */
 class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
