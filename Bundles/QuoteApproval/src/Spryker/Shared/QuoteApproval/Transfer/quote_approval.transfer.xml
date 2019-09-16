@@ -21,7 +21,6 @@
 
     <transfer name="QuoteApprovalRequest">
         <property name="idQuote" type="int"/>
-        <property name="quote" type="Quote"/>
         <property name="approverCompanyUserId" type="int"/>
         <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuoteApproval" type="int"/>

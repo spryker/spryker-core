@@ -40,6 +40,7 @@ interface QuoteApprovalClientInterface
      * - Removes all existing cart sharing.
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -57,6 +58,7 @@ interface QuoteApprovalClientInterface
      * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      * - Removes cart sharing with approver.
      * - Removes quote approval request.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -151,6 +153,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Sends Zed request to approve quote approval request.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -166,6 +169,7 @@ interface QuoteApprovalClientInterface
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Declined" if checks are true.
      * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -213,16 +217,4 @@ interface QuoteApprovalClientInterface
      * @return bool
      */
     public function isCompanyUserInQuoteApproverList(QuoteTransfer $quoteTransfer, int $idCompanyUser): bool;
-
-    /**
-     * Specification:
-     * - Returns false if one of the required field does not exist in QuoteTransfer - true otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

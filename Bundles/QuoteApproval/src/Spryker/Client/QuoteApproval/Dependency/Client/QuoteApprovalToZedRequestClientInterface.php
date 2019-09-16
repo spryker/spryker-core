@@ -14,11 +14,11 @@ interface QuoteApprovalToZedRequestClientInterface
     /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param array|int|null $requestOptions
+     * @param int|null $timeoutInSeconds
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null);
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null);
 
     /**
      * @return void

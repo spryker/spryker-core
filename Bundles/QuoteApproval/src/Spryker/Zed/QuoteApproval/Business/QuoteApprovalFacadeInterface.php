@@ -21,6 +21,7 @@ interface QuoteApprovalFacadeInterface
      * - Removes all existing cart sharing.
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -35,6 +36,7 @@ interface QuoteApprovalFacadeInterface
      * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
      * - Removes all existing cart sharing.
      * - Removes quote approval.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -73,6 +75,7 @@ interface QuoteApprovalFacadeInterface
      * - Checks that Approver can approve request.
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Approved" if checks are true.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
@@ -88,6 +91,7 @@ interface QuoteApprovalFacadeInterface
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Declined" if checks are true.
      * - Executes QuoteApprovalUnlockPreCheckPluginInterface plugins, unlocks quote if all registered plugins returns true.
+     * - Returns quote approval response with updated quote.
      *
      * @api
      *
