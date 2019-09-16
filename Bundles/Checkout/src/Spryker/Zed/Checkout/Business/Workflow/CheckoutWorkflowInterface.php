@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Business\Workflow;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutWorkflowInterface
@@ -23,5 +24,5 @@ interface CheckoutWorkflowInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isOrderPlaceable(QuoteTransfer $quoteTransfer);
+    public function isOrderPlaceable(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
 }
