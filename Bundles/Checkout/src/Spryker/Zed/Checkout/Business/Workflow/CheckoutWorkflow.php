@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Checkout\Business\Workflow;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
@@ -83,6 +85,28 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
         $this->runStateMachine($checkoutResponseTransfer->getSaveOrder());
         $this->doPostSave($quoteTransfer, $checkoutResponseTransfer);
+
+        return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function isOrderPlaceable(QuoteTransfer $quoteTransfer)
+    {
+        $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
+
+        $checkoutResponseTransfer->setIsSuccess($this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer));
+
+        if (!$checkoutResponseTransfer->getIsSuccess()) {
+            $checkoutErrorTransfers = new ArrayObject();
+            $checkoutErrorTransfers->append(
+                (new QuoteErrorTransfer())->setMessage('checkout.step.error.title')
+            );
+            $checkoutResponseTransfer->setErrors($checkoutErrorTransfers);
+        }
 
         return $checkoutResponseTransfer;
     }

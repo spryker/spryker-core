@@ -42,11 +42,21 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function isOrderPlaceableAction(QuoteTransfer $quoteTransfer)
+    {
+        return $this->getFacade()->isOrderPlaceable($quoteTransfer);
+    }
+
+    /**
      * @param \Exception|\Throwable $exception
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createCheckoutResponseWithPlaceOrderFailure($exception)
+    protected function createCheckoutResponseWithPlaceOrderFailure($exception): CheckoutResponseTransfer
     {
         $checkoutErrorTransfer = (new CheckoutErrorTransfer())
             ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
