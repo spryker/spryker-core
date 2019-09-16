@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\AuthRestApi\Business\AuthRestApiBusinessFactory;
 use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeBridge;
+use Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface;
 use Spryker\Zed\Oauth\Business\OauthFacade;
 
 /**
@@ -72,6 +73,7 @@ class AuthRestApiFacadeTest extends Unit
         );
 
         $authRestApiBusinessFactoryMock = $this->addMockOauthFacade($authRestApiBusinessFactoryMock);
+        $authRestApiBusinessFactoryMock = $this->addCalledMockAuthPlugin($authRestApiBusinessFactoryMock);
 
         return $authRestApiBusinessFactoryMock;
     }
@@ -90,6 +92,7 @@ class AuthRestApiFacadeTest extends Unit
         );
 
         $authRestApiBusinessFactoryMock = $this->addMockOauthFacadeWithInvalidProcessAccessTokenRequest($authRestApiBusinessFactoryMock);
+        $authRestApiBusinessFactoryMock = $this->addIgnoredMockAuthPlugin($authRestApiBusinessFactoryMock);
 
         return $authRestApiBusinessFactoryMock;
     }
@@ -136,6 +139,50 @@ class AuthRestApiFacadeTest extends Unit
 
         $authRestApiBusinessFactoryMock->method('getOauthFacade')
             ->willReturn((new AuthRestApiToOauthFacadeBridge($oauthFacadeMock)));
+
+        return $authRestApiBusinessFactoryMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addCalledMockAuthPlugin(MockObject $authRestApiBusinessFactoryMock): MockObject
+    {
+        $pluginMock = $this->createPartialMock(
+            PostAuthPluginInterface::class,
+            [
+                'postAuth',
+            ]
+        );
+
+        $pluginMock->expects($this->once())->method('postAuth');
+
+        $authRestApiBusinessFactoryMock->method('getPostAuthPlugins')
+            ->willReturn([$pluginMock]);
+
+        return $authRestApiBusinessFactoryMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addIgnoredMockAuthPlugin(MockObject $authRestApiBusinessFactoryMock): MockObject
+    {
+        $pluginMock = $this->createPartialMock(
+            PostAuthPluginInterface::class,
+            [
+                'postAuth',
+            ]
+        );
+
+        $pluginMock->expects($this->never())->method('postAuth');
+
+        $authRestApiBusinessFactoryMock->method('getPostAuthPlugins')
+            ->willReturn([$pluginMock]);
 
         return $authRestApiBusinessFactoryMock;
     }
