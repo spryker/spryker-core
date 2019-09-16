@@ -194,10 +194,12 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         if ($priceProductScheduleEntity->getFkProduct()) {
             $productConcreteEntity = $priceProductScheduleEntity->getProduct();
+            $productAbstractEntity = $productConcreteEntity->getSpyProductAbstract();
 
             $priceProductTransfer->setIdProduct($productConcreteEntity->getIdProduct());
             $priceProductTransfer->setSkuProduct($productConcreteEntity->getSku());
-            $priceProductTransfer->setSkuProductAbstract($productConcreteEntity->getSpyProductAbstract()->getSku());
+            $priceProductTransfer->setSkuProductAbstract($productAbstractEntity->getSku());
+            $priceProductTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
         }
 
         if ($priceProductScheduleEntity->getFkProductAbstract()) {

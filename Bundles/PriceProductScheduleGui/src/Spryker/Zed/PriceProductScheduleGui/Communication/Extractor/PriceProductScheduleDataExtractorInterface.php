@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Extractor;
 
+use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 
 interface PriceProductScheduleDataExtractorInterface
@@ -21,14 +22,12 @@ interface PriceProductScheduleDataExtractorInterface
     ): string;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
-     * @param int|null $idPriceProductScheduleList
+     * @param \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
      *
      * @return string
      */
-    public function extractRedirectUrlFromPriceProductScheduleTransfer(
-        PriceProductScheduleTransfer $priceProductScheduleTransfer,
-        ?int $idPriceProductScheduleList
+    public function extractRedirectUrlFromPriceProductSchedule(
+        PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
     ): string;
 
     /**

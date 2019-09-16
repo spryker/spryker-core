@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -52,8 +53,9 @@ class EditController extends AbstractController
         $form = $this->getFactory()
             ->createPriceProductScheduleForm($priceProductScheduleFormDataProvider, $priceProductScheduleTransfer);
         $form->handleRequest($request);
+        $priceProductScheduleRedirectTransfer = $this->createPriceProductScheduleRedirectTransfer($priceProductScheduleTransfer, $idPriceProductScheduleList);
 
-        $viewData = $this->prepareViewResponseData($form, $priceProductScheduleTransfer, $idPriceProductScheduleList);
+        $viewData = $this->prepareViewResponseData($form, $priceProductScheduleTransfer, $priceProductScheduleRedirectTransfer);
 
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->handleSubmitForm($form, $viewData[static::KEY_REDIRECT_URL]);
@@ -63,16 +65,35 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      * @param int|null $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer
+     */
+    protected function createPriceProductScheduleRedirectTransfer(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer,
+        ?int $idPriceProductScheduleList
+    ): PriceProductScheduleRedirectTransfer {
+        $priceProductTransfer = $priceProductScheduleTransfer->requirePriceProduct()
+            ->getPriceProduct();
+
+        return (new PriceProductScheduleRedirectTransfer())
+            ->setIdPriceProductScheduleList($idPriceProductScheduleList)
+            ->setIdProduct($priceProductTransfer->getIdProduct())
+            ->setIdProductAbstract($priceProductTransfer->getIdProductAbstract());
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     * @param \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
      *
      * @return array
      */
     protected function prepareViewResponseData(
         FormInterface $form,
         PriceProductScheduleTransfer $priceProductScheduleTransfer,
-        ?int $idPriceProductScheduleList
+        PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
     ): array {
         $dataExtractor = $this->getFactory()
             ->createPriceProductScheduleDataExtractor();
@@ -80,7 +101,7 @@ class EditController extends AbstractController
             ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
         $timezoneText = $dataExtractor
             ->extractTimezoneTextFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
-        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductScheduleTransfer($priceProductScheduleTransfer, $idPriceProductScheduleList);
+        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductSchedule($priceProductScheduleRedirectTransfer);
 
         return [
             static::KEY_FORM => $form->createView(),
