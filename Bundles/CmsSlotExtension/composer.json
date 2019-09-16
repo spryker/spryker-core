@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-extension",
+  "type": "library",
   "description": "CmsSlotExtension module",
   "license": "proprietary",
   "require": {

@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-locale-connector",
+  "type": "library",
   "description": "CmsSlotLocaleConnector module",
   "license": "proprietary",
   "require": {
