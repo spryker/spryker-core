@@ -24,6 +24,9 @@ use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydrator instead.
+ */
 class OrderHydrator implements OrderHydratorInterface
 {
     /**
@@ -168,7 +171,6 @@ class OrderHydrator implements OrderHydratorInterface
             ->count();
 
         $orderTransfer->setUniqueProductQuantity($uniqueProductQuantity);
-
         $orderTransfer = $this->executeHydrateOrderPlugins($orderTransfer);
 
         return $orderTransfer;
@@ -197,7 +199,7 @@ class OrderHydrator implements OrderHydratorInterface
     public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
         $criteria = new Criteria();
-        $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+        $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_FK_SALES_SHIPMENT);
         foreach ($orderEntity->getItems($criteria) as $orderItemEntity) {
             $itemTransfer = $this->hydrateOrderItemTransfer($orderItemEntity);
             $orderTransfer->addItem($itemTransfer);
@@ -300,10 +302,14 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        $countryEntity = $orderEntity->getShippingAddress()->getCountry();
+        $orderShippingAddressEntity = $orderEntity->getShippingAddress();
+        if ($orderShippingAddressEntity === null) {
+            return;
+        }
 
+        $countryEntity = $orderShippingAddressEntity->getCountry();
         $shippingAddressTransfer = new AddressTransfer();
-        $shippingAddressTransfer->fromArray($orderEntity->getShippingAddress()->toArray(), true);
+        $shippingAddressTransfer->fromArray($orderShippingAddressEntity->toArray(), true);
         $this->hydrateCountryEntityIntoAddressTransfer($shippingAddressTransfer, $countryEntity);
 
         $orderTransfer->setShippingAddress($shippingAddressTransfer);

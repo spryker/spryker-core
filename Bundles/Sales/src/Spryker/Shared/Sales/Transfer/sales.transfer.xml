@@ -11,7 +11,7 @@
         <property name="firstName" type="string" />
         <property name="orderReference" type="string" />
         <property name="billingAddress" type="Address" />
-        <property name="shippingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
         <property name="customer" type="Customer" />
         <property name="items" type="Item[]"  singular="item" />
         <property name="createdAt" type="string" />
@@ -20,7 +20,7 @@
         <property name="invoice" type="Invoice[]" />
         <property name="invoiceReference" type="string" />
         <property name="invoiceCreatedAt" type="string" />
-        <property name="fkShipmentMethod" type="int" />
+        <property name="fkShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.fkShipmentMethod) instead." />
         <property name="fkCustomer" type="int" />
         <property name="customerReference" type="string" />
         <property name="totals" type="Totals" />
@@ -116,6 +116,7 @@
         <property name="canceledAmount" type="int"/>
         <property name="stateHistory" type="ItemState[]" />
         <property name="isOrdered" type="bool" />
+        <property name="shipment" type="Shipment" />
     </transfer>
 
     <transfer name="ItemCollection">
@@ -216,6 +217,14 @@
         <property name="lastIndex" type="int" />
         <property name="firstPage" type="int" />
         <property name="lastPage" type="int" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
     </transfer>
 
 </transfers>
