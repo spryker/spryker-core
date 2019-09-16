@@ -124,6 +124,8 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     }
 
     /**
+     * @module Product
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     protected function prepareQuery(): SpyProductQuery
