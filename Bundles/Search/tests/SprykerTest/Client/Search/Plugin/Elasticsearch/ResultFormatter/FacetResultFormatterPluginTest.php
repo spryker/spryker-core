@@ -379,7 +379,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->setConfig($searchConfig->getFacetConfigBuilder()->get('baz'))
             ->setMin(10)
             ->setMax(20)
-            ->setActiveMin(5)
+            ->setActiveMin(10)
             ->setActiveMax(20);
 
         return [

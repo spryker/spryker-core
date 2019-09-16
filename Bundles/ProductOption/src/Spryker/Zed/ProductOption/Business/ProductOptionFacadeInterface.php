@@ -135,8 +135,8 @@ interface ProductOptionFacadeInterface
 
     /**
      * Specification:
-     *  - Calculate tax rate for current quote
-     *  - Set tax rate perecentage
+     *  - Calculate tax rates for current quote level (BC) or item level shipping addresses.
+     *  - Set tax rate percentages for item product options.
      *
      * @api
      *
@@ -180,6 +180,8 @@ interface ProductOptionFacadeInterface
      *   - items are ordered by ID.
      *
      * @api
+     *
+     * @deprecated Not used anymore.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

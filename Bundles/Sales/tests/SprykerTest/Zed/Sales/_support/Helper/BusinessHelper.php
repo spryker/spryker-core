@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Sales\Helper;
 
 use Codeception\Module;
 use DateTime;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
@@ -43,9 +45,11 @@ class BusinessHelper extends Module
     }
 
     /**
+     * @param iterable|array $itemTransfers
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function haveSalesOrderEntity(): SpySalesOrder
+    public function haveSalesOrderEntity(iterable $itemTransfers = []): SpySalesOrder
     {
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $omsStateEntity = $this->createOmsState();
@@ -53,22 +57,11 @@ class BusinessHelper extends Module
         $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
-        $this->createOrderItem(
+        $this->createOrderItems(
             $omsStateEntity,
             $salesOrderEntity,
             $omsProcessEntity,
-            static::ORDER_ITEM_QTY,
-            static::ORDER_ITEM_GROSS_PRICE_1,
-            static::ORDER_ITEM_TAX_RATE
-        );
-
-        $this->createOrderItem(
-            $omsStateEntity,
-            $salesOrderEntity,
-            $omsProcessEntity,
-            static::ORDER_ITEM_QTY,
-            static::ORDER_ITEM_GROSS_PRICE_2,
-            static::ORDER_ITEM_TAX_RATE
+            $itemTransfers
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
@@ -81,6 +74,101 @@ class BusinessHelper extends Module
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
+     * @param iterable|array $itemTransfers
+     *
+     * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     */
+    protected function createOrderItems(
+        SpyOmsOrderItemState $omsStateEntity,
+        SpySalesOrder $salesOrderEntity,
+        SpyOmsOrderProcess $omsOrderProcessEntity,
+        iterable $itemTransfers = []
+    ): iterable {
+        if (count($itemTransfers) === 0) {
+            return $this->createOrderItemsWithDefaultValues($omsStateEntity, $salesOrderEntity, $omsOrderProcessEntity);
+        }
+
+        return $this->createOrderItemsUsingItemTransfers(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsOrderProcessEntity,
+            $itemTransfers
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
+     * @param iterable $itemTransfers
+     *
+     * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     */
+    protected function createOrderItemsUsingItemTransfers(
+        SpyOmsOrderItemState $omsStateEntity,
+        SpySalesOrder $salesOrderEntity,
+        SpyOmsOrderProcess $omsOrderProcessEntity,
+        iterable $itemTransfers
+    ): iterable {
+        $salesOrderItems = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $this->createOrderItem(
+                $omsStateEntity,
+                $salesOrderEntity,
+                $omsOrderProcessEntity,
+                $itemTransfer,
+                static::ORDER_ITEM_QTY,
+                static::ORDER_ITEM_GROSS_PRICE_1,
+                static::ORDER_ITEM_TAX_RATE
+            );
+        }
+
+        return $salesOrderItems;
+    }
+
+    /**
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
+     *
+     * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     */
+    protected function createOrderItemsWithDefaultValues(
+        SpyOmsOrderItemState $omsStateEntity,
+        SpySalesOrder $salesOrderEntity,
+        SpyOmsOrderProcess $omsOrderProcessEntity
+    ): iterable {
+        $salesOrderItems = [];
+
+        $salesOrderItems[] = $this->createOrderItem(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsOrderProcessEntity,
+            (new ItemBuilder())->build(),
+            static::ORDER_ITEM_QTY,
+            static::ORDER_ITEM_GROSS_PRICE_1,
+            static::ORDER_ITEM_TAX_RATE
+        );
+
+        $salesOrderItems[] = $this->createOrderItem(
+            $omsStateEntity,
+            $salesOrderEntity,
+            $omsOrderProcessEntity,
+            (new ItemBuilder())->build(),
+            static::ORDER_ITEM_QTY,
+            static::ORDER_ITEM_GROSS_PRICE_2,
+            static::ORDER_ITEM_TAX_RATE
+        );
+
+        return $salesOrderItems;
+    }
+
+    /**
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState $omsStateEntity
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $quantity
      * @param int $grossPrice
      * @param int $taxRate
@@ -91,6 +179,7 @@ class BusinessHelper extends Module
         SpyOmsOrderItemState $omsStateEntity,
         SpySalesOrder $salesOrderEntity,
         SpyOmsOrderProcess $omsOrderProcessEntity,
+        ItemTransfer $itemTransfer,
         $quantity,
         $grossPrice,
         $taxRate
@@ -98,12 +187,13 @@ class BusinessHelper extends Module
         $salesOrderItem = new SpySalesOrderItem();
         $salesOrderItem->setGrossPrice($grossPrice);
         $salesOrderItem->setQuantity($quantity);
-        $salesOrderItem->setSku('123');
-        $salesOrderItem->setName('test1');
+        $salesOrderItem->setSku($itemTransfer->getSku());
+        $salesOrderItem->setName($itemTransfer->getName());
         $salesOrderItem->setTaxRate($taxRate);
         $salesOrderItem->setFkOmsOrderItemState($omsStateEntity->getIdOmsOrderItemState());
         $salesOrderItem->setProcess($omsOrderProcessEntity);
         $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
+        $salesOrderItem->setGroupKey($itemTransfer->getGroupKey());
         $salesOrderItem->save();
 
         return $salesOrderItem;
