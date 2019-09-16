@@ -75,7 +75,7 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
                 continue;
             }
 
-            $restShipmentMethodAttributesTransfers = $this->getSortedShipmentMethodAttributesTransfers(
+            $restShipmentMethodAttributesTransfers = $this->getSortedRestShipmentMethodsAttributesTransfers(
                 $shipmentMethodsTransfer,
                 $currentStoreTransfer,
                 $restRequest
@@ -94,7 +94,7 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
-    protected function getSortedShipmentMethodAttributesTransfers(
+    protected function getSortedRestShipmentMethodsAttributesTransfers(
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
         StoreTransfer $currentStoreTransfer,
         RestRequestInterface $restRequest
@@ -180,7 +180,6 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     ): RestShipmentMethodsAttributesTransfer {
         if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
             $moneyValueTransfer = $this->findMoneyValueTransfer($shipmentMethodTransfer, $storeTransfer);
-
             if ($moneyValueTransfer) {
                 $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
                 $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
