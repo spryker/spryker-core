@@ -142,6 +142,10 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
     }
 
     /**
+     * @module Glossary
+     * @module ConfigurableBundle
+     * @module ProductList
+     *
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery
      *
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
