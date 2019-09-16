@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
@@ -70,10 +71,13 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     protected function translateConfigurableBundleTemplateNames(ArrayObject $salesOrderConfiguredBundleTransfers): ArrayObject
     {
         foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
-            $salesOrderConfiguredBundleTransfer->setTranslatedName(
-                $this->glossaryFacade->translate(
-                    $salesOrderConfiguredBundleTransfer->getName()
-                )
+            $salesOrderConfiguredBundleTransfer->addTranslation(
+                (new ConfigurableBundleTemplateTranslationTransfer())
+                    ->setName(
+                        $this->glossaryFacade->translate(
+                            $salesOrderConfiguredBundleTransfer->getName()
+                        )
+                    )
             );
         }
 
