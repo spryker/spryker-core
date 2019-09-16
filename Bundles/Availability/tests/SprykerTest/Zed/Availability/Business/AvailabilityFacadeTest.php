@@ -100,7 +100,7 @@ class AvailabilityFacadeTest extends Unit
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => $quantity->toString()]);
 
-        $calculatedQuantity = $availabilityFacade->calculateStockForProduct(static::CONCRETE_SKU);
+        $calculatedQuantity = $availabilityFacade->calculateAvailabilityForProduct(static::CONCRETE_SKU);
 
         $this->assertTrue($calculatedQuantity->equals($quantity));
     }

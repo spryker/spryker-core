@@ -116,7 +116,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void
     {
-        $quantity = $this->sellable->calculateStockForProductWithStore($sku, $storeTransfer);
+        $quantity = $this->sellable->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
         $quantityWithReservedItems = $this->getQuantity($quantity);
 
         $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);

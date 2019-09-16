@@ -15,5 +15,5 @@ interface ProductManagementToAvailabilityInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct(string $sku): Decimal;
+    public function calculateAvailabilityForProduct(string $sku): Decimal;
 }
