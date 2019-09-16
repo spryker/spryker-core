@@ -49,11 +49,6 @@ class QuoteApprovalFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var string[]
-     */
-    protected $requiredQuoteFields = [];
-
-    /**
      * @return void
      */
     public function testGetQuoteFieldsAllowedForSavingReturnsCorrectQuoteFields(): void
@@ -61,7 +56,7 @@ class QuoteApprovalFacadeTest extends Unit
         // Arrange
         $quoteTransfer = $this->createQuoteWithGrandTotal(static::VALUE_GRAND_TOTAL);
 
-        $this->requiredQuoteFields = [
+        $requiredQuoteFields = [
             QuoteTransfer::BILLING_ADDRESS,
             QuoteTransfer::SHIPPING_ADDRESS,
             QuoteTransfer::PAYMENTS,
@@ -69,11 +64,11 @@ class QuoteApprovalFacadeTest extends Unit
         ];
 
         // Act
-        $quoteFieldsAllowedForSaving = $this->getQuoteApprovalFacadeMock()
+        $quoteFieldsAllowedForSaving = $this->getQuoteApprovalFacadeMock($requiredQuoteFields)
             ->getQuoteFieldsAllowedForSaving($quoteTransfer);
 
         // Assert
-        $this->assertEquals($quoteFieldsAllowedForSaving, $this->requiredQuoteFields);
+        $this->assertEquals($requiredQuoteFields, $quoteFieldsAllowedForSaving);
     }
 
     /**
@@ -84,23 +79,23 @@ class QuoteApprovalFacadeTest extends Unit
         // Arrange
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
         $quoteApprovalRequestTransfer = $this->createValidQuoteApprovalRequestTransfer($quoteApprovalCreateRequestTransfer);
-        $this->requiredQuoteFields = [
+        $requiredQuoteFields = [
             QuoteTransfer::BILLING_ADDRESS,
         ];
 
         // Act
-        $this->getQuoteApprovalFacadeMock()->approveQuoteApproval($quoteApprovalRequestTransfer);
-        $quoteFieldsAllowedForSaving = $this->getQuoteApprovalFacadeMock()
+        $this->getQuoteApprovalFacadeMock($requiredQuoteFields)->approveQuoteApproval($quoteApprovalRequestTransfer);
+        $quoteFieldsAllowedForSaving = $this->getQuoteApprovalFacadeMock($requiredQuoteFields)
             ->getQuoteFieldsAllowedForSaving($this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()));
 
         // Assert
-        $this->assertNotSame($quoteFieldsAllowedForSaving, $this->requiredQuoteFields);
+        $this->assertNotSame($requiredQuoteFields, $quoteFieldsAllowedForSaving);
     }
 
     /**
      * @return void
      */
-    public function testQuoteFieldsAllowedForSavingSaveShippingAddressSuccess(): void
+    public function testQuoteFieldsAllowedForSavingSaveShippingAddressSuccessfully(): void
     {
         // Arrange
         $this->prepareEnvForQuoteApprovalCreation();
@@ -114,7 +109,7 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         // Assert
-        $this->assertEquals($quoteTransfer->getShippingAddress(), $addressTransfer);
+        $this->assertEquals($addressTransfer, $quoteTransfer->getShippingAddress());
     }
 
     /**
@@ -133,7 +128,7 @@ class QuoteApprovalFacadeTest extends Unit
         $quoteTransfer = $this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote());
 
         // Assert
-        $this->assertNotEquals($quoteTransfer->getShippingAddress(), $addressTransfer);
+        $this->assertNotEquals($addressTransfer, $quoteTransfer->getShippingAddress());
     }
 
     /**
@@ -187,8 +182,8 @@ class QuoteApprovalFacadeTest extends Unit
         $this->assertEquals(true, $quoteApprovalResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $shareDeatailCollectionTransfer->getShareDetails());
         $this->assertEquals(
-            $shareDeatailCollectionTransfer->getShareDetails()->offsetGet(0)->getIdCompanyUser(),
-            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId()
+            $quoteApprovalCreateRequestTransfer->getApproverCompanyUserId(),
+            $shareDeatailCollectionTransfer->getShareDetails()->offsetGet(0)->getIdCompanyUser()
         );
     }
 
@@ -630,9 +625,11 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
+     * @param string[] $requiredQuoteFields
+     *
      * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface
      */
-    protected function getQuoteApprovalFacadeMock(): QuoteApprovalFacadeInterface
+    protected function getQuoteApprovalFacadeMock(array $requiredQuoteFields): QuoteApprovalFacadeInterface
     {
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
             ->setMethods(['getRequiredQuoteFields'])
@@ -641,7 +638,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         $quoteApprovalConfigMock
             ->method('getRequiredQuoteFields')
-            ->willReturn($this->requiredQuoteFields);
+            ->willReturn($requiredQuoteFields);
 
         /** @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacade $quoteApprovalFacade */
         $quoteApprovalFacade = $this->getFacade();
