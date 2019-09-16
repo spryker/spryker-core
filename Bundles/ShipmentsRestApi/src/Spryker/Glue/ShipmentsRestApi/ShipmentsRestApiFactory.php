@@ -14,8 +14,8 @@ use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapper;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilder;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorter;
-use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
+use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
 
 class ShipmentsRestApiFactory extends AbstractFactory
 {
@@ -27,7 +27,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
         return new ShipmentMethodsByCheckoutDataExpander(
             $this->createShipmentMethodsRestResponseBuilder(),
             $this->createShipmentMethodsMapper(),
-            $this->createShipmentMethodsSorter()
+            $this->createShipmentMethodSorter()
         );
     }
 
@@ -48,10 +48,10 @@ class ShipmentsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface
      */
-    public function createShipmentMethodsSorter(): ShipmentMethodsSorterInterface
+    public function createShipmentMethodSorter(): ShipmentMethodSorterInterface
     {
-        return new ShipmentMethodsSorter();
+        return new ShipmentMethodSorter();
     }
 }

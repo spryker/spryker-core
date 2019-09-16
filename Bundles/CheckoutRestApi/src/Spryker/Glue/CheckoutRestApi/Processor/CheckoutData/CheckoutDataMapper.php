@@ -48,18 +48,19 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     ): RestCheckoutDataResponseAttributesTransfer {
         $restCheckoutDataResponseAttributesTransfer = new RestCheckoutDataResponseAttributesTransfer();
 
-        $restCheckoutDataResponseAttributesTransfer = $this->addRestAddressTransfer(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapRestAddressTransfer(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->addRestPaymentProviderTransfers(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapPaymentProviders(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
-        $restCheckoutDataResponseAttributesTransfer = $this->addRestShipmentMethodTransfers(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapShipmentMethods(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
+
         $restCheckoutDataResponseAttributesTransfer = $this->addSelectedRestShipmentMethodTransfers(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
@@ -74,7 +75,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function addRestAddressTransfer(
+    protected function mapRestAddressTransfer(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -97,7 +98,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function addRestPaymentProviderTransfers(
+    protected function mapPaymentProviders(
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -161,14 +162,14 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @deprecated Use `addSelectedRestShipmentMethodTransfers` instead.
+     * @deprecated Will be removed in next major release
      *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function addRestShipmentMethodTransfers(
+    protected function mapShipmentMethods(
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -176,14 +177,9 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         foreach ($shipmentMethods as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
-                new RestShipmentMethodTransfer()
+                new RestShipmentMethodTransfer(),
+                $checkoutDataTransfer->getCurrentStore()
             );
-
-            $defaultGrossPrice = $this->findDefaultGrossPrice($shipmentMethodTransfer, $checkoutDataTransfer->getCurrentStore());
-            $defaultNetPrice = $this->findDefaultNetPrice($shipmentMethodTransfer, $checkoutDataTransfer->getCurrentStore());
-
-            $restShipmentMethodTransfer->setDefaultGrossPrice($defaultGrossPrice);
-            $restShipmentMethodTransfer->setDefaultNetPrice($defaultNetPrice);
 
             $restCheckoutDataResponseAttributesTransfer->addShipmentMethod($restShipmentMethodTransfer);
         }
@@ -194,79 +190,27 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer $restShipmentMethodTransfer
-     *
+     * @param StoreTransfer $storeTransfer
      * @return \Generated\Shared\Transfer\RestShipmentMethodTransfer
      */
     protected function mapShipmentMethodTransferToRestShipmentMethodTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        RestShipmentMethodTransfer $restShipmentMethodTransfer
+        RestShipmentMethodTransfer $restShipmentMethodTransfer,
+        StoreTransfer $storeTransfer
     ): RestShipmentMethodTransfer {
-        return $restShipmentMethodTransfer
+        $restShipmentMethodTransfer
             ->fromArray($shipmentMethodTransfer->toArray(), true)
             ->setPrice($shipmentMethodTransfer->getStoreCurrencyPrice())
             ->setId($shipmentMethodTransfer->getIdShipmentMethod());
-    }
 
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int|null
-     */
-    protected function findDefaultGrossPrice(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $storeTransfer
-    ): ?int {
-        foreach ($shipmentMethodTransfer->getPrices() as $priceTransfer) {
-            if ($this->checkPriceTransferByCurrencyIsoCodeAndStoreId(
-                $priceTransfer,
-                $storeTransfer,
-                $shipmentMethodTransfer
-            )) {
-                return $priceTransfer->getGrossAmount();
-            }
+        $moneyValueTransfer = $this->findMoneyValueTransfer($shipmentMethodTransfer, $storeTransfer);
+
+        if ($moneyValueTransfer) {
+            $restShipmentMethodTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
+            $restShipmentMethodTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
         }
 
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $priceTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return bool
-     */
-    protected function checkPriceTransferByCurrencyIsoCodeAndStoreId(
-        MoneyValueTransfer $priceTransfer,
-        StoreTransfer $storeTransfer,
-        ShipmentMethodTransfer $shipmentMethodTransfer
-    ): bool {
-        return $priceTransfer->getFkStore() === $storeTransfer->getIdStore()
-            && $priceTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int|null
-     */
-    protected function findDefaultNetPrice(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $storeTransfer
-    ): ?int {
-        foreach ($shipmentMethodTransfer->getPrices() as $priceTransfer) {
-            if ($this->checkPriceTransferByCurrencyIsoCodeAndStoreId(
-                $priceTransfer,
-                $storeTransfer,
-                $shipmentMethodTransfer
-            )) {
-                return $priceTransfer->getNetAmount();
-            }
-        }
-
-        return null;
+        return $restShipmentMethodTransfer;
     }
 
     /**
@@ -283,18 +227,52 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         foreach ($shipmentMethods as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
-                new RestShipmentMethodTransfer()
+                new RestShipmentMethodTransfer(),
+                $restCheckoutDataTransfer->getCurrentStore()
             );
-
-            $defaultGrossPrice = $this->findDefaultGrossPrice($shipmentMethodTransfer, $restCheckoutDataTransfer->getCurrentStore());
-            $defaultNetPrice = $this->findDefaultNetPrice($shipmentMethodTransfer, $restCheckoutDataTransfer->getCurrentStore());
-
-            $restShipmentMethodTransfer->setDefaultGrossPrice($defaultGrossPrice);
-            $restShipmentMethodTransfer->setDefaultNetPrice($defaultNetPrice);
 
             $restCheckoutDataResponseAttributesTransfer->addSelectedShipmentMethod($restShipmentMethodTransfer);
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
+    }
+
+    /**
+     * @param ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param StoreTransfer $storeTransfer
+     *
+     * @return MoneyValueTransfer|null
+     */
+    protected function findMoneyValueTransfer(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer
+    ): ?MoneyValueTransfer {
+        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
+            if ($this->isMoneyValueTransferForCurrentStoreAndCurrency(
+                $moneyValueTransfer,
+                $storeTransfer,
+                $shipmentMethodTransfer
+            )) {
+                return $moneyValueTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return bool
+     */
+    protected function isMoneyValueTransferForCurrentStoreAndCurrency(
+        MoneyValueTransfer $moneyValueTransfer,
+        StoreTransfer $storeTransfer,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): bool {
+        return $moneyValueTransfer->getFkStore() === $storeTransfer->getIdStore()
+            && $moneyValueTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
     }
 }

@@ -7,28 +7,27 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 
 class ShipmentMethodsMapper implements ShipmentMethodsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param array $restShipmentMethodAttributesTransfers
+     * @param RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
-    public function mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
+    public function mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
         array $shipmentMethodTransfers,
-        array $restShipmentMethodAttributesTransfers
+        array $restShipmentMethodsAttributesTransfers
     ): array {
-        $restShipmentMethodAttributesTransfers = [];
-
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-            $restShipmentMethodAttributesTransfers[$shipmentMethodTransfer->getIdShipmentMethod()] =
-                $restShipmentMethodAttributesTransfer = (new RestShipmentMethodAttributesTransfer())
-                    ->fromArray($shipmentMethodTransfer->toArray(), true);
+            $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
+            $restShipmentMethodsAttributesTransfer = (new RestShipmentMethodsAttributesTransfer())
+                ->fromArray($shipmentMethodTransfer->toArray(), true);
+            $restShipmentMethodsAttributesTransfers[$idShipmentMethod] = $restShipmentMethodsAttributesTransfer;
         }
 
-        return $restShipmentMethodAttributesTransfers;
+        return $restShipmentMethodsAttributesTransfers;
     }
 }

@@ -7,19 +7,19 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Sorter;
 
-use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
 
-class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
+class ShipmentMethodSorter implements ShipmentMethodSorterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[] $restShipmentMethodAttributeTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
-    public function sortShipmentMethodAttributesTransfers(
+    public function sortRestShipmentMethodsAttributesTransfers(
         array $restShipmentMethodAttributeTransfers,
         RestRequestInterface $restRequest
     ): array {
@@ -32,8 +32,8 @@ class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
         uasort(
             $restShipmentMethodAttributeTransfers,
             function (
-                RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfers,
-                RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfers
+                RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfers,
+                RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfers
             ) use ($sorts) {
                 return $this->sortRestShipmentMethodAttributeTransfers(
                     $currentRestShipmentMethodAttributeTransfers,
@@ -47,15 +47,15 @@ class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfer
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $sort
      *
      * @return bool
      */
     protected function isPreviousSortingEqual(
-        RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
-        RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfer,
+        RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
+        RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer,
         SortInterface $sort
     ): bool {
         $sortingField = $sort->getField();
@@ -74,13 +74,13 @@ class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $restShipmentMethodAttributeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer
      * @param string $propertyName
      *
      * @return mixed
      */
     protected function getValueByPropertyName(
-        RestShipmentMethodAttributesTransfer $restShipmentMethodAttributeTransfer,
+        RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributeTransfer,
         string $propertyName
     ) {
         $getterMethodName = $this->makeGetterMethodNameByPropertyName($propertyName);
@@ -103,15 +103,15 @@ class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfer
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $sort
      *
      * @return int
      */
     protected function comparator(
-        RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
-        RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfer,
+        RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfer,
+        RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfer,
         SortInterface $sort
     ): int {
         $sortingField = $sort->getField();
@@ -135,15 +135,15 @@ class ShipmentMethodsSorter implements ShipmentMethodsSorterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfers
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfers
      * @param array $sorts
      *
      * @return int
      */
     protected function sortRestShipmentMethodAttributeTransfers(
-        RestShipmentMethodAttributesTransfer $currentRestShipmentMethodAttributeTransfers,
-        RestShipmentMethodAttributesTransfer $nextRestShipmentMethodAttributeTransfers,
+        RestShipmentMethodsAttributesTransfer $currentRestShipmentMethodAttributeTransfers,
+        RestShipmentMethodsAttributesTransfer $nextRestShipmentMethodAttributeTransfers,
         array $sorts
     ): int {
         $sortsCount = count($sorts);

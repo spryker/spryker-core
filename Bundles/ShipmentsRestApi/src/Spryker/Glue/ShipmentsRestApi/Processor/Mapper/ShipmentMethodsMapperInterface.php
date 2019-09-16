@@ -11,12 +11,12 @@ interface ShipmentMethodsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param array $restShipmentMethodAttributesTransfers
+     * @param array $restShipmentMethodsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
-    public function mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
+    public function mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
         array $shipmentMethodTransfers,
-        array $restShipmentMethodAttributesTransfers
+        array $restShipmentMethodsAttributesTransfers
     ): array;
 }

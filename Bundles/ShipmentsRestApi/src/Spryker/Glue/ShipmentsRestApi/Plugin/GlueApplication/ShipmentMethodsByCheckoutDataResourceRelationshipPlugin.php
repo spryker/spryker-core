@@ -19,7 +19,7 @@ class ShipmentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPl
 {
     /**
      * {@inheritdoc}
-     * - Adds shipment-methods resource as relationship by checkoutData.
+     * - Adds shipment-methods resource as relationship in case RestCheckoutDataTransfer is provided as payload.
      *
      * @api
      *

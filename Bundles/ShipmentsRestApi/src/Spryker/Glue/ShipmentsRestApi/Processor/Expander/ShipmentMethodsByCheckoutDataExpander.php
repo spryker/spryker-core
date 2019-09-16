@@ -9,7 +9,7 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
-use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
 
 class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckoutDataExpanderInterface
 {
@@ -32,23 +32,23 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     protected $shipmentMethodMapper;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface
      */
-    protected $shipmentMethodsSorter;
+    protected $shipmentMethodSorter;
 
     /**
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface $shipmentMethodRestResponseBuilder
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface $shipmentMethodMapper
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface $shipmentMethodsSorter
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface $shipmentMethodSorter
      */
     public function __construct(
         ShipmentMethodsRestResponseBuilderInterface $shipmentMethodRestResponseBuilder,
         ShipmentMethodsMapperInterface $shipmentMethodMapper,
-        ShipmentMethodsSorterInterface $shipmentMethodsSorter
+        ShipmentMethodSorterInterface $shipmentMethodSorter
     ) {
         $this->shipmentMethodRestResponseBuilder = $shipmentMethodRestResponseBuilder;
         $this->shipmentMethodMapper = $shipmentMethodMapper;
-        $this->shipmentMethodsSorter = $shipmentMethodsSorter;
+        $this->shipmentMethodSorter = $shipmentMethodSorter;
     }
 
     /**
@@ -60,12 +60,17 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $shipmentMethodsTransfer = $this->findShipmentMethodsInPayload($resource);
+            $restCheckoutDataTransfer = $resource->getPayload();
+            if (!$restCheckoutDataTransfer instanceof RestCheckoutDataTransfer) {
+                continue;
+            }
+
+            $shipmentMethodsTransfer = $restCheckoutDataTransfer->getShipmentMethods();
             if (!$shipmentMethodsTransfer) {
                 continue;
             }
 
-            $currentStoreTransfer = $this->findCurrentStoreInPayload($resource);
+            $currentStoreTransfer = $restCheckoutDataTransfer->getCurrentStore();
             if (!$currentStoreTransfer) {
                 continue;
             }
@@ -83,57 +88,11 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|null
-     */
-    protected function findShipmentMethodsInPayload(RestResourceInterface $restResource): ?ShipmentMethodsTransfer
-    {
-        $restCheckoutDataTransfer = $this->getPayloadAsCheckoutData($restResource);
-        if (!$restCheckoutDataTransfer) {
-            return null;
-        }
-
-        return $restCheckoutDataTransfer->getShipmentMethods();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return \Generated\Shared\Transfer\RestCheckoutDataTransfer|null
-     */
-    protected function getPayloadAsCheckoutData(RestResourceInterface $restResource): ?RestCheckoutDataTransfer
-    {
-        $payload = $restResource->getPayload();
-
-        if (!$payload || !($payload instanceof RestCheckoutDataTransfer)) {
-            return null;
-        }
-
-        return $payload;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer|null
-     */
-    protected function findCurrentStoreInPayload(RestResourceInterface $restResource): ?StoreTransfer
-    {
-        $restCheckoutDataTransfer = $this->getPayloadAsCheckoutData($restResource);
-        if (!$restCheckoutDataTransfer) {
-            return null;
-        }
-
-        return $restCheckoutDataTransfer->getCurrentStore();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
     protected function getSortedShipmentMethodAttributesTransfers(
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
@@ -144,23 +103,23 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         $shipmentMethodTransfers = $shipmentMethodsTransfer->getMethods()->getArrayCopy();
 
         $restShipmentMethodAttributesTransfers = $this->shipmentMethodMapper
-            ->mapShipmentMethodTransfersToRestShipmentMethodAttributesTransfers(
+            ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
                 $shipmentMethodTransfers,
                 $restShipmentMethodAttributesTransfers
             );
 
-        $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodAttributesTransfers(
+        $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
             $restShipmentMethodAttributesTransfers,
             $shipmentMethodTransfers,
             $currentStoreTransfer
         );
 
-        return $this->shipmentMethodsSorter
-            ->sortShipmentMethodAttributesTransfers($restShipmentMethodAttributesTransfers, $restRequest);
+        return $this->shipmentMethodSorter
+            ->sortRestShipmentMethodsAttributesTransfers($restShipmentMethodAttributesTransfers, $restRequest);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[] $restShipmentMethodAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributesTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
@@ -170,74 +129,84 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         RestResourceInterface $resource
     ): void {
         foreach ($restShipmentMethodAttributesTransfers as $idShipmentMethod => $restShipmentMethodAttributesTransfer) {
-            $shipmentMethodRestResource = $this->createShipmentMethodRestResourceByCheckoutDataExpander(
-                $restShipmentMethodAttributesTransfer,
-                (string)$idShipmentMethod
-            );
+            $shipmentMethodRestResource = $this->shipmentMethodRestResponseBuilder->createShipmentMethodRestResource(
+                    (string)$idShipmentMethod,
+                    $restShipmentMethodAttributesTransfer
+                );
 
             $resource->addRelationship($shipmentMethodRestResource);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer[] $restShipmentMethodAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer[] $restShipmentMethodsAttributesTransfers
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
-    protected function addShipmentMethodPricesToRestShipmentMethodAttributesTransfers(
-        array $restShipmentMethodAttributesTransfers,
+    protected function addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
+        array $restShipmentMethodsAttributesTransfers,
         array $shipmentMethodTransfers,
         StoreTransfer $storeTransfer
     ): array {
-        foreach ($restShipmentMethodAttributesTransfers as $restShipmentMethodAttributesTransfer) {
+        foreach ($restShipmentMethodsAttributesTransfers as $idShipmentMethod => $restShipmentMethodsAttributesTransfer) {
             foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-                $defaultGrossPrice = $this->findDefaultGrossPrice($shipmentMethodTransfer, $storeTransfer);
-                $defaultNetPrice = $this->findDefaultNetPrice($shipmentMethodTransfer, $storeTransfer);
-
-                $restShipmentMethodAttributesTransfer->setDefaultGrossPrice($defaultGrossPrice);
-                $restShipmentMethodAttributesTransfer->setDefaultNetPrice($defaultNetPrice);
+                $restShipmentMethodsAttributesTransfer = $this->setPricesToRestShipmentMethodsAttributesTransfer(
+                   $idShipmentMethod,
+                   $shipmentMethodTransfer,
+                   $storeTransfer,
+                   $restShipmentMethodsAttributesTransfer
+               );
             }
         }
 
-        return $restShipmentMethodAttributesTransfers;
+        return $restShipmentMethodsAttributesTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer
-     * @param string $idShipmentMethod
+     * @param int $idShipmentMethod
+     * @param ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param StoreTransfer $storeTransfer
+     * @param RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return RestShipmentMethodsAttributesTransfer
      */
-    protected function createShipmentMethodRestResourceByCheckoutDataExpander(
-        RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer,
-        string $idShipmentMethod
-    ): RestResourceInterface {
-        return $this->shipmentMethodRestResponseBuilder
-            ->createShipmentMethodRestResource(
-                $restShipmentMethodAttributesTransfer,
-                $idShipmentMethod
-            );
+    protected function setPricesToRestShipmentMethodsAttributesTransfer(
+        int $idShipmentMethod,
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        StoreTransfer $storeTransfer,
+        RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
+    ): RestShipmentMethodsAttributesTransfer {
+        if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
+            $moneyValueTransfer = $this->findMoneyValueTransfer($shipmentMethodTransfer, $storeTransfer);
+
+            if ($moneyValueTransfer) {
+                $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
+                $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
+            }
+        }
+
+        return $restShipmentMethodsAttributesTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param StoreTransfer $storeTransfer
      *
-     * @return int|null
+     * @return MoneyValueTransfer|null
      */
-    protected function findDefaultGrossPrice(
+    protected function findMoneyValueTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
         StoreTransfer $storeTransfer
-    ): ?int {
-        foreach ($shipmentMethodTransfer->getPrices() as $priceTransfer) {
-            if ($this->checkPriceTransferByCurrencyIsoCodeAndStoreId(
-                $priceTransfer,
+    ): ?MoneyValueTransfer {
+        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
+            if ($this->isMoneyValueTransferForCurrentStoreAndCurrency(
+                $moneyValueTransfer,
                 $storeTransfer,
                 $shipmentMethodTransfer
             )) {
-                return $priceTransfer->getGrossAmount();
+                return $moneyValueTransfer;
             }
         }
 
@@ -245,41 +214,18 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return bool
      */
-    protected function checkPriceTransferByCurrencyIsoCodeAndStoreId(
-        MoneyValueTransfer $priceTransfer,
+    protected function isMoneyValueTransferForCurrentStoreAndCurrency(
+        MoneyValueTransfer $moneyValueTransfer,
         StoreTransfer $storeTransfer,
         ShipmentMethodTransfer $shipmentMethodTransfer
     ): bool {
-        return $priceTransfer->getFkStore() === $storeTransfer->getIdStore()
-            && $priceTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int|null
-     */
-    protected function findDefaultNetPrice(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $storeTransfer
-    ): ?int {
-        foreach ($shipmentMethodTransfer->getPrices() as $priceTransfer) {
-            if ($this->checkPriceTransferByCurrencyIsoCodeAndStoreId(
-                $priceTransfer,
-                $storeTransfer,
-                $shipmentMethodTransfer
-            )) {
-                return $priceTransfer->getNetAmount();
-            }
-        }
-
-        return null;
+        return $moneyValueTransfer->getFkStore() === $storeTransfer->getIdStore()
+            && $moneyValueTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
     }
 }
