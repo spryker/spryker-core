@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CartsRestApisRestApi\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +37,7 @@ class ConvertGuestQuoteToCustomerQuoteTest extends Unit
     {
         parent::setUp();
 
-        $this->cartsRestApiFacade = new CartsRestApiFacade();
+        $this->cartsRestApiFacade = $this->tester->getFacade();
     }
 
     /**
