@@ -9,24 +9,12 @@
     </transfer>
 
     <transfer name="ConfiguredBundle">
-        <property name="template" type="ConfigurableBundleCartTemplate" />
         <property name="quantity" type="int" />
         <property name="groupKey" type="string" />
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
-        <property name="slot" type="ConfigurableBundleCartTemplateSlot" />
-    </transfer>
-
-    <transfer name="ConfigurableBundleCartTemplate">
-        <property name="idConfigurableBundleCartTemplate" type="int" />
-        <property name="uuid" type="string" />
-        <property name="name" type="string" />
-    </transfer>
-
-    <transfer name="ConfigurableBundleCartTemplateSlot">
-        <property name="idConfigurableBundleCartTemplateSlot" type="int" />
-        <property name="uuid" type="string" />
+        <property name="quantityPerSlot" type="int" />
     </transfer>
 
 </transfers>

@@ -7,12 +7,16 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Reader;
 
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface QuoteReaderInterface
 {
     /**
      * @param string $groupKey
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getItemsByConfiguredBundleGroupKey(string $groupKey): array;
+    public function getItemsByConfiguredBundleGroupKey(string $groupKey, QuoteTransfer $quoteTransfer): ArrayObject;
 }

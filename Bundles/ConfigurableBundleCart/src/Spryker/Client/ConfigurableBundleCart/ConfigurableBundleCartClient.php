@@ -37,14 +37,14 @@ class ConfigurableBundleCartClient extends AbstractClient implements Configurabl
      * @api
      *
      * @param string $configuredBundleGroupKey
-     * @param int $quantity
+     * @param int $configuredBundleQuantity
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $quantity): QuoteResponseTransfer
+    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $configuredBundleQuantity): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->createCartWriter()
-            ->updateConfiguredBundleQuantity($configuredBundleGroupKey, $quantity);
+            ->updateConfiguredBundleQuantity($configuredBundleGroupKey, $configuredBundleQuantity);
     }
 }

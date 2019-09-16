@@ -7,32 +7,20 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Reader;
 
-use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
+use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteReader implements QuoteReaderInterface
 {
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface
-     */
-    protected $cartClient;
-
-    /**
-     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
-     */
-    public function __construct(ConfigurableBundleCartToCartClientInterface $cartClient)
-    {
-        $this->cartClient = $cartClient;
-    }
-
-    /**
      * @param string $groupKey
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getItemsByConfiguredBundleGroupKey(string $groupKey): array
+    public function getItemsByConfiguredBundleGroupKey(string $groupKey, QuoteTransfer $quoteTransfer): ArrayObject
     {
         $itemTransfers = [];
-        $quoteTransfer = $this->cartClient->getQuote();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getConfiguredBundle() && $itemTransfer->getConfiguredBundle()->getGroupKey() === $groupKey) {
@@ -40,6 +28,6 @@ class QuoteReader implements QuoteReaderInterface
             }
         }
 
-        return $itemTransfers;
+        return new ArrayObject($itemTransfers);
     }
 }

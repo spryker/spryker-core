@@ -13,7 +13,7 @@ interface ConfigurableBundleCartClientInterface
 {
     /**
      * Specification:
-     * -
+     * - Removes configured bundle from cart.
      *
      * @api
      *
@@ -25,14 +25,14 @@ interface ConfigurableBundleCartClientInterface
 
     /**
      * Specification:
-     * -
+     * - Updates configured bundle quantity.
      *
      * @api
      *
      * @param string $configuredBundleGroupKey
-     * @param int $quantity
+     * @param int $configuredBundleQuantity
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $quantity): QuoteResponseTransfer;
+    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $configuredBundleQuantity): QuoteResponseTransfer;
 }
