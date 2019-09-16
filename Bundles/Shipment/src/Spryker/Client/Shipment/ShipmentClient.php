@@ -8,6 +8,7 @@
 namespace Spryker\Client\Shipment;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -16,7 +17,11 @@ use Spryker\Client\Kernel\AbstractClient;
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @deprecated Use getAvailableMethodsByShipment() instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -25,5 +30,45 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
         return $this->getFactory()->createZedStub()->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
+     */
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
+    {
+        return $this->getFactory()->createZedStub()->getAvailableMethodsByShipment($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiShipmentSelectionEnabled(): bool
+    {
+        return $this->getFactory()->getConfig()->isMultiShipmentSelectionEnabled();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteWithShipmentGroups(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createZedStub()->expandQuoteWithShipmentGroups($quoteTransfer);
     }
 }
