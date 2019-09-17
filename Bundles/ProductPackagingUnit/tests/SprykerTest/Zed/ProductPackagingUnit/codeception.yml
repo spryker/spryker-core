@@ -26,7 +26,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitHelper
-                - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingLeadProductHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\PriceChangeHelper
                 - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper

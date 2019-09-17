@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -30,15 +29,11 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         SpyProductPackagingUnit $productPackagingUnitEntity,
         ProductPackagingUnitTransfer $productPackagingUnitTransfer
     ): ProductPackagingUnitTransfer {
-        $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
-
         $productPackagingUnitTransfer->fromArray($productPackagingUnitEntity->toArray(), true);
 
-        if ($productPackagingUnitAmountEntity) {
-            $productPackagingUnitTransfer->setProductPackagingUnitAmount(
-                (new ProductPackagingUnitAmountTransfer())->fromArray($productPackagingUnitAmountEntity->toArray(), true)
-            );
-        }
+        $productPackagingUnitTransfer->setProductPackagingUnitAmount(
+            (new ProductPackagingUnitAmountTransfer())->fromArray($productPackagingUnitEntity->toArray(), true)
+        );
 
         $productPackagingUnitTransfer->setProductPackagingUnitType(
             $this->mapProductPackagingUnitTypeTransfer(
@@ -66,19 +61,19 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $productPackagingLeadProductEntity
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
      * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
      */
     public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingLeadProduct $productPackagingLeadProductEntity,
+        SpyProductPackagingUnit $productPackagingUnitEntity,
         ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
     ): ProductPackagingLeadProductTransfer {
         $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->fromArray($productPackagingLeadProductEntity->getSpyProduct()->toArray(), true);
+            ->fromArray($productPackagingUnitEntity->getLeadProduct()->toArray(), true);
         $productPackagingLeadProductTransfer->setProduct($productConcreteTransfer);
-        $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingLeadProductEntity->getFkProductAbstract());
+        $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingUnitEntity->getLeadProduct()->getFkProductAbstract());
 
         return $productPackagingLeadProductTransfer;
     }

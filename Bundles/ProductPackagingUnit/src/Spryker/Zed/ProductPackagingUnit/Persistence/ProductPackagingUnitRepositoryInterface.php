@@ -41,17 +41,6 @@ interface ProductPackagingUnitRepositoryInterface
     ): int;
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer;
-
-    /**
      * @param string $siblingProductSku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null

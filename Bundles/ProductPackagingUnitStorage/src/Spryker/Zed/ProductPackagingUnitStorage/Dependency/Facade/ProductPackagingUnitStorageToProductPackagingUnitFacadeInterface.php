@@ -7,21 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-
 interface ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
 {
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function getProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer;
-
     /**
      * @return string
      */

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-
 class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
 {
     /**
@@ -22,19 +20,6 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     public function __construct($productPackagingUnitFacade)
     {
         $this->productPackagingUnitFacade = $productPackagingUnitFacade;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function getProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer {
-        return $this->productPackagingUnitFacade->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**
