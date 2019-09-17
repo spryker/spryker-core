@@ -22,6 +22,13 @@ interface ConfigurableBundleRepositoryInterface
     ): ?ConfigurableBundleTemplateTransfer;
 
     /**
+     * @param string[] $allowedTemplateUuid
+     *
+     * @return string[]
+     */
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
+
+    /**
      * @param int $idProductList
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]

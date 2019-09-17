@@ -10,6 +10,7 @@ namespace Spryker\Zed\ConfigurableBundle\Persistence;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -41,6 +42,26 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         return $this->getFactory()
             ->createConfigurableBundleMapper()
             ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+    }
+
+    /**
+     * @param string[] $allowedTemplateUuids
+     *
+     * @return string[]
+     */
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuids): array
+    {
+        if (empty($allowedTemplateUuids)) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
+            ->filterByUuid_In($allowedTemplateUuids)
+            ->filterByIsActive(true)
+            ->find()
+            ->toArray();
     }
 
     /**

@@ -9,6 +9,8 @@ namespace Spryker\Zed\ConfigurableBundleStorage\Business;
 
 use Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisher;
 use Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisherInterface;
+use Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher\ConfigurableBundleStorageUnpublisher;
+use Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher\ConfigurableBundleStorageUnpublisherInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -24,6 +26,17 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleStoragePublisher(): ConfigurableBundleStoragePublisherInterface
     {
         return new ConfigurableBundleStoragePublisher(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher\ConfigurableBundleStorageUnpublisherInterface
+     */
+    public function createConfigurableBundleStorageUnpublisher(): ConfigurableBundleStorageUnpublisherInterface
+    {
+        return new ConfigurableBundleStorageUnpublisher(
             $this->getRepository(),
             $this->getEntityManager()
         );

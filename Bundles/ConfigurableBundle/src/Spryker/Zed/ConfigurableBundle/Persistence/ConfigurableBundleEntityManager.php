@@ -60,4 +60,73 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
 
         return true;
     }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateEntity->delete();
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->delete();
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateEntity->setIsActive(true)
+            ->save();
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->createConfigurableBundleTemplateQuery()
+            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+
+        if (!$configurableBundleTemplateEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateEntity->setIsActive(false)
+            ->save();
+    }
 }

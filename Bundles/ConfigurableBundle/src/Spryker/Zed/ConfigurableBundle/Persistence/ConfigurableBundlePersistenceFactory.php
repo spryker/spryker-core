@@ -40,6 +40,6 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createConfigurableBundleTemplateSlotQuery(): SpyConfigurableBundleTemplateSlotQuery
     {
-        return SpyConfigurableBundleTemplateSlotQuery::create();
+        return new SpyConfigurableBundleTemplateSlotQuery();
     }
 }

@@ -10,9 +10,10 @@ namespace SprykerTest\Zed\ConfigurableBundle\Business\Generator;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
-use Spryker\Service\UtilText\UtilTextService;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceBridge;
 
 /**
  * Auto-generated group annotations
@@ -39,7 +40,7 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
      *
      * @return void
      */
-    public function testGenerateConfigurableBundleTemplateName(string $rawName, string $expectedGeneratedName): void
+    public function testSetConfigurableBundleTemplateName(string $rawName, string $expectedGeneratedName): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateTransfer($rawName);
@@ -58,12 +59,11 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
     public function getGenerateConfigurableBundleTemplateNameData(): array
     {
         return [
-            ['My bundle', 'configurable_bundle.template.my_bundle.name'],
-            ['Alot    of    spaces', 'configurable_bundle.template.alot_of_spaces.name'],
-            ['another "template" example', 'configurable_bundle.template.another_template_example.name'],
-            ['Template 1', 'configurable_bundle.template.template_1.name'],
-            ['Example !@#$%^&&*() name', 'configurable_bundle.template.example_name.name'],
-            ['Allowed_name-symbols', 'configurable_bundle.template.allowed_name-symbols.name'],
+            ['My bundle', 'configurable_bundle.templates.my-bundle.name'],
+            ['Alot    of    spaces', 'configurable_bundle.templates.alot-of-spaces.name'],
+            ['another “template” example', 'configurable_bundle.templates.another-template-example.name'],
+            ['Template 1', 'configurable_bundle.templates.template-1.name'],
+            ['Example !@#$%^&&*()_ name', 'configurable_bundle.templates.example-name.name'],
         ];
     }
 
@@ -72,9 +72,18 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
      */
     protected function createConfigurableBundleTemplateNameGenerator(): ConfigurableBundleTemplateNameGeneratorInterface
     {
-        return new ConfigurableBundleTemplateNameGenerator(
-            $this->tester->getLocator()->utilText()->service()
-        );
+        return new ConfigurableBundleTemplateNameGenerator($this->createConfigurableBundleToUtilTextServiceBridgeMock());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createConfigurableBundleToUtilTextServiceBridgeMock(): MockObject
+    {
+        return $this->getMockBuilder(ConfigurableBundleToUtilTextServiceBridge::class)
+            ->setConstructorArgs([$this->tester->getLocator()->utilText()->service()])
+            ->setMethods()
+            ->getMock();
     }
 
     /**

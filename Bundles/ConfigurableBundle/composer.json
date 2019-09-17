@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart-extension": "^4.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/product-list": "^1.5.0",
@@ -19,7 +20,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ConfigurableBundle\\Helper\\": "tests/SprykerTest/Shared/ConfigurableBundle/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

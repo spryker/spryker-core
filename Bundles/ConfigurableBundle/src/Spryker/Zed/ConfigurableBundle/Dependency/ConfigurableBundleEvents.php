@@ -43,6 +43,14 @@ class ConfigurableBundleEvents
 
     /**
      * Specification:
+     * - This event is used for spy_configurable_bundle_template entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE = 'Entity.spy_configurable_bundle_template.delete';
+
+    /**
+     * Specification:
      * - This event is used for configurable_bundle_template_slot unpublishing.
      *
      * @api

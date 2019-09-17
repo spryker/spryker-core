@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlotTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,11 +15,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ConfigurableBundleStorage\Communication\ConfigurableBundleStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig getConfig()
  */
-class ConfigurableBundleTemplateSlotStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ConfigurableBundleTemplateStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
-     * - Publishes slot's active configurable bundle template changes to Store.
+     * - Unpublishes removed configurable bundle templates from Storage.
      *
      * @api
      *
@@ -33,9 +32,9 @@ class ConfigurableBundleTemplateSlotStoragePublishListener extends AbstractPlugi
     {
         $configurableBundleTemplateIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyConfigurableBundleTemplateSlotTableMap::COL_FK_CONFIGURABLE_BUNDLE_TEMPLATE);
+            ->getEventTransferIds($eventTransfers);
 
         $this->getFacade()
-            ->publishConfigurableBundleTemplate($configurableBundleTemplateIds);
+            ->unpublishConfigurableBundleTemplate($configurableBundleTemplateIds);
     }
 }

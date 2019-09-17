@@ -79,6 +79,26 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     }
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleEntityManager->activateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleEntityManager->deactivateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
@@ -139,5 +159,28 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
         }
 
         return $configurableBundleTemplateResponseTransfer->addMessage($messageTransfer);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($idConfigurableBundleTemplate): void {
+            $this->executeDeleteConfigurableBundleTemplateByIdTransaction($idConfigurableBundleTemplate);
+        });
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    protected function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
+    {
+        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 }
