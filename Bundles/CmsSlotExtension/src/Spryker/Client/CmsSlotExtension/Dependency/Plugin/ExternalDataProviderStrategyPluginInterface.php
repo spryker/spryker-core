@@ -29,5 +29,6 @@ interface ExternalDataProviderStrategyPluginInterface
      *
      * @return string
      */
+    // todo CR topic: get value?
     public function getDataForKey(): string;
 }

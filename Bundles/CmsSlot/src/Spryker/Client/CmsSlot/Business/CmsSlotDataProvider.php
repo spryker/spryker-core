@@ -34,6 +34,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
         $externalData = [];
 
         foreach ($dataKeys as $dataKey) {
+            // todo CR topic https://github.com/spryker/spryker/pull/5999#discussion_r323764729
             $externalData[$dataKey] = $this->executeExternalDataProviderStrategyPlugins($dataKey);
         }
 
