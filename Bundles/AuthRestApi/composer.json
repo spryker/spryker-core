@@ -24,7 +24,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Glue\\AuthRestApi\\Helper": "tests/SprykerTest//Glue/AuthRestApi/_support/Helper"
+      "SprykerTest\\Glue\\AuthRestApi\\Helper": "tests/SprykerTest/Glue/AuthRestApi/_support/Helper"
     }
   },
   "minimum-stability": "dev",
