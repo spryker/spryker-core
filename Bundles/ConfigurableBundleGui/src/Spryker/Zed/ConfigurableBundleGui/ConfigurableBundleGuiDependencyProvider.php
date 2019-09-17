@@ -7,8 +7,17 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui;
 
-use Orm\Zed\ConfigurableBundle\Persistence\Base\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeBridge;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeBridge;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeBridge;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeBridge;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -17,9 +26,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
-
+    public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT';
+    public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,8 +42,13 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addConfigurableBundleTemplatePropelQuery($container);
+        $container = $this->addConfigurableBundleFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addProductListFacade($container);
+        $container = $this->addConfigurableBundleTemplatePropelQuery($container);
+        $container = $this->addConfigurableBundleTemplateSlotPropelQuery($container);
+        $container = $this->addProductPropelQuery($container);
 
         return $container;
     }
@@ -40,10 +58,12 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addConfigurableBundleTemplatePropelQuery(Container $container): Container
+    protected function addConfigurableBundleFacade(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, function () {
-            return SpyConfigurableBundleTemplateQuery::create();
+        $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container): ConfigurableBundleGuiToConfigurableBundleFacadeInterface {
+            return new ConfigurableBundleGuiToConfigurableBundleFacadeBridge(
+                $container->getLocator()->configurableBundle()->facade()
+            );
         });
 
         return $container;
@@ -56,11 +76,85 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container): ConfigurableBundleGuiToLocaleFacadeInterface {
             return new ConfigurableBundleGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container): ConfigurableBundleGuiToGlossaryFacadeInterface {
+            return new ConfigurableBundleGuiToGlossaryFacadeBridge(
+                $container->getLocator()->glossary()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container): ConfigurableBundleGuiToProductListFacadeInterface {
+            return new ConfigurableBundleGuiToProductListFacadeBridge(
+                $container->getLocator()->productList()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleTemplatePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, $container->factory(function (): SpyConfigurableBundleTemplateQuery {
+            return SpyConfigurableBundleTemplateQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleTemplateSlotPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, $container->factory(function (): SpyConfigurableBundleTemplateSlotQuery {
+            return SpyConfigurableBundleTemplateSlotQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (): SpyProductQuery {
+            return SpyProductQuery::create();
+        }));
 
         return $container;
     }

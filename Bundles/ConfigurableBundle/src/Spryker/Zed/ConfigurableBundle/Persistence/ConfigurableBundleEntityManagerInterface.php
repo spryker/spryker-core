@@ -7,6 +7,25 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+
 interface ConfigurableBundleEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function createConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return bool
+     */
+    public function updateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): bool;
 }

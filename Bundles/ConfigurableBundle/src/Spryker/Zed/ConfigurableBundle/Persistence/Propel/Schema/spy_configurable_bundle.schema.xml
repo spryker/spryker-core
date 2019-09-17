@@ -25,6 +25,7 @@
 
     <table name="spy_configurable_bundle_template_slot" phpName="SpyConfigurableBundleTemplateSlot">
         <column name="id_configurable_bundle_template_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="uuid" required="false" type="VARCHAR" size="255"/>
         <column name="fk_configurable_bundle_template" type="INTEGER" required="true"/>
         <column name="fk_product_list" type="INTEGER"/>

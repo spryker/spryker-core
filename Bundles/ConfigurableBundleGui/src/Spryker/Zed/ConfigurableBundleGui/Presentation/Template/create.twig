@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Template details' %}
+
+{% block section_title %}
+    {{ 'Create Configurable Bundle Template' | trans }}
+{% endblock %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/configurable-bundle-gui/template', 'Back to Template list' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {% set tips = 'At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.' %}
+
+            {{ tabs(tabs, {
+                form: form,
+                currentLocale: currentLocale,
+                tips: tips
+            }) }}
+
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
