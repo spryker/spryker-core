@@ -12,6 +12,7 @@ use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ZedRequest

@@ -19,6 +19,7 @@ use Spryker\Zed\Oms\OmsConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

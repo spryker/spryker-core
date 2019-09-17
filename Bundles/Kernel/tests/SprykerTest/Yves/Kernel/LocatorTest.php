@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Locator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel

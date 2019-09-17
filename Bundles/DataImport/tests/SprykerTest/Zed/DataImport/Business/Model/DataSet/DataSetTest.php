@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

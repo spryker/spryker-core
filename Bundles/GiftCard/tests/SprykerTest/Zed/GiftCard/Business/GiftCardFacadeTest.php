@@ -24,6 +24,7 @@ use Spryker\Zed\GiftCard\GiftCardConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group GiftCard

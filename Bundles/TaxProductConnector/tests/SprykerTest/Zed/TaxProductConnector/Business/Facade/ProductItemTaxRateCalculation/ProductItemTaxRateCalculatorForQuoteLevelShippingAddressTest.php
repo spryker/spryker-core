@@ -21,6 +21,7 @@ use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
