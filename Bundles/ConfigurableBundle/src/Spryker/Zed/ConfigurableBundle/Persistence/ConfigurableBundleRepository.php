@@ -20,7 +20,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function findProductListUsageAmongSlots(int $idProductList): array
+    public function findConfigurableBundleTemplateSlotsByIdProductList(int $idProductList): array
     {
         $configurableBundleTemplateSlotEntityCollection = $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()
@@ -31,16 +31,16 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             return [];
         }
 
-        $configurableBundleTemplateSlotTransferCollection = [];
+        $configurableBundleTemplateSlotTransfers = [];
         $configurableBundleMapper = $this->getFactory()->createConfigurableBundleMapper();
 
         foreach ($configurableBundleTemplateSlotEntityCollection as $configurableBundleTemplateSlotEntity) {
-            $configurableBundleTemplateSlotTransferCollection[] = $configurableBundleMapper->mapConfigurableBundleTemplateSlotEntityToTransfer(
+            $configurableBundleTemplateSlotTransfers[] = $configurableBundleMapper->mapConfigurableBundleTemplateSlotEntityToTransfer(
                 $configurableBundleTemplateSlotEntity,
                 new ConfigurableBundleTemplateSlotTransfer()
             );
         }
 
-        return $configurableBundleTemplateSlotTransferCollection;
+        return $configurableBundleTemplateSlotTransfers;
     }
 }

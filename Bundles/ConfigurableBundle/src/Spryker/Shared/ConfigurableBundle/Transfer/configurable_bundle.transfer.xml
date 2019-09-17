@@ -34,18 +34,18 @@
 
     <transfer name="ProductListResponse">
         <property name="productList" type="ProductList" />
-        <property name="messages" type="Message[]" singular="message"/>
+        <property name="messages" type="Message[]" singular="message" />
         <property name="isSuccessful" type="bool" />
     </transfer>
 
     <transfer name="ProductList">
-        <property name="idProductList" type="int"/>
+        <property name="idProductList" type="int" />
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string"/>
-        <property name="type" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="value" type="string" />
+        <property name="type" type="string" />
+        <property name="parameters" type="array" />
     </transfer>
 
 </transfers>

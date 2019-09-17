@@ -167,4 +167,34 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
 
         return $merchantRelationTransfers;
     }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function findMerchantRelationshipsByIdProductList(int $idProductList): array
+    {
+        $merchantRelatioshipEntityCollection = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->innerJoinWithMerchant()
+            ->useSpyProductListQuery()
+                ->filterByIdProductList($idProductList)
+            ->endUse()
+            ->find();
+
+        if (!$merchantRelatioshipEntityCollection->count()) {
+            return [];
+        }
+
+        $merchantRelationshipTransfers = [];
+
+        foreach ($merchantRelatioshipEntityCollection as $merchantRelationshipEntity) {
+            $merchantRelationshipTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationshipEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationshipTransfers;
+    }
 }

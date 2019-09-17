@@ -8,12 +8,17 @@
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
 class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
 {
+    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it used by Merchant Relation "%merchant_relation_id% - %merchant_name%".';
+
     /**
      * @var \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface
      */
@@ -116,5 +121,51 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         return $this->repository->getMerchantRelationshipById(
             $merchantRelationshipTransfer->getIdMerchantRelationship()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        $productListTransfer->requireIdProductList();
+
+        $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList()->setIsSuccessful(true);
+
+        $merchantRelationshipTransfers = $this->repository
+            ->findMerchantRelationshipsByIdProductList($productListTransfer->getIdProductList());
+
+        if (!$merchantRelationshipTransfers) {
+            return $productListResponseTransfer;
+        }
+
+        $productListResponseTransfer = $this->expandProductListResponseTransferWithMessages($productListResponseTransfer, $merchantRelationshipTransfers);
+
+        return $productListResponseTransfer->setIsSuccessful(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $merchantRelationshipTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function expandProductListResponseTransferWithMessages(
+        ProductListResponseTransfer $productListResponseTransfer,
+        array $merchantRelationshipTransfers
+    ): ProductListResponseTransfer {
+        foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
+            $productListResponseTransfer->addMessage(
+                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST)
+                    ->setParameters([
+                        '%merchant_relation_id%' => $merchantRelationshipTransfer->getIdMerchantRelationship(),
+                        '%merchant_name%' => $merchantRelationshipTransfer->getMerchant()->getName(),
+                    ])
+            );
+        }
+
+        return $productListResponseTransfer;
     }
 }

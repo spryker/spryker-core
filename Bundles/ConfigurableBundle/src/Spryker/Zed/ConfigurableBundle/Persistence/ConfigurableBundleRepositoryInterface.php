@@ -12,7 +12,7 @@ interface ConfigurableBundleRepositoryInterface
     /**
      * @param int $idProductList
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function findProductListUsageAmongSlots(int $idProductList): array;
+    public function findConfigurableBundleTemplateSlotsByIdProductList(int $idProductList): array;
 }

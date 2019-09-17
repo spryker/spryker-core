@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 
 interface MerchantRelationshipReaderInterface
 {
@@ -43,4 +45,11 @@ interface MerchantRelationshipReaderInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }

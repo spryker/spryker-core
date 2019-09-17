@@ -46,7 +46,10 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      */
     public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository->findProductListUsageAmongSlots($productListTransfer->getIdProductList());
+        $productListTransfer->requireIdProductList();
+
+        $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository
+            ->findConfigurableBundleTemplateSlotsByIdProductList($productListTransfer->getIdProductList());
 
         return $this->createProductListResponseTransfer($productListTransfer, $configurableBundleTemplateSlotTransfers);
     }
