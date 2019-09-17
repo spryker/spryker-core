@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 
 /**
@@ -30,10 +31,15 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConfigurableBundleTemplateByIdWillReturnNullIfTemplateNotFound(): void
+    public function testFindConfigurableBundleTemplateWillReturnNullIfTemplateNotFound(): void
     {
+        // Arrange
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate(-1);
+
         // Act
-        $configurableBundleTemplateTransfer = $this->tester->getFacade()->findConfigurableBundleTemplateById(0);
+        $configurableBundleTemplateTransfer = $this->tester->getFacade()
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         // Assert
         $this->assertNull($configurableBundleTemplateTransfer);
@@ -42,15 +48,17 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConfigurableBundleTemplateByIdWillReturnTransfer(): void
+    public function testFindConfigurableBundleTemplateWillReturnTransfer(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         // Act
         $foundConfigurableBundleTemplateTransfer = $this->tester
             ->getFacade()
-            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         // Assert
         $this->assertNotNull($foundConfigurableBundleTemplateTransfer);
