@@ -15,9 +15,6 @@ class PriceProductScheduleDataFormatter implements PriceProductScheduleDataForma
     protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
     protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
 
-    protected const REDIRECT_URL_PRODUCT_CONCRETE_PATTERN = '/product-management/edit/variant?id-product=%d&id-product-abstract=%d#tab-content-scheduled_prices';
-    protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%d#tab-content-scheduled_prices';
-
     protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be <b>%s</b> as defined on the store selected';
 
     /**

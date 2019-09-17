@@ -16,5 +16,5 @@ interface PriceProductScheduleRedirectStrategyResolverInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer
      */
-    public function resolvePriceProductScheduleRedirectStrategy(PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer): PriceProductScheduleRedirectTransfer;
+    public function resolve(PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer): PriceProductScheduleRedirectTransfer;
 }

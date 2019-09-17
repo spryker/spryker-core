@@ -30,6 +30,8 @@ class EditController extends AbstractController
     protected const KEY_REDIRECT_URL = 'redirectUrl';
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';
 
+    protected const REDIRECT_URL_MAIN_PAGE = '/';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -101,12 +103,13 @@ class EditController extends AbstractController
             ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
         $timezoneText = $dataExtractor
             ->extractTimezoneTextFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
-        $redirectUrl = $dataExtractor->extractRedirectUrlFromPriceProductSchedule($priceProductScheduleRedirectTransfer);
+        $priceProductScheduleRedirectTransfer = $this->getFactory()->createPriceProductScheduleRedirectStrategyResolver()
+            ->resolve($priceProductScheduleRedirectTransfer);
 
         return [
             static::KEY_FORM => $form->createView(),
             static::KEY_TITLE => $title,
-            static::KEY_REDIRECT_URL => $redirectUrl,
+            static::KEY_REDIRECT_URL => $priceProductScheduleRedirectTransfer->getRedirectUrl() ?? static::REDIRECT_URL_MAIN_PAGE,
             static::KEY_TIMEZONE_TEXT => $timezoneText,
         ];
     }

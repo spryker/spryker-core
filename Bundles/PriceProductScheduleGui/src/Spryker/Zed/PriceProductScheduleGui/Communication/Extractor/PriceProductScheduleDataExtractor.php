@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Extractor;
 
-use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface;
@@ -57,20 +56,6 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         return $this->priceProductScheduleDataFormatter->formatTitle($priceProductTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
-     *
-     * @return string
-     */
-    public function extractRedirectUrlFromPriceProductSchedule(
-        PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
-    ): string {
-        $priceProductScheduleRedirectTransfer = $this->priceProductScheduleRedirectStrategyResolver
-            ->resolvePriceProductScheduleRedirectStrategy($priceProductScheduleRedirectTransfer);
-
-        return $priceProductScheduleRedirectTransfer->getRedirectUrl() ?? '/';
     }
 
     /**
