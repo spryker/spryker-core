@@ -24,6 +24,7 @@ use Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResp
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
+ * @method \Spryker\Client\AuthRestApi\AuthRestApiClientInterface getClient()
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiConfig getConfig()
  */
 class AuthRestApiFactory extends AbstractFactory
@@ -34,7 +35,7 @@ class AuthRestApiFactory extends AbstractFactory
     public function createAccessTokensReader(): AccessTokensReaderInterface
     {
         return new AccessTokensReader(
-            $this->getOauthClient(),
+            $this->getClient(),
             $this->getResourceBuilder(),
             $this->getConfig()
         );
