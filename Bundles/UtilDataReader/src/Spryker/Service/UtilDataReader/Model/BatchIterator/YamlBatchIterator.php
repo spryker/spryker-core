@@ -53,6 +53,7 @@ class YamlBatchIterator implements CountableIteratorInterface
      * {@inheritdoc}
      *
      * @throws \Spryker\Service\UtilDataReader\Exception\ResourceNotFoundException
+     *
      * @return void
      */
     protected function initialize()

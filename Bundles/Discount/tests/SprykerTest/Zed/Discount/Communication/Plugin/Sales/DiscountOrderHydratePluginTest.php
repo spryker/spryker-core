@@ -107,11 +107,15 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItemsMixedQuantity(): array
     {
         $quoteTransfer = $this->getMultipleItemsMixedQuantityQuote();
-        $itemDiscountQuantities = [1, 2, 3];
+        $itemDiscountQuantities = [
+            $quoteTransfer->getItems()[0]->getSku() => 1,
+            $quoteTransfer->getItems()[1]->getSku() => 2,
+            $quoteTransfer->getItems()[2]->getSku() => 3,
+        ];
         $discountAmounts = [
-            [50, 50],
-            [50, 25],
-            [50, 17],
+            $quoteTransfer->getItems()[0]->getSku() => [50, 50],
+            $quoteTransfer->getItems()[1]->getSku() => [50, 25],
+            $quoteTransfer->getItems()[2]->getSku() => [50, 17],
         ];
 
         return [
@@ -137,9 +141,11 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorSingleItemHigherQuantity(): array
     {
         $quoteTransfer = $this->getSingleItemHigherQuantityQuote();
-        $itemDiscountQuantities = [3];
+        $itemDiscountQuantities = [
+            $quoteTransfer->getItems()[0]->getSku() => 3,
+        ];
         $discountAmounts = [
-            [50, 17],
+            $quoteTransfer->getItems()[0]->getSku() => [50, 17],
         ];
 
         return [
@@ -165,9 +171,11 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorSingleItem(): array
     {
         $quoteTransfer = $this->getSingleItemQuote();
-        $itemDiscountQuantities = [1];
+        $itemDiscountQuantities = [
+            $quoteTransfer->getItems()[0]->getSku() => 1,
+        ];
         $discountAmounts = [
-            [50, 50],
+            $quoteTransfer->getItems()[0]->getSku() => [50, 50],
         ];
 
         return [
@@ -195,11 +203,15 @@ class DiscountOrderHydratePluginTest extends Unit
     protected function getDataForOrderHydratorMultipleItem(): array
     {
         $quoteTransfer = $this->getMultipleItemsQuote();
-        $itemDiscountQuantities = [1, 1, 1];
+        $itemDiscountQuantities = [
+            $quoteTransfer->getItems()[0]->getSku() => 1,
+            $quoteTransfer->getItems()[1]->getSku() => 1,
+            $quoteTransfer->getItems()[2]->getSku() => 1,
+        ];
         $discountAmounts = [
-            [50, 50],
-            [50, 50],
-            [50, 50],
+            $quoteTransfer->getItems()[0]->getSku() => [50, 50],
+            $quoteTransfer->getItems()[1]->getSku() => [50, 50],
+            $quoteTransfer->getItems()[2]->getSku() => [50, 50],
         ];
 
         return [
@@ -237,11 +249,11 @@ class DiscountOrderHydratePluginTest extends Unit
         $orderTransfer = $discountOrderHydratePlugin->hydrate($orderTransfer);
 
         //Assert
-        foreach ($orderTransfer->getItems() as $index => $itemTransfer) {
+        foreach ($orderTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-                $this->assertEquals($itemDiscountQuantities[$index], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
-                $this->assertEquals($discountAmounts[$index][0], $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
-                $this->assertEquals($discountAmounts[$index][1], $calculatedDiscountTransfer->getUnitAmount(), 'Discount unit amount does not match expected value');
+                $this->assertEquals($itemDiscountQuantities[$itemTransfer->getSku()], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
+                $this->assertEquals($discountAmounts[$itemTransfer->getSku()][0], $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
+                $this->assertEquals($discountAmounts[$itemTransfer->getSku()][1], $calculatedDiscountTransfer->getUnitAmount(), 'Discount unit amount does not match expected value');
             }
         }
     }

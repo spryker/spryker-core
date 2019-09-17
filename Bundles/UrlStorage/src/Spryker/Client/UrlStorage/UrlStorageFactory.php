@@ -8,8 +8,19 @@
 namespace Spryker\Client\UrlStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToLocaleClientInterface;
+use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStoreClientInterface;
+use Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilder;
+use Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilderInterface;
+use Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapper;
+use Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface;
+use Spryker\Client\UrlStorage\Storage\UrlRedirectStorageReader;
+use Spryker\Client\UrlStorage\Storage\UrlRedirectStorageReaderInterface;
 use Spryker\Client\UrlStorage\Storage\UrlStorageReader;
 
+/**
+ * @method \Spryker\Client\UrlStorage\UrlStorageConfig getConfig()
+ */
 class UrlStorageFactory extends AbstractFactory
 {
     /**
@@ -21,6 +32,39 @@ class UrlStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getUrlStorageResourceMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\UrlStorage\Mapper\UrlRedirectStorageMapperInterface
+     */
+    public function createUrlRedirectStorageMapper(): UrlRedirectStorageMapperInterface
+    {
+        return new UrlRedirectStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Client\UrlStorage\Storage\UrlRedirectStorageReaderInterface
+     */
+    public function createUrlRedirectStorageReader(): UrlRedirectStorageReaderInterface
+    {
+        return new UrlRedirectStorageReader(
+            $this->getStorageClient(),
+            $this->createUrlRedirectStorageKeyBuilder(),
+            $this->createUrlRedirectStorageMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\UrlStorage\KeyBuilder\UrlRedirectStorageKeyBuilderInterface
+     */
+    public function createUrlRedirectStorageKeyBuilder(): UrlRedirectStorageKeyBuilderInterface
+    {
+        return new UrlRedirectStorageKeyBuilder(
+            $this->getSynchronizationService(),
+            $this->getStoreClient(),
+            $this->getLocaleClient(),
+            $this->getConfig()
         );
     }
 
@@ -46,5 +90,21 @@ class UrlStorageFactory extends AbstractFactory
     public function getUrlStorageResourceMapperPlugins()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::PLUGINS_URL_STORAGE_RESOURCE_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStoreClientInterface
+     */
+    public function getStoreClient(): UrlStorageToStoreClientInterface
+    {
+        return $this->getProvidedDependency(UrlStorageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToLocaleClientInterface
+     */
+    public function getLocaleClient(): UrlStorageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(UrlStorageDependencyProvider::CLIENT_LOCALE);
     }
 }

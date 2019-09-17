@@ -44,6 +44,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Check customer password min and max length according to configuration if it is provided.
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
@@ -60,6 +61,7 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Checks customer password min and max length according to configuration if it is provided.
      * - Validates provided customer email information.
      * - Encrypts provided plain text password.
      * - Assigns current locale to customer if it is not set already.
@@ -156,6 +158,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Updates password if NewPassword property is set in provided transfer object:
+     *      - Check customer password min and max length according to configuration.
      *      - Validates provided current plain text password using persistent storage.
      *      - Encrypts provided plain text password before update.
      * - Identifies customer by either customer ID, customer email, or password restoration key.
@@ -174,6 +177,7 @@ interface CustomerFacadeInterface
     /**
      * Specification:
      * - Identifies customer by either customer ID, customer email, or password restoration key.
+     * - Check customer password min and max length according to configuration if it is provided.
      * - Validates provided current plain text password using persistent storage.
      * - Encrypts provided plain text password and stores it in persistent storage.
      *
@@ -273,6 +277,18 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\AddressTransfer|null
      */
     public function findCustomerAddressById(int $idCustomerAddress): ?AddressTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves customer address by address details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
 
     /**
      * Specification:
@@ -389,6 +405,7 @@ interface CustomerFacadeInterface
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
+     * - Processes quote level (BC) or item level shipping addresses.
      *
      * @see CustomerFacadeInterface::registerCustomer()
      * @see CustomerFacadeInterface::updateCustomer()
@@ -482,4 +499,14 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets all salutations available in the system.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array;
 }

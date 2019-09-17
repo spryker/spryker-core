@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Translator\Business;
 
 use Codeception\TestCase\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Translator\Business\TranslatorBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
@@ -91,7 +92,7 @@ class TranslatorFacadeTest extends Test
             ->willReturn($this->getStoreMock());
 
         $factoryMock->method('getLocaleFacade')
-            ->willReturn(new TranslatorToLocaleFacadeBridge($this->tester->getLocator()->locale()->facade()));
+            ->willReturn($this->getLocaleFacadeMock());
 
         return $factoryMock;
     }
@@ -128,6 +129,23 @@ class TranslatorFacadeTest extends Test
             ->willReturn(codecept_output_dir());
 
         return $configMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getLocaleFacadeMock(): MockObject
+    {
+        $localeFacadeMock = $this->getMockBuilder(TranslatorToLocaleFacadeBridge::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->tester->getLocator()->locale()->facade()])
+            ->setMethods(['getCurrentLocale', 'getSupportedLocaleCodes'])
+            ->getMock();
+
+        $localeFacadeMock->method('getCurrentLocale')->willReturn('de_DE');
+        $localeFacadeMock->method('getSupportedLocaleCodes')->willReturn(['de_DE']);
+
+        return $localeFacadeMock;
     }
 
     /**

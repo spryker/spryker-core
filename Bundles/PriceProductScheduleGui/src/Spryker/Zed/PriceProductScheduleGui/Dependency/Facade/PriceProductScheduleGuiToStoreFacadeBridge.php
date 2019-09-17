@@ -31,4 +31,12 @@ class PriceProductScheduleGuiToStoreFacadeBridge implements PriceProductSchedule
     {
         return $this->storeFacade->getStoreById($idStore);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores()
+    {
+        return $this->storeFacade->getAllStores();
+    }
 }
