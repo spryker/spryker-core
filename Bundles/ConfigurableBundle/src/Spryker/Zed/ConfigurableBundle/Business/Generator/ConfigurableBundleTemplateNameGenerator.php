@@ -12,7 +12,7 @@ use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTe
 
 class ConfigurableBundleTemplateNameGenerator implements ConfigurableBundleTemplateNameGeneratorInterface
 {
-    protected const NAME_PREFIX = 'configurable_bundle.template.names';
+    protected const NAME_PREFIX = 'configurable_bundle.templates';
     protected const NAME_POSTFIX = 'name';
     protected const SPACE_REPLACEMENT = '_';
     protected const PARTS_CONCATENATOR = '.';
