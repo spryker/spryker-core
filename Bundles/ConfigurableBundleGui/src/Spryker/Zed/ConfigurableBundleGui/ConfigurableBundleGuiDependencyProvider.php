@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui;
 
-use Orm\Zed\ConfigurableBundle\Persistence\Base\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeBridge;

@@ -45,8 +45,8 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template by ConfigurableBundleTemplateFilterTransfer::idConfigurableBundleTemplate.
-     * - Returns corresponding transfer object if found, null otherwise.
+     * - Finds configurable bundle template by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Returns corresponding transfer object for the first matching record if found, null otherwise.
      *
      * @api
      *

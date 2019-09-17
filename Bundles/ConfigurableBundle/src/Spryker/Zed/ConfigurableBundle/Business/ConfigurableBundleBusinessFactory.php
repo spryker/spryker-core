@@ -17,6 +17,7 @@ use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWri
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -59,7 +60,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createConfigurableBundleTemplateNameGenerator(): ConfigurableBundleTemplateNameGeneratorInterface
     {
-        return new ConfigurableBundleTemplateNameGenerator();
+        return new ConfigurableBundleTemplateNameGenerator($this->getUtilTextService());
     }
 
     /**
@@ -68,5 +69,13 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): ConfigurableBundleToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

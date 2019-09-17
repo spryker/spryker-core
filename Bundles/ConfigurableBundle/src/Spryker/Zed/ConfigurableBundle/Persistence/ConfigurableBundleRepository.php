@@ -58,6 +58,8 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             );
         }
 
+        $configurableBundleTemplateQuery->limit(1);
+
         return $configurableBundleTemplateQuery;
     }
 }

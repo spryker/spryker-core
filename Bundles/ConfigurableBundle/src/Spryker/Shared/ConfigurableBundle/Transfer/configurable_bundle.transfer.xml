@@ -53,4 +53,9 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
 </transfers>

@@ -22,11 +22,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ConfigurableBundleTemplateTranslationForm extends AbstractType
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_FK_LOCALE = 'fkLocale';
-    public const FIELD_LOCALE_NAME = 'localeName';
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_FK_LOCALE = 'fkLocale';
+    protected const FIELD_LOCALE_NAME = 'localeName';
 
-    public const OPTION_DATA_CLASS = 'data_class';
+    protected const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
