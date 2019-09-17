@@ -17,17 +17,18 @@ class QuoteEntityManager extends AbstractEntityManager implements QuoteEntityMan
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string[] $quoteFieldsAllowedForSaving
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function saveQuote(QuoteTransfer $quoteTransfer)
+    public function saveQuote(QuoteTransfer $quoteTransfer, array $quoteFieldsAllowedForSaving)
     {
         $quoteMapper = $this->getFactory()->createQuoteMapper();
         $quoteEntity = $this->getFactory()
             ->createQuoteQuery()
             ->filterByIdQuote($quoteTransfer->getIdQuote())
             ->findOneOrCreate();
-        $quoteEntity = $quoteMapper->mapTransferToEntity($quoteTransfer, $quoteEntity);
+        $quoteEntity = $quoteMapper->mapTransferToEntity($quoteTransfer, $quoteEntity, $quoteFieldsAllowedForSaving);
         $quoteEntity->save();
         $quoteTransfer->fromArray($quoteEntity->toArray(), true);
 
