@@ -25,7 +25,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleQuery();
+        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleTemplateQuery();
         $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
             $configurableBundleTemplateQuery,
             $configurableBundleTemplateFilterTransfer

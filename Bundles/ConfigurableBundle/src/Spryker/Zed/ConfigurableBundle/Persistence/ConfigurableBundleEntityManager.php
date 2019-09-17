@@ -45,7 +45,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): bool {
         $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleQuery()
+            ->createConfigurableBundleTemplateQuery()
             ->findOneByIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         if (!$configurableBundleTemplateEntity) {

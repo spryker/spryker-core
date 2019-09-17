@@ -29,7 +29,7 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
      */
-    public function createConfigurableBundleQuery(): SpyConfigurableBundleTemplateQuery
+    public function createConfigurableBundleTemplateQuery(): SpyConfigurableBundleTemplateQuery
     {
         return SpyConfigurableBundleTemplateQuery::create();
     }
