@@ -18,7 +18,6 @@ class ImageCollectionTransformer implements DataTransformerInterface
      * @param \Generated\Shared\Transfer\CategoryImageTransfer[] $value The value in the original representation
      *
      * @return array|null The value in the transformed representation
-     *
      */
     public function transform($value)
     {
@@ -40,7 +39,6 @@ class ImageCollectionTransformer implements DataTransformerInterface
      * @param array $value The value in the transformed representation
      *
      * @return \ArrayObject|null The value in the original representation
-     *
      */
     public function reverseTransform($value)
     {

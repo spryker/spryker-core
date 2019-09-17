@@ -23,4 +23,11 @@ interface UrlStorageRepositoryInterface
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
      */
     public function findUrlStorageByUrlIds(array $urlIds): array;
+
+    /**
+     * @param string[] $urls
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     */
+    public function findUrlEntitiesByUrls(array $urls): array;
 }
