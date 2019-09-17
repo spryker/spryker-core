@@ -207,6 +207,18 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        // TODO:
+
+        return new QuoteResponseTransfer();
+    }
+
+    /**
      * Specification:
      *  - Decreases quantity for given item.
      *  - Makes zed request.

@@ -220,6 +220,31 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      * Specification:
      *  - Makes zed request with items and customer.
      *  - Loads customer quote from database.
+     *  - Changes quantity for given items.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns quote response.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer()
+            ->setItems($cartChangeTransfer->getItems());
+
+        $quoteResponseTransfer = $this->getZedStub()->updateQuantity($persistentCartChangeTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
      *  - Decreases quantity for given item.
      *  - Recalculates quote totals.
      *  - Save updated quote to database.

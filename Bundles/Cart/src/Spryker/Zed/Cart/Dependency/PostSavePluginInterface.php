@@ -7,17 +7,11 @@
 
 namespace Spryker\Zed\Cart\Dependency;
 
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CartExtension\Dependency\Plugin\PostSavePluginInterface as SprykerPostSavePluginInterface;
 
-interface PostSavePluginInterface
+/**
+ * @deprecated Use \Spryker\Zed\CartExtension\Dependency\Plugin\PostSavePluginInterface instead.
+ */
+interface PostSavePluginInterface extends SprykerPostSavePluginInterface
 {
-    /**
-     * Specification:
-     *  - This plugin executed after add and remove operations, you will receive modified quote which is ready to store in client side
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     */
-    public function postSave(QuoteTransfer $quoteTransfer);
 }

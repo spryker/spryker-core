@@ -154,6 +154,22 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        if ($this->isQuoteLocked()) {
+            $this->addPermissionFailedMessage();
+
+            return $this->createNotSuccessfulQuoteResponseTransfer();
+        }
+
+        return $this->quoteStorageStrategy->updateQuantity($cartChangeTransfer);
+    }
+
+    /**
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity

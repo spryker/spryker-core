@@ -75,7 +75,7 @@ class Operation implements OperationInterface
     protected $cartRemovalPreCheckPlugins;
 
     /**
-     * @var \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\PostSavePluginInterface[]
      */
     protected $postSavePlugins = [];
 
@@ -101,7 +101,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[] $itemExpanderPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
-     * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[] $postReloadItemsPlugins

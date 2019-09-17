@@ -5,9 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.33.0",
+    "spryker/cart": "^7.3.0",
+    "spryker/cart-extension": "^1.6.0 || ^2.2.1 || ^4.0.0",
     "spryker/configurable-bundle": "^1.0.0",
-    "spryker/cart": "^7.3.0"
+    "spryker/kernel": "^3.33.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

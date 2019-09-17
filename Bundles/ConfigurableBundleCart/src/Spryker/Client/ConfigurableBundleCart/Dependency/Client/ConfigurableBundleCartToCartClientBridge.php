@@ -8,7 +8,8 @@
 namespace Spryker\Client\ConfigurableBundleCart\Dependency\Client;
 
 use ArrayObject;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class ConfigurableBundleCartToCartClientBridge implements ConfigurableBundleCartToCartClientInterface
 {
@@ -28,7 +29,7 @@ class ConfigurableBundleCartToCartClientBridge implements ConfigurableBundleCart
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote(): QuoteTransfer
+    public function getQuote()
     {
         return $this->cartClient->getQuote();
     }
@@ -38,8 +39,18 @@ class ConfigurableBundleCartToCartClientBridge implements ConfigurableBundleCart
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeItems(ArrayObject $items): QuoteTransfer
+    public function removeItems(ArrayObject $items)
     {
         return $this->cartClient->removeItems($items);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->cartClient->updateQuantity($cartChangeTransfer);
     }
 }

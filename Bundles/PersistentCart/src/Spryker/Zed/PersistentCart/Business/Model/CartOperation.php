@@ -200,6 +200,66 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer->requireCustomer();
+
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+            $persistentCartChangeTransfer->getIdQuote(),
+            $persistentCartChangeTransfer->getCustomer()
+        );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer = $this->mergeQuotes(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $persistentCartChangeTransfer->getQuote()
+        );
+
+        $itemsToRemove = [];
+        $itemsToAdd = [];
+
+        $itemsTransfer = $persistentCartChangeTransfer->getItems();
+
+        foreach ($itemsTransfer as $itemTransfer) {
+            $quoteItemTransfer = $this->findItemInQuote($itemTransfer, $quoteTransfer);
+
+            if (!$quoteItemTransfer) {
+                continue;
+            }
+
+            if ($itemTransfer->getQuantity() === 0) {
+                $itemsToRemove[] = $quoteItemTransfer;
+                continue;
+            }
+
+            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+
+            if ($delta === 0) {
+                continue;
+            }
+
+            $changeItemTransfer = clone $quoteItemTransfer;
+            $changeItemTransfer->setQuantity($delta);
+
+            if ($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
+                $itemsToRemove[] = $changeItemTransfer;
+                continue;
+            }
+
+            $itemsToAdd[] = $changeItemTransfer;
+        }
+
+        return $this->updateItemQuantity($quoteTransfer, $itemsToRemove, $itemsToAdd);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -358,5 +418,33 @@ class CartOperation implements CartOperationInterface
         $quoteResponseTransfer->setIsSuccessful(false);
 
         return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsToRemove
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsToAdd
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function updateItemQuantity(QuoteTransfer $quoteTransfer, array $itemsToRemove = [], array $itemsToAdd = []): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
+
+        if (!$itemsToAdd && !$itemsToRemove) {
+            return $quoteResponseTransfer;
+        }
+
+        if ($itemsToRemove) {
+            $quoteResponseTransfer = $this->quoteItemOperation->removeItems($itemsToRemove, $quoteTransfer);
+        }
+
+        if ($quoteResponseTransfer->getIsSuccessful() && $itemsToAdd) {
+            return $this->quoteItemOperation->addItems($itemsToAdd, $quoteTransfer);
+        }
+
+        return $quoteResponseTransfer;
     }
 }
