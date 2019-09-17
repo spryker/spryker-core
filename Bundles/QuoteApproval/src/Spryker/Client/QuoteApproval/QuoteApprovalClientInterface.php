@@ -42,6 +42,7 @@ interface QuoteApprovalClientInterface
      * - Locks quote.
      * - Creates new QuoteApproval request in status `waiting`.
      * - Returns quote approval response with updated quote.
+     * - Requires QuoteApprovalRequestTransfer::quote field to be set.
      *
      * @api
      *
