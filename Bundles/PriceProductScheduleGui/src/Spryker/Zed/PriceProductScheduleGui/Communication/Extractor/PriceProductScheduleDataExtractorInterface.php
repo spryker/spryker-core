@@ -25,15 +25,6 @@ interface PriceProductScheduleDataExtractorInterface
      *
      * @return string
      */
-    public function extractRedirectUrlFromPriceProductScheduleTransfer(
-        PriceProductScheduleTransfer $priceProductScheduleTransfer
-    ): string;
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
-     *
-     * @return string
-     */
     public function extractTimezoneTextFromPriceProductScheduledTransfer(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): string;
