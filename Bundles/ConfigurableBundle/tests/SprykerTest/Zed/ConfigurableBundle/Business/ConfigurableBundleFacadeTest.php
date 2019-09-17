@@ -31,6 +31,28 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testDeleteConfigurableBundleTemplateByIdDeletesTemplate(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+
+        // Act
+        $this->tester->getFacade()
+            ->deleteConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Assert
+        $removedConfigurableBundleTemplateTransfer = $this->tester->getFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
+
+        $this->assertNull($removedConfigurableBundleTemplateTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testFindConfigurableBundleTemplateWillReturnNullIfTemplateNotFound(): void
     {
         // Arrange
@@ -43,6 +65,56 @@ class ConfigurableBundleFacadeTest extends Unit
 
         // Assert
         $this->assertNull($configurableBundleTemplateTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function filterInactiveItemsFiltersDeletedItems(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithConfigurableBundleTemplate('not-existing-template-uuid');
+
+        // Act
+        $filteredQuoteTransfer = $this->tester->getFacade()
+            ->filterInactiveItems($quoteTransfer);
+
+        // Assert
+        $this->assertEmpty($filteredQuoteTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterInactiveItemsFiltersDeactivatedItems(): void
+    {
+        // Arrange
+        $configurableBundleTemplate = $this->tester->createDeactivatedConfigurableBundleTemplate();
+        $quoteTransfer = $this->tester->createQuoteTransferWithConfigurableBundleTemplate($configurableBundleTemplate->getUuid());
+
+        // Act
+        $filteredQuoteTransfer = $this->tester->getFacade()
+            ->filterInactiveItems($quoteTransfer);
+
+        // Assert
+        $this->assertEmpty($filteredQuoteTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterInactiveItemsDoesNotFilterActiveItems(): void
+    {
+        // Arrange
+        $configurableBundleTemplate = $this->tester->createActiveConfigurableBundleTemplate();
+        $quoteTransfer = $this->tester->createQuoteTransferWithConfigurableBundleTemplate($configurableBundleTemplate->getUuid());
+
+        // Act
+        $filteredQuoteTransfer = $this->tester->getFacade()
+            ->filterInactiveItems($quoteTransfer);
+
+        // Assert
+        $this->assertNotEmpty($filteredQuoteTransfer->getItems());
     }
 
     /**
@@ -134,5 +206,53 @@ class ConfigurableBundleFacadeTest extends Unit
         $configurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
         $this->assertNotNull($configurableBundleTemplateTransfer);
         $this->assertGreaterThan(0, $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+    }
+
+    /**
+     * @return void
+     */
+    public function testActivateConfigurableBundleTemplateByIdActivatesTemplate(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createDeactivatedConfigurableBundleTemplate();
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->activateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Assert
+        $updatedConfigurableBundleTemplateTransfer = $this->tester
+            ->getFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
+
+        $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), true);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeactivateConfigurableBundleTemplateByIdDeactivatesTemplate(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+
+        // Act
+        $this->tester
+            ->getFacade()
+            ->deactivateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Assert
+        $updatedConfigurableBundleTemplateTransfer = $this->tester
+            ->getFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
+
+        $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), false);
     }
 }

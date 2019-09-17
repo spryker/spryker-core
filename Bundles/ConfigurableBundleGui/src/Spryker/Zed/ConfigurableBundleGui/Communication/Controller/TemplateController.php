@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,13 +21,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TemplateController extends AbstractController
 {
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     */
     protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
+
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
+
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
-    protected const ERORR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found';
-    protected const ERORR_MESSAGE_PARAM_ID = '%id%';
+    protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+
+    protected const MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" was activated.';
+    protected const MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" was deactivated.';
+
+    protected const MESSAGE_PARAM_TEMPLATE_NAME = '%template_name%';
 
     /**
      * @return array
@@ -129,8 +144,8 @@ class TemplateController extends AbstractController
         $configurableBundleTemplateTransfer = $formDataProvider->getData($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()) {
-            $this->addErrorMessage(static::ERORR_MESSAGE_TEMPLATE_NOT_FOUND, [
-                static::ERORR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -200,6 +215,148 @@ class TemplateController extends AbstractController
         $table = $this->getFactory()->createConfigurableBundleTemplateSlotProductsTable($idConfigurableBundleTemplateSlot);
 
         return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request): RedirectResponse
+    {
+        $idConfigurableBundleTemplate = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+        );
+
+        $configurableBundleTemplateTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                   ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            );
+
+        if (!$configurableBundleTemplateTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
+
+        $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+
+        return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deactivateAction(Request $request): RedirectResponse
+    {
+        $idConfigurableBundleTemplate = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+        );
+
+        $configurableBundleTemplateTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            );
+
+        if (!$configurableBundleTemplateTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
+
+        $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->deactivateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        $this->addSuccessMessage(static::MESSAGE_TEMPLATE_DEACTIVATED, [
+            static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
+                ->getGlossaryFacade()
+                ->translate($configurableBundleTemplateTransfer->getName()),
+            ]);
+
+        return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function activateAction(Request $request): RedirectResponse
+    {
+        $idConfigurableBundleTemplate = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+        );
+
+        $configurableBundleTemplateTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            );
+
+        if (!$configurableBundleTemplateTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
+
+        $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->activateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        $this->addSuccessMessage(static::MESSAGE_TEMPLATE_ACTIVATED, [
+            static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
+                ->getGlossaryFacade()
+                ->translate($configurableBundleTemplateTransfer->getName()),
+        ]);
+
+        return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function confirmDeleteAction(Request $request)
+    {
+        $idConfigurableBundleTemplate = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+        );
+
+        $configurableBundleTemplateTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            );
+
+        if (!$configurableBundleTemplateTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplate,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
+
+        return [
+            'configurableBundleTemplateTransfer' => $configurableBundleTemplateTransfer,
+        ];
     }
 
     /**

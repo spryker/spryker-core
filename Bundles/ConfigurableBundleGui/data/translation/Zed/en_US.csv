@@ -8,6 +8,14 @@ Status,Status
 "Configurable Bundle Templates","Configurable Bundle Templates"
 "# of Slots","# of Slots"
 "Create New Template","Create New Template"
+"Are you sure you want to delete template","Are you sure you want to delete template"
+"Delete Template","Delete Template"
+Cancel,Cancel
+"Configurable bundle template with id ""%id%"" was not found.","Configurable bundle template with id ""%id%"" was not found."
+"Configurable Bundle Template deletion confirmation","Configurable Bundle Template deletion confirmation"
+"Back","Back"
+"Template ""%template_name%"" was activated.","Template ""%template_name%"" was activated."
+"Template ""%template_name%"" was deactivated.","Template ""%template_name%"" was deactivated."
 General,General
 Slots,Slots
 "Template details","Template details"

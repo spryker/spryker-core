@@ -10,6 +10,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -68,5 +69,69 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
         return $this->getFactory()
             ->createConfigurableBundleTemplateReader()
             ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateWriter()
+            ->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createInactiveConfiguredBundleItemFilter()
+            ->filterInactiveItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateWriter()
+            ->activateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateWriter()
+            ->deactivateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 }

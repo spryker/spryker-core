@@ -11,7 +11,7 @@ interface ConfigurableBundleStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Publishes configurable bundle template changes to storage.
+     * - Publishes configurable bundle template changes to Storage.
      *
      * @api
      *
@@ -20,4 +20,16 @@ interface ConfigurableBundleStorageFacadeInterface
      * @return void
      */
     public function publishConfigurableBundleTemplate(array $configurableBundleTemplateIds): void;
+
+    /**
+     * Specification:
+     * - Unpublishes removed configurable bundle templates from the Storage.
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplate(array $configurableBundleTemplateIds): void;
 }

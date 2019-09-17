@@ -31,12 +31,12 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     protected const COL_STATUS = 'is_active';
     protected const COL_ACTIONS = 'actions';
 
-    protected const URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
      */
-    protected const URL_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
+    protected const ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
@@ -49,9 +49,9 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE = '/configurable-bundle-gui/template/deactivate';
 
     /**
-     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deleteAction()
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::confirmDeleteAction()
      */
-    protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE = '/configurable-bundle-gui/template/delete';
+    protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE = '/configurable-bundle-gui/template/confirm-delete';
 
     /**
      * @var \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
@@ -207,15 +207,15 @@ class ConfigurableBundleTemplateTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(static::URL_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE, [
-                static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
+            Url::generate(static::ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Edit'
         );
 
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, [
-                static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
+            Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Delete'
         );
@@ -235,7 +235,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
         if ($configurableBundleTemplateEntity->getIsActive()) {
             return $this->generateRemoveButton(
                 Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE, [
-                    static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
                 ]),
                 'Deactivate'
             );
@@ -243,7 +243,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
 
         return $this->generateViewButton(
             Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_ACTIVATE, [
-                static::URL_PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Activate'
         );

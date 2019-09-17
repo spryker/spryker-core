@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
+use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
@@ -69,6 +71,16 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface
+     */
+    public function createInactiveConfiguredBundleItemFilter(): InactiveConfiguredBundleItemFilterInterface
+    {
+        return new InactiveConfiguredBundleItemFilter(
+            $this->getRepository()
+        );
     }
 
     /**

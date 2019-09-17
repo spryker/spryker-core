@@ -20,4 +20,11 @@ interface ConfigurableBundleRepositoryInterface
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer;
+
+    /**
+     * @param string[] $allowedTemplateUuid
+     *
+     * @return string[]
+     */
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
 }
