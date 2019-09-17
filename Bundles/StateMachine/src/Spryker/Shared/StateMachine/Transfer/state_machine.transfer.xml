@@ -19,5 +19,19 @@
         <property name="stateMachineName" type="string" />
     </transfer>
 
+    <transfer name="EventTriggerFormData">
+        <property name="idState" type="int" />
+        <property name="identifier" type="int" />
+        <property name="event" type="string"/>
+        <property name="redirect" type="string" />
+    </transfer>
+
+    <transfer name="EventItemTriggerFormData">
+        <property name="identifier" type="int" />
+        <property name="stateMachineName" type="string" />
+        <property name="processName" type="string"/>
+        <property name="redirect" type="string" />
+    </transfer>
+
 </transfers>
 
