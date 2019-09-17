@@ -11,10 +11,12 @@ interface PaymentMethodsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers
+     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
     public function mapPaymentProviderTransfersToRestPaymentMethodsAttributesTransfers(
-        array $paymentProviderTransfers
+        array $paymentProviderTransfers,
+        array $restPaymentMethodsAttributesTransfers = []
     ): array;
 }

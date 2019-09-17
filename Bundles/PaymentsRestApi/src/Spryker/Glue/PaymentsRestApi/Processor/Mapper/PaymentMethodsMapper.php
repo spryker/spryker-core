@@ -30,20 +30,16 @@ class PaymentMethodsMapper implements PaymentMethodsMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers
+     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
     public function mapPaymentProviderTransfersToRestPaymentMethodsAttributesTransfers(
-        array $paymentProviderTransfers
+        array $paymentProviderTransfers,
+        array $restPaymentMethodsAttributesTransfers = []
     ): array {
-        $restPaymentMethodsAttributesTransfers = [];
-
         foreach ($paymentProviderTransfers as $paymentProviderTransfer) {
-            $restPaymentMethodsAttributesTransfers +=
-                $this->mapPaymentMethodsTransfersToRestPaymentMethodAttributesTransfers(
-                    $paymentProviderTransfer,
-                    $paymentProviderTransfer->getPaymentMethods()
-                );
+            $restPaymentMethodsAttributesTransfers += $this->mapPaymentProviderTransferToRestPaymentMethodAttributesTransfers($paymentProviderTransfer);
         }
 
         return $restPaymentMethodsAttributesTransfers;
@@ -51,17 +47,15 @@ class PaymentMethodsMapper implements PaymentMethodsMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PaymentMethodTransfer[] $paymentMethodTransfers
+     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
-    protected function mapPaymentMethodsTransfersToRestPaymentMethodAttributesTransfers(
+    protected function mapPaymentProviderTransferToRestPaymentMethodAttributesTransfers(
         PaymentProviderTransfer $paymentProviderTransfer,
-        ArrayObject $paymentMethodTransfers
+        array $restPaymentMethodsAttributesTransfers = []
     ): array {
-        $restPaymentMethodsAttributesTransfers = [];
-
-        foreach ($paymentMethodTransfers as $paymentMethodTransfer) {
+        foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
             $restPaymentMethodsAttributesTransfers[$paymentMethodTransfer->getIdSalesPaymentMethodType()] =
                 $this->createRestPaymentMethodAttributesTransfer($paymentProviderTransfer, $paymentMethodTransfer);
         }
@@ -79,13 +73,11 @@ class PaymentMethodsMapper implements PaymentMethodsMapperInterface
         PaymentProviderTransfer $paymentProviderTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): RestPaymentMethodsAttributesTransfer {
-        $paymentMethodName = $paymentMethodTransfer->getMethodName();
-        $paymentMethodPriority = $this->findPaymentMethodPriorityInConfig($paymentMethodName);
-
+        $methodName = $paymentMethodTransfer->getMethodName();
         return (new RestPaymentMethodsAttributesTransfer())
-            ->setName($paymentMethodName)
+            ->setName($methodName)
             ->setPaymentProviderName($paymentProviderTransfer->getName())
-            ->setPriority($paymentMethodPriority);
+            ->setPriority($this->findPaymentMethodPriorityInConfig($methodName));
     }
 
     /**
@@ -95,8 +87,6 @@ class PaymentMethodsMapper implements PaymentMethodsMapperInterface
      */
     protected function findPaymentMethodPriorityInConfig(string $paymentMethodName): ?int
     {
-        $paymentMethodPriorityMap = $this->config->getPaymentMethodPriority();
-
-        return $paymentMethodPriorityMap[$paymentMethodName] ?? null;
+        return $this->config->getPaymentMethodPriority()[$paymentMethodName] ?? null;
     }
 }
