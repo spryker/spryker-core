@@ -8,20 +8,34 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Generator;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 
 class ConfigurableBundleTemplateNameGenerator implements ConfigurableBundleTemplateNameGeneratorInterface
 {
-    protected const NAME_PREFIX = 'configurable_bundle.template';
+    protected const NAME_PREFIX = 'configurable_bundle.templates';
     protected const NAME_POSTFIX = 'name';
     protected const SPACE_REPLACEMENT = '_';
     protected const PARTS_CONCATENATOR = '.';
+
+    /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface
+     */
+    protected $utilTextService;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface $utilTextService
+     */
+    public function __construct(ConfigurableBundleToUtilTextServiceInterface $utilTextService)
+    {
+        $this->utilTextService = $utilTextService;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function generateConfigurableBundleTemplateName(
+    public function setConfigurableBundleTemplateName(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer->requireTranslations();
@@ -40,15 +54,16 @@ class ConfigurableBundleTemplateNameGenerator implements ConfigurableBundleTempl
      */
     protected function generateName(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): string
     {
+        $slugifiedName = $this->utilTextService->generateSlug(
+            $configurableBundleTemplateTransfer->getTranslations()[0]->getName()
+        );
+
         $nameParts = [
             static::NAME_PREFIX,
-            $configurableBundleTemplateTransfer->getTranslations()[0]->getName(),
+            $slugifiedName,
             static::NAME_POSTFIX,
         ];
 
-        $name = implode(static::PARTS_CONCATENATOR, $nameParts);
-        $name = str_replace(' ', static::SPACE_REPLACEMENT, $name);
-
-        return strtolower($name);
+        return implode(static::PARTS_CONCATENATOR, $nameParts);
     }
 }

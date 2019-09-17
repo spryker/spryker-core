@@ -8,8 +8,7 @@
 namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 
 /**
@@ -43,7 +42,10 @@ class ConfigurableBundleFacadeTest extends Unit
 
         // Assert
         $removedConfigurableBundleTemplateTransfer = $this->tester->getFacade()
-            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
 
         $this->assertNull($removedConfigurableBundleTemplateTransfer);
     }
@@ -51,10 +53,13 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConfigurableBundleTemplateByIdWillReturnNull(): void
+    public function testFindConfigurableBundleTemplateByIdWillReturnNullIfTemplateNotFound(): void
     {
         // Act
-        $configurableBundleTemplateTransfer = $this->tester->getFacade()->findConfigurableBundleTemplateById(0);
+        $configurableBundleTemplateTransfer = $this->tester->getFacade()->findConfigurableBundleTemplate(
+            (new ConfigurableBundleTemplateFilterTransfer())
+                ->setIdConfigurableBundleTemplate(0)
+        );
 
         // Assert
         $this->assertNull($configurableBundleTemplateTransfer);
@@ -121,10 +126,13 @@ class ConfigurableBundleFacadeTest extends Unit
         // Act
         $foundConfigurableBundleTemplateTransfer = $this->tester
             ->getFacade()
-            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $foundConfigurableBundleTemplateTransfer);
+        $this->assertNotNull($foundConfigurableBundleTemplateTransfer);
         $this->assertSame(
             $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
             $foundConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()
@@ -155,17 +163,16 @@ class ConfigurableBundleFacadeTest extends Unit
             ->updateConfigurableBundleTemplate($updatedConfigurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $updatedConfigurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
-        $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $updatedConfigurableBundleTemplateTransfer);
+        $this->assertNotNull($updatedConfigurableBundleTemplateTransfer);
         $this->assertNotSame($configurableBundleTemplateTransfer->getName(), $updatedConfigurableBundleTemplateTransfer->getName());
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfigurableBundleTemplateWillReturnNotSuccessfulResponse(): void
+    public function testUpdateConfigurableBundleTemplateWillReturnNotSuccessfulResponseIfTemplateNotFound(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
@@ -177,25 +184,26 @@ class ConfigurableBundleFacadeTest extends Unit
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
         $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @return void
      */
-    public function testCreateConfigurableBundleTemplate(): void
+    public function testCreateConfigurableBundleTemplateWillCreateTemplate(): void
     {
-        $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateTransfer();
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplateTransfer();
 
+        // Act
         $configurableBundleTemplateResponseTransfer = $this->tester
             ->getFacade()
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
-        $this->assertInstanceOf(ConfigurableBundleTemplateResponseTransfer::class, $configurableBundleTemplateResponseTransfer);
+        // Assert
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $configurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
-        $this->assertInstanceOf(ConfigurableBundleTemplateTransfer::class, $configurableBundleTemplateTransfer);
+        $this->assertNotNull($configurableBundleTemplateTransfer);
         $this->assertGreaterThan(0, $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
     }
 
@@ -215,7 +223,10 @@ class ConfigurableBundleFacadeTest extends Unit
         // Assert
         $updatedConfigurableBundleTemplateTransfer = $this->tester
             ->getFacade()
-            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
 
         $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), true);
     }
@@ -236,18 +247,11 @@ class ConfigurableBundleFacadeTest extends Unit
         // Assert
         $updatedConfigurableBundleTemplateTransfer = $this->tester
             ->getFacade()
-            ->findConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())
+                    ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            );
 
         $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), false);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    protected function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
-    {
-        $configurableBundleTemplateTranslationTransfers = $this->tester->createTranslationTransfersForAvailableLocales();
-
-        return (new ConfigurableBundleTemplateTransfer())->setTranslations($configurableBundleTemplateTranslationTransfers);
     }
 }

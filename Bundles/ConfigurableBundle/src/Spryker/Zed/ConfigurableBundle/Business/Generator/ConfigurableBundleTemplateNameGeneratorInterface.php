@@ -16,7 +16,7 @@ interface ConfigurableBundleTemplateNameGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function generateConfigurableBundleTemplateName(
+    public function setConfigurableBundleTemplateName(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer;
 }

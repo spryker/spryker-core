@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,18 +19,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ConfigurableBundleRepository extends AbstractRepository implements ConfigurableBundleRepositoryInterface
 {
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
-    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->leftJoinWithSpyConfigurableBundleTemplateSlot()
-            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->find()
-            ->getFirst();
+    public function findConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleTemplateQuery();
+        $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
+            $configurableBundleTemplateQuery,
+            $configurableBundleTemplateFilterTransfer
+        );
+
+        $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->find()->getFirst();
 
         if (!$configurableBundleTemplateEntity) {
             return null;
@@ -49,7 +53,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         if (empty($allowedTemplateUuids)) {
             return [];
         }
-        
+
         return $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
             ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
@@ -57,5 +61,26 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             ->filterByIsActive(true)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
+     */
+    protected function setConfigurableBundleTemplateFilters(
+        SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery,
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): SpyConfigurableBundleTemplateQuery {
+        if ($configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate()) {
+            $configurableBundleTemplateQuery->filterByIdConfigurableBundleTemplate(
+                $configurableBundleTemplateFilterTransfer->getIdConfigurableBundleTemplate()
+            );
+        }
+
+        $configurableBundleTemplateQuery->limit(1);
+
+        return $configurableBundleTemplateQuery;
     }
 }

@@ -71,7 +71,6 @@ class ConfigurableBundleBusinessTester extends Actor
      */
     public function createTranslationsForAvailableLocales(array $data = []): array
     {
-
         $availableLocaleTransfers = $this->getLocator()
             ->locale()
             ->facade()
@@ -106,6 +105,16 @@ class ConfigurableBundleBusinessTester extends Actor
                             ->setUuid($templateUuid)
                     )
             );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
+    {
+        $configurableBundleTemplateTranslationTransfers = $this->createTranslationTransfersForAvailableLocales();
+
+        return (new ConfigurableBundleTemplateTransfer())->setTranslations($configurableBundleTemplateTranslationTransfers);
     }
 
     /**

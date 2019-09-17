@@ -9,6 +9,7 @@
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/product-list": "^1.5.0",
+    "spryker/util-text": "^1.0.0",
     "spryker/uuid-behavior": "^1.0.0"
   },
   "require-dev": {

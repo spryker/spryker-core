@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -45,16 +46,18 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template by id.
-     * - Returns corresponding transfer object if found, null otherwise.
+     * - Finds configurable bundle template by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Returns corresponding transfer object for the first matching record if found, null otherwise.
      *
      * @api
      *
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
      */
-    public function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer;
+    public function findConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer;
 
     /**
      * Specification:

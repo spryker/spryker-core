@@ -21,11 +21,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ConfigurableBundleTemplateForm extends AbstractType
 {
-    public const FIELD_NAME = 'name';
-    public const FIELD_TRANSLATIONS = 'translations';
-
-    public const OPTION_DATA_CLASS = 'data_class';
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
+
+    protected const FIELD_NAME = 'name';
+    protected const FIELD_TRANSLATIONS = 'translations';
+    protected const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

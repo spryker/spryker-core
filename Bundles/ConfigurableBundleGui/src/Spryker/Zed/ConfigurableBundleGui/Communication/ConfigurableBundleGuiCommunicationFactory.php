@@ -10,6 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable;
@@ -21,14 +22,15 @@ use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \SprykerEco\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiRepositoryInterface getRepository()
- * @method \SprykerEco\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiEntityManagerInterface getEntityManager()
- * @method \SprykerEco\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
- * @method \SprykerEco\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
  */
 class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -82,7 +84,8 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return new ConfigurableBundleTemplateSlotTable(
             $idConfigurableBundleTemplate,
             $this->getConfigurableBundleTemplateSlotPropelQuery(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getProductListFacade()
         );
     }
 
@@ -96,7 +99,9 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return new ConfigurableBundleTemplateSlotProductsTable(
             $idConfigurableBundleTemplateSlot,
             $this->getConfigurableBundleTemplateSlotPropelQuery(),
-            $this->getLocaleFacade()
+            $this->getProductPropelQuery(),
+            $this->getLocaleFacade(),
+            $this->getProductListFacade()
         );
     }
 
@@ -133,6 +138,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function getProductPropelQuery(): SpyProductQuery
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PROPEL_QUERY_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface
      */
     public function getConfigurableBundleFacade(): ConfigurableBundleGuiToConfigurableBundleFacadeInterface
@@ -154,5 +167,13 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function getGlossaryFacade(): ConfigurableBundleGuiToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface
+     */
+    public function getProductListFacade(): ConfigurableBundleGuiToProductListFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_PRODUCT_LIST);
     }
 }

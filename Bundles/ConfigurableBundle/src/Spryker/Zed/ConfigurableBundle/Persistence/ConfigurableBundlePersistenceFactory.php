@@ -32,7 +32,7 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createConfigurableBundleTemplateQuery(): SpyConfigurableBundleTemplateQuery
     {
-        return new SpyConfigurableBundleTemplateQuery();
+        return SpyConfigurableBundleTemplateQuery::create();
     }
 
     /**

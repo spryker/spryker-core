@@ -10,7 +10,9 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Table;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -34,23 +36,39 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     protected $configurableBundleTemplateSlotPropelQuery;
 
     /**
+     * @var \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected $productPropelQuery;
+
+    /**
      * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface
+     */
+    protected $productListFacade;
+
+    /**
      * @param int $idConfigurableBundleTemplateSlot
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productPropelQuery
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface $productListFacade
      */
     public function __construct(
         int $idConfigurableBundleTemplateSlot,
         SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery,
-        ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
+        SpyProductQuery $productPropelQuery,
+        ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade,
+        ConfigurableBundleGuiToProductListFacadeInterface $productListFacade
     ) {
         $this->idConfigurableBundleTemplateSlot = $idConfigurableBundleTemplateSlot;
         $this->configurableBundleTemplateSlotPropelQuery = $configurableBundleTemplateSlotPropelQuery;
+        $this->productPropelQuery = $productPropelQuery;
         $this->localeFacade = $localeFacade;
+        $this->productListFacade = $productListFacade;
     }
 
     /**
@@ -67,6 +85,12 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
         ]);
 
         $config->setSortable([
+            SpyProductTableMap::COL_ID_PRODUCT,
+            SpyProductTableMap::COL_SKU,
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
+        ]);
+
+        $config->setSearchable([
             SpyProductTableMap::COL_ID_PRODUCT,
             SpyProductTableMap::COL_SKU,
             SpyProductLocalizedAttributesTableMap::COL_NAME,
@@ -91,7 +115,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     protected function prepareData(TableConfiguration $config): array
     {
         $configurableBundleTemplateSlotProducts = $this->runQuery(
-            $this->prepareQuery($this->configurableBundleTemplateSlotPropelQuery),
+            $this->prepareQuery(),
             $config,
             true
         );
@@ -100,35 +124,43 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery
+     * @module Product
      *
-     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function prepareQuery(SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery): SpyConfigurableBundleTemplateSlotQuery
+    protected function prepareQuery(): SpyProductQuery
     {
-        $configurableBundleTemplateSlotPropelQuery
-            ->filterByIdConfigurableBundleTemplateSlot($this->idConfigurableBundleTemplateSlot)
-            ->joinSpyProductList()
-            ->useSpyProductListQuery()
-                ->joinSpyProductListProductConcrete()
-                ->useSpyProductListProductConcreteQuery()
-                    ->joinSpyProduct()
-                    ->useSpyProductQuery()
-                        ->joinSpyProductLocalizedAttributes()
-                        ->where(sprintf(
-                            '%s = %s',
-                            SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE,
-                            $this->localeFacade->getCurrentLocale()->getIdLocale()
-                        ))
-                    ->endUse()
-                ->endUse()
-            ->endUse()
+        $configurableBundleTemplateSlotProductIds = $this->getConfigurableBundleTemplateSlotProductIds();
+
+        $this->productPropelQuery
+            ->joinSpyProductLocalizedAttributes()
+            ->where(sprintf(
+                '%s = %s',
+                SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE,
+                $this->localeFacade->getCurrentLocale()->getIdLocale()
+            ))
+            ->filterByIdProduct_In($configurableBundleTemplateSlotProductIds)
             ->select([
                 SpyProductTableMap::COL_ID_PRODUCT,
                 SpyProductTableMap::COL_SKU,
                 SpyProductLocalizedAttributesTableMap::COL_NAME,
             ]);
 
-        return $configurableBundleTemplateSlotPropelQuery;
+        return $this->productPropelQuery;
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getConfigurableBundleTemplateSlotProductIds(): array
+    {
+        $configurableBundleTemplateSlotEntity = $this->configurableBundleTemplateSlotPropelQuery
+            ->findOneByIdConfigurableBundleTemplateSlot($this->idConfigurableBundleTemplateSlot);
+
+        if (!$configurableBundleTemplateSlotEntity) {
+            return [];
+        }
+
+        return $this->productListFacade->getProductConcreteIdsByProductListIds([$configurableBundleTemplateSlotEntity->getFkProductList()]);
     }
 }
