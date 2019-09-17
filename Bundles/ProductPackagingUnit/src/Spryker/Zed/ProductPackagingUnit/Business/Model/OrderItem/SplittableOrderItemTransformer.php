@@ -25,6 +25,8 @@ class SplittableOrderItemTransformer implements SplittableOrderItemTransformerIn
      */
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
+        $itemTransfer->requireAmount();
+
         $transformedItemsCollection = new ItemCollectionTransfer();
         $quantity = $itemTransfer->getQuantity();
 

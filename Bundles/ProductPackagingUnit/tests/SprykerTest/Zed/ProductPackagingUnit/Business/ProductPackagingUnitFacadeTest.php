@@ -978,6 +978,29 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
+    public function testTransformSplittableItem(): void
+    {
+        // Assign
+        $this->setData(true);
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::CONCRETE_PRODUCT_SKU)
+            ->setQuantity(2)
+            ->setAmount(3)
+            ->setAmountSalesUnit(new ProductMeasurementSalesUnitTransfer());
+
+        //Act
+        $itemCollectionTransfer = $this->getFacade()->transformSplittableItem($itemTransfer);
+
+        //Assert
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+            $this->assertSame(1, $itemTransfer->getQuantity());
+            $this->assertSame('1.5', $itemTransfer->getAmount()->trim()->toString());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testIsItemQuantitySplittable(): void
     {
         // Assign
