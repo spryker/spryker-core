@@ -110,8 +110,7 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
      */
     public function findPriceProductSchedulesByIdPriceProductScheduleList(
         int $idPriceProductScheduleList
-    ): array
-    {
+    ): array {
         return $this->priceProductScheduleFacade
             ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
     }
@@ -167,5 +166,16 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
     {
         return $this->priceProductScheduleFacade->isPriceProductScheduleUnique($priceProductScheduleTransfer);
+    }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
     }
 }
