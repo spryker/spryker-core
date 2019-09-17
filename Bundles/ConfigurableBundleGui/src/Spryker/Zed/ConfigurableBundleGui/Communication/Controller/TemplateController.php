@@ -34,7 +34,7 @@ class TemplateController extends AbstractController
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
-    protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found';
+    protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     protected const MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" was activated.';
