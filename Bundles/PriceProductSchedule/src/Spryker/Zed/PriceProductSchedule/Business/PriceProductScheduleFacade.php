@@ -260,6 +260,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      */
     public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
     {
-        return new PriceProductScheduleListResponseTransfer();
+        return $this->getFactory()
+            ->createPriceProductScheduleListRemover()
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
     }
 }
