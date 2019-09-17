@@ -5,7 +5,7 @@
 
     <transfer name="RestCheckoutData">
         <property name="addresses" type="Addresses" singular="address"/>
-        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod" deprecated="Use selectedShipmentMethods instead."/>
+        <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
         <property name="selectedShipmentMethods" type="ShipmentMethods" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
@@ -76,7 +76,7 @@
     <transfer name="RestCheckoutDataResponseAttributes">
         <property name="addresses" type="RestAddress[]" singular="address"/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider"/>
-        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Use selectedShipmentMethods instead."/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Use `shipment-methods` relationship instead."/>
         <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Use selectedPaymentMethods instead"/>
         <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
@@ -203,4 +203,22 @@
         <property name="fkStore" type="int"/>
         <property name="currency" type="Currency"/>
     </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quote" type="Quote"/>
+        <property name="customer" type="Customer"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
+    </transfer>
+
 </transfers>

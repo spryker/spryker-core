@@ -9,15 +9,15 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Sorter;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ShipmentMethodsSorterInterface
+interface ShipmentMethodSorterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[] $restShipmentMethodAttributeTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
-    public function sortShipmentMethodAttributesTransfers(
+    public function sortRestShipmentMethodsAttributesTransfers(
         array $restShipmentMethodAttributeTransfers,
         RestRequestInterface $restRequest
     ): array;

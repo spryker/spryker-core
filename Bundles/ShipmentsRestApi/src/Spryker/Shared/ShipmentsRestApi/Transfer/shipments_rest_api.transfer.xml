@@ -46,7 +46,7 @@
         <property name="message" type="string" />
     </transfer>
 
-    <transfer name="RestShipmentMethodAttributes">
+    <transfer name="RestShipmentMethodsAttributes">
         <property name="name" type="string"/>
         <property name="carrierName" type="string"/>
         <property name="deliveryTime" type="int"/>

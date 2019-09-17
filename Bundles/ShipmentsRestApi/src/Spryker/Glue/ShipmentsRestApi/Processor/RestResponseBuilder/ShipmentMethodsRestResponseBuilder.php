@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
@@ -36,14 +36,14 @@ class ShipmentMethodsRestResponseBuilder implements ShipmentMethodsRestResponseB
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer
      * @param string $idShipmentMethod
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createShipmentMethodRestResource(
-        RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer,
-        string $idShipmentMethod
+        string $idShipmentMethod,
+        RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributesTransfer
     ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS,

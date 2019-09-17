@@ -86,11 +86,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
+        $shipmentMethodsTransfer = $this->getShipmentMethodsTransfer($quoteTransfer);
+        $selectedShipmentMethodsTransfer = $this->getSelectedShipmentMethodsTransfer($restCheckoutRequestAttributesTransfer, $shipmentMethodsTransfer);
+
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
-            ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
-            ->setSelectedShipmentMethods(
-                $this->getSelectedShipmentMethodsTransfer($restCheckoutRequestAttributesTransfer, $quoteTransfer)
-            )
+            ->setShipmentMethods($shipmentMethodsTransfer)
+            ->setSelectedShipmentMethods($selectedShipmentMethodsTransfer)
             ->setPaymentProviders($this->getPaymentProviders())
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer))
@@ -113,15 +114,15 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     protected function getSelectedShipmentMethodsTransfer(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        QuoteTransfer $quoteTransfer
+        ShipmentMethodsTransfer $shipmentMethodsTransfer
     ): ShipmentMethodsTransfer {
-        $shipmentMethodsTransfer = new ShipmentMethodsTransfer();
+        $selectedShipmentMethodsTransfer = new ShipmentMethodsTransfer();
         $restShipmentTransfer = $restCheckoutRequestAttributesTransfer->getShipment();
 
         if (!$restShipmentTransfer) {
@@ -130,14 +131,14 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $selectedShipmentMethodId = $restShipmentTransfer->getIdShipmentMethod();
 
-        foreach ($this->getShipmentMethodsTransfer($quoteTransfer)->getMethods() as $shipmentMethodTransfer) {
+        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $selectedShipmentMethodId) {
-                $shipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
+                $selectedShipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
                 break;
             }
         }
 
-        return $shipmentMethodsTransfer;
+        return $selectedShipmentMethodsTransfer;
     }
 
     /**
