@@ -27,8 +27,4 @@ use Codeception\Actor;
 class ShipmentsRestApiBusinessTester extends Actor
 {
     use _generated\ShipmentsRestApiBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

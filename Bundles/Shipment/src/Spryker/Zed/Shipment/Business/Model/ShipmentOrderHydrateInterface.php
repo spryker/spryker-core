@@ -9,6 +9,9 @@ namespace Spryker\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface instead.
+ */
 interface ShipmentOrderHydrateInterface
 {
     /**

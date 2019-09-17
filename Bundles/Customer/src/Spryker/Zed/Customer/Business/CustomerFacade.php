@@ -335,6 +335,22 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->getFactory()
+            ->createAddress()
+            ->findCustomerAddressByAddressData($addressTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
      * @return bool
      */
     public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
@@ -472,7 +488,8 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     public function saveOrderCustomer(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFactory()
-            ->createCheckoutCustomerOrderSaver()
+            ->createCustomerOrderSaverStrategyResolver()
+            ->resolve($quoteTransfer->getItems())
             ->saveOrderCustomer($quoteTransfer, $saveOrderTransfer);
     }
 
@@ -553,5 +570,17 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
     {
         return $this->getFactory()->createCustomerReader()->findCustomerByReference($customerReference);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array
+    {
+        return $this->getRepository()->getAllSalutations();
     }
 }

@@ -194,11 +194,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function checkTimeouts(array $logContext = [])
     {
-        $orderStateMachine = $this->getFactory()
+        $factory = $this->getFactory();
+        $orderStateMachine = $factory
             ->createLockedOrderStateMachine($logContext);
 
-        return $this->getFactory()
-            ->createOrderStateMachineTimeout()
+        return $factory->createOrderStateMachineTimeout()
             ->checkTimeouts($orderStateMachine);
     }
 
@@ -506,6 +506,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderStateMachineFinder()
             ->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
+    {
+        return $this->getFactory()
+            ->createManualOrderReader()
+            ->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
 
     /**
