@@ -21,6 +21,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
      */
@@ -103,7 +105,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             $checkoutErrorTransfers = new ArrayObject();
             $checkoutErrorTransfers->append(
-                (new QuoteErrorTransfer())->setMessage('checkout.step.error.title')
+                (new QuoteErrorTransfer())->setMessage(static::MESSAGE_CART_REQUIRE_APPROVAL)
             );
             $checkoutResponseTransfer->setErrors($checkoutErrorTransfers);
         }

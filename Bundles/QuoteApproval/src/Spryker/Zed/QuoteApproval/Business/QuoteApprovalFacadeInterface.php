@@ -121,4 +121,19 @@ interface QuoteApprovalFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function sanitizeQuoteApproval(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns false if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
+     * - Returns false if executing of PlaceOrderPermissionPlugin permission returns true.
+     * - Returns false if quote approval status is `approved`.
+     * - Returns true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool;
 }
