@@ -19,7 +19,7 @@ class ShipmentMethodsMapper implements ShipmentMethodsMapperInterface
      */
     public function mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
         array $shipmentMethodTransfers,
-        array $restShipmentMethodsAttributesTransfers
+        array $restShipmentMethodsAttributesTransfers = []
     ): array {
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
             $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();

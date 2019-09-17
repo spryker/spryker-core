@@ -75,47 +75,60 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
                 continue;
             }
 
-            $restShipmentMethodAttributesTransfers = $this->getSortedRestShipmentMethodsAttributesTransfers(
+            $restShipmentMethodsAttributesTransfers = $this->mapRestShipmentMethodsAttributesTransfers(
                 $shipmentMethodsTransfer,
-                $currentStoreTransfer,
+                $currentStoreTransfer
+            );
+
+            $restShipmentMethodsAttributesTransfers = $this->sortRestShipmentMethodsAttributesTransfers(
+                $restShipmentMethodsAttributesTransfers,
                 $restRequest
             );
 
-            $this->addShipmentMethodResourceRelationships($restShipmentMethodAttributesTransfers, $resource);
+            $this->addShipmentMethodResourceRelationships($restShipmentMethodsAttributesTransfers, $resource);
         }
 
         return $resources;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     * @param ShipmentMethodsTransfer $shipmentMethodsTransfer
+     *
+     * @param StoreTransfer $storeTransfer
+     * @return RestShipmentMethodsAttributesTransfer[]
+     */
+    protected function mapRestShipmentMethodsAttributesTransfers(
+        ShipmentMethodsTransfer $shipmentMethodsTransfer,
+        StoreTransfer $storeTransfer
+    ): array {
+        $shipmentMethodTransfers = $shipmentMethodsTransfer->getMethods()->getArrayCopy();
+
+        $restShipmentMethodsAttributesTransfers = $this->shipmentMethodMapper
+            ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
+                $shipmentMethodTransfers
+            );
+
+        $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
+            $restShipmentMethodsAttributesTransfers,
+            $shipmentMethodTransfers,
+            $storeTransfer
+        );
+
+        return $restShipmentMethodAttributesTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
-    protected function getSortedRestShipmentMethodsAttributesTransfers(
-        ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        StoreTransfer $currentStoreTransfer,
+    protected function sortRestShipmentMethodsAttributesTransfers(
+        array $restShipmentMethodsAttributesTransfers,
         RestRequestInterface $restRequest
     ): array {
-        $restShipmentMethodAttributesTransfers = [];
-        $shipmentMethodTransfers = $shipmentMethodsTransfer->getMethods()->getArrayCopy();
-
-        $restShipmentMethodAttributesTransfers = $this->shipmentMethodMapper
-            ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-                $shipmentMethodTransfers,
-                $restShipmentMethodAttributesTransfers
-            );
-
-        $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
-            $restShipmentMethodAttributesTransfers,
-            $shipmentMethodTransfers,
-            $currentStoreTransfer
-        );
-
         return $this->shipmentMethodSorter
-            ->sortRestShipmentMethodsAttributesTransfers($restShipmentMethodAttributesTransfers, $restRequest);
+            ->sortRestShipmentMethodsAttributesTransfers($restShipmentMethodsAttributesTransfers, $restRequest);
     }
 
     /**
