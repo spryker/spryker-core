@@ -9,15 +9,12 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication;
 
 use Generated\Shared\Transfer\PriceProductScheduleListImportResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Exporter\PriceProductScheduleCsvExporterInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleListForm;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleListFormDataProvider;
-use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Extractor\PriceProductScheduleDataExtractor;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Extractor\PriceProductScheduleDataExtractorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleDateConstraint;
@@ -25,12 +22,21 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProductScheduleUniqueConstraint;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProdductScheduleDeleteForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleListForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleListFormDataProvider;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\DateTransformer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolver;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectToProductAbstract;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectToProductConcrete;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectToScheduleList;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
@@ -343,8 +349,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function createPriceProductScheduleListForm(
         PriceProductScheduleListFormDataProvider $dataProvider,
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
-    ): FormInterface
-    {
+    ): FormInterface {
         return $this->getFormFactory()->create(
             PriceProductScheduleListForm::class,
             $dataProvider->getData($priceProductScheduleListTransfer)
@@ -403,7 +408,8 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleDataExtractor(
             $this->getStoreFacade(),
-            $this->createPriceProductScheduleDataFormatter()
+            $this->createPriceProductScheduleDataFormatter(),
+            $this->createPriceProductScheduleRedirectStrategyResolver()
         );
     }
 
@@ -415,6 +421,42 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return new PriceProductScheduleDataFormatter(
             $this->getProductFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface
+     */
+    public function createPriceProductScheduleRedirectToProductAbstract(): PriceProductScheduleRedirectInterface
+    {
+        return new PriceProductScheduleRedirectToProductAbstract();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface
+     */
+    public function createPriceProductScheduleRedirectToProductConcrete(): PriceProductScheduleRedirectInterface
+    {
+        return new PriceProductScheduleRedirectToProductConcrete();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface
+     */
+    public function createPriceProductScheduleRedirectToScheduleList(): PriceProductScheduleRedirectInterface
+    {
+        return new PriceProductScheduleRedirectToScheduleList();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface
+     */
+    public function createPriceProductScheduleRedirectStrategyResolver(): PriceProductScheduleRedirectStrategyResolverInterface
+    {
+        return new PriceProductScheduleRedirectStrategyResolver([
+            PriceProductScheduleRedirectStrategyResolver::KEY_ABSTRACT_PRODUCT => $this->createPriceProductScheduleRedirectToProductAbstract(),
+            PriceProductScheduleRedirectStrategyResolver::KEY_CONCRETE_PRODUCT => $this->createPriceProductScheduleRedirectToProductConcrete(),
+            PriceProductScheduleRedirectStrategyResolver::KEY_SCHEDULE_LIST => $this->createPriceProductScheduleRedirectToScheduleList(),
+        ]);
     }
 
     /**

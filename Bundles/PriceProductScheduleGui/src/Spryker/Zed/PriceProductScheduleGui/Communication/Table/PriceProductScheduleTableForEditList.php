@@ -94,6 +94,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
         return $this->generateEditButton(
             Url::generate('/price-product-schedule-gui/edit', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
+                'id-price-product-schedule-list' => $item->getFkPriceProductScheduleList(),
             ]),
             'Edit'
         );

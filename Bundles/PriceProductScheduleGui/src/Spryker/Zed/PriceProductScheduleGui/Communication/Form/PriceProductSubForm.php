@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +23,8 @@ class PriceProductSubForm extends AbstractType
 {
     public const FIELD_PRICE_TYPE = 'priceType';
     public const FIELD_MONEY_VALUE = 'moneyValue';
+    public const FIELD_ABSTRACT_SKU = 'skuProductAbstract';
+    public const FIELD_CONCRETE_SKU = 'skuProduct';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -50,7 +53,9 @@ class PriceProductSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMoneyValue($builder, $options)
+        $this->addAbstractSku($builder)
+            ->addConcreteSku($builder)
+            ->addMoneyValue($builder, $options)
             ->addPriceType($builder, $options);
     }
 
@@ -84,6 +89,38 @@ class PriceProductSubForm extends AbstractType
             'data_class' => MoneyValueTransfer::class,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAbstractSku(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ABSTRACT_SKU, TextType::class, [
+            'label' => 'Abstract SKU',
+            'disabled' => true,
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addConcreteSku(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CONCRETE_SKU, TextType::class, [
+            'label' => 'Concrete SKU',
+            'disabled' => true,
+            'required' => false,
         ]);
 
         return $this;
