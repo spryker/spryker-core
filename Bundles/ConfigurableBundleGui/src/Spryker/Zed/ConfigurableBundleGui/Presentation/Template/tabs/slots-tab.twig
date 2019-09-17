@@ -1,0 +1,14 @@
+<div class="well">
+    {{ 'You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.' | trans }}
+</div>
+
+<div id="slot-table-wrapper">
+    {{ slotTable | raw }}
+</div>
+
+<hr/>
+
+<h4 id="slot-products-table-name"></h4>
+<div id="slot-products-table-wrapper" class="hidden">
+    {{ slotProductsTable | raw }}
+</div>

@@ -15,6 +15,23 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
 class ConfigurableBundleMapper
 {
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate $configurableBundleTemplateEntity
+     *
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate
+     */
+    public function mapConfigurableBundleTemplateTransferToEntity(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        SpyConfigurableBundleTemplate $configurableBundleTemplateEntity
+    ): SpyConfigurableBundleTemplate {
+        $configurableBundleTemplateEntity->fromArray(
+            $configurableBundleTemplateTransfer->toArray()
+        );
+
+        return $configurableBundleTemplateEntity;
+    }
+
+    /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *

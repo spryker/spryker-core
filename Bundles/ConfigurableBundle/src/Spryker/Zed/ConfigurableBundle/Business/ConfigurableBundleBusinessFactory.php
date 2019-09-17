@@ -7,10 +7,19 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriter;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriter;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -20,6 +29,34 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface
+     */
+    public function createConfigurableBundleTemplateWriter(): ConfigurableBundleTemplateWriterInterface
+    {
+        return new ConfigurableBundleTemplateWriter(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTemplateTranslationWriter(),
+            $this->createConfigurableBundleTemplateNameGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
+     */
+    public function createConfigurableBundleTemplateTranslationWriter(): ConfigurableBundleTemplateTranslationWriterInterface
+    {
+        return new ConfigurableBundleTemplateTranslationWriter($this->getGlossaryFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
+     */
+    public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
+    {
+        return new ConfigurableBundleTemplateReader($this->getRepository());
+    }
+
     /**
      * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
      */
@@ -32,10 +69,26 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface
+     */
+    public function createConfigurableBundleTemplateNameGenerator(): ConfigurableBundleTemplateNameGeneratorInterface
+    {
+        return new ConfigurableBundleTemplateNameGenerator($this->getUtilTextService());
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
+    public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): ConfigurableBundleToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

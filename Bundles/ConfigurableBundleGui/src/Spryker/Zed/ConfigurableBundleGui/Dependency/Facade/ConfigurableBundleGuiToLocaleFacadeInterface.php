@@ -13,4 +13,9 @@ interface ConfigurableBundleGuiToLocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection();
 }
