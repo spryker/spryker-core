@@ -75,8 +75,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStoragePublishListener())
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStorageUnpublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStoragePublishListener());
 
         return $this;
     }

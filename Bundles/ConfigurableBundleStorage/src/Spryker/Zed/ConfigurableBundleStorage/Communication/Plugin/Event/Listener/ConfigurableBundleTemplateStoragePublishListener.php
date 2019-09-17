@@ -19,7 +19,8 @@ class ConfigurableBundleTemplateStoragePublishListener extends AbstractPlugin im
 {
     /**
      * {@inheritdoc}
-     * - Publishes active configurable bundle template changes to Store.
+     * - Publishes active configurable bundle template changes to Storage.
+     * - Unpublish inactive configurable bundle templates Storage.
      *
      * @api
      *

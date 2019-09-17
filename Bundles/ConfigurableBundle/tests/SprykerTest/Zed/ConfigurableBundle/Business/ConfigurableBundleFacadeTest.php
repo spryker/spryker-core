@@ -202,7 +202,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testActivateConfigurableBundleTemplateActivatesTemplate(): void
+    public function testActivateConfigurableBundleTemplateByIdActivatesTemplate(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createDeactivatedConfigurableBundleTemplate();
@@ -210,7 +210,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->activateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->activateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         // Assert
         $updatedConfigurableBundleTemplateTransfer = $this->tester
@@ -223,7 +223,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeactivateConfigurableBundleTemplateDeactivatesTemplate(): void
+    public function testDeactivateConfigurableBundleTemplateByIdDeactivatesTemplate(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
@@ -231,7 +231,7 @@ class ConfigurableBundleFacadeTest extends Unit
         // Act
         $this->tester
             ->getFacade()
-            ->deactivateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->deactivateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         // Assert
         $updatedConfigurableBundleTemplateTransfer = $this->tester

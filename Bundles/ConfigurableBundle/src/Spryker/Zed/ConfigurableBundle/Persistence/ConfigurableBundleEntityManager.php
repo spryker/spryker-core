@@ -97,7 +97,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
      *
      * @return void
      */
-    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
@@ -116,7 +116,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
      *
      * @return void
      */
-    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleTemplateQuery()

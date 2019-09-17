@@ -45,9 +45,7 @@ class ConfigurableBundleStorageUnpublisher implements ConfigurableBundleStorageU
         $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleTemplateIds);
 
         foreach ($configurableBundleTemplateStorageEntityMap as $idConfigurableBundleTemplate => $configurableBundleTemplateStorageEntity) {
-            $configurableBundleTemplateEntity = $configurableBundleTemplateEntityMap[$idConfigurableBundleTemplate] ?? null;
-
-            if ($configurableBundleTemplateEntity && $configurableBundleTemplateEntity->isActive()) {
+            if (isset($configurableBundleTemplateEntityMap[$idConfigurableBundleTemplate])) {
                 continue;
             }
 

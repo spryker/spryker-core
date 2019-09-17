@@ -50,13 +50,15 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
         $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleTemplateIds);
 
         foreach ($configurableBundleTemplateEntityMap as $configurableBundleTemplateEntity) {
-            if (!$configurableBundleTemplateEntity->isActive()) {
-                continue;
-            }
-
             $idConfigurableBundleTemplate = $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate();
             $configurableBundleTemplateStorageEntity = $configurableBundleTemplateStorageEntityMap[$idConfigurableBundleTemplate]
                 ?? new SpyConfigurableBundleTemplateStorage();
+
+            if (isset($configurableBundleTemplateStorageEntityMap[$idConfigurableBundleTemplate]) && !$configurableBundleTemplateEntity->isActive()) {
+                $configurableBundleTemplateStorageEntity->delete();
+
+                continue;
+            }
 
             $configurableBundleTemplateStorageEntity = $this->mapConfigurableBundleTemplateEntityToConfigurableBundleTemplateStorageEntity(
                 $configurableBundleTemplateEntity,

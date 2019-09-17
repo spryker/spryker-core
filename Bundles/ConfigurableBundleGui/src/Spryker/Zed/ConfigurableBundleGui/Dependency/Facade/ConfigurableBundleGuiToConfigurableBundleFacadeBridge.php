@@ -30,9 +30,9 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
      *
      * @return void
      */
-    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
-        $this->configurableBundleFacade->deactivateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        $this->configurableBundleFacade->deactivateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 
     /**
@@ -40,9 +40,9 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
      *
      * @return void
      */
-    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
-        $this->configurableBundleFacade->activateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        $this->configurableBundleFacade->activateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 
     /**

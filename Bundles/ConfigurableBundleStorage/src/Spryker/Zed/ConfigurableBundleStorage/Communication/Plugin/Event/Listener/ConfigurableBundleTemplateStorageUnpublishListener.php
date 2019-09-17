@@ -19,7 +19,7 @@ class ConfigurableBundleTemplateStorageUnpublishListener extends AbstractPlugin 
 {
     /**
      * {@inheritdoc}
-     * - Unpublishes deactivated and removed configurable bundle templates from Storage.
+     * - Unpublishes removed configurable bundle templates from Storage.
      *
      * @api
      *

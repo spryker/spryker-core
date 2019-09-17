@@ -23,7 +23,7 @@ interface ConfigurableBundleStorageFacadeInterface
 
     /**
      * Specification:
-     * - Unpublishes deactivated and removed configurable bundle templates from the Storage.
+     * - Unpublishes removed configurable bundle templates from the Storage.
      *
      * @api
      *

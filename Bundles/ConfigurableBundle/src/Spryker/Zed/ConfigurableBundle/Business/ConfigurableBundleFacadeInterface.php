@@ -93,7 +93,7 @@ interface ConfigurableBundleFacadeInterface
      *
      * @return void
      */
-    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
 
     /**
      * Specification:
@@ -105,5 +105,5 @@ interface ConfigurableBundleFacadeInterface
      *
      * @return void
      */
-    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
 }

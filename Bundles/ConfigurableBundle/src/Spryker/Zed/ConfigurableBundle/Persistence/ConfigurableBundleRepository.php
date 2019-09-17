@@ -46,6 +46,10 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
      */
     public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuids): array
     {
+        if (empty($allowedTemplateUuids)) {
+            return [];
+        }
+        
         return $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
             ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])

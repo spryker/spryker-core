@@ -271,7 +271,7 @@ class TemplateController extends AbstractController
 
         $this->getFactory()
             ->getConfigurableBundleFacade()
-            ->deactivateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->deactivateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         $this->addSuccessMessage(static::MESSAGE_TEMPLATE_DEACTIVATED, [
             static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
@@ -307,7 +307,7 @@ class TemplateController extends AbstractController
 
         $this->getFactory()
             ->getConfigurableBundleFacade()
-            ->activateConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+            ->activateConfigurableBundleTemplateById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         $this->addSuccessMessage(static::MESSAGE_TEMPLATE_ACTIVATED, [
             static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()

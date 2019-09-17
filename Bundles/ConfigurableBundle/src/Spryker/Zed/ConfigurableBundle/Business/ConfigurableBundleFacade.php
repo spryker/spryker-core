@@ -110,11 +110,11 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @return void
      */
-    public function activateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
-            ->activateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+            ->activateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 
     /**
@@ -126,10 +126,10 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @return void
      */
-    public function deactivateConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
-            ->deactivateConfigurableBundleTemplate($idConfigurableBundleTemplate);
+            ->deactivateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 }
