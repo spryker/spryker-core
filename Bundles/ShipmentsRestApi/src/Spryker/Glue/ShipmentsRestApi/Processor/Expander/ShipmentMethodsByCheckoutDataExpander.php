@@ -92,10 +92,10 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     }
 
     /**
-     * @param ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @param StoreTransfer $storeTransfer
-     * @return RestShipmentMethodsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
     protected function mapRestShipmentMethodsAttributesTransfers(
         ShipmentMethodsTransfer $shipmentMethodsTransfer,
@@ -143,9 +143,9 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     ): void {
         foreach ($restShipmentMethodAttributesTransfers as $idShipmentMethod => $restShipmentMethodAttributesTransfer) {
             $shipmentMethodRestResource = $this->shipmentMethodRestResponseBuilder->createShipmentMethodRestResource(
-                    (string)$idShipmentMethod,
-                    $restShipmentMethodAttributesTransfer
-                );
+                (string)$idShipmentMethod,
+                $restShipmentMethodAttributesTransfer
+            );
 
             $resource->addRelationship($shipmentMethodRestResource);
         }
@@ -166,11 +166,11 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
         foreach ($restShipmentMethodsAttributesTransfers as $idShipmentMethod => $restShipmentMethodsAttributesTransfer) {
             foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
                 $restShipmentMethodsAttributesTransfer = $this->setPricesToRestShipmentMethodsAttributesTransfer(
-                   $idShipmentMethod,
-                   $shipmentMethodTransfer,
-                   $storeTransfer,
-                   $restShipmentMethodsAttributesTransfer
-               );
+                    $idShipmentMethod,
+                    $shipmentMethodTransfer,
+                    $storeTransfer,
+                    $restShipmentMethodsAttributesTransfer
+                );
             }
         }
 
@@ -179,11 +179,11 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
 
     /**
      * @param int $idShipmentMethod
-     * @param ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param StoreTransfer $storeTransfer
-     * @param RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
      *
-     * @return RestShipmentMethodsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer
      */
     protected function setPricesToRestShipmentMethodsAttributesTransfer(
         int $idShipmentMethod,
@@ -203,10 +203,10 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     }
 
     /**
-     * @param ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return MoneyValueTransfer|null
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
     protected function findMoneyValueTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,

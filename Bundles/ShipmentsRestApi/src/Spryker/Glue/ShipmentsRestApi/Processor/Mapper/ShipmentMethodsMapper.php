@@ -13,7 +13,7 @@ class ShipmentMethodsMapper implements ShipmentMethodsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */

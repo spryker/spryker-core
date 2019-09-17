@@ -190,7 +190,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer $restShipmentMethodTransfer
-     * @param StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Generated\Shared\Transfer\RestShipmentMethodTransfer
      */
     protected function mapShipmentMethodTransferToRestShipmentMethodTransfer(
@@ -238,10 +239,10 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @param ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return MoneyValueTransfer|null
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
     protected function findMoneyValueTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,

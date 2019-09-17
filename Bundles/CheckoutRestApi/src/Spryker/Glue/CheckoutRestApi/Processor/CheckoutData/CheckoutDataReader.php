@@ -144,7 +144,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
-     * @param RestCheckoutDataTransfer $restCheckoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */

@@ -114,7 +114,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param ShipmentMethodsTransfer $shipmentMethodsTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */

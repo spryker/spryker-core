@@ -7,13 +7,11 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
-
 interface ShipmentMethodsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
