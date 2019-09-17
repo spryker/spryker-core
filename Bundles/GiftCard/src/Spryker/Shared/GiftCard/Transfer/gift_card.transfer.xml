@@ -56,4 +56,9 @@
         <property name="concreteConfiguration" type="GiftCardProductConfiguration" />
     </transfer>
 
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item" />
+        <property name="availableShipmentMethods" type="ShipmentMethods" />
+    </transfer>
+
 </transfers>

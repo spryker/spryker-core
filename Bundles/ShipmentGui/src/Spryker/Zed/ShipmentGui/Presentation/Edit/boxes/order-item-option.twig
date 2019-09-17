@@ -1,0 +1,23 @@
+
+{% for productOption in orderItem.productOptions %}
+    <tr class="addition-row">
+        <td></td>
+        <td>+ <span class="label">{{ 'Option' | trans }}</span></td>
+        <td>
+            <div>
+                <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">{{ productOption.value }}</a>
+            </div>
+            <div class="sku">
+              {{ 'Sku' | trans }}: {{ productOption.sku }}
+            </div>
+        </td>
+        <td>
+
+            <div>
+                {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: productOption.sumPrice, priceToPay: productOption.sumPrice - productOption.sumDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+            </div>
+            <div class="tax-info">incl. {{ productOption.taxRate|default(0) }} % tax </div>
+        </td>
+        <td colspan="4"></td>
+    </tr>
+{% endfor %}
