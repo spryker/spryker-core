@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -14,4 +15,32 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ConfigurableBundleRepository extends AbstractRepository implements ConfigurableBundleRepositoryInterface
 {
+    /**
+     * @param int $idProductList
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     */
+    public function findProductListUsageAmongSlots(int $idProductList): array
+    {
+        $configurableBundleTemplateSlotEntityCollection = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->joinWithSpyConfigurableBundleTemplate()
+            ->filterByFkProductList($idProductList);
+
+        if (!$configurableBundleTemplateSlotEntityCollection->count()) {
+            return [];
+        }
+
+        $configurableBundleTemplateSlotTransferCollection = [];
+        $configurableBundleMapper = $this->getFactory()->createConfigurableBundleMapper();
+
+        foreach ($configurableBundleTemplateSlotEntityCollection as $configurableBundleTemplateSlotEntity) {
+            $configurableBundleTemplateSlotTransferCollection[] = $configurableBundleMapper->mapConfigurableBundleTemplateSlotEntityToTransfer(
+                $configurableBundleTemplateSlotEntity,
+                new ConfigurableBundleTemplateSlotTransfer()
+            );
+        }
+
+        return $configurableBundleTemplateSlotTransferCollection;
+    }
 }

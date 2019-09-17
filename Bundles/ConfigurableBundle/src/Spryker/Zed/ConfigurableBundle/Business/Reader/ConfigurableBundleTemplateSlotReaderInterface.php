@@ -5,22 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business;
+namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
-interface ConfigurableBundleFacadeInterface
+interface ConfigurableBundleTemplateSlotReaderInterface
 {
     /**
-     * Specification:
-     * - Finds configurable bundle template slots which use given product list by ProductListTransfer::idProductList.
-     * - Returns ProductListResponseTransfer with check results.
-     * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
-     * - ProductListResponseTransfer::messages contains usage details.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer

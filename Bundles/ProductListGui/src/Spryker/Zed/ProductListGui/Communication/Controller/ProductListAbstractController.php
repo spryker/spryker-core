@@ -93,6 +93,7 @@ class ProductListAbstractController extends AbstractController
 
                 continue;
             }
+
             $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
         }
     }

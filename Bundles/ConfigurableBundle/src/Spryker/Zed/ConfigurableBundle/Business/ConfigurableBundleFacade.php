@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ProductListResponseTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,4 +18,19 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBundleFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotReader()
+            ->checkProductListUsageAmongSlots($productListTransfer);
+    }
 }

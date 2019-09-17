@@ -31,3 +31,4 @@ Selected,Ausgewählt
 SKU,SKU
 Type,Typ
 Whitelist,Whitelist
+"Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","DE Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot)."
