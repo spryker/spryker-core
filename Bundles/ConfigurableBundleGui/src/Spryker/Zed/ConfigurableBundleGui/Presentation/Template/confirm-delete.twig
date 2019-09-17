@@ -14,7 +14,7 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            <p>{{ 'Are you sure you want to delete template' | trans }}: <b>{{ configurableBundleTemplateTransfer.name | trans }}</b>?</p>
+            <p>{{ 'Are you sure you want to delete template' | trans }}: <b>{{ configurableBundleTemplateTransfer.translations[0].name | trans }}</b>?</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
                 <a href="{{ url(

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -353,6 +354,15 @@ class TemplateController extends AbstractController
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
+
+        $configurableBundleTemplateTransfer->addTranslation(
+            (new ConfigurableBundleTemplateTranslationTransfer())
+                ->setName(
+                    $this->getFactory()
+                        ->getGlossaryFacade()
+                        ->translate($configurableBundleTemplateTransfer->getName())
+                )
+        );
 
         return [
             'configurableBundleTemplateTransfer' => $configurableBundleTemplateTransfer,
