@@ -32,6 +32,8 @@
                     <span><b>{{ 'Imported by on the' | trans }}</b></span><br>
                     {% if(priceProductScheduleList.user) %}
                         <span>{{ priceProductScheduleList.user.firstName ~ ' ' ~ priceProductScheduleList.user.firstName }}</span>
+                    {% else %}
+                        <span>{{ 'Via data import' | trans }}</span>
                     {% endif %}
                     <span>{{ priceProductScheduleList.createdAt | date('Y-m-d H:i:s') }}</span>
                 </div>
