@@ -44,18 +44,12 @@ class RemovePriceProductScheduleListTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\Currency\Business\CurrencyFacadeInterface
-     */
-    protected $currencyFacade;
-
-    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
         $this->tester->ensureDatabaseTableIsEmpty();
-        $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
     }
 
     /**
@@ -68,8 +62,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->tester->haveStore();
 
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
@@ -174,8 +167,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->tester->haveStore();
 
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
@@ -282,8 +274,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->tester->haveStore();
 
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
@@ -390,8 +381,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->tester->haveStore();
 
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
@@ -496,8 +486,7 @@ class RemovePriceProductScheduleListTest extends Unit
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
         $storeTransfer = $this->tester->haveStore();
 
-        $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),

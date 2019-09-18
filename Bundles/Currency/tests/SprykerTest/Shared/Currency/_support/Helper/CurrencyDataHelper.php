@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\Currency\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -27,6 +28,20 @@ class CurrencyDataHelper extends Module
          $currencyTransfer = (new CurrencyBuilder($override))->build();
 
          return $this->getCurrencyFacade()->createCurrency($currencyTransfer);
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    public function haveCurrencyTransfer(array $override = []): CurrencyTransfer
+    {
+        $currencyFacade = $this->getCurrencyFacade();
+        $currencyTransfer = (new CurrencyBuilder($override))->build();
+        $idCurrency = $currencyFacade->createCurrency($currencyTransfer);
+
+        return $currencyFacade->getByIdCurrency($idCurrency);
     }
 
     /**
