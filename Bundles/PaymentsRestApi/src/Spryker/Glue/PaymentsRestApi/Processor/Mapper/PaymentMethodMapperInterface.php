@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
 
-interface PaymentMethodsMapperInterface
+interface PaymentMethodMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers

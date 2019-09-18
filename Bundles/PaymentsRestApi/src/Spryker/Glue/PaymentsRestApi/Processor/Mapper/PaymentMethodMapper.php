@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
-class PaymentMethodsMapper implements PaymentMethodsMapperInterface
+class PaymentMethodMapper implements PaymentMethodMapperInterface
 {
     /**
      * @var \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig
@@ -77,16 +77,6 @@ class PaymentMethodsMapper implements PaymentMethodsMapperInterface
         return (new RestPaymentMethodsAttributesTransfer())
             ->setName($methodName)
             ->setPaymentProviderName($paymentProviderTransfer->getName())
-            ->setPriority($this->findPaymentMethodPriorityInConfig($methodName));
-    }
-
-    /**
-     * @param string $paymentMethodName
-     *
-     * @return int|null
-     */
-    protected function findPaymentMethodPriorityInConfig(string $paymentMethodName): ?int
-    {
-        return $this->config->getPaymentMethodPriority()[$paymentMethodName] ?? null;
+            ->setPriority($this->config->getPaymentMethodPriority()[$methodName] ?? null);
     }
 }

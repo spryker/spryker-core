@@ -19,7 +19,7 @@ class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlug
 {
     /**
      * {@inheritdoc}
-     * - Adds payment-methods resource as relationship by checkoutData.
+     * - Adds payment-methods resource as relationship in case RestCheckoutDataTransfer is provided as payload.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlug
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createPaymentMethodsByCheckoutDataExpander()
+            ->createPaymentMethodByCheckoutDataExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

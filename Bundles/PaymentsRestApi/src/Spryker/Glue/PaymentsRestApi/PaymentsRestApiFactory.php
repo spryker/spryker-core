@@ -8,10 +8,10 @@
 namespace Spryker\Glue\PaymentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodsByCheckoutDataExpander;
-use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodsByCheckoutDataExpanderInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapper;
-use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpander;
+use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpanderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapper;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
 use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilder;
 use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface;
 
@@ -21,22 +21,22 @@ use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRes
 class PaymentsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodsByCheckoutDataExpanderInterface
+     * @return \Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpanderInterface
      */
-    public function createPaymentMethodsByCheckoutDataExpander(): PaymentMethodsByCheckoutDataExpanderInterface
+    public function createPaymentMethodByCheckoutDataExpander(): PaymentMethodByCheckoutDataExpanderInterface
     {
-        return new PaymentMethodsByCheckoutDataExpander(
+        return new PaymentMethodByCheckoutDataExpander(
             $this->createPaymentMethodsRestResponseBuilder(),
             $this->createPaymentMethodsMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodsMapperInterface
+     * @return \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface
      */
-    public function createPaymentMethodsMapper(): PaymentMethodsMapperInterface
+    public function createPaymentMethodsMapper(): PaymentMethodMapperInterface
     {
-        return new PaymentMethodsMapper($this->getConfig());
+        return new PaymentMethodMapper($this->getConfig());
     }
 
     /**
