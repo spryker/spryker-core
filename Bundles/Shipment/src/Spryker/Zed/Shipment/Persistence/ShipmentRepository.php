@@ -43,34 +43,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      */
     public function getShipmentMethodPricesByIdShipmentMethod(int $idShipmentMethod): ArrayObject
     {
-        $shipmentMethodPriceEntities = $this->getShipmentMethodPriceEntitiesByIdShipmentMethod($idShipmentMethod);
+        $shipmentMethodPriceEntities = $this->getFactory()
+            ->createShipmentMethodPriceQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->find()
+            ->getData();
 
         return $this->getFactory()
             ->createShipmentMethodPricesMapper()
             ->mapShipmentMethodPriceEntitiesToMoneyValueTransfers($shipmentMethodPriceEntities);
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[]
-     */
-    protected function getShipmentMethodPriceEntitiesByIdShipmentMethod(int $idShipmentMethod): array
-    {
-        return $this->queryMethodPricesByIdShipmentMethod($idShipmentMethod)
-            ->find()
-            ->getData();
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
-     */
-    protected function queryMethodPricesByIdShipmentMethod(int $idShipmentMethod): SpyShipmentMethodPriceQuery
-    {
-        return $this->getFactory()
-            ->createShipmentMethodPriceQuery()
-            ->filterByFkShipmentMethod($idShipmentMethod);
     }
 }

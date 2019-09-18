@@ -39,15 +39,18 @@ class ShipmentMethodPricesMapper implements ShipmentMethodPricesMapperInterface
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $shipmentMethodPriceEntities
+     * @param MoneyValueTransfer[] $moneyValueTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
-    public function mapShipmentMethodPriceEntitiesToMoneyValueTransfers(array $shipmentMethodPriceEntities): ArrayObject
-    {
-        $shipmentMethodMoneyValueTransferCollection = new ArrayObject();
+    public function mapShipmentMethodPriceEntitiesToMoneyValueTransfers(
+        array $shipmentMethodPriceEntities,
+        array $moneyValueTransfers = []
+    ): ArrayObject {
+        $shipmentMethodMoneyValueTransferCollection = new ArrayObject($moneyValueTransfers);
         foreach ($shipmentMethodPriceEntities as $shipmentMethodPriceEntity) {
-            $shipmentMethodMoneyValueTransferCollection
-                ->append($this->mapShipmentMethodPriceEntityToMoneyValueTransfer($shipmentMethodPriceEntity));
+            $moneyValueTransfer = $this->mapShipmentMethodPriceEntityToMoneyValueTransfer($shipmentMethodPriceEntity, new MoneyValueTransfer());
+            $shipmentMethodMoneyValueTransferCollection->append($moneyValueTransfer);
         }
 
         return $shipmentMethodMoneyValueTransferCollection;
@@ -55,38 +58,20 @@ class ShipmentMethodPricesMapper implements ShipmentMethodPricesMapperInterface
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $shipmentMethodPriceEntity
+     * @param MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
     protected function mapShipmentMethodPriceEntityToMoneyValueTransfer(
-        SpyShipmentMethodPrice $shipmentMethodPriceEntity
+        SpyShipmentMethodPrice $shipmentMethodPriceEntity,
+        MoneyValueTransfer $moneyValueTransfer
     ): MoneyValueTransfer {
-        return (new MoneyValueTransfer())
+        return $moneyValueTransfer
             ->fromArray($shipmentMethodPriceEntity->toArray(), true)
             ->setIdEntity($shipmentMethodPriceEntity->getIdShipmentMethodPrice())
             ->setNetAmount($shipmentMethodPriceEntity->getDefaultNetPrice())
             ->setGrossAmount($shipmentMethodPriceEntity->getDefaultGrossPrice())
-            ->setCurrency($this->getCurrencyTransferByIdCurrency($shipmentMethodPriceEntity->getFkCurrency()))
-            ->setStore($this->getStoreTransferByIdStore($shipmentMethodPriceEntity->getFkStore()));
-    }
-
-    /**
-     * @param int $idCurrency
-     *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer
-     */
-    protected function getCurrencyTransferByIdCurrency(int $idCurrency): CurrencyTransfer
-    {
-        return $this->currencyFacade->getByIdCurrency($idCurrency);
-    }
-
-    /**
-     * @param int $idStore
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function getStoreTransferByIdStore(int $idStore): StoreTransfer
-    {
-        return $this->storeFacade->getStoreById($idStore);
+            ->setCurrency($this->currencyFacade->getByIdCurrency($shipmentMethodPriceEntity->getFkCurrency()))
+            ->setStore($this->storeFacade->getStoreById($shipmentMethodPriceEntity->getFkStore()));
     }
 }
