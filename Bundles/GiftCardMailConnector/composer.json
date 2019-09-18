@@ -9,7 +9,7 @@
     "spryker/gift-card": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/mail": "^4.0.0",
-    "spryker/sales": "^8.6.0 || ^10.0.0"
+    "spryker/sales": "^8.6.0 || ^10.0.0 || ^11.0.0"
   },
   "require-dev": {
     "spryker/checkout": "*",

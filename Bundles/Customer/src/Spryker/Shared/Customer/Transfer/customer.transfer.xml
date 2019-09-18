@@ -32,6 +32,7 @@
         <property name="iso2Code" type="string" />
         <property name="anonymizedAt" type="string" />
         <property name="country" type="Country" />
+        <property name="isAddressSavingSkipped" type="bool"/>
     </transfer>
 
     <transfer name="Addresses">
@@ -103,7 +104,16 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="isAddressSavingSkipped" type="bool" />
+        <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead." />
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
+        <property name="billingAddress" type="Address"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address" />
+    </transfer>
 </transfers>

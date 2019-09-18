@@ -13,6 +13,7 @@ use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development

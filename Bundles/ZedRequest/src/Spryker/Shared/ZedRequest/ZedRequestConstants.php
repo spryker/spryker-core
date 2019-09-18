@@ -18,7 +18,9 @@ interface ZedRequestConstants
     public const AUTH_ZED_ENABLED = 'AUTH_ZED_ENABLED';
     public const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
 
-    /** @deprecated Please use ZedRequestConstants::BASE_URL_SSL_ZED_API instead */
+    /**
+     * @deprecated Please use ZedRequestConstants::BASE_URL_SSL_ZED_API instead
+     */
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
 
     public const HOST_ZED_API = 'HOST_ZED_API';

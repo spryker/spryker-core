@@ -16,6 +16,7 @@ use Spryker\Shared\ContentStorage\ContentStorageConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ContentStorage

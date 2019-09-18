@@ -13,6 +13,7 @@ use Spryker\Shared\Twig\Cache\CacheLoaderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig

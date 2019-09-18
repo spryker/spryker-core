@@ -37,6 +37,7 @@ use SprykerTest\Service\FileSystem\Stub\FlysystemConfigStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group FileSystem

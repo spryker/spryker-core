@@ -15,6 +15,7 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Navigation

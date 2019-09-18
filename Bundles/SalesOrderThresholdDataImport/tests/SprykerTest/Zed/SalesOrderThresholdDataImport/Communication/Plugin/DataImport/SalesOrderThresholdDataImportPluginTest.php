@@ -19,6 +19,7 @@ use Spryker\Zed\SalesOrderThresholdDataImport\SalesOrderThresholdDataImportConfi
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesOrderThresholdDataImport

@@ -20,6 +20,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

@@ -18,6 +18,7 @@ use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnec
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
