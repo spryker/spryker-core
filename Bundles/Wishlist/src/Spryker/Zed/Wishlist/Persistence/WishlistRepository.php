@@ -29,6 +29,7 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->useSpyCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
+            ->leftJoinWithSpyWishlistItem()
             ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
                     sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_ID_WISHLIST_ITEM),
@@ -54,19 +55,19 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
      */
     public function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer
     {
-        $wishlistEntity = $this->getFactory()
+        $wishlistEntityCollection = $this->getFactory()
             ->createWishlistQuery()
             ->filterByFkCustomer($idCustomer)
             ->filterByUuid($uuidWishlist)
-            ->leftJoinSpyWishlistItem()
-            ->findOne();
+            ->leftJoinWithSpyWishlistItem()
+            ->find();
 
-        if (!$wishlistEntity) {
+        if (!$wishlistEntityCollection->count()) {
             return null;
         }
 
         return $this->getFactory()
             ->createWishlistMapper()
-            ->mapWishlistEntityToWishlistTransfer($wishlistEntity, new WishlistTransfer());
+            ->mapWishlistEntityToWishlistTransfer($wishlistEntityCollection->getFirst(), new WishlistTransfer());
     }
 }

@@ -145,7 +145,7 @@ class WishlistsRestApiFacadeTest extends Test
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertEquals(
             $wishlistResponseTransfer->getErrorIdentifier(),
-            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
         );
     }
 
@@ -323,7 +323,7 @@ class WishlistsRestApiFacadeTest extends Test
             (new WishlistItemRequestTransfer())
                 ->setUuidWishlist($wishlist->getUuid())
                 ->setIdCustomer($this->customer->getIdCustomer())
-                ->setSku($wishlistItem->getIdWishlistItem())
+                ->setSku($wishlistItem->getSku())
         );
 
         //Assert

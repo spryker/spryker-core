@@ -15,6 +15,16 @@ use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFac
 class WishlistUpdater implements WishlistUpdaterInterface
 {
     /**
+     * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
+     */
+    protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+
+    /**
+     * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT
+     */
+    protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
+
+    /**
      * @var \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface
      */
     protected $wishlistFacade;
@@ -51,6 +61,19 @@ class WishlistUpdater implements WishlistUpdaterInterface
         $wishlistResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
+            foreach ($wishlistResponseTransfer->getErrors() as $error) {
+                if ($error === static::ERROR_MESSAGE_NAME_ALREADY_EXISTS) {
+                    return $wishlistResponseTransfer->setErrorIdentifier(
+                        WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST
+                    );
+                }
+                if ($error === static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT) {
+                    return $wishlistResponseTransfer->setErrorIdentifier(
+                        WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
+                    );
+                }
+            }
+
             return $wishlistResponseTransfer->setErrorIdentifier(
                 WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
             );

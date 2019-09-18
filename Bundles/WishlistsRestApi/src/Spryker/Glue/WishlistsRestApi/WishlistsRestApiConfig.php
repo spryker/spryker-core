@@ -64,6 +64,11 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_WISHLIST_CANT_BE_UPDATED,
             ],
+            SharedWishlistRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU,
+            ],
         ];
     }
 }

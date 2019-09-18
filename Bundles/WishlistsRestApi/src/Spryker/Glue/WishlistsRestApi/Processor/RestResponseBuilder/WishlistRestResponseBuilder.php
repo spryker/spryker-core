@@ -201,15 +201,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         foreach ($wishlistCollectionTransfer->getWishlists() as $wishlistTransfer) {
-            $restWishlistsAttributesTransfer = $this->wishlistMapper->mapWishlistTransferToRestWishlistsAttributes($wishlistTransfer);
-
-            $wishlistResource = $this->restResourceBuilder->createRestResource(
-                WishlistsRestApiConfig::RESOURCE_WISHLISTS,
-                $wishlistTransfer->getUuid(),
-                $restWishlistsAttributesTransfer
-            );
-
-            $restResponse->addResource($wishlistResource);
+            $restResponse->addResource($this->createWishlistsResource($wishlistTransfer));
         }
 
         return $restResponse;

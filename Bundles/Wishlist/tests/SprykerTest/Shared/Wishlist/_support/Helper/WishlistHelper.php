@@ -27,8 +27,7 @@ class WishlistHelper extends Module
     public function haveEmptyWishlist(array $override): WishlistTransfer
     {
         $wishlistTransfer = (new WishlistBuilder($override))
-            ->build()
-            ->fromArray($override);
+            ->build();
 
         $createdWishlistTransfer = $this->getWishlistFacade()->createWishlist($wishlistTransfer);
 
@@ -42,9 +41,8 @@ class WishlistHelper extends Module
      */
     public function haveItemInWishlist(array $override): WishlistItemTransfer
     {
-        $wishlistItemTransfer = (new WishlistItemBuilder())
-            ->build()
-            ->fromArray($override);
+        $wishlistItemTransfer = (new WishlistItemBuilder($override))
+            ->build();
 
         $createdWishlistItemTransfer = $this->getWishlistFacade()->addItem($wishlistItemTransfer);
 

@@ -49,6 +49,10 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
 
+        if (!$this->isItemInWishlist($wishlistResponseTransfer->getWishlist(), $wishlistItemRequestTransfer->getSku())) {
+            return $this->createWishlistItemNotFoundErrorResponse();
+        }
+
         $wishlistItemTransfer = $this->createWishlistItemTransfer(
             $wishlistResponseTransfer->getWishlist(),
             $wishlistItemRequestTransfer
@@ -108,5 +112,36 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
             ->setIdCustomer($wishlistItemRequestTransfer->getIdCustomer());
 
         return $wishlistRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    protected function createWishlistItemNotFoundErrorResponse(): WishlistItemResponseTransfer
+    {
+        return (new WishlistItemResponseTransfer())
+            ->setIsSuccess(false)
+            ->setErrorIdentifier(WishlistsRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     * @param string $sku
+     *
+     * @return bool
+     */
+    protected function isItemInWishlist(WishlistTransfer $wishlistTransfer, string $sku): bool
+    {
+        if (!$wishlistTransfer->getWishlistItems()->count()) {
+            return false;
+        }
+
+        foreach ($wishlistTransfer->getWishlistItems() as $wishlistItemTransfer) {
+            if ($wishlistItemTransfer->getSku() === $sku) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
