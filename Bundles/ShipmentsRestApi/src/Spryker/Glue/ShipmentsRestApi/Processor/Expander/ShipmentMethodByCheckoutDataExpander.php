@@ -7,12 +7,10 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
@@ -70,14 +68,8 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
                 continue;
             }
 
-            $currentStoreTransfer = $restCheckoutDataTransfer->getCurrentStore();
-            if (!$currentStoreTransfer) {
-                continue;
-            }
-
             $restShipmentMethodsAttributesTransfers = $this->mapRestShipmentMethodsAttributesTransfers(
-                $shipmentMethodsTransfer,
-                $currentStoreTransfer
+                $shipmentMethodsTransfer
             );
 
             $restShipmentMethodsAttributesTransfers = $this->sortRestShipmentMethodsAttributesTransfers(
@@ -93,13 +85,11 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
      */
     protected function mapRestShipmentMethodsAttributesTransfers(
-        ShipmentMethodsTransfer $shipmentMethodsTransfer,
-        StoreTransfer $storeTransfer
+        ShipmentMethodsTransfer $shipmentMethodsTransfer
     ): array {
         $shipmentMethodTransfers = $shipmentMethodsTransfer->getMethods()->getArrayCopy();
 
@@ -110,8 +100,7 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
 
         $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
             $restShipmentMethodsAttributesTransfers,
-            $shipmentMethodTransfers,
-            $storeTransfer
+            $shipmentMethodTransfers
         );
 
         return $restShipmentMethodAttributesTransfers;
@@ -154,21 +143,18 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     /**
      * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer[] $restShipmentMethodsAttributesTransfers
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
     protected function addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
         array $restShipmentMethodsAttributesTransfers,
-        array $shipmentMethodTransfers,
-        StoreTransfer $storeTransfer
+        array $shipmentMethodTransfers
     ): array {
         foreach ($restShipmentMethodsAttributesTransfers as $idShipmentMethod => $restShipmentMethodsAttributesTransfer) {
             foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
                 $restShipmentMethodsAttributesTransfer = $this->setPricesToRestShipmentMethodsAttributesTransfer(
                     $idShipmentMethod,
                     $shipmentMethodTransfer,
-                    $storeTransfer,
                     $restShipmentMethodsAttributesTransfer
                 );
             }
@@ -180,7 +166,6 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     /**
      * @param int $idShipmentMethod
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer
@@ -188,56 +173,18 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     protected function setPricesToRestShipmentMethodsAttributesTransfer(
         int $idShipmentMethod,
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $storeTransfer,
         RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
     ): RestShipmentMethodsAttributesTransfer {
         if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
-            $moneyValueTransfer = $this->findMoneyValueTransfer($shipmentMethodTransfer, $storeTransfer);
-            if ($moneyValueTransfer) {
-                $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
-                $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
+            $moneyValueTransfer = current($shipmentMethodTransfer->getPrices());
+            if (!$moneyValueTransfer) {
+                return $restShipmentMethodsAttributesTransfer;
             }
+
+            $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
+            $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
         }
 
         return $restShipmentMethodsAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    protected function findMoneyValueTransfer(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $storeTransfer
-    ): ?MoneyValueTransfer {
-        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
-            if ($this->isMoneyValueTransferForCurrentStoreAndCurrency(
-                $moneyValueTransfer,
-                $storeTransfer,
-                $shipmentMethodTransfer
-            )) {
-                return $moneyValueTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return bool
-     */
-    protected function isMoneyValueTransferForCurrentStoreAndCurrency(
-        MoneyValueTransfer $moneyValueTransfer,
-        StoreTransfer $storeTransfer,
-        ShipmentMethodTransfer $shipmentMethodTransfer
-    ): bool {
-        return $moneyValueTransfer->getFkStore() === $storeTransfer->getIdStore()
-            && $moneyValueTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
     }
 }

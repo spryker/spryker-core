@@ -98,8 +98,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setSelectedShipmentMethods($selectedShipmentMethodsTransfer)
             ->setPaymentProviders($this->getPaymentProviders())
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
-            ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer))
-            ->setCurrentStore($quoteTransfer->getStore());
+            ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
                 ->setIsSuccess(true)

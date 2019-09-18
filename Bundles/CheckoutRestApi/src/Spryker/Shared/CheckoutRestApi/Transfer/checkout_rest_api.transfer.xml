@@ -9,7 +9,6 @@
         <property name="selectedShipmentMethods" type="ShipmentMethods" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
-        <property name="currentStore" type="Store"/>
     </transfer>
 
     <transfer name="RestCheckoutError">
