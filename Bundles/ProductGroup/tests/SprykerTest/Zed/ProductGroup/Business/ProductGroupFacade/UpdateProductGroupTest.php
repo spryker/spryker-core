@@ -14,6 +14,7 @@ use Spryker\Shared\ProductGroup\ProductGroupConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroup

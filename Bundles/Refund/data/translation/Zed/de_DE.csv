@@ -5,4 +5,5 @@ Comment,Kommentar
 "Refund date",Rückerstattungsdatum
 "Refund Id",Rückerstattungs-ID
 "Sales Order Id","Bestell ID"
-Time,time
+Time,Time
+"No returns for this order","Keine Rücksendungen für diese Bestellung"

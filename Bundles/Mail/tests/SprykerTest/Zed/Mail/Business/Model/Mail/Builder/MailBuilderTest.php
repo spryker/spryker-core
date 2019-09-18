@@ -20,6 +20,7 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Mail

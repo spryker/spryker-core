@@ -20,6 +20,7 @@ use SprykerTest\Zed\Kernel\Communication\Form\Fixtures\FooType;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

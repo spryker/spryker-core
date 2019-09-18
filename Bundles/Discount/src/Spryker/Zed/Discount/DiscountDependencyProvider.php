@@ -168,7 +168,6 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     *
      * This is additional filter applied to discountable items, the plugins are triggered after discount collectors run
      * this ensures that certain items are never picked by discount calculation and removed from DiscountableItem stack.
      *

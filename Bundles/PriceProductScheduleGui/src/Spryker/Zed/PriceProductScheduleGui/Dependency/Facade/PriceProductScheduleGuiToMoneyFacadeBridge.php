@@ -33,4 +33,24 @@ class PriceProductScheduleGuiToMoneyFacadeBridge implements PriceProductSchedule
     {
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToInteger($value)
+    {
+        return $this->moneyFacade->convertDecimalToInteger($value);
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertIntegerToDecimal($value)
+    {
+        return $this->moneyFacade->convertIntegerToDecimal($value);
+    }
 }

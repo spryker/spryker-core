@@ -16,6 +16,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductImage

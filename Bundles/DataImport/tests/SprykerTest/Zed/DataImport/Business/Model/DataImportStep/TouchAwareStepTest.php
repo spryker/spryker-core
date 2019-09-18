@@ -15,6 +15,7 @@ use Spryker\Zed\DataImport\Dependency\Facade\DataImportToTouchInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

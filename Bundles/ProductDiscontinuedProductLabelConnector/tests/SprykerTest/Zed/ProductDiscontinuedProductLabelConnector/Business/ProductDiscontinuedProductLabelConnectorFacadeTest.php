@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductDiscontinuedProductLabelConnector

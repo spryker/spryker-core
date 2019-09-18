@@ -14,6 +14,7 @@ use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PropelOrm

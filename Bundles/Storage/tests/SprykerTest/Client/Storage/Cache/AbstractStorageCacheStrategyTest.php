@@ -17,6 +17,7 @@ use SprykerTest\Client\Storage\Helper\CacheDataProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Storage
