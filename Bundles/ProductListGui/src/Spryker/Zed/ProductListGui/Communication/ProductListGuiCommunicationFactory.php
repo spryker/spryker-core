@@ -30,7 +30,8 @@ use Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTab
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AssignedProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AvailableProductConcreteRelationTabs;
-use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListAggregationTabs;
+use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListCreateAggregationTabs;
+use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListEditAggregationTabs;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeInterface;
@@ -86,11 +87,19 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListAggregationTabs
+     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListCreateAggregationTabs
      */
-    public function createProductListAggregationTabs(): TabsInterface
+    public function createProductListCreateAggregationTabs(): TabsInterface
     {
-        return new ProductListAggregationTabs();
+        return new ProductListCreateAggregationTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListEditAggregationTabs
+     */
+    public function createProductListEditAggregationTabs(): TabsInterface
+    {
+        return new ProductListEditAggregationTabs();
     }
 
     /**

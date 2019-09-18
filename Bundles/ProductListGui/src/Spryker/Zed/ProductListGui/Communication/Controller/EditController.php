@@ -93,6 +93,9 @@ class EditController extends ProductListAbstractController
         $idProductList = $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $data = $this->prepareTemplateVariables($productListAggregateForm);
         $data['idProductList'] = $idProductList;
+        $data['productListAggregationTabs'] = $this->getFactory()
+            ->createProductListEditAggregationTabs()
+            ->createView();
 
         return $data;
     }

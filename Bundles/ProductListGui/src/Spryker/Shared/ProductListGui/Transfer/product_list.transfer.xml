@@ -36,4 +36,14 @@
         <property name="defaultOptions" type="array" />
     </transfer>
 
+    <transfer name="UsedByTableData">
+        <property name="rows" type="UsedByTableRow[]" />
+    </transfer>
+
+    <transfer name="UsedByTableRow">
+        <property name="title" type="string" />
+        <property name="name" type="string" />
+        <property name="actions" type="Button[]" />
+    </transfer>
+
 </transfers>

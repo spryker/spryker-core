@@ -137,7 +137,6 @@ class ProductListAbstractController extends AbstractController
         $assignedProductConcreteTable = $this->getFactory()->createAssignedProductConcreteTable();
 
         return [
-            'productListAggregationTabs' => $this->getFactory()->createProductListAggregationTabs()->createView(),
             'aggregateForm' => $productListAggregateForm->createView(),
             'availableProductConcreteRelationTabs' => $availableProductConcreteRelationTabs->createView(),
             'assignedProductConcreteRelationTabs' => $assignedProductConcreteRelationTabs->createView(),
