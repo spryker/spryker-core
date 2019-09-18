@@ -22,6 +22,7 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

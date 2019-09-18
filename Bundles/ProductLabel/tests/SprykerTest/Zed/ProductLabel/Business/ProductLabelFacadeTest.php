@@ -21,6 +21,7 @@ use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductLabel

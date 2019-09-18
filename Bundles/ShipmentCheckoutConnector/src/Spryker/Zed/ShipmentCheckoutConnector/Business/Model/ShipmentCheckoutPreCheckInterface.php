@@ -7,16 +7,11 @@
 
 namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface as ShipmentCheckoutPreCheckWithMultipleShippingAddressInterface;
 
-interface ShipmentCheckoutPreCheckInterface
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface instead.
+ */
+interface ShipmentCheckoutPreCheckInterface extends ShipmentCheckoutPreCheckWithMultipleShippingAddressInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return bool
-     */
-    public function checkShipment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 }

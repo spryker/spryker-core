@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote

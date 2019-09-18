@@ -44,7 +44,6 @@ interface OmsFacadeInterface
     public function isOrderFlagged($idOrder, $flag);
 
     /**
-     *
      * Specification:
      *  - Checks if all order items is in state with givent flag
      *  - Returns true if all order items have flag in state
@@ -464,6 +463,19 @@ interface OmsFacadeInterface
      * @return string[]
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     *  - Reads all order manual events from persistence.
+     *  - Returns a list of grouped manual events.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
      * Specification:

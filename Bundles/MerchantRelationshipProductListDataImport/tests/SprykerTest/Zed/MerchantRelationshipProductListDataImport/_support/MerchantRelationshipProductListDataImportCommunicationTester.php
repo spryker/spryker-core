@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

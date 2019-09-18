@@ -19,6 +19,7 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Stock

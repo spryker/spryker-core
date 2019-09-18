@@ -14,6 +14,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle

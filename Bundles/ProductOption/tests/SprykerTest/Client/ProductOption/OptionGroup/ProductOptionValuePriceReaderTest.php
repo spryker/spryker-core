@@ -18,6 +18,7 @@ use Spryker\Shared\ProductOption\ProductOptionConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption

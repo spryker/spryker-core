@@ -13,6 +13,7 @@ use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptio
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group PersistentCartShare

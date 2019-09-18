@@ -14,6 +14,7 @@ use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Store

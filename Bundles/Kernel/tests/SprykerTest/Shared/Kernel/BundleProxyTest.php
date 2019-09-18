@@ -15,6 +15,7 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorWithoutMatcher;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel
