@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsSlot\Business;
 
+use Generated\Shared\Transfer\CmsSlotExternalDataTransfer;
 use Spryker\Client\CmsSlot\Exception\CmsSlotExternalDataProviderMissingException;
 
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
@@ -27,18 +28,20 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     /**
      * @param string[] $dataKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */
-    public function getCmsSlotExternalDataByKeys(array $dataKeys): array
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): CmsSlotExternalDataTransfer
     {
-        $externalData = [];
+        $cmsSlotExternalDataTransfer = new CmsSlotExternalDataTransfer();
 
         foreach ($dataKeys as $dataKey) {
-            // todo CR topic https://github.com/spryker/spryker/pull/5999#discussion_r323764729
-            $externalData[$dataKey] = $this->executeExternalDataProviderStrategyPlugins($dataKey);
+            $cmsSlotExternalDataTransfer->addValues(
+                $dataKey,
+                $this->executeExternalDataProviderStrategyPlugins($dataKey)
+            );
         }
 
-        return $externalData;
+        return $cmsSlotExternalDataTransfer;
     }
 
     /**
@@ -52,7 +55,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     {
         foreach ($this->externalDataProviderStrategyPlugins as $externalDataProviderStrategyPlugin) {
             if ($externalDataProviderStrategyPlugin->isApplicable($dataKey)) {
-                return $externalDataProviderStrategyPlugin->getDataForKey();
+                return $externalDataProviderStrategyPlugin->getValue();
             }
         }
 

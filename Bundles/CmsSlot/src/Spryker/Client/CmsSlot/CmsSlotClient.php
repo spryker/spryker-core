@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsSlot;
 
+use Generated\Shared\Transfer\CmsSlotExternalDataTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,9 +22,9 @@ class CmsSlotClient extends AbstractClient implements CmsSlotClientInterface
      *
      * @param string[] $dataKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */
-    public function getCmsSlotExternalDataByKeys(array $dataKeys): array
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): CmsSlotExternalDataTransfer
     {
         return $this->getFactory()->createCmsSlotDataProvider()->getCmsSlotExternalDataByKeys($dataKeys);
     }

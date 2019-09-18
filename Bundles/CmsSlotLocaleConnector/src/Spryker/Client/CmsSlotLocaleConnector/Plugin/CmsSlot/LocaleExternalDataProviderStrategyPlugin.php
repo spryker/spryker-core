@@ -40,7 +40,7 @@ class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getDataForKey(): string
+    public function getValue(): string
     {
         return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }
