@@ -46,4 +46,26 @@
         <property name="message" type="string" />
     </transfer>
 
+    <transfer name="RestShipmentMethodsAttributes">
+        <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="fkStore" type="int"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
+    </transfer>
+
 </transfers>

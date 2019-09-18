@@ -6,6 +6,7 @@
     <transfer name="RestCheckoutData">
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
+        <property name="selectedShipmentMethods" type="ShipmentMethods" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
     </transfer>
@@ -73,7 +74,8 @@
     <transfer name="RestCheckoutDataResponseAttributes">
         <property name="addresses" type="RestAddress[]" singular="address"/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider"/>
-        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod"/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Use `shipment-methods` relationship instead."/>
+        <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
     </transfer>
 
     <transfer name="RestPaymentProvider">
@@ -87,12 +89,15 @@
     </transfer>
 
     <transfer name="RestShipmentMethod">
-        <property name="carrierName" type="string"/>
         <property name="id" type="int"/>
         <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
         <property name="price" type="int"/>
-        <property name="taxRate" type="float"/>
+        <property name="taxRate" type="float" deprecated="Will be removed with next major release."/>
         <property name="deliveryTime" type="int"/>
+        <property name="defaultGrossPrice" type="int"/>
+        <property name="defaultNetPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="RestCheckoutResponseAttributes">
@@ -182,6 +187,36 @@
     <transfer name="CustomerResponse">
         <property name="hasCustomer" type="bool" />
         <property name="customerTransfer" type="Customer" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="fkStore" type="int"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string" />
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quote" type="Quote"/>
+        <property name="customer" type="Customer"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int" />
+        <property name="code" type="string" />
+        <property name="detail" type="string" />
     </transfer>
 
 </transfers>
