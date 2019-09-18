@@ -78,7 +78,9 @@ class PriceProductScheduleListRemover implements PriceProductScheduleListRemover
             $this->executeRemoveScheduleListTransactionLogic($priceProductScheduleListTransfer);
         });
 
-        return $priceProductScheduleListResponseTransfer->setIsSuccess(true);
+        return $priceProductScheduleListResponseTransfer
+            ->setIsSuccess(true)
+            ->setPriceProductScheduleList();
     }
 
     /**
@@ -114,7 +116,7 @@ class PriceProductScheduleListRemover implements PriceProductScheduleListRemover
                 ->getIdPriceProductSchedule();
 
             if ($priceProductScheduleTransfer->getIsCurrent()) {
-                $this->priceProductScheduleRemover->removeAndApplyPriceProductSchedule($priceProductScheduleTransfer->getIdPriceProductSchedule());
+                $this->priceProductScheduleRemover->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
 
                 return;
             }

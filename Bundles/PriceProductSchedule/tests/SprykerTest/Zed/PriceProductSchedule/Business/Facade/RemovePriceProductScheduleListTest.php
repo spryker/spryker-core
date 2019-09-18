@@ -49,11 +49,6 @@ class RemovePriceProductScheduleListTest extends Unit
     protected $currencyFacade;
 
     /**
-     * @var \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @return void
      */
     public function setUp(): void
@@ -61,7 +56,6 @@ class RemovePriceProductScheduleListTest extends Unit
         parent::setUp();
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->currencyFacade = $this->tester->getLocator()->currency()->facade();
-        $this->storeFacade = $this->tester->getLocator()->store()->facade();
     }
 
     /**
@@ -72,7 +66,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -178,7 +172,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -286,7 +280,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -394,7 +388,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -500,7 +494,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->tester->haveStore();
 
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'test1']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
@@ -666,7 +660,7 @@ class RemovePriceProductScheduleListTest extends Unit
             ])
             ->getMock();
         $storeFacade = new PriceProductScheduleToStoreFacadeBridge(
-            $this->storeFacade
+            $this->tester->getLocator()->store()->facade()
         );
         $priceProductFacade = new PriceProductScheduleToPriceProductFacadeBridge(
             $this->tester->getLocator()->priceProduct()->facade()
