@@ -119,18 +119,6 @@ interface QuoteStorageStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Updates quantity for each item.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
-
-    /**
-     * Specification:
      *  - Decreases quantity for given item.
      *  - Makes zed request.
      *  - Returns updated quote.

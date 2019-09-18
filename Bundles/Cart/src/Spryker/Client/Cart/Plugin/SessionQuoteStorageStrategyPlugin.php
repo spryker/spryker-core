@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\ItemsQuantityUpdateQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -22,7 +23,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\Cart\CartClientInterface getClient()
  * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
-class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
+class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, ItemsQuantityUpdateQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -213,9 +214,103 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      */
     public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
     {
-        // TODO:
+        $quoteTransfer = $this->getQuote();
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
 
-        return new QuoteResponseTransfer();
+        $cartChangeTransferForAdd = $this->prepareCartChangeTransferForAdd($cartChangeTransfer);
+
+        if ($cartChangeTransferForAdd->getItems()->count()) {
+            $quoteResponseTransfer = $this->getCartZedStub()->addToCart($cartChangeTransferForAdd);
+        }
+
+        $cartChangeTransferForRemoval = $this->prepareCartChangeTransferForRemoval($cartChangeTransfer);
+
+        if ($quoteResponseTransfer->getIsSuccessful() && $cartChangeTransferForRemoval->getItems()->count()) {
+            $quoteResponseTransfer = $this->getCartZedStub()->removeFromCart($cartChangeTransferForRemoval);
+        }
+
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function prepareCartChangeTransferForAdd(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        $cartChangeTransferForAdd = $this->createCartChangeTransfer();
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
+
+            if (!$quoteItemTransfer || $itemTransfer->getQuantity() === 0) {
+                continue;
+            }
+
+            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+
+            if ($delta === 0) {
+                continue;
+            }
+
+            $changeItemTransfer = clone $quoteItemTransfer;
+            $changeItemTransfer->setQuantity($delta);
+
+            if ($quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
+                $cartChangeTransferForAdd->addItem($changeItemTransfer);
+            }
+        }
+
+        return $this->getFactory()
+            ->createCartChangeRequestExpander()
+            ->addItemsRequestExpand($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function prepareCartChangeTransferForRemoval(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        $cartChangeTransferForRemoval = $this->createCartChangeTransfer();
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
+
+            if (!$quoteItemTransfer) {
+                continue;
+            }
+
+            if ($itemTransfer->getQuantity() === 0) {
+                $cartChangeTransferForRemoval->addItem($quoteItemTransfer);
+                continue;
+            }
+
+            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+
+            if ($delta === 0) {
+                continue;
+            }
+
+            $changeItemTransfer = clone $quoteItemTransfer;
+            $changeItemTransfer->setQuantity($delta);
+
+            if ($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
+                $cartChangeTransferForRemoval->addItem($changeItemTransfer);
+            }
+        }
+
+        return $this->getFactory()
+            ->createCartChangeRequestExpander()
+            ->removeItemRequestExpand($cartChangeTransferForRemoval);
     }
 
     /**

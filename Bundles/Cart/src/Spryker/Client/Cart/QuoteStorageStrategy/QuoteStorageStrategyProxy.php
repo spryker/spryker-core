@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
+use Spryker\Client\CartExtension\Dependency\Plugin\ItemsQuantityUpdateQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
@@ -156,6 +157,8 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
@@ -164,6 +167,12 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             $this->addPermissionFailedMessage();
 
             return $this->createNotSuccessfulQuoteResponseTransfer();
+        }
+
+        if (!$this->quoteStorageStrategy instanceof ItemsQuantityUpdateQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement ItemsQuantityUpdateQuoteStorageStrategyPluginInterface in order to use `updateQuantity` functionality.'
+            );
         }
 
         return $this->quoteStorageStrategy->updateQuantity($cartChangeTransfer);

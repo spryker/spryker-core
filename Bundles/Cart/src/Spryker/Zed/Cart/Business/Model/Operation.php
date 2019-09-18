@@ -184,14 +184,18 @@ class Operation implements OperationInterface
     {
         $cartChangeTransfer->requireQuote();
         $cartChangeTransfer->setOperation(CartConfig::OPERATION_ADD);
-        $quoteResponseTransfer = (new QuoteResponseTransfer())->setIsSuccessful(false);
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+
+        $originalQuoteTransfer = (new QuoteTransfer())
+            ->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->setQuoteTransfer($originalQuoteTransfer);
 
         if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
             $this->messengerFacade->addErrorMessage($this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED));
-            $quoteResponseTransfer = $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
 
-            return $quoteResponseTransfer->setQuoteTransfer($originalQuoteTransfer);
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
         $cartChangeTransfer = $this->normalizeCartChangeTransfer($cartChangeTransfer);
@@ -200,9 +204,7 @@ class Operation implements OperationInterface
         );
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
-            $quoteResponseTransfer = $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
-
-            return $quoteResponseTransfer->setQuoteTransfer($cartChangeTransfer->getQuote());
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
@@ -211,7 +213,7 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_ADD, $cartChangeTransfer, $quoteTransfer)) {
-            return $quoteResponseTransfer->setQuoteTransfer($originalQuoteTransfer);
+            return $quoteResponseTransfer;
         }
 
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::ADD_ITEMS_SUCCESS));
@@ -228,13 +230,28 @@ class Operation implements OperationInterface
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
+        return $this->removeFromCart($cartChangeTransfer)->getQuoteTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
         $cartChangeTransfer->requireQuote();
         $cartChangeTransfer->setOperation(CartConfig::OPERATION_REMOVE);
 
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+        $originalQuoteTransfer = (new QuoteTransfer())
+            ->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($originalQuoteTransfer)
+            ->setIsSuccessful(false);
 
         if (!$this->executeCartRemovalPreCheckPlugins($cartChangeTransfer)) {
-            return $cartChangeTransfer->getQuote();
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
@@ -243,12 +260,14 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->recalculate($quoteTransfer);
 
         if ($this->isTerminated(static::TERMINATION_EVENT_NAME_REMOVE, $cartChangeTransfer, $quoteTransfer)) {
-            return $originalQuoteTransfer;
+            return $quoteResponseTransfer;
         }
 
         $this->messengerFacade->addSuccessMessage($this->createMessengerMessageTransfer(self::REMOVE_ITEMS_SUCCESS));
 
-        return $quoteTransfer;
+        return $quoteResponseTransfer
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**

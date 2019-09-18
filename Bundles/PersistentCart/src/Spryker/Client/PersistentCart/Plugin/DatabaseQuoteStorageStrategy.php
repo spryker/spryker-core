@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
+use Spryker\Client\CartExtension\Dependency\Plugin\ItemsQuantityUpdateQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -26,7 +27,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
  */
-class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface
+class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, ItemsQuantityUpdateQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
