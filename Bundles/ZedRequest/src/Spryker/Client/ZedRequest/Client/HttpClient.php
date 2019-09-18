@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ZedRequest\Client;
 
+use RuntimeException;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
