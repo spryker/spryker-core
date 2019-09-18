@@ -9,7 +9,7 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 
-class ShipmentMethodsMapper implements ShipmentMethodsMapperInterface
+class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
@@ -22,10 +22,19 @@ class ShipmentMethodsMapper implements ShipmentMethodsMapperInterface
         array $restShipmentMethodsAttributesTransfers = []
     ): array {
         foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-            $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
             $restShipmentMethodsAttributesTransfer = (new RestShipmentMethodsAttributesTransfer())
                 ->fromArray($shipmentMethodTransfer->toArray(), true);
-            $restShipmentMethodsAttributesTransfers[$idShipmentMethod] = $restShipmentMethodsAttributesTransfer;
+
+            $moneyValueTransfer = current($shipmentMethodTransfer->getPrices());
+
+            if (!$moneyValueTransfer) {
+                continue;
+            }
+
+            $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
+            $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
+
+            $restShipmentMethodsAttributesTransfers[$shipmentMethodTransfer->getIdShipmentMethod()] = $restShipmentMethodsAttributesTransfer;
         }
 
         return $restShipmentMethodsAttributesTransfers;

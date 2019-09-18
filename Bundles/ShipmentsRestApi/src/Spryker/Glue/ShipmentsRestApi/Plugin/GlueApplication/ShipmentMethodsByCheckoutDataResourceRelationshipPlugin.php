@@ -31,7 +31,7 @@ class ShipmentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPl
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createShipmentMethodsByCheckoutDataExpander()
+            ->createShipmentMethodByCheckoutDataExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

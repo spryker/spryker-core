@@ -10,7 +10,6 @@
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
         <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
-        <property name="currentStore" type="Store"/>
     </transfer>
 
     <transfer name="RestCheckoutError">
@@ -213,6 +212,10 @@
         <property name="quote" type="Quote"/>
         <property name="customer" type="Customer"/>
         <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
