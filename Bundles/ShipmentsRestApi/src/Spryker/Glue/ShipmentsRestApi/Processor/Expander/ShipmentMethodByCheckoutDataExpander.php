@@ -15,19 +15,19 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
 
-class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckoutDataExpanderInterface
+class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDataExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface
      */
     protected $shipmentMethodRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface
+     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface
      */
     protected $shipmentMethodMapper;
 
@@ -37,13 +37,13 @@ class ShipmentMethodsByCheckoutDataExpander implements ShipmentMethodsByCheckout
     protected $shipmentMethodSorter;
 
     /**
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface $shipmentMethodRestResponseBuilder
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface $shipmentMethodMapper
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface $shipmentMethodRestResponseBuilder
+     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface $shipmentMethodMapper
      * @param \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface $shipmentMethodSorter
      */
     public function __construct(
-        ShipmentMethodsRestResponseBuilderInterface $shipmentMethodRestResponseBuilder,
-        ShipmentMethodsMapperInterface $shipmentMethodMapper,
+        ShipmentMethodRestResponseBuilderInterface $shipmentMethodRestResponseBuilder,
+        ShipmentMethodMapperInterface $shipmentMethodMapper,
         ShipmentMethodSorterInterface $shipmentMethodSorter
     ) {
         $this->shipmentMethodRestResponseBuilder = $shipmentMethodRestResponseBuilder;

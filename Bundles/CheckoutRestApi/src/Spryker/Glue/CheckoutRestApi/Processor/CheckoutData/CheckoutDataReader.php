@@ -129,10 +129,13 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer,
         RestCheckoutDataTransfer $restCheckoutDataTransfer
     ): RestResponseInterface {
-        $checkoutDataResource = $this->createRestResource(
-            $restCheckoutResponseAttributesTransfer,
-            $restCheckoutDataTransfer
+        $checkoutDataResource = $this->restResourceBuilder->createRestResource(
+            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
+            null,
+            $restCheckoutResponseAttributesTransfer
         );
+
+        $checkoutDataResource->setPayload($restCheckoutDataTransfer);
 
         $restResponse = $this->restResourceBuilder
             ->createRestResponse()
@@ -140,29 +143,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setStatus(Response::HTTP_OK);
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function createRestResource(
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer,
-        RestCheckoutDataTransfer $restCheckoutDataTransfer
-    ): RestResourceInterface {
-        $checkoutDataResource = $this->restResourceBuilder->createRestResource(
-            CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
-            null,
-            $restCheckoutResponseAttributesTransfer
-        );
-
-        if ($restCheckoutDataTransfer) {
-            $checkoutDataResource->setPayload($restCheckoutDataTransfer);
-        }
-
-        return $checkoutDataResource;
     }
 
     /**

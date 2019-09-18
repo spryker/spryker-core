@@ -162,7 +162,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @deprecated Will be removed in next major release
+     * @deprecated Will be removed in next major release.
      *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
@@ -173,8 +173,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $checkoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        $shipmentMethods = $checkoutDataTransfer->getShipmentMethods()->getMethods();
-        foreach ($shipmentMethods as $shipmentMethodTransfer) {
+        $shipmentMethodTransfers = $checkoutDataTransfer->getShipmentMethods()->getMethods();
+        foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
                 new RestShipmentMethodTransfer(),
@@ -224,8 +224,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        $shipmentMethods = $restCheckoutDataTransfer->getSelectedShipmentMethods()->getMethods();
-        foreach ($shipmentMethods as $shipmentMethodTransfer) {
+        $shipmentMethodTransfers = $restCheckoutDataTransfer->getSelectedShipmentMethods()->getMethods();
+        foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
             $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
                 $shipmentMethodTransfer,
                 new RestShipmentMethodTransfer(),
