@@ -19,7 +19,6 @@ use Spryker\Glue\CheckoutRestApi\Processor\Error\RestCheckoutErrorMapperInterfac
 use Spryker\Glue\CheckoutRestApi\Processor\RequestAttributesExpander\CheckoutRequestAttributesExpanderInterface;
 use Spryker\Glue\CheckoutRestApi\Processor\Validator\CheckoutRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;

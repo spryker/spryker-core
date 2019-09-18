@@ -67,6 +67,10 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
             ? $nextRestShipmentMethodAttributeTransfer->offsetGet($currentSort->getField()) : null;
 
         if ($currentSortedPropertyValue === $nextSortedPropertyValue) {
+            if (!isset($sorts[$index + 1])) {
+                return 0;
+            }
+
             return $this->compare(
                 $currentRestShipmentMethodAttributeTransfer,
                 $nextRestShipmentMethodAttributeTransfer,
