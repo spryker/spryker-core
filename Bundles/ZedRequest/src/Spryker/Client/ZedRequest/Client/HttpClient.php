@@ -31,14 +31,18 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     /**
      * @param string $baseUrl
      * @param string $rawToken
+     * @param bool $isAuthenticationEnabled Deprecated: Will be removed in the next major.
      * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      * @param array $tokenGenerationOptions
      * @param array $clientConfiguration
+     *
+     * @throws \RuntimeException
      */
     public function __construct(
         $baseUrl,
         $rawToken,
+        $isAuthenticationEnabled,
         UtilTextServiceInterface $utilTextService,
         UtilNetworkServiceInterface $utilNetworkService,
         array $tokenGenerationOptions = [],
@@ -49,6 +53,10 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
         $this->rawToken = $rawToken;
         $this->utilTextService = $utilTextService;
         $this->tokenGenerationOptions = $tokenGenerationOptions;
+
+        if ($isAuthenticationEnabled === false) {
+            throw new RuntimeException('Setting $isAuthenticationEnabled to false is not allowed for security reasons.');
+        }
     }
 
     /**
