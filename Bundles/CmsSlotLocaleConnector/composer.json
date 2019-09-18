@@ -1,28 +1,21 @@
 {
-  "name": "spryker/cms-slot",
+  "name": "spryker/cms-slot-locale-connector",
   "type": "library",
-  "description": "CmsSlot module",
+  "description": "CmsSlotLocaleConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/cms-slot-extension": "^0.1.0",
-    "spryker/kernel": "^3.37.0",
-    "spryker/symfony": "^3.3.0"
+    "spryker/kernel": "^3.30.0",
+    "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\CmsSlot\\Helper\\": "tests/SprykerTest/Zed/CmsSlot/_support/Helper/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

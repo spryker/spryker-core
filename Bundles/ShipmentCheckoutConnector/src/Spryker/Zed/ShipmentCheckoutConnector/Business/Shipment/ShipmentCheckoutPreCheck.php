@@ -88,7 +88,7 @@ class ShipmentCheckoutPreCheck implements ShipmentCheckoutPreCheckInterface
     protected function createCheckoutErrorTransfer(?ShipmentMethodTransfer $shipmentMethodTransfer): CheckoutErrorTransfer
     {
         return (new CheckoutErrorTransfer())
-            ->addParameters([
+            ->setParameters([
                 '%method_name%' => $shipmentMethodTransfer ? $shipmentMethodTransfer->getName() : 'null',
                 '%carrier_name%' => $shipmentMethodTransfer ? $shipmentMethodTransfer->getCarrierName() : 'null',
             ])
