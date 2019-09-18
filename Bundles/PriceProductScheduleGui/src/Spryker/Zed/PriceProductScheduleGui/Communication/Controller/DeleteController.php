@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider;
 use Symfony\Component\Form\FormInterface;
@@ -23,9 +23,11 @@ class DeleteController extends AbstractController
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE = 'id-price-product-schedule';
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
     protected const PARAM_ID_PRODUCT = 'id-product';
+    protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
     protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
     protected const PARAM_TEMPLATE_FORM = 'form';
     protected const SUCCESS_MESSAGE = 'Scheduled price was successfully removed';
+    protected const REDIRECT_URL_MAIN_PAGE = '/';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,9 +37,8 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         $priceProductScheduleTransfer = $this->createPriceProductScheduleTransfer($request);
-        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
-        $idProduct = $request->query->get(static::PARAM_ID_PRODUCT);
-        $redirectUrl = $this->makeRedirectUrl($idProductAbstract, $idProduct);
+
+        $redirectUrl = $this->makeRedirectUrl($request);
         $dataProvider = $this->getFactory()
             ->createPriceProductScheduleDeleteFormDataProvider();
         $form = $this->getFactory()
@@ -93,19 +94,25 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param int|null $idProduct
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
-    protected function makeRedirectUrl(int $idProductAbstract, ?int $idProduct): string
+    protected function makeRedirectUrl(Request $request): string
     {
-        $priceProductTransfer = (new PriceProductTransfer())
+        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
+        $idProduct = $request->query->get(static::PARAM_ID_PRODUCT);
+        $idPriceProductScheduleList = $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST);
+
+        $priceProductScheduleRedirectTransfer = (new PriceProductScheduleRedirectTransfer())
+            ->setIdPriceProductScheduleList($idPriceProductScheduleList)
             ->setIdProductAbstract($idProductAbstract)
             ->setIdProduct($idProduct);
 
-        return $this->getFactory()
-            ->createPriceProductScheduleDataFormatter()
-            ->formatRedirectUrl($priceProductTransfer);
+        $priceProductScheduleRedirectTransfer = $this->getFactory()
+            ->createPriceProductScheduleRedirectStrategyResolver()
+            ->resolve($priceProductScheduleRedirectTransfer);
+
+        return $priceProductScheduleRedirectTransfer->getRedirectUrl() ?? static::REDIRECT_URL_MAIN_PAGE;
     }
 }
