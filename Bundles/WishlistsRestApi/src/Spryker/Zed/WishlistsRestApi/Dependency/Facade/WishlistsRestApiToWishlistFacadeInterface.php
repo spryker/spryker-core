@@ -19,7 +19,7 @@ interface WishlistsRestApiToWishlistFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
+    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -27,13 +27,6 @@ interface WishlistsRestApiToWishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
     public function removeWishlist(WishlistTransfer $wishlistTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer

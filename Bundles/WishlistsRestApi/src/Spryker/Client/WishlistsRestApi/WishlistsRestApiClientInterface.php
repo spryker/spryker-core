@@ -16,10 +16,11 @@ interface WishlistsRestApiClientInterface
 {
     /**
      * Specification:
-     *  - Updates existing wishlist records in DB.
-     *  - Required properties: uuid, idCustomer and wishlist.
-     *  - Returns wishlist response with updated wishlist.
-     *  - If error occurred returns wishlist response with errors.
+     * - Makes Zed request.
+     * - Updates existing wishlist records in DB.
+     * - Required properties: uuid, idCustomer and wishlist.
+     * - Returns wishlist response with updated wishlist.
+     * - If error occurs, returns wishlist response with errors.
      *
      * @api
      *
@@ -31,8 +32,9 @@ interface WishlistsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Deletes existing wishlist from DB.
-     *  - If error occurred returns wishlist response with errors.
+     * - Makes Zed request.
+     * - Deletes existing wishlist from DB.
+     * - If error occurs, returns wishlist response with errors.
      *
      * @api
      *
@@ -44,7 +46,11 @@ interface WishlistsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Adds item to specified wishlist.
+     * - Makes Zed request.
+     * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
+     * - Looks up the wishlist by uuid.
+     * - In case wishlist is not found, return error.
+     * - Adds product to the wishlist found in the previous step.
      *
      * @api
      *
@@ -56,7 +62,11 @@ interface WishlistsRestApiClientInterface
 
     /**
      * Specification:
-     *  - Deletes item from specified wishlist.
+     * - Makes Zed request.
+     * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
+     * - Looks up the wishlist by uuid.
+     * - In case wishlist is not found, return error.
+     * - Removes product from the wishlist found in the previous step.
      *
      * @api
      *

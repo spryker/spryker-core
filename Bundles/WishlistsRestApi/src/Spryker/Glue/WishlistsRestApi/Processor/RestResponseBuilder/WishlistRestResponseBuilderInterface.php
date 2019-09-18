@@ -8,6 +8,7 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -37,6 +38,14 @@ interface WishlistRestResponseBuilderInterface
     public function createWishlistsRestResponse(?WishlistTransfer $wishlistTransfer = null): RestResponseInterface;
 
     /**
+     * @param string $idWishlist
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer|null $wishlistItemTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createWishlistItemsRestResponse(string $idWishlist, ?WishlistItemTransfer $wishlistItemTransfer = null): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
@@ -51,9 +60,48 @@ interface WishlistRestResponseBuilderInterface
     public function createWishlistsResource(WishlistTransfer $wishlistTransfer): RestResourceInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createWishlistCollectionResponse(WishlistCollectionTransfer $wishlistCollectionTransfer): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createEmptyResponse(): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $errorMessage
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createErrorResponseFromErrorMessage(RestErrorMessageTransfer $errorMessage): RestResponseInterface;
+
+    /**
+     * @param array $errors
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestErrorResponse(array $errors): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createUnknownErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCantAddWishlistItemErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createWishlistNotFoundErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createItemSkuMissingErrorToResponse(): RestResponseInterface;
 }

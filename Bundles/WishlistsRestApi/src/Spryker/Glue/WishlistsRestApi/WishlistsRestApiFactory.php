@@ -43,10 +43,6 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistReader(
             $this->getWishlistClient(),
-            $this->getResourceBuilder(),
-            $this->createWishlistsResourceMapper(),
-            $this->createWishlistItemsResourceMapper(),
-            $this->getClient(),
             $this->createWishlistRestResponseBuilder()
         );
     }
@@ -92,9 +88,8 @@ class WishlistsRestApiFactory extends AbstractFactory
     public function createWishlistItemAdder(): WishlistItemAdderInterface
     {
         return new WishlistItemAdder(
-            $this->getResourceBuilder(),
-            $this->createWishlistItemsResourceMapper(),
-            $this->getClient()
+            $this->getClient(),
+            $this->createWishlistRestResponseBuilder()
         );
     }
 
@@ -105,7 +100,6 @@ class WishlistsRestApiFactory extends AbstractFactory
     {
         return new WishlistItemDeleter(
             $this->getClient(),
-            $this->getResourceBuilder(),
             $this->createWishlistItemsResourceMapper(),
             $this->createWishlistRestResponseBuilder()
         );

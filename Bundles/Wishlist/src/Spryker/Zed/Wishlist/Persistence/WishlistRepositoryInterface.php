@@ -20,12 +20,10 @@ interface WishlistRepositoryInterface
     public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer;
 
     /**
-     * @api
-     *
      * @param int $idCustomer
      * @param string $uuidWishlist
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer|null
      */
-    public function getWishlistByCustomerIdAndUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer;
+    public function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer;
 }

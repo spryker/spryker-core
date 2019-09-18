@@ -17,5 +17,5 @@ interface WishlistItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function add(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
+    public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
 }

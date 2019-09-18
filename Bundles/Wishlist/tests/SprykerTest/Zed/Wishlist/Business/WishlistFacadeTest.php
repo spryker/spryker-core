@@ -632,7 +632,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetWishlistByIdCustomerAndUuidShouldReturnWishlist(): void
+    public function testGetCustomerWishlistByUuidShouldReturnWishlist(): void
     {
         //Arrange
         $wishlistName = 'Test Wishlist';
@@ -641,10 +641,10 @@ class WishlistFacadeTest extends Unit
         $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getSku());
 
         //Act
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid(
             (new WishlistRequestTransfer())
                 ->setIdCustomer($this->customer->getIdCustomer())
-                ->setIdWishlist($this->wishlist->getUuid())
+                ->setUuid($this->wishlist->getUuid())
         );
         $wishlist = $wishlistResponseTransfer->getWishlist();
 
@@ -661,16 +661,16 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetWishlistByIdCustomerAndUuidShouldReturnError(): void
+    public function testGetCustomerWishlistByUuidShouldReturnError(): void
     {
         //Arrange
         $uuidWishlistNotExisting = 'fake-uuid';
 
         //Act
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid(
             (new WishlistRequestTransfer())
                 ->setIdCustomer($this->customer->getIdCustomer())
-                ->setIdWishlist($uuidWishlistNotExisting)
+                ->setUuid($uuidWishlistNotExisting)
         );
 
         //Assert

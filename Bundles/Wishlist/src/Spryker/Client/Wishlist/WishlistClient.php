@@ -267,8 +267,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->getZedStub()->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
+        return $this->getZedStub()->getCustomerWishlistByUuid($wishlistRequestTransfer);
     }
 }

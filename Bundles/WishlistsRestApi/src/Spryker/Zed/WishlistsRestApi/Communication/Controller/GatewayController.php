@@ -45,7 +45,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function addWishlistItemAction(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
-        return $this->getFacade()->addItem($wishlistItemRequestTransfer);
+        return $this->getFacade()->addWishlistItem($wishlistItemRequestTransfer);
     }
 
     /**

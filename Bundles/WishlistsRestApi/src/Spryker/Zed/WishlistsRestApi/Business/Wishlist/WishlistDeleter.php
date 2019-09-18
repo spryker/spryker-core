@@ -34,7 +34,7 @@ class WishlistDeleter implements WishlistDeleterInterface
      */
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             $wishlistResponseTransfer->setErrorIdentifier(WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND);

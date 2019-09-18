@@ -7,24 +7,32 @@
 
 namespace Spryker\Zed\Wishlist\Persistence\Mapper;
 
+use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class WishlistMapper implements WishlistMapperInterface
 {
     /**
-     * @param array $wishlist
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlist[] $wishlistEntities
+     * @param \Generated\Shared\Transfer\WishlistCollectionTransfer $wishlistCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
+     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
-    public function mapWishlistEntityToWishlistTransfer(array $wishlist): WishlistTransfer
-    {
-        $wishlistTransfer = (new WishlistTransfer())
-            ->fromArray($wishlist, true);
+    public function mapWishlistEntitiesToWishlistCollectionTransfer(
+        ObjectCollection $wishlistEntities,
+        WishlistCollectionTransfer $wishlistCollectionTransfer
+    ): WishlistCollectionTransfer {
+        foreach ($wishlistEntities as $wishlistEntity) {
+            $wishlistCollectionTransfer->addWishlist(
+                $this->mapWishlistEntityToWishlistTransfer($wishlistEntity, new WishlistTransfer())
+            );
+        }
 
-        return $wishlistTransfer;
+        return $wishlistCollectionTransfer;
     }
 
     /**
@@ -33,7 +41,7 @@ class WishlistMapper implements WishlistMapperInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function mapWishlistEntityToWishlistTransferWithItems(
+    public function mapWishlistEntityToWishlistTransfer(
         SpyWishlist $wishlistEntity,
         WishlistTransfer $wishlistTransfer
     ): WishlistTransfer {

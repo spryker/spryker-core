@@ -14,11 +14,14 @@ class WishlistItemMapper implements WishlistItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer
      */
-    public function mapWishlistItemTransferToRestWishlistItemsAttributes(WishlistItemTransfer $wishlistItemTransfer): RestWishlistItemsAttributesTransfer
-    {
-        return (new RestWishlistItemsAttributesTransfer())->fromArray($wishlistItemTransfer->toArray(), true);
+    public function mapWishlistItemTransferToRestWishlistItemsAttributes(
+        WishlistItemTransfer $wishlistItemTransfer,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestWishlistItemsAttributesTransfer {
+        return $restWishlistItemsAttributesTransfer->fromArray($wishlistItemTransfer->toArray(), true);
     }
 }

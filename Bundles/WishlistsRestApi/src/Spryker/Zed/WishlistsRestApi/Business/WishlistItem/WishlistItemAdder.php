@@ -36,24 +36,22 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function add(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
         $wishlistItemRequestTransfer->requireIdCustomer()
             ->requireUuidWishlist()
             ->requireSku();
 
         $wishlistRequestTransfer = $this->createWishlistRequest($wishlistItemRequestTransfer);
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
-        $wishlistTransfer = $wishlistResponseTransfer->getWishlist();
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
 
-        $wishlistItemTransfer = $this->createWishlistItemTransfer($wishlistTransfer);
-        $wishlistItemTransfer->fromArray(
-            $wishlistItemRequestTransfer->toArray(),
-            true
+        $wishlistItemTransfer = $this->createWishlistItemTransfer(
+            $wishlistResponseTransfer->getWishlist(),
+            $wishlistItemRequestTransfer
         );
 
         $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
@@ -61,7 +59,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
             return $this->createWishlistItemCanNotBeAddedError();
         }
 
-        return $this->createWishlistItemSuccessResponse($wishlistTransfer, $wishlistItemTransfer);
+        return $this->createWishlistItemSuccessResponse($wishlistItemTransfer);
     }
 
     /**
@@ -78,17 +76,21 @@ class WishlistItemAdder implements WishlistItemAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param string|null $sku
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    protected function createWishlistItemTransfer(WishlistTransfer $wishlistTransfer, ?string $sku = null): WishlistItemTransfer
+    protected function createWishlistItemTransfer(WishlistTransfer $wishlistTransfer, WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemTransfer
     {
         $wishlistItemTransfer = new WishlistItemTransfer();
         $wishlistItemTransfer->setFkWishlist($wishlistTransfer->getIdWishlist());
         $wishlistItemTransfer->setWishlistName($wishlistTransfer->getName());
         $wishlistItemTransfer->setFkCustomer($wishlistTransfer->getFkCustomer());
-        $wishlistItemTransfer->setSku($sku);
+
+        $wishlistItemTransfer->fromArray(
+            $wishlistItemRequestTransfer->toArray(),
+            true
+        );
 
         return $wishlistItemTransfer;
     }
@@ -117,22 +119,14 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    protected function createWishlistItemSuccessResponse(WishlistTransfer $wishlistTransfer, WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
+    protected function createWishlistItemSuccessResponse(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid(
-            (new WishlistRequestTransfer())
-                ->setIdCustomer($wishlistTransfer->getFkCustomer())
-                ->setUuid($wishlistTransfer->getUuid())
-        );
-
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(true)
-            ->setWishlist($wishlistResponseTransfer->getWishlist())
-            ->setAffectedWishlistItem($wishlistItemTransfer);
+            ->setWishlistItem($wishlistItemTransfer);
     }
 }

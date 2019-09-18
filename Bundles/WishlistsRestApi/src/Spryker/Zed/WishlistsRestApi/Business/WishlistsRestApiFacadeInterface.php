@@ -16,7 +16,7 @@ interface WishlistsRestApiFacadeInterface
 {
     /**
      * Specification:
-     *  - Updates existing wishlist records in DB with generated UUID value.
+     * - Updates existing wishlist records in DB with generated UUID value.
      *
      * @api
      *
@@ -28,10 +28,10 @@ interface WishlistsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Updates existing wishlist records in DB.
-     *  - Required properties: uuid, fkCustomer.
-     *  - Returns wishlist response with updated wishlist.
-     *  - If error occurred returns wishlist response with errors.
+     * - Updates existing wishlist records in DB.
+     * - Required properties: uuid, fkCustomer.
+     * - Returns wishlist response with updated wishlist.
+     * - If error occurred returns wishlist response with errors.
      *
      * @api
      *
@@ -43,8 +43,8 @@ interface WishlistsRestApiFacadeInterface
 
     /**
      * Specification:
-     *  - Deletes existing wishlist from DB.
-     *  - If error occurred returns wishlist response with errors.
+     * - Deletes existing wishlist from DB.
+     * - If error occurred returns wishlist response with errors.
      *
      * @api
      *
@@ -55,7 +55,11 @@ interface WishlistsRestApiFacadeInterface
     public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
+     * - Looks up the wishlist by uuid.
+     * - In case wishlist is not found, return error.
+     * - Adds product to the wishlist found in the previous step.
      *
      * @api
      *
@@ -63,10 +67,14 @@ interface WishlistsRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function addItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
+    public function addWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
+     * - Looks up the wishlist by uuid.
+     * - In case wishlist is not found, return error.
+     * - Removes product from the wishlist found in the previous step.
      *
      * @api
      *

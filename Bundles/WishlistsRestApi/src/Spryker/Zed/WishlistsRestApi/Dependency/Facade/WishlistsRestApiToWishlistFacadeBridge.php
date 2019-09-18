@@ -32,9 +32,9 @@ class WishlistsRestApiToWishlistFacadeBridge implements WishlistsRestApiToWishli
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        return $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
+        return $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
     }
 
     /**
@@ -45,16 +45,6 @@ class WishlistsRestApiToWishlistFacadeBridge implements WishlistsRestApiToWishli
     public function removeWishlist(WishlistTransfer $wishlistTransfer)
     {
         return $this->wishlistFacade->removeWishlist($wishlistTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
-    public function validateAndCreateWishlist(WishlistTransfer $wishlistTransfer)
-    {
-        return $this->wishlistFacade->validateAndCreateWishlist($wishlistTransfer);
     }
 
     /**

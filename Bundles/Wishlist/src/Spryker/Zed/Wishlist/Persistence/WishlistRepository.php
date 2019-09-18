@@ -25,8 +25,6 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
      */
     public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
-        $wishlistCollection = new WishlistCollectionTransfer();
-
         $wishlistEntities = $this->getFactory()->createWishlistQuery()
             ->useSpyCustomerQuery()
                 ->filterByCustomerReference($customerReference)
@@ -40,23 +38,21 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->endUse()
             ->find();
 
-        foreach ($wishlistEntities as $wishlistEntity) {
-            $wishlistTransfer = $this->getFactory()->createWishlistMapper()->mapWishlistEntityToWishlistTransfer($wishlistEntity->toArray());
-            $wishlistCollection->addWishlist($wishlistTransfer);
+        if (!$wishlistEntities->count()) {
+            return new WishlistCollectionTransfer();
         }
 
-        return $wishlistCollection;
+        return $this->getFactory()->createWishlistMapper()
+            ->mapWishlistEntitiesToWishlistCollectionTransfer($wishlistEntities, new WishlistCollectionTransfer());
     }
 
     /**
-     * @api
-     *
      * @param int $idCustomer
      * @param string $uuidWishlist
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer|null
      */
-    public function getWishlistByCustomerIdAndUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer
+    public function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer
     {
         $wishlistEntity = $this->getFactory()
             ->createWishlistQuery()
@@ -71,6 +67,6 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
 
         return $this->getFactory()
             ->createWishlistMapper()
-            ->mapWishlistEntityToWishlistTransferWithItems($wishlistEntity, new WishlistTransfer());
+            ->mapWishlistEntityToWishlistTransfer($wishlistEntity, new WishlistTransfer());
     }
 }

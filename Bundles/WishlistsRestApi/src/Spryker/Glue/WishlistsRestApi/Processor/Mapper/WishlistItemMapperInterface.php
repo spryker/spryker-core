@@ -14,8 +14,12 @@ interface WishlistItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer
      */
-    public function mapWishlistItemTransferToRestWishlistItemsAttributes(WishlistItemTransfer $wishlistItemTransfer): RestWishlistItemsAttributesTransfer;
+    public function mapWishlistItemTransferToRestWishlistItemsAttributes(
+        WishlistItemTransfer $wishlistItemTransfer,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestWishlistItemsAttributesTransfer;
 }

@@ -34,8 +34,8 @@ class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipEx
     public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $wishlistsResources = $this->wishlistReader
-                ->getWishlistsByCustomerReference($resource->getId());
+            $wishlistsResources = $this->wishlistReader->getWishlistsByCustomerReference($resource->getId());
+
             foreach ($wishlistsResources as $wishlistsResource) {
                 $resource->addRelationship($wishlistsResource);
             }

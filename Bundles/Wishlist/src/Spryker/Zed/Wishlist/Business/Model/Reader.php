@@ -418,7 +418,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getWishlistByIdCustomerAndUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
         $wishlistRequestTransfer
             ->requireUuid()
@@ -428,7 +428,7 @@ class Reader implements ReaderInterface
             ->setIsSuccess(false);
 
         $wishlistTransfer = $this->wishlistRepository
-            ->getWishlistByCustomerIdAndUuid(
+            ->getCustomerWishlistByUuid(
                 $wishlistRequestTransfer->getIdCustomer(),
                 $wishlistRequestTransfer->getUuid()
             );

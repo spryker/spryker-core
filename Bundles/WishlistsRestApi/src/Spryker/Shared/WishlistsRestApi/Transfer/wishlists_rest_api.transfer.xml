@@ -41,9 +41,8 @@
     </transfer>
 
     <transfer name="WishlistItemResponse">
-        <property name="wishlist" type="Wishlist" />
-        <property name="affectedWishlistItem"  type="WishlistItem" />
         <property name="isSuccess" type="bool" />
+        <property name="wishlistItem"  type="WishlistItem" />
         <property name="errors" type="array" singular="error" />
         <property name="errorIdentifier" type="string"/>
     </transfer>
@@ -52,6 +51,10 @@
         <property name="status" type="int" />
         <property name="code" type="string" />
         <property name="detail" type="string" />
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string" />
     </transfer>
 
 </transfers>

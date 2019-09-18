@@ -38,9 +38,13 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
      */
     public function delete(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
+        $wishlistItemRequestTransfer->requireIdCustomer()
+            ->requireUuidWishlist()
+            ->requireSku();
+
         $wishlistRequestTransfer = $this->createWishlistRequestTransfer($wishlistItemRequestTransfer);
 
-        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByIdCustomerAndUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
@@ -49,9 +53,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
             $wishlistResponseTransfer->getWishlist(),
             $wishlistItemRequestTransfer
         );
-        $this->wishlistFacade->removeItem(
-            $wishlistItemTransfer
-        );
+        $this->wishlistFacade->removeItem($wishlistItemTransfer);
 
         return $this->createSuccessResponse();
     }
@@ -91,8 +93,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
      */
     protected function createSuccessResponse()
     {
-        return (new WishlistItemResponseTransfer())
-            ->setIsSuccess(true);
+        return (new WishlistItemResponseTransfer())->setIsSuccess(true);
     }
 
     /**

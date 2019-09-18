@@ -80,7 +80,7 @@ class WishlistUpdater implements WishlistUpdaterInterface
         RestRequestInterface $restRequest
     ) {
         $wishlistTransfer = $this->wishlistResourceMapper
-            ->mapWishlistAttributesToWishlistTransfer(new WishlistTransfer(), $attributesTransfer);
+            ->mapWishlistAttributesToWishlistTransfer($attributesTransfer, new WishlistTransfer());
 
         return (new WishlistRequestTransfer())
             ->setUuid($restRequest->getResource()->getId())

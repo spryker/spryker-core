@@ -7,61 +7,37 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Processor\WishlistItems;
 
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class WishlistItemAdder implements WishlistItemAdderInterface
 {
-    protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
-
-    /**
-     * @var \Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface
-     */
-    protected $wishlistClient;
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
-    /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface
-     */
-    protected $wishlistReader;
-
-    /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface
-     */
-    protected $wishlistItemMapper;
-
     /**
      * @var \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface
      */
     protected $wishlistRestApiClient;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface $wishlistItemMapper
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface
+     */
+    protected $wishlistRestResponseBuilder;
+
+    /**
      * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistRestApiClient
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        WishlistItemMapperInterface $wishlistItemMapper,
-        WishlistsRestApiClientInterface $wishlistRestApiClient
+        WishlistsRestApiClientInterface $wishlistRestApiClient,
+        WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
-        $this->wishlistItemMapper = $wishlistItemMapper;
         $this->wishlistRestApiClient = $wishlistRestApiClient;
+        $this->wishlistRestResponseBuilder = $wishlistRestResponseBuilder;
     }
 
     /**
@@ -74,7 +50,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
     {
         $wishlistResource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
         if (!$wishlistResource) {
-            return $this->createWishlistNotFoundErrorResponse();
+            return $this->wishlistRestResponseBuilder->createWishlistNotFoundErrorResponse();
         }
 
         $wishlistItemRequest = $this->createWishlistItemRequest(
@@ -85,25 +61,11 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         $wishlistItemResponse = $this->wishlistRestApiClient->addWishlistItem($wishlistItemRequest);
 
         if (!$wishlistItemResponse->getIsSuccess()) {
-            return $this->createCantAddWishlistItemErrorResponse();
+            return $this->wishlistRestResponseBuilder->createCantAddWishlistItemErrorResponse();
         }
 
-        $restWishlistItemsAttributesTransfer = $this->wishlistItemMapper
-            ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemResponse->getAffectedWishlistItem());
-
-        $wishlistItemResource = $this->restResourceBuilder->createRestResource(
-            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $restWishlistItemsAttributesTransfer->getSku(),
-            $restWishlistItemsAttributesTransfer
-        );
-        $wishlistItemResource->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLinkForWishlistItem($wishlistItemResponse->getWishlist()->getUuid(), $restWishlistItemsAttributesTransfer->getSku())
-        );
-
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addResource($wishlistItemResource);
+        return $this->wishlistRestResponseBuilder
+            ->createWishlistItemsRestResponse($wishlistResource->getId(), $wishlistItemResponse->getWishlistItem());
     }
 
     /**
@@ -122,52 +84,5 @@ class WishlistItemAdder implements WishlistItemAdderInterface
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setUuidWishlist($wishlistResource->getId())
             ->setSku($restWishlistItemsAttributesRequestTransfer->getSku());
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createWishlistNotFoundErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NOT_FOUND)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
-
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @param string $wishlistResourceId
-     * @param string $wishlistItemResourceId
-     *
-     * @return string
-     */
-    protected function createSelfLinkForWishlistItem(string $wishlistResourceId, string $wishlistItemResourceId): string
-    {
-        return sprintf(
-            static::SELF_LINK_FORMAT_PATTERN,
-            WishlistsRestApiConfig::RESOURCE_WISHLISTS,
-            $wishlistResourceId,
-            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $wishlistItemResourceId
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createCantAddWishlistItemErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_CANT_ADD_ITEM)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM);
-
-        return $restResponse = $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
     }
 }
