@@ -51,9 +51,9 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $restCheckoutDataTransfer = $resource->getPayload();
@@ -77,8 +77,6 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
 
             $this->addShipmentMethodResourceRelationships($restShipmentMethodsAttributesTransfers, $resource);
         }
-
-        return $resources;
     }
 
     /**
