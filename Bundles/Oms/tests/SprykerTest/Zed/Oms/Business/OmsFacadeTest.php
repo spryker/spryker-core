@@ -15,6 +15,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
+use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Oms\OmsConfig;
 
 /**
@@ -38,7 +39,27 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks()
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->resetReservedStatesCache();
+        $this->tester->configureTestStateMachine(['Test01']);
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        $this->tester->resetReservedStatesCache();
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearLocksShouldEmptyDatabaseFromExpiredLocks(): void
     {
         $identifier = '1-2-3';
 
@@ -59,7 +80,7 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOrderMatrixCreation()
+    public function testOrderMatrixCreation(): void
     {
         $omsFacade = $this->createOmsFacade();
 
@@ -72,7 +93,7 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderFlaggedExcludeFromCustomerShouldReturnTrueWhenAllStatesHaveFlag()
+    public function testIsOrderFlaggedExcludeFromCustomerShouldReturnTrueWhenAllStatesHaveFlag(): void
     {
         $testStateMachineProcessName = 'Test01';
 
@@ -97,7 +118,7 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderFlaggedExcludeFromCustomerShouldReturnFalseWhenAnyOfStatesMissingFlag()
+    public function testIsOrderFlaggedExcludeFromCustomerShouldReturnFalseWhenAnyOfStatesMissingFlag(): void
     {
         $testStateMachineProcessName = 'Test01';
 
@@ -118,7 +139,7 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReservedItemsByNonExistentSku()
+    public function testReservedItemsByNonExistentSku(): void
     {
         $omsFacade = $this->createOmsFacade();
         $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
@@ -140,7 +161,7 @@ class OmsFacadeTest extends Unit
         ];
 
         // Action
-        $stateNames = $this->createOmsFacade()->getReservedStateNames();
+        $stateNames = array_keys($this->createOmsFacade()->getOmsReservedStateCollection()->getStates()->getArrayCopy());
 
         // Assert
         $this->assertSame($expected, $stateNames);
@@ -169,7 +190,7 @@ class OmsFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
-    protected function createOmsFacade()
+    protected function createOmsFacade(): OmsFacadeInterface
     {
         $omsBusinessFactory = new OmsBusinessFactory();
         $omsConfig = new OmsConfig();
@@ -187,7 +208,7 @@ class OmsFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
-    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null)
+    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null): OmsFacadeInterface
     {
         $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 
