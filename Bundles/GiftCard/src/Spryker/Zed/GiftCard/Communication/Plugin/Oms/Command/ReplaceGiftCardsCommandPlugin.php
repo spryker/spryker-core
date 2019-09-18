@@ -21,7 +21,6 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 class ReplaceGiftCardsCommandPlugin extends AbstractPlugin implements CommandByOrderInterface
 {
     /**
-     *
      * Command which is executed per order basis
      *
      * @api

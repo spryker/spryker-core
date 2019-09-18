@@ -11,6 +11,7 @@ use Spryker\Zed\Application\Communication\ZedBootstrap;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

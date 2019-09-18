@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
- *
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {

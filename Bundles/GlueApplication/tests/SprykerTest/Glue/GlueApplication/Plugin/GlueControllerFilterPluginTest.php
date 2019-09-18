@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication

@@ -16,6 +16,7 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\TestTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ZedRequest

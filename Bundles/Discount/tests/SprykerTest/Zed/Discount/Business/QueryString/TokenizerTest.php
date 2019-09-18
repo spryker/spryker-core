@@ -12,6 +12,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

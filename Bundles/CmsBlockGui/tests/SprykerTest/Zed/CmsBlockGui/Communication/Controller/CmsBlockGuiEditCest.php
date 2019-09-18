@@ -12,6 +12,7 @@ use SprykerTest\Zed\CmsBlockGui\PageObject\CmsBlockGuiListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsBlockGui

@@ -13,6 +13,7 @@ use Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension\NonSplittableI
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesQuantity

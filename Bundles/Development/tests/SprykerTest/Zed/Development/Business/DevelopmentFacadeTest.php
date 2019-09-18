@@ -15,6 +15,7 @@ use Spryker\Zed\Development\Business\DevelopmentFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development

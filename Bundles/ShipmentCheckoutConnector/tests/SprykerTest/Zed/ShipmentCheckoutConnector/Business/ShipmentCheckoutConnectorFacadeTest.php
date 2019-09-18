@@ -19,6 +19,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\ShipmentCheckoutConnectorFaca
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentCheckoutConnector
