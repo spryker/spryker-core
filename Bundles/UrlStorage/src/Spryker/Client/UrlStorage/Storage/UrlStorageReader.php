@@ -96,7 +96,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
 
         foreach ($urlDetails['locale_urls'] as $localeUrl) {
             if ($localeUrl['fk_locale'] === $urlDetails['fk_locale']) {
-                return $localeUrl['localeName'];
+                return $localeUrl['locale_name'];
             }
         }
 
