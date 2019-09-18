@@ -8,50 +8,50 @@
 namespace Spryker\Glue\ShipmentsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodsByCheckoutDataExpander;
-use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodsByCheckoutDataExpanderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapper;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilder;
-use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorter;
-use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpander;
+use Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapper;
+use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilder;
+use Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface;
+use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorter;
+use Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface;
 
 class ShipmentsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodsByCheckoutDataExpanderInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Expander\ShipmentMethodByCheckoutDataExpanderInterface
      */
-    public function createShipmentMethodsByCheckoutDataExpander(): ShipmentMethodsByCheckoutDataExpanderInterface
+    public function createShipmentMethodByCheckoutDataExpander(): ShipmentMethodByCheckoutDataExpanderInterface
     {
-        return new ShipmentMethodsByCheckoutDataExpander(
-            $this->createShipmentMethodsRestResponseBuilder(),
-            $this->createShipmentMethodsMapper(),
-            $this->createShipmentMethodsSorter()
+        return new ShipmentMethodByCheckoutDataExpander(
+            $this->createShipmentMethodRestResponseBuilder(),
+            $this->createShipmentMethodMapper(),
+            $this->createShipmentMethodSorter()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface
      */
-    public function createShipmentMethodsMapper(): ShipmentMethodsMapperInterface
+    public function createShipmentMethodMapper(): ShipmentMethodMapperInterface
     {
-        return new ShipmentMethodsMapper();
+        return new ShipmentMethodMapper();
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodsRestResponseBuilderInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder\ShipmentMethodRestResponseBuilderInterface
      */
-    public function createShipmentMethodsRestResponseBuilder(): ShipmentMethodsRestResponseBuilderInterface
+    public function createShipmentMethodRestResponseBuilder(): ShipmentMethodRestResponseBuilderInterface
     {
-        return new ShipmentMethodsRestResponseBuilder($this->getResourceBuilder(), $this->createShipmentMethodsMapper());
+        return new ShipmentMethodRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodsSorterInterface
+     * @return \Spryker\Glue\ShipmentsRestApi\Processor\Sorter\ShipmentMethodSorterInterface
      */
-    public function createShipmentMethodsSorter(): ShipmentMethodsSorterInterface
+    public function createShipmentMethodSorter(): ShipmentMethodSorterInterface
     {
-        return new ShipmentMethodsSorter();
+        return new ShipmentMethodSorter();
     }
 }

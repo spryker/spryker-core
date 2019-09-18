@@ -7,13 +7,12 @@
 
 namespace Spryker\Glue\ShipmentsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer;
+use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface;
 use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
-class ShipmentMethodsRestResponseBuilder implements ShipmentMethodsRestResponseBuilderInterface
+class ShipmentMethodRestResponseBuilder implements ShipmentMethodRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -21,29 +20,22 @@ class ShipmentMethodsRestResponseBuilder implements ShipmentMethodsRestResponseB
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface
-     */
-    protected $shipmentMethodsMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodsMapperInterface $shipmentMethodsMapper
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder, ShipmentMethodsMapperInterface $shipmentMethodsMapper)
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
     {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->shipmentMethodsMapper = $shipmentMethodsMapper;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer
      * @param string $idShipmentMethod
+     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createShipmentMethodRestResource(
-        RestShipmentMethodAttributesTransfer $restShipmentMethodAttributesTransfer,
-        string $idShipmentMethod
+        string $idShipmentMethod,
+        RestShipmentMethodsAttributesTransfer $restShipmentMethodAttributesTransfer
     ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS,
