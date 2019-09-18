@@ -8,9 +8,7 @@
 namespace Spryker\Glue\ShipmentsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
-use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ShipmentsRestApi\Processor\Mapper\ShipmentMethodMapperInterface;
@@ -91,19 +89,10 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
     protected function mapRestShipmentMethodsAttributesTransfers(
         ShipmentMethodsTransfer $shipmentMethodsTransfer
     ): array {
-        $shipmentMethodTransfers = $shipmentMethodsTransfer->getMethods()->getArrayCopy();
-
-        $restShipmentMethodsAttributesTransfers = $this->shipmentMethodMapper
+        return $this->shipmentMethodMapper
             ->mapShipmentMethodTransfersToRestShipmentMethodsAttributesTransfers(
-                $shipmentMethodTransfers
+                $shipmentMethodsTransfer->getMethods()->getArrayCopy()
             );
-
-        $restShipmentMethodAttributesTransfers = $this->addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
-            $restShipmentMethodsAttributesTransfers,
-            $shipmentMethodTransfers
-        );
-
-        return $restShipmentMethodAttributesTransfers;
     }
 
     /**
@@ -138,53 +127,5 @@ class ShipmentMethodByCheckoutDataExpander implements ShipmentMethodByCheckoutDa
 
             $resource->addRelationship($shipmentMethodRestResource);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodTransfer[] $restShipmentMethodsAttributesTransfers
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
-     *
-     * @return array
-     */
-    protected function addShipmentMethodPricesToRestShipmentMethodsAttributesTransfers(
-        array $restShipmentMethodsAttributesTransfers,
-        array $shipmentMethodTransfers
-    ): array {
-        foreach ($restShipmentMethodsAttributesTransfers as $idShipmentMethod => $restShipmentMethodsAttributesTransfer) {
-            foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-                $restShipmentMethodsAttributesTransfer = $this->setPricesToRestShipmentMethodsAttributesTransfer(
-                    $idShipmentMethod,
-                    $shipmentMethodTransfer,
-                    $restShipmentMethodsAttributesTransfer
-                );
-            }
-        }
-
-        return $restShipmentMethodsAttributesTransfers;
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer
-     */
-    protected function setPricesToRestShipmentMethodsAttributesTransfer(
-        int $idShipmentMethod,
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        RestShipmentMethodsAttributesTransfer $restShipmentMethodsAttributesTransfer
-    ): RestShipmentMethodsAttributesTransfer {
-        if ($idShipmentMethod === $shipmentMethodTransfer->getIdShipmentMethod()) {
-            $moneyValueTransfer = current($shipmentMethodTransfer->getPrices());
-            if (!$moneyValueTransfer) {
-                return $restShipmentMethodsAttributesTransfer;
-            }
-
-            $restShipmentMethodsAttributesTransfer->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount());
-            $restShipmentMethodsAttributesTransfer->setDefaultNetPrice($moneyValueTransfer->getNetAmount());
-        }
-
-        return $restShipmentMethodsAttributesTransfer;
     }
 }
