@@ -20,6 +20,7 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector

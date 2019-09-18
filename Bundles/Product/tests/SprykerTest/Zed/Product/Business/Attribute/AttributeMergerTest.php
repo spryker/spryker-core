@@ -13,6 +13,7 @@ use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product

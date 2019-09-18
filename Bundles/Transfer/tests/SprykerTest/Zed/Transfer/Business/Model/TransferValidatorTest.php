@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer

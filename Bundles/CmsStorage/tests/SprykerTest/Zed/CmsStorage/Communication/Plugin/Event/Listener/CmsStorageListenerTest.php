@@ -27,6 +27,7 @@ use SprykerTest\Zed\CmsStorage\CmsStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsStorage
@@ -207,7 +208,7 @@ class CmsStorageListenerTest extends Unit
     {
         $count = SpyCmsPageStorageQuery::create()->count();
 
-        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $count);
+        $this->assertGreaterThan($beforeCount, $count);
 
         $cmsPage = SpyCmsPageStorageQuery::create()->filterByLocale('en_US')
             ->orderByIdCmsPageStorage()

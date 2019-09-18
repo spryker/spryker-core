@@ -20,3 +20,4 @@ Save,Save
 "Shipment method ""%s"" was created successfully.","Shipment method ""%s"" was created successfully."
 "Shipment method ""%s"" was updated successfully.","Shipment method ""%s"" was updated successfully."
 "Shipment Methods","Shipment Methods"
+"Shipment method with such name already exists for selected shipment provider.","Shipment method with such name already exists for selected shipment provider."

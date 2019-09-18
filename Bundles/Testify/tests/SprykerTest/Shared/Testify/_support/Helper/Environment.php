@@ -13,6 +13,8 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
+    protected const TESTING_APPLICATION_ENV_NAME = 'devtest';
+
     /**
      * @var string
      */
@@ -25,9 +27,11 @@ class Environment extends Module
     {
         $rootDirectory = $this->getRootDirectory();
         $store = $this->getStore();
+        $applicationEnv = $this->getApplicationEnvironment();
 
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', 'devtest');
+        defined('APPLICATION_ENV') || define('APPLICATION_ENV', $applicationEnv);
         defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
+        putenv('APPLICATION_STORE=' . $store);
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', $rootDirectory);
@@ -38,15 +42,18 @@ class Environment extends Module
     /**
      * @return string
      */
-    protected function getRootDirectory()
+    protected function getRootDirectory(): string
     {
         if (!$this->rootDirectory) {
             $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());
             $srcDirectoryPosition = array_search('current', $pathParts);
 
             $rootDirPathParts = array_slice($pathParts, 1, $srcDirectoryPosition);
-
-            $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+            if ($rootDirPathParts) {
+                $this->rootDirectory = DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $rootDirPathParts);
+            } else {
+                $this->rootDirectory = getcwd();
+            }
         }
 
         return $this->rootDirectory;
@@ -57,7 +64,7 @@ class Environment extends Module
      *
      * @return string
      */
-    protected function getStore()
+    protected function getStore(): string
     {
         if (getenv('APPLICATION_STORE')) {
             return getenv('APPLICATION_STORE');
@@ -85,21 +92,33 @@ class Environment extends Module
     /**
      * @return string
      */
-    private function getDefaultStore()
+    protected function getApplicationEnvironment(): string
     {
-        $defaultStoreFile = $this->getRootDirectory() . '/Config/Shared/default_store.php';
+        if (getenv('SPRYKER_TESTING_ENABLED')) {
+            return getenv('APPLICATION_ENV');
+        }
+
+        return static::TESTING_APPLICATION_ENV_NAME;
+    }
+
+    /**
+     * @return string|null
+     */
+    private function getDefaultStore(): ?string
+    {
+        $defaultStoreFile = $this->getRootDirectory() . '/config/Shared/default_store.php';
 
         if (file_exists($defaultStoreFile)) {
             return include $defaultStoreFile;
         }
 
-        return false;
+        return null;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    private function getFirstDefinedStore()
+    private function getFirstDefinedStore(): ?string
     {
         $storesFile = $this->getRootDirectory() . '/config/Shared/stores.php';
 
@@ -109,6 +128,6 @@ class Environment extends Module
             return current(array_keys($stores));
         }
 
-        return false;
+        return null;
     }
 }

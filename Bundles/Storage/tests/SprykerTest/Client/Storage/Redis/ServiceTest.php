@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Storage
@@ -79,6 +80,8 @@ class ServiceTest extends Unit
         $this->clientMock = $this->getMockBuilder(ClientInterface::class)
             ->setMethods([
                 'keys',
+                'scan',
+                'dbSize',
                 'getProfile',
                 'getOptions',
                 'connect',

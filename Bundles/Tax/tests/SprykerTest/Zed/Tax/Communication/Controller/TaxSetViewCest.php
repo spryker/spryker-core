@@ -12,6 +12,7 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax

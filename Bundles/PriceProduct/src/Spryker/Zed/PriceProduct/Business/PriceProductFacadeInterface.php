@@ -551,4 +551,18 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getValidPrices(array $priceProductFilterTransfers): array;
+
+    /**
+     * Specification:
+     * - Checks if price product exists by product identifier and price type.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(
+        PriceProductTransfer $priceProductTransfer
+    ): bool;
 }

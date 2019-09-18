@@ -10,7 +10,7 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="billingAddresses" type="Address[]" singular="billingAddress" />
-        <property name="shippingAddresses" type="Address[]" singular="shippingAddress" />
+        <property name="shippingAddresses" type="Address[]" singular="shippingAddress" deprecated="Obsolete. Not used anymore" />
     </transfer>
 
     <transfer name="CheckoutError">
@@ -71,7 +71,7 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="billingAddress" type="Address"/>
-        <property name="shippingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingSameAsShipping" type="bool"/>
         <property name="customer" type="Customer" />
         <property name="orderReference" type="string" />

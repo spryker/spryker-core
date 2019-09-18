@@ -17,6 +17,8 @@ use Orm\Zed\StateMachine\Persistence\SpyStateMachineLock;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineLockQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcessQuery;
 use Spryker\Service\UtilNetwork\UtilNetworkService;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
@@ -29,6 +31,7 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandler;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine
@@ -215,8 +218,12 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[$firstItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
 
+        $this->sleepIfMySql(1);
+
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
         $stateMachineItems[$secondItemIdentifier] = $stateMachineHandler->getItemStateUpdated();
+
+        $this->sleepIfMySql(1);
 
         $stateMachineFacade->triggerEvent('ship order', $stateMachineItems[$secondItemIdentifier]);
 
@@ -257,6 +264,8 @@ class StateMachineFacadeTest extends Unit
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
+
+        $this->sleepIfMySql(1);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $secondItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -378,22 +387,23 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $this->sleepIfMySql(1);
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
-        $stateMachineItemsTransfer = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
+        $stateMachineItemTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
             $stateMachineItemTransfer->getIdStateMachineProcess(),
             $identifier
         );
 
-        $this->assertCount(3, $stateMachineItemsTransfer);
+        $this->assertCount(3, $stateMachineItemTransfers);
 
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[0];
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
 
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[1];
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('invoice sent', $stateMachineItemTransfer->getStateName());
 
-        $stateMachineItemTransfer = $stateMachineItemsTransfer[2];
+        $stateMachineItemTransfer = array_shift($stateMachineItemTransfers);
         $this->assertEquals('order exported', $stateMachineItemTransfer->getStateName());
     }
 
@@ -413,6 +423,8 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        $this->sleepIfMySql(1);
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
             $stateMachineProcessTransfer,
@@ -455,7 +467,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
-        sleep(1);
+        $this->sleepIfMySql(1);
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier2);
 
         $stateMachineItemsWithGivenFlag = $stateMachineFacade->getItemsWithFlag(
@@ -494,6 +506,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+        $this->sleepIfMySql(1);
 
         $stateMachineItemsWithoutGivenFlag = $stateMachineFacade->getItemsWithoutFlag(
             $stateMachineProcessTransfer,
@@ -710,5 +723,17 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade->setFactory($stateMachineBusinessFactory);
 
         return $stateMachineFacade;
+    }
+
+    /**
+     * @param int $seconds
+     *
+     * @return void
+     */
+    protected function sleepIfMySql(int $seconds): void
+    {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+            sleep($seconds);
+        }
     }
 }

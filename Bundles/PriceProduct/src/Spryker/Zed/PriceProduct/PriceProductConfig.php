@@ -52,6 +52,22 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForNetType(): string
+    {
+        return $this->getSharedConfig()->getPriceModeIdentifierForNetType();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForGrossType(): string
+    {
+        return $this->getSharedConfig()->getPriceModeIdentifierForGrossType();
+    }
+
+    /**
      * @return bool
      */
     public function getIsDeleteOrphanStorePricesOnSaveEnabled(): bool

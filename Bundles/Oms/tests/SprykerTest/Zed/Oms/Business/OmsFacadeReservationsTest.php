@@ -15,6 +15,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

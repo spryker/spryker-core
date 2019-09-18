@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmentCollectorStrategyResolver;
 
 /**
  * @method \Spryker\Zed\ShipmentDiscountConnector\Business\ShipmentDiscountConnectorBusinessFactory getFactory()
@@ -58,7 +59,8 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function collectDiscountByShipmentCarrier(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createCarrierDiscountCollector()
+            ->createShipmentDiscountCollectorStrategyResolver()
+            ->resolveByTypeAndItems(MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_CARRIER, $quoteTransfer->getItems())
             ->collect($quoteTransfer, $clauseTransfer);
     }
 
@@ -75,7 +77,8 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function collectDiscountByShipmentMethod(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createMethodDiscountCollector()
+            ->createShipmentDiscountCollectorStrategyResolver()
+            ->resolveByTypeAndItems(MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD, $quoteTransfer->getItems())
             ->collect($quoteTransfer, $clauseTransfer);
     }
 
@@ -92,7 +95,8 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function collectDiscountByShipmentPrice(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createShipmentPriceDiscountCollector()
+            ->createShipmentDiscountCollectorStrategyResolver()
+            ->resolveByTypeAndItems(MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE, $quoteTransfer->getItems())
             ->collect($quoteTransfer, $clauseTransfer);
     }
 
@@ -110,7 +114,8 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function isCarrierSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createCarrierDiscountDecisionRule()
+            ->createShipmentDiscountDecisionRuleStrategyResolver()
+            ->resolveByTypeAndItems(MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_CARRIER, $quoteTransfer->getItems())
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
@@ -128,7 +133,8 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function isMethodSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createMethodDiscountDecisionRule()
+            ->createShipmentDiscountDecisionRuleStrategyResolver()
+            ->resolveByTypeAndItems(MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_METHOD, $quoteTransfer->getItems())
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
@@ -146,7 +152,8 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     public function isPriceSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
     {
         return $this->getFactory()
-            ->createShipmentPriceDiscountDecisionRule()
+            ->createShipmentDiscountDecisionRuleStrategyResolver()
+            ->resolveByTypeAndItems(MultiShipmentCollectorStrategyResolver::DISCOUNT_TYPE_PRICE, $quoteTransfer->getItems())
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 }

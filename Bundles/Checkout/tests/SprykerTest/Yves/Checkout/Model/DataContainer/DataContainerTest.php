@@ -14,6 +14,7 @@ use Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Checkout

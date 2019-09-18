@@ -14,6 +14,7 @@
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
         <property name="priceMode" type="string" />
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
     </transfer>
 
     <transfer name="Clause">
@@ -24,5 +25,8 @@
         <property name="acceptedTypes" type="array" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
+    </transfer>
 
 </transfers>

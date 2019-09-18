@@ -103,7 +103,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $options = $this->configurationBuilder->getConfiguration($directory, $options);
 
         if ($options === []) {
-            return $this->formatResult($options);
+            return [];
         }
 
         if ($this->isCoreModule($options)) {
@@ -147,7 +147,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function runCommand($directory, array $options = [])
     {
-        $command = [str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command)];
+        $command = explode(' ', str_replace(DevelopmentConfig::BUNDLE_PLACEHOLDER, $directory, $this->command));
         $command[] = '--minimumpriority';
         $command[] = $options[static::OPTION_PRIORITY];
 

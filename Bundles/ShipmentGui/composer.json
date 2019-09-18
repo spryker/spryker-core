@@ -1,0 +1,34 @@
+{
+  "name": "spryker/shipment-gui",
+  "type": "library",
+  "description": "ShipmentGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/customer": "^7.23.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/sales": "^11.0.0",
+    "spryker/shipment": "^7.0.0",
+    "spryker/symfony": "^3.2.2",
+    "spryker/util-text": "^1.2.3"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

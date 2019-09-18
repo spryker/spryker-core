@@ -14,6 +14,7 @@ use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -97,7 +98,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(FilterPreferencesPage::URL_LIST);
 
-        $this->canSee('Filter successfully deleted.');
+        $this->seeInPageSource('Filter successfully deleted.');
     }
 
     /**
@@ -118,7 +119,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->canSee('Attribute to search was added successfully.', SearchPreferencesPage::SELECTOR_ALERT_SUCCESS);
+        $this->seeInPageSource('Attribute to search was added successfully.');
     }
 
     /**
@@ -141,7 +142,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->canSee('Attribute to search was successfully updated.', SearchPreferencesPage::SELECTOR_ALERT_SUCCESS);
+        $this->seeInPageSource('Attribute to search was successfully updated.');
     }
 
     /**
@@ -157,7 +158,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->canSee('Attribute to search was successfully deactivated.', SearchPreferencesPage::SELECTOR_ALERT_SUCCESS);
+        $this->seeInPageSource('Attribute to search was successfully deactivated.');
     }
 
     /**

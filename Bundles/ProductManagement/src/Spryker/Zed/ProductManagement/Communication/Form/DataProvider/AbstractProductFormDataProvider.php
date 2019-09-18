@@ -818,7 +818,6 @@ class AbstractProductFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer,
         array $formData
     ): ArrayObject {
-
         if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
             return $productTransfer->getPrices();
         }

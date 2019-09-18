@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="shipment" type="Shipment"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
@@ -31,6 +31,11 @@
         <property name="unitNetPrice" type="int" />
         <property name="unitGrossPrice" type="int" />
         <property name="quantity" type="int" />
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CheckoutData">
