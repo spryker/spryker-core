@@ -38,8 +38,6 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
 
-    public const PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER = 'PLUGINS_PRODUCT_LIST_FORM_EXPANDER';
-
     public const PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER = 'PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER';
 
     /**
@@ -66,7 +64,6 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductListTableQueryCriteriaExpanderPlugins($container);
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
-        $container = $this->addProductListOwnerTypeFormExpanderPlugins($container);
         $container = $this->addProductListTopButtonsExpanderPlugins($container);
 
         return $container;
@@ -247,20 +244,6 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductListOwnerTypeFormExpanderPlugins(Container $container): Container
-    {
-        $container[static::PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER] = function () {
-            return $this->getProductListOwnerTypeFormExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductListTopButtonsExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER, function (): array {
@@ -268,14 +251,6 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[]
-     */
-    protected function getProductListOwnerTypeFormExpanderPlugins(): array
-    {
-        return [];
     }
 
     /**

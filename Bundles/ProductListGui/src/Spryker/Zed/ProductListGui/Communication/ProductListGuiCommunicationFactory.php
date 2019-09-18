@@ -155,8 +155,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListAggregateFormDataProvider(
             $this->createProductListFormDataProvider(),
-            $this->createProductListCategoryRelationFormDataProvider(),
-            $this->getProductListOwnerTypeFormExpanderPlugins()
+            $this->createProductListCategoryRelationFormDataProvider()
         );
     }
 
@@ -236,14 +235,6 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListPropelQuery(): SpyProductListQuery
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::PROPEL_QUERY_PRODUCT_LIST);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[]
-     */
-    public function getProductListOwnerTypeFormExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER);
     }
 
     /**

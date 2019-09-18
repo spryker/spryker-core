@@ -5,19 +5,14 @@
 Back,Back
 "Back to Product Lists","Back to Product Lists"
 Blacklist,Blacklist
-"Business Unit Owner Name","Business Unit Owner Name"
 "Create a Product List","Create a Product List"
 "Edit List","Edit List"
 Export,Export
 ID,ID
-"ID Merchant Relation","ID Merchant Relation"
 "Import Product List","Import Product List"
 "List of Product lists","List of Product lists"
-"Merchant Name","Merchant Name"
-"Merchant relationship","Merchant relationship"
 Name,Name
 "Overview of Product lists","Overview of Product lists"
-"Owner Type","Owner Type"
 "Product label #%d successfully created.","Product label #%d successfully created."
 "Product List ""%s"" has been successfully created.","Product List ""%s"" has been successfully created."
 "Product List ""%s"" has been successfully updated.","Product List ""%s"" has been successfully updated."

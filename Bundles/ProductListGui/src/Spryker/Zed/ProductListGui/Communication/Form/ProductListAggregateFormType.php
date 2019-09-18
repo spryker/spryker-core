@@ -10,13 +10,11 @@ namespace Spryker\Zed\ProductListGui\Communication\Form;
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
@@ -25,7 +23,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProductListAggregateFormType extends AbstractType
 {
     public const OPTION_CATEGORY_IDS = ProductListCategoryRelationTransfer::CATEGORY_IDS;
-    public const OPTION_OWNER_TYPE = ProductListAggregateFormTransfer::OWNER_TYPE;
 
     public const BLOCK_PREFIX = 'productListAggregate';
 
@@ -43,7 +40,6 @@ class ProductListAggregateFormType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setRequired(static::OPTION_CATEGORY_IDS);
-        $resolver->setRequired(static::OPTION_OWNER_TYPE);
 
         $resolver->setDefaults([
             'data_class' => ProductListAggregateFormTransfer::class,
@@ -73,7 +69,6 @@ class ProductListAggregateFormType extends AbstractType
             ->addAssignedProductIdsField($builder)
             ->addProductIdsToBeAssignedField($builder)
             ->addProductIdsToBeDeassignedField($builder)
-            ->addOwnerTypeField($builder, $options)
             ->addProductListSubForm($builder)
             ->addProductListCategoryRelationSubForm($builder, $options)
             ->addProductListProductConcreteRelationSubForm($builder);
@@ -162,26 +157,6 @@ class ProductListAggregateFormType extends AbstractType
             ProductListAggregateFormTransfer::PRODUCT_LIST,
             ProductListFormType::class
         );
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addOwnerTypeField($builder, $options)
-    {
-        $builder->add(ProductListAggregateFormTransfer::OWNER_TYPE, ChoiceType::class, [
-            'label' => 'Owner Type',
-            'required' => true,
-            'choices' => $options[static::OPTION_OWNER_TYPE],
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ]);
 
         return $this;
     }
