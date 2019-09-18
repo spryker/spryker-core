@@ -28,6 +28,8 @@ use Spryker\Zed\ProductListGui\Communication\Table\AvailableProductConcreteTable
 use Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTablePluginExecutor;
 use Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTablePluginExecutorInterface;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
+use Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableDataProvider;
+use Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableDataProviderInterface;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AssignedProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AvailableProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListCreateAggregationTabs;
@@ -177,6 +179,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableDataProviderInterface
+     */
+    public function createProductListUsedByTableDataProvider(): ProductListUsedByTableDataProviderInterface
+    {
+        return new ProductListUsedByTableDataProvider($this->getProductListUsedByTableDataExpanderPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ProductListGuiToLocaleFacadeInterface
@@ -292,6 +302,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListTopButtonsExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface[]
+     */
+    public function getProductListUsedByTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER);
     }
 
     /**

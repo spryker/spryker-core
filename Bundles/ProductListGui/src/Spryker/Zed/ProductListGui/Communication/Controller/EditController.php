@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +36,11 @@ class EditController extends ProductListAbstractController
         );
 
         if ($productListTransfer === null) {
-            return $this->viewResponse($this->executeEditAction($request, $productListAggregateForm));
+            $productListTransfer = (new ProductListTransfer())->setIdProductList(
+                $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST))
+            );
+
+            return $this->viewResponse($this->executeEditAction($productListTransfer, $productListAggregateForm));
         }
 
         $productListResponseTransfer = $this->getFactory()
@@ -83,16 +88,20 @@ class EditController extends ProductListAbstractController
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      * @param \Symfony\Component\Form\FormInterface $productListAggregateForm
      *
      * @return array
      */
-    protected function executeEditAction(Request $request, FormInterface $productListAggregateForm)
+    protected function executeEditAction(ProductListTransfer $productListTransfer, FormInterface $productListAggregateForm)
     {
-        $idProductList = $this->castId($request->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $data = $this->prepareTemplateVariables($productListAggregateForm);
-        $data['idProductList'] = $idProductList;
+        $data['idProductList'] = $productListTransfer->getIdProductList();
+
+        $data['productListUsedByTableDataTransfer'] = $this->getFactory()
+            ->createProductListUsedByTableDataProvider()
+            ->getTableData($productListTransfer);
+
         $data['productListAggregationTabs'] = $this->getFactory()
             ->createProductListEditAggregationTabs()
             ->createView();

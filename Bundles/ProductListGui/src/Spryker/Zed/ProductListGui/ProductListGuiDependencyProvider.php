@@ -40,6 +40,8 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER = 'PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER';
 
+    public const PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -65,6 +67,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
         $container = $this->addProductListTopButtonsExpanderPlugins($container);
+        $container = $this->addProductListUsedByTableDataExpanderPlugins($container);
 
         return $container;
     }
@@ -254,6 +257,20 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListUsedByTableDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER, function (): array {
+            return $this->getProductListUsedByTableDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[]
      */
     protected function getProductListTableActionExpanderPlugins(): array
@@ -297,6 +314,14 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
      */
     protected function getProductListTopButtonsExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface[]
+     */
+    protected function getProductListUsedByTableDataExpanderPlugins(): array
     {
         return [];
     }

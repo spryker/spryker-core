@@ -36,13 +36,14 @@
         <property name="defaultOptions" type="array" />
     </transfer>
 
-    <transfer name="UsedByTableData">
-        <property name="rows" type="UsedByTableRow[]" />
+    <transfer name="ProductListUsedByTableData">
+        <property name="productList" type="ProductList" />
+        <property name="rows" type="ProductListUsedByTableRow[]" />
     </transfer>
 
-    <transfer name="UsedByTableRow">
-        <property name="title" type="string" />
-        <property name="name" type="string" />
+    <transfer name="ProductListUsedByTableRow">
+        <property name="entityTitle" type="string" />
+        <property name="entityName" type="string" />
         <property name="actions" type="Button[]" />
     </transfer>
 
