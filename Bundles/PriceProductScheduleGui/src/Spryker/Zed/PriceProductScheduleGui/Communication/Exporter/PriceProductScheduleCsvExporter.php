@@ -29,7 +29,7 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
     protected const FORMAT_FILE_NAME = '%s.csv';
     protected const PARAM_FILE_NAME = 'price_product_schedule_export';
 
-    protected const PATTERN_DATE_TIME = 'Y-m-d\TH:i:sO';
+    protected const PATTERN_DATE_TIME = 'Y-m-d\TH:i:s-00:00';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
