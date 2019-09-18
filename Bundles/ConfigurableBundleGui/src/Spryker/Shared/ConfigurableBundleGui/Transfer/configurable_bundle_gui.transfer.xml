@@ -34,4 +34,14 @@
         <property name="idConfigurableBundleTemplate" type="int" />
     </transfer>
 
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button" />
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string" />
+        <property name="title" type="string" />
+        <property name="defaultOptions" type="array" />
+    </transfer>
+
 </transfers>

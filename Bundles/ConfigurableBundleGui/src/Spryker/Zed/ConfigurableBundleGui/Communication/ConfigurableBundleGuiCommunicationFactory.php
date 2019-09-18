@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpander;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable;
@@ -61,6 +63,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getLocaleFacade(),
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface
+     */
+    public function createProductListButtonsExpander(): ProductListButtonsExpanderInterface
+    {
+        return new ProductListButtonsExpander();
     }
 
     /**

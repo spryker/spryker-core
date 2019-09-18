@@ -24,9 +24,13 @@ class IndexController extends AbstractController
     public function indexAction(Request $request): array
     {
         $table = $this->getFactory()->createProductListTable();
+        $topButtons = $this->getFactory()
+            ->createTopButtonsProvider()
+            ->getTopButtons();
 
         return [
             'productListTable' => $table->render(),
+            'topButtons' => $topButtons,
         ];
     }
 

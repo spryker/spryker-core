@@ -13,6 +13,8 @@ use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProvider;
+use Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProviderInterface;
 use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporter;
 use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterface;
 use Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListAggregateFormDataProvider;
@@ -159,6 +161,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProviderInterface
+     */
+    public function createTopButtonsProvider(): TopButtonsProviderInterface
+    {
+        return new TopButtonsProvider($this->getProductListTopButtonsExpanderPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ProductListGuiToLocaleFacadeInterface
@@ -274,6 +284,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListTableHeaderExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
+     */
+    public function getProductListTopButtonsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER);
     }
 
     /**

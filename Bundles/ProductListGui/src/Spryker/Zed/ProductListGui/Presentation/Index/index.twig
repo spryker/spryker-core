@@ -7,7 +7,14 @@
 
 {% block action %}
     {{ parent() }}
-    {{ createActionButton('/product-list-gui/create', 'Create Product List' | trans) }}
+    {% for button in topButtons.getButtons() %}
+        {% include '@ProductListGui/_partials/button.twig' with {
+            url: button.url | default,
+            title: button.title | default,
+            class: button.defaultOptions.class | default(''),
+            iconClass: button.defaultOptions.iconClass| default('')
+        } only %}
+    {% endfor %}
 {% endblock %}
 
 {% block content %}

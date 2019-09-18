@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantRelationshipGui\Communication;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListButtonsExpander;
+use Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListButtonsExpanderInterface;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DataProvider\MerchantRelationshipFormDataProvider;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipCreateForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipEditForm;
@@ -66,6 +68,14 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     public function createMerchantRelationshipTable(?int $idCompany = null): MerchantRelationshipTable
     {
         return new MerchantRelationshipTable($this->getPropelMerchantRelationshipQuery(), $idCompany);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListButtonsExpanderInterface
+     */
+    public function createProductListButtonsExpander(): ProductListButtonsExpanderInterface
+    {
+        return new ProductListButtonsExpander();
     }
 
     /**
