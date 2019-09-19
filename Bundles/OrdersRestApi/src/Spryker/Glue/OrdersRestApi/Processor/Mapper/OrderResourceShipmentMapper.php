@@ -80,22 +80,22 @@ class OrderResourceShipmentMapper implements OrderResourceShipmentMapperInterfac
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $defaultShipmentMethodPriceTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\RestOrderShipmentTransfer
      */
     protected function createRestShipmentMethodTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        MoneyValueTransfer $defaultShipmentMethodPriceTransfer
+        MoneyValueTransfer $moneyValueTransfer
     ): RestOrderShipmentTransfer {
-        $defaultShipmentMethodPriceTransfer->requireCurrency();
+        $moneyValueTransfer->requireCurrency();
 
         return (new RestOrderShipmentTransfer())
             ->setShipmentMethodName($shipmentMethodTransfer->getName())
             ->setCarrierName($shipmentMethodTransfer->getCarrierName())
             ->setDeliveryTime($shipmentMethodTransfer->getDeliveryTime())
-            ->setDefaultNetPrice($defaultShipmentMethodPriceTransfer->getNetAmount())
-            ->setDefaultGrossPrice($defaultShipmentMethodPriceTransfer->getGrossAmount())
-            ->setCurrencyIsoCode($defaultShipmentMethodPriceTransfer->getCurrency()->getCode());
+            ->setDefaultNetPrice($moneyValueTransfer->getNetAmount())
+            ->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount())
+            ->setCurrencyIsoCode($moneyValueTransfer->getCurrency()->getCode());
     }
 }
