@@ -35,10 +35,10 @@ class RenderFormController extends AbstractController
      */
     public function eventAction(Request $request): array
     {
-        $identifier = $this->castId($request->get(static::URL_PARAM_IDENTIFIER));
-        $redirect = $request->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
-        $idState = $this->castId($request->get(static::URL_PARAM_ID_STATE));
-        $events = $request->get(static::URL_PARAM_EVENTS);
+        $identifier = $this->castId($request->attributes->getInt(static::URL_PARAM_IDENTIFIER));
+        $idState = $this->castId($request->attributes->getInt(static::URL_PARAM_ID_STATE));
+        $redirect = $request->attributes->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
+        $events = $request->attributes->get(static::URL_PARAM_EVENTS);
 
         $eventItemTriggerFormCollection = $this->getFactory()
             ->createStateMachineTriggerFormCollectionBuilder()
@@ -56,11 +56,11 @@ class RenderFormController extends AbstractController
      */
     public function eventItemAction(Request $request): array
     {
-        $identifier = $this->castId($request->get(static::URL_PARAM_IDENTIFIER));
-        $redirect = $request->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
-        $stateMachineName = $request->get(static::URL_PARAM_STATE_MACHINE_NAME);
-        $processName = $request->get(static::URL_PARAM_PROCESS_NAME);
-        $eventName = $request->get(static::URL_PARAM_EVENT_NAME);
+        $identifier = $this->castId($request->attributes->getInt(static::URL_PARAM_IDENTIFIER));
+        $redirect = $request->attributes->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
+        $stateMachineName = $request->attributes->get(static::URL_PARAM_STATE_MACHINE_NAME);
+        $processName = $request->attributes->get(static::URL_PARAM_PROCESS_NAME);
+        $eventName = $request->attributes->get(static::URL_PARAM_EVENT_NAME);
 
         $form = $this->getFactory()
             ->createStateMachineTriggerFormFactory()
