@@ -108,7 +108,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductListMerchantRelationshipAssignmentsUnassignMerchantRelationFromProductList(): void
+    public function testUpdateProductListMerchantRelationshipAssignmentsUnassignsMerchantRelationshipFromProductList(): void
     {
         // Arrange
         $this->tester->truncateProductListTableRelations();
@@ -132,7 +132,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductListMerchantRelationshipAssignmentsAssignMerchantRelationToProductList(): void
+    public function testUpdateProductListMerchantRelationshipAssignmentsAssignMerchantRelationshipToProductList(): void
     {
         // Arrange
         $this->tester->truncateProductListTableRelations();

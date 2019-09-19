@@ -22,5 +22,5 @@ interface MerchantRelationshipProductListEntityManagerInterface
      *
      * @return void
      */
-    public function removeMerchantRelationFromProductList(int $idProductList): void;
+    public function removeMerchantRelationshipFromProductList(int $idProductList): void;
 }

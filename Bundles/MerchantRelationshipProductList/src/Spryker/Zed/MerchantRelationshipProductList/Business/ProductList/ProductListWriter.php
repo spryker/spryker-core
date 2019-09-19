@@ -80,7 +80,7 @@ class ProductListWriter implements ProductListWriterInterface
                 continue;
             }
 
-            $this->merchantRelationshipProductListEntityManager->removeMerchantRelationFromProductList(
+            $this->merchantRelationshipProductListEntityManager->removeMerchantRelationshipFromProductList(
                 $productListTransfer->getIdProductList()
             );
 

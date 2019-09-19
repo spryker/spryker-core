@@ -13,7 +13,7 @@ interface MerchantRelationshipEditFormExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Provides functionality to extend Merchant Relationship update form.
+     * - Provides functionality to extend Merchant Relationship edit form.
      *
      * @api
      *

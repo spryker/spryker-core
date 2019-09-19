@@ -19,7 +19,7 @@ class ProductListMerchantRelationshipEditFormExpanderPlugin extends AbstractPlug
 {
     /**
      * {@inheritdoc}
-     * - Adds Product List multi-select field to merchant relation form.
+     * - Adds Product List multi-select field to merchant relationship edit form.
      *
      * @api
      *

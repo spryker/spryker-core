@@ -235,7 +235,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      *
      * @return void
      */
-    public function executeMerchantRelationshipPostCreatePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    protected function executeMerchantRelationshipPostCreatePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
         foreach ($this->merchantRelationshipPostCreatePlugins as $merchantRelationshipPostCreatePlugin) {
             $merchantRelationshipPostCreatePlugin->execute($merchantRelationshipTransfer);
