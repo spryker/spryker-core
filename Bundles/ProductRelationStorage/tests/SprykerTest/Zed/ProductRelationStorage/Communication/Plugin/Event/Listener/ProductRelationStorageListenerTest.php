@@ -23,6 +23,7 @@ use SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelationStorage

@@ -13,6 +13,7 @@ use Spryker\Zed\Assertion\Business\Model\Assertion;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Assertion

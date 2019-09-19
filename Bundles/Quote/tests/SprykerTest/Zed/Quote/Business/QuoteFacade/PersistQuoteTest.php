@@ -20,6 +20,7 @@ use Spryker\Zed\Quote\Business\QuoteFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote

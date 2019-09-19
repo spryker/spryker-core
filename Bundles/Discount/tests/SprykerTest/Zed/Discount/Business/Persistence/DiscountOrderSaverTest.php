@@ -20,6 +20,7 @@ use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

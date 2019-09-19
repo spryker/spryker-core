@@ -14,6 +14,7 @@ use SprykerTest\Shared\Application\Log\Processor\Fixtures\Entity;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application

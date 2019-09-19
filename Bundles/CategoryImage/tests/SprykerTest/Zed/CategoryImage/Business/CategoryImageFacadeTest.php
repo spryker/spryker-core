@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryImage

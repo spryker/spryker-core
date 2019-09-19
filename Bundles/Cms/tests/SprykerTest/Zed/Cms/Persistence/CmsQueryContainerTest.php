@@ -14,6 +14,7 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms

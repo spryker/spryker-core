@@ -1,0 +1,8 @@
+{% for expense in order.expenses if expense.type == shipmentExpenseType %}
+    <div class="col-sm-10">
+        <p>
+            {{ 'Shipment' | trans }} {{ expense.shipment.method.carrierName ?? '' }} {{ expense.name }}
+        </p>
+    </div>
+    <div class="col-sm-2"><p>{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</p></div>
+{% endfor %}

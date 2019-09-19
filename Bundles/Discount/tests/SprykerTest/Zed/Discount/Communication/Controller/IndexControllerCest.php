@@ -11,6 +11,7 @@ use SprykerTest\Zed\Discount\DiscountCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

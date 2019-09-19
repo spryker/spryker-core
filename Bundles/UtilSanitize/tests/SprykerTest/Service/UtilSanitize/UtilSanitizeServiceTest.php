@@ -12,6 +12,7 @@ use Spryker\Service\UtilSanitize\UtilSanitizeService;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilSanitize

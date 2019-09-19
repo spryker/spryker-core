@@ -14,6 +14,7 @@ use Spryker\Yves\Twig\Plugin\ServiceProvider\TwigServiceProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig

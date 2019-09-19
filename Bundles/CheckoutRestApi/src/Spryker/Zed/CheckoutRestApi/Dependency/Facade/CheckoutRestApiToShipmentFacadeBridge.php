@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 
 class CheckoutRestApiToShipmentFacadeBridge implements CheckoutRestApiToShipmentFacadeInterface
 {
@@ -27,10 +28,10 @@ class CheckoutRestApiToShipmentFacadeBridge implements CheckoutRestApiToShipment
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
+    public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer
     {
-        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        return $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
     }
 }

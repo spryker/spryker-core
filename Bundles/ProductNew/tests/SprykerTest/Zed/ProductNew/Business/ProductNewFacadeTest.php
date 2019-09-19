@@ -17,6 +17,7 @@ use Spryker\Zed\ProductNew\ProductNewConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductNew

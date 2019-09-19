@@ -19,6 +19,7 @@ use Spryker\Shared\ContentProduct\ContentProductConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ContentProduct

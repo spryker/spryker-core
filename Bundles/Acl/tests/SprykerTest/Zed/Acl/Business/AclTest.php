@@ -22,6 +22,7 @@ use Spryker\Zed\User\Business\UserFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Acl
