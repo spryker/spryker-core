@@ -59,14 +59,14 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
     {
         $productListQuery = $this->getFactory()
             ->getProductListQuery()
-            ->useSpyMerchantRelationshipQuery(null, Criteria::LEFT_JOIN)
+            ->useSpyMerchantRelationshipQuery()
                 ->filterByIdMerchantRelationship(null, Criteria::ISNULL)
             ->endUse();
 
         if ($merchantRelationshipTransfer->getIdMerchantRelationship()) {
             $productListQuery = $this->getFactory()
                 ->getProductListQuery()
-                ->useSpyMerchantRelationshipQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyMerchantRelationshipQuery()
                     ->filterByIdMerchantRelationship(null, Criteria::ISNULL)
                     ->_or()
                     ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
