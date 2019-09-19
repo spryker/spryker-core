@@ -34,8 +34,6 @@ class TriggerController extends AbstractController
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
-     * @deprecated use submitTriggerEventForOrderItemsAction instead
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -43,6 +41,13 @@ class TriggerController extends AbstractController
     public function triggerEventForOrderItemsAction(Request $request)
     {
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
+
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            $this->addErrorMessage(static::ERROR_INVALID_FORM);
+
+            return $this->redirectResponse($redirect);
+        }
+
         $idOrderItems = $this->getRequestIdSalesOrderItems($request);
         if ($idOrderItems === []) {
             return $this->redirectResponse($redirect);
@@ -56,6 +61,8 @@ class TriggerController extends AbstractController
     }
 
     /**
+     * @deprecated use triggerEventForOrderItemsAction instead
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -82,35 +89,42 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated use submitTriggerEventForOrderAction instead
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
-        $event = $request->query->get('event');
-        $redirect = $request->query->get('redirect', '/');
-        $itemsList = $request->query->get('items');
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
+
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            $this->addErrorMessage(static::ERROR_INVALID_FORM);
+
+            return $this->redirectResponse($redirect);
+        }
+
+        $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
         $this->getFacade()->triggerEvent($event, $orderItems, []);
-        $this->addInfoMessage('Status change triggered successfully.');
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
     }
 
     /**
+     * @deprecated use triggerEventForOrderAction instead
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function submitTriggerEventForOrderAction(Request $request)
     {
-        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
 
         if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
@@ -120,7 +134,6 @@ class TriggerController extends AbstractController
 
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
         $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
@@ -145,9 +158,7 @@ class TriggerController extends AbstractController
             $query->filterByIdSalesOrderItem($itemsList, Criteria::IN);
         }
 
-        $orderItems = $query->find();
-
-        return $orderItems;
+        return $query->find();
     }
 
     /**

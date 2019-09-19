@@ -9,8 +9,8 @@ namespace Spryker\Zed\Oms\Communication\Form\DataProvider;
 
 abstract class AbstractOmsTriggerFormDataProvider
 {
-    public const OMS_ACTION_ITEM_TRIGGER = 'submit-trigger-event-for-order-items';
-    public const OMS_ACTION_ORDER_TRIGGER = 'submit-trigger-event-for-order';
+    public const OMS_ACTION_ITEM_TRIGGER = 'trigger-event-for-order-items';
+    public const OMS_ACTION_ORDER_TRIGGER = 'trigger-event-for-order';
 
     public const QUERY_PARAM_EVENT = 'event';
     public const QUERY_PARAM_ID_SALES_ORDER = 'id-sales-order';
