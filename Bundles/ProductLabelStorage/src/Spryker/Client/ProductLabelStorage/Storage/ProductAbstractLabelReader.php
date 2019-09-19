@@ -140,8 +140,13 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
         }
 
         $storageData = array_map(function ($storageData) {
+            if (empty($storageData)) {
+                return null;
+            }
+
             return $this->utilEncodingService->decodeJson($storageData, true);
         }, $this->storageClient->getMulti($storageKeys));
+        $storageData = array_filter($storageData);
         $productLabelIds = [];
 
         foreach ($storageData as $storageDataItem) {

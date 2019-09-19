@@ -150,7 +150,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
         $restResourceCollectionsByProductConcreteSku = [];
 
         foreach ($abstractProductIdsByProductConcreteSku as $productConcreteSku => $idProductAbstract) {
-            $restResourceCollectionsByProductConcreteSku[$productConcreteSku] = $restResourceCollections[$idProductAbstract];
+            $restResourceCollectionsByProductConcreteSku[$productConcreteSku] = $restResourceCollections[$idProductAbstract] ?? [];
         }
 
         return $restResourceCollectionsByProductConcreteSku;

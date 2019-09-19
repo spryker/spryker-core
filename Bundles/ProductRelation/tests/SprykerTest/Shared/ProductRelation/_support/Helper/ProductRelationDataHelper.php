@@ -24,14 +24,18 @@ class ProductRelationDataHelper extends Module
     /**
      * @param string $skuAbstractProduct
      * @param int $idProductAbstract
+     * @param string $productRelationType
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
-    public function haveProductRelation(string $skuAbstractProduct, int $idProductAbstract): ProductRelationTransfer
-    {
+    public function haveProductRelation(
+        string $skuAbstractProduct,
+        int $idProductAbstract,
+        string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING
+    ): ProductRelationTransfer {
         $productRelationFacade = $this->getProductRelationFacade();
 
-        $productRelationTransfer = $this->createProductRelationTransfer($skuAbstractProduct, $idProductAbstract);
+        $productRelationTransfer = $this->createProductRelationTransfer($skuAbstractProduct, $idProductAbstract, $productRelationType);
 
         $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
 
@@ -66,11 +70,15 @@ class ProductRelationDataHelper extends Module
     /**
      * @param string $skuAbstractProduct
      * @param int $idProductAbstractRelated
+     * @param string $productRelationType
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
-    protected function createProductRelationTransfer(string $skuAbstractProduct, int $idProductAbstractRelated): ProductRelationTransfer
-    {
+    protected function createProductRelationTransfer(
+        string $skuAbstractProduct,
+        int $idProductAbstractRelated,
+        string $productRelationType
+    ): ProductRelationTransfer {
         $productRelationTransfer = new ProductRelationTransfer();
         $productRelationTransfer->setFkProductAbstract($idProductAbstractRelated);
 
@@ -82,7 +90,7 @@ class ProductRelationDataHelper extends Module
         $productRelationTransfer->setIsActive(true);
 
         $productRelationTypeTransfer = new ProductRelationTypeTransfer();
-        $productRelationTypeTransfer->setKey(ProductRelationTypes::TYPE_UP_SELLING);
+        $productRelationTypeTransfer->setKey($productRelationType);
         $productRelationTransfer->setProductRelationType($productRelationTypeTransfer);
 
         return $productRelationTransfer;
