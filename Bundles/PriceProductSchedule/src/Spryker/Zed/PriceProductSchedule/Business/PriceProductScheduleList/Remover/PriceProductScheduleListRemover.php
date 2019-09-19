@@ -118,7 +118,7 @@ class PriceProductScheduleListRemover implements PriceProductScheduleListRemover
             if ($priceProductScheduleTransfer->getIsCurrent()) {
                 $this->priceProductScheduleRemover->removeAndApplyPriceProductSchedule($idPriceProductSchedule);
 
-                return;
+                continue;
             }
 
             $this->priceProductScheduleEntityManager
