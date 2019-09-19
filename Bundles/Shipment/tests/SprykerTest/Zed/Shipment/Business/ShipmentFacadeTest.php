@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
@@ -506,6 +507,31 @@ class ShipmentFacadeTest extends Test
         $this->assertTrue($this->hasShipmentExpense($calculableObjectTransfer, $anotherExpenseTransfer));
         $this->assertFalse($this->hasShipmentExpense($calculableObjectTransfer, $shipmentExpenseTransfer));
     }
+
+    /**
+     * @return void
+     */
+    public function testExpandOrderWithShipmentPrices(): void
+    {
+        //Arrange
+        $idSalesOrder = $this->tester->createOrder();
+        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($idSalesOrder);
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
+
+        //Act
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $this->tester->getFacade()->expandOrderWithShipmentPrices($orderTransfer);
+
+        //Assert
+        foreach ($orderTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = current($shipmentMethodTransfer->getPrices());
+            $this->assertNotNull($moneyValueTransfer->getNetAmount());
+            $this->assertNotNull($moneyValueTransfer->getGrossAmount());
+        }
+    }
+
 
     /**
      * @return array
