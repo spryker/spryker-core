@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+use DateTime;
+use DateTimeZone;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -24,6 +26,7 @@ class EditScheduleListController extends AbstractController
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
     protected const MESSAGE_SUCCESS = 'Scheduled price list has been successfully saved';
     protected const URL_PATTERN_EDIT_LIST = '/price-product-schedule-gui/edit-schedule-list?id-price-product-schedule-list=%s';
+    protected const FORMAT_DATE_TIME = 'Y-m-d e H:i:s';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -59,11 +62,32 @@ class EditScheduleListController extends AbstractController
         $priceProductScheduleTable = $this->getFactory()
             ->createPriceProductScheduleTableForEditList($idPriceProductScheduleList);
 
+        $priceProductScheduleListTransfer = $priceProductScheduleListResponseTransfer->getPriceProductScheduleList();
+        $priceProductScheduleListTransfer = $this->formatCreatedAt($priceProductScheduleListTransfer);
+
         return $this->viewResponse([
-            'priceProductScheduleList' => $priceProductScheduleListResponseTransfer->getPriceProductScheduleList(),
+            'priceProductScheduleList' => $priceProductScheduleListTransfer,
             'priceProductScheduleTable' => $priceProductScheduleTable->render(),
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    protected function formatCreatedAt(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer
+    {
+        $createdAt = $priceProductScheduleListTransfer->getCreatedAt();
+        $dateTime = new DateTime($createdAt);
+        $storeTransfer = $this->getFactory()
+            ->getStoreFacade()
+            ->getCurrentStore();
+        $timezone = new DateTimeZone($storeTransfer->getTimezone());
+        $dateTime->setTimezone($timezone);
+
+        return $priceProductScheduleListTransfer->setCreatedAt($dateTime->format(static::FORMAT_DATE_TIME));
     }
 
     /**

@@ -63,3 +63,4 @@ Delete,Delete
 "Scheduled price list was successfully removed","Scheduled price list was successfully removed"
 "Are you sure about deleting the Scheduled prices %s?","Are you sure about deleting the Scheduled prices %s?"
 "You will delete %d prices for %d products. Is this what you want?","You will delete %d prices for %d products. Is this what you want?"
+"Via data import","Via data import"
