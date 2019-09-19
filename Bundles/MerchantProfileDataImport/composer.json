@@ -1,17 +1,10 @@
 {
-  "name": "spryker/merchant-gui",
+  "name": "spryker/merchant-profile-data-import",
   "type": "library",
-  "description": "MerchantGui module",
+  "description": "MerchantProfileDataImport module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/country": "^3.0.0",
-    "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/merchant": "^2.0.0",
-    "spryker/merchant-gui-extension": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/util-text": "^1.1.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
@@ -24,7 +23,6 @@ class MerchantWriter implements MerchantWriterInterface
     use TransactionTrait;
 
     protected const ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
-    protected const ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID = 'Merchant status transition is not valid.';
 
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface
@@ -48,11 +46,6 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantAddressWriter;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
-     */
-    protected $merchantStatusValidator;
-
-    /**
      * @var \Spryker\Zed\Merchant\MerchantConfig
      */
     protected $merchantConfig;
@@ -62,7 +55,6 @@ class MerchantWriter implements MerchantWriterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
      * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
-     * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      */
     public function __construct(
@@ -70,14 +62,12 @@ class MerchantWriter implements MerchantWriterInterface
         MerchantRepositoryInterface $merchantRepository,
         MerchantKeyGeneratorInterface $merchantKeyGenerator,
         MerchantAddressWriterInterface $merchantAddressWriter,
-        MerchantStatusValidatorInterface $merchantStatusValidator,
         MerchantConfig $merchantConfig
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
         $this->merchantKeyGenerator = $merchantKeyGenerator;
         $this->merchantAddressWriter = $merchantAddressWriter;
-        $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantConfig = $merchantConfig;
     }
 
@@ -95,8 +85,6 @@ class MerchantWriter implements MerchantWriterInterface
                 $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
             );
         }
-
-        $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
 
         $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
             return $this->executeCreateTransaction($merchantTransfer);
@@ -128,12 +116,6 @@ class MerchantWriter implements MerchantWriterInterface
         $existingMerchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
         if ($existingMerchantTransfer === null) {
             $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_NOT_FOUND);
-
-            return $merchantResponseTransfer;
-        }
-
-        if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($existingMerchantTransfer->getStatus(), $merchantTransfer->getStatus())) {
-            $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID);
 
             return $merchantResponseTransfer;
         }
@@ -199,10 +181,6 @@ class MerchantWriter implements MerchantWriterInterface
         $merchantTransfer
             ->requireName()
             ->requireRegistrationNumber()
-            ->requireContactPersonTitle()
-            ->requireContactPersonFirstName()
-            ->requireContactPersonLastName()
-            ->requireContactPersonPhone()
             ->requireEmail();
     }
 

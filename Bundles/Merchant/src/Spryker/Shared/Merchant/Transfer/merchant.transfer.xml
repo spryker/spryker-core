@@ -8,11 +8,6 @@
         <property name="merchantKey" type="string" />
         <property name="name" type="string" />
         <property name="registrationNumber" type="string" />
-        <property name="status" type="string" />
-        <property name="contactPersonTitle" type="string" />
-        <property name="contactPersonFirstName" type="string" />
-        <property name="contactPersonLastName" type="string" />
-        <property name="contactPersonPhone" type="string" />
         <property name="email" type="string" />
         <property name="addressCollection" type="MerchantAddressCollection" />
     </transfer>
