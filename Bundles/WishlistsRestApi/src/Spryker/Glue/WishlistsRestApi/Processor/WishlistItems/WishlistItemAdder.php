@@ -73,13 +73,13 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $wishlistResource
      * @param \Generated\Shared\Transfer\RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\WishlistItemRequestTransfer|null
+     * @return \Generated\Shared\Transfer\WishlistItemRequestTransfer
      */
     protected function createWishlistItemRequest(
         RestRequestInterface $restRequest,
         RestResourceInterface $wishlistResource,
         RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer
-    ): ?WishlistItemRequestTransfer {
+    ): WishlistItemRequestTransfer {
         return (new WishlistItemRequestTransfer())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setUuidWishlist($wishlistResource->getId())

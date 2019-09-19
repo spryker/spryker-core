@@ -67,15 +67,17 @@ class WishlistCreator implements WishlistCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    protected function createWishlistTransfer(RestWishlistsAttributesTransfer $attributesTransfer, RestRequestInterface $restRequest): WishlistTransfer
-    {
+    protected function createWishlistTransfer(
+        RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer,
+        RestRequestInterface $restRequest
+    ): WishlistTransfer {
         return $this->wishlistMapper
-            ->mapWishlistAttributesToWishlistTransfer($attributesTransfer, new WishlistTransfer())
+            ->mapWishlistAttributesToWishlistTransfer($restWishlistsAttributesTransfer, new WishlistTransfer())
             ->setFkCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
     }
 }

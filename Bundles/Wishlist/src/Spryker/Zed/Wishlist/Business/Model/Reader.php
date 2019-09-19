@@ -424,22 +424,18 @@ class Reader implements ReaderInterface
             ->requireUuid()
             ->requireIdCustomer();
 
-        $wishlistResponseTransfer = (new WishlistResponseTransfer())
-            ->setIsSuccess(false);
-
-        $wishlistTransfer = $this->wishlistRepository
-            ->getCustomerWishlistByUuid(
-                $wishlistRequestTransfer->getIdCustomer(),
-                $wishlistRequestTransfer->getUuid()
-            );
+        $wishlistTransfer = $this->wishlistRepository->getCustomerWishlistByUuid(
+            $wishlistRequestTransfer->getIdCustomer(),
+            $wishlistRequestTransfer->getUuid()
+        );
 
         if (!$wishlistTransfer) {
-            $wishlistResponseTransfer->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
-
-            return $wishlistResponseTransfer;
+            return (new WishlistResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
         }
 
-        return $wishlistResponseTransfer
+        return (new WishlistResponseTransfer())
             ->setWishlist($wishlistTransfer)
             ->setIsSuccess(true);
     }

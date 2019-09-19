@@ -24,14 +24,11 @@ class WishlistHelper extends Module
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function haveEmptyWishlist(array $override): WishlistTransfer
+    public function haveWishlist(array $override): WishlistTransfer
     {
-        $wishlistTransfer = (new WishlistBuilder($override))
-            ->build();
+        $wishlistTransfer = (new WishlistBuilder($override))->build();
 
-        $createdWishlistTransfer = $this->getWishlistFacade()->createWishlist($wishlistTransfer);
-
-        return $createdWishlistTransfer;
+        return $this->getWishlistFacade()->createWishlist($wishlistTransfer);
     }
 
     /**

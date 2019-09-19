@@ -12,7 +12,6 @@ use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
 use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 
@@ -24,27 +23,19 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     protected $wishlistRestApiClient;
 
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface
-     */
-    protected $wishlistItemMapper;
-
-    /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface
      */
     protected $wishlistRestResponseBuilder;
 
     /**
      * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistRestApiClient
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface $wishlistItemMapper
      * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
      */
     public function __construct(
         WishlistsRestApiClientInterface $wishlistRestApiClient,
-        WishlistItemMapperInterface $wishlistItemMapper,
         WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
     ) {
         $this->wishlistRestApiClient = $wishlistRestApiClient;
-        $this->wishlistItemMapper = $wishlistItemMapper;
         $this->wishlistRestResponseBuilder = $wishlistRestResponseBuilder;
     }
 

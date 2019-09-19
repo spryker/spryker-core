@@ -150,7 +150,7 @@ interface WishlistClientInterface
 
     /**
      * Specification:
-     *  - Retrieving wishlist collection by customer transfer.
+     * - Retrieves wishlist collection by customer transfer.
      *
      * @api
      *
@@ -162,11 +162,11 @@ interface WishlistClientInterface
 
     /**
      * Specification:
-     *  - Retrieve wishlist by customer id and wishlist uuid.
-     *
-     * {@internal will work if uuid field is provided.}
+     * - Retrieves wishlist by customer id and wishlist uuid.
      *
      * @api
+     *
+     * {@internal will work if uuid field is provided.}
      *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *

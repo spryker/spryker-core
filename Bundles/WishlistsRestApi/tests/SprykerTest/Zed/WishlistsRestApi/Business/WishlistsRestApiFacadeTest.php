@@ -61,7 +61,7 @@ class WishlistsRestApiFacadeTest extends Test
     {
         $originalName = 'Original';
         $newName = 'New';
-        $originalWishlist = $this->tester->haveEmptyWishlist(
+        $originalWishlist = $this->tester->haveWishlist(
             [
                 'name' => $originalName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
@@ -123,7 +123,7 @@ class WishlistsRestApiFacadeTest extends Test
         //Arrange
         $originalName = 'Original';
         $wrongName = '{{New';
-        $wishlist = $this->tester->haveEmptyWishlist(
+        $wishlist = $this->tester->haveWishlist(
             [
                 'name' => $originalName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
@@ -156,7 +156,7 @@ class WishlistsRestApiFacadeTest extends Test
     {
         //Arrange
         $wishlistName = 'name';
-        $wishlist = $this->tester->haveEmptyWishlist(
+        $wishlist = $this->tester->haveWishlist(
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => $wishlistName,
@@ -207,7 +207,7 @@ class WishlistsRestApiFacadeTest extends Test
     {
         //Arrange
         $wishlistName = 'name';
-        $wishlist = $this->tester->haveEmptyWishlist(
+        $wishlist = $this->tester->haveWishlist(
             [
                 'name' => $wishlistName,
                 'fkCustomer' => $this->customer->getIdCustomer(),
@@ -272,7 +272,7 @@ class WishlistsRestApiFacadeTest extends Test
     public function testAddNonExistingWishlistItemToWishlistShouldReturnError(): void
     {
         //Arrange
-        $wishlist = $this->tester->haveEmptyWishlist(
+        $wishlist = $this->tester->haveWishlist(
             [
                 'name' => 'name',
                 'fkCustomer' => $this->customer->getIdCustomer(),
@@ -302,7 +302,7 @@ class WishlistsRestApiFacadeTest extends Test
     {
         //Arrange
         $wishlistName = 'name';
-        $wishlist = $this->tester->haveEmptyWishlist(
+        $wishlist = $this->tester->haveWishlist(
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => $wishlistName,
@@ -344,7 +344,7 @@ class WishlistsRestApiFacadeTest extends Test
      */
     public function testDeleteWishlistItemInNonExistingWishlistShouldReturnError(): void
     {
-        $wishlist = $this->tester->haveEmptyWishlist(
+        $wishlist = $this->tester->haveWishlist(
             [
                 'fkCustomer' => $this->customer->getIdCustomer(),
                 'name' => 'name',

@@ -29,7 +29,7 @@ class WishlistsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Wishlist not found.",
-     *              "422": "Unknown error."
+     *              "422": "Unprocessable entity."
      *          }
      *     },
      *     "getCollection": {
@@ -58,7 +58,7 @@ class WishlistsResourceController extends AbstractController
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Creates wishlist.",
+     *              "Creates wishlist."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -66,7 +66,7 @@ class WishlistsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Wishlist with the same name already exists, Wishlist name has wrong format.",
-     *              "422": "Unknown error."
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
@@ -95,7 +95,8 @@ class WishlistsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
-     *              "404": "Wishlist not found."
+     *              "404": "Wishlist not found.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
@@ -123,7 +124,8 @@ class WishlistsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Wishlist not found."
+     *              "404": "Wishlist not found.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })

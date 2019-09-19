@@ -42,7 +42,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
             ->requireUuidWishlist()
             ->requireSku();
 
-        $wishlistRequestTransfer = $this->createWishlistRequest($wishlistItemRequestTransfer);
+        $wishlistRequestTransfer = $this->createWishlistRequestTransfer($wishlistItemRequestTransfer);
         $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -67,7 +67,7 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistRequestTransfer
      */
-    protected function createWishlistRequest(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistRequestTransfer
+    protected function createWishlistRequestTransfer(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistRequestTransfer
     {
         return (new WishlistRequestTransfer())
             ->setIdCustomer($wishlistItemRequestTransfer->getIdCustomer())

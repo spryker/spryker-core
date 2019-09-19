@@ -21,7 +21,7 @@ class WishlistUpdater implements WishlistUpdaterInterface
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface
      */
-    protected $wishlistResourceMapper;
+    protected $wishlistMapper;
 
     /**
      * @var \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface
@@ -34,16 +34,16 @@ class WishlistUpdater implements WishlistUpdaterInterface
     protected $wishlistRestResponseBuilder;
 
     /**
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface $wishlistResourceMapper
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapperInterface $wishlistMapper
      * @param \Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface $wishlistsRestApiClient
      * @param \Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
      */
     public function __construct(
-        WishlistMapperInterface $wishlistResourceMapper,
+        WishlistMapperInterface $wishlistMapper,
         WishlistsRestApiClientInterface $wishlistsRestApiClient,
         WishlistRestResponseBuilderInterface $wishlistRestResponseBuilder
     ) {
-        $this->wishlistResourceMapper = $wishlistResourceMapper;
+        $this->wishlistMapper = $wishlistMapper;
         $this->wishlistsRestApiClient = $wishlistsRestApiClient;
         $this->wishlistRestResponseBuilder = $wishlistRestResponseBuilder;
     }
@@ -70,17 +70,17 @@ class WishlistUpdater implements WishlistUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
+     * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\WishlistRequestTransfer
      */
     protected function createWishlistRequestTransferFromRequest(
-        RestWishlistsAttributesTransfer $attributesTransfer,
+        RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer,
         RestRequestInterface $restRequest
     ) {
-        $wishlistTransfer = $this->wishlistResourceMapper
-            ->mapWishlistAttributesToWishlistTransfer($attributesTransfer, new WishlistTransfer());
+        $wishlistTransfer = $this->wishlistMapper
+            ->mapWishlistAttributesToWishlistTransfer($restWishlistsAttributesTransfer, new WishlistTransfer());
 
         return (new WishlistRequestTransfer())
             ->setUuid($restRequest->getResource()->getId())

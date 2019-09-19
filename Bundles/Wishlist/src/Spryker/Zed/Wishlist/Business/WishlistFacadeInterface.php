@@ -222,10 +222,12 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Returns wishlist by uuid for a given customer.
-     *  - Required values of WishlistTransfer: fkCustomer, uuid.
+     * - Returns wishlist for a given customer by uuid.
+     * - Required values of WishlistRequestTransfer::$wishlist: fkCustomer, uuid.
      *
      * @api
+     *
+     * {@internal will work if uuid field is provided.}
      *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *

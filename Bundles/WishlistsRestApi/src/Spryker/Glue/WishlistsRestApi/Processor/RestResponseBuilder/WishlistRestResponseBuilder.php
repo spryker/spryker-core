@@ -261,8 +261,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_UNKNOWN_ERROR)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        return $this->restResourceBuilder->createRestResponse()
-            ->addError($errorMessage);
+        return $this->restResourceBuilder->createRestResponse()->addError($errorMessage);
     }
 
     /**
@@ -275,9 +274,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM);
 
-        return $restResponse = $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
+        return $restResponse = $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -290,9 +287,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setStatus(Response::HTTP_NOT_FOUND)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_NOT_FOUND);
 
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -305,9 +300,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED);
 
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -320,9 +313,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS)
             ->setStatus(Response::HTTP_BAD_REQUEST);
 
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -335,9 +326,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setCode(WishlistsRestApiConfig::RESPONSE_CODE_WISHLIST_NAME_INVALID)
             ->setStatus(Response::HTTP_BAD_REQUEST);
 
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**

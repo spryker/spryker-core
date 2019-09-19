@@ -675,7 +675,7 @@ class WishlistFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response should be unsuccessful.');
-        $this->assertCount(1, $wishlistResponseTransfer->getErrors(), 'Exectly 1 error is expected');
+        $this->assertCount(1, $wishlistResponseTransfer->getErrors(), 'Exactly 1 error is expected');
         $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');
         $this->assertNull($wishlistResponseTransfer->getWishlist(), 'No wishlist should be returned.');
     }

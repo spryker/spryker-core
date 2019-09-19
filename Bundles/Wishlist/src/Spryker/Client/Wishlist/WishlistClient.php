@@ -259,9 +259,9 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * {@inheritdoc}
      *
-     * {@internal will work if uuid field is provided.}
-     *
      * @api
+     *
+     * {@internal will work if uuid field is provided.}
      *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *

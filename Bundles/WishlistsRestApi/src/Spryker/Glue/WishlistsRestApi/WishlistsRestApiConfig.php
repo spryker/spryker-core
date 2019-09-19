@@ -36,7 +36,6 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED = 'Id is not specified.';
     public const RESPONSE_DETAIL_WISHLIST_NAME_INVALID = 'Please enter name using only letters, numbers, underscores, spaces or dashes.';
     public const RESPONSE_DETAIL_WISHLIST_CANT_BE_UPDATED = 'Can\'t update wishlist';
-    public const RESPONSE_DETAIL_WISHLIST_CANT_BE_CREATED = 'Can\'t create wishlist';
 
     /**
      * @return array
@@ -68,6 +67,11 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_NO_ITEM_WITH_PROVIDED_ID,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_NO_ITEM_WITH_PROVIDED_SKU,
+            ],
+            SharedWishlistRestApiConfig::ERROR_IDENTIFIER_WISHLIST_ITEM_CANT_BE_ADDED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_WISHLIST_CANT_ADD_ITEM,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM,
             ],
         ];
     }
