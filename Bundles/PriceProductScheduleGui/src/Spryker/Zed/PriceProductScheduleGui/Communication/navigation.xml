@@ -51,6 +51,17 @@
                         <action>index</action>
                         <icon>fa-angle-double-right</icon>
                         <visible>0</visible>
+                        <pages>
+                            <price-product-schedule-edit>
+                                <label>Edit Schedule Price</label>
+                                <title>Edit Schedule Price</title>
+                                <bundle>price-product-schedule-gui</bundle>
+                                <controller>edit-schedule-price</controller>
+                                <action>index</action>
+                                <icon>fa-angle-double-right</icon>
+                                <visible>0</visible>
+                            </price-product-schedule-edit>
+                        </pages>
                     </price-product-schedule-list-edit>
                     <price-product-schedule-list-delete>
                         <label>Delete</label>

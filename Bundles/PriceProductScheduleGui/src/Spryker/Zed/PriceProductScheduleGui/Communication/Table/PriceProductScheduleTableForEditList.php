@@ -92,7 +92,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
     protected function generatePriceProductScheduleEditButton(SpyPriceProductSchedule $item): string
     {
         return $this->generateEditButton(
-            Url::generate('/price-product-schedule-gui/edit', [
+            Url::generate('/price-product-schedule-gui/edit-schedule-price', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
                 'id-price-product-schedule-list' => $item->getFkPriceProductScheduleList(),
             ]),
@@ -110,6 +110,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
         return $this->generateRemoveButton(
             Url::generate('/price-product-schedule-gui/delete', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
+                'id-price-product-schedule-list' => $item->getFkPriceProductScheduleList(),
             ]),
             'Delete'
         );
