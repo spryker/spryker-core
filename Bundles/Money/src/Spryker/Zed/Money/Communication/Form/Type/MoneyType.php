@@ -172,6 +172,8 @@ class MoneyType extends AbstractType
      * {@inheritdoc}
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

@@ -41,9 +41,9 @@ class DiscountPromotionCalculationFormDataExpanderPlugin extends AbstractPlugin 
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param array|null $data
      *

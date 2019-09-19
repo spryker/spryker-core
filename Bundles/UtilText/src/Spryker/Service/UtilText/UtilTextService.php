@@ -98,7 +98,15 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Generates a hash from an input string.
+     *
+     * @api
+     *
+     * @param string $rawToken
+     * @param array $options
+     *
+     * @return string
      */
     public function generateToken($rawToken, array $options = [])
     {
@@ -106,7 +114,15 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Checks if a hash matches against an input string that gets hashed internally.
+     *
+     * @api
+     *
+     * @param string $rawToken
+     * @param string $token
+     *
+     * @return bool
      */
     public function checkToken($rawToken, $hash)
     {

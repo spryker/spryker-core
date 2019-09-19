@@ -22,11 +22,12 @@ class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
     /**
      * {@inheritdoc}
      * - Adds application global variables.
-     * - Extends twig with application global functions.
+     * - Extends Twig with application global functions.
      *
      * @api
      *
      * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
      */

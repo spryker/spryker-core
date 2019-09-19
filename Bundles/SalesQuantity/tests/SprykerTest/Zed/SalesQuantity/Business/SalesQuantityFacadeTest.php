@@ -201,9 +201,9 @@ class SalesQuantityFacadeTest extends Unit
     }
 
     /**
-     * @see SalesQuantityConfig::findItemQuantityThreshold()
-     *
      * @dataProvider thresholds
+     *
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
      *
      * @param bool $expectedResult
      * @param int $quantity

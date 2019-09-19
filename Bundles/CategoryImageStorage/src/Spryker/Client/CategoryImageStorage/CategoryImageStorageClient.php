@@ -17,8 +17,13 @@ class CategoryImageStorageClient extends AbstractClient implements CategoryImage
 {
     /**
      * {@inheritdoc}
-     *
+     * 
      * @api
+     * 
+     * @param int $idCategory
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryImageSetCollectionStorageTransfer|null
      */
     public function findCategoryImageSetCollectionStorage(int $idCategory, string $localeName): ?CategoryImageSetCollectionStorageTransfer
     {

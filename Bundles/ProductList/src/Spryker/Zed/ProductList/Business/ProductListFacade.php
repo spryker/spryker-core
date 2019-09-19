@@ -77,6 +77,8 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void
     {
@@ -86,11 +88,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -150,11 +152,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProductAbstract() instead.
      *
      * @param int $idProductAbstract
      *
@@ -198,11 +200,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductBlacklistIdsByIdProduct() instead.
      *
      * @param int $idProduct
      *
@@ -230,11 +232,11 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use ProductListFacade::getProductWhitelistIdsByIdProduct() instead.
      *
      * @param int $idProduct
      *

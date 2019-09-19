@@ -382,12 +382,12 @@ interface CustomerFacadeInterface
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
      *
-     * @see CustomerFacadeInterface::registerCustomer()
-     * @see CustomerFacadeInterface::updateCustomer()
-     *
      * @api
      *
      * @deprecated Use saveOrderCustomer() instead
+     *
+     * @see CustomerFacadeInterface::registerCustomer()
+     * @see CustomerFacadeInterface::updateCustomer()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -407,10 +407,10 @@ interface CustomerFacadeInterface
      * - Updates customer addresses.
      * - Processes quote level (BC) or item level shipping addresses.
      *
+     * @api
+     *
      * @see CustomerFacadeInterface::registerCustomer()
      * @see CustomerFacadeInterface::updateCustomer()
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer

@@ -80,7 +80,7 @@ class ApiRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function match($pathinfo)
     {
