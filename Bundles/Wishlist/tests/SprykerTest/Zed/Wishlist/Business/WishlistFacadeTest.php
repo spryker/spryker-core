@@ -640,13 +640,12 @@ class WishlistFacadeTest extends Unit
 
         $this->setupEmptyWishlist($wishlistName);
         $this->createWishlistItem($this->wishlist->getIdWishlist(), $this->product_1->getSku());
+        $wishlistRequestTransfer = (new WishlistRequestTransfer())
+            ->setIdCustomer($this->customer->getIdCustomer())
+            ->setUuid($this->wishlist->getUuid());
 
         //Act
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid(
-            (new WishlistRequestTransfer())
-                ->setIdCustomer($this->customer->getIdCustomer())
-                ->setUuid($this->wishlist->getUuid())
-        );
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
         $wishlist = $wishlistResponseTransfer->getWishlist();
 
         //Assert
@@ -666,13 +665,12 @@ class WishlistFacadeTest extends Unit
     {
         //Arrange
         $uuidWishlistNotExisting = 'fake-uuid';
+        $wishlistRequestTransfer = (new WishlistRequestTransfer())
+            ->setIdCustomer($this->customer->getIdCustomer())
+            ->setUuid($uuidWishlistNotExisting);
 
         //Act
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid(
-            (new WishlistRequestTransfer())
-                ->setIdCustomer($this->customer->getIdCustomer())
-                ->setUuid($uuidWishlistNotExisting)
-        );
+        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
 
         //Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response should be unsuccessful.');
