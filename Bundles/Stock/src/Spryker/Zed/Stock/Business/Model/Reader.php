@@ -15,7 +15,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Stock\Business\Exception\MissingProductException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use Spryker\Zed\Stock\Business\Exception\StockWarehouseMappingException;
@@ -338,7 +338,7 @@ class Reader implements ReaderInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     * @throws \Spryker\Zed\Stock\Business\Exception\MissingProductException
      *
      * @return int
      */

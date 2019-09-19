@@ -216,6 +216,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return true;
         }
 
+        if ($currentQuantity === null || $quantityWithReservedItems === null) {
+            return false;
+        }
+
         if ($currentQuantity->equals(0) && $quantityWithReservedItems->greaterThan($currentQuantity)) {
             return true;
         }
