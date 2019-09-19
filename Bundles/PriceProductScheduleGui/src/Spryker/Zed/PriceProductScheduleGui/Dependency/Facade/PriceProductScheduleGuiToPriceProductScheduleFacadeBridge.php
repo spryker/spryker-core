@@ -167,4 +167,15 @@ class PriceProductScheduleGuiToPriceProductScheduleFacadeBridge implements Price
     {
         return $this->priceProductScheduleFacade->isPriceProductScheduleUnique($priceProductScheduleTransfer);
     }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
+    {
+        return $this->priceProductScheduleFacade
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
+    }
 }

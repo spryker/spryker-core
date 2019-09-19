@@ -23,6 +23,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Constraint\PriceProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProdductScheduleDeleteForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleImportFormType;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleListDeleteForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\PriceProductScheduleListForm;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleDeleteFormDataProvider;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
@@ -188,6 +189,15 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
                 [],
                 $options
             );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPriceProductScheduleListDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()
+            ->create(PriceProductScheduleListDeleteForm::class);
     }
 
     /**

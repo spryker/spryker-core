@@ -248,4 +248,20 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     {
         return $this->getRepository()->isPriceProductScheduleUnique($priceProductScheduleTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleListRemover()
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
+    }
 }

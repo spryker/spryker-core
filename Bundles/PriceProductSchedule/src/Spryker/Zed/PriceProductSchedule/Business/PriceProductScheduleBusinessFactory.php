@@ -67,6 +67,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProd
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListImporterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Remover\PriceProductScheduleListRemover;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Remover\PriceProductScheduleListRemoverInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinder;
 use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinder;
@@ -495,6 +497,19 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
             $this->createPriceProductScheduleListFinder(),
             $this->createPriceProductScheduleListCreator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Remover\PriceProductScheduleListRemoverInterface
+     */
+    public function createPriceProductScheduleListRemover(): PriceProductScheduleListRemoverInterface
+    {
+        return new PriceProductScheduleListRemover(
+            $this->createPriceProductScheduleRemover(),
+            $this->createPriceProductScheduleListFinder(),
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

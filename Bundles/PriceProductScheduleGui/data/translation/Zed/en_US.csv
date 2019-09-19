@@ -59,4 +59,8 @@ Delete,Delete
 "Schedule price haven not been saved","Schedule price haven not been saved"
 "Finish at must be greater than start from","Finish at must be greater than start from"
 "An identical scheduled price already exists for this product.","An identical scheduled price already exists for this product."
+"Yes, delete those prices","Yes, delete those prices"
+"Scheduled price list was successfully removed","Scheduled price list was successfully removed"
+"Are you sure about deleting the Scheduled prices %s?","Are you sure about deleting the Scheduled prices %s?"
+"You will delete %d prices for %d products. Is this what you want?","You will delete %d prices for %d products. Is this what you want?"
 "Via data import","Via data import"

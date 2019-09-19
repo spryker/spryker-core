@@ -171,4 +171,18 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
             ->find()
             ->delete();
     }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleListById(int $idPriceProductScheduleList): void
+    {
+        $this->getFactory()
+            ->createPriceProductScheduleListQuery()
+            ->filterByIdPriceProductScheduleList($idPriceProductScheduleList)
+            ->find()
+            ->delete();
+    }
 }
