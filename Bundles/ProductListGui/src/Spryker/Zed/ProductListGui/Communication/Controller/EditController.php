@@ -98,7 +98,7 @@ class EditController extends ProductListAbstractController
         $data = $this->prepareTemplateVariables($productListAggregateForm);
         $data['idProductList'] = $productListTransfer->getIdProductList();
 
-        $data['productListUsedByTableDataTransfer'] = $this->getFactory()
+        $data['productListUsedByTableData'] = $this->getFactory()
             ->createProductListUsedByTableDataProvider()
             ->getTableData($productListTransfer);
 

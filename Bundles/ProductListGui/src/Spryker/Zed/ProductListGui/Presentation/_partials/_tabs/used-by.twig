@@ -7,5 +7,14 @@
         </tr>
     </thead>
     <tbody>
+        {% for productListUsedByTableRow in productListUsedByTableData.rows %}
+            <tr>
+                <td>{{ productListUsedByTableRow.entityTitle }}</td>
+                <td>{{ productListUsedByTableRow.entityName }}</td>
+                <td>{% include '@ProductListGui/_partials/button-collection.twig' with {
+                        buttonCollection: productListUsedByTableRow.actionButtons
+                    } only %} </td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>

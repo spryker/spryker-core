@@ -38,13 +38,13 @@
 
     <transfer name="ProductListUsedByTableData">
         <property name="productList" type="ProductList" />
-        <property name="rows" type="ProductListUsedByTableRow[]" />
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
     </transfer>
 
     <transfer name="ProductListUsedByTableRow">
         <property name="entityTitle" type="string" />
         <property name="entityName" type="string" />
-        <property name="actions" type="Button[]" />
+        <property name="actionButtons" type="ButtonCollection" />
     </transfer>
 
 </transfers>

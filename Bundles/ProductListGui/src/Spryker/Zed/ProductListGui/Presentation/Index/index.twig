@@ -7,14 +7,9 @@
 
 {% block action %}
     {{ parent() }}
-    {% for button in topButtons.getButtons() %}
-        {% include '@ProductListGui/_partials/button.twig' with {
-            url: button.url | default,
-            title: button.title | default,
-            class: button.defaultOptions.class | default(''),
-            iconClass: button.defaultOptions.iconClass| default('')
-        } only %}
-    {% endfor %}
+    {% include '@ProductListGui/_partials/button-collection.twig' with {
+        buttonCollection: topButtons
+    } only %}
 {% endblock %}
 
 {% block content %}

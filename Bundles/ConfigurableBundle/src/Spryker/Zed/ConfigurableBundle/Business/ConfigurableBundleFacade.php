@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -151,5 +152,21 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
         return $this->getFactory()
             ->createConfigurableBundleTemplateSlotReader()
             ->checkProductListUsageAmongSlots($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     */
+    public function expandProductListUsedByTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
+    {
+        return $this->getFactory()
+            ->createProductListUsedByTableDataExpander()
+            ->expandTableData($productListUsedByTableDataTransfer);
     }
 }

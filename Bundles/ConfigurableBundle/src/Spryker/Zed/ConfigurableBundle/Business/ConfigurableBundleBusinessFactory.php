@@ -7,10 +7,16 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpander;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydrator;
+use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapper;
+use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
@@ -76,6 +82,34 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleTemplateNameGenerator(): ConfigurableBundleTemplateNameGeneratorInterface
     {
         return new ConfigurableBundleTemplateNameGenerator($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpanderInterface
+     */
+    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
+    {
+        return new ProductListUsedByTableDataExpander(
+            $this->getRepository(),
+            $this->createConfigurableBundleTranslationHydrator(),
+            $this->createProductListUsedByTableDataMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface
+     */
+    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
+    {
+        return new ProductListUsedByTableDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface
+     */
+    public function createConfigurableBundleTranslationHydrator(): ConfigurableBundleTranslationHydratorInterface
+    {
+        return new ConfigurableBundleTranslationHydrator($this->getGlossaryFacade());
     }
 
     /**

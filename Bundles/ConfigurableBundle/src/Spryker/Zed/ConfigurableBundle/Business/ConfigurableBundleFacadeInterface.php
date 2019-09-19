@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleFacadeInterface
@@ -127,4 +128,17 @@ interface ConfigurableBundleFacadeInterface
      */
     public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
+    /**
+     * Specification:
+     * - Finds configurable bundle template slots which use given product list by UsedByTableDataTransfer::idProductList.
+     * - Uses idProductList property from ProductListUsedByTableDataTransfer::ProductList to filter records.
+     * - Expands UsedByTableDataTransfer::rows with found data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     */
+    public function expandProductListUsedByTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer;
 }

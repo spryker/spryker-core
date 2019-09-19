@@ -36,6 +36,12 @@
         <property name="name" type="string" />
         <property name="uuid" type="string" />
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotTranslation">
+        <property name="name" type="string" />
+        <property name="locale" type="Locale" />
     </transfer>
 
     <transfer name="ProductListResponse">
@@ -73,6 +79,21 @@
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductListUsedByTableData">
+        <property name="productList" type="ProductList" />
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="entityTitle" type="string" />
+        <property name="entityName" type="string" />
+        <property name="actionButtons" type="ButtonCollection" />
+    </transfer>
+
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button" />
     </transfer>
 
 </transfers>
