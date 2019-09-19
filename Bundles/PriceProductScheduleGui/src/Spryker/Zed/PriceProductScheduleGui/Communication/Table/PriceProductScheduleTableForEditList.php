@@ -110,6 +110,7 @@ class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleT
         return $this->generateRemoveButton(
             Url::generate('/price-product-schedule-gui/delete', [
                 'id-price-product-schedule' => $item->getIdPriceProductSchedule(),
+                'id-price-product-schedule-list' => $item->getFkPriceProductScheduleList(),
             ]),
             'Delete'
         );
