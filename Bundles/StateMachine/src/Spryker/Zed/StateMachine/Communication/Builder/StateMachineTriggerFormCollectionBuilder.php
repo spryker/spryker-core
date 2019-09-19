@@ -28,7 +28,7 @@ class StateMachineTriggerFormCollectionBuilder implements StateMachineTriggerFor
      * @param int $identifier
      * @param string $redirect
      * @param int $idState
-     * @param array $events
+     * @param string[] $events
      *
      * @return \Symfony\Component\Form\FormView[]
      */
