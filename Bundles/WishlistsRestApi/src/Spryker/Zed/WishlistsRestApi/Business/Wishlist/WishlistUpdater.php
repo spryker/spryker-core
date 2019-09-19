@@ -61,24 +61,34 @@ class WishlistUpdater implements WishlistUpdaterInterface
         $wishlistResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
-            foreach ($wishlistResponseTransfer->getErrors() as $error) {
-                if ($error === static::ERROR_MESSAGE_NAME_ALREADY_EXISTS) {
-                    return $wishlistResponseTransfer->setErrorIdentifier(
-                        WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST
-                    );
-                }
-                if ($error === static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT) {
-                    return $wishlistResponseTransfer->setErrorIdentifier(
-                        WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
-                    );
-                }
-            }
-
-            return $wishlistResponseTransfer->setErrorIdentifier(
-                WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
-            );
+            return $this->createWishlistResponseTransferWithError($wishlistResponseTransfer);
         }
 
         return $wishlistResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistResponseTransfer $wishlistResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    protected function createWishlistResponseTransferWithError(WishlistResponseTransfer $wishlistResponseTransfer): WishlistResponseTransfer
+    {
+        foreach ($wishlistResponseTransfer->getErrors() as $error) {
+            if ($error === static::ERROR_MESSAGE_NAME_ALREADY_EXISTS) {
+                return $wishlistResponseTransfer->setErrorIdentifier(
+                    WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_ALREADY_EXIST
+                );
+            }
+            if ($error === static::ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT) {
+                return $wishlistResponseTransfer->setErrorIdentifier(
+                    WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NAME_WRONG_FORMAT
+                );
+            }
+        }
+
+        return $wishlistResponseTransfer->setErrorIdentifier(
+            WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
+        );
     }
 }

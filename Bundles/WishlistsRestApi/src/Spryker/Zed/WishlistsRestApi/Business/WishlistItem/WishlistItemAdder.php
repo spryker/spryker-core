@@ -82,17 +82,11 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      */
     protected function createWishlistItemTransfer(WishlistTransfer $wishlistTransfer, WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemTransfer
     {
-        $wishlistItemTransfer = new WishlistItemTransfer();
-        $wishlistItemTransfer->setFkWishlist($wishlistTransfer->getIdWishlist());
-        $wishlistItemTransfer->setWishlistName($wishlistTransfer->getName());
-        $wishlistItemTransfer->setFkCustomer($wishlistTransfer->getFkCustomer());
-
-        $wishlistItemTransfer->fromArray(
-            $wishlistItemRequestTransfer->toArray(),
-            true
-        );
-
-        return $wishlistItemTransfer;
+        return (new WishlistItemTransfer())
+            ->setFkWishlist($wishlistTransfer->getIdWishlist())
+            ->setWishlistName($wishlistTransfer->getName())
+            ->setFkCustomer($wishlistTransfer->getFkCustomer())
+            ->fromArray($wishlistItemRequestTransfer->toArray(), true);
     }
 
     /**

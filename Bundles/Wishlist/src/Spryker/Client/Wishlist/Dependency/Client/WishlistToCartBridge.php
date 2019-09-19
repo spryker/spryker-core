@@ -44,7 +44,7 @@ class WishlistToCartBridge implements WishlistToCartInterface
      */
     public function addItems(array $itemTransfers, array $params = [])
     {
-        return $this->cartClient->addItems($itemTransfers);
+        return $this->cartClient->addItems($itemTransfers, $params);
     }
 
     /**

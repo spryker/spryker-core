@@ -424,7 +424,7 @@ class Reader implements ReaderInterface
             ->requireUuid()
             ->requireIdCustomer();
 
-        $wishlistTransfer = $this->wishlistRepository->getCustomerWishlistByUuid(
+        $wishlistTransfer = $this->wishlistRepository->findCustomerWishlistByUuid(
             $wishlistRequestTransfer->getIdCustomer(),
             $wishlistRequestTransfer->getUuid()
         );

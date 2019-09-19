@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\WishlistsRestApi;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface;
 
 /**
@@ -35,10 +36,25 @@ class WishlistsRestApiBusinessTester extends Actor
     public function getWishlistsRestApiFacade(): WishlistsRestApiFacadeInterface
     {
         /**
-         * @var \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface
+         * @var \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface $facade
          */
         $facade = $this->getFacade();
 
         return $facade;
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer
+     */
+    public function getWishlistByName(int $idCustomer, string $name): WishlistTransfer
+    {
+        return $this->getWishlistFacade()->getWishlistByName(
+            (new WishlistTransfer())
+                ->setName($name)
+                ->setFkCustomer($idCustomer)
+        );
     }
 }

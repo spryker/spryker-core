@@ -274,7 +274,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_WISHLIST_CANT_ADD_ITEM);
 
-        return $restResponse = $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**

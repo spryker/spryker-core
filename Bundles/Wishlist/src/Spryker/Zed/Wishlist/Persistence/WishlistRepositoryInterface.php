@@ -25,5 +25,5 @@ interface WishlistRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer|null
      */
-    public function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer;
+    public function findCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer;
 }
