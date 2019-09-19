@@ -14,6 +14,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Mail

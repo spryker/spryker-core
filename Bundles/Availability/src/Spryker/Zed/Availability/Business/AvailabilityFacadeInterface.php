@@ -189,7 +189,6 @@ interface AvailabilityFacadeInterface
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
-     *
      * Specification:
      *  - Updates availability for given sku, by quantity for current store
      *  - Touches availability collector if data changed

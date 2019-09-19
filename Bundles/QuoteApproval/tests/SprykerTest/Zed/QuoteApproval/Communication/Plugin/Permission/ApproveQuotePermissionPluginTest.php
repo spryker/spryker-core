@@ -14,6 +14,7 @@ use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermis
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group QuoteApproval

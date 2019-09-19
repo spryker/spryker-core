@@ -12,6 +12,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer

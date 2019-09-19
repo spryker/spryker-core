@@ -26,6 +26,7 @@ use Spryker\DecimalObject\Decimal;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Availability

@@ -334,7 +334,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return implode($pathParts, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 
     /**

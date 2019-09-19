@@ -26,6 +26,7 @@ use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\Categor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryImageStorage

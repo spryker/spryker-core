@@ -30,6 +30,7 @@ use Spryker\Zed\ProductDiscountConnector\ProductDiscountConnectorDependencyProvi
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductDiscountConnector

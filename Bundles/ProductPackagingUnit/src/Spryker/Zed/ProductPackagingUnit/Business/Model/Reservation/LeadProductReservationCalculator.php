@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
@@ -44,13 +45,40 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      */
     public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): Decimal
     {
-        $reservedStateNames = $this->omsFacade->getReservedStateNames();
+        $reservedStates = $this->omsFacade->getOmsReservedStateCollection()->getStates();
 
-        $sumReservedLeadProductAmount = $this->productPackagingUnitRepository
-            ->sumLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, $reservedStateNames);
+        $reservedLeadProductAmountAggregations = $this->productPackagingUnitRepository
+            ->aggregateLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, array_keys($reservedStates->getArrayCopy()));
+
+        $sumReservedLeadProductAmount = new Decimal(0);
+        foreach ($reservedLeadProductAmountAggregations as $reservedLeadProductAmountAggregation) {
+            $this->assertAggregationTransfer($reservedLeadProductAmountAggregation);
+
+            $processName = $reservedLeadProductAmountAggregation->getProcessName();
+            $stateName = $reservedLeadProductAmountAggregation->getStateName();
+            if (!$reservedStates->offsetExists($stateName) || !$reservedStates[$stateName]->getProcesses()->offsetExists($processName)) {
+                continue;
+            }
+
+            $reservedLeadProductAmountAggregation->requireSumAmount();
+            $sumReservedLeadProductAmount = $sumReservedLeadProductAmount->add($reservedLeadProductAmountAggregation->getSumAmount());
+        }
 
         $sumReservedLeadProductQuantity = $this->omsFacade->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
         return $sumReservedLeadProductQuantity->add($sumReservedLeadProductAmount);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer $salesAggregationTransfer
+     *
+     * @return void
+     */
+    protected function assertAggregationTransfer(SalesOrderItemStateAggregationTransfer $salesAggregationTransfer): void
+    {
+        $salesAggregationTransfer
+            ->requireSku()
+            ->requireProcessName()
+            ->requireStateName();
     }
 }
