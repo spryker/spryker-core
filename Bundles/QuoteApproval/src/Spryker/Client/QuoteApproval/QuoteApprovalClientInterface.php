@@ -126,7 +126,7 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns true if quote status is `declined`.
+     * - Returns true if quote status is `declined`, false otherwise.
      *
      * @api
      *

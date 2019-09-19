@@ -133,7 +133,9 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      */
     public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->getFactory()->createQuoteStatusChecker()->isQuoteDeclined($quoteTransfer);
+        return $this->getFactory()
+            ->createQuoteStatusChecker()
+            ->isQuoteDeclined($quoteTransfer);
     }
 
     /**
