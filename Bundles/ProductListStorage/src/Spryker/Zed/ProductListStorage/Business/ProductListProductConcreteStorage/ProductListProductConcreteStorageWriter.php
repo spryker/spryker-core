@@ -25,6 +25,8 @@ class ProductListProductConcreteStorageWriter implements ProductListProductConcr
     protected $productListStorageRepository;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue;

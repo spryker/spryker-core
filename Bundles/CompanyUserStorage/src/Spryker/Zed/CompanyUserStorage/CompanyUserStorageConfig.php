@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserStorage;
 
-use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyUserStorageConfig extends AbstractBundleConfig
@@ -18,13 +17,5 @@ class CompanyUserStorageConfig extends AbstractBundleConfig
     public function getCompanyUserSynchronizationPoolName(): ?string
     {
         return null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return $this->get(CompanyUserStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 }

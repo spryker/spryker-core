@@ -26,23 +26,15 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $entityManager;
 
     /**
-     * @var bool
-     */
-    protected $isSendingToQueue;
-
-    /**
      * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface $repository
      * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface $entityManager
-     * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductResourceAliasStorageRepositoryInterface $repository,
-        ProductResourceAliasStorageEntityManagerInterface $entityManager,
-        bool $isSendingToQueue = true
+        ProductResourceAliasStorageEntityManagerInterface $entityManager
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
-        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -57,7 +49,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         $productConcreteData = $this->repository->getProductConcreteSkuList($productConcreteIds);
 
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
-            $productConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $sku = $productConcreteData[$productConcreteStorageEntity->getFkProduct()][static::KEY_SKU];
 
             $oldSku = $productConcreteStorageEntity->getSku();

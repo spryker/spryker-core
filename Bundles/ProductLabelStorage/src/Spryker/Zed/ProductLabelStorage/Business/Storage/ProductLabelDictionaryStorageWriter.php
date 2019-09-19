@@ -24,6 +24,8 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $queryContainer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -76,7 +78,6 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     {
         $spyProductStorageEntities = $this->findProductLabelDictionaryStorageEntities();
         foreach ($spyProductStorageEntities as $spyProductStorageEntity) {
-            $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyProductStorageEntity->delete();
         }
     }
@@ -154,7 +155,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     }
 
     /**
-     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage[]
+     * @return array
      */
     protected function findProductLabelDictionaryStorageEntities()
     {

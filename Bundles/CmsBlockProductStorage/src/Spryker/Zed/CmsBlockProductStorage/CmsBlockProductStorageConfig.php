@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage;
 
-use Spryker\Shared\CmsBlockProductStorage\CmsBlockProductStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockProductStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(CmsBlockProductStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

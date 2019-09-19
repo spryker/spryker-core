@@ -50,6 +50,8 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected $store;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -150,7 +152,6 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected function deleteStorageEntities(array $cmsBlockStorageEntities)
     {
         foreach ($cmsBlockStorageEntities as $cmsBlockStorageEntity) {
-            $cmsBlockStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $cmsBlockStorageEntity->delete();
         }
     }

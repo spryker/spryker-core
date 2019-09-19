@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\NavigationStorage;
 
-use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class NavigationStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(NavigationStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

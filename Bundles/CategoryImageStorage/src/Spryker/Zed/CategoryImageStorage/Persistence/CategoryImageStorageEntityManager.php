@@ -16,27 +16,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CategoryImageStorageEntityManager extends AbstractEntityManager implements CategoryImageStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function saveCategoryImageStorage(SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer)
     {
-        $categoryImageStorageEntity = $this->getFactory()
-            ->createSpyCategoryImageStorageQuery()
-            ->filterByIdCategoryImageStorage(
-                $categoryImageStorageEntityTransfer->getIdCategoryImageStorage()
-            )
-            ->findOneOrCreate();
-
-        $categoryImageStorageEntity->fromArray(
-            $categoryImageStorageEntityTransfer->toArray()
-        );
-        $categoryImageStorageEntity->setIsSendingToQueue(
-            $this->getFactory()->getConfig()->isSendingToQueue()
-        );
-
-        $categoryImageStorageEntity->save();
+        $this->save($categoryImageStorageEntityTransfer);
     }
 
     /**
@@ -48,10 +32,6 @@ class CategoryImageStorageEntityManager extends AbstractEntityManager implements
             ->createSpyCategoryImageStorageQuery()
             ->filterByIdCategoryImageStorage($idCategoryImageStorageEntityTransfer)
             ->findOne();
-
-        $categoryImageStorageEntity->setIsSendingToQueue(
-            $this->getFactory()->getConfig()->isSendingToQueue()
-        );
 
         $categoryImageStorageEntity->delete();
     }

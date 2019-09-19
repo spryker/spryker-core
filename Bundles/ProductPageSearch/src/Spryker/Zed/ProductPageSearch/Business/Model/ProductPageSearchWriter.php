@@ -26,6 +26,8 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     protected $utilEncoding;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;

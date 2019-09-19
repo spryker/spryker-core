@@ -9,10 +9,9 @@ namespace Spryker\Client\CompanyUserStorage\Storage;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\CompanyUserStorage\CompanyUserStorageConfig;
 use Spryker\Client\CompanyUserStorage\Dependency\Client\CompanyUserStorageToStorageClientInterface;
 use Spryker\Client\CompanyUserStorage\Dependency\Service\CompanyUserStorageToSynchronizationServiceInterface;
-use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig as SharedCompanyUserStorageConfig;
+use Spryker\Shared\CompanyUserStorage\CompanyUserStorageConfig;
 
 class CompanyUserStorage implements CompanyUserStorageInterface
 {
@@ -29,23 +28,15 @@ class CompanyUserStorage implements CompanyUserStorageInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\CompanyUserStorage\CompanyUserStorageConfig
-     */
-    protected $config;
-
-    /**
      * @param \Spryker\Client\CompanyUserStorage\Dependency\Client\CompanyUserStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\CompanyUserStorage\Dependency\Service\CompanyUserStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\CompanyUserStorage\CompanyUserStorageConfig $config
      */
     public function __construct(
         CompanyUserStorageToStorageClientInterface $storageClient,
-        CompanyUserStorageToSynchronizationServiceInterface $synchronizationService,
-        CompanyUserStorageConfig $config
+        CompanyUserStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->config = $config;
     }
 
     /**
@@ -58,8 +49,16 @@ class CompanyUserStorage implements CompanyUserStorageInterface
     {
         $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference);
+        $mappingData = $this->storageClient->get($mappingKey);
 
-        return $this->findStorageDataByMappingKey($mappingKey);
+        if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
+            return null;
+        }
+
+        $storageKey = $this->getStorageKey($mappingData[static::KEY_ID]);
+        $companyUserStorageData = $this->storageClient->get($storageKey);
+
+        return (new CompanyUserStorageTransfer())->fromArray($companyUserStorageData, true);
     }
 
     /**
@@ -74,43 +73,7 @@ class CompanyUserStorage implements CompanyUserStorageInterface
             ->setReference($reference);
 
         return $this->synchronizationService
-            ->getStorageKeyBuilder(SharedCompanyUserStorageConfig::COMPANY_USER_RESOURCE_NAME)
+            ->getStorageKeyBuilder(CompanyUserStorageConfig::COMPANY_USER_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @param string $mappingKey
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserStorageTransfer|null
-     */
-    protected function findStorageDataByMappingKey(string $mappingKey): ?CompanyUserStorageTransfer
-    {
-        $storageData = $this->storageClient->get($mappingKey);
-
-        if ($this->config->isSendingToQueue()) {
-            $storageData = $this->resolveMappingData($storageData);
-        }
-
-        if (!$storageData) {
-            return null;
-        }
-
-        return (new CompanyUserStorageTransfer())->fromArray($storageData, true);
-    }
-
-    /**
-     * @param array|null $mappingData
-     *
-     * @return array|null
-     */
-    protected function resolveMappingData(?array $mappingData): ?array
-    {
-        if (!$mappingData || !isset($mappingData[static::KEY_ID])) {
-            return null;
-        }
-
-        $storageKey = $this->getStorageKey($mappingData[static::KEY_ID]);
-
-        return $this->storageClient->get($storageKey);
     }
 }

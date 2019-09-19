@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\UrlStorage;
 
-use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UrlStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(UrlStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

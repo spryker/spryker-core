@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductReviewStorage;
 
-use Spryker\Shared\ProductReviewStorage\ProductReviewStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductReviewStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(ProductReviewStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

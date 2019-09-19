@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface;
@@ -53,6 +52,8 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     protected $store;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -101,7 +102,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     public function unpublish(array $cmsPageIds): void
     {
-        $this->deleteSearchEntitiesByCmsPageIds($cmsPageIds);
+        $this->deleteSearchEntities($cmsPageIds);
     }
 
     /**
@@ -143,26 +144,13 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      *
      * @return void
      */
-    protected function deleteSearchEntitiesByCmsPageIds(array $cmsPageIds): void
+    protected function deleteSearchEntities(array $cmsPageIds): void
     {
         if (empty($cmsPageIds)) {
             return;
         }
 
-        $cmsPageSearchEntities = $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find();
-        $this->deleteCmsPageSearchEntities($cmsPageSearchEntities);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch[] $cmsPageSearchEntities
-     *
-     * @return void
-     */
-    protected function deleteCmsPageSearchEntities(ObjectCollection $cmsPageSearchEntities): void
-    {
-        foreach ($cmsPageSearchEntities as $cmsPageSearchEntity) {
-            $this->deleteSearchEntity($cmsPageSearchEntity);
-        }
+        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->delete();
     }
 
     /**
@@ -172,7 +160,6 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     protected function deleteSearchEntity(SpyCmsPageSearch $cmsPageSearchEntity): void
     {
-        $cmsPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $cmsPageSearchEntity->delete();
     }
 

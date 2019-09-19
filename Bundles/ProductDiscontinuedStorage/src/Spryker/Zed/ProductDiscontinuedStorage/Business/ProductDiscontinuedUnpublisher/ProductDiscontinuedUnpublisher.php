@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedUnp
 
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface;
-use Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 
 class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherInterface
 {
@@ -24,23 +23,15 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
     protected $productDiscontinuedStorageRepository;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig
-     */
-    protected $productDiscontinuedStorageConfig;
-
-    /**
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface $discontinuedStorageEntityManager
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository
-     * @param \Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig
      */
     public function __construct(
         ProductDiscontinuedStorageEntityManagerInterface $discontinuedStorageEntityManager,
-        ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository,
-        ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig
+        ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository
     ) {
         $this->discontinuedStorageEntityManager = $discontinuedStorageEntityManager;
         $this->productDiscontinuedStorageRepository = $productDiscontinuedStorageRepository;
-        $this->productDiscontinuedStorageConfig = $productDiscontinuedStorageConfig;
     }
 
     /**
@@ -53,9 +44,6 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
         $productDiscontinuedStorageEntities = $this->findProductDiscontinuedStorageEntitiesByIds($productDiscontinuedIds);
 
         foreach ($productDiscontinuedStorageEntities as $productDiscontinuedStorageEntity) {
-            $productDiscontinuedStorageEntity->setIsSendingToQueue(
-                $this->productDiscontinuedStorageConfig->isSendingToQueue()
-            );
             $this->discontinuedStorageEntityManager->deleteProductDiscontinuedStorageEntity(
                 $productDiscontinuedStorageEntity
             );

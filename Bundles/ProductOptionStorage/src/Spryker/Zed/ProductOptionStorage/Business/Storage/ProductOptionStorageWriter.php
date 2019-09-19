@@ -41,6 +41,8 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $productOptionStorageReader;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue;
@@ -110,9 +112,6 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {
             foreach ($productAbstractOptionStorageEntityArray as $productAbstractOptionStorageEntity) {
-                $productAbstractOptionStorageEntity->setIsSendingToQueue(
-                    $this->isSendingToQueue
-                );
                 $productAbstractOptionStorageEntity->delete();
             }
         }

@@ -50,9 +50,6 @@ class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorag
         $spyTaxSetStorages = $this->findTaxSetStoragesByIdTaxSetsIndexedByFkTaxSet($taxSetIds);
 
         foreach ($spyTaxSetStorages as $spyTaxSetStorage) {
-            $spyTaxSetStorage->setIsSendingToQueue(
-                $this->getFactory()->getConfig()->isSendingToQueue()
-            );
             $spyTaxSetStorage->delete();
         }
     }

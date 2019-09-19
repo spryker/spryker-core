@@ -35,14 +35,4 @@ interface CustomerAccessStorageConstants
      * @api
      */
     public const CUSTOMER_ACCESS_RESOURCE_NAME = 'unauthenticated_customer_access';
-
-    /**
-     * Specification:
-     * - Enables/disables storage synchronization.
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
-     */
-    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

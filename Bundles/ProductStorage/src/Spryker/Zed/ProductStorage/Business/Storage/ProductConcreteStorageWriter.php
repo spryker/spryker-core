@@ -37,6 +37,8 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -100,7 +102,6 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
     protected function deleteProductConcreteStorageEntities(array $productConcreteStorageEntities)
     {
         foreach ($productConcreteStorageEntities as $productConcreteStorageEntity) {
-            $productConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productConcreteStorageEntity->delete();
         }
     }

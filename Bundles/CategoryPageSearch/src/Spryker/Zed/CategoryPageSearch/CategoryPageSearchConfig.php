@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\CategoryPageSearch;
 
-use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryPageSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(CategoryPageSearchConstants::SEARCH_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

@@ -20,6 +20,8 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     protected $queryContainer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -69,7 +71,6 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     {
         $spyProductAbstractGroupStorageEntities = $this->findProductAbstractGroupStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractGroupStorageEntities as $spyProductAbstractGroupStorageEntity) {
-            $spyProductAbstractGroupStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyProductAbstractGroupStorageEntity->delete();
         }
     }
@@ -278,7 +279,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorage[]
+     * @return array
      */
     protected function findProductAbstractGroupStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

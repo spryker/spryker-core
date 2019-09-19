@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductStorageConfig extends AbstractBundleConfig
 {
@@ -36,13 +35,5 @@ class ProductStorageConfig extends AbstractBundleConfig
     public static function isCollectorCompatibilityMode(): bool
     {
         return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return $this->get(ProductStorageConstants::STORAGE_SYNC_ENABLED, true);
     }
 }

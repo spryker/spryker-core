@@ -25,8 +25,7 @@ class ShoppingListStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListCustomerStoragePublisher(
             $this->getEntityManager(),
-            $this->getRepository(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getRepository()
         );
     }
 }

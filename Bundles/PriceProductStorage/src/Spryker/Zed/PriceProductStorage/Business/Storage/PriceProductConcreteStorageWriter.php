@@ -35,6 +35,8 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     protected $queryContainer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -87,7 +89,6 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     {
         $priceProductConcreteStorageEntities = $this->findPriceProductConcreteStorageEntities($productConcreteIds);
         foreach ($priceProductConcreteStorageEntities as $priceProductConcreteStorageEntity) {
-            $priceProductConcreteStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $priceProductConcreteStorageEntity->delete();
         }
     }

@@ -9,23 +9,9 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage;
-use Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 
 class ProductMeasurementUnitStorageMapper implements ProductMeasurementUnitStorageMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig
-     */
-    protected $config;
-
-    /**
-     * @param \Spryker\Zed\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig $config
-     */
-    public function __construct(ProductMeasurementUnitStorageConfig $config)
-    {
-        $this->config = $config;
-    }
-
     /**
      * @param \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage $spyProductMeasurementUnitStorageEntity
      * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntityTransfer
@@ -37,9 +23,6 @@ class ProductMeasurementUnitStorageMapper implements ProductMeasurementUnitStora
         SpyProductMeasurementUnitStorageEntityTransfer $productMeasurementUnitStorageEntityTransfer
     ): SpyProductMeasurementUnitStorage {
         $spyProductMeasurementUnitStorageEntity->fromArray($productMeasurementUnitStorageEntityTransfer->toArray());
-        $spyProductMeasurementUnitStorageEntity->setIsSendingToQueue(
-            $this->config->isSendingToQueue()
-        );
 
         return $spyProductMeasurementUnitStorageEntity;
     }

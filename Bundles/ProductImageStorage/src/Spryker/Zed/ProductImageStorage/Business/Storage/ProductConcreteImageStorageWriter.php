@@ -36,6 +36,8 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     protected $repository;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -117,7 +119,6 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
                     continue;
                 }
 
-                $productConcreteImageStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $productConcreteImageStorageEntity->delete();
             }
         }

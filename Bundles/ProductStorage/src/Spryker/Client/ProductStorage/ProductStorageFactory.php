@@ -21,9 +21,6 @@ use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
 
-/**
- * @method \Spryker\Client\ProductStorage\ProductStorageConfig getConfig()
- */
 class ProductStorageFactory extends AbstractFactory
 {
     /**
@@ -59,7 +56,6 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getLocaleClient(),
-            $this->getConfig(),
             $this->getProductConcreteRestrictionPlugins()
         );
     }
@@ -85,7 +81,6 @@ class ProductStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStore(),
             $this->createProductAbstractAttributeMapRestrictionFilter(),
-            $this->getConfig(),
             $this->getProductAbstractRestrictionPlugins()
         );
     }

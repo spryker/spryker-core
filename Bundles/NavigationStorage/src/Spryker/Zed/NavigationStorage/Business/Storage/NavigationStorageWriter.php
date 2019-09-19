@@ -46,6 +46,8 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     protected $store;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -94,7 +96,6 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
         $spyNavigationMenuTranslationStorageEntities = $this->findNavigationStorageEntitiesByNavigationIds($navigationIds);
         foreach ($spyNavigationMenuTranslationStorageEntities as $spyNavigationMenuTranslationStorageLocalizedEntities) {
             foreach ($spyNavigationMenuTranslationStorageLocalizedEntities as $spyNavigationMenuTranslationStorageLocalizedEntity) {
-                $spyNavigationMenuTranslationStorageLocalizedEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $spyNavigationMenuTranslationStorageLocalizedEntity->delete();
             }
         }
@@ -185,7 +186,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param array $navigationIds
      *
-     * @return \Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorage[][]
+     * @return array
      */
     protected function findNavigationStorageEntitiesByNavigationIds(array $navigationIds)
     {

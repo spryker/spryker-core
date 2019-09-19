@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage;
 
-use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -82,10 +81,12 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(PriceProductMerchantRelationshipStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 }

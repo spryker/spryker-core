@@ -26,23 +26,15 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $entityManager;
 
     /**
-     * @var bool
-     */
-    protected $isSendingToQueue;
-
-    /**
      * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageRepositoryInterface $repository
      * @param \Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStorageEntityManagerInterface $entityManager
-     * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductResourceAliasStorageRepositoryInterface $repository,
-        ProductResourceAliasStorageEntityManagerInterface $entityManager,
-        bool $isSendingToQueue = true
+        ProductResourceAliasStorageEntityManagerInterface $entityManager
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
-        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -57,7 +49,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         $productAbstractData = $this->repository->getProductAbstractSkuList($productAbstractIds);
 
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
-            $productAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $sku = $productAbstractData[$productAbstractStorageEntity->getFkProductAbstract()][static::KEY_SKU];
             $oldSku = $productAbstractStorageEntity->getSku();
             if ($oldSku === $sku) {

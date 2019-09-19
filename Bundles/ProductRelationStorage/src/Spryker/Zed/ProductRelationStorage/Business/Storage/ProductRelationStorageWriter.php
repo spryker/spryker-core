@@ -33,6 +33,8 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     protected $repository;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -90,7 +92,6 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     {
         $spyProductAbstractRelationStorageEntities = $this->findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractRelationStorageEntities as $spyProductAbstractRelationStorageEntity) {
-            $spyProductAbstractRelationStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyProductAbstractRelationStorageEntity->delete();
         }
     }
@@ -289,7 +290,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorage[]
+     * @return array
      */
     protected function findProductStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

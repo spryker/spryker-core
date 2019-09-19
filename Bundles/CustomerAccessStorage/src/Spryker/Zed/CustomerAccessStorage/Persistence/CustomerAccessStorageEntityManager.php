@@ -24,9 +24,6 @@ class CustomerAccessStorageEntityManager extends AbstractEntityManager implement
     {
         $storageEntityTransfer = $this->getFactory()->createCustomerAccessStorageQuery()->findOneOrCreate();
         $storageEntityTransfer->setData($customerAccessTransfer->toArray());
-        $storageEntityTransfer->setIsSendingToQueue(
-            $this->getFactory()->getConfig()->isSendingToQueue()
-        );
         $storageEntityTransfer->save();
     }
 }

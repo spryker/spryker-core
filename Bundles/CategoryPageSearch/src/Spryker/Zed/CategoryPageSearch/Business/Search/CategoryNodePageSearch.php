@@ -98,7 +98,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     }
 
     /**
-     * @param \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[][] $spyCategoryNodePageSearchEntities
+     * @param array $spyCategoryNodePageSearchEntities
      *
      * @return void
      */
@@ -106,7 +106,6 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     {
         foreach ($spyCategoryNodePageSearchEntities as $spyCategoryNodePageSearchLocaleEntities) {
             foreach ($spyCategoryNodePageSearchLocaleEntities as $spyCategoryNodePageSearchLocaleEntity) {
-                $spyCategoryNodePageSearchLocaleEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $spyCategoryNodePageSearchLocaleEntity->delete();
             }
         }
@@ -183,7 +182,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     /**
      * @param array $categoryNodeIds
      *
-     * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch[][]
+     * @return array
      */
     protected function findCategoryNodePageSearchEntitiesByCategoryNodeIds(array $categoryNodeIds)
     {

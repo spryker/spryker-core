@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage;
 
-use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(ProductPackagingUnitStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

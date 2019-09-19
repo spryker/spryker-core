@@ -31,6 +31,8 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     protected $productSearchConfig;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -82,7 +84,6 @@ class ProductSearchConfigStorageWriter implements ProductSearchConfigStorageWrit
     public function unpublish()
     {
         $spyProductStorageEntity = $this->findProductSearchConfigDictionaryStorageEntity();
-        $spyProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
         $spyProductStorageEntity->delete();
     }
 

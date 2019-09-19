@@ -29,8 +29,7 @@ class CompanyUserStorageBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUserFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getCompanyUserStorageExpanderPlugins(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getCompanyUserStorageExpanderPlugins()
         );
     }
 

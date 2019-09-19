@@ -35,6 +35,8 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -104,7 +106,6 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         $spyProductAbstractStorageEntities = $this->findProductAbstractCategoryStorageEntitiesByProductAbstractIds($productAbstractIds);
         foreach ($spyProductAbstractStorageEntities as $spyProductAbstractStorageLocalizedEntities) {
             foreach ($spyProductAbstractStorageLocalizedEntities as $spyProductAbstractStorageLocalizedEntity) {
-                $spyProductAbstractStorageLocalizedEntity->setIsSendingToQueue($this->isSendingToQueue);
                 $spyProductAbstractStorageLocalizedEntity->delete();
             }
         }
@@ -253,7 +254,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[][]
+     * @return array
      */
     protected function findProductAbstractCategoryStorageEntitiesByProductAbstractIds(array $productAbstractIds)
     {

@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\CmsPageSearch;
 
-use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsPageSearchConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(CmsPageSearchConstants::SEARCH_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

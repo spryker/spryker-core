@@ -43,14 +43,4 @@ class CategoryStorageConstants
      * @api
      */
     public const CATEGORY_TREE_RESOURCE_NAME = 'category_tree';
-
-    /**
-     * Specification:
-     * - Enables/disables storage synchronization.
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
-     */
-    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

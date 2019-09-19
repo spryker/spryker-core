@@ -49,6 +49,8 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     protected $store;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -100,7 +102,6 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
         foreach ($spyProductSetPageSearchEntities as $spyProductSetPageSearchEntityLocales) {
             foreach ($spyProductSetPageSearchEntityLocales as $spyProductSetPageSearchEntityLocale) {
-                $spyProductSetPageSearchEntityLocale->setIsSendingToQueue($this->isSendingToQueue);
                 $spyProductSetPageSearchEntityLocale->delete();
             }
         }
@@ -200,7 +201,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     /**
      * @param array $productSetIds
      *
-     * @return \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch[][]
+     * @return array
      */
     protected function findProductSetPageSearchEntitiesByProductSetIds(array $productSetIds)
     {

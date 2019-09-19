@@ -25,6 +25,8 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     protected $productListStorageRepository;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue;

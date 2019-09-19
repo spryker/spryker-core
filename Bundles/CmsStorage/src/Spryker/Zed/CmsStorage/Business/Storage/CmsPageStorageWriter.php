@@ -44,6 +44,8 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     protected $storeFacade;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -176,7 +178,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     /**
      * @param int[] $cmsPageIds
      *
-     * @return \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage[][][]
+     * @return array
      */
     protected function findCmsStorageEntities(array $cmsPageIds): array
     {
@@ -256,7 +258,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorage[][][] $cmsPageStorageEntities
+     * @param array $cmsPageStorageEntities
      *
      * @return void
      */
@@ -265,7 +267,6 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
         foreach ($cmsPageStorageEntities as $cmsPageStorageEntity) {
             foreach ($cmsPageStorageEntity as $cmsPageStorageLocaleEntity) {
                 foreach ($cmsPageStorageLocaleEntity as $cmsPageStorageLocaleStoreEntity) {
-                    $cmsPageStorageLocaleStoreEntity->setIsSendingToQueue($this->isSendingToQueue);
                     $cmsPageStorageLocaleStoreEntity->delete();
                 }
             }

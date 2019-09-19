@@ -25,6 +25,8 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     protected $utilSanitizeService;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -64,7 +66,6 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         $spyCmsBlockProductStorageEntities = $this->findCmsBlockProductStorageEntitiesByProductIds($productAbstractIds);
 
         foreach ($spyCmsBlockProductStorageEntities as $spyCmsBlockProductStorageEntity) {
-            $spyCmsBlockProductStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             if (isset($cmsBlockProductsTransfer[$spyCmsBlockProductStorageEntity->getFkProductAbstract()])) {
                 $this->storeData($cmsBlockProductsTransfer, $spyCmsBlockProductStorageEntities);
 
@@ -152,7 +153,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     /**
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage[]
+     * @return array
      */
     protected function findCmsBlockProductStorageEntitiesByProductIds(array $productAbstractIds)
     {

@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage;
 
-use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockCategoryStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
-        return $this->get(CmsBlockCategoryStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

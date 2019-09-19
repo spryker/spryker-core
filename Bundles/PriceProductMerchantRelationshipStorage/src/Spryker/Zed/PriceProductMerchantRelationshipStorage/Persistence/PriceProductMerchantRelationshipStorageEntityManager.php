@@ -59,9 +59,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         array $priceProductAbstractMerchantRelationshipStorageEntities
     ): void {
         foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
-            $priceProductAbstractMerchantRelationshipStorageEntity->setIsSendingToQueue(
-                $this->getFactory()->getConfig()->isSendingToQueue()
-            );
             $priceProductAbstractMerchantRelationshipStorageEntity->delete();
         }
     }
@@ -108,9 +105,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         array $priceProductConcreteMerchantRelationshipStorageEntities
     ): void {
         foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
-            $priceProductConcreteMerchantRelationshipStorageEntity->setIsSendingToQueue(
-                $this->getFactory()->getConfig()->isSendingToQueue()
-            );
             $priceProductConcreteMerchantRelationshipStorageEntity->delete();
         }
     }

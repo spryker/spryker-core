@@ -35,6 +35,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
     protected $repository;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -141,7 +143,6 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
                 continue;
             }
 
-            $productAbstractImageStorageEntities[$idProductAbstract][$localeName]->setIsSendingToQueue($this->isSendingToQueue);
             $productAbstractImageStorageEntities[$idProductAbstract][$localeName]->delete();
             unset($productAbstractImageStorageEntities[$idProductAbstract][$localeName]);
         }

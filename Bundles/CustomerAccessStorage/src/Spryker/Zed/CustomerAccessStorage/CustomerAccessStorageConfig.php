@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\CustomerAccessStorage;
 
-use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerAccessStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return bool
      */
     public function isSendingToQueue()
     {
-        return $this->get(CustomerAccessStorageConstants::STORAGE_SYNC_ENABLED, true);
+        return true;
     }
 
     /**

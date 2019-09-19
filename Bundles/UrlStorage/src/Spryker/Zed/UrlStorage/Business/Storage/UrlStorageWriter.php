@@ -43,6 +43,8 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $storeFacade;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -114,7 +116,6 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
         $this->deleteUrlStorageEntitiesWithExistingUrls($urlStorageEntitiesWithExistingUrls);
         foreach ($indexedUrlStorageEntities as $spyUrlStorageEntity) {
-            $spyUrlStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $spyUrlStorageEntity->delete();
         }
     }

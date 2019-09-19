@@ -34,6 +34,8 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected $store;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -82,7 +84,6 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     {
         $productReviewSearchEntities = $this->findProductReviewSearchEntitiesByProductReviewIds($productReviewIds);
         foreach ($productReviewSearchEntities as $productReviewSearchEntity) {
-            $productReviewSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productReviewSearchEntity->delete();
         }
     }
@@ -167,7 +168,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     /**
      * @param array $productReviewIds
      *
-     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch[]
+     * @return array
      */
     protected function findProductReviewSearchEntitiesByProductReviewIds(array $productReviewIds)
     {

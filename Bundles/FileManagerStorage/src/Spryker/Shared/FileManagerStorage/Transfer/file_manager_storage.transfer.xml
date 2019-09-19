@@ -26,6 +26,5 @@
         <property name="data" type="FileStorageData"/>
         <property name="locale" type="string"/>
         <property name="key" type="string"/>
-        <property name="isSendingToQueue" type="bool"/>
     </transfer>
 </transfers>

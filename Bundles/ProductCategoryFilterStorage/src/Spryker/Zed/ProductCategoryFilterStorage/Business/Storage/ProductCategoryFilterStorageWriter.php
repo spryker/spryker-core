@@ -28,6 +28,8 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     protected $utilEncodingService;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -71,7 +73,6 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     {
         $categoryFilterStorageEntities = $this->findProductCategoryFilterStorageEntitiesByCategoryIds($categoryIds);
         foreach ($categoryFilterStorageEntities as $categoryFilterStorageEntity) {
-            $categoryFilterStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $categoryFilterStorageEntity->delete();
         }
     }
@@ -130,7 +131,7 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     /**
      * @param array $idCategories
      *
-     * @return \Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorage[]
+     * @return array
      */
     protected function findProductCategoryFilterStorageEntitiesByCategoryIds(array $idCategories)
     {

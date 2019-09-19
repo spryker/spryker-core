@@ -37,6 +37,8 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected $queryContainer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -88,7 +90,6 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     {
         $priceProductAbstractStorageEntities = $this->findPriceProductAbstractStorageEntities($productAbstractIds);
         foreach ($priceProductAbstractStorageEntities as $priceProductAbstractStorageEntity) {
-            $priceProductAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $priceProductAbstractStorageEntity->delete();
         }
     }

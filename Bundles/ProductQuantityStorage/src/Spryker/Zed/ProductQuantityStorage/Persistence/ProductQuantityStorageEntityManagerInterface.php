@@ -13,20 +13,15 @@ interface ProductQuantityStorageEntityManagerInterface
 {
     /**
      * @param int $idProductQuantityStorage
-     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    public function deleteProductQuantityStorage(int $idProductQuantityStorage, bool $isSendingToQueue = true): void;
+    public function deleteProductQuantityStorage(int $idProductQuantityStorage): void;
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity
-     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    public function saveProductQuantityStorageEntity(
-        SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity,
-        bool $isSendingToQueue = true
-    ): void;
+    public function saveProductQuantityStorageEntity(SpyProductQuantityStorageEntityTransfer $productQuantityStorageEntity): void;
 }

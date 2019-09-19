@@ -47,6 +47,8 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $storeFacade;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -116,7 +118,6 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected function deleteProductAbstractStorageEntities(array $productAbstractStorageEntities)
     {
         foreach ($productAbstractStorageEntities as $productAbstractStorageEntity) {
-            $productAbstractStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             $productAbstractStorageEntity->delete();
         }
     }

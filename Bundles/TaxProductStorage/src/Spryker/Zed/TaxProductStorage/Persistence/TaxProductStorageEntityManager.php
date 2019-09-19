@@ -27,9 +27,6 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
         $spyTaxProductStorages = $this->findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds($productAbstractIds);
 
         foreach ($spyTaxProductStorages as $spyTaxProductStorage) {
-            $spyTaxProductStorage->setIsSendingToQueue(
-                $this->getFactory()->getConfig()->isSendingToQueue()
-            );
             $spyTaxProductStorage->delete();
         }
     }
@@ -51,9 +48,6 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
             $spyTaxProductStorage
                 ->setSku($taxProductStorageTransfer->getSku())
                 ->setData($taxProductStorageTransfer->toArray())
-                ->setIsSendingToQueue(
-                    $this->getFactory()->getConfig()->isSendingToQueue()
-                )
                 ->save();
         }
     }

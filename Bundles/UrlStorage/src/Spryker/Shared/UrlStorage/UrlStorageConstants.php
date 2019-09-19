@@ -43,14 +43,4 @@ class UrlStorageConstants
      * @api
      */
     public const REDIRECT_RESOURCE_NAME = 'redirect';
-
-    /**
-     * Specification:
-     * - Enables/disables storage synchronization.
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Synchronization\SynchronizationConstants::STORAGE_SYNC_ENABLED
-     */
-    public const STORAGE_SYNC_ENABLED = 'SYNCHRONIZATION:STORAGE_SYNC_ENABLED';
 }

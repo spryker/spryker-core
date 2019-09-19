@@ -35,14 +35,4 @@ class ProductSetPageSearchConstants
      * @api
      */
     public const PRODUCT_SET_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
-
-    /**
-     * Specification:
-     * - Enables/disables search synchronization.
-     *
-     * @api
-     *
-     * @uses \Spryker\Shared\Synchronization\SynchronizationConstants::SEARCH_SYNC_ENABLED
-     */
-    public const SEARCH_SYNC_ENABLED = 'SYNCHRONIZATION:SEARCH_SYNC_ENABLED';
 }

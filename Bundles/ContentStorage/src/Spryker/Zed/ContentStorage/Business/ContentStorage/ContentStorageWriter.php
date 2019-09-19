@@ -43,29 +43,21 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var bool
-     */
-    protected $isSendingToQueue;
-
-    /**
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface $contentStorageRepository
      * @param \Spryker\Zed\ContentStorage\Persistence\ContentStorageEntityManagerInterface $contentStorageEntityManager
      * @param \Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
-     * @param bool $isSendingToQueue
      */
     public function __construct(
         ContentStorageRepositoryInterface $contentStorageRepository,
         ContentStorageEntityManagerInterface $contentStorageEntityManager,
         ContentStorageToLocaleFacadeInterface $localeFacade,
-        ContentStorageToUtilEncodingInterface $utilEncodingService,
-        bool $isSendingToQueue
+        ContentStorageToUtilEncodingInterface $utilEncodingService
     ) {
         $this->contentStorageRepository = $contentStorageRepository;
         $this->contentStorageEntityManager = $contentStorageEntityManager;
         $this->localeFacade = $localeFacade;
         $this->utilEncodingService = $utilEncodingService;
-        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -122,7 +114,6 @@ class ContentStorageWriter implements ContentStorageWriterInterface
             }
 
             $contentStorageTransfer->setFkContent($contentTransfer->getIdContent())
-                ->setIsSendingToQueue($this->isSendingToQueue)
                 ->setContentKey($contentTransfer->getKey())
                 ->setLocale($availableLocale->getLocaleName())
                 ->setData($this->utilEncodingService->encodeJson([

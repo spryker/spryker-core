@@ -26,6 +26,8 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     protected $utilSanitizeService;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -65,7 +67,6 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
 
         foreach ($spyCmsBlockCategoryStorageEntities as $spyCmsBlockCategoryStorageEntity) {
-            $spyCmsBlockCategoryStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
             if (isset($cmsBlockCategoriesTransfer[$spyCmsBlockCategoryStorageEntity->getFkCategory()])) {
                 $this->storeData($cmsBlockCategoriesTransfer, $spyCmsBlockCategoryStorageEntities);
 
@@ -158,7 +159,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     /**
      * @param array $categoryIds
      *
-     * @return \Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage[]
+     * @return array
      */
     protected function findCmsBlockCategoryStorageEntitiesByCategoryIds(array $categoryIds)
     {

@@ -7,16 +7,8 @@
 
 namespace Spryker\Zed\ProductResourceAliasStorage;
 
-use Spryker\Shared\ProductResourceAliasStorage\ProductResourceAliasStorageConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductResourceAliasStorageConfig extends AbstractBundleConfig
 {
-    /**
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return $this->get(ProductResourceAliasStorageConstants::STORAGE_SYNC_ENABLED, true);
-    }
 }
