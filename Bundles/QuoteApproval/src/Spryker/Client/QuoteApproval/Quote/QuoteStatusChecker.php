@@ -101,9 +101,9 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
     {
-        $quoteTransfer = $this->quoteStatusCalculator
+        $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
-        return $quoteTransfer === QuoteApprovalConfig::STATUS_DECLINED;
+        return $quoteStatus === QuoteApprovalConfig::STATUS_DECLINED;
     }
 }
