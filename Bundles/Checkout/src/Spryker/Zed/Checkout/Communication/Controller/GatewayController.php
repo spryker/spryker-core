@@ -28,7 +28,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function placeOrderAction(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function placeOrderAction(QuoteTransfer $quoteTransfer)
     {
         try {
             $checkoutResponseTransfer = $this->getFacade()->placeOrder($quoteTransfer);

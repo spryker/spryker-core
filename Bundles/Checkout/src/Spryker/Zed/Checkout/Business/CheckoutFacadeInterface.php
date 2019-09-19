@@ -36,7 +36,7 @@ interface CheckoutFacadeInterface
     /**
      * Specification:
      * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
-     * - Return response with boolean isSuccess and an array of errors.
+     * - Returns response with boolean isSuccess and an array of errors.
      *
      * @api
      *

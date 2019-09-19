@@ -84,9 +84,9 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     protected function isQuoteApproved(QuoteTransfer $quoteTransfer): bool
     {
-        $quoteTransfer = $this->quoteStatusCalculator
+        $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
-        return $quoteTransfer === QuoteApprovalConfig::STATUS_APPROVED;
+        return $quoteStatus === QuoteApprovalConfig::STATUS_APPROVED;
     }
 }
