@@ -7,25 +7,11 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
+use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface as SearchExtensionResultFormatterPluginInterface;
+
 /**
  * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface` instead.
  */
-interface ResultFormatterPluginInterface
+interface ResultFormatterPluginInterface extends SearchExtensionResultFormatterPluginInterface
 {
-    /**
-     * @api
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * @api
-     *
-     * @param mixed $searchResult
-     * @param array $requestParameters
-     *
-     * @return mixed
-     */
-    public function formatResult($searchResult, array $requestParameters = []);
 }

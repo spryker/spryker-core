@@ -7,21 +7,11 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface as SearchExtensionQueryExpanderPluginInterface;
+
 /**
  * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface` instead
  */
-interface QueryExpanderPluginInterface
+interface QueryExpanderPluginInterface extends SearchExtensionQueryExpanderPluginInterface
 {
-    /**
-     * Specification:
-     *  - Expands base query
-     *
-     * @api
-     *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
-     */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []);
 }

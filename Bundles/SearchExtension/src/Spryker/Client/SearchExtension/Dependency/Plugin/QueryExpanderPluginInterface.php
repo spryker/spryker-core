@@ -22,5 +22,3 @@ interface QueryExpanderPluginInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []);
 }
-
-class_alias(QueryExpanderPluginInterface::class, 'Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface', false);
