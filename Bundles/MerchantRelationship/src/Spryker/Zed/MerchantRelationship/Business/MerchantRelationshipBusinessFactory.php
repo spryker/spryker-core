@@ -10,8 +10,12 @@ namespace Spryker\Zed\MerchantRelationship\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface;
+use Spryker\Zed\MerchantRelationship\Business\Expander\ProductListUsedByTableDataExpander;
+use Spryker\Zed\MerchantRelationship\Business\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGenerator;
 use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
+use Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableDataMapper;
+use Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReader;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipWriter;
@@ -63,6 +67,25 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     public function createMerchantRelationshipExpander(): MerchantRelationshipExpanderInterface
     {
         return new MerchantRelationshipExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Expander\ProductListUsedByTableDataExpanderInterface
+     */
+    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
+    {
+        return new ProductListUsedByTableDataExpander(
+            $this->createMerchantRelationshipReader(),
+            $this->createProductListUsedByTableDataMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableDataMapperInterface
+     */
+    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
+    {
+        return new ProductListUsedByTableDataMapper();
     }
 
     /**

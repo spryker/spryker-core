@@ -11,7 +11,9 @@
     "spryker/merchant": "^1.1.0",
     "spryker/merchant-relationship-extension": "^1.0.0",
     "spryker/product-list-extension": "^1.0.0",
-    "spryker/propel-orm": "^1.0.0"
+    "spryker/product-list-gui-extension": "^1.2.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/util-text": "^1.1.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -130,7 +130,7 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template slots which use given product list by UsedByTableDataTransfer::idProductList.
+     * - Finds configurable bundle template slots which use given product list.
      * - Uses idProductList property from ProductListUsedByTableDataTransfer::ProductList to filter records.
      * - Expands UsedByTableDataTransfer::rows with found data.
      *
