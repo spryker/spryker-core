@@ -9,21 +9,15 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
-use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface;
-use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
 
 class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
      */
-    protected $configurableBundleRepository;
-
-    /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface
-     */
-    protected $configurableBundleTranslationHydrator;
+    protected $configurableBundleTemplateSlotReader;
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface
@@ -31,18 +25,15 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     protected $productListUsedByTableDataMapper;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface $configurableBundleTranslationHydrator
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface $configurableBundleTemplateSlotReader
      * @param \Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
      */
     public function __construct(
-        ConfigurableBundleRepositoryInterface $configurableBundleRepository,
-        ConfigurableBundleTranslationHydratorInterface $configurableBundleTranslationHydrator,
+        ConfigurableBundleTemplateSlotReaderInterface $configurableBundleTemplateSlotReader,
         ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
     ) {
-        $this->configurableBundleRepository = $configurableBundleRepository;
+        $this->configurableBundleTemplateSlotReader = $configurableBundleTemplateSlotReader;
         $this->productListUsedByTableDataMapper = $productListUsedByTableDataMapper;
-        $this->configurableBundleTranslationHydrator = $configurableBundleTranslationHydrator;
     }
 
     /**
@@ -52,13 +43,8 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
      */
     public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
-        $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository->findConfigurableBundleTemplateSlotsByIdProductList(
-            $productListUsedByTableDataTransfer->getProductList()->getIdProductList()
-        );
-
-        $configurableBundleTemplateSlotTransfers = $this->hydrateConfigurableBundleTemplateSlotTransfersWithTranslations(
-            $configurableBundleTemplateSlotTransfers
-        );
+        $configurableBundleTemplateSlotTransfers = $this->configurableBundleTemplateSlotReader
+            ->findConfigurableBundleTemplateSlotsByProductList($productListUsedByTableDataTransfer->getProductList());
 
         $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,
@@ -66,27 +52,6 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
         );
 
         return $productListUsedByTableDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
-     */
-    protected function hydrateConfigurableBundleTemplateSlotTransfersWithTranslations(array $configurableBundleTemplateSlotTransfers): array
-    {
-        foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
-            $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationHydrator
-                ->hydrateConfigurableBundleTemplateSlotWithTranslationForCurrentLocale($configurableBundleTemplateSlotTransfer);
-
-            $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
-                $this->configurableBundleTranslationHydrator->hydrateConfigurableBundleTemplateWithTranslationForCurrentLocale(
-                    $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()
-                )
-            );
-        }
-
-        return $configurableBundleTemplateSlotTransfers;
     }
 
     /**

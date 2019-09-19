@@ -36,8 +36,9 @@ class ConfigurableBundleTranslationHydrator implements ConfigurableBundleTransla
     public function hydrateConfigurableBundleTemplateWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer {
-        $translation = $this->glossaryFacade->translate($configurableBundleTemplateTransfer->getName());
+        $configurableBundleTemplateTransfer->requireName();
 
+        $translation = $this->glossaryFacade->translate($configurableBundleTemplateTransfer->getName());
         $configurableBundleTemplateTransfer->addTranslation(
             (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
         );
@@ -53,8 +54,9 @@ class ConfigurableBundleTranslationHydrator implements ConfigurableBundleTransla
     public function hydrateConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer {
-        $translation = $this->glossaryFacade->translate($configurableBundleTemplateSlotTransfer->getName());
+        $configurableBundleTemplateSlotTransfer->requireName();
 
+        $translation = $this->glossaryFacade->translate($configurableBundleTemplateSlotTransfer->getName());
         $configurableBundleTemplateSlotTransfer->addTranslation(
             (new ConfigurableBundleTemplateSlotTranslationTransfer())->setName($translation)
         );

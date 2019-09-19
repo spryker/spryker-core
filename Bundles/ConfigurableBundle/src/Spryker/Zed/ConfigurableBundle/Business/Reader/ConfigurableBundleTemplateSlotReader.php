@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplateSlotReaderInterface
@@ -23,20 +24,37 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
     protected $configurableBundleRepository;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface
      */
-    protected $glossaryFacade;
+    protected $configurableBundleTranslationHydrator;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
-     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface $configurableBundleTranslationHydrator
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
-        ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+        ConfigurableBundleTranslationHydratorInterface $configurableBundleTranslationHydrator
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
-        $this->glossaryFacade = $glossaryFacade;
+        $this->configurableBundleTranslationHydrator = $configurableBundleTranslationHydrator;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     */
+    public function findConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array
+    {
+        $productListTransfer->requireIdProductList();
+
+        $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository
+            ->findConfigurableBundleTemplateSlotsByIdProductList($productListTransfer->getIdProductList());
+
+        return $this->hydrateConfigurableBundleTemplateSlotTransfersWithTranslations(
+            $configurableBundleTemplateSlotTransfers
+        );
     }
 
     /**
@@ -46,10 +64,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      */
     public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $productListTransfer->requireIdProductList();
-
-        $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository
-            ->findConfigurableBundleTemplateSlotsByIdProductList($productListTransfer->getIdProductList());
+        $configurableBundleTemplateSlotTransfers = $this->findConfigurableBundleTemplateSlotsByProductList($productListTransfer);
 
         return $this->createProductListResponseTransfer($productListTransfer, $configurableBundleTemplateSlotTransfers);
     }
@@ -74,6 +89,27 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     */
+    protected function hydrateConfigurableBundleTemplateSlotTransfersWithTranslations(array $configurableBundleTemplateSlotTransfers): array
+    {
+        foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
+            $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationHydrator
+                ->hydrateConfigurableBundleTemplateSlotWithTranslationForCurrentLocale($configurableBundleTemplateSlotTransfer);
+
+            $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
+                $this->configurableBundleTranslationHydrator->hydrateConfigurableBundleTemplateWithTranslationForCurrentLocale(
+                    $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()
+                )
+            );
+        }
+
+        return $configurableBundleTemplateSlotTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
      *
@@ -84,17 +120,38 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         array $configurableBundleTemplateSlotTransfers
     ): ProductListResponseTransfer {
         foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
-            $template = $this->glossaryFacade->translate($configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getName());
-            $slot = $this->glossaryFacade->translate($configurableBundleTemplateSlotTransfer->getName());
+            $configurableBundleTemplateSlotTransfer->requireTranslations();
+            $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->requireTranslations();
 
-            $productListResponseTransfer->addMessage(
-                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST)
-                    ->setParameters([
-                        '%template%' => $template,
-                        '%slot%' => $slot,
-                    ])
+            $productListResponseTransfer = $this->addMessageToProductListResponseTransfer(
+                $productListResponseTransfer,
+                $configurableBundleTemplateSlotTransfer
             );
         }
+
+        return $productListResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function addMessageToProductListResponseTransfer(
+        ProductListResponseTransfer $productListResponseTransfer,
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ProductListResponseTransfer {
+        $templateName = $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName();
+        $slotName = $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName();
+
+        $productListResponseTransfer->addMessage(
+            (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST)
+                ->setParameters([
+                    '%template%' => $templateName,
+                    '%slot%' => $slotName,
+                ])
+        );
 
         return $productListResponseTransfer;
     }

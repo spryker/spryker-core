@@ -72,7 +72,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateSlotReader(
             $this->getRepository(),
-            $this->getGlossaryFacade()
+            $this->createConfigurableBundleTranslationHydrator()
         );
     }
 
@@ -90,8 +90,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
     {
         return new ProductListUsedByTableDataExpander(
-            $this->getRepository(),
-            $this->createConfigurableBundleTranslationHydrator(),
+            $this->createConfigurableBundleTemplateSlotReader(),
             $this->createProductListUsedByTableDataMapper()
         );
     }
