@@ -16,7 +16,6 @@ use Spryker\Service\UtilText\Model\Url\Url;
 class ProductListUsedByTableDataMapper implements ProductListUsedByTableDataMapperInterface
 {
     protected const ENTITY_TITLE = 'Configurable Bundle Template';
-    protected const ENTITY_NAME_PATTERN = '%s - %s';
 
     protected const EDIT_BUTTON_TITLE = 'Edit Slot';
     protected const EDIT_BUTTON_OPTIONS = [
@@ -67,7 +66,7 @@ class ProductListUsedByTableDataMapper implements ProductListUsedByTableDataMapp
             ->getName();
 
         return sprintf(
-            static::ENTITY_NAME_PATTERN,
+            '%s - %s',
             $configurableBundleTemplateName,
             $configurableBundleTemplateSlotName
         );

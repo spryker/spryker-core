@@ -5,26 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundleGui\Communication\Plugin\ProductListGuiExtension;
+namespace Spryker\Zed\MerchantRelationshipGui\Communication\Plugin\ProductListGui;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
- * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipGui\Communication\MerchantRelationshipGuiCommunicationFactory getFactory()
  */
-class ConfigurableBundleTemplateListProductListTopButtonsExpanderPlugin extends AbstractPlugin implements ProductListTopButtonsExpanderPluginInterface
+class MerchantRelationListProductListTopButtonsExpanderPlugin extends AbstractPlugin implements ProductListTopButtonsExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands buttons list with button leads to a Cofigurable Bundle Template list page.
+     * - Expands buttons list with button leads to a Merchant Relations list page.
      *
      * @api
      *
-     * @see \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     * @see \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\ListMerchantRelationshipController::indexAction()
      *
      * @param \Generated\Shared\Transfer\ButtonCollectionTransfer $buttonCollectionTransfer
      *

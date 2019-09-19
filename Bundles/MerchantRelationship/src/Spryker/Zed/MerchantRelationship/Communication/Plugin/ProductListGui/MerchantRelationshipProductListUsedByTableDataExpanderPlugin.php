@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Communication\Plugin\ProductListGuiExtension;
+namespace Spryker\Zed\MerchantRelationship\Communication\Plugin\ProductListGui;
 
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundle\ConfigurableBundleConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundle\Business\ConfigurableBundleFacadeInterface getFacade()
- * @method \Spryker\Zed\ConfigurableBundle\Communication\ConfigurableBundleCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantRelationship\Communication\MerchantRelationshipCommunicationFactory getFactory()
  */
-class ConfigurableBundleTemplateProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
+class MerchantRelationshipProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
-     * - Expands table data with Configurable Bundle Templates and Slots which use Product List.
+     * - Expands table data with Merchant Relationships which use Product List.
      *
      * @api
      *
