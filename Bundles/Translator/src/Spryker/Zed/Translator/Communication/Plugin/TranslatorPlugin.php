@@ -54,6 +54,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * {@inheritdoc}
@@ -62,7 +63,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @param string $locale
      *
-     * @@return void
+     * @return void
      */
     public function setLocale($locale): void
     {
@@ -71,6 +72,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
 
     /**
      * @deprecated Will be removed without replacement.
+     *
      * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * {@inheritdoc}

@@ -23,13 +23,13 @@ class ManualOrderEntryGuiToProductFacadeBridge implements ManualOrderEntryGuiToP
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return bool
      */
-    public function hasProductConcrete($concreteSku)
+    public function hasProductConcrete($sku)
     {
-        return $this->productFacade->hasProductConcrete($concreteSku);
+        return $this->productFacade->hasProductConcrete($sku);
     }
 
     /**

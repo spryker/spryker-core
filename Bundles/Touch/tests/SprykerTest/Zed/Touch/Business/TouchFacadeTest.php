@@ -18,6 +18,7 @@ use Spryker\Zed\Touch\Business\TouchFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -40,6 +41,11 @@ class TouchFacadeTest extends Unit
 
     protected const UNIQUE_INDEX_ITEM_ID = 1;
     protected const UNIQUE_INDEX_ITEM_TYPE = 'index.test.item';
+
+    /**
+     * @var \SprykerTest\Zed\Touch\TouchBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface
@@ -203,5 +209,39 @@ class TouchFacadeTest extends Unit
 
         //Assert
         $this->assertSame(count($itemIds), $affectedRows);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCleanTouchEntitiesForDeletedItemEventShouldDeleteTouchEntitiesForDeletedItemEvent(): void
+    {
+        // Arrange
+        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::ITEM_ID_1, static::UNIQUE_INDEX_ITEM_TYPE);
+        $touchEntitiesForDeletedItemEventCount = $this->tester->getTouchEntitiesForDeletedItemEventCount();
+
+        $this->createTouchEntity(static::ITEM_EVENT_DELETED, static::ITEM_ID_2, static::UNIQUE_INDEX_ITEM_TYPE);
+
+        // Act
+        $deletedTouchEntitiesCount = $this->touchFacade->cleanTouchEntitiesForDeletedItemEvent();
+
+        // Assert
+        $this->assertSame($touchEntitiesForDeletedItemEventCount + 1, $deletedTouchEntitiesCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCleanTouchEntitiesForDeletedItemEventShouldNotDeleteTouchEntitiesForOtherItemEvents(): void
+    {
+        // Arrange
+        $this->createTouchEntity(static::ITEM_EVENT_ACTIVE, static::ITEM_ID_1, static::UNIQUE_INDEX_ITEM_TYPE);
+        $touchEntitiesForDeletedItemEventCount = $this->tester->getTouchEntitiesForDeletedItemEventCount();
+
+        // Act
+        $deletedTouchEntitiesCount = $this->touchFacade->cleanTouchEntitiesForDeletedItemEvent();
+
+        // Assert
+        $this->assertSame($touchEntitiesForDeletedItemEventCount, $deletedTouchEntitiesCount);
     }
 }

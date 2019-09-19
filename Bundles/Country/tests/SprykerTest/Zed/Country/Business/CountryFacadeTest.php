@@ -22,6 +22,7 @@ use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Country

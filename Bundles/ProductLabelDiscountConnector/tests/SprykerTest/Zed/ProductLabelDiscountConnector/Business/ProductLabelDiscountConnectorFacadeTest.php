@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductLabelDiscountConnector

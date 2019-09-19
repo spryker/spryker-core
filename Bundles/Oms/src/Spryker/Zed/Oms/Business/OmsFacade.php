@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -194,11 +195,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function checkTimeouts(array $logContext = [])
     {
-        $orderStateMachine = $this->getFactory()
+        $factory = $this->getFactory();
+        $orderStateMachine = $factory
             ->createLockedOrderStateMachine($logContext);
 
-        return $this->getFactory()
-            ->createOrderStateMachineTimeout()
+        return $factory->createOrderStateMachineTimeout()
             ->checkTimeouts($orderStateMachine);
     }
 
@@ -295,6 +296,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -344,6 +347,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $stateName
      *
@@ -513,6 +518,22 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
+    {
+        return $this->getFactory()
+            ->createManualOrderReader()
+            ->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function clearLocks()
@@ -650,10 +671,24 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getOmsReservedStateCollection()` instead.
+     *
      * @return string[]
      */
     public function getReservedStateNames(): array
     {
         return $this->getFactory()->createUtilReservation()->getReservedStateNames();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
+    {
+        return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
     }
 }

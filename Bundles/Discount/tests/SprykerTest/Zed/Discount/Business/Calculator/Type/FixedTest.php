@@ -16,6 +16,7 @@ use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

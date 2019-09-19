@@ -12,6 +12,7 @@ use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine

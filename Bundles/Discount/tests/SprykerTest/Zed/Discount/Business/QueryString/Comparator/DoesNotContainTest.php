@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\DoesNotContain;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

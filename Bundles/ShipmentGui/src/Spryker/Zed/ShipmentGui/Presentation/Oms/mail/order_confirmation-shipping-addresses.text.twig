@@ -1,0 +1,23 @@
+{{ 'mail.order.confirmation.shipment_details' | trans }}
+
+{% for shipmentGroup in mail.shipmentGroups %}
+
+    {{ 'mail.order.confirmation.shipment_number' | trans }} {{ loop.index +1 }}
+
+    {{ 'mail.order.confirmation.shipping_address' | trans }}: {{ shipmentGroup.shipment.shippingAddress.firstName }} {{ shipmentGroup.shipment.shippingAddress.lastName }},
+    {{ shipmentGroup.shipment.shippingAddress.address1 }} {{ shipmentGroup.shipment.shippingAddress.address2 }} {{ shipmentGroup.shipment.shippingAddress.address3 }},
+    {{ shipmentGroup.shipment.shippingAddress.zipCode }} {{ shipmentGroup.shipment.shippingAddress.city }},
+    {{ shipmentGroup.shipment.shippingAddress.region }}
+
+    {{ 'mail.order.confirmation.shipping_method' | trans }}: {{ shipmentGroup.shipment.method.name }}
+    {{ 'mail.order.confirmation.delivery_date' | trans }}: {{ shipmentGroup.shipment.requestedDeliveryDate }}
+
+    {{ 'mail.order.confirmation.products_in_shipment' | trans }}
+
+    {% for item in shipmentGroup.items %}
+        {{ item.name }} ({{ item.sku }}) x {{ item.quantity }} = {{ item.unitPrice | money }}
+    {% endfor %}
+
+- - -
+
+{% endfor %}

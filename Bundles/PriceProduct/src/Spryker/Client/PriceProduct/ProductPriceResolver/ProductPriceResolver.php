@@ -153,7 +153,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceMode = $priceProductFilter->getPriceMode();
         $price = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
 
-        if (!$price) {
+        if ($price === null) {
             return $currentProductPriceTransfer;
         }
 

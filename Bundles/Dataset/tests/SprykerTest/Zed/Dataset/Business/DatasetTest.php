@@ -14,6 +14,7 @@ use Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Dataset

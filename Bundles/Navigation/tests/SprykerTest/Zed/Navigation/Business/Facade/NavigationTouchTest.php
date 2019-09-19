@@ -21,6 +21,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Navigation
