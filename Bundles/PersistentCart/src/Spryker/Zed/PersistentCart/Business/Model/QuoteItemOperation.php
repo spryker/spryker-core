@@ -132,8 +132,8 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
         $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
-        $updatedQuoteResponseTransfer = $this->cartFacade->removeFromCart($cartChangeTransfer);
-        $this->quoteFacade->updateQuote($updatedQuoteResponseTransfer->getQuoteTransfer());
+        $quoteResponseTransfer = $this->cartFacade->removeFromCart($cartChangeTransfer);
+        $updatedQuoteResponseTransfer = $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
         $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($quoteResponseTransfer, $updatedQuoteResponseTransfer);
 

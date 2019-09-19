@@ -208,19 +208,23 @@ class CartOperation implements CartOperationInterface
     {
         $persistentCartChangeTransfer->requireCustomer();
 
-        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+        $persistentQuoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeTransfer->getIdQuote(),
             $persistentCartChangeTransfer->getCustomer()
         );
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
+        if (!$persistentQuoteResponseTransfer->getIsSuccessful()) {
+            return $persistentQuoteResponseTransfer;
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $quoteResponseTransfer->getQuoteTransfer(),
+            $persistentQuoteResponseTransfer->getQuoteTransfer(),
             $persistentCartChangeTransfer->getQuote()
         );
+
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setQuoteTransfer($quoteTransfer);
 
         $itemsToAdd = $this->prepareItemsForAdd($persistentCartChangeTransfer, $quoteTransfer);
 
@@ -233,7 +237,9 @@ class CartOperation implements CartOperationInterface
         if ($quoteResponseTransfer->getIsSuccessful() && $itemsToRemove) {
             $quoteResponseTransfer = $this->quoteItemOperation->removeItems($itemsToRemove, $quoteTransfer);
 
-            // TODO: if we have isSuccessful = false we should revert original quote.
+            if (!$quoteResponseTransfer->getIsSuccessful()) {
+                $this->quoteFacade->updateQuote($persistentQuoteResponseTransfer->getQuoteTransfer());
+            }
         }
 
         return $quoteResponseTransfer;
@@ -258,16 +264,14 @@ class CartOperation implements CartOperationInterface
 
             $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
 
-            if ($delta === 0) {
+            if ($delta === 0 || $quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
                 continue;
             }
 
             $changeItemTransfer = clone $quoteItemTransfer;
             $changeItemTransfer->setQuantity($delta);
 
-            if ($quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
-                $itemsToAdd[] = $changeItemTransfer;
-            }
+            $itemsToAdd[] = $changeItemTransfer;
         }
 
         return $itemsToAdd;
@@ -297,16 +301,14 @@ class CartOperation implements CartOperationInterface
 
             $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
 
-            if ($delta === 0) {
+            if ($delta === 0 || !($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity())) {
                 continue;
             }
 
             $changeItemTransfer = clone $quoteItemTransfer;
             $changeItemTransfer->setQuantity($delta);
 
-            if ($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
-                $itemsToRemove[] = $changeItemTransfer;
-            }
+            $itemsToRemove[] = $changeItemTransfer;
         }
 
         return $itemsToRemove;

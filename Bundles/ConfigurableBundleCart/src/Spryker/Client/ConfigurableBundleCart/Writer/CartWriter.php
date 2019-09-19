@@ -87,11 +87,9 @@ class CartWriter implements CartWriterInterface
 
         $itemTransfers = $this->itemsQuantityCalculator->updateItemsQuantity($itemTransfers, $configuredBundleQuantity);
 
-        $cartChangeTransfer = (new CartChangeTransfer())
-            ->setItems($itemTransfers)
-            ->setQuote($quoteTransfer);
-
-        $quoteResponseTransfer = $this->cartClient->updateQuantity($cartChangeTransfer);
+        $quoteResponseTransfer = $this->cartClient->updateQuantity(
+            (new CartChangeTransfer())->setItems($itemTransfers)
+        );
 
         return $quoteResponseTransfer;
     }

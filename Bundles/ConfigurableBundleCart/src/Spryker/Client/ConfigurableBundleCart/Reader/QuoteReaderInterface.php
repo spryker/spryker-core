@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteReaderInterface
 {
     /**
-     * @param string $groupKey
+     * @param string $configuredBundleGroupKey
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getItemsByConfiguredBundleGroupKey(string $groupKey, QuoteTransfer $quoteTransfer): ArrayObject;
+    public function getItemsByConfiguredBundleGroupKey(string $configuredBundleGroupKey, QuoteTransfer $quoteTransfer): ArrayObject;
 }

@@ -14,7 +14,10 @@ interface ItemsQuantityUpdateQuoteStorageStrategyPluginInterface
 {
     /**
      * Specification:
-     *  - Updates quantity for each item.
+     * - Makes zed request.
+     * - Updates quantity for given items.
+     * - Stores quote in session internally after success zed request.
+     * - Returns response with updated quote.
      *
      * @api
      *

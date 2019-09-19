@@ -8,6 +8,7 @@
 namespace Spryker\Client\ConfigurableBundleCart\Calculator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class ItemsQuantityCalculator implements ItemsQuantityCalculatorInterface
 {
@@ -19,15 +20,21 @@ class ItemsQuantityCalculator implements ItemsQuantityCalculatorInterface
      */
     public function updateItemsQuantity(ArrayObject $itemTransfers, int $configuredBundleQuantity): ArrayObject
     {
+        $itemTransfersToUpdate = new ArrayObject();
+
         foreach ($itemTransfers as $itemTransfer) {
             $itemTransfer
                 ->requireConfiguredBundleItem()
                 ->getConfiguredBundleItem()
                     ->requireQuantityPerSlot();
 
-            $itemTransfer->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot() * $configuredBundleQuantity);
+            $itemTransferToUpdate = (new ItemTransfer())
+                ->fromArray($itemTransfer->toArray(false))
+                ->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot() * $configuredBundleQuantity);
+
+            $itemTransfersToUpdate->append($itemTransferToUpdate);
         }
 
-        return $itemTransfers;
+        return $itemTransfersToUpdate;
     }
 }

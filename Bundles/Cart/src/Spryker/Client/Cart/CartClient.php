@@ -174,6 +174,8 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

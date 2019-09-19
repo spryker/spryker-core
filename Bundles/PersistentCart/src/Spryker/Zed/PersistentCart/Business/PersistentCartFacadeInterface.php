@@ -123,7 +123,7 @@ interface PersistentCartFacadeInterface
      *  - Merges loaded quote with quote from change request if is provided.
      *  - Calls calculate quantity to add or remove.
      *  - Removes or add items.
-     *  - Saves quote to DB.
+     *  - Saves quote to DB in case success result.
      *  - Calls quote response extend plugins.
      *
      * @api

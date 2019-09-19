@@ -208,6 +208,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     * - Makes zed request.
+     * - Updates quantity for given items.
+     * - Stores quote in session internally after success zed request.
+     * - Returns response with updated quote.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -256,21 +262,23 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
             $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
 
-            if ($delta === 0) {
+            if ($delta === 0 || $quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
                 continue;
             }
 
             $changeItemTransfer = clone $quoteItemTransfer;
             $changeItemTransfer->setQuantity($delta);
 
-            if ($quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
-                $cartChangeTransferForAdd->addItem($changeItemTransfer);
-            }
+            $cartChangeTransferForAdd->addItem($changeItemTransfer);
+        }
+
+        if (!$cartChangeTransferForAdd->getItems()->count()) {
+            return $cartChangeTransferForAdd;
         }
 
         return $this->getFactory()
             ->createCartChangeRequestExpander()
-            ->addItemsRequestExpand($cartChangeTransfer);
+            ->addItemsRequestExpand($cartChangeTransferForAdd);
     }
 
     /**
@@ -296,16 +304,18 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
             $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
 
-            if ($delta === 0) {
+            if ($delta === 0 || !($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity())) {
                 continue;
             }
 
             $changeItemTransfer = clone $quoteItemTransfer;
             $changeItemTransfer->setQuantity($delta);
 
-            if ($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
-                $cartChangeTransferForRemoval->addItem($changeItemTransfer);
-            }
+            $cartChangeTransferForRemoval->addItem($changeItemTransfer);
+        }
+
+        if (!$cartChangeTransferForRemoval->getItems()->count()) {
+            return $cartChangeTransferForRemoval;
         }
 
         return $this->getFactory()
