@@ -56,7 +56,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createCheckoutResponseWithPlaceOrderFailure($exception): CheckoutResponseTransfer
+    protected function createCheckoutResponseWithPlaceOrderFailure($exception)
     {
         $checkoutErrorTransfer = (new CheckoutErrorTransfer())
             ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)

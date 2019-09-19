@@ -38,7 +38,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderPlaceableResponseIsSuccessful()
+    public function testIsOrderPlaceableResponseIsSuccessful(): void
     {
         // Arrange
         $checkoutResponse = $this->createBaseCheckoutResponse();
@@ -60,7 +60,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderPlaceableResponseIsNotSuccessful()
+    public function testIsOrderPlaceableResponseIsNotSuccessful(): void
     {
         // Arrange
         $mockBuilder = $this->getMockBuilder(CheckoutPreConditionPluginInterface::class)->getMock();

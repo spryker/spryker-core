@@ -19,8 +19,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
-
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
      */
