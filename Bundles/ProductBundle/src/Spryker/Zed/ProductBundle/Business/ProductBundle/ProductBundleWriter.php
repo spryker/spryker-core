@@ -114,7 +114,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     protected function createProductBundleEntity(ProductForBundleTransfer $productForBundleTransfer, $idProductBundle)
     {
         $productBundleEntity = $this->findOrCreateProductBundleEntity($productForBundleTransfer, $idProductBundle);
-        $productBundleEntity->setQuantity($productForBundleTransfer->getQuantity()->toString());
+        $productBundleEntity->setQuantity($productForBundleTransfer->getQuantity());
         $productBundleEntity->save();
 
         $productForBundleTransfer->setIdProductBundle($productBundleEntity->getIdProductBundle());

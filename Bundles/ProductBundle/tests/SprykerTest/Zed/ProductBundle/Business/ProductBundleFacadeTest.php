@@ -392,7 +392,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProductEntity = $bundledProducts[0];
 
-        $this->assertTrue($bundledProductTransfer->getQuantity()->equals($bundledProductEntity->getQuantity()));
+        $this->assertSame($bundledProductTransfer->getQuantity(), $bundledProductEntity->getQuantity());
         $this->assertSame($productConcreteToAssignTransfer->getIdProductConcrete(), $bundledProductEntity->getFkBundledProduct());
         $this->assertSame($productConcreteBundleTransfer->getIdProductConcrete(), $bundledProductEntity->getFkProduct());
     }

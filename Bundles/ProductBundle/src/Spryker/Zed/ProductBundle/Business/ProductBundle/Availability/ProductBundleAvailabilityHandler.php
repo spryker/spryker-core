@@ -244,7 +244,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return false;
         }
 
-        return $bundledProductAvailabilityEntity->getQuantity() == 0 && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock();
+        return (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->isZero() && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock();
     }
 
     /**
