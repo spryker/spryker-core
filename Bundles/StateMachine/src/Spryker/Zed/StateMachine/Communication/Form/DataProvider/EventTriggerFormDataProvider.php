@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\StateMachine\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\EventTriggerFormDataTransfer;
 use Spryker\Zed\StateMachine\Communication\Form\EventTriggerForm;
 
 class EventTriggerFormDataProvider
 {
     public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
+
+    public const URL_PARAM_IDENTIFIER = 'identifier';
+    public const URL_PARAM_ID_STATE = 'id-state';
+    public const URL_PARAM_REDIRECT = 'redirect';
+    public const URL_PARAM_EVENT = 'event';
 
     /**
      * @param int $identifier
@@ -20,31 +24,22 @@ class EventTriggerFormDataProvider
      * @param int $idState
      * @param string $event
      *
-     * @return \Generated\Shared\Transfer\EventTriggerFormDataTransfer
+     * @return array
      */
-    public function getData(
+    public function getOptions(
         int $identifier,
         string $redirect,
         int $idState,
         string $event
-    ): EventTriggerFormDataTransfer {
-        return (new EventTriggerFormDataTransfer())->setEvent($event)
-            ->setIdentifier($identifier)
-            ->setIdState($idState)
-            ->setRedirect($redirect);
-    }
-
-    /**
-     * @param string $event
-     * @param string $redirect
-     *
-     * @return array
-     */
-    public function getOptions(string $event, string $redirect): array
-    {
+    ): array {
         return [
             EventTriggerForm::OPTION_EVENT => $event,
-            EventTriggerForm::OPTION_REDIRECT => $redirect,
+            EventTriggerForm::OPTION_ACTION_QUERY_PARAMETERS => [
+                static::URL_PARAM_IDENTIFIER => $identifier,
+                static::URL_PARAM_REDIRECT => $redirect,
+                static::URL_PARAM_ID_STATE => $idState,
+                static::URL_PARAM_EVENT => $event,
+            ],
             EventTriggerForm::OPTION_SUBMIT_BUTTON_CLASS => static::SUBMIT_BUTTON_CLASS,
         ];
     }

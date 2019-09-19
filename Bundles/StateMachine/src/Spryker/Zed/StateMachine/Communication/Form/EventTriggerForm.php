@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\StateMachine\Communication\Form;
 
-use Generated\Shared\Transfer\EventTriggerFormDataTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,11 +23,11 @@ class EventTriggerForm extends AbstractType
 {
     public const OPTION_EVENT = 'OPTION_EVENT';
     public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
-    public const OPTION_REDIRECT = 'OPTION_REDIRECT';
+    public const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
 
     protected const BUTTON_SUBMIT = 'submit';
 
-    protected const ACTION_ROUTE = '/state-machine/trigger/submit-trigger-event';
+    protected const ACTION_ROUTE = '/state-machine/trigger/trigger-event';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -40,60 +38,8 @@ class EventTriggerForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addEventField($builder)
-            ->addIdStateField($builder)
-            ->addIdentifierField($builder)
-            ->addRedirectField($builder)
             ->addSubmitButton($builder, $options)
             ->setAction($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addEventField(FormBuilderInterface $builder)
-    {
-        $builder->add(EventTriggerFormDataTransfer::EVENT, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdStateField(FormBuilderInterface $builder)
-    {
-        $builder->add(EventTriggerFormDataTransfer::ID_STATE, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdentifierField(FormBuilderInterface $builder)
-    {
-        $builder->add(EventTriggerFormDataTransfer::IDENTIFIER, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addRedirectField(FormBuilderInterface $builder)
-    {
-        $builder->add(EventTriggerFormDataTransfer::REDIRECT, HiddenType::class);
-
-        return $this;
     }
 
     /**
@@ -141,7 +87,7 @@ class EventTriggerForm extends AbstractType
      */
     protected function createAction(array $options): string
     {
-        return Url::generate(static::ACTION_ROUTE, [EventTriggerFormDataTransfer::REDIRECT => $options[static::OPTION_REDIRECT]]);
+        return Url::generate(static::ACTION_ROUTE, $options[static::OPTION_ACTION_QUERY_PARAMETERS]);
     }
 
     /**
@@ -152,9 +98,8 @@ class EventTriggerForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => EventTriggerFormDataTransfer::class,
             static::OPTION_EVENT => null,
-            static::OPTION_REDIRECT => null,
+            static::OPTION_ACTION_QUERY_PARAMETERS => null,
             static::OPTION_SUBMIT_BUTTON_CLASS => null,
         ]);
     }

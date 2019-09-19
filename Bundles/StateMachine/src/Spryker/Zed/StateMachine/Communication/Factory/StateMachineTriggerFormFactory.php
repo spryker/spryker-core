@@ -77,13 +77,10 @@ class StateMachineTriggerFormFactory implements StateMachineTriggerFormFactoryIn
         string $processName,
         string $eventName
     ): FormInterface {
-        $data = $this->createEventItemTriggerFormDataProvider()
-            ->getData($identifier, $redirect, $stateMachineName, $processName);
-
         $options = $this->createEventItemTriggerFormDataProvider()
-            ->getOptions($eventName, $redirect);
+            ->getOptions($eventName, $identifier, $redirect, $stateMachineName, $processName);
 
-        return $this->formFactory->create(EventItemTriggerForm::class, $data, $options);
+        return $this->formFactory->create(EventItemTriggerForm::class, null, $options);
     }
 
     /**
@@ -100,12 +97,9 @@ class StateMachineTriggerFormFactory implements StateMachineTriggerFormFactoryIn
         int $idState,
         string $event
     ): FormInterface {
-        $data = $this->createEventTriggerFormDataProvider()
-            ->getData($identifier, $redirect, $idState, $event);
-
         $options = $this->createEventTriggerFormDataProvider()
-            ->getOptions($event, $redirect);
+            ->getOptions($identifier, $redirect, $idState, $event);
 
-        return $this->formFactory->create(EventTriggerForm::class, $data, $options);
+        return $this->formFactory->create(EventTriggerForm::class, null, $options);
     }
 }
