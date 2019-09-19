@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
@@ -35,16 +33,9 @@ class PermissionContextProviderTest extends Unit
     public function testProvideContextShouldReturnGrandTotalInCentAmountArrayElement(): void
     {
         // Assign
-        $quoteTransfer = (new QuoteTransfer())
-            ->setTotals(
-                (new TotalsTransfer())->setGrandTotal(static::QUOTE_GRAND_TOTAL)
-            )
-            ->setStore(
-                (new StoreTransfer())->setName('DE')
-            )
-            ->setCurrency(
-                (new CurrencyTransfer())->setCode('EUR')
-            );
+        $quoteTransfer = (new QuoteTransfer())->setTotals(
+            (new TotalsTransfer())->setGrandTotal(static::QUOTE_GRAND_TOTAL)
+        );
         $permissionContextProvider = new PermissionContextProvider();
 
         // Act

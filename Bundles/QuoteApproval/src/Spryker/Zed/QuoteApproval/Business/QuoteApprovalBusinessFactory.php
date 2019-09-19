@@ -10,6 +10,8 @@ namespace Spryker\Zed\QuoteApproval\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProviderInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProvider;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProviderInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
@@ -54,7 +56,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteLocker(),
             $this->getSharedCartFacade(),
             $this->createQuoteApprovalRequestValidator(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 
@@ -100,7 +103,8 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteApprovalRequestValidator(),
             $this->createQuoteApprovalMessageBuilder(),
             $this->getEntityManager(),
-            $this->createQuoteLocker()
+            $this->createQuoteLocker(),
+            $this->getRepository()
         );
     }
 
@@ -121,7 +125,19 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteLocker(),
             $this->createQuoteApprovalRequestValidator(),
             $this->getSharedCartFacade(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteFieldsProviderInterface
+     */
+    public function createQuoteFieldsProvider(): QuoteFieldsProviderInterface
+    {
+        return new QuoteFieldsProvider(
+            $this->createQuoteStatusCalculator(),
+            $this->getConfig()
         );
     }
 
