@@ -19,6 +19,7 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine

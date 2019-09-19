@@ -51,7 +51,6 @@ interface StoreFacadeInterface
     public function getStoreById($idStore);
 
     /**
-     *
      * Specification:
      *  - Read store by store name
      *
@@ -64,7 +63,6 @@ interface StoreFacadeInterface
     public function getStoreByName($storeName);
 
     /**
-     *
      * Specification:
      *  - Retrieves store by store name
      *

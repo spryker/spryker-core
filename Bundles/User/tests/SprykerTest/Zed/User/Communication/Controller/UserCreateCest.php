@@ -12,6 +12,7 @@ use SprykerTest\Zed\User\UserCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group User

@@ -227,7 +227,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @
      * @param string $repositoryName
      *
      * @return bool

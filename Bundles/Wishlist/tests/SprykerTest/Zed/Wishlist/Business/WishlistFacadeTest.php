@@ -29,6 +29,7 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Wishlist

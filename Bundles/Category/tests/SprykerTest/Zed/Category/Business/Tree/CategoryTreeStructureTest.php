@@ -14,6 +14,7 @@ use SprykerTest\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category

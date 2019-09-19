@@ -13,6 +13,7 @@ use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductLabelSearch

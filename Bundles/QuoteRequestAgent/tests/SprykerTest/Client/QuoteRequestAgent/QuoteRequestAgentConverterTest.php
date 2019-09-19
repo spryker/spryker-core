@@ -23,6 +23,7 @@ use Spryker\Shared\QuoteRequestAgent\QuoteRequestAgentConfig as SharedQuoteReque
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group QuoteRequestAgent

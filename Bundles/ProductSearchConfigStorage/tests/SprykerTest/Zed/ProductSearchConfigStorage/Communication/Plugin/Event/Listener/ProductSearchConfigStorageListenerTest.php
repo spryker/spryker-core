@@ -21,6 +21,7 @@ use SprykerTest\Zed\ProductSearchConfigStorage\ProductSearchConfigStorageConfigM
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSearchConfigStorage

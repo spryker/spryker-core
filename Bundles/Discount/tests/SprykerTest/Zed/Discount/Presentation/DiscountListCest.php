@@ -15,6 +15,7 @@ use SprykerTest\Zed\Discount\PageObject\DiscountViewPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
