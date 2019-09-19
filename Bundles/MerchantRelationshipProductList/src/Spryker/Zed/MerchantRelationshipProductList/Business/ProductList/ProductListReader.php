@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipProductList\Business\ProductList;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListRepositoryInterface;
 
@@ -37,5 +38,15 @@ class ProductListReader implements ProductListReaderInterface
         $companyBusinessUnitTransfer->requireIdCompanyBusinessUnit();
 
         return $this->merchantRelationshipProductListRepository->getProductListCollectionByIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
+    {
+        return $this->merchantRelationshipProductListRepository->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer);
     }
 }

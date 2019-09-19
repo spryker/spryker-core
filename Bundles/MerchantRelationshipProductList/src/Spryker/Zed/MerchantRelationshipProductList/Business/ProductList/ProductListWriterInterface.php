@@ -19,4 +19,11 @@ interface ProductListWriterInterface
     public function deleteProductListsByMerchantRelationship(
         MerchantRelationshipTransfer $merchantRelationshipTransfer
     ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
 }

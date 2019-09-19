@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -48,5 +49,37 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
         $this->getFactory()
             ->createProductListWriter()
             ->deleteProductListsByMerchantRelationship($merchantRelationshipTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return void
+     */
+    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    {
+        $this->getFactory()
+            ->createProductListWriter()
+            ->updateProductListMerchantRelationshipAssignments($merchantRelationshipTransfer);
     }
 }

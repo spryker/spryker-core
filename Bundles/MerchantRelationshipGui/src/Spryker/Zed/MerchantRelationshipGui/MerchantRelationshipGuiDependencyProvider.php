@@ -23,6 +23,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const PROPEL_MERCHANT_RELATIONSHIP_QUERY = 'PROPEL_MERCHANT_RELATIONSHIP_QUERY';
 
+    public const PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER = 'PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER';
+    public const PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER = 'PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -36,6 +39,8 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
         $container = $this->addCompanyFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addPropelMerchantRelationshipQuery($container);
+        $container = $this->addMerchantRelationshipCreateFormExpanderPlugins($container);
+        $container = $this->addMerchantRelationshipEditFormExpanderPlugins($container);
 
         return $container;
     }
@@ -108,5 +113,49 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipCreateFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER, function () {
+            return $this->getMerchantRelationshipCreateFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipEditFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER, function () {
+            return $this->getMerchantRelationshipEditFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipCreateFormExpanderPluginInterface[]
+     */
+    protected function getMerchantRelationshipCreateFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipEditFormExpanderPluginInterface[]
+     */
+    protected function getMerchantRelationshipEditFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

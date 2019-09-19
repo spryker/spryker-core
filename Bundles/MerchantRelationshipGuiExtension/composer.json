@@ -1,0 +1,32 @@
+{
+  "name": "spryker/merchant-relationship-gui-extension",
+  "type": "library",
+  "description": "MerchantRelationshipGuiExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use Merchant Relationship form expander plugins."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

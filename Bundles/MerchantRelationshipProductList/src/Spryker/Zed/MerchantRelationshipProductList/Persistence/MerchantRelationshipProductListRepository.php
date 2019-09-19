@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListPersistenceFactory getFactory()
@@ -46,6 +48,39 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
         }
 
         return $productListCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
+    {
+        $productListQuery = $this->getFactory()
+            ->getProductListQuery()
+            ->useSpyMerchantRelationshipQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIdMerchantRelationship(null, Criteria::ISNULL)
+            ->endUse();
+
+        if ($merchantRelationshipTransfer->getIdMerchantRelationship()) {
+            $productListQuery = $this->getFactory()
+                ->getProductListQuery()
+                ->useSpyMerchantRelationshipQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIdMerchantRelationship(null, Criteria::ISNULL)
+                    ->_or()
+                    ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
+                ->endUse();
+        }
+
+        $productListEntities = $productListQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantRelationshipProductListMapper()
+            ->mapProductListCollection(
+                $productListEntities,
+                new ProductListCollectionTransfer()
+            );
     }
 
     /**

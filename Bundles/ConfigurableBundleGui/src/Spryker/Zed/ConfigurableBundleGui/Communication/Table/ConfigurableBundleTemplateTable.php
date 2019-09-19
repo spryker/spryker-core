@@ -85,7 +85,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE => 'ID',
             static::COL_NAME_TRANSLATION => 'Name',
-            static::COL_COUNT_OF_SLOTS => '# of Slots',
+            static::COL_COUNT_OF_SLOTS => 'Nr. of Slots',
             static::COL_STATUS => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
@@ -213,14 +213,13 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             'Edit'
         );
 
+        $buttons[] = $this->generateTemplateStatusChangeButton($configurableBundleTemplateEntity);
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
             'Delete'
         );
-
-        $buttons[] = $this->generateTemplateStatusChangeButton($configurableBundleTemplateEntity);
 
         return implode(' ', $buttons);
     }

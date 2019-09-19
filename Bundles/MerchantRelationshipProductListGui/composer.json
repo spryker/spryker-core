@@ -5,18 +5,17 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-relationship": "^1.2.0",
+    "spryker/merchant-relationship-gui-extension": "^1.1.0",
+    "spryker/merchant-relationship-product-list": "^1.2.0",
     "spryker/product-list-gui-extension": "^1.1.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/gui": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/gui": "If you want to provide plugins for ProductListGui module. Minimum required version: ^1.0.0"
   },
   "autoload": {
     "psr-4": {
