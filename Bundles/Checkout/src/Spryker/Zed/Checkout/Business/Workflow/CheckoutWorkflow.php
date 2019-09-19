@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Business\Workflow;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface;
@@ -101,14 +99,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
 
         $checkoutResponseTransfer->setIsSuccess($this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer));
-
-        if (!$checkoutResponseTransfer->getIsSuccess()) {
-            $checkoutErrorTransfers = new ArrayObject();
-            $checkoutErrorTransfers->append(
-                (new QuoteErrorTransfer())->setMessage(static::MESSAGE_CART_REQUIRE_APPROVAL)
-            );
-            $checkoutResponseTransfer->setErrors($checkoutErrorTransfers);
-        }
 
         return $checkoutResponseTransfer;
     }

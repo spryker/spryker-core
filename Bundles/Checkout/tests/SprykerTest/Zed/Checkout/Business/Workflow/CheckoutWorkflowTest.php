@@ -18,6 +18,7 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use SprykerTest\Zed\Checkout\Business\Fixture\MockPostHook;
 use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
@@ -34,6 +35,57 @@ use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
  */
 class CheckoutWorkflowTest extends Unit
 {
+    /**
+     * @return void
+     */
+    public function testIsOrderPlaceableResponseIsSuccessful()
+    {
+        // Arrange
+        $checkoutResponse = $this->createBaseCheckoutResponse();
+        $checkoutWorkflow = new CheckoutWorkflow(
+            new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            [],
+            [],
+            [new MockPostHook($checkoutResponse)]
+        );
+        $quoteTransfer = new QuoteTransfer();
+
+        // Act
+        $checkoutResponseTransfer = $checkoutWorkflow->isOrderPlaceable($quoteTransfer);
+
+        // Assert
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsOrderPlaceableResponseIsNotSuccessful()
+    {
+        // Arrange
+        $mockBuilder = $this->getMockBuilder(CheckoutPreConditionPluginInterface::class)->getMock();
+
+        $mockBuilder->expects($this->once())->method('checkCondition')->with(
+            $this->isInstanceOf(QuoteTransfer::class),
+            $this->isInstanceOf(CheckoutResponseTransfer::class)
+        );
+
+        $checkoutResponse = $this->createBaseCheckoutResponse();
+        $checkoutWorkflow = new CheckoutWorkflow(
+            new CheckoutToOmsFacadeBridge(new OmsFacade()),
+            [$mockBuilder],
+            [],
+            [new MockPostHook($checkoutResponse)]
+        );
+        $quoteTransfer = new QuoteTransfer();
+
+        // Act
+        $checkoutResponseTransfer = $checkoutWorkflow->isOrderPlaceable($quoteTransfer);
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+    }
+
     /**
      * @return void
      */

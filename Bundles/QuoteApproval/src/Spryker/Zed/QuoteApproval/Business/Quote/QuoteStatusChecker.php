@@ -50,7 +50,14 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
             return true;
         }
 
-        if ($this->can(PlaceOrderPermissionPlugin::KEY, $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(), $this->permissionContextProvider->provideContext($quoteTransfer))) {
+        $idCompanyUser = $quoteTransfer->requireCustomer()
+            ->getCustomer()
+            ->requireCompanyUserTransfer()
+                ->getCompanyUserTransfer()
+                ->requireIdCompanyUser()
+                ->getIdCompanyUser();
+
+        if ($this->can(PlaceOrderPermissionPlugin::KEY, $idCompanyUser, $this->permissionContextProvider->provideContext($quoteTransfer))) {
             return false;
         }
 

@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\QuoteApproval\Communication\Plugin\Checkout;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -32,20 +31,15 @@ class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements 
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        $canProceedCheckout = !$this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
-        $checkoutResponseTransfer->setIsSuccess($canProceedCheckout);
-
-        if ($canProceedCheckout === true) {
-            $checkoutErrorTransfers = new ArrayObject();
-            $checkoutErrorTransfers->append(
-                (new QuoteErrorTransfer())->setMessage(static::MESSAGE_CART_REQUIRE_APPROVAL)
-            );
-
-            $checkoutResponseTransfer->setErrors($checkoutErrorTransfers);
+        if (!$this->getFacade()->isQuoteApprovalRequired($quoteTransfer)) {
+            return true;
         }
 
-        return $canProceedCheckout;
+        $checkoutResponseTransfer->setIsSuccess(false)
+            ->addError((new CheckoutErrorTransfer())->setMessage(static::MESSAGE_CART_REQUIRE_APPROVAL));
+
+        return false;
     }
 }

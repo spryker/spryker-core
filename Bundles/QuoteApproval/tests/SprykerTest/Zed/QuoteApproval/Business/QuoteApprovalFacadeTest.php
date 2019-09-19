@@ -7,16 +7,21 @@
 
 namespace SprykerTest\Zed\QuoteApproval\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
+use Generated\Shared\Transfer\QuoteApprovalTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
@@ -42,19 +47,70 @@ class QuoteApprovalFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @group app
+     *
      * @return void
      */
-    public function testApproveQuoteApprovalSuccess(): void
+    public function testIsQuoteApprovalRequiredResponseIsSuccessful(): void
     {
-        //Assign
-        $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
-        $quoteApprovalRequestTransfer = $this->createValidQuoteApprovalRequestTransfer($quoteApprovalCreateRequestTransfer);
+        // Assign
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer)
+            ->setStore(
+                (new StoreTransfer())->setName('DE')
+            )
+            ->setCurrency(
+                (new CurrencyTransfer())->setCode('EUR')
+            );
 
-        //Act
-        $quoteApprovalResponseTransfer = $this->getFacade()->approveQuoteApproval($quoteApprovalRequestTransfer);
+        // Act
+        $quoteApprovalResponseTransfer = $this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
 
-        //Assert
-        $this->assertTrue($quoteApprovalResponseTransfer->getIsSuccessful());
+        // Assert
+        $this->assertFalse($quoteApprovalResponseTransfer);
+    }
+
+    /**
+     * @group app
+     *
+     * @return void
+     */
+    public function testIsQuoteApprovalRequiredResponseIsNotSuccessful(): void
+    {
+        // Assign
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+        ]);
+        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer)
+            ->setStore(
+                (new StoreTransfer())->setName('DE')
+            )
+            ->setCurrency(
+                (new CurrencyTransfer())->setCode('EUR')
+            );
+        $quoteTransfer->setQuoteApprovals($this->createQuoteApprovalTransfers([
+            QuoteApprovalConfig::STATUS_WAITING,
+        ]));
+
+        // Act
+        $quoteApprovalResponseTransfer = $this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
+
+        // Assert
+        $this->assertTrue($quoteApprovalResponseTransfer);
     }
 
     /**
@@ -530,5 +586,21 @@ class QuoteApprovalFacadeTest extends Unit
         ]);
 
         return $companyUserTransfer;
+    }
+
+    /**
+     * @param string[] $statuses
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     */
+    protected function createQuoteApprovalTransfers(array $statuses): ArrayObject
+    {
+        $quoteApprovalTransfers = [];
+
+        foreach ($statuses as $status) {
+            $quoteApprovalTransfers[] = (new QuoteApprovalTransfer())->setStatus($status);
+        }
+
+        return new ArrayObject($quoteApprovalTransfers);
     }
 }
