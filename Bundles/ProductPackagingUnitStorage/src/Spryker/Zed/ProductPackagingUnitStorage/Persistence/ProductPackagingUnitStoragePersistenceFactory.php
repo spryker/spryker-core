@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
+use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductConcretePackagingStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
@@ -21,11 +21,11 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
 class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductConcretePackagingStorageQuery
      */
-    public function createSpyProductAbstractPackagingStorageQuery(): SpyProductAbstractPackagingStorageQuery
+    public function createSpyProductConcretePackagingStorageQuery(): SpyProductConcretePackagingStorageQuery
     {
-        return SpyProductAbstractPackagingStorageQuery::create();
+        return SpyProductConcretePackagingStorageQuery::create();
     }
 
     /**
@@ -37,10 +37,10 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
      */
-    public function getProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
+    public function getProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
     {
-        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT_PACKAGING_LEAD_PRODUCT);
+        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT);
     }
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
-use Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer;
+use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\SpyProductConcretePackagingStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,33 +17,33 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager implements ProductPackagingUnitStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
      *
      * @return void
      */
-    public function saveProductAbstractPackagingStorageEntity(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer): void
+    public function saveProductConcretePackagingStorageEntity(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer): void
     {
-        $productAbstractPackagingStorageEntity = $this->getFactory()
-            ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract($productAbstractPackagingStorageTransfer->getIdProductAbstract())
+        $productConcretePackagingStorageEntity = $this->getFactory()
+            ->createSpyProductConcretePackagingStorageQuery()
+            ->filterByFkProduct($productConcretePackagingStorageTransfer->getIdProduct())
             ->findOneOrCreate();
 
-        $productAbstractPackagingStorageEntity->setData($productAbstractPackagingStorageTransfer->toArray());
+        $productConcretePackagingStorageEntity->setData($productConcretePackagingStorageTransfer->toArray());
 
-        $productAbstractPackagingStorageEntity->save();
+        $productConcretePackagingStorageEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer $productAbstractPackagingStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity
      *
      * @return void
      */
-    public function deleteProductAbstractPackagingStorageEntity(SpyProductAbstractPackagingStorageEntityTransfer $productAbstractPackagingStorageEntity): void
+    public function deleteProductConcretePackagingStorageEntity(SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity): void
     {
-        $productAbstractPackagingStorageEntity = $this->getFactory()
-            ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract($productAbstractPackagingStorageEntity->getFkProductAbstract());
+        $productConcretePackagingStorageEntity = $this->getFactory()
+            ->createSpyProductConcretePackagingStorageQuery()
+            ->filterByFkProduct($productConcretePackagingStorageEntity->getFkProduct());
 
-        $productAbstractPackagingStorageEntity->delete();
+        $productConcretePackagingStorageEntity->delete();
     }
 }

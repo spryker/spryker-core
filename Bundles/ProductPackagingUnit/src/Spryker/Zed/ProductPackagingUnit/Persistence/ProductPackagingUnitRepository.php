@@ -126,7 +126,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
         return $this->getFactory()
             ->createProductPackagingUnitQuery()
@@ -134,7 +134,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
                 ->filterByIdProductPackagingUnitType_In($productPackagingUnitTypeIds)
             ->endUse()
             ->joinProduct()
-            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
             ->find()
             ->toArray();
     }

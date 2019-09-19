@@ -19,57 +19,57 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
     /**
      * @var \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface
      */
-    protected $productAbstractPackagingUnitStorageReader;
+    protected $productConcretePackagingUnitStorageReader;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface $productPackagingUnitStorageEntityManager
-     * @param \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface $productAbstractPackagingStorageReader
+     * @param \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface $productConcretePackagingStorageReader
      */
     public function __construct(
         ProductPackagingUnitStorageEntityManagerInterface $productPackagingUnitStorageEntityManager,
-        ProductPackagingStorageReaderInterface $productAbstractPackagingStorageReader
+        ProductPackagingStorageReaderInterface $productConcretePackagingStorageReader
     ) {
         $this->productPackagingUnitStorageEntityManager = $productPackagingUnitStorageEntityManager;
-        $this->productAbstractPackagingUnitStorageReader = $productAbstractPackagingStorageReader;
+        $this->productConcretePackagingUnitStorageReader = $productConcretePackagingStorageReader;
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function publish(array $productAbstractIds): void
+    public function publishProductPackagingUnit(array $productConcreteIds): void
     {
-        $productAbstractPackagingTransfers = $this->productAbstractPackagingUnitStorageReader
-            ->getProductAbstractPackagingStorageTransfer($productAbstractIds);
+        $productConcretePackagingTransfers = $this->productConcretePackagingUnitStorageReader
+            ->getProductConcretePackagingStorageTransfer($productConcreteIds);
 
-        $this->storeData($productAbstractPackagingTransfers);
+        $this->storeData($productConcretePackagingTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[] $productAbstractPackagingTransfers
+     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer[] $productConcretePackagingTransfers
      *
      * @return void
      */
-    protected function storeData(array $productAbstractPackagingTransfers): void
+    protected function storeData(array $productConcretePackagingTransfers): void
     {
-        foreach ($productAbstractPackagingTransfers as $productAbstractPackagingTransfer) {
-            $this->productPackagingUnitStorageEntityManager->saveProductAbstractPackagingStorageEntity($productAbstractPackagingTransfer);
+        foreach ($productConcretePackagingTransfers as $productConcretePackagingTransfer) {
+            $this->productPackagingUnitStorageEntityManager->saveProductConcretePackagingStorageEntity($productConcretePackagingTransfer);
         }
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds): void
+    public function unpublishProductPackagingUnit(array $productConcreteIds): void
     {
-        $productAbstractPackagingStorageEntities = $this->productAbstractPackagingUnitStorageReader
-            ->getProductAbstractPackagingStorageEntities($productAbstractIds);
+        $productConcretePackagingStorageEntities = $this->productConcretePackagingUnitStorageReader
+            ->getProductConcretePackagingStorageEntities($productConcreteIds);
 
-        foreach ($productAbstractPackagingStorageEntities as $productAbstractPackagingStorageEntity) {
-            $this->productPackagingUnitStorageEntityManager->deleteProductAbstractPackagingStorageEntity($productAbstractPackagingStorageEntity);
+        foreach ($productConcretePackagingStorageEntities as $productConcretePackagingStorageEntity) {
+            $this->productPackagingUnitStorageEntityManager->deleteProductConcretePackagingStorageEntity($productConcretePackagingStorageEntity);
         }
     }
 }

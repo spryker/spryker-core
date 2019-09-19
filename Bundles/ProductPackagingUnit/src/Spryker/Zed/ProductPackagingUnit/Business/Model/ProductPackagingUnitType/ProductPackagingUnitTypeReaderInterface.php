@@ -47,5 +47,5 @@ interface ProductPackagingUnitTypeReaderInterface
      *
      * @return array
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 }

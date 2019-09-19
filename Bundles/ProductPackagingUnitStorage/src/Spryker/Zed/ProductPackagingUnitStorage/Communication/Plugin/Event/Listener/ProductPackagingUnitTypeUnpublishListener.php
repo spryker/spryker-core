@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductAbstractPackagingStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductPackagingUnitTypeUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
@@ -29,10 +29,12 @@ class ProductAbstractPackagingStorageUnpublishListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $productAbstractIds = $this->getFactory()
+        $productPackagingTypeIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
+        $productConcreteIds = $this->getFacade()->findProductIdsByProductPackagingUnitTypeIds($productPackagingTypeIds);
+
+        $this->getFacade()->unpublishProductPackagingUnit($productConcreteIds);
     }
 }

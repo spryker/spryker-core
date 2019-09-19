@@ -23,20 +23,12 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     }
 
     /**
-     * @return string
-     */
-    public function getDefaultProductPackagingUnitTypeName(): string
-    {
-        return $this->productPackagingUnitFacade->getDefaultProductPackagingUnitTypeName();
-    }
-
-    /**
      * @param array $productPackagingUnitTypeIds
      *
      * @return array
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        return $this->productPackagingUnitFacade->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
+        return $this->productPackagingUnitFacade->findProductIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 }

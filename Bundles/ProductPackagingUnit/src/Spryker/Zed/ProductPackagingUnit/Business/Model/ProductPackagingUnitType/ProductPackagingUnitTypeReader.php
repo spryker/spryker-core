@@ -102,8 +102,8 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        return $this->repository->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
+        return $this->repository->findProductIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 }
