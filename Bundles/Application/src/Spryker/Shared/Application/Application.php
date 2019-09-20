@@ -134,10 +134,7 @@ class Application implements HttpKernelInterface, TerminableInterface
         // `controllers` is set by the `\Silex\Provider\RoutingServiceProvider` and might not be used anymore.
         // For projects which make use of the previous router this ensures that `routes` is filled with a
         // proper RouteCollection which contains all routes.
-        // Additionally the `\Silex\Application` sets a new flag `controllers-flushed` which is set to false when the
-        // new router is used but to true when the previous router is used, this will prevent from flushing the controllers
-        // twice.
-        if ($this->container->has('controllers') && (!$this->container->has('controllers-flushed') || $this->container->get('controllers-flushed') === false)) {
+        if ($this->container->has('controllers')) {
             $this->container->get('routes')->addCollection($this->container->get('controllers')->flush());
 
             return;
