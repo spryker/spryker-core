@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
@@ -722,10 +723,13 @@ class ShipmentFacadeTest extends Test
      */
     public function testHasValidCarrierNameById(): void
     {
-        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+        $shipmentCarrierTransfer1 = $this->tester->haveShipmentCarrier();
+        $shipmentCarrierTransfer2 = $this->tester->haveShipmentCarrier([
+            ShipmentCarrierTransfer::NAME => $shipmentCarrierTransfer1->getName(),
+        ]);
 
         $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName($shipmentCarrierTransfer->getName(), 0);
+            ->hasCarrierName($shipmentCarrierTransfer1->getName(), $shipmentCarrierTransfer2->getIdShipmentCarrier());
 
         $this->assertTrue($hasCarrierName);
     }
@@ -750,17 +754,6 @@ class ShipmentFacadeTest extends Test
     {
         $hasCarrierName = $this->tester->getShipmentFacade()
             ->hasCarrierName(static::NOT_VALID_SHIPMENT_CARRIER_NAME);
-
-        $this->assertFalse($hasCarrierName);
-    }
-
-    /**
-     * @return void
-     */
-    public function testHasNoValidCarrierNameById(): void
-    {
-        $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName(static::NOT_VALID_SHIPMENT_CARRIER_NAME, 0);
 
         $this->assertFalse($hasCarrierName);
     }
