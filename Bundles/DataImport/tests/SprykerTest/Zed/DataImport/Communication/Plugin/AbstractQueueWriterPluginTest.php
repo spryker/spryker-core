@@ -15,6 +15,7 @@ use Spryker\Zed\DataImport\Communication\Plugin\AbstractQueueWriterPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

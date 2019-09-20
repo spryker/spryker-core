@@ -24,6 +24,7 @@ use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSet
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

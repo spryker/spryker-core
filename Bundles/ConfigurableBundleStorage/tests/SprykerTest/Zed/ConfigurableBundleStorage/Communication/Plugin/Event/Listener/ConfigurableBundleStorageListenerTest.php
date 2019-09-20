@@ -18,6 +18,7 @@ use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\Co
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ConfigurableBundleStorage

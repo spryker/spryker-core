@@ -14,6 +14,7 @@ use Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ManualOrderEntry

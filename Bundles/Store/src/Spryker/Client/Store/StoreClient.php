@@ -30,7 +30,6 @@ class StoreClient extends AbstractClient implements StoreClientInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api

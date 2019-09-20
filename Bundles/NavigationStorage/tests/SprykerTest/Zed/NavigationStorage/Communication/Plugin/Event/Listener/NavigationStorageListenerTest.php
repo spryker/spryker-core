@@ -26,6 +26,7 @@ use SprykerTest\Zed\NavigationStorage\NavigationStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group NavigationStorage

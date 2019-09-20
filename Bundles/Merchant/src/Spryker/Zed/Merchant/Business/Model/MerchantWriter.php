@@ -38,7 +38,6 @@ class MerchantWriter implements MerchantWriterInterface
 
     /**
      * @var \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
-     *
      */
     protected $merchantKeyGenerator;
 

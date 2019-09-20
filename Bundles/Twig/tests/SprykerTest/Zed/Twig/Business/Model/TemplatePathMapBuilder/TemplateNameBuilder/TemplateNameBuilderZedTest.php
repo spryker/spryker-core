@@ -12,6 +12,7 @@ use Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilder\T
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig

@@ -34,6 +34,7 @@ use SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSetPageSearch

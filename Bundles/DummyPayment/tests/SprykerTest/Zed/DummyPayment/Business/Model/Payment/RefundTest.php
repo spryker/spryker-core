@@ -15,6 +15,7 @@ use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment

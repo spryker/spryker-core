@@ -23,6 +23,7 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityStorage
