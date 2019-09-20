@@ -33,11 +33,6 @@
         <property name="anonymizedAt" type="string" />
         <property name="country" type="Country" />
         <property name="isAddressSavingSkipped" type="bool"/>
-        <property name="idCompanyUnitAddress" type="int" />
-        <property name="idSalesOrderAddress" type="int" />
-        <property name="fkMiscCountry" type="int" />
-        <property name="region" type="string" />
-        <property name="key" type="string" />
     </transfer>
 
     <transfer name="Addresses">
