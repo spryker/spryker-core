@@ -131,14 +131,12 @@ class Application implements HttpKernelInterface, TerminableInterface
      */
     public function flushControllers()
     {
+        $routeCollection = $this->container->get('controllers')->flush();
+
         // `controllers` is set by the `\Silex\Provider\RoutingServiceProvider` and might not be used anymore.
         // For projects which make use of the previous router this ensures that `routes` is filled with a
         // proper RouteCollection which contains all routes.
-        if ($this->container->has('controllers')) {
-            $this->container->get('routes')->addCollection($this->container->get('controllers')->flush());
-
-            return;
-        }
+        $this->container->get('routes')->addCollection($routeCollection);
 
         // When projects make use of the new Router we need to make sure that we add all `controllers` as new Router to
         // the ChainRouter.
@@ -146,8 +144,8 @@ class Application implements HttpKernelInterface, TerminableInterface
         $chainRouter = $this->container->get(static::SERVICE_ROUTER);
 
         $loader = new ClosureLoader();
-        $resource = function () {
-            return $this->container->get('controllers')->flush();
+        $resource = function () use ($routeCollection) {
+            return $routeCollection;
         };
         $router = new Router($loader, $resource);
         $chainRouter->add($router, 1);
