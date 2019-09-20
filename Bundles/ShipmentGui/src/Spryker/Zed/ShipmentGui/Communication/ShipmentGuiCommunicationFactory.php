@@ -9,11 +9,13 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
+use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
@@ -89,6 +91,22 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createStringToNumberTransformer(): DataTransformerInterface
     {
         return new StringToNumberTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper
+     */
+    public function createShipmentCarrierMapper(): ShipmentCarrierMapper
+    {
+        return new ShipmentCarrierMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName
+     */
+    public function createPriceProductSchedulePriceConstraint(): ShipmentGuiUniqueShipmentCarrierName
+    {
+        return new ShipmentGuiUniqueShipmentCarrierName($this->getShipmentFacade());
     }
 
     /**

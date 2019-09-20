@@ -12,9 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -62,9 +60,7 @@ class ShipmentCarrierFormType extends AbstractType
             'label' => static::LABEL_NAME,
             'constraints' => [
                 new NotBlank(),
-                new Callback([
-                    'callback' => [$this, 'uniqueShipmentCarrierNameCheck'],
-                ]),
+                $this->getFactory()->createPriceProductSchedulePriceConstraint(),
             ],
         ]);
 
@@ -96,21 +92,5 @@ class ShipmentCarrierFormType extends AbstractType
         $builder->add(static::FIELD_ID_CARRIER, HiddenType::class);
 
         return $this;
-    }
-
-    /**
-     * @param string $carrierName
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     *
-     * @return void
-     */
-    public function uniqueShipmentCarrierNameCheck($carrierName, ExecutionContextInterface $context): void
-    {
-        $formData = $context->getRoot()->getData();
-        $idCarrier = $formData[static::FIELD_ID_CARRIER] ?? null;
-
-        if ($this->getFactory()->getShipmentFacade()->hasCarrierName($carrierName, [$idCarrier])) {
-            $context->addViolation(static::MESSAGE_VIOLATION);
-        }
     }
 }

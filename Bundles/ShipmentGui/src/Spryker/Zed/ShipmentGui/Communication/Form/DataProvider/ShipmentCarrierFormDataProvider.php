@@ -37,7 +37,7 @@ class ShipmentCarrierFormDataProvider
         }
 
         return [
-            ShipmentCarrierFormType::FIELD_IS_ACTIVE_FIELD => $this->getCarrierIsActive($idCarrier),
+            ShipmentCarrierFormType::FIELD_IS_ACTIVE_FIELD => $this->isCarrierActive($idCarrier),
         ];
     }
 
@@ -54,7 +54,7 @@ class ShipmentCarrierFormDataProvider
      *
      * @return bool
      */
-    protected function getCarrierIsActive(int $idCarrier): bool
+    protected function isCarrierActive(int $idCarrier): bool
     {
         $shipmentCarrierTransfer = $this->shipmentFacade->findShipmentCarrierById($idCarrier);
         if ($shipmentCarrierTransfer === null || $shipmentCarrierTransfer->getIsActive() === null) {

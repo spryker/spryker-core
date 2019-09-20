@@ -33,7 +33,8 @@ class CreateCarrierController extends AbstractController
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $shipmentCarrierTransfer = $this->mapRequestDataToShipmentCarrierTransfer($form->getData(), new ShipmentCarrierTransfer());
+            $shipmentCarrierTransfer = $factory->createShipmentCarrierMapper()
+                ->mapRequestDataToShipmentCarrierTransfer($form->getData(), new ShipmentCarrierTransfer());
 
             $factory->getShipmentFacade()->createCarrier($shipmentCarrierTransfer);
 
@@ -45,16 +46,5 @@ class CreateCarrierController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param array $requestData
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
-     */
-    protected function mapRequestDataToShipmentCarrierTransfer(array $requestData, ShipmentCarrierTransfer $shipmentCarrierTransfer): ShipmentCarrierTransfer
-    {
-        return $shipmentCarrierTransfer->fromArray($requestData, true);
     }
 }
