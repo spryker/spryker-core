@@ -18,6 +18,10 @@ class GuiConfig extends AbstractBundleConfig
         'bootstrap_3_layout.html.twig',
     ];
 
+    protected const TABS_DEFAULT_TEMPLATE_PATH = '@Gui/Tabs/tabs.twig';
+
+    protected const SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH = '@Gui/Form/button/submit_button.twig';
+
     /**
      * @return string
      */
@@ -50,5 +54,21 @@ class GuiConfig extends AbstractBundleConfig
     public function getZedAssetsPath(): string
     {
         return $this->get(GuiConstants::ZED_ASSETS_PATH, '/assets/');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTabsDefaultTemplatePath(): string
+    {
+        return static::TABS_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubmitButtonDefaultTemplatePath(): string
+    {
+        return static::SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH;
     }
 }

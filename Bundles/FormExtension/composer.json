@@ -1,0 +1,34 @@
+{
+  "name": "spryker/form-extension",
+  "type": "library",
+  "description": "FormExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/testify": "*",
+    "spryker/symfony": "*"
+  },
+  "suggest": {
+    "spryker/container": "If you want to use the FormPluginInterface.",
+    "spryker/symfony": "If you want to use the FormPluginInterface."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

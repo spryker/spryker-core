@@ -34,6 +34,8 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
     public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
+    public const TWIG_GUI_FUNCTIONS = 'TWIG_GUI_FUNCTIONS';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

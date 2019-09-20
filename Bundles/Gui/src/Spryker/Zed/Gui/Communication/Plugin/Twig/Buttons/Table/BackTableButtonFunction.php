@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table;
 
+/**
+ * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonTwigPlugin` instead.
+ */
 class BackTableButtonFunction extends AbstractTableFunction
 {
     /**

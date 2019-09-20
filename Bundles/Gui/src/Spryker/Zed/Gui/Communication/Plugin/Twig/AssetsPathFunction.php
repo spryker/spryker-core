@@ -8,15 +8,14 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 
 use Spryker\Shared\Twig\TwigFunction;
-use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathTwigPlugin` instead.
+ *
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
 class AssetsPathFunction extends TwigFunction
 {
-    use BundleConfigResolverAwareTrait;
-
     /**
      * @return string
      */
@@ -33,7 +32,7 @@ class AssetsPathFunction extends TwigFunction
         return function ($path) {
             $path = ltrim($path, '/');
 
-            return rtrim($this->getConfig()->getZedAssetsPath() . '/') . $path;
+            return '/assets/' . $path;
         };
     }
 }
