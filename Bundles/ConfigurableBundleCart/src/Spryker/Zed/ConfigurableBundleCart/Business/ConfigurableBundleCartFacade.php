@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,51 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ConfigurableBundleCartFacade extends AbstractFacade implements ConfigurableBundleCartFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function updateConfiguredBundleQuantityForQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleQuantityCalculator()
+            ->updateConfiguredBundleQuantity($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function updateConfiguredBundleQuantityPerSlotForQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleQuantityCalculator()
+            ->updateConfiguredBundleQuantityPerSlot($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkConfiguredBundleQuantityInQuote(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleQuantityChecker()
+            ->checkConfiguredBundleQuantity($quoteTransfer);
+    }
 }

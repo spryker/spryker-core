@@ -18,6 +18,7 @@ class CartWriter implements CartWriterInterface
 {
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND = 'configured_bundle_cart.error.configured_bundle_not_found';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED = 'configured_bundle_cart.error.configured_bundle_cannot_be_removed';
+    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED = 'configured_bundle_cart.error.configured_bundle_cannot_be_updated';
 
     /**
      * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface
@@ -90,6 +91,10 @@ class CartWriter implements CartWriterInterface
         $quoteResponseTransfer = $this->cartClient->updateQuantity(
             (new CartChangeTransfer())->setItems($itemTransfers)
         );
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED);
+        }
 
         return $quoteResponseTransfer;
     }

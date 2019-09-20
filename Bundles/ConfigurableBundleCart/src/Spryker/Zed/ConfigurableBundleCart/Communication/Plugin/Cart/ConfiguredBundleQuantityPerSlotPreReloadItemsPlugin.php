@@ -19,7 +19,7 @@ class ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin extends AbstractPlugin
 {
     /**
      * {@inheritdoc}
-     * - TODO:
+     * - Updates configured bundle quantity per slot for quote items.
      *
      * @api
      *
@@ -29,18 +29,6 @@ class ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin extends AbstractPlugin
      */
     public function preReloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        // TODO: move to Facade -> Business Model.
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundleItem() || !$itemTransfer->getConfiguredBundle()) {
-                continue;
-            }
-
-            $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot(
-                (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity())
-            );
-        }
-
-        return $quoteTransfer;
+        return $this->getFacade()->updateConfiguredBundleQuantityPerSlotForQuote($quoteTransfer);
     }
 }

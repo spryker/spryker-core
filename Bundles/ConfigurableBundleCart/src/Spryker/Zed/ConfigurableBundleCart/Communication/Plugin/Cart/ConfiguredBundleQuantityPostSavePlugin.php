@@ -19,7 +19,7 @@ class ConfiguredBundleQuantityPostSavePlugin extends AbstractPlugin implements P
 {
     /**
      * {@inheritdoc}
-     * - TODO:
+     * - Updates configured bundle quantity for quote items.
      *
      * @api
      *
@@ -29,18 +29,6 @@ class ConfiguredBundleQuantityPostSavePlugin extends AbstractPlugin implements P
      */
     public function postSave(QuoteTransfer $quoteTransfer)
     {
-        // TODO: move to Facade -> Business Model.
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundleItem()) {
-                continue;
-            }
-
-            $itemTransfer->getConfiguredBundle()->setQuantity(
-                (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
-            );
-        }
-
-        return $quoteTransfer;
+        return $this->getFacade()->updateConfiguredBundleQuantityForQuote($quoteTransfer);
     }
 }
