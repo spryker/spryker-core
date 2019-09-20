@@ -10,6 +10,7 @@
     "spryker/error-handler": "^2.0.0",
     "spryker/event-behavior": "^1.10.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/locale": "^3.3.0",
     "spryker/price": "^5.3.0",
     "spryker/price-product": "^1.1.0 || ^2.1.0 || ^4.0.0",
     "spryker/product": "^6.9.0",
@@ -29,7 +30,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/locale": "*",
     "spryker/product-attribute": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",

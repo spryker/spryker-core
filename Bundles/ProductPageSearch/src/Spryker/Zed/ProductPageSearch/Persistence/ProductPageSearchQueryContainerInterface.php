@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductPageSearchQueryContainerInterface extends QueryContainerInterface
@@ -19,11 +21,10 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @api
      *
      * @param array $productAbstractIds
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractByIds(array $productAbstractIds, ?StoreTransfer $storeTransfer = null);
+    public function queryProductAbstractByIds(array $productAbstractIds);
 
     /**
      * @api
@@ -157,4 +158,50 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
     public function queryAllProductCategories(array $productAbstractIds);
+
+    /**
+     * Specification:
+     * - Returns `SpyProductAbstractLocalizedAttributesQuery` filtered by store id, product ids and available locales.
+     *
+     * @api
+     *
+     * @module Product
+     *
+     * @param int[] $productAbstractIds
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(array $productAbstractIds, StoreTransfer $storeTransfer): SpyProductAbstractLocalizedAttributesQuery;
+
+    /**
+     * Specification:
+     * - Returns `SpyProductQuery` with `SpyProductLocalizedAttributes` filtered by abstract product ids and locale iso codes.
+     *
+     * @api
+     *
+     * @module Product
+     * @module Locale
+     *
+     * @param int[] $abstractProductIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcretesByAbstractProductIdsAndLocaleIsoCodes(array $abstractProductIds, array $localeIsoCodes): SpyProductQuery;
+
+    /**
+     * Specification:
+     * - Returns `SpyProductSearchQuery` filtered by concrete product ids and locale iso codes.
+     *
+     * @api
+     *
+     * @module ProductSearch
+     *
+     * @param int[] $productConcreteIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
+     */
+    public function queryProductSearchByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): SpyProductSearchQuery;
 }

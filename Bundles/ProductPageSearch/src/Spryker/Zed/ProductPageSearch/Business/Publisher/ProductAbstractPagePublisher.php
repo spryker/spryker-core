@@ -148,9 +148,15 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productPageLoadTransfer = $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
         }
 
+        $localeIsoCodes = $this->getAvailableLocaleIsoCodes();
+
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
+        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
+        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
+        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
         $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productAbstractIds, $productAbstractLocalizedEntities);
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductEntities($productConcreteEntities, $productAbstractLocalizedEntities);
+        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
         if (!$productAbstractLocalizedEntities) {
             $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
@@ -416,7 +422,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $productAbstractLocalizedEntities = array_merge(
                 $productAbstractLocalizedEntities,
-                $this->queryContainer->queryProductAbstractByIds($productAbstractIds, $storeTransfer)->find()->getData()
+                $this->queryContainer->queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore($productAbstractIds, $storeTransfer)->find()->getData()
             );
         }
 
@@ -425,9 +431,72 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
     /**
      * @param int[] $productAbstractIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return array
+     */
+    protected function getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes(array $productAbstractIds, array $localeIsoCodes): array
+    {
+        return $this->queryContainer
+            ->queryProductConcretesByAbstractProductIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAvailableLocaleIsoCodes(): array
+    {
+        $localeIsoCodes = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $localeIsoCodes = array_merge($localeIsoCodes, $storeTransfer->getAvailableLocaleIsoCodes());
+        }
+
+        return array_unique($localeIsoCodes);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return array
+     */
+    protected function getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array $productConcreteIds, array $localeIsoCodes): array
+    {
+        return $this->queryContainer
+            ->queryProductSearchByProductConcreteIdsAndLocaleIsoCodes($productConcreteIds, $localeIsoCodes)
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param array $productSearchEntities
+     * @param array $productConcreteEntities
+     *
+     * @return array
+     */
+    protected function hydrateProductConcreteEntitiesWithProductSearchEntities(array $productSearchEntities, array $productConcreteEntities): array
+    {
+        $productSearchByProductConcreteId = [];
+
+        foreach ($productSearchEntities as $productSearch) {
+            $productSearchByProductConcreteId[$productSearch['fk_product']][] = $productSearch;
+        }
+
+        foreach ($productConcreteEntities as $key => $productConcreteEntity) {
+            $productConcreteId = (int)$productConcreteEntity['id_product'];
+            $productConcreteEntities[$key]['SpyProductSearches'] = $productSearchByProductConcreteId[$productConcreteId];
+        }
+
+        return $productConcreteEntities;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
      * @param array $productAbstractLocalizedEntities
      *
-     * @return mixed
+     * @return array
      */
     protected function hydrateProductAbstractLocalizedEntitiesWithProductCategories(array $productAbstractIds, array $productAbstractLocalizedEntities)
     {
@@ -441,6 +510,27 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
             $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories'] = $productCategoriesByProductAbstractId[$productAbstractId];
+        }
+
+        return $productAbstractLocalizedEntities;
+    }
+
+    /**
+     * @param array $productConcreteData
+     * @param array $productAbstractLocalizedEntities
+     *
+     * @return array
+     */
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductEntities(array $productConcreteData, array $productAbstractLocalizedEntities): array
+    {
+        $productConcretesByProductAbstractId = [];
+        foreach ($productConcreteData as $productConcrete) {
+            $productConcretesByProductAbstractId[$productConcrete['fk_product_abstract']][] = $productConcrete;
+        }
+
+        foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProducts'] = $productConcretesByProductAbstractId[$productAbstractId];
         }
 
         return $productAbstractLocalizedEntities;
