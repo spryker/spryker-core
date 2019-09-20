@@ -23,7 +23,7 @@ interface ExternalDataProviderStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Returns value which represents the key in the CMS slot request.
+     *  - Returns the value which represents the key in the CMS slot request.
      *
      * @api
      *
