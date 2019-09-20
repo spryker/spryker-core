@@ -277,8 +277,17 @@ class PriceProductScheduleListTable extends AbstractTable
     protected function generatePriceProductScheduleListEditButton(
         SpyPriceProductScheduleList $priceProductScheduleListEntity
     ): string {
+        if ($priceProductScheduleListEntity->getIsActive()) {
+            return $this->generateEditButton(
+                Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT, [
+                    PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+                ]),
+                static::BUTTON_EDIT
+            );
+        }
+
         return $this->generateEditButton(
-            Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT, [
+            Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
                 PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
             static::BUTTON_EDIT
