@@ -55,6 +55,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteWishlistItemAction(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
-        return $this->getFacade()->deleteItem($wishlistItemRequestTransfer);
+        return $this->getFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
     }
 }

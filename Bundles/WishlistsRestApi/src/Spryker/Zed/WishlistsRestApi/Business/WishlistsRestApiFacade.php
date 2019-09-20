@@ -86,7 +86,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function deleteItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
+    public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer
     {
         return $this->getFactory()->createWishlistItemDeleter()->delete($wishlistItemRequestTransfer);
     }

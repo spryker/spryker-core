@@ -82,5 +82,5 @@ interface WishlistsRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
-    public function deleteItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
+    public function deleteWishlistItem(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemResponseTransfer;
 }

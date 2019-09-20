@@ -335,7 +335,7 @@ class WishlistsRestApiFacadeTest extends Test
             ->setSku($wishlistItem->getSku());
 
         //Act
-        $wishlistItemResponseTransfer = $this->wishlistsRestApiFacade->deleteItem($wishlistItemRequestTransfer);
+        $wishlistItemResponseTransfer = $this->wishlistsRestApiFacade->deleteWishlistItem($wishlistItemRequestTransfer);
 
         //Assert
         $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), $wishlistName);
@@ -372,7 +372,7 @@ class WishlistsRestApiFacadeTest extends Test
             ->setSku($wishlistItem->getSku());
 
         //Act
-        $wishlistItemResponseTransfer = $this->wishlistsRestApiFacade->deleteItem($wishlistItemRequestTransfer);
+        $wishlistItemResponseTransfer = $this->wishlistsRestApiFacade->deleteWishlistItem($wishlistItemRequestTransfer);
 
         //Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
@@ -402,7 +402,7 @@ class WishlistsRestApiFacadeTest extends Test
             ->setSku($concreteProduct->getSku());
 
         //Act
-        $wishlistItemResponseTransfer = $this->wishlistsRestApiFacade->deleteItem($wishlistItemRequestTransfer);
+        $wishlistItemResponseTransfer = $this->wishlistsRestApiFacade->deleteWishlistItem($wishlistItemRequestTransfer);
 
         //Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
