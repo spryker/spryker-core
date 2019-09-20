@@ -16,7 +16,7 @@ use Twig\Environment;
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */
-class GuiTwigPlugin extends AbstractPlugin implements TwigPluginInterface
+class GuiFilterTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
      * {@inheritdoc}

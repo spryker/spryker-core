@@ -48,7 +48,7 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addFunction(new TwigFunction($this->getFunctionName(), function (string $url, string $title, array $options = []) {
+        $twig->addFunction(new TwigFunction($this->getFunctionName(), function ($url, $title, $options = []) {
             if (!array_key_exists(ButtonUrlGenerator::ICON, $options)) {
                 $options[ButtonUrlGenerator::ICON] = $this->getIcon();
             }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\Gui\Communication;
 
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
-use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Symfony\Component\Form\FormTypeExtensionInterface;
 
 /**
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
@@ -25,14 +23,6 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFilesystemLoader(): FilesystemLoaderInterface
     {
         return new FilesystemLoader($this->getConfig()->getTemplatePaths());
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormTypeExtensionInterface
-     */
-    public function createNoValidateFormTypeExtension(): FormTypeExtensionInterface
-    {
-        return new NoValidateTypeExtension();
     }
 
     /**
