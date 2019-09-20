@@ -73,7 +73,7 @@ class PriceProductScheduleListForm extends AbstractType
             static::FIELD_PRICE_PRODUCT_SCHEDULE_NAME,
             TextType::class,
             [
-                'label' => 'Schedule name',
+                'label' => 'Name',
                 'constraints' => [
                     new Required(),
                     new NotBlank(),
