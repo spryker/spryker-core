@@ -148,7 +148,7 @@ class Application implements HttpKernelInterface, TerminableInterface
             return $routeCollection;
         };
         $router = new Router($loader, $resource);
-        $chainRouter->add($router, 1);
+        $chainRouter->add($router);
     }
 
     /**
