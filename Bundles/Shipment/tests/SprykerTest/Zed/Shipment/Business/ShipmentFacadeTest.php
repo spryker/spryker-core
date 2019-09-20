@@ -53,6 +53,7 @@ class ShipmentFacadeTest extends Test
 
     protected const VALUE_ANOTHER_EXPENSE_TYPE = 'VALUE_ANOTHER_EXPENSE_TYPE';
 
+    protected const NOT_VALID_SHIPMENT_CARRIER_NAME = 'Not valid shipment carrier name';
     protected const NOT_UNIQUE_SHIPMENT_NAME_STANDART = 'Standard';
     protected const NOT_UNIQUE_SHIPMENT_NAME_EXPRESS = 'Express';
     protected const UNIQUE_SHIPMENT_NAME = 'Example unique shipment name';
@@ -677,5 +678,90 @@ class ShipmentFacadeTest extends Test
             ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
 
         $this->assertTrue($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindValidShipmentCarrierById(): void
+    {
+        $idShipmentCarrier = $this->tester->haveShipmentCarrier()->getIdShipmentCarrier();
+
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
+            ->findShipmentCarrierById($idShipmentCarrier);
+
+        $this->assertNotNull($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindNotValidShipmentCarrierById(): void
+    {
+        $shipmentCarrierTransfer = $this->tester->getShipmentFacade()
+            ->findShipmentCarrierById(0);
+
+        $this->assertNull($shipmentCarrierTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasValidCarrierName(): void
+    {
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+
+        $hasCarrierName = $this->tester->getShipmentFacade()
+            ->hasCarrierName($shipmentCarrierTransfer->getName());
+
+        $this->assertTrue($hasCarrierName);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasValidCarrierNameById(): void
+    {
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+
+        $hasCarrierName = $this->tester->getShipmentFacade()
+            ->hasCarrierName($shipmentCarrierTransfer->getName(), 0);
+
+        $this->assertTrue($hasCarrierName);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasNotValidCarrierNameById(): void
+    {
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+
+        $hasCarrierName = $this->tester->getShipmentFacade()
+            ->hasCarrierName($shipmentCarrierTransfer->getName(), $shipmentCarrierTransfer->getIdShipmentCarrier());
+
+        $this->assertFalse($hasCarrierName);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasNoValidCarrierName(): void
+    {
+        $hasCarrierName = $this->tester->getShipmentFacade()
+            ->hasCarrierName(static::NOT_VALID_SHIPMENT_CARRIER_NAME);
+
+        $this->assertFalse($hasCarrierName);
+    }
+
+    /**
+     * @return void
+     */
+    public function testHasNoValidCarrierNameById(): void
+    {
+        $hasCarrierName = $this->tester->getShipmentFacade()
+            ->hasCarrierName(static::NOT_VALID_SHIPMENT_CARRIER_NAME, 0);
+
+        $this->assertFalse($hasCarrierName);
     }
 }

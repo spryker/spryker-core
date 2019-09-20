@@ -87,11 +87,11 @@ interface ShipmentRepositoryInterface
 
     /**
      * @param string $carrierName
-     * @param int|null $idCarrier
+     * @param int|null $excludeIdCarrier
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool;
+    public function hasCarrierName($carrierName, ?int $excludeIdCarrier = null): bool;
 
     /**
      * @param string $shipmentMethodName

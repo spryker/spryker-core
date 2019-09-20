@@ -80,13 +80,13 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param string $carrierName
-     * @param int|null $idCarrier
+     * @param int|null $excludeIdCarrier
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool
+    public function hasCarrierName($carrierName, ?int $excludeIdCarrier = null): bool
     {
-        return $this->getRepository()->hasCarrierName($carrierName, $idCarrier);
+        return $this->getRepository()->hasCarrierName($carrierName, $excludeIdCarrier);
     }
 
     /**
