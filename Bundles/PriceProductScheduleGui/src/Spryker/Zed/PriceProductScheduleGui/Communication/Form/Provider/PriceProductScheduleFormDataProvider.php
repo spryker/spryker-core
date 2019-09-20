@@ -107,6 +107,17 @@ class PriceProductScheduleFormDataProvider
      */
     public function getData(PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
     {
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+
+        if ($priceProductTransfer === null) {
+            return $priceProductScheduleTransfer;
+        }
+
+        if ($priceProductTransfer->getSkuProduct() !== null) {
+            $priceProductTransfer->setSkuProductAbstract(null);
+            $priceProductScheduleTransfer->setPriceProduct($priceProductTransfer);
+        }
+
         return $priceProductScheduleTransfer;
     }
 

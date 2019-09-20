@@ -66,9 +66,12 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
 
         $priceProductScheduleEntity->save();
 
-        $priceProductScheduleTransfer->setIdPriceProductSchedule((int)$priceProductScheduleEntity->getIdPriceProductSchedule());
-
-        return $priceProductScheduleTransfer;
+        return $this->getFactory()
+            ->createPriceProductScheduleMapper()
+            ->mapPriceProductScheduleEntityToPriceProductScheduleTransfer(
+                $priceProductScheduleEntity,
+                $priceProductScheduleTransfer
+            );
     }
 
     /**
