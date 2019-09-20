@@ -59,7 +59,8 @@ class CustomerAccessRequestValidator implements CustomerAccessRequestValidatorIn
     protected function createNotFoundErrorMessageTransfer(): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(Response::$statusTexts[Response::HTTP_NOT_FOUND]);
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setCode(CustomerAccessRestApiConfig::RESPONSE_CODE_UNAUTHORIZED_ACCESS_FORBIDDEN)
+            ->setDetail(CustomerAccessRestApiConfig::RESPONSE_MESSAGE_UNAUTHORIZED_ACCESS_FORBIDDEN);
     }
 }
