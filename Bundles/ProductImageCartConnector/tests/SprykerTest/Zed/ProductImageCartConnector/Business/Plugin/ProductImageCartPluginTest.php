@@ -16,6 +16,7 @@ use Spryker\Zed\ProductImageCartConnector\Business\ProductImageCartConnectorFaca
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductImageCartConnector

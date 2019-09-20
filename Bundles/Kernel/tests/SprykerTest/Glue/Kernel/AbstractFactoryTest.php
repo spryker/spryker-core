@@ -15,6 +15,7 @@ use SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel

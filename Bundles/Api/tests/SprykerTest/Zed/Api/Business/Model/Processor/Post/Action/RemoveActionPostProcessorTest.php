@@ -15,6 +15,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\RemoveActionPostProcess
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api

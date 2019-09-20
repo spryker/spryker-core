@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

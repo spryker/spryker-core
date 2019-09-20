@@ -14,6 +14,7 @@ use Spryker\Client\StorageRedis\StorageRedisConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageRedis

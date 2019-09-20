@@ -20,6 +20,7 @@ use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PersistentCartShare

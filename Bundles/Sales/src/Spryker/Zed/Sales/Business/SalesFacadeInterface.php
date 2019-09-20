@@ -253,7 +253,6 @@ interface SalesFacadeInterface
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
-     *
      * Specification:
      * - Transforms provided cart items according configured cart item transformer strategies.
      * - If no cart item transformer strategy is configured, explodes the provided items per quantity.

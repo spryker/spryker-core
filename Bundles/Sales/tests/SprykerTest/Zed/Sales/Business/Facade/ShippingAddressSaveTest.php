@@ -24,6 +24,7 @@ use Spryker\Zed\Sales\SalesConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales

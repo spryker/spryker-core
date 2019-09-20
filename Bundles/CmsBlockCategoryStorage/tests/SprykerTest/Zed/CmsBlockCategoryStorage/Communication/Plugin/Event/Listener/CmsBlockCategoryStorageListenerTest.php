@@ -26,6 +26,7 @@ use SprykerTest\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsBlockCategoryStorage

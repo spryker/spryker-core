@@ -12,6 +12,7 @@ use Spryker\Zed\Setup\Communication\SetupCommunicationFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Setup
