@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/customer": "^6.3.0 || ^7.0.0",
     "spryker/customer-user-connector": "^1.0.0",
-    "spryker/gui": "^3.10.0",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",

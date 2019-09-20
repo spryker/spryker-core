@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/comment": "^1.0.0",
-    "spryker/gui": "^3.0.0",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/sales-extension": "^1.3.0",
     "spryker/symfony": "^3.0.0"

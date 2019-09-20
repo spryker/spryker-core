@@ -10,7 +10,7 @@
     "spryker/company-user-gui-extension": "^1.0.0",
     "spryker/customer": "^7.10.2",
     "spryker/customer-extension": "^1.1.0",
-    "spryker/gui": "^3.17.0",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.1.5",
