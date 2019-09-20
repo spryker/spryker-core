@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
@@ -88,9 +88,9 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->sumProductQuantitiesForSku(
             $this->getOmsReservedStateCollection()->getStates(),
@@ -103,24 +103,22 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        $storeTransfer->requireName();
-
         $idStore = $this->getIdStore($storeTransfer);
 
         $reservationEntity = $this->queryContainer
             ->queryProductReservationBySkuAndStore($sku, $idStore)
             ->findOne();
 
-        $reservationQuantity = 0;
+        $reservationQuantity = new Decimal(0);
         if ($reservationEntity !== null) {
-            $reservationQuantity = $reservationEntity->getReservationQuantity();
+            $reservationQuantity = new Decimal($reservationEntity->getReservationQuantity());
         }
 
-        $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
+        $reservationQuantity = $reservationQuantity->add($this->getReservationsFromOtherStores($sku, $storeTransfer));
 
         return $reservationQuantity;
     }
@@ -129,11 +127,11 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer)
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $currentStoreTransfer): Decimal
     {
-        $reservationQuantity = 0;
+        $reservationQuantity = new Decimal(0);
         $reservationStores = $this->queryContainer
             ->queryOmsProductReservationStoreBySku($sku)
             ->find();
@@ -142,7 +140,7 @@ class Reservation implements ReservationInterface
             if ($omsProductReservationStoreEntity->getStore() === $currentStoreTransfer->getName()) {
                 continue;
             }
-            $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
+            $reservationQuantity = $reservationQuantity->add($omsProductReservationStoreEntity->getReservationQuantity());
         }
 
         return $reservationQuantity;
@@ -189,11 +187,14 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function sumProductQuantitiesForSku(ArrayObject $reservedStates, string $sku, ?StoreTransfer $storeTransfer = null): int
-    {
-        $sumQuantity = 0;
+    protected function sumProductQuantitiesForSku(
+        iterable $reservedStates,
+        string $sku,
+        ?StoreTransfer $storeTransfer = null
+    ): Decimal {
+        $sumQuantity = new Decimal(0);
         $salesAggregationTransfers = $this->omsRepository->getSalesOrderAggregationBySkuAndStatesNames(
             array_keys($reservedStates->getArrayCopy()),
             $sku,
@@ -210,7 +211,7 @@ class Reservation implements ReservationInterface
             }
 
             $salesAggregationTransfer->requireSumAmount();
-            $sumQuantity += $salesAggregationTransfer->getSumAmount();
+            $sumQuantity = $sumQuantity->add($salesAggregationTransfer->getSumAmount());
         }
 
         return $sumQuantity;
@@ -232,11 +233,11 @@ class Reservation implements ReservationInterface
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
     {
         $storeTransfer->requireIdStore();
 
@@ -244,7 +245,7 @@ class Reservation implements ReservationInterface
             ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
             ->findOneOrCreate();
 
-        $reservationEntity->setReservationQuantity($reservationQuantity);
+        $reservationEntity->setReservationQuantity($reservationQuantity->toString());
         $reservationEntity->save();
     }
 
@@ -270,6 +271,8 @@ class Reservation implements ReservationInterface
         if ($storeTransfer->getIdStore()) {
             return $storeTransfer->getIdStore();
         }
+
+        $storeTransfer->requireName();
 
         return $this->storeFacade
             ->getStoreByName($storeTransfer->getName())

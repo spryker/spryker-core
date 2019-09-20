@@ -13,6 +13,7 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
@@ -43,10 +44,10 @@ class AvailabilityHandlerTest extends Unit
      */
     public function testUpdateAvailabilityShouldTouchWhenStockUpdated()
     {
-        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(0);
+        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock();
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProductWithStore')->willReturn(15);
+        $sellableMock->method('calculateAvailabilityForProductWithStore')->willReturn(new Decimal(15));
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -66,10 +67,10 @@ class AvailabilityHandlerTest extends Unit
      */
     public function testUpdateAvailabilityShouldTouchAndUpdateNewStock()
     {
-        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(5);
+        $availabilityContainerMock = $this->createAvailabilityQueryContainerMock('5');
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProductWithStore')->willReturn(0);
+        $sellableMock->method('calculateAvailabilityForProductWithStore')->willReturn(new Decimal(0));
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -183,11 +184,11 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @param int $availabilityQuantity
+     * @param string $availabilityQuantity
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
-    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0)
+    protected function createAvailabilityQueryContainerMock(string $availabilityQuantity = '0')
     {
         $availabilityContainerMock = $this->getMockBuilder(AvailabilityQueryContainerInterface::class)
             ->getMock();

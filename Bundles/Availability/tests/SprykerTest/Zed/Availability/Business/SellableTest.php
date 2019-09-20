@@ -16,6 +16,7 @@ use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
@@ -70,7 +71,7 @@ class SellableTest extends Unit
             ->save();
 
         $productEntity = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
-        $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), 100);
+        $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), new Decimal(100));
 
         $this->assertTrue($isSellable);
     }
@@ -90,7 +91,7 @@ class SellableTest extends Unit
             ->save();
 
         $productEntity = SpyProductQuery::create()->findOneByIdProduct($stockProductEntity->getFkProduct());
-        $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), 1);
+        $isSellable = $this->availabilityFacade->isProductSellable($productEntity->getSku(), new Decimal(1));
 
         $this->assertTrue($isSellable);
     }
@@ -124,7 +125,7 @@ class SellableTest extends Unit
             ->setQuantity(5)
             ->save();
 
-        $this->assertFalse($this->availabilityFacade->isProductSellable('P1337', 6));
+        $this->assertFalse($this->availabilityFacade->isProductSellable('P1337', new Decimal(6)));
     }
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Spryker\DecimalObject\Decimal;
+
 class ProductManagementToAvailabilityBridge implements ProductManagementToAvailabilityInterface
 {
     /**
@@ -25,10 +27,10 @@ class ProductManagementToAvailabilityBridge implements ProductManagementToAvaila
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku)
+    public function calculateAvailabilityForProduct(string $sku): Decimal
     {
-        return $this->availabilityFacade->calculateStockForProduct($sku);
+        return $this->availabilityFacade->calculateAvailabilityForProduct($sku);
     }
 }

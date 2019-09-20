@@ -78,7 +78,7 @@ class StockFacadeTest extends Unit
     public const ABSTRACT_SKU = 'abstract-sku';
     public const CONCRETE_SKU = 'concrete-sku';
     public const STOCK_QUANTITY_1 = 92;
-    public const STOCK_QUANTITY_2 = 8;
+    public const STOCK_QUANTITY_2 = 8.2;
 
     /**
      * @return void
@@ -124,7 +124,7 @@ class StockFacadeTest extends Unit
     {
         $productStock = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertEquals(100, $productStock);
+        $this->assertTrue($productStock->equals('100.2'));
     }
 
     /**
@@ -231,7 +231,7 @@ class StockFacadeTest extends Unit
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertEquals(90, $stockSize);
+        $this->assertTrue($stockSize->equals('90.2'));
     }
 
     /**
@@ -247,7 +247,7 @@ class StockFacadeTest extends Unit
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
-        $this->assertEquals(110, $stockSize);
+        $this->assertTrue($stockSize->equals('110.2'));
     }
 
     /**
@@ -328,7 +328,7 @@ class StockFacadeTest extends Unit
 
         $this->assertNotEmpty($productConcreteTransfer->getStocks());
         foreach ($productConcreteTransfer->getStocks() as $stock) {
-            $this->assertTrue($stock->getQuantity() > 0);
+            $this->assertTrue($stock->getQuantity()->greaterThan(0));
             $this->assertEquals($stock->getSku(), self::CONCRETE_SKU);
         }
     }

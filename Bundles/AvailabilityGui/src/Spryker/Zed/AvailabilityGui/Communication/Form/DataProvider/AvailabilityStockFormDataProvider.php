@@ -99,7 +99,7 @@ class AvailabilityStockFormDataProvider
 
             $stockProductTransfer = (new StockProductTransfer())
                 ->setStockType($type)
-                ->setQuantity(0);
+                ->setQuantity('0.0');
 
             $availabilityStockTransfer->addStockProduct($stockProductTransfer);
         }

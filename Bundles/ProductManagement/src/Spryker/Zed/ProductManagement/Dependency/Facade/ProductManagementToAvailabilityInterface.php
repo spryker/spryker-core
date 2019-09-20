@@ -6,12 +6,14 @@
  */
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Spryker\DecimalObject\Decimal;
+
 interface ProductManagementToAvailabilityInterface
 {
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku);
+    public function calculateAvailabilityForProduct(string $sku): Decimal;
 }

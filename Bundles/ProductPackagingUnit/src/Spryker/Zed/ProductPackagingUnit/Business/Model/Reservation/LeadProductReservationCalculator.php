@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
@@ -40,16 +41,16 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      * @param string $leadProductSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): int
+    public function calculateReservedAmountForLeadProduct(string $leadProductSku, StoreTransfer $storeTransfer): Decimal
     {
         $reservedStates = $this->omsFacade->getOmsReservedStateCollection()->getStates();
 
         $reservedLeadProductAmountAggregations = $this->productPackagingUnitRepository
             ->aggregateLeadProductAmountForAllSalesOrderItemsBySku($leadProductSku, array_keys($reservedStates->getArrayCopy()));
 
-        $sumReservedLeadProductAmount = 0;
+        $sumReservedLeadProductAmount = new Decimal(0);
         foreach ($reservedLeadProductAmountAggregations as $reservedLeadProductAmountAggregation) {
             $this->assertAggregationTransfer($reservedLeadProductAmountAggregation);
 
@@ -60,12 +61,12 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
             }
 
             $reservedLeadProductAmountAggregation->requireSumAmount();
-            $sumReservedLeadProductAmount += $reservedLeadProductAmountAggregation->getSumAmount();
+            $sumReservedLeadProductAmount = $sumReservedLeadProductAmount->add($reservedLeadProductAmountAggregation->getSumAmount());
         }
 
         $sumReservedLeadProductQuantity = $this->omsFacade->sumReservedProductQuantitiesForSku($leadProductSku, $storeTransfer);
 
-        return $sumReservedLeadProductAmount + $sumReservedLeadProductQuantity;
+        return $sumReservedLeadProductQuantity->add($sumReservedLeadProductAmount);
     }
 
     /**

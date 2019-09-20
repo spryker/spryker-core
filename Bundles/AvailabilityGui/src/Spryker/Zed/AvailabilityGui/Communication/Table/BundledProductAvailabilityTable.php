@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
@@ -180,7 +181,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ? $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] : 0,
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ? $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] : 0,
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->toString(),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
@@ -211,14 +212,14 @@ class BundledProductAvailabilityTable extends AbstractTable
     /**
      * @param array $productItem
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateReservation(array $productItem)
+    protected function calculateReservation(array $productItem): Decimal
     {
-        $quantity = (int)$productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY];
-        $quantity += $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
+        $reservation = $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
 
-        return $quantity;
+        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY]))
+            ->add($reservation);
     }
 
     /**

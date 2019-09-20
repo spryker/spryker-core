@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
-use Traversable;
+use Spryker\DecimalObject\Decimal;
 
 class Calculator implements CalculatorInterface
 {
@@ -28,9 +28,9 @@ class Calculator implements CalculatorInterface
     /**
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku)
+    public function calculateStockForProduct(string $sku): Decimal
     {
         $productEntities = $this->reader->getStocksProduct($sku);
 
@@ -41,9 +41,9 @@ class Calculator implements CalculatorInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer)
+    public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         $productEntities = $this->reader->findProductStocksForStore($sku, $storeTransfer);
 
@@ -51,16 +51,15 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateTotalQuantity(Traversable $productEntities)
+    protected function calculateTotalQuantity(array $productEntities): Decimal
     {
-        $quantity = 0;
-
+        $quantity = new Decimal(0);
         foreach ($productEntities as $productEntity) {
-            $quantity += $productEntity->getQuantity();
+            $quantity = $quantity->add($productEntity->getQuantity());
         }
 
         return $quantity;

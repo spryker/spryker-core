@@ -15,7 +15,6 @@
     <transfer name="PromotionItem">
         <property name="idDiscountPromotion" type="int" />
         <property name="idProductAbstract" type="int" />
-        <property name="maxQuantity" type="int" />
         <property name="sku" type="string" />
         <property name="abstractSku" type="string" />
         <property name="maxQuantity" type="int" />
@@ -54,7 +53,6 @@
 
     <transfer name="StorageProduct">
          <property name="promotionItem" type="PromotionItem"/>
-         <property name="maxQuantity" type="int"/>
     </transfer>
 
 </transfers>

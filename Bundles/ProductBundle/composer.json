@@ -25,6 +25,7 @@
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"

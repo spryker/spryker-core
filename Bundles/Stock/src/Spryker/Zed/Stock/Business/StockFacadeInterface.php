@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface StockFacadeInterface
 {
@@ -47,9 +48,9 @@ interface StockFacadeInterface
      *
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct($sku);
+    public function calculateStockForProduct(string $sku): Decimal;
 
     /**
      * Specification:
@@ -60,9 +61,9 @@ interface StockFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateProductStockForStore($sku, StoreTransfer $storeTransfer);
+    public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * Specification:
