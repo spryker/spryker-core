@@ -20,7 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContentBannerReader implements ContentBannerReaderInterface
 {
-    /** @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::CONTENT_TYPE_BANNER */
+    /**
+     * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::CONTENT_TYPE_BANNER
+     */
     protected const CONTENT_TYPE_BANNER = 'Banner';
 
     /**

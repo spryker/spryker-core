@@ -10,6 +10,11 @@ namespace Spryker\Shared\SalesOrderThresholdGui;
 interface SalesOrderThresholdGuiConfig
 {
     /**
+     * @see \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::THRESHOLD_EXPENSE_TYPE const.
+     */
+    public const THRESHOLD_EXPENSE_TYPE = 'THRESHOLD_EXPENSE_TYPE';
+
+    /**
      * @deprecated Will be removed in the next major.
      *
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_HARD

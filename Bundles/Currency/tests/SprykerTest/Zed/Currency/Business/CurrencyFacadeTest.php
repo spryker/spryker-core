@@ -17,6 +17,7 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Currency

@@ -15,6 +15,7 @@ use Spryker\Shared\Session\Business\Handler\Lock\Redis\RedisSpinLockLocker;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Session

@@ -17,6 +17,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Collector

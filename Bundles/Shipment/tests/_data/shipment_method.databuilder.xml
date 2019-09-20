@@ -5,14 +5,37 @@
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ShipmentMethod">
-        <property name="name" dataBuilderRule="word(5)" />
+        <property name="name" dataBuilderRule="word" />
         <property name="isActive" dataBuilderRule="=1" />
         <property name="fkShipmentCarrier" dataBuilderRule="=1" />
+        <property name="taxRate" dataBuilderRule="randomFloat(2, 0, 99)" />
     </transfer>
 
     <transfer name="ShipmentCarrier">
         <property name="name" dataBuilderRule="word(1)" />
         <property name="isActive" dataBuilderRule="=1" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="totals" dataBuilderRule="randomNumber(5)" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" dataBuilderRule="isbn10" />
+        <property name="unitPrice" dataBuilderRule="randomNumber(5)" />
+        <property name="sumPrice" dataBuilderRule="randomNumber(3)" />
+        <property name="amount" dataBuilderRule="randomNumber(1)" />
+    </transfer>
+
+    <transfer name="Address">
+        <property name="iso2Code" dataBuilderRule="=DE" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" dataBuilderRule="word" />
+        <property name="taxRate" dataBuilderRule="randomFloat(2, 0, 99)" />
+        <property name="name" dataBuilderRule="word" />
+        <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)" />
     </transfer>
 
 </transfers>
