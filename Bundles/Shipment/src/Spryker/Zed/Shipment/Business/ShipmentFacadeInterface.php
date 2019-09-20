@@ -48,6 +48,31 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves the carrier by ID from database as transfer object.
+     * - Returns NULL if the carrier does not exist.
+     *
+     * @api
+     *
+     * @param int $idCarrier
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer;
+
+    /**
+     * - Checks if carrier valid for given name and id parameters.
+     *
+     * @api
+     *
+     * @param string $carrierName
+     * @param int|null $idCarrier
+     *
+     * @return bool
+     */
+    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool;
+
+    /**
+     * Specification:
      * - Retrieves the list of available shipment methods from database as transfer object collection
      * grouped by shipment hash.
      *

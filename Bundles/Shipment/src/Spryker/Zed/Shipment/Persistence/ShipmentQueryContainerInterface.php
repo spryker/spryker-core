@@ -80,6 +80,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $carrierName
      * @param int|null $idCarrier
      *

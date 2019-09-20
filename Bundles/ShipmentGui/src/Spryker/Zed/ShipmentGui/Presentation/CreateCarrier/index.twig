@@ -5,18 +5,12 @@
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Add Carrier Company' } %}
-
         {% block widget_content %}
-
             {{ form_start(form) }}
-            {{ form_widget(form) }}
-
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Add' | trans }}" />
+                {{ form_widget(form) }}
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Add' | trans }}" />
             {{ form_end(form) }}
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

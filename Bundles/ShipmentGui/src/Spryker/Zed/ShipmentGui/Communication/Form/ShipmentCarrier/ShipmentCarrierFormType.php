@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Shipment\Communication\Form;
+namespace Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -17,35 +17,25 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
- * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
- * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ShipmentGui\ShipmentGuiConfig getConfig()
  */
-class CarrierForm extends AbstractType
+class ShipmentCarrierFormType extends AbstractType
 {
-    public const FIELD_NAME_GLOSSARY_FIELD = 'glossaryKeyName';
     public const FIELD_NAME_FIELD = 'name';
     public const FIELD_IS_ACTIVE_FIELD = 'isActive';
     public const FIELD_ID_CARRIER = 'id_carrier';
 
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'carrier';
-    }
+    protected const LABEL_NAME = 'Name';
+    protected const LABEL_IS_ACTIVE_FIELD = 'Enabled?';
+    protected const MESSAGE_VIOLATION = 'Carrier with the same name already exists.';
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
-     *
      * @return string
      */
-    public function getName()
+    public function getBlockPrefix(): string
     {
-        return $this->getBlockPrefix();
+        return 'carrier';
     }
 
     /**
@@ -54,11 +44,11 @@ class CarrierForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addNameField($builder)
             ->addIsActiveField($builder)
-            ->addIdCarrierField($builder);
+            ->addIdShipmentCarrierField($builder);
     }
 
     /**
@@ -68,12 +58,12 @@ class CarrierForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_NAME_FIELD, TextType::class, [
-            'label' => 'Name',
+        $builder->add(static::FIELD_NAME_FIELD, TextType::class, [
+            'label' => static::LABEL_NAME,
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'callback' => [$this, 'uniqueCarrierNameCheck'],
+                    'callback' => [$this, 'uniqueShipmentCarrierNameCheck'],
                 ]),
             ],
         ]);
@@ -88,8 +78,8 @@ class CarrierForm extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_IS_ACTIVE_FIELD, CheckboxType::class, [
-            'label' => 'Enabled?',
+        $builder->add(static::FIELD_IS_ACTIVE_FIELD, CheckboxType::class, [
+            'label' => static::LABEL_IS_ACTIVE_FIELD,
             'required' => false,
         ]);
 
@@ -101,9 +91,9 @@ class CarrierForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdCarrierField(FormBuilderInterface $builder)
+    protected function addIdShipmentCarrierField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_CARRIER, HiddenType::class);
+        $builder->add(static::FIELD_ID_CARRIER, HiddenType::class);
 
         return $this;
     }
@@ -114,28 +104,13 @@ class CarrierForm extends AbstractType
      *
      * @return void
      */
-    public function uniqueCarrierNameCheck($carrierName, ExecutionContextInterface $context)
+    public function uniqueShipmentCarrierNameCheck($carrierName, ExecutionContextInterface $context): void
     {
         $formData = $context->getRoot()->getData();
-        $idCarrier = isset($formData[static::FIELD_ID_CARRIER]) ? $formData[static::FIELD_ID_CARRIER] : null;
+        $idCarrier = $formData[static::FIELD_ID_CARRIER] ?? null;
 
-        if ($this->hasExistingCarrierName($carrierName, $idCarrier)) {
-            $context->addViolation('Carrier with the same name already exists.');
+        if ($this->getFactory()->getShipmentFacade()->hasCarrierName($carrierName, $idCarrier)) {
+            $context->addViolation(static::MESSAGE_VIOLATION);
         }
-    }
-
-    /**
-     * @param string $carrierName
-     * @param int|null $idCarrier
-     *
-     * @return bool
-     */
-    protected function hasExistingCarrierName($carrierName, $idCarrier = null)
-    {
-        $count = $this->getQueryContainer()
-            ->queryUniqueCarrierName($carrierName, $idCarrier)
-            ->count();
-
-        return $count > 0;
     }
 }

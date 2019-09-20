@@ -65,6 +65,35 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @param int $idCarrier
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer
+    {
+        return $this->getRepository()->findShipmentCarrierById($idCarrier);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $carrierName
+     * @param int|null $idCarrier
+     *
+     * @return bool
+     */
+    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool
+    {
+        return $this->getRepository()->hasCarrierName($carrierName, $idCarrier);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function getMethods()

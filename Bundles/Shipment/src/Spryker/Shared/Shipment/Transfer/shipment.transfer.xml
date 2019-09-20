@@ -12,6 +12,7 @@
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method" />
         <property name="shipmentHash" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
@@ -152,6 +153,16 @@
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote" />
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
     </transfer>
 
 </transfers>

@@ -65,4 +65,33 @@
         <id-method-parameter value="spy_shipment_method_price_pk_seq"/>
     </table>
 
+    <table name="spy_shipment_method_store">
+        <column name="id_shipment_method_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_shipment_method" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_shipment_method_store-fk_shipment_method" foreignTable="spy_shipment_method" phpName="shipmentMethod" refPhpName="ShipmentMethodStore">
+            <reference local="fk_shipment_method" foreign="id_shipment_method"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shipment_method_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ShipmentMethodStore">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <index name="index-shipment_method_store-fk_shipment_method">
+            <index-column name="fk_shipment_method"/>
+        </index>
+
+        <index name="index-shipment_method_store-fk_store">
+            <index-column name="fk_store"/>
+        </index>
+
+        <unique name="spy_shipment_method_store-unique-shipment_method">
+            <unique-column name="fk_shipment_method"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <id-method-parameter value="spy_shipment_method_store_pk_seq"/>
+    </table>
+
 </database>

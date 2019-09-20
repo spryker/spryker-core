@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -342,6 +343,46 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         return $this->getFactory()
             ->createShipmentOrderMapper()
             ->mapSalesOrderEntityToOrderTransfer($salesOrderEntity, new OrderTransfer());
+    }
+
+    /**
+     * @param int $idCarrier
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer
+    {
+        $shipmentCarrierEntity = $this->getFactory()
+            ->createShipmentCarrierQuery()
+            ->filterByIdShipmentCarrier($idCarrier)
+            ->findOne();
+
+        if ($shipmentCarrierEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentCarrierMapper()
+            ->mapShipmentCarrierEntityToShipmentCarrierTransfer($shipmentCarrierEntity, new ShipmentCarrierTransfer());
+    }
+
+    /**
+     * @param string $carrierName
+     * @param int|null $idCarrier
+     *
+     * @return bool
+     */
+    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool
+    {
+        $query = $this->getFactory()
+            ->createShipmentCarrierQuery()
+            ->filterByName($carrierName);
+
+        if ($idCarrier !== null) {
+            $query->filterByIdShipmentCarrier($idCarrier, Criteria::NOT_EQUAL);
+        }
+
+        return $query->exists();
     }
 
     /**
