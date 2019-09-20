@@ -15,6 +15,7 @@ use Spryker\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOptionCartConnector

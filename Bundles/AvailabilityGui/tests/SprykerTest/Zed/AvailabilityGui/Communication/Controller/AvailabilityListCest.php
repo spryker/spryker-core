@@ -12,6 +12,7 @@ use SprykerTest\Zed\AvailabilityGui\PageObject\AvailabilityPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group AvailabilityGui

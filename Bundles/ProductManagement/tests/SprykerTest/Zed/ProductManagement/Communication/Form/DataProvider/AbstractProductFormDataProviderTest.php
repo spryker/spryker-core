@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProduc
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement

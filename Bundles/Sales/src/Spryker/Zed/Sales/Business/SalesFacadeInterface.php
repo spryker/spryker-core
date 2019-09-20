@@ -149,9 +149,11 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Returns a list of of orders for the given customer id and (optional) filters.
-     *  - Aggregates order totals calls -> SalesAggregator
-     *  - Paginates order list for limited result
+     * - Returns a list of of orders for the given customer id and (optional) filters.
+     * - OrderListTransfer::$filters can contain offset-based pagination and ordering parameters.
+     * - OrderListTransfer::$pagination can be used to apply page-based pagination strategy to the queried orders.
+     * - Hydrates the resulting orders with related data.
+     * - Aggregates order totals calls -> SalesAggregator.
      *
      * @api
      *
@@ -251,7 +253,6 @@ interface SalesFacadeInterface
     public function getCustomerOrderByOrderReference(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
-     *
      * Specification:
      * - Transforms provided cart items according configured cart item transformer strategies.
      * - If no cart item transformer strategy is configured, explodes the provided items per quantity.

@@ -55,6 +55,7 @@ use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Checkout

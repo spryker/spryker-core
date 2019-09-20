@@ -24,6 +24,7 @@ use Spryker\Shared\Shipment\ShipmentConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment
