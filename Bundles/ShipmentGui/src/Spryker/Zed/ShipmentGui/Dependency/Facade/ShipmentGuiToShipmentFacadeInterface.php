@@ -75,11 +75,11 @@ interface ShipmentGuiToShipmentFacadeInterface
 
     /**
      * @param string $carrierName
-     * @param int|null $idCarrier
+     * @param int[] $excludedIdCarriers
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool;
+    public function hasCarrierName($carrierName, array $excludedIdCarriers = []): bool;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $carrierTransfer

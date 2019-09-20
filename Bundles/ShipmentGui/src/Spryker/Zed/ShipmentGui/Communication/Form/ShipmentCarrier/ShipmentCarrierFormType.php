@@ -109,7 +109,7 @@ class ShipmentCarrierFormType extends AbstractType
         $formData = $context->getRoot()->getData();
         $idCarrier = $formData[static::FIELD_ID_CARRIER] ?? null;
 
-        if ($this->getFactory()->getShipmentFacade()->hasCarrierName($carrierName, $idCarrier)) {
+        if ($this->getFactory()->getShipmentFacade()->hasCarrierName($carrierName, [$idCarrier])) {
             $context->addViolation(static::MESSAGE_VIOLATION);
         }
     }

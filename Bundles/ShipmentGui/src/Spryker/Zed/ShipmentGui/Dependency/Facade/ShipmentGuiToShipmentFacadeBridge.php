@@ -108,13 +108,13 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
 
     /**
      * @param string $carrierName
-     * @param int|null $idCarrier
+     * @param int[] $excludedIdCarriers
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, ?int $idCarrier = null): bool
+    public function hasCarrierName($carrierName, array $excludedIdCarriers = []): bool
     {
-        return $this->shipmentFacade->hasCarrierName($carrierName, $idCarrier);
+        return $this->shipmentFacade->hasCarrierName($carrierName, $excludedIdCarriers);
     }
 
     /**

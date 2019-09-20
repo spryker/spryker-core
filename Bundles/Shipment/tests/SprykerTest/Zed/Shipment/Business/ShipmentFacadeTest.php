@@ -729,7 +729,7 @@ class ShipmentFacadeTest extends Test
         ]);
 
         $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName($shipmentCarrierTransfer1->getName(), $shipmentCarrierTransfer2->getIdShipmentCarrier());
+            ->hasCarrierName($shipmentCarrierTransfer1->getName(), [$shipmentCarrierTransfer2->getIdShipmentCarrier()]);
 
         $this->assertTrue($hasCarrierName);
     }
@@ -742,7 +742,7 @@ class ShipmentFacadeTest extends Test
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
 
         $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName($shipmentCarrierTransfer->getName(), $shipmentCarrierTransfer->getIdShipmentCarrier());
+            ->hasCarrierName($shipmentCarrierTransfer->getName(), [$shipmentCarrierTransfer->getIdShipmentCarrier()]);
 
         $this->assertFalse($hasCarrierName);
     }
