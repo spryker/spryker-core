@@ -25,7 +25,6 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      * {@inheritdoc}
      * - Adds `form.factory` service.
      * - Adds global `FORM_FACTORY` service as an alias for `form.factory`.
-     * - Adds `form.csrf_provider` service.
      *
      * @api
      *

@@ -23,8 +23,8 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     public const FUNCTION_NAME_URL = 'url';
 
     /**
-     * Specification:
-     * - Allows to extend Twig with additional url function.
+     * {@inheritDoc}
+     * - Extends twig with "url" function to parse and generate URLs based on URL parts.
      *
      * @api
      *

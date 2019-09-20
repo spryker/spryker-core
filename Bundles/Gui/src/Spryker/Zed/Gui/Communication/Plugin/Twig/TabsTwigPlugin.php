@@ -23,8 +23,7 @@ class TabsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     public const FUNCTION_NAME_TABS = 'tabs';
 
     /**
-     * Specification:
-     * - Allows to extend Twig with additional function to get Zed assets base url.
+     * {@inheritDoc}
      *
      * @api
      *

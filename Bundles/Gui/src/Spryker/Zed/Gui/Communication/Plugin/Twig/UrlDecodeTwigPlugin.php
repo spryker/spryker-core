@@ -22,8 +22,9 @@ class UrlDecodeTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     public const FUNCTION_NAME_URL_DECODE = 'urldecode';
 
     /**
-     * Specification:
-     * - Allows to extend Twig with additional function to encode url.
+     * {@inheritDoc}
+     * - Extends twig with "urldecode" function to encode the url.
+     * - The function returns a string which consist all non-alphanumeric characters except -_. and replace by the percent (%) sign followed by two hex digits and spaces encoded as plus (+) signs.
      *
      * @api
      *

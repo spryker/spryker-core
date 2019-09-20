@@ -22,8 +22,8 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     public const FUNCTION_NAME_ASSETS_PATH = 'assetsPath';
 
     /**
-     * Specification:
-     * - Allows to extend Twig with additional function to get Zed assets base url.
+     * {@inheritdoc}
+     * - Extends twig with "assetsPath" function to generate assets absolute url.
      *
      * @api
      *
