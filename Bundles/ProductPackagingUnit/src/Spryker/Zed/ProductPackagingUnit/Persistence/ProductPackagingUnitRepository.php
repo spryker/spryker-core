@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -120,7 +120,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @module Product
+     * @module ProductPackagingUnit
      *
      * @param int[] $productPackagingUnitTypeIds
      *
@@ -133,8 +133,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->useProductPackagingUnitTypeQuery()
                 ->filterByIdProductPackagingUnitType_In($productPackagingUnitTypeIds)
             ->endUse()
-            ->joinProduct()
-            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->select([SpyProductPackagingUnitTableMap::COL_FK_PRODUCT])
             ->find()
             ->toArray();
     }

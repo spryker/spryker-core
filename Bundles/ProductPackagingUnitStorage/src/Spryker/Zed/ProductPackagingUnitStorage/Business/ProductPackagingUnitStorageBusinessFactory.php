@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReader;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriter;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriterInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReader;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReaderInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageWriter;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageWriterInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
@@ -23,24 +23,24 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
 class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReaderInterface
      */
-    public function createProductPackagingStorageReader(): ProductPackagingStorageReaderInterface
+    public function createProductPackagingUnitStorageReader(): ProductPackagingUnitStorageReaderInterface
     {
-        return new ProductPackagingStorageReader(
+        return new ProductPackagingUnitStorageReader(
             $this->getRepository(),
             $this->getProductPackagingUnitFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriterInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageWriterInterface
      */
-    public function createProductPackagingStorageWriter(): ProductPackagingStorageWriterInterface
+    public function createProductPackagingUnitStorageWriter(): ProductPackagingUnitStorageWriterInterface
     {
-        return new ProductPackagingStorageWriter(
+        return new ProductPackagingUnitStorageWriter(
             $this->getEntityManager(),
-            $this->createProductPackagingStorageReader()
+            $this->createProductPackagingUnitStorageReader()
         );
     }
 

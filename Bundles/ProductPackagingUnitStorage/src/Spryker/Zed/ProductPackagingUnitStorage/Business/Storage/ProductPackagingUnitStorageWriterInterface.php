@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 
-interface ProductPackagingStorageWriterInterface
+interface ProductPackagingUnitStorageWriterInterface
 {
     /**
      * @param int[] $productConcreteIds

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 
 use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface;
 
-class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInterface
+class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWriterInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface
@@ -17,20 +17,20 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
     protected $productPackagingUnitStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReaderInterface
      */
-    protected $productConcretePackagingUnitStorageReader;
+    protected $productPackagingUnitStorageReader;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface $productPackagingUnitStorageEntityManager
-     * @param \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface $productConcretePackagingStorageReader
+     * @param \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReaderInterface $productPackagingUnitStorageReader
      */
     public function __construct(
         ProductPackagingUnitStorageEntityManagerInterface $productPackagingUnitStorageEntityManager,
-        ProductPackagingStorageReaderInterface $productConcretePackagingStorageReader
+        ProductPackagingUnitStorageReaderInterface $productPackagingUnitStorageReader
     ) {
         $this->productPackagingUnitStorageEntityManager = $productPackagingUnitStorageEntityManager;
-        $this->productConcretePackagingUnitStorageReader = $productConcretePackagingStorageReader;
+        $this->productPackagingUnitStorageReader = $productPackagingUnitStorageReader;
     }
 
     /**
@@ -40,7 +40,7 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
      */
     public function publishProductPackagingUnit(array $productConcreteIds): void
     {
-        $productConcretePackagingTransfers = $this->productConcretePackagingUnitStorageReader
+        $productConcretePackagingTransfers = $this->productPackagingUnitStorageReader
             ->getProductConcretePackagingStorageTransfer($productConcreteIds);
 
         $this->storeData($productConcretePackagingTransfers);
@@ -65,7 +65,7 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
      */
     public function unpublishProductPackagingUnit(array $productConcreteIds): void
     {
-        $productConcretePackagingStorageEntities = $this->productConcretePackagingUnitStorageReader
+        $productConcretePackagingStorageEntities = $this->productPackagingUnitStorageReader
             ->getProductConcretePackagingStorageEntities($productConcreteIds);
 
         foreach ($productConcretePackagingStorageEntities as $productConcretePackagingStorageEntity) {

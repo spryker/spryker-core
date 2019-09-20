@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface;
 
-class ProductPackagingStorageReader implements ProductPackagingStorageReaderInterface
+class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageReaderInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface
