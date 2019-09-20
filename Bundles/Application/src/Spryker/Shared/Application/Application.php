@@ -137,22 +137,9 @@ class Application implements HttpKernelInterface, TerminableInterface
         // Additionally the `\Silex\Application` sets a new flag `'controllers-flushed'` which is set to false when the
         // new router is used but to true when the previous router is used, this will prevent from flushing the controllers
         // twice.
-        if ($this->container->has('controllers') && ($this->container->has('controllers-flushed') && $this->container->get('controllers-flushed') === false)) {
-            $this->container->set('routes', function (ContainerInterface $container) {
-                return $this->container->get('controllers')->flush();
-            });
+        if ($this->container->has('controllers') && (!$this->container->has('controllers-flushed') || $this->container->get('controllers-flushed') === false)) {
+            $this->container->get('routes')->addCollection($this->container->get('controllers')->flush());
         }
-
-        /** @var \Symfony\Cmf\Component\Routing\ChainRouterInterface $chainRouter */
-//        $chainRouter = $this->container->get(static::SERVICE_ROUTER);
-//
-//        $loader = new ClosureLoader();
-//        $resource = function () {
-//            return $this->container->get('controllers')->flush();
-//        };
-//        $router = new Router($loader, $resource);
-////        $chainRouter->add($router, 1);
-//        $chainRouter->add($router);
     }
 
     /**
