@@ -368,18 +368,18 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param string $carrierName
-     * @param int|null $excludeIdCarrier
+     * @param int|null $excludedIdCarrier
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, ?int $excludeIdCarrier = null): bool
+    public function hasCarrierName($carrierName, ?int $excludedIdCarrier = null): bool
     {
         $query = $this->getFactory()
             ->createShipmentCarrierQuery()
             ->filterByName($carrierName);
 
-        if ($excludeIdCarrier !== null) {
-            $query->filterByIdShipmentCarrier($excludeIdCarrier, Criteria::NOT_EQUAL);
+        if ($excludedIdCarrier !== null) {
+            $query->filterByIdShipmentCarrier($excludedIdCarrier, Criteria::NOT_EQUAL);
         }
 
         return $query->exists();

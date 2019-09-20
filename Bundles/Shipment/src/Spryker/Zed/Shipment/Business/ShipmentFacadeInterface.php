@@ -65,11 +65,11 @@ interface ShipmentFacadeInterface
      * @api
      *
      * @param string $carrierName
-     * @param int|null $excludeIdCarrier
+     * @param int|null $excludedIdCarrier
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, ?int $excludeIdCarrier = null): bool;
+    public function hasCarrierName($carrierName, ?int $excludedIdCarrier = null): bool;
 
     /**
      * Specification:
