@@ -238,7 +238,7 @@ class CartOperation implements CartOperationInterface
             $quoteResponseTransfer = $this->quoteItemOperation->removeItems($itemsToRemove, $quoteTransfer);
 
             if (!$quoteResponseTransfer->getIsSuccessful()) {
-                $this->quoteFacade->updateQuote($persistentQuoteResponseTransfer->getQuoteTransfer());
+                return $this->quoteFacade->updateQuote($persistentQuoteResponseTransfer->getQuoteTransfer());
             }
         }
 

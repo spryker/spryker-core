@@ -237,9 +237,13 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
             $quoteResponseTransfer = $this->getCartZedStub()->removeFromCart($cartChangeTransferForRemoval);
         }
 
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return (new QuoteResponseTransfer())
+                ->setQuoteTransfer($quoteTransfer)
+                ->setIsSuccessful(false);
         }
+
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
         return $quoteResponseTransfer;
     }
@@ -304,7 +308,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
             $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
 
-            if ($delta === 0 || !($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity())) {
+            if ($delta === 0 || $quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
                 continue;
             }
 

@@ -29,8 +29,6 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
-     * @deprecated Use addToCart() instead.
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -57,8 +55,6 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
-     * @deprecated Use removeFromCart() instead.
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
