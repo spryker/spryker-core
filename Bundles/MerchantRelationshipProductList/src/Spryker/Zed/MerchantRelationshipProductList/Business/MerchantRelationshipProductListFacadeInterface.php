@@ -54,7 +54,7 @@ interface MerchantRelationshipProductListFacadeInterface
 
     /**
      * Specification:
-     * - Assigns product lists to merchant relationship.
+     * - Adjusts "merchant relationshop - product list" assignments in Persistence according provided product list collection.
      *
      * @api
      *
