@@ -26,7 +26,7 @@ class CreateActionButtonTwigPlugin extends AbstractActionButtonTwig
      */
     protected function getButtonClass(): string
     {
-        return "btn-create";
+        return 'btn-create';
     }
 
     /**

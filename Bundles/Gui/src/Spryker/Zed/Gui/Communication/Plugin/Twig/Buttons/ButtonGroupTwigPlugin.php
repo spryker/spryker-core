@@ -43,7 +43,7 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
      */
     protected function getButtonGroupFunction(): TwigFunction
     {
-        return new TwigFunction(static::FUNCTION_NAME_GROUP_ACTION_BUTTONS, function (string $buttons, string $title, array $options = []) {
+        return new TwigFunction(static::FUNCTION_NAME_GROUP_ACTION_BUTTONS, function (array $buttons, string $title, array $options = []) {
             if (!array_key_exists(ButtonGroupUrlGenerator::ICON, $options)) {
                 $options[ButtonGroupUrlGenerator::ICON] = $this->getDefaultIcon();
             }
@@ -52,10 +52,10 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
                 $options[ButtonGroupUrlGenerator::BUTTON_CLASS] = $this->getDefaultButtonClass();
             }
 
-            $button = $this->createButtonUrlGenerator($buttons, $title, $options);
+            $buttonGroupUrlGenerator = $this->getFactory()->createButtonGroupUrlGenerator($buttons, $title, $options);
 
-            return $button->generate();
-        });
+            return $buttonGroupUrlGenerator->generate();
+        }, ['is_safe' => ['html']]);
     }
 
     /**
@@ -72,17 +72,5 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
     protected function getDefaultIcon()
     {
         return '<i class="fa fa-caret-right"></i> ';
-    }
-
-    /**
-     * @param array $buttons
-     * @param string $title
-     * @param array $options
-     *
-     * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupUrlGenerator
-     */
-    protected function createButtonUrlGenerator(array $buttons, $title, array $options)
-    {
-        return new ButtonGroupUrlGenerator($buttons, $title, $options);
     }
 }

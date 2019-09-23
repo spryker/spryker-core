@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/symfony": "^3.0.0",
@@ -21,6 +20,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/gui": "If you want to use TwigPlugin",
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {

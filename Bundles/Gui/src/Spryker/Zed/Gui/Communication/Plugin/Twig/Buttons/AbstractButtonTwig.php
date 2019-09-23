@@ -48,7 +48,17 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addFunction(new TwigFunction($this->getFunctionName(), function ($url, $title, $options = []) {
+        $twig->addFunction($this->getButtonGroupFunction());
+
+        return $twig;
+    }
+
+    /**
+     * @return \Twig\TwigFunction
+     */
+    protected function getButtonGroupFunction(): TwigFunction
+    {
+        return new TwigFunction($this->getFunctionName(), function ($url, $title, $options = []) {
             if (!array_key_exists(ButtonUrlGenerator::ICON, $options)) {
                 $options[ButtonUrlGenerator::ICON] = $this->getIcon();
             }
@@ -61,25 +71,9 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
                 $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;
             }
 
-            $button = $this->createButtonUrlGenerator($url, $title, $options);
+            $buttonUrlGenerator = $this->getFactory()->createButtonUrlGenerator($url, $title, $options);
 
-            return $button->generate();
-        }));
-
-        return $twig;
-    }
-
-    /**
-     * @param string $url
-     * @param string $title
-     * @param array $options
-     *
-     * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonUrlGenerator
-     */
-    protected function createButtonUrlGenerator($url, $title, array $options)
-    {
-        $button = new ButtonUrlGenerator($url, $title, $options);
-
-        return $button;
+            return $buttonUrlGenerator->generate();
+        }, ['is_safe' => ['html']]);
     }
 }
