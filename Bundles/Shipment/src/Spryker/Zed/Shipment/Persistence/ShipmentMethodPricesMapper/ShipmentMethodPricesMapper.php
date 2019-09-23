@@ -8,9 +8,7 @@
 namespace Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
@@ -39,7 +37,7 @@ class ShipmentMethodPricesMapper implements ShipmentMethodPricesMapperInterface
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $shipmentMethodPriceEntities
-     * @param MoneyValueTransfer[] $moneyValueTransfers
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer[] $moneyValueTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
@@ -58,7 +56,7 @@ class ShipmentMethodPricesMapper implements ShipmentMethodPricesMapperInterface
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $shipmentMethodPriceEntity
-     * @param MoneyValueTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */

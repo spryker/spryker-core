@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 

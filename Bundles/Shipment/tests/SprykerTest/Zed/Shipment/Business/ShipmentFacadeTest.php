@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
@@ -531,7 +530,6 @@ class ShipmentFacadeTest extends Test
             $this->assertNotNull($moneyValueTransfer->getGrossAmount());
         }
     }
-
 
     /**
      * @return array

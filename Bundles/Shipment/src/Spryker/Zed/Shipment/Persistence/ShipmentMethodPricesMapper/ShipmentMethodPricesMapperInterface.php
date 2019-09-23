@@ -8,13 +8,13 @@
 namespace Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 
 interface ShipmentMethodPricesMapperInterface
 {
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $shipmentMethodPriceEntities
-     * @param MoneyValueTransfer[] $moneyValueTransfers
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer[] $moneyValueTransfers
+     *
      * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
     public function mapShipmentMethodPriceEntitiesToMoneyValueTransfers(
