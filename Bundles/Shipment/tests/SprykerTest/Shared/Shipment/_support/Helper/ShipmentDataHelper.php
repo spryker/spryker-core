@@ -45,8 +45,8 @@ class ShipmentDataHelper extends Module
     {
         $shipmentEntity = new SpySalesShipment();
         $shipmentEntity->fromArray($shipmentTransfer->toArray());
+        $shipmentEntity->fromArray($shipmentTransfer->getMethod()->toArray());
         $shipmentEntity->setFkSalesOrder($idSalesOrder);
-        $shipmentEntity->setName($shipmentTransfer->getMethod() ? $shipmentTransfer->getMethod()->getName() : null);
         $shipmentEntity->save();
 
         return $shipmentEntity->getIdSalesShipment();
