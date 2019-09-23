@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier;
 
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -22,11 +24,23 @@ class ShipmentCarrierFormType extends AbstractType
 {
     public const FIELD_NAME_FIELD = 'name';
     public const FIELD_IS_ACTIVE_FIELD = 'isActive';
-    public const FIELD_ID_CARRIER = 'id_carrier';
+    public const FIELD_ID_CARRIER = 'idShipmentCarrier';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_IS_ACTIVE_FIELD = 'Enabled?';
     protected const MESSAGE_VIOLATION = 'Carrier with the same name already exists.';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => ShipmentCarrierTransfer::class,
+        ]);
+    }
 
     /**
      * @return string
@@ -60,7 +74,7 @@ class ShipmentCarrierFormType extends AbstractType
             'label' => static::LABEL_NAME,
             'constraints' => [
                 new NotBlank(),
-                $this->getFactory()->createPriceProductSchedulePriceConstraint([
+                $this->getFactory()->createShipmentGuiUniqueShipmentCarrierNameConstraint([
                     static::FIELD_NAME_FIELD,
                 ]),
             ],

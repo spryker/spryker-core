@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication;
 
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName;
@@ -49,14 +50,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formData
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentCarrierFormType(array $formData, array $formOptions = []): FormInterface
+    public function createShipmentCarrierFormType(ShipmentCarrierTransfer $shipmentCarrierTransfer, array $formOptions = []): FormInterface
     {
-        return $this->getFormFactory()->create(ShipmentCarrierFormType::class, $formData, $formOptions);
+        return $this->getFormFactory()->create(ShipmentCarrierFormType::class, $shipmentCarrierTransfer, $formOptions);
     }
 
     /**
@@ -106,7 +107,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName
      */
-    public function createPriceProductSchedulePriceConstraint(array $idExcludedCarrierFields = []): ShipmentGuiUniqueShipmentCarrierName
+    public function createShipmentGuiUniqueShipmentCarrierNameConstraint(array $idExcludedCarrierFields = []): ShipmentGuiUniqueShipmentCarrierName
     {
         return new ShipmentGuiUniqueShipmentCarrierName($this->getShipmentFacade(), $idExcludedCarrierFields);
     }

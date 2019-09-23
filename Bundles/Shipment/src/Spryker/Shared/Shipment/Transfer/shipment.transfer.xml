@@ -7,6 +7,7 @@
         <property name="idShipmentCarrier" type="int" />
         <property name="name" type="string" />
         <property name="isActive" type="bool" />
+        <property name="idExcludedCarriers" type="array"/>
     </transfer>
 
     <transfer name="ShipmentMethods">

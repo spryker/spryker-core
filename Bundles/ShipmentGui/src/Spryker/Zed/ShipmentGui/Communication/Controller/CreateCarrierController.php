@@ -18,6 +18,7 @@ class CreateCarrierController extends AbstractController
 {
     protected const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
     protected const URL_REDIRECT_SHIPMENT = '/shipment';
+    public const REQUEST_ID_CARRIER = 'idShipmentCarrier';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -29,14 +30,14 @@ class CreateCarrierController extends AbstractController
         $factory = $this->getFactory();
         $carrierFormDataProvider = $factory->createShipmentCarrierFormDataProvider();
 
-        $form = $factory->createShipmentCarrierFormType($carrierFormDataProvider->getData(), $carrierFormDataProvider->getOptions())
+        $idShipmentCarrier = $request->query->getInt(static::REQUEST_ID_CARRIER);
+        $companyRoleTransfer = (new ShipmentCarrierTransfer())->setIdShipmentCarrier($idShipmentCarrier);
+
+        $form = $factory->createShipmentCarrierFormType($carrierFormDataProvider->getData($companyRoleTransfer), $carrierFormDataProvider->getOptions())
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $shipmentCarrierTransfer = $factory->createShipmentCarrierMapper()
-                ->mapRequestDataToShipmentCarrierTransfer($form->getData(), new ShipmentCarrierTransfer());
-
-            $factory->getShipmentFacade()->createCarrier($shipmentCarrierTransfer);
+            $factory->getShipmentFacade()->createCarrier($form->getData());
 
             $this->addSuccessMessage(static::MESSAGE_CARRIER_CREATE_SUCCESS);
 

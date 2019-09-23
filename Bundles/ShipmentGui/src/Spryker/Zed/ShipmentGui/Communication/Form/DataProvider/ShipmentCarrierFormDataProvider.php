@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
-use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 
 class ShipmentCarrierFormDataProvider
@@ -26,19 +26,22 @@ class ShipmentCarrierFormDataProvider
     }
 
     /**
-     * @param int|null $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      *
-     * @return bool[]
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    public function getData(?int $idCarrier = null): array
+    public function getData(ShipmentCarrierTransfer $shipmentCarrierTransfer): ShipmentCarrierTransfer
     {
-        if ($idCarrier === null) {
-            return [];
+        if ($shipmentCarrierTransfer->getIdShipmentCarrier() === null) {
+            return $shipmentCarrierTransfer;
         }
 
-        return [
-            ShipmentCarrierFormType::FIELD_IS_ACTIVE_FIELD => $this->isCarrierActive($idCarrier),
-        ];
+        $foundShipmentCarrierTransfer = $this->shipmentFacade->findShipmentCarrierById($shipmentCarrierTransfer->getIdShipmentCarrier());
+        if ($foundShipmentCarrierTransfer === null) {
+            return $shipmentCarrierTransfer;
+        }
+
+        return $foundShipmentCarrierTransfer;
     }
 
     /**
@@ -46,21 +49,8 @@ class ShipmentCarrierFormDataProvider
      */
     public function getOptions(): array
     {
-        return [];
-    }
-
-    /**
-     * @param int $idCarrier
-     *
-     * @return bool
-     */
-    protected function isCarrierActive(int $idCarrier): bool
-    {
-        $shipmentCarrierTransfer = $this->shipmentFacade->findShipmentCarrierById($idCarrier);
-        if ($shipmentCarrierTransfer === null || $shipmentCarrierTransfer->getIsActive() === null) {
-            return false;
-        }
-
-        return $shipmentCarrierTransfer->getIsActive();
+        return [
+            'data_class' => ShipmentCarrierTransfer::class,
+        ];
     }
 }

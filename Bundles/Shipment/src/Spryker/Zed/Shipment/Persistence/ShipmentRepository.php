@@ -367,19 +367,18 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param string $carrierName
-     * @param int[] $excludedIdCarriers
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, array $excludedIdCarriers): bool
+    public function hasCarrierName(ShipmentCarrierTransfer $shipmentCarrierTransfer): bool
     {
         $query = $this->getFactory()
             ->createShipmentCarrierQuery()
-            ->filterByName($carrierName);
+            ->filterByName($shipmentCarrierTransfer->getName());
 
-        if ($excludedIdCarriers !== []) {
-            $query->filterByIdShipmentCarrier_In($excludedIdCarriers, Criteria::NOT_EQUAL);
+        if ($shipmentCarrierTransfer->getIdExcludedCarriers() !== []) {
+            $query->filterByIdShipmentCarrier($shipmentCarrierTransfer->getIdExcludedCarriers(), Criteria::NOT_IN);
         }
 
         return $query->exists();

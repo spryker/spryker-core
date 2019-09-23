@@ -86,12 +86,11 @@ interface ShipmentRepositoryInterface
     public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer;
 
     /**
-     * @param string $carrierName
-     * @param int[] $excludedIdCarriers
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      *
      * @return bool
      */
-    public function hasCarrierName($carrierName, array $excludedIdCarriers): bool;
+    public function hasCarrierName(ShipmentCarrierTransfer $shipmentCarrierTransfer): bool;
 
     /**
      * @param string $shipmentMethodName

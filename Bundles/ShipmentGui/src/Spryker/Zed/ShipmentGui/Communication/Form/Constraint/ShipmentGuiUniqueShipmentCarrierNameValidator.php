@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -35,7 +36,7 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
      */
     protected function assertAlreadyExistsCarrierName(string $carrierName, ShipmentGuiUniqueShipmentCarrierName $constraint): bool
     {
-        return $constraint->getShipmentFacade()->hasCarrierName($carrierName, $this->getExcludedIdCarriers($constraint));
+        return $constraint->getShipmentFacade()->hasCarrierName($this->createShipmentCarrierTransfer($carrierName, $constraint));
     }
 
     /**
@@ -71,5 +72,18 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
         }
 
         return $idExcludedCarriers;
+    }
+
+    /**
+     * @param string $carrierName
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
+     */
+    protected function createShipmentCarrierTransfer(string $carrierName, ShipmentGuiUniqueShipmentCarrierName $constraint): ShipmentCarrierTransfer
+    {
+        return (new ShipmentCarrierTransfer())
+            ->setName($carrierName)
+            ->setIdExcludedCarriers($this->getExcludedIdCarriers($constraint));
     }
 }
