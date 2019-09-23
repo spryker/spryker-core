@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -119,25 +118,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer {
-        return $this->getFactory()
-            ->createProductPackagingUnitLeadProductReader()
-            ->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**

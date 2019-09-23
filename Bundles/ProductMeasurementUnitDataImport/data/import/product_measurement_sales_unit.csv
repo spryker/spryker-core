@@ -25,3 +25,14 @@ sales_unit_23,218_1230,ITEM,1,1,1,1
 sales_unit_24,218_1230,KILO,10,100,1,0
 sales_unit_25,218_1230,GRAM,0.01,1,1,0
 sales_unit_26,217_1231,ITEM,1,1,1,1
+sales_unit_fish-item,fish-1-1,ITEM,0.25,100,1,1
+sales_unit_fish-kilo,fish-1-1,KILO,1,1000,0,0
+sales_unit_potato-kilo,potato-1-1,KILO,1,1000,1,1
+sales_unit_hdmi-cable-ring,cable-hdmi-1-1,ITEM,1.5,100,1,1
+sales_unit_hdmi-cable-meter-1,cable-hdmi-1-1,METR,1,100,1,0
+sales_unit_hdmi-cable-meter-2,cable-hdmi-1-2,METR,1,100,1,1
+sales_unit_hdmi-cable-centi,cable-hdmi-1-2,CMET,0.01,10,1,0
+sales_unit_vga-cable-ring,cable-vga-1-1,ITEM,1.5,100,1,1
+sales_unit_vga-cable-meter-1,cable-vga-1-1,METR,1,100,1,0
+sales_unit_vga-cable-meter-2,cable-vga-1-2,METR,1,100,1,1
+sales_unit_vga-cable-centi,cable-vga-1-2,CMET,0.01,10,1,0
