@@ -96,6 +96,6 @@ class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             }
 
             return $html;
-        });
+        }, ['is_safe' => ['html']]);
     }
 }

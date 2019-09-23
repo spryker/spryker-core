@@ -70,6 +70,6 @@ class ModalTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             $html .= '</div>';
 
             return $html;
-        });
+        }, ['is_safe' => ['html']]);
     }
 }

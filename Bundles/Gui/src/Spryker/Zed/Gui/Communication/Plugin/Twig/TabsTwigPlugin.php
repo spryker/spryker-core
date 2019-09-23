@@ -46,9 +46,12 @@ class TabsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     protected function getTabsFunction(Environment $twig): TwigFunction
     {
-        $options['needs_environment'] = true;
+        $options = [
+            'needs_environment' => true,
+            'is_safe' => ['html'],
+        ];
 
-        return new TwigFunction(static::FUNCTION_NAME_TABS, function (TabsViewTransfer $tabsViewTransfer, array $context) use ($twig) {
+        return new TwigFunction(static::FUNCTION_NAME_TABS, function (Environment $twig, TabsViewTransfer $tabsViewTransfer, array $context = []) {
             $context['tabsViewTransfer'] = $tabsViewTransfer;
 
             return $twig->render($this->getConfig()->getTabsDefaultTemplatePath(), $context);

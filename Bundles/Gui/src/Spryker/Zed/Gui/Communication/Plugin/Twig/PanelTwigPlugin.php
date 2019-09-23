@@ -90,6 +90,6 @@ class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             $html .= '</section>';
 
             return $html;
-        });
+        }, ['is_safe' => ['html']]);
     }
 }
