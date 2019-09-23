@@ -12,7 +12,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
 {
-    protected const FIELD_ID_CARRIER = 'id_carrier';
+    protected const FIELD_ID_EXCLUDED_NAME = 'idExcludedName';
 
     /**
      * @param string $value
@@ -37,7 +37,7 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
      */
     protected function assertAlreadyExistsCarrierName(string $carrierName, ShipmentGuiUniqueShipmentCarrierName $constraint): bool
     {
-        return $constraint->getShipmentFacade()->hasCarrierName($carrierName, $this->getExcludedIdCarriers());
+        return $constraint->getShipmentFacade()->hasCarrierName($carrierName, $this->getExcludedIdCarriers($constraint));
     }
 
     /**
@@ -54,13 +54,20 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
     }
 
     /**
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     *
      * @return int[]
      */
-    protected function getExcludedIdCarriers(): array
+    protected function getExcludedIdCarriers(ShipmentGuiUniqueShipmentCarrierName $constraint): array
     {
+        $fields = $constraint->getFields();
+        if (empty($fields[static::FIELD_ID_EXCLUDED_NAME])) {
+            return [];
+        }
+
         $formData = $this->context->getRoot()->getData();
         $excludedIdCarriers = [];
-        $idCarrier = $formData[static::FIELD_ID_CARRIER] ?? null;
+        $idCarrier = $formData[$fields[static::FIELD_ID_EXCLUDED_NAME]] ?? null;
         if ($idCarrier !== null) {
             $excludedIdCarriers[] = (int)$idCarrier;
         }
