@@ -22,7 +22,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\Shipment\ShipmentConfig;
 
 class SalesHelper extends Module
 {
@@ -180,6 +180,9 @@ class SalesHelper extends Module
         if ($salesOrderItemEntity->getQuantity() === null) {
             $salesOrderItemEntity->setQuantity(1);
         }
+        if ($salesOrderItemEntity->getGroupKey() === null) {
+            $salesOrderItemEntity->setGroupKey('key');
+        }
 
         $omsOrderItemStateEntity = $this->getOrderItemState($salesOrderItem);
         $salesOrderItemEntity->setFkOmsOrderItemState($omsOrderItemStateEntity->getIdOmsOrderItemState());
@@ -276,7 +279,7 @@ class SalesHelper extends Module
         $shipmentExpense = new SpySalesExpense();
         $shipmentExpense->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $shipmentExpense->setName('default');
-        $shipmentExpense->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpense->setGrossPrice(100);
         $shipmentExpense->save();
 

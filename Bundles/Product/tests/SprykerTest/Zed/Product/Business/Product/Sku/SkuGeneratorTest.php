@@ -16,6 +16,7 @@ use SprykerTest\Zed\Product\Business\FacadeTestAbstract;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product

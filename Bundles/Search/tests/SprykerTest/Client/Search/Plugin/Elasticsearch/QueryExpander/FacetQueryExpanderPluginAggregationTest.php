@@ -9,6 +9,7 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

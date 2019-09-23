@@ -12,6 +12,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DocumentationGeneratorRestApi

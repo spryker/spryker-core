@@ -19,6 +19,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

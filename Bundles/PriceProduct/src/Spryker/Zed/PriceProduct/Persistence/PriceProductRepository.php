@@ -457,4 +457,18 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 
         return $priceProductTransfers;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(PriceProductTransfer $priceProductTransfer): bool
+    {
+        return $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract())
+            ->filterByFkProduct($priceProductTransfer->getIdProduct())
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType())->count() > 0;
+    }
 }

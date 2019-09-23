@@ -12,6 +12,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\Redis\RedisSessionKeyGe
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Session

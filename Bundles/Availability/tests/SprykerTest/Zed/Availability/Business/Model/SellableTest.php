@@ -16,6 +16,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterfac
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Availability
