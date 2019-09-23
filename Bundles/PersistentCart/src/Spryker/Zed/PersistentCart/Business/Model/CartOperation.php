@@ -226,10 +226,10 @@ class CartOperation implements CartOperationInterface
             ->setIsSuccessful(true)
             ->setQuoteTransfer($quoteTransfer);
 
-        $itemsToAdd = $this->prepareItemsForAdd($persistentCartChangeTransfer, $quoteTransfer);
+        $itemsToAdding = $this->prepareItemsForAdding($persistentCartChangeTransfer, $quoteTransfer);
 
-        if ($itemsToAdd) {
-            $quoteResponseTransfer = $this->quoteItemOperation->addItems($itemsToAdd, $quoteTransfer);
+        if ($itemsToAdding) {
+            $quoteResponseTransfer = $this->quoteItemOperation->addItems($itemsToAdding, $quoteTransfer);
         }
 
         $itemsToRemove = $this->prepareItemsForRemoval($persistentCartChangeTransfer, $quoteTransfer);
@@ -251,9 +251,9 @@ class CartOperation implements CartOperationInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function prepareItemsForAdd(PersistentCartChangeTransfer $persistentCartChangeTransfer, QuoteTransfer $quoteTransfer): array
+    protected function prepareItemsForAdding(PersistentCartChangeTransfer $persistentCartChangeTransfer, QuoteTransfer $quoteTransfer): array
     {
-        $itemsToAdd = [];
+        $itemsToAdding = [];
 
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
             $quoteItemTransfer = $this->findItemInQuote($itemTransfer, $quoteTransfer);
@@ -271,10 +271,10 @@ class CartOperation implements CartOperationInterface
             $changeItemTransfer = clone $quoteItemTransfer;
             $changeItemTransfer->setQuantity($delta);
 
-            $itemsToAdd[] = $changeItemTransfer;
+            $itemsToAdding[] = $changeItemTransfer;
         }
 
-        return $itemsToAdd;
+        return $itemsToAdding;
     }
 
     /**
@@ -301,7 +301,7 @@ class CartOperation implements CartOperationInterface
 
             $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
 
-            if ($delta === 0 || !($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity())) {
+            if ($delta === 0 || $quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
                 continue;
             }
 

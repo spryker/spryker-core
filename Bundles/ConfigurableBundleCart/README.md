@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/configurable-bundle-cart.svg)](https://travis-ci.org/spryker/configurable-bundle-cart)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/configurable-bundle-cart/badge.svg)](https://coveralls.io/github/spryker/configurable-bundle-cart)
 
-ConfigurableBundleCart module provides ability to add/update/remove configured bundles to cart.
+ConfigurableBundleCart module provides ability to perform add/update/remove cart operations for configured bundles.
 
 ## Installation
 

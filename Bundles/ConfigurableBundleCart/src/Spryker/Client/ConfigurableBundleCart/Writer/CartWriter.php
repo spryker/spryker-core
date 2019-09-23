@@ -10,7 +10,7 @@ namespace Spryker\Client\ConfigurableBundleCart\Writer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Spryker\Client\ConfigurableBundleCart\Calculator\ItemsQuantityCalculatorInterface;
+use Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface;
 
@@ -31,23 +31,23 @@ class CartWriter implements CartWriterInterface
     protected $quoteReader;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Calculator\ItemsQuantityCalculatorInterface
+     * @var \Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface
      */
-    protected $itemsQuantityCalculator;
+    protected $itemQuantityCalculator;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
      * @param \Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface $quoteReader
-     * @param \Spryker\Client\ConfigurableBundleCart\Calculator\ItemsQuantityCalculatorInterface $itemsQuantityCalculator
+     * @param \Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface $itemQuantityCalculator
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
         QuoteReaderInterface $quoteReader,
-        ItemsQuantityCalculatorInterface $itemsQuantityCalculator
+        ItemQuantityCalculatorInterface $itemQuantityCalculator
     ) {
         $this->cartClient = $cartClient;
         $this->quoteReader = $quoteReader;
-        $this->itemsQuantityCalculator = $itemsQuantityCalculator;
+        $this->itemQuantityCalculator = $itemQuantityCalculator;
     }
 
     /**
@@ -86,7 +86,7 @@ class CartWriter implements CartWriterInterface
         $quoteTransfer = $this->cartClient->getQuote();
         $itemTransfers = $this->quoteReader->getItemsByConfiguredBundleGroupKey($configuredBundleGroupKey, $quoteTransfer);
 
-        $itemTransfers = $this->itemsQuantityCalculator->updateItemsQuantity($itemTransfers, $configuredBundleQuantity);
+        $itemTransfers = $this->itemQuantityCalculator->changeQuantity($itemTransfers, $configuredBundleQuantity);
 
         $quoteResponseTransfer = $this->cartClient->updateQuantity(
             (new CartChangeTransfer())->setItems($itemTransfers)
@@ -106,8 +106,11 @@ class CartWriter implements CartWriterInterface
      */
     protected function getErrorResponse(string $message): QuoteResponseTransfer
     {
+        $quoteErrorTransfer = (new QuoteErrorTransfer())
+            ->setMessage($message);
+
         return (new QuoteResponseTransfer())
             ->setIsSuccessful(false)
-            ->addError((new QuoteErrorTransfer())->setMessage($message));
+            ->addError($quoteErrorTransfer);
     }
 }

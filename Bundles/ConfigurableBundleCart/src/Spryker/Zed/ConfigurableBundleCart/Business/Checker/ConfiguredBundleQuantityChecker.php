@@ -65,17 +65,11 @@ class ConfiguredBundleQuantityChecker implements ConfiguredBundleQuantityChecker
         $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
 
         $configuredBundleItemTransfer
-            ->requireSlot()
-            ->getSlot()
-                ->requireUuid();
+            ->requireQuantityPerSlot();
 
         $configuredBundleTransfer
             ->requireGroupKey()
-            ->requireQuantity()
-            ->requireTemplate()
-            ->getTemplate()
-                ->requireUuid()
-                ->requireName();
+            ->requireQuantity();
 
         if (!isset($configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()])) {
             $configuredBundleTransfers[$configuredBundleTransfer->getGroupKey()] = (new ConfiguredBundleTransfer())

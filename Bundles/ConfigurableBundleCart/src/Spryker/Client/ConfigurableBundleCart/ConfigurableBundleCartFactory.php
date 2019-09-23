@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\ConfigurableBundleCart;
 
-use Spryker\Client\ConfigurableBundleCart\Calculator\ItemsQuantityCalculator;
-use Spryker\Client\ConfigurableBundleCart\Calculator\ItemsQuantityCalculatorInterface;
+use Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculator;
+use Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteReader;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface;
@@ -29,16 +29,16 @@ class ConfigurableBundleCartFactory extends AbstractFactory
         return new CartWriter(
             $this->getCartClient(),
             $this->createQuoteReader(),
-            $this->createItemsQuantityCalculator()
+            $this->createItemQuantityCalculator()
         );
     }
 
     /**
-     * @return \Spryker\Client\ConfigurableBundleCart\Calculator\ItemsQuantityCalculatorInterface
+     * @return \Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface
      */
-    public function createItemsQuantityCalculator(): ItemsQuantityCalculatorInterface
+    public function createItemQuantityCalculator(): ItemQuantityCalculatorInterface
     {
-        return new ItemsQuantityCalculator();
+        return new ItemQuantityCalculator();
     }
 
     /**

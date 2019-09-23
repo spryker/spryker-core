@@ -211,7 +211,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      * Specification:
      * - Makes zed request.
      * - Updates quantity for given items.
-     * - Stores quote in session internally after success zed request.
+     * - Stores quote in session internally after successful zed request.
      * - Returns response with updated quote.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -225,10 +225,10 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
             ->setQuoteTransfer($quoteTransfer)
             ->setIsSuccessful(true);
 
-        $cartChangeTransferForAdd = $this->prepareCartChangeTransferForAdd($cartChangeTransfer);
+        $cartChangeTransferForAdding = $this->prepareCartChangeTransferForAdding($cartChangeTransfer);
 
-        if ($cartChangeTransferForAdd->getItems()->count()) {
-            $quoteResponseTransfer = $this->getCartZedStub()->addToCart($cartChangeTransferForAdd);
+        if ($cartChangeTransferForAdding->getItems()->count()) {
+            $quoteResponseTransfer = $this->getCartZedStub()->addToCart($cartChangeTransferForAdding);
         }
 
         $cartChangeTransferForRemoval = $this->prepareCartChangeTransferForRemoval($cartChangeTransfer);
@@ -253,9 +253,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function prepareCartChangeTransferForAdd(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    protected function prepareCartChangeTransferForAdding(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $cartChangeTransferForAdd = $this->createCartChangeTransfer();
+        $cartChangeTransferForAdding = $this->createCartChangeTransfer();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
@@ -273,16 +273,16 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
             $changeItemTransfer = clone $quoteItemTransfer;
             $changeItemTransfer->setQuantity($delta);
 
-            $cartChangeTransferForAdd->addItem($changeItemTransfer);
+            $cartChangeTransferForAdding->addItem($changeItemTransfer);
         }
 
-        if (!$cartChangeTransferForAdd->getItems()->count()) {
-            return $cartChangeTransferForAdd;
+        if (!$cartChangeTransferForAdding->getItems()->count()) {
+            return $cartChangeTransferForAdding;
         }
 
         return $this->getFactory()
             ->createCartChangeRequestExpander()
-            ->addItemsRequestExpand($cartChangeTransferForAdd);
+            ->addItemsRequestExpand($cartChangeTransferForAdding);
     }
 
     /**

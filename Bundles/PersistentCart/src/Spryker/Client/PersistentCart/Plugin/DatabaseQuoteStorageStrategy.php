@@ -223,7 +223,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Loads customer quote from database.
      *  - Changes quantity for given items.
      *  - Recalculates quote totals.
-     *  - Save updated quote to database.
+     *  - Saves updated quote to database.
      *  - Stores quote in session internally after zed request.
      *  - Returns quote response.
      *

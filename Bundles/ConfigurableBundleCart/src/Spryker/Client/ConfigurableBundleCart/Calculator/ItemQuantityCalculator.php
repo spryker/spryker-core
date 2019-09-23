@@ -10,7 +10,7 @@ namespace Spryker\Client\ConfigurableBundleCart\Calculator;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
-class ItemsQuantityCalculator implements ItemsQuantityCalculatorInterface
+class ItemQuantityCalculator implements ItemQuantityCalculatorInterface
 {
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
@@ -18,7 +18,7 @@ class ItemsQuantityCalculator implements ItemsQuantityCalculatorInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function updateItemsQuantity(ArrayObject $itemTransfers, int $configuredBundleQuantity): ArrayObject
+    public function changeQuantity(ArrayObject $itemTransfers, int $configuredBundleQuantity): ArrayObject
     {
         $itemTransfersToUpdate = new ArrayObject();
 
