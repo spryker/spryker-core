@@ -11,7 +11,7 @@ use Spryker\Shared\Twig\TwigFunction;
 use Twig\Environment;
 
 /**
- * @deprecated `\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form\SubmitButtonTwigPlugin` instead.
+ * @deprecated `Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form\SubmitButtonTwigPlugin` instead.
  */
 class SubmitButtonFunction extends TwigFunction
 {

@@ -11,7 +11,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin` instead.
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin` instead.
  */
 class UrlFunction extends TwigFunction
 {

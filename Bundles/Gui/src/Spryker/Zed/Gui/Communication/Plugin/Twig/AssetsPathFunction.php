@@ -10,7 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 use Spryker\Shared\Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathTwigPlugin` instead.
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathTwigPlugin` instead.
  *
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  */

@@ -12,7 +12,7 @@ use Spryker\Shared\Twig\TwigFunction;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin` instead.
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\TabsTwigPlugin` instead.
  */
 class TabsFunction extends TwigFunction
 {
