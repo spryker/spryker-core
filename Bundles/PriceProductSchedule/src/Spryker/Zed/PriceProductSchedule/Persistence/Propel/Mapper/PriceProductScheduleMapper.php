@@ -105,13 +105,10 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         $idStore = $moneyValueTransfer->getFkStore();
         $idCurrency = $moneyValueTransfer->getFkCurrency();
 
-        if ($priceProductTransfer->getIdProductAbstract() !== null) {
-            $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
-        }
-
-        if ($priceProductTransfer->getIdProduct() !== null) {
-            $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
-        }
+        $priceProductScheduleEntity = $this->addProductIdentifierToPriceProductScheduleEntityFromPriceProduct(
+            $priceProductTransfer,
+            $priceProductScheduleEntity
+        );
 
         if ($idStore === null && $moneyValueTransfer->getStore() !== null) {
             $idStore = $moneyValueTransfer->getStore()->getIdStore();
@@ -137,6 +134,23 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
             ->setActiveTo($priceProductScheduleTransfer->getActiveTo())
             ->setIsCurrent($priceProductScheduleTransfer->getIsCurrent());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule
+     */
+    protected function addProductIdentifierToPriceProductScheduleEntityFromPriceProduct(
+        PriceProductTransfer $priceProductTransfer,
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): SpyPriceProductSchedule {
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            return $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
+        }
+
+        return $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 
     /**
