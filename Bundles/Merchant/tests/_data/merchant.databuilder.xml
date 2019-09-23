@@ -7,11 +7,6 @@
         <property name="merchantKey" dataBuilderRule="word"/>
         <property name="name" dataBuilderRule="word"/>
         <property name="registrationNumber"  dataBuilderRule="word" />
-        <property name="status" dataBuilderRule="=waiting_for_approval" />
-        <property name="contactPersonTitle" dataBuilderRule="word" />
-        <property name="contactPersonFirstName" dataBuilderRule="word" />
-        <property name="contactPersonLastName" dataBuilderRule="word" />
-        <property name="contactPersonPhone" dataBuilderRule="e164PhoneNumber" />
         <property name="email" dataBuilderRule="email" />
         <property name="addressCollection" type="MerchantAddressCollection" />
     </transfer>

@@ -6,11 +6,12 @@
     <table name="spy_merchant_profile" identifierQuoting="true">
         <column name="id_merchant_profile" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="contact_person_role" size="255" type="VARCHAR"/>
-        <column name="contact_person_title" size="255" type="VARCHAR"/>
+        <column name="contact_person_title"  type="ENUM" valueSet="Mr, Mrs, Dr, Ms" required="false" />
         <column name="contact_person_first_name" size="255" type="VARCHAR"/>
         <column name="contact_person_last_name" size="255" type="VARCHAR"/>
         <column name="contact_person_phone" size="255" type="VARCHAR"/>
         <column name="banner_url" size="255" type="VARCHAR"/>
+        <column name="logo_url" size="255" type="VARCHAR"/>
         <column name="public_email" type="VARCHAR" size="255"/>
 
         <column name="description_glossary_key" type="VARCHAR" size="255"/>
@@ -20,6 +21,7 @@
         <column name="cancellation_policy_glossary_key" type="VARCHAR" size="255"/>
         <column name="imprint_glossary_key" type="VARCHAR" size="255"/>
         <column name="data_privacy_glossary_key" type="VARCHAR" size="255"/>
+        <column name="is_active" default="false" type="BOOLEAN" />
 
         <column name="fk_merchant" required="true" type="INTEGER"/>
 

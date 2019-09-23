@@ -1,0 +1,27 @@
+namespace: SprykerTest\Zed\MerchantProfileDataImport
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Communication:
+     path: Communication
+     class_name: MerchantProfileDataImportCommunicationTester
+     modules:
+         enabled:
+             - Asserts
+             - \SprykerTest\Shared\Testify\Helper\Environment
+             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+             - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+             - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
+             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+             - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+             - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantDataImportHelper
