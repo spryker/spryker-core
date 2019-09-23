@@ -140,7 +140,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
 
         $merchantRelationshipTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationshipTransfer);
         $this->saveAssignedCompanyBusinessUnits($merchantRelationshipTransfer);
-        $this->executeMerchantRelationshipPostUpdatePlugins($merchantRelationshipTransfer);
+        $merchantRelationshipTransfer = $this->executeMerchantRelationshipPostUpdatePlugins($merchantRelationshipTransfer);
 
         return $merchantRelationshipTransfer;
     }
@@ -247,12 +247,14 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    protected function executeMerchantRelationshipPostUpdatePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    protected function executeMerchantRelationshipPostUpdatePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
         foreach ($this->merchantRelationshipPostUpdatePlugins as $merchantRelationshipPostUpdatePlugin) {
-            $merchantRelationshipPostUpdatePlugin->execute($merchantRelationshipTransfer);
+            $merchantRelationshipTransfer = $merchantRelationshipPostUpdatePlugin->execute($merchantRelationshipTransfer);
         }
+
+        return $merchantRelationshipTransfer;
     }
 }

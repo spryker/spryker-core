@@ -19,7 +19,7 @@ interface MerchantRelationshipPostUpdatePluginInterface
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
+    public function execute(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 }
