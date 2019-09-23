@@ -18,6 +18,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/company": "*",
+    "spryker/product-list": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

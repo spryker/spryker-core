@@ -11,8 +11,10 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
+use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
 
 /**
  * Inherited Methods
@@ -89,6 +91,16 @@ class MerchantRelationshipBusinessTester extends Actor
     }
 
     /**
+     * @param array $productListData
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function createProductList(array $productListData = []): ProductListTransfer
+    {
+        return $this->haveProductList($productListData);
+    }
+
+    /**
      * @param int $idMerchantRelationship
      *
      * @return void
@@ -120,6 +132,16 @@ class MerchantRelationshipBusinessTester extends Actor
             ->filterByFkMerchantRelationship($idMerchantRelationship);
 
         $this->assertSame(0, $merchantRelationshipToCompanyBusinessUnitQuery->count());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function expandMecrhantRelationshipWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        return (new MerchantRelationshipExpander())->expandWithName($merchantRelationshipTransfer);
     }
 
     /**
