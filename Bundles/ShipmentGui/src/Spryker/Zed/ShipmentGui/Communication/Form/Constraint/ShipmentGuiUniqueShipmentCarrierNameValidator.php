@@ -59,7 +59,7 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
     protected function getExcludedIdCarriers(ShipmentGuiUniqueShipmentCarrierName $constraint): array
     {
         $idExcludedCarrierFields = $constraint->getIdExcludedCarrierFields();
-        $excludedIdCarriers = [];
+        $idExcludedCarriers = [];
         $formData = $this->context->getRoot()->getData();
 
         foreach ($idExcludedCarrierFields as $fieldName) {
@@ -67,9 +67,9 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
                 continue;
             }
 
-            $excludedIdCarriers[] = (int)$formData[$fieldName];
+            $idExcludedCarriers[] = (int)$formData[$fieldName];
         }
 
-        return $excludedIdCarriers;
+        return $idExcludedCarriers;
     }
 }
