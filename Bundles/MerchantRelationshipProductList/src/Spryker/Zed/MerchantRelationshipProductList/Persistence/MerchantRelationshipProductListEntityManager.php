@@ -24,7 +24,6 @@ class MerchantRelationshipProductListEntityManager extends AbstractEntityManager
     {
         $productListEntities = $this->getFactory()
             ->getProductListQuery()
-            ->leftJoinWithSpyProductListProductConcrete()
             ->filterByIdProductList_In($productListIds)
             ->find();
 

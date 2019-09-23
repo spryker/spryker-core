@@ -72,129 +72,129 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function create(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer
+    public function create(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationTransfer) {
-            return $this->executeCreateTransaction($merchantRelationTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationshipTransfer) {
+            return $this->executeCreateTransaction($merchantRelationshipTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function executeCreateTransaction(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer
+    public function executeCreateTransaction(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        $merchantRelationTransfer
+        $merchantRelationshipTransfer
             ->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
 
-        if ($merchantRelationTransfer->getMerchantRelationshipKey()) {
-            $merchantRelationTransfer->setMerchantRelationshipKey(
+        if (!$merchantRelationshipTransfer->getMerchantRelationshipKey()) {
+            $merchantRelationshipTransfer->setMerchantRelationshipKey(
                 $this->merchantRelationshipKeyGenerator
                     ->generateMerchantRelationshipKey()
             );
         }
 
-        $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
-        $this->saveAssignedCompanyBusinessUnits($merchantRelationTransfer);
-        $this->executeMerchantRelationshipPostCreatePlugins($merchantRelationTransfer);
+        $merchantRelationshipTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationshipTransfer);
+        $this->saveAssignedCompanyBusinessUnits($merchantRelationshipTransfer);
+        $merchantRelationshipTransfer = $this->executeMerchantRelationshipPostCreatePlugins($merchantRelationshipTransfer);
 
-        return $merchantRelationTransfer;
+        return $merchantRelationshipTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function update(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer
+    public function update(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationTransfer) {
-            return $this->executeUpdateTransaction($merchantRelationTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationshipTransfer) {
+            return $this->executeUpdateTransaction($merchantRelationshipTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function executeUpdateTransaction(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer
+    public function executeUpdateTransaction(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        $merchantRelationTransfer->requireIdMerchantRelationship()
+        $merchantRelationshipTransfer->requireIdMerchantRelationship()
             ->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
 
-        if ($merchantRelationTransfer->getMerchantRelationshipKey()) {
-            $merchantRelationTransfer->setMerchantRelationshipKey(
+        if (!$merchantRelationshipTransfer->getMerchantRelationshipKey()) {
+            $merchantRelationshipTransfer->setMerchantRelationshipKey(
                 $this->merchantRelationshipKeyGenerator
                     ->generateMerchantRelationshipKey()
             );
         }
 
-        $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
-        $this->saveAssignedCompanyBusinessUnits($merchantRelationTransfer);
-        $this->executeMerchantRelationshipPostUpdatePlugins($merchantRelationTransfer);
+        $merchantRelationshipTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationshipTransfer);
+        $this->saveAssignedCompanyBusinessUnits($merchantRelationshipTransfer);
+        $this->executeMerchantRelationshipPostUpdatePlugins($merchantRelationshipTransfer);
 
-        return $merchantRelationTransfer;
+        return $merchantRelationshipTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return void
      */
-    public function delete(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    public function delete(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
-        $merchantRelationTransfer->requireIdMerchantRelationship();
+        $merchantRelationshipTransfer->requireIdMerchantRelationship();
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationTransfer) {
-            $this->executeDeleteMerchantRelationshipByIdTransaction($merchantRelationTransfer);
+        $this->getTransactionHandler()->handleTransaction(function () use ($merchantRelationshipTransfer) {
+            $this->executeDeleteMerchantRelationshipByIdTransaction($merchantRelationshipTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return void
      */
-    protected function saveAssignedCompanyBusinessUnits(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    protected function saveAssignedCompanyBusinessUnits(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
         $currentIdAssignedCompanyBusinessUnits = $this->repository
-            ->getIdAssignedBusinessUnitsByMerchantRelationshipId($merchantRelationTransfer->getIdMerchantRelationship());
-        $requestedIdAssignedCompanyBusinessUnits = $this->getIdAssignedCompanyBusinessUnits($merchantRelationTransfer);
+            ->getIdAssignedBusinessUnitsByMerchantRelationshipId($merchantRelationshipTransfer->getIdMerchantRelationship());
+        $requestedIdAssignedCompanyBusinessUnits = $this->getIdAssignedCompanyBusinessUnits($merchantRelationshipTransfer);
 
         $idAssignedCompanyBusinessUnitsToSave = array_diff($requestedIdAssignedCompanyBusinessUnits, $currentIdAssignedCompanyBusinessUnits);
         $idAssignedCompanyBusinessUnitsToDelete = array_diff($currentIdAssignedCompanyBusinessUnits, $requestedIdAssignedCompanyBusinessUnits);
 
         $this->entityManager->addAssignedCompanyBusinessUnits(
             $idAssignedCompanyBusinessUnitsToSave,
-            $merchantRelationTransfer->getIdMerchantRelationship()
+            $merchantRelationshipTransfer->getIdMerchantRelationship()
         );
         $this->entityManager->removeAssignedCompanyBusinessUnits(
             $idAssignedCompanyBusinessUnitsToDelete,
-            $merchantRelationTransfer->getIdMerchantRelationship()
+            $merchantRelationshipTransfer->getIdMerchantRelationship()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return int[]
      */
-    protected function getIdAssignedCompanyBusinessUnits($merchantRelationTransfer): array
+    protected function getIdAssignedCompanyBusinessUnits($merchantRelationshipTransfer): array
     {
-        if (!$merchantRelationTransfer->getAssigneeCompanyBusinessUnits()) {
+        if (!$merchantRelationshipTransfer->getAssigneeCompanyBusinessUnits()) {
             return [];
         }
 
-        $companyBusinessUnits = $merchantRelationTransfer->getAssigneeCompanyBusinessUnits()->getCompanyBusinessUnits();
+        $companyBusinessUnits = $merchantRelationshipTransfer->getAssigneeCompanyBusinessUnits()->getCompanyBusinessUnits();
         if (!$companyBusinessUnits) {
             return [];
         }
@@ -208,26 +208,14 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
      * @return void
      */
-    protected function executeDeleteMerchantRelationshipByIdTransaction(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    protected function executeDeleteMerchantRelationshipByIdTransaction(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
     {
-        $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationTransfer);
-        $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
-     *
-     * @return void
-     */
-    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationTransfer): void
-    {
-        foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
-            $merchantRelationshipPreDeletePlugin->execute($merchantRelationTransfer);
-        }
+        $this->executeMerchantRelationshipPreDeletePlugins($merchantRelationshipTransfer);
+        $this->entityManager->deleteMerchantRelationshipById($merchantRelationshipTransfer->getIdMerchantRelationship());
     }
 
     /**
@@ -235,11 +223,25 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      *
      * @return void
      */
-    protected function executeMerchantRelationshipPostCreatePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    protected function executeMerchantRelationshipPreDeletePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    {
+        foreach ($this->merchantRelationshipPreDeletePlugins as $merchantRelationshipPreDeletePlugin) {
+            $merchantRelationshipPreDeletePlugin->execute($merchantRelationshipTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    protected function executeMerchantRelationshipPostCreatePlugins(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
         foreach ($this->merchantRelationshipPostCreatePlugins as $merchantRelationshipPostCreatePlugin) {
-            $merchantRelationshipPostCreatePlugin->execute($merchantRelationshipTransfer);
+            $merchantRelationshipTransfer = $merchantRelationshipPostCreatePlugin->execute($merchantRelationshipTransfer);
         }
+
+        return $merchantRelationshipTransfer;
     }
 
     /**

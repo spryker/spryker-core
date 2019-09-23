@@ -60,7 +60,7 @@ interface MerchantRelationshipProductListFacadeInterface
      *
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
+    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 }

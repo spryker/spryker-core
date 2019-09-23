@@ -65,9 +65,9 @@ class ProductListWriter implements ProductListWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
-    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): void
+    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
         $productListCollectionTransfer = $this->merchantRelationshipProductListRepository->findProductListCollectionByIdMerchantRelationship(
             $merchantRelationshipTransfer->getIdMerchantRelationship()
@@ -91,5 +91,7 @@ class ProductListWriter implements ProductListWriterInterface
             $productListIds,
             $merchantRelationshipTransfer->getIdMerchantRelationship()
         );
+
+        return $merchantRelationshipTransfer;
     }
 }
