@@ -12,6 +12,7 @@ use SprykerTest\Zed\Auth\PageObject\LoginPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Auth

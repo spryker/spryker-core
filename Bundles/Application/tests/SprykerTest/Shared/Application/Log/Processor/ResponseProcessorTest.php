@@ -12,6 +12,7 @@ use Spryker\Shared\Application\Log\Processor\ResponseProcessor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application

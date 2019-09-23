@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\BundleProxy;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel

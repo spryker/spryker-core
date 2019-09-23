@@ -17,6 +17,7 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund

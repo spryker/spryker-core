@@ -13,6 +13,7 @@ use Spryker\Zed\Discount\Communication\Plugin\Calculator\FixedPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

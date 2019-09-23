@@ -48,6 +48,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
      *
      * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
      * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdInvalidArgumentException
+     *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
      */
     public function saveSalesOrderThreshold(
@@ -83,6 +84,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer $salesOrderThresholdTypeTransfer
      *
      * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer
      */
     public function getSalesOrderThresholdTypeByKey(
@@ -158,6 +160,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @throws \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
+     *
      * @return bool
      */
     public function isThresholdValid(

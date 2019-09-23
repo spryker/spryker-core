@@ -12,6 +12,7 @@ use SprykerTest\Zed\Acl\PageObject\AclGroupCreatePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Acl

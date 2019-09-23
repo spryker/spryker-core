@@ -18,6 +18,7 @@ class ProductManagementConfig extends AbstractBundleConfig
     /**
      * Used for validity datetimes transformation and displaying in messages.
      * Hydration validity format is described in ProductValidity module.
+     *
      * @see \Spryker\Zed\ProductValidity\Business\Validity\ProductValidityHydrator::VALIDITY_DATE_TIME_FORMAT
      */
     public const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';

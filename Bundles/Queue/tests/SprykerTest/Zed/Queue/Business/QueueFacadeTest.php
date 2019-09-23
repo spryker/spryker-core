@@ -23,6 +23,7 @@ use Spryker\Zed\Queue\QueueDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Queue

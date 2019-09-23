@@ -16,6 +16,7 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductDiscontinued

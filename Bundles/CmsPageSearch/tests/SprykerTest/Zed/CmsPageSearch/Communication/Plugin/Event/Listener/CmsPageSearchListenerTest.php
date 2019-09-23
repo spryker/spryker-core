@@ -24,6 +24,7 @@ use SprykerTest\Zed\CmsPageSearch\CmsPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsPageSearch

@@ -14,6 +14,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\Equal;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductAttributeGui\ProductAttributeGuiCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAttributeGui

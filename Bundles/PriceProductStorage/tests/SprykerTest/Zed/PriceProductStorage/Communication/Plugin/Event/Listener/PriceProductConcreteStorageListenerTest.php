@@ -32,6 +32,7 @@ use SprykerTest\Zed\PriceProductStorage\PriceProductStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductStorage

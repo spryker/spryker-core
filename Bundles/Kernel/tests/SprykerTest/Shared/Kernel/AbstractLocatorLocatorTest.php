@@ -12,6 +12,7 @@ use SprykerTest\Shared\Kernel\Fixtures\LocatorLocator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel

@@ -16,6 +16,7 @@ use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cart

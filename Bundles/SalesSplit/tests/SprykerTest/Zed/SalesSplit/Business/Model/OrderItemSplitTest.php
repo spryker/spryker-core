@@ -18,6 +18,7 @@ use SprykerTest\Zed\SalesSplit\Business\Model\Fixtures\SpySalesOrderItemMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesSplit

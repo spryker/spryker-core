@@ -5,7 +5,16 @@
 
             {% block widget_content %}
 
-                {% for shipmentMethod in order.shipmentMethods %}
+                {% for shipmentGroup in shipmentGroups %}
+                    {% set sumPriceToPayAggregation = null %}
+                    {% for expense in order.expenses %}
+                        {% if expense.type == shipmentExpenseType
+                            and expense.shipment is not empty
+                            and expense.shipment.idSalesShipment == shipmentGroup.shipment.idSalesShipment
+                        %}
+                            {% set sumPriceToPayAggregation = expense.sumPriceToPayAggregation %}
+                        {% endif %}
+                    {% endfor %}
                 <table class="footable table table-striped toggle-arrow-tiny">
                     <thead>
                         <tr>
@@ -16,15 +25,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ shipmentMethod.carrierName }}</td>
-                            <td>{{ shipmentMethod.name }}</td>
-                            <td>
-                                {% for expense in order.expenses %}
-                                    {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' and expense.idSalesExpense == shipmentMethod.fkSalesExpense %}
-                                      {{ expense.sumPriceToPayAggregation | money(true, order.currencyIsoCode) }}
-                                    {% endif %}
-                                {% endfor %}
-                            </td>
+                            <td>{{ shipmentGroup.shipment.method.carrierName }}</td>
+                            <td>{{ shipmentGroup.shipment.method.name }}</td>
+                            <td>{% if sumPriceToPayAggregation %}{{ sumPriceToPayAggregation | money(true, currencyIsoCode) }}{% endif %}</td>
                         </tr>
                     </tbody>
                 </table>

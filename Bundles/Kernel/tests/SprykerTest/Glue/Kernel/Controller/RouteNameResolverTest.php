@@ -12,6 +12,7 @@ use Spryker\Glue\Kernel\Controller\RouteNameResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel

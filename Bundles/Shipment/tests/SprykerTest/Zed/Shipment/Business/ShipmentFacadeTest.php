@@ -20,6 +20,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
@@ -29,6 +30,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -446,7 +448,7 @@ class ShipmentFacadeTest extends Test
         $calculableObjectTransfer = $this->tester->buildCalculableObjectTransfer();
 
         $shipmentExpenseTransfer = (new ExpenseTransfer())
-            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+            ->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
 
         $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
 
@@ -468,7 +470,7 @@ class ShipmentFacadeTest extends Test
         ]);
 
         $shipmentExpenseTransfer = (new ExpenseTransfer())
-            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+            ->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
 
         $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
 
@@ -490,7 +492,7 @@ class ShipmentFacadeTest extends Test
         ]);
 
         $shipmentExpenseTransfer = (new ExpenseTransfer())
-            ->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+            ->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
 
         $calculableObjectTransfer->addExpense($shipmentExpenseTransfer);
 
