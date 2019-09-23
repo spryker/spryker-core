@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
@@ -151,13 +152,16 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     public function queryCategoryNodeFullPath(int $idNode): SpyCategoryNodeQuery;
 
     /**
+     * Specification:
+     * - Returns `SpyProductCategoryQuery` filtered by product abstract ids.
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    public function queryAllProductCategories(array $productAbstractIds);
+    public function queryAllProductCategories(array $productAbstractIds): SpyProductCategoryQuery;
 
     /**
      * Specification:

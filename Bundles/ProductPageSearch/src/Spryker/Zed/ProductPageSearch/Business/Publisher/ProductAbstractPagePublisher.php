@@ -148,14 +148,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productPageLoadTransfer = $productPageDataLoaderPlugin->expandProductPageDataTransfer($productPageLoadTransfer);
         }
 
-        $localeIsoCodes = $this->getAvailableLocaleIsoCodes();
-
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
-        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
-        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
-        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productAbstractIds, $productAbstractLocalizedEntities);
-        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductEntities($productConcreteEntities, $productAbstractLocalizedEntities);
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntities($productAbstractLocalizedEntities, $productAbstractIds);
+
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
         if (!$productAbstractLocalizedEntities) {
@@ -165,6 +160,28 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         $this->storeData($productAbstractLocalizedEntities, $productAbstractPageSearchEntities, $pageDataExpanderPlugins, $productPageLoadTransfer, $isRefresh);
+    }
+
+    /**
+     * @param array $productAbstractLocalizedEntities
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function hydrateProductAbstractLocalizedEntities(array $productAbstractLocalizedEntities, array $productAbstractIds): array
+    {
+        $localeIsoCodes = $this->getAvailableLocaleIsoCodes();
+
+        $productCategories = $this->findProductCategories($productAbstractIds);
+
+        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
+        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
+        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
+
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductEntities($productConcreteEntities, $productAbstractLocalizedEntities);
+
+        return $productAbstractLocalizedEntities;
     }
 
     /**
@@ -493,14 +510,13 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array $productCategories
      * @param array $productAbstractLocalizedEntities
      *
      * @return array
      */
-    protected function hydrateProductAbstractLocalizedEntitiesWithProductCategories(array $productAbstractIds, array $productAbstractLocalizedEntities)
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductCategories(array $productCategories, array $productAbstractLocalizedEntities)
     {
-        $productCategories = $this->findProductCategories($productAbstractIds);
         $productCategoriesByProductAbstractId = [];
 
         foreach ($productCategories as $productCategory) {
