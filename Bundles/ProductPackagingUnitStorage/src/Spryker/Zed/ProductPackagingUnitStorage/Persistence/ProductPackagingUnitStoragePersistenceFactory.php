@@ -11,6 +11,8 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductConcretePackagingStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductPackagingUnitStorage\Persistence\Mapper\ProductPackagingUnitStorageMapper;
+use Spryker\Zed\ProductPackagingUnitStorage\Persistence\Mapper\ProductPackagingUnitStorageMapperInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
@@ -26,6 +28,14 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     public function createSpyProductConcretePackagingStorageQuery(): SpyProductConcretePackagingStorageQuery
     {
         return SpyProductConcretePackagingStorageQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Persistence\Mapper\ProductPackagingUnitStorageMapperInterface
+     */
+    public function createProductPackagingUnitStorageMapper(): ProductPackagingUnitStorageMapperInterface
+    {
+        return new ProductPackagingUnitStorageMapper();
     }
 
     /**

@@ -21,7 +21,7 @@ interface ProductPackagingUnitStorageRepositoryInterface
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer[]
      */
     public function findPackagingProductsByProductConcreteIds(array $productConcreteIds): array;
 

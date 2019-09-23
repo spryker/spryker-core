@@ -53,7 +53,7 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
             return $itemTransfer;
         }
 
-        if (!$productConcretePackagingStorageTransfer->getIdLeadProduct()) {
+        if ($productConcretePackagingStorageTransfer->getIdLeadProduct() === null) {
             return $itemTransfer;
         }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 
 use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface;
 
 class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWriterInterface
 {
@@ -17,20 +18,20 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
     protected $productPackagingUnitStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface
      */
-    protected $productPackagingUnitStorageReader;
+    protected $productPackagingUnitStorageRepository;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface $productPackagingUnitStorageEntityManager
-     * @param \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingUnitStorageReaderInterface $productPackagingUnitStorageReader
+     * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface $productPackagingUnitStorageRepository
      */
     public function __construct(
         ProductPackagingUnitStorageEntityManagerInterface $productPackagingUnitStorageEntityManager,
-        ProductPackagingUnitStorageReaderInterface $productPackagingUnitStorageReader
+        ProductPackagingUnitStorageRepositoryInterface $productPackagingUnitStorageRepository
     ) {
         $this->productPackagingUnitStorageEntityManager = $productPackagingUnitStorageEntityManager;
-        $this->productPackagingUnitStorageReader = $productPackagingUnitStorageReader;
+        $this->productPackagingUnitStorageRepository = $productPackagingUnitStorageRepository;
     }
 
     /**
@@ -40,8 +41,8 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
      */
     public function publishProductPackagingUnit(array $productConcreteIds): void
     {
-        $productConcretePackagingTransfers = $this->productPackagingUnitStorageReader
-            ->getProductConcretePackagingStorageTransfer($productConcreteIds);
+        $productConcretePackagingTransfers = $this->productPackagingUnitStorageRepository
+            ->findPackagingProductsByProductConcreteIds($productConcreteIds);
 
         $this->storeData($productConcretePackagingTransfers);
     }
@@ -65,8 +66,8 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
      */
     public function unpublishProductPackagingUnit(array $productConcreteIds): void
     {
-        $productConcretePackagingStorageEntities = $this->productPackagingUnitStorageReader
-            ->getProductConcretePackagingStorageEntities($productConcreteIds);
+        $productConcretePackagingStorageEntities = $this->productPackagingUnitStorageRepository
+            ->findProductConcretePackagingStorageEntitiesByProductConcreteIds($productConcreteIds);
 
         foreach ($productConcretePackagingStorageEntities as $productConcretePackagingStorageEntity) {
             $this->productPackagingUnitStorageEntityManager->deleteProductConcretePackagingStorageEntity($productConcretePackagingStorageEntity);

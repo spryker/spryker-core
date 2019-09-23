@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClient;
-use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -50,7 +49,11 @@ class ProductPackagingUnitStorageClientTest extends Unit
             SpyProductPackagingUnitEntityTransfer::LEAD_PRODUCT_SKU => $itemProductConcreteTransfer->getSku(),
         ]);
 
-        $this->setStorageMock((new ProductConcretePackagingStorageTransfer())->toArray());
+        $productPackagingUnitStorageToStorageClientBridge = $this->getMockBuilder(ProductPackagingUnitStorageToStorageClientInterface::class)->getMock();
+        $this->tester->setStorageMock(
+            $productPackagingUnitStorageToStorageClientBridge,
+            (new ProductConcretePackagingStorageTransfer())->toArray()
+        );
 
         // Act
         $productConcretePackagingStorageTransfer = $this->createProductPackagingUnitStorageClient()
@@ -68,17 +71,5 @@ class ProductPackagingUnitStorageClientTest extends Unit
     protected function createProductPackagingUnitStorageClient(): ProductPackagingUnitStorageClient
     {
         return new ProductPackagingUnitStorageClient();
-    }
-
-    /**
-     * @param array|null $content
-     *
-     * @return void
-     */
-    protected function setStorageMock(?array $content): void
-    {
-        $productPackagingUnitStorageToStorageClientBridge = $this->getMockBuilder(ProductPackagingUnitStorageToStorageClientInterface::class)->getMock();
-        $productPackagingUnitStorageToStorageClientBridge->method('get')->willReturn($content);
-        $this->tester->setDependency(ProductPackagingUnitStorageDependencyProvider::CLIENT_STORAGE, $productPackagingUnitStorageToStorageClientBridge);
     }
 }

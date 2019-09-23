@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -22,7 +23,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      */
     public function findProductConcretePackagingStorageEntitiesByProductConcreteIds(array $productConcreteIds): array
     {
-        if (!$productConcreteIds) {
+        if ($productConcreteIds !== []) {
             return [];
         }
 
@@ -39,12 +40,13 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer[]
      */
     public function findPackagingProductsByProductConcreteIds(array $productConcreteIds): array
     {
+        $productConcretePackagingStorageTransfers = [];
         if ($productConcreteIds === []) {
-            return [];
+            return $productConcretePackagingStorageTransfers;
         }
 
         $query = $this->getFactory()
@@ -57,7 +59,18 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
             ->joinWithLeadProduct()
             ->innerJoinWithProductPackagingUnitType();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        $productPackagingUnitEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+
+        foreach ($productPackagingUnitEntityTransfers as $productPackagingUnitEntityTransfer) {
+            $productConcretePackagingStorageTransfers[] = $this->getFactory()
+                ->createProductPackagingUnitStorageMapper()
+                ->mapProductConcretePackagingStorageEntityTransferToStorageTransfer(
+                    $productPackagingUnitEntityTransfer,
+                    new ProductConcretePackagingStorageTransfer()
+                );
+        }
+
+        return $productConcretePackagingStorageTransfers;
     }
 
     /**
@@ -89,7 +102,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     {
         $query = $this->getFactory()->createSpyProductConcretePackagingStorageQuery();
 
-        if ($productConcreteIds) {
+        if ($productConcreteIds !== []) {
             $query->filterByFkProduct_In($productConcreteIds);
         }
 
