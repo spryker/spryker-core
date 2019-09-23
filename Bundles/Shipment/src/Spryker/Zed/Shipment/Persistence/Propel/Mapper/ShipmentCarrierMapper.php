@@ -22,6 +22,6 @@ class ShipmentCarrierMapper
         SpyShipmentCarrier $salesShipmentEntity,
         ShipmentCarrierTransfer $shipmentCarrierTransfer
     ): ShipmentCarrierTransfer {
-        return $shipmentCarrierTransfer->fromArray($salesShipmentEntity->toArray());
+        return $shipmentCarrierTransfer->fromArray($salesShipmentEntity->toArray(), true);
     }
 }
