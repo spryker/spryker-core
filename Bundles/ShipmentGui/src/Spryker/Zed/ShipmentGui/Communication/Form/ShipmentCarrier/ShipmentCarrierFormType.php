@@ -61,7 +61,7 @@ class ShipmentCarrierFormType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 $this->getFactory()->createPriceProductSchedulePriceConstraint([
-                    'idExcludedName' => static::FIELD_NAME_FIELD,
+                    static::FIELD_NAME_FIELD,
                 ]),
             ],
         ]);

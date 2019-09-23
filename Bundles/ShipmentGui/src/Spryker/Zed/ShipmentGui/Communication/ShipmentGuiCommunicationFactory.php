@@ -102,13 +102,13 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $fields
+     * @param array $idExcludedCarrierFields
      *
      * @return \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName
      */
-    public function createPriceProductSchedulePriceConstraint(array $fields = []): ShipmentGuiUniqueShipmentCarrierName
+    public function createPriceProductSchedulePriceConstraint(array $idExcludedCarrierFields = []): ShipmentGuiUniqueShipmentCarrierName
     {
-        return new ShipmentGuiUniqueShipmentCarrierName($this->getShipmentFacade(), $fields);
+        return new ShipmentGuiUniqueShipmentCarrierName($this->getShipmentFacade(), $idExcludedCarrierFields);
     }
 
     /**

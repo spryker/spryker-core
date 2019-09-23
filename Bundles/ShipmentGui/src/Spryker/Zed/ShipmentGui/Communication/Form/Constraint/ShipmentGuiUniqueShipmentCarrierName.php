@@ -25,19 +25,19 @@ class ShipmentGuiUniqueShipmentCarrierName extends Constraint
     /**
      * @var array
      */
-    protected $fields;
+    protected $idExcludedCarrierFields;
 
     /**
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface $shipmentFacade
-     * @param array $fields
+     * @param array $idExcludedCarrierFields
      * @param array $options
      */
-    public function __construct(ShipmentGuiToShipmentFacadeInterface $shipmentFacade, array $fields, array $options = [])
+    public function __construct(ShipmentGuiToShipmentFacadeInterface $shipmentFacade, array $idExcludedCarrierFields, array $options = [])
     {
         parent::__construct($options);
 
         $this->shipmentFacade = $shipmentFacade;
-        $this->fields = $fields;
+        $this->idExcludedCarrierFields = $idExcludedCarrierFields;
     }
 
     /**
@@ -51,9 +51,9 @@ class ShipmentGuiUniqueShipmentCarrierName extends Constraint
     /**
      * @return array
      */
-    public function getFields(): array
+    public function getIdExcludedCarrierFields(): array
     {
-        return $this->fields;
+        return $this->idExcludedCarrierFields;
     }
 
     /**

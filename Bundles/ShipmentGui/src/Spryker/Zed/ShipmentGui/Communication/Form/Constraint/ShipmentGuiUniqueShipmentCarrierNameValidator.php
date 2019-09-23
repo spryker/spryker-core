@@ -12,8 +12,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
 {
-    protected const FIELD_ID_EXCLUDED_NAME = 'idExcludedName';
-
     /**
      * @param string $value
      * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
@@ -60,16 +58,16 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
      */
     protected function getExcludedIdCarriers(ShipmentGuiUniqueShipmentCarrierName $constraint): array
     {
-        $fields = $constraint->getFields();
-        if (empty($fields[static::FIELD_ID_EXCLUDED_NAME])) {
-            return [];
-        }
-
-        $formData = $this->context->getRoot()->getData();
+        $idExcludedCarrierFields = $constraint->getIdExcludedCarrierFields();
         $excludedIdCarriers = [];
-        $idCarrier = $formData[$fields[static::FIELD_ID_EXCLUDED_NAME]] ?? null;
-        if ($idCarrier !== null) {
-            $excludedIdCarriers[] = (int)$idCarrier;
+        $formData = $this->context->getRoot()->getData();
+
+        foreach ($idExcludedCarrierFields as $fieldName) {
+            if (empty($formData[$fieldName])) {
+                continue;
+            }
+
+            $excludedIdCarriers[] = (int)$formData[$fieldName];
         }
 
         return $excludedIdCarriers;
