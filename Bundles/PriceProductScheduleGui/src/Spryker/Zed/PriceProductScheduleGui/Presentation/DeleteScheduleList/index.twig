@@ -1,17 +1,22 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = "Are you sure about deleting the Scheduled prices %s?" | format(priceProductScheduleList.name) | trans %}
-
 {% block head_title %}
-    {{ widget_title }}
+    {{ 'Scheduled Prices' | trans }}
 {% endblock %}
+
+{% set widget_title = "Scheduled Prices" %}
+
 {% block section_title %}
     {{ widget_title }}
 {% endblock %}
 
+{#{% set widget_title = "Are you sure about deleting the Scheduled prices %s?" | format(priceProductScheduleList.name) | trans %}#}
+
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        widget_title: "Are you sure about deleting the Scheduled prices \"%s\"?" | format(priceProductScheduleList.name) | trans,
+    } %}
 
         {% block widget_content %}
             <div>
