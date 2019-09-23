@@ -27,6 +27,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -71,12 +72,12 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame($stockTransfer->getQuantity()->trim()->toString(), '7.5');
-        $this->assertSame($relatedProductStock->divide($bundleQuantity, 10)->toString(), $stockTransfer->getQuantity()->toString());
+        $this->assertTrue($stockTransfer->getQuantity()->equals(7.5));
+        $this->assertTrue($relatedProductStock->divide($bundleQuantity, 10)->equals($stockTransfer->getQuantity()->toString()));
 
         $stockTransfer = $stocks[1];
-        $this->assertSame($stockTransfer->getQuantity()->trim()->toString(), '7.5');
-        $this->assertSame($relatedProductStock->divide($bundleQuantity, 10)->trim()->toString(), $stockTransfer->getQuantity()->trim()->toString());
+        $this->assertTrue($stockTransfer->getQuantity()->equals(7.5));
+        $this->assertTrue($relatedProductStock->divide($bundleQuantity, 10)->equals($stockTransfer->getQuantity()));
     }
 
     /**
@@ -106,10 +107,10 @@ class ProductBundleStockWriterTest extends Unit
         $this->assertCount(2, $stocks);
 
         $stockTransfer = $stocks[0];
-        $this->assertSame('0', $stockTransfer->getQuantity()->toString());
+        $this->assertTrue($stockTransfer->getQuantity()->isZero());
 
         $stockTransfer = $stocks[1];
-        $this->assertSame('0', $stockTransfer->getQuantity()->toString());
+        $this->assertTrue($stockTransfer->getQuantity()->isZero());
     }
 
     /**

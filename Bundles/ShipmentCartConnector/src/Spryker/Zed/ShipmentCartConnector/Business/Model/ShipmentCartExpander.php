@@ -12,9 +12,13 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToPriceFacadeInterface;
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander instead.
+ */
 class ShipmentCartExpander implements ShipmentCartExpanderInterface
 {
     /**
@@ -132,9 +136,8 @@ class ShipmentCartExpander implements ShipmentCartExpanderInterface
     {
         $priceMode = $quoteTransfer->getPriceMode();
         $currencyTransfer = $quoteTransfer->getCurrency();
-        $shipmentExpenseTypeIdentifier = $this->shipmentFacade->getShipmentExpenseTypeIdentifier();
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
-            if ($expenseTransfer->getType() !== $shipmentExpenseTypeIdentifier) {
+            if ($expenseTransfer->getType() !== ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 

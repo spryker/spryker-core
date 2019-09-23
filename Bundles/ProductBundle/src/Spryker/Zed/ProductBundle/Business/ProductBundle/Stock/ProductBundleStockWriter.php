@@ -186,7 +186,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param array $bundledItemStock
-     * @param array $bundledItemQuantity
+     * @param int[] $bundledItemQuantity
      *
      * @return array
      */

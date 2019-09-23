@@ -21,13 +21,6 @@ interface ProductBundleToAvailabilityInterface
     public function isProductSellable(string $sku, Decimal $quantity): bool;
 
     /**
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateStockForProduct(string $sku): Decimal;
-
-    /**
      * @param int $idAvailabilityAbstract
      *
      * @return void
@@ -66,5 +59,5 @@ interface ProductBundleToAvailabilityInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 }

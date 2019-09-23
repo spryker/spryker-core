@@ -13,6 +13,7 @@ use Spryker\Zed\Transfer\TransferConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer

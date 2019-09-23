@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

@@ -16,6 +16,7 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption

@@ -25,7 +25,7 @@ interface SellableInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct(string $sku): Decimal;
+    public function calculateAvailabilityForProduct(string $sku): Decimal;
 
     /**
      * @param string $sku
@@ -49,5 +49,5 @@ interface SellableInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 }

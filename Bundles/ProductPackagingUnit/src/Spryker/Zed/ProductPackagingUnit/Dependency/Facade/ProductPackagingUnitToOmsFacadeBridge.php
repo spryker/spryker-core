@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -49,10 +50,10 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     }
 
     /**
-     * @return string[]
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStateNames(): array
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
-        return $this->omsFacade->getReservedStateNames();
+        return $this->omsFacade->getOmsReservedStateCollection();
     }
 }

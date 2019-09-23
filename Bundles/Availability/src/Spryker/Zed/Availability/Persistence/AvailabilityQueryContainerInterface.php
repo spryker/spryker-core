@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstract;
+
 interface AvailabilityQueryContainerInterface
 {
     /**
@@ -134,4 +136,31 @@ interface AvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function queryAllAvailabilityAbstracts();
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    public function getAvailabilityQuantity(SpyProductAbstract $productAbstractEntity): string;
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    public function getReservationQuantity(SpyProductAbstract $productAbstractEntity): string;
+
+    /**
+     * @api
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return string
+     */
+    public function getConcreteNeverOutOfStockSet(SpyProductAbstract $productAbstractEntity): string;
 }

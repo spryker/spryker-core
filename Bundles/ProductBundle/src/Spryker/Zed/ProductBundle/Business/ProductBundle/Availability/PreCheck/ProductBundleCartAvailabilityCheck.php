@@ -189,7 +189,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         iterable $itemsInCart,
         StoreTransfer $storeTransfer
     ): Decimal {
-        $itemAvailability = $this->availabilityFacade->calculateStockForProductWithStore(
+        $itemAvailability = $this->availabilityFacade->calculateAvailabilityForProductWithStore(
             $itemTransfer->getSku(),
             $storeTransfer
         );

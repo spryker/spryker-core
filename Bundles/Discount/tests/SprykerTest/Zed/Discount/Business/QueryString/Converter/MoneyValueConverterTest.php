@@ -18,6 +18,7 @@ use Spryker\Zed\Money\Business\MoneyFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount
