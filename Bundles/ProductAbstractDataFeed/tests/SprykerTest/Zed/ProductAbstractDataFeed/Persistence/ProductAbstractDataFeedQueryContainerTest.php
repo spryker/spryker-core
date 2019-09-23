@@ -16,6 +16,7 @@ use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQuery
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAbstractDataFeed

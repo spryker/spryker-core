@@ -70,7 +70,7 @@ interface AvailabilityFacadeInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct(string $sku): Decimal;
+    public function calculateAvailabilityForProduct(string $sku): Decimal;
 
     /**
      * Specification:
@@ -85,7 +85,7 @@ interface AvailabilityFacadeInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * Specification:
@@ -189,7 +189,6 @@ interface AvailabilityFacadeInterface
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
-     *
      * Specification:
      *  - Updates availability for given sku, by quantity for current store
      *  - Touches availability collector if data changed

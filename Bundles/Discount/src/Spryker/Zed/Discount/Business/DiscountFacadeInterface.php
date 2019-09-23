@@ -507,7 +507,6 @@ interface DiscountFacadeInterface
     );
 
     /**
-     *
      * Specification:
      *  - Check if price mode equals provided in decision rule
      *

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -44,7 +45,6 @@ interface OmsFacadeInterface
     public function isOrderFlagged($idOrder, $flag);
 
     /**
-     *
      * Specification:
      *  - Checks if all order items is in state with givent flag
      *  - Returns true if all order items have flag in state
@@ -263,11 +263,12 @@ interface OmsFacadeInterface
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
     /**
-     *
      * Specification:
      *  - Reads all order items having state with reserved attribute for given concrete product
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      *
@@ -306,6 +307,8 @@ interface OmsFacadeInterface
      *  - Gets state entity by state name from persistence
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $stateName
      *
@@ -464,6 +467,19 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Reads all order manual events from persistence.
+     *  - Returns a list of grouped manual events.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return string[]
+     */
+    public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
+
+    /**
+     * Specification:
      *  - Clears state machine lock table, which used when items are locked. This is garbage collection call
      *
      * @api
@@ -590,7 +606,20 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getOmsReservedStateCollection()` instead.
+     *
      * @return string[]
      */
     public function getReservedStateNames(): array;
+
+    /**
+     * Specification:
+     *  - Reads states from XML definition
+     *  - Returns a list of reserved state objects in an associative array
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
 }

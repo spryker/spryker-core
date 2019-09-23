@@ -13,6 +13,7 @@ use Spryker\Zed\Refund\Communication\Table\RefundTable;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund

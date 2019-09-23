@@ -107,7 +107,7 @@ interface ProductPackagingUnitRepositoryInterface
      * @param string $sku
      * @param string[] $reservedStateNames
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function sumLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): int;
+    public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array;
 }

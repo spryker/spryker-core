@@ -18,10 +18,8 @@ class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvai
      */
     public function mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestConcreteProductAvailabilityAttributesTransfer
     {
-        $restProductsConcreteAvailabilityAttributesTransfer = (new RestConcreteProductAvailabilityAttributesTransfer())
+        return (new RestConcreteProductAvailabilityAttributesTransfer())
             ->fromArray($availabilityEntityTransfer->toArray(), true)
             ->setAvailability($availabilityEntityTransfer->getQuantity()->greaterThan(0));
-
-        return $restProductsConcreteAvailabilityAttributesTransfer;
     }
 }

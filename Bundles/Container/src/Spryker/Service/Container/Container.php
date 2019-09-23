@@ -26,17 +26,17 @@ class Container implements ContainerInterface, ArrayAccess
     protected $isTriggerErrorEnabled;
 
     /**
-     * @var mixed[]
+     * @var array
      */
     protected $services = [];
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected $serviceIdentifier = [];
 
     /**
-     * @var mixed[]
+     * @var array
      */
     protected static $globalServices = [];
 

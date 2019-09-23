@@ -30,6 +30,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
@@ -394,7 +395,7 @@ class GeneratedTransferTest extends Unit
 
         // Assert
         $this->assertInstanceOf(Decimal::class, $generatedTransfer->getTestDecimal());
-        $this->assertSame('1', $generatedTransfer->getTestDecimal()->toString());
+        $this->assertTrue($generatedTransfer->getTestDecimal()->equals(1));
     }
 
     /**

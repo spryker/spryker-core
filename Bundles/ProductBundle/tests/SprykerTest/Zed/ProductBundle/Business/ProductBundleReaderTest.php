@@ -14,16 +14,17 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use PHPUnit\Framework\MockObject\MockObject;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -59,7 +60,7 @@ class ProductBundleReaderTest extends Unit
         $productForBundleTransfer = $bundledProductsTransferCollection[0];
         $this->assertSame($this->fixtures['bundledProductSku'], $productForBundleTransfer->getSku());
         $this->assertSame($this->fixtures['fkBundledProduct'], $productForBundleTransfer->getIdProductConcrete());
-        $this->assertSame((new Decimal($this->fixtures['bundledProductQuantity']))->toString(), $productForBundleTransfer->getQuantity()->toString());
+        $this->assertTrue((new Decimal($this->fixtures['bundledProductQuantity']))->equals($productForBundleTransfer->getQuantity()));
         $this->assertSame($this->fixtures['idProductBundle'], $productForBundleTransfer->getIdProductBundle());
     }
 
@@ -68,7 +69,7 @@ class ProductBundleReaderTest extends Unit
      */
     public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability()
     {
-        $bundleAvailability = '5';
+        $bundleAvailability = 5;
 
         $productBundleReaderMock = $this->createProductBundleReader();
 
@@ -89,7 +90,7 @@ class ProductBundleReaderTest extends Unit
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
 
         $this->assertNotNull($productBundleTransfer);
-        $this->assertEquals($bundleAvailability, $productBundleTransfer->getAvailability()->toString());
+        $this->assertTrue($productBundleTransfer->getAvailability()->equals($bundleAvailability));
         $this->assertCount(1, $productBundleTransfer->getBundledProducts());
     }
 
@@ -161,7 +162,7 @@ class ProductBundleReaderTest extends Unit
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, ProductBundleReaderInterface $productBundleReaderMock)
+    protected function setupFindBundledProducts(array $fixtures, MockObject $productBundleReaderMock): void
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);

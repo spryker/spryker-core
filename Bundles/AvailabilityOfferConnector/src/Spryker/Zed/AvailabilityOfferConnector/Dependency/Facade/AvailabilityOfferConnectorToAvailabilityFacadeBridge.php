@@ -31,8 +31,8 @@ class AvailabilityOfferConnectorToAvailabilityFacadeBridge implements Availabili
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
+        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
     }
 }

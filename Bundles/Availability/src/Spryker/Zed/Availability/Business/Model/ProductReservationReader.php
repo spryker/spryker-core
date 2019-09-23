@@ -178,9 +178,9 @@ class ProductReservationReader implements ProductReservationReaderInterface
     {
         $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
         $productAbstractAvailabilityTransfer->fromArray($productAbstractEntity->toArray(), true);
-        $productAbstractAvailabilityTransfer->setAvailability($productAbstractEntity->getAvailabilityQuantity());
+        $productAbstractAvailabilityTransfer->setAvailability($this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity));
         $productAbstractAvailabilityTransfer->setReservationQuantity(
-            $this->calculateReservation($productAbstractEntity->getReservationQuantity())
+            $this->calculateReservation($this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity))
         );
 
         $this->setAbstractNeverOutOfStock($productAbstractEntity, $productAbstractAvailabilityTransfer);
@@ -198,8 +198,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
         SpyProductAbstract $productAbstractEntity,
         ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
     ) {
-
-        $neverOutOfStockSet = explode(',', $productAbstractEntity->getConcreteNeverOutOfStockSet());
+        $neverOutOfStockSet = explode(',', $this->availabilityQueryContainer->getConcreteNeverOutOfStockSet($productAbstractEntity));
 
         $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(false);
         foreach ($neverOutOfStockSet as $status) {

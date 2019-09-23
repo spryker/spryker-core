@@ -13,6 +13,7 @@ use Spryker\Service\UtilDateTime\UtilDateTimeDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDateTime

@@ -14,6 +14,7 @@ use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine

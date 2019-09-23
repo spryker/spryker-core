@@ -578,4 +578,19 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createReaderModel()
             ->getValidPrices($priceProductFilterTransfers);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(PriceProductTransfer $priceProductTransfer): bool
+    {
+        return $this->getRepository()
+            ->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer);
+    }
 }

@@ -83,11 +83,11 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct(string $sku): Decimal
+    public function calculateAvailabilityForProduct(string $sku): Decimal
     {
         return $this->getFactory()
             ->createSellableModel()
-            ->calculateStockForProduct($sku);
+            ->calculateAvailabilityForProduct($sku);
     }
 
     /**
@@ -96,14 +96,15 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
             ->createSellableModel()
-            ->calculateStockForProductWithStore($sku, $storeTransfer);
+            ->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
     }
 
     /**

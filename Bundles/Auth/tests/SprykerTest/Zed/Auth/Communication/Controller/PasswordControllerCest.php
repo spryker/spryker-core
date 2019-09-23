@@ -11,6 +11,7 @@ use SprykerTest\Zed\Auth\AuthCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Auth

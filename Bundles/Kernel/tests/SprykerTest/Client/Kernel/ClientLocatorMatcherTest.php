@@ -12,6 +12,7 @@ use Spryker\Client\Kernel\ClientLocatorMatcher;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel

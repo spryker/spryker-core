@@ -16,6 +16,7 @@ use Spryker\Zed\Stock\Business\StockFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Stock
@@ -54,7 +55,7 @@ class CalculatorTest extends Unit
     public function testCalculateStock()
     {
         $stock = $this->stockFacade->calculateStockForProduct($this->productEntity->getSku());
-        $this->assertSame('30', $stock->trim()->toString());
+        $this->assertTrue($stock->equals(30));
     }
 
     /**

@@ -14,7 +14,6 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit\Framework\MockObject\MockObject;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
@@ -24,6 +23,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle
@@ -50,15 +50,15 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
 
-        $bundledProducts = new ObjectCollection();
+        $bundledProducts = [];
         $productBundleEntity = new SpyProductBundle();
         $productEntity = new SpyProduct();
 
         $productEntity->setSku($bundleSku);
         $productBundleEntity->setSpyProductRelatedByFkProduct($productEntity);
-        $bundledProducts->append($productBundleEntity);
+        $bundledProducts[] = $productBundleEntity;
 
-            $productBundleAvailabilityHandlerMock->method('getBundlesUsingProductBySku')
+        $productBundleAvailabilityHandlerMock->method('getBundlesUsingProductBySku')
             ->willReturn($bundledProducts);
 
         $this->setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, $productBundleAvailabilityHandlerMock);
@@ -120,8 +120,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             $storeFacadeMock = $this->createStoreFacadeMock();
             $storeTransfer = (new StoreBuilder([
                 StoreTransfer::ID_STORE => self::ID_STORE,
-            ]))
-            ->build();
+            ]))->build();
             $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
             $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
         }
@@ -173,14 +172,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      */
     protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, MockObject $productBundleAvailabilityHandlerMock)
     {
-        $bundleItems = new ObjectCollection();
+        $bundleItems = [];
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
         $productEntity = new SpyProduct();
 
         $productEntity->setSku($bundledItemSku);
         $productBundleEntity->setSpyProductRelatedByFkBundledProduct($productEntity);
-        $bundleItems->append($productBundleEntity);
+        $bundleItems[] = $productBundleEntity;
 
         $productBundleAvailabilityHandlerMock->method('getBundleItemsByIdProduct')
             ->willReturn($bundleItems);

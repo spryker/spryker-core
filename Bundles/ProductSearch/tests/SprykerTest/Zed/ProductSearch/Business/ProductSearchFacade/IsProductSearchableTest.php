@@ -19,6 +19,7 @@ use Spryker\Zed\ProductSearch\Business\ProductSearchFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSearch

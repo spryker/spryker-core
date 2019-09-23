@@ -268,7 +268,7 @@ class BundledProductTable extends AbstractTable
     protected function getAvailability(SpyProduct $productConcreteEntity): Decimal
     {
         if (!$productConcreteEntity->getIsNeverOutOfStock()) {
-            return $this->availabilityFacade->calculateStockForProduct($productConcreteEntity->getSku());
+            return $this->availabilityFacade->calculateAvailabilityForProduct($productConcreteEntity->getSku());
         }
 
         return new Decimal(0);

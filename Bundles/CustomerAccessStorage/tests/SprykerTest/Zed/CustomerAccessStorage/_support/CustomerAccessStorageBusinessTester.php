@@ -12,6 +12,7 @@ use Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterf
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -21,6 +21,7 @@ use SprykerTest\Zed\ProductCategoryFilterStorage\ProductCategoryFilterStorageCon
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilterStorage
