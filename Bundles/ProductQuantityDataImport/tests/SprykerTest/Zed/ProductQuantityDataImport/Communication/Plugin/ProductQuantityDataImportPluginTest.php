@@ -16,6 +16,7 @@ use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductQuantityDataImport

@@ -12,6 +12,7 @@ use Spryker\Service\Kernel\ServiceLocatorMatcher;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel

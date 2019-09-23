@@ -13,6 +13,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -111,7 +112,7 @@ class AutoloadUpdaterTest extends Unit
             [
                 [
                     $pathParts,
-                    implode($pathParts, DIRECTORY_SEPARATOR) . '/',
+                    implode(DIRECTORY_SEPARATOR, $pathParts) . '/',
                 ],
             ]
         );
@@ -140,7 +141,7 @@ class AutoloadUpdaterTest extends Unit
             [
                 [
                     $pathParts,
-                    implode($pathParts, DIRECTORY_SEPARATOR) . '/',
+                    implode(DIRECTORY_SEPARATOR, $pathParts) . '/',
                 ],
             ]
         );

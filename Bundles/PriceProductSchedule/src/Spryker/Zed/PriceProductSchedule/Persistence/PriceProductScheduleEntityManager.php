@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Persistence;
 use DateTime;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
+use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -68,6 +69,31 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
         $priceProductScheduleTransfer->setIdPriceProductSchedule((int)$priceProductScheduleEntity->getIdPriceProductSchedule());
 
         return $priceProductScheduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function createPriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
+        $priceProductScheduleTransfer->requirePriceProductScheduleList()->getPriceProductScheduleList()->requireIdPriceProductScheduleList();
+        $priceProductScheduleTransfer->getPriceProduct()->requireMoneyValue();
+
+        $priceProductScheduleEntity = $this->getFactory()
+            ->createPriceProductScheduleMapper()
+            ->mapPriceProductScheduleTransferToPriceProductScheduleEntity(
+                $priceProductScheduleTransfer,
+                new SpyPriceProductSchedule()
+            );
+
+        $priceProductScheduleEntity->save();
+
+        return $priceProductScheduleTransfer->setIdPriceProductSchedule(
+            (int)$priceProductScheduleEntity->getIdPriceProductSchedule()
+        );
     }
 
     /**
@@ -130,5 +156,19 @@ class PriceProductScheduleEntityManager extends AbstractEntityManager implements
         $priceProductScheduleListEntity->save();
 
         return $priceProductScheduleListTransfer;
+    }
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleById(int $idPriceProductSchedule): void
+    {
+        $this->getFactory()
+            ->createPriceProductScheduleQuery()
+            ->filterByIdPriceProductSchedule($idPriceProductSchedule)
+            ->find()
+            ->delete();
     }
 }

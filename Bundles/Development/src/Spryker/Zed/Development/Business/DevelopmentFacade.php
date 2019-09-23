@@ -124,6 +124,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * {@inheritdoc}
      *
      * @api
+     *
      * @internal
      *
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
@@ -140,6 +141,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * {@inheritdoc}
      *
      * @api
+     *
      * @internal
      *
      * @param string $moduleName

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DatasetFilenameTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Dataset

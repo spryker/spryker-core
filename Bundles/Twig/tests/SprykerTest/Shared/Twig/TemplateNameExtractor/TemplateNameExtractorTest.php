@@ -14,6 +14,7 @@ use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig
