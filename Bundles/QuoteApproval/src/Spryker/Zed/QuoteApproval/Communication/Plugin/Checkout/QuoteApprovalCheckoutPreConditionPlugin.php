@@ -19,10 +19,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
-    protected const MESSAGE_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+    protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
 
     /**
-     * Specification:
+     * {@inheritdoc}
      * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
      * - Returns response with boolean isSuccess and an array of errors.
      *
@@ -40,7 +40,7 @@ class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements 
         }
 
         $checkoutResponseTransfer->setIsSuccess(false)
-            ->addError((new CheckoutErrorTransfer())->setMessage(static::MESSAGE_CART_REQUIRE_APPROVAL));
+            ->addError((new CheckoutErrorTransfer())->setMessage(static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL));
 
         return false;
     }

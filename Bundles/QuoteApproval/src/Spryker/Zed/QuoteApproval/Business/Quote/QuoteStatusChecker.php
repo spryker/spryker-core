@@ -46,47 +46,24 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool
     {
-        if ($this->isQuoteWaitingForApproval($quoteTransfer)) {
+        $quoteStatus = $this->quoteStatusCalculator
+            ->calculateQuoteStatus($quoteTransfer);
+
+        if ($quoteStatus === QuoteApprovalConfig::STATUS_WAITING) {
             return true;
         }
 
         $idCompanyUser = $quoteTransfer->requireCustomer()
             ->getCustomer()
             ->requireCompanyUserTransfer()
-                ->getCompanyUserTransfer()
-                ->requireIdCompanyUser()
-                ->getIdCompanyUser();
+            ->getCompanyUserTransfer()
+            ->requireIdCompanyUser()
+            ->getIdCompanyUser();
 
         if ($this->can(PlaceOrderPermissionPlugin::KEY, $idCompanyUser, $this->permissionContextProvider->provideContext($quoteTransfer))) {
             return false;
         }
 
-        return !$this->isQuoteApproved($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool
-    {
-        $quoteStatus = $this->quoteStatusCalculator
-            ->calculateQuoteStatus($quoteTransfer);
-
-        return $quoteStatus === QuoteApprovalConfig::STATUS_WAITING;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteApproved(QuoteTransfer $quoteTransfer): bool
-    {
-        $quoteStatus = $this->quoteStatusCalculator
-            ->calculateQuoteStatus($quoteTransfer);
-
-        return $quoteStatus === QuoteApprovalConfig::STATUS_APPROVED;
+        return $quoteStatus !== QuoteApprovalConfig::STATUS_APPROVED;
     }
 }
