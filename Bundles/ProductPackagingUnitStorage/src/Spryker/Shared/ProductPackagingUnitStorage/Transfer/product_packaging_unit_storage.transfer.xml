@@ -26,7 +26,7 @@
         <property name="productConcrete" type="ProductConcrete"/>
         <property name="quantity" type="int"/>
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="amount" type="int"/>
+        <property name="amount" type="decimal"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 

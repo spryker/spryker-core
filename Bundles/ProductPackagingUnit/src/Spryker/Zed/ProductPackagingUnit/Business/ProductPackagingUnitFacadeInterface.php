@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -65,22 +64,6 @@ interface ProductPackagingUnitFacadeInterface
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ?ProductPackagingUnitTypeTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves a product packaging lead product by the provided product abstract ID.
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer;
 
     /**
      * Specification:

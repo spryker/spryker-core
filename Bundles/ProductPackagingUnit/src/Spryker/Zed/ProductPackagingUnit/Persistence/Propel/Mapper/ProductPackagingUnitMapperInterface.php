@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -41,13 +40,13 @@ interface ProductPackagingUnitMapperInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $productPackagingLeadProductEntity
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
      * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
      */
     public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingLeadProduct $productPackagingLeadProductEntity,
+        SpyProductPackagingUnit $productPackagingUnitEntity,
         ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
     ): ProductPackagingLeadProductTransfer;
 

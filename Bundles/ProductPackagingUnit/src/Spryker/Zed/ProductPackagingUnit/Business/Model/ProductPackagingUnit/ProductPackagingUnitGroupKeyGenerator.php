@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroupKeyGeneratorInterface
 {
     protected const AMOUNT_GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+    protected const DIVISION_SCALE = 10;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -24,12 +25,12 @@ class ProductPackagingUnitGroupKeyGenerator implements ProductPackagingUnitGroup
             return $itemTransfer->getGroupKey();
         }
 
-        $amountPerQuantity = $itemTransfer->getAmount() / $itemTransfer->getQuantity();
+        $amountPerQuantity = $itemTransfer->getAmount()->divide($itemTransfer->getQuantity(), static::DIVISION_SCALE);
 
         return sprintf(
             static::AMOUNT_GROUP_KEY_FORMAT,
             $itemTransfer->getGroupKey(),
-            $amountPerQuantity,
+            $amountPerQuantity->trim()->toString(),
             $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()
         );
     }

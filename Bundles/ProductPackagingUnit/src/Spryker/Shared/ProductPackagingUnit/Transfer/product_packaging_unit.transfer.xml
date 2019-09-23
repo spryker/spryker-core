@@ -24,10 +24,10 @@
     <transfer name="ProductPackagingUnitAmount">
         <property name="idProductPackagingUnitAmount" type="int" />
         <property name="isVariable" type="bool" />
-        <property name="defaultAmount" type="int" />
-        <property name="amountMin" type="int" />
-        <property name="amountMax" type="int" />
-        <property name="amountInterval" type="int" />
+        <property name="defaultAmount" type="decimal"/>
+        <property name="amountMin" type="decimal"/>
+        <property name="amountMax" type="decimal"/>
+        <property name="amountInterval" type="decimal"/>
     </transfer>
 
     <transfer name="ProductPackagingLeadProduct">
@@ -38,8 +38,26 @@
     <transfer name="Item">
         <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
-        <property name="amount" type="int"/>
+        <property name="amount" type="decimal"/>
         <property name="productPackagingUnit" type="ProductPackagingUnit"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+        <property name="conversion" type="float"/>
+        <property name="precision" type="int"/>
+        <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="value" type="int"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementBaseUnit">
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+        <property name="name" type="string"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="OmsStateCollection">

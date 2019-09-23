@@ -97,38 +97,6 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @module Product
      *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    public function findProductPackagingLeadProductByIdProductAbstract(
-        int $idProductAbstract
-    ): ?ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductEntity = $this->getFactory()
-            ->createProductPackagingLeadProductQuery()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->innerJoinWithSpyProduct()
-            ->findOne();
-
-        if (!$productPackagingLeadProductEntity) {
-            return null;
-        }
-
-        $productPackagingLeadProductTransfer = $this->getFactory()
-            ->createProductPackagingUnitMapper()
-            ->mapProductPackagingLeadProductTransfer(
-                $productPackagingLeadProductEntity,
-                new ProductPackagingLeadProductTransfer()
-            );
-
-        return $productPackagingLeadProductTransfer;
-    }
-
-    /**
-     * @module Product
-     *
      * @param string $siblingProductSku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
@@ -136,25 +104,21 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     public function findProductPackagingLeadProductBySiblingProductSku(
         string $siblingProductSku
     ): ?ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductQuery = $this->getFactory()->createProductPackagingLeadProductQuery();
-        $productPackagingLeadProductQuery
-            ->useSpyProductAbstractQuery()
-                ->useSpyProductQuery()
-                    ->filterBySku($siblingProductSku)
-                ->endUse()
-            ->endUse();
-
-        $productPackagingLeadProductEntity = $productPackagingLeadProductQuery
+        $productPackagingUnitEntity = $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->useProductQuery('Product')
+                ->filterBySku($siblingProductSku)
+            ->endUse()
             ->findOne();
 
-        if (!$productPackagingLeadProductEntity) {
+        if ($productPackagingUnitEntity === null || $productPackagingUnitEntity->getLeadProduct() === null) {
             return null;
         }
 
         $productPackagingLeadProductTransfer = $this->getFactory()
             ->createProductPackagingUnitMapper()
             ->mapProductPackagingLeadProductTransfer(
-                $productPackagingLeadProductEntity,
+                $productPackagingUnitEntity,
                 new ProductPackagingLeadProductTransfer()
             );
 
@@ -332,7 +296,6 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     {
         return $this->getFactory()
             ->createProductPackagingUnitQuery()
-            ->innerJoinWithProductPackagingUnitType()
-            ->leftJoinWithSpyProductPackagingUnitAmount();
+            ->innerJoinWithProductPackagingUnitType();
     }
 }

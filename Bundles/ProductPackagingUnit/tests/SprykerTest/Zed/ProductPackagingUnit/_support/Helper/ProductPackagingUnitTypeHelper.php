@@ -11,11 +11,9 @@ use Codeception\Module;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductPackagingUnitTypeHelper extends Module
 {
-    use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
     /**
