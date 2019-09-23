@@ -30,8 +30,6 @@ class ControllerResolver extends SharedControllerResolver
     }
 
     /**
-     * @deprecated Will be removed without replacement. This method only exists for calls to `render(controller('/foo/bar/baz'))` which can be simplified by using `render('/foo/bar/baz')` instead.
-     *
      * @param string $uri
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
