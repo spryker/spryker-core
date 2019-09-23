@@ -224,6 +224,10 @@ abstract class AbstractPriceProductScheduleTable extends AbstractTable
      */
     protected function getAbstractSkuFromPriceProductScheduleEntity(SpyPriceProductSchedule $priceProductScheduleEntity): ?string
     {
+        if ($priceProductScheduleEntity->getFkProduct() !== null) {
+            return null;
+        }
+        
         $productAbstractEntity = $priceProductScheduleEntity->getProductAbstract();
 
         if ($productAbstractEntity === null) {
