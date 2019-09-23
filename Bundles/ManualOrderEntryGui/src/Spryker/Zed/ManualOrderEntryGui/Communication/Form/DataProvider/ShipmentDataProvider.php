@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
@@ -76,9 +77,9 @@ class ShipmentDataProvider implements FormDataProviderInterface
         if (!$quoteTransfer->getStore() || !$quoteTransfer->getCurrency()) {
             return [];
         }
-        $shipmentMethodsTransfer = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
-        $shipmentMethodList = [];
 
+        $shipmentMethodList = [];
+        $shipmentMethodsTransfer = $this->resolveShipmentMethods($quoteTransfer);
         foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
             $moneyTransfer = $this->moneyFacade->fromInteger($shipmentMethodTransfer->getStoreCurrencyPrice(), $shipmentMethodTransfer->getCurrencyIsoCode());
 
@@ -92,5 +93,41 @@ class ShipmentDataProvider implements FormDataProviderInterface
         }
 
         return $shipmentMethodList;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function resolveShipmentMethods(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    {
+        if ($this->hasItemLevelShipments($quoteTransfer)) {
+            $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+
+            return current($shipmentMethodsCollectionTransfer->getShipmentMethods());
+        }
+
+        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemLevelShipments(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

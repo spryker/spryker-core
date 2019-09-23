@@ -16,6 +16,7 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPlu
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application

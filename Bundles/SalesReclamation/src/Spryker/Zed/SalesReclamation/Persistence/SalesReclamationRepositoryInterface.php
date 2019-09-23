@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ReclamationTransfer;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationPersistenceFactory getFactory()
- *
  */
 interface SalesReclamationRepositoryInterface
 {

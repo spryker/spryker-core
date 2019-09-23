@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainerLocatorMatcher;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

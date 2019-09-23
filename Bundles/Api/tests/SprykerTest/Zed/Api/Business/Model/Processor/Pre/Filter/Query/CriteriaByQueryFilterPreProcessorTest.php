@@ -14,6 +14,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\CriteriaByQueryFil
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api

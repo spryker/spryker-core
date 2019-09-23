@@ -23,6 +23,7 @@ use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesQuantity

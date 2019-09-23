@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Customer\Business\Customer\AddressInterface;
 use Spryker\Zed\Customer\Business\Customer\CustomerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverWithMultiShippingAddress instead.
+ */
 class CustomerOrderSaver implements CustomerOrderSaverInterface
 {
     /**
@@ -73,6 +76,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             return;
         }
 
+        $quoteTransfer->requireShippingAddress();
         $this->processCustomerAddress($quoteTransfer->getShippingAddress(), $customer);
 
         if ($quoteTransfer->getBillingSameAsShipping() !== true) {

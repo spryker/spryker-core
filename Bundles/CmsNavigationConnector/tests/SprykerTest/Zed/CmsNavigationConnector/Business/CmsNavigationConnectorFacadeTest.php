@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\NavigationNodeTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsNavigationConnector

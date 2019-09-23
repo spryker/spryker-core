@@ -15,6 +15,7 @@ use Spryker\Zed\Refund\Business\RefundBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund

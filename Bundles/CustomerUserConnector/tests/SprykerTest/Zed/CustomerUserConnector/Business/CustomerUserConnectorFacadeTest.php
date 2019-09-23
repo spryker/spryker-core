@@ -14,6 +14,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerUserConnector

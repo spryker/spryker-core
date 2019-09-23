@@ -37,7 +37,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Collects discountable items from the given quote by the shipment carrier
+     * - Collects discountable items from the given quote by the quote level (BC) or item level shipments' carriers.
      *
      * @api
      *
@@ -50,7 +50,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Collects discountable items from the given quote by the shipment method
+     * - Collects discountable items from the given quote by the quote level (BC) or item level shipments' methods.
      *
      * @api
      *
@@ -63,7 +63,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Collects discountable items from the given quote by the shipment price
+     * - Collects discountable items from the given quote by the quote level (BC) or item level shipments' prices.
      *
      * @api
      *
@@ -76,7 +76,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Compare chosen for the order shipment carrier with a carrier in condition
+     * - Compare the shipment carrier selected in the quote level (BC) or item level with the shipment carrier in condition.
      *
      * @api
      *
@@ -90,7 +90,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Compare chosen for the order shipment method with a method in condition
+     * - Compare the shipment method selected in the quote level (BC) or item level with the shipment method in condition.
      *
      * @api
      *
@@ -104,7 +104,7 @@ interface ShipmentDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Compare chosen for order shipment carrier with a shipment price in condition
+     * - Compare the shipment price selected in the quote level (BC) or item level with the shipment price in condition.
      *
      * @api
      *
