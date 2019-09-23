@@ -212,15 +212,27 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @part json
      *
      * @param string $type
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsResourceCollectionOfType(string $type): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'type' => $type,
+        ], '$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
      * @param int $size
      *
      * @return void
      */
     public function seeResponseDataContainsResourceCollectionOfTypeWithSizeOf(string $type, int $size): void
     {
-        $this->getJsonPathModule()->seeResponseJsonPathContains([
-            'type' => $type,
-        ], '$.data[*]');
+        $this->seeResponseDataContainsResourceCollectionOfType($type);
         $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data')[0]);
     }
 

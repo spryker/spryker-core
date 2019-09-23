@@ -108,7 +108,7 @@ class ProductRelationDataHelper extends Module
         $ruleQuerySetTransfer->setField('spy_product_abstract.sku');
         $ruleQuerySetTransfer->setType('string');
         $ruleQuerySetTransfer->setInput('text');
-        $ruleQuerySetTransfer->setOperator('less_or_equal');
+        $ruleQuerySetTransfer->setOperator('equal');
         $ruleQuerySetTransfer->setValue($skuValueForFilter);
 
         return $ruleQuerySetTransfer;
