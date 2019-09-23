@@ -194,8 +194,11 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
             $currencyTransfer = $currencyTransfers[$priceProductFilterTransfer->getCurrencyIsoCode()] ?? $this->getDefaultCurrencyForCurrentStore();
             $storeTransfer = $storeTransfers[$priceProductFilterTransfer->getStoreName()] ?? $this->getCurrentStore();
-            
+
             $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                ->fromArray($priceProductFilterTransfer->toArray(false), true);
+
+            $priceProductCriteriaTransfer
                 ->setPriceDimension(
                     $priceProductFilterTransfer->getPriceDimension()
                 )
@@ -210,8 +213,6 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
                     $this->getPriceModeFromFilter($priceProductFilterTransfer)
                 )->setPriceType(
                     $this->priceProductTypeReader->handleDefaultPriceType($priceProductFilterTransfer->getPriceTypeName())
-                )->setQuantity(
-                    $priceProductFilterTransfer->getQuantity()
                 );
 
             $priceProductCriteriaTransferIndexedBySku[$priceProductFilterTransfer->getSku()] = $priceProductCriteriaTransfer;
