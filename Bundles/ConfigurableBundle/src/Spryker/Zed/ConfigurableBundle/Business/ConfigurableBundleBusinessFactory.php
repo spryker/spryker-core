@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydrator;
-use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapper;
 use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
@@ -72,7 +72,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateSlotReader(
             $this->getRepository(),
-            $this->createConfigurableBundleTranslationHydrator()
+            $this->createConfigurableBundleTranslationExpander()
         );
     }
 
@@ -104,11 +104,11 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface
      */
-    public function createConfigurableBundleTranslationHydrator(): ConfigurableBundleTranslationHydratorInterface
+    public function createConfigurableBundleTranslationExpander(): ConfigurableBundleTranslationExpanderInterface
     {
-        return new ConfigurableBundleTranslationHydrator($this->getGlossaryFacade());
+        return new ConfigurableBundleTranslationExpander($this->getGlossaryFacade());
     }
 
     /**

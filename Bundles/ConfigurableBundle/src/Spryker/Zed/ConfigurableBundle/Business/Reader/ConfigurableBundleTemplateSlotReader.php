@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplateSlotReaderInterface
@@ -24,20 +24,20 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
     protected $configurableBundleRepository;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface
      */
-    protected $configurableBundleTranslationHydrator;
+    protected $configurableBundleTranslationExpander;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Hydrator\ConfigurableBundleTranslationHydratorInterface $configurableBundleTranslationHydrator
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
-        ConfigurableBundleTranslationHydratorInterface $configurableBundleTranslationHydrator
+        ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
-        $this->configurableBundleTranslationHydrator = $configurableBundleTranslationHydrator;
+        $this->configurableBundleTranslationExpander = $configurableBundleTranslationExpander;
     }
 
     /**
@@ -52,7 +52,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository
             ->findConfigurableBundleTemplateSlotsByIdProductList($productListTransfer->getIdProductList());
 
-        return $this->hydrateConfigurableBundleTemplateSlotTransfersWithTranslations(
+        return $this->expandConfigurableBundleTemplateSlotTransfersWithTranslations(
             $configurableBundleTemplateSlotTransfers
         );
     }
@@ -93,14 +93,14 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    protected function hydrateConfigurableBundleTemplateSlotTransfersWithTranslations(array $configurableBundleTemplateSlotTransfers): array
+    protected function expandConfigurableBundleTemplateSlotTransfersWithTranslations(array $configurableBundleTemplateSlotTransfers): array
     {
         foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
-            $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationHydrator
-                ->hydrateConfigurableBundleTemplateSlotWithTranslationForCurrentLocale($configurableBundleTemplateSlotTransfer);
+            $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationExpander
+                ->expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale($configurableBundleTemplateSlotTransfer);
 
             $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
-                $this->configurableBundleTranslationHydrator->hydrateConfigurableBundleTemplateWithTranslationForCurrentLocale(
+                $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
                     $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()
                 )
             );

@@ -192,9 +192,11 @@ class ProductListFacadeTest extends Unit
 
         // Act
         $productListResponseTransfer = $this->getFacade()->deleteProductList($productListTransfer);
+        $productListTransfer = $this->getFacade()->getProductListById($productListTransfer);
 
         // Assert
         $this->assertTrue($productListResponseTransfer->getIsSuccessful());
+        $this->assertNull($productListTransfer->getIdProductList());
     }
 
     /**

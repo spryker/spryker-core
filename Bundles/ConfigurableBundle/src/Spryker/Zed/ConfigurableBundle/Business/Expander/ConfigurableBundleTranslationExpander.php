@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Hydrator;
+namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 
-class ConfigurableBundleTranslationHydrator implements ConfigurableBundleTranslationHydratorInterface
+class ConfigurableBundleTranslationExpander implements ConfigurableBundleTranslationExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
@@ -33,7 +33,7 @@ class ConfigurableBundleTranslationHydrator implements ConfigurableBundleTransla
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function hydrateConfigurableBundleTemplateWithTranslationForCurrentLocale(
+    public function expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer->requireName();
@@ -51,7 +51,7 @@ class ConfigurableBundleTranslationHydrator implements ConfigurableBundleTransla
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    public function hydrateConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
+    public function expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotTransfer->requireName();

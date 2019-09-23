@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Hydrator;
+namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleTranslationHydratorInterface
+interface ConfigurableBundleTranslationExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function hydrateConfigurableBundleTemplateWithTranslationForCurrentLocale(
+    public function expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer;
 
@@ -26,7 +26,7 @@ interface ConfigurableBundleTranslationHydratorInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    public function hydrateConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
+    public function expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer;
 }
