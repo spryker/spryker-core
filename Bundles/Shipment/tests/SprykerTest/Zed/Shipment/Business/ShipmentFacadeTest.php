@@ -690,8 +690,7 @@ class ShipmentFacadeTest extends Test
         $idShipmentCarrier = $this->tester->haveShipmentCarrier()->getIdShipmentCarrier();
 
         // Act
-        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
-            ->findShipmentCarrierById($idShipmentCarrier);
+        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()->findShipmentCarrierById($idShipmentCarrier);
 
         // Assert
         $this->assertNotNull($isShipmentMethodUniqueForCarrier);
@@ -703,8 +702,7 @@ class ShipmentFacadeTest extends Test
     public function testFindNotValidShipmentCarrierById(): void
     {
         // Act
-        $shipmentCarrierTransfer = $this->tester->getShipmentFacade()
-            ->findShipmentCarrierById(0);
+        $shipmentCarrierTransfer = $this->tester->getShipmentFacade()->findShipmentCarrierById(0);
 
         // Assert
         $this->assertNull($shipmentCarrierTransfer);
@@ -719,8 +717,7 @@ class ShipmentFacadeTest extends Test
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
 
         // Act
-        $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName($shipmentCarrierTransfer->getName());
+        $hasCarrierName = $this->tester->getShipmentFacade()->hasCarrierName($shipmentCarrierTransfer);
 
         // Assert
         $this->assertTrue($hasCarrierName);
@@ -733,10 +730,10 @@ class ShipmentFacadeTest extends Test
     {
         // Arrange
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+        $shipmentCarrierTransfer->setIdExcludedCarriers([$shipmentCarrierTransfer->getIdShipmentCarrier()]);
 
         // Act
-        $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName($shipmentCarrierTransfer->getName(), [$shipmentCarrierTransfer->getIdShipmentCarrier()]);
+        $hasCarrierName = $this->tester->getShipmentFacade()->hasCarrierName($shipmentCarrierTransfer);
 
         // Assert
         $this->assertFalse($hasCarrierName);
@@ -752,10 +749,11 @@ class ShipmentFacadeTest extends Test
         $shipmentCarrierTransfer2 = $this->tester->haveShipmentCarrier([
             ShipmentCarrierTransfer::NAME => $shipmentCarrierTransfer1->getName(),
         ]);
+        $shipmentCarrierTransfer1->setIdExcludedCarriers([$shipmentCarrierTransfer2->getIdShipmentCarrier()]);
 
         // Act
         $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName($shipmentCarrierTransfer1->getName(), [$shipmentCarrierTransfer2->getIdShipmentCarrier()]);
+            ->hasCarrierName($shipmentCarrierTransfer1);
 
         // Assert
         $this->assertTrue($hasCarrierName);
@@ -766,9 +764,11 @@ class ShipmentFacadeTest extends Test
      */
     public function testHasNoValidCarrierName(): void
     {
+        // Arrange
+        $shipmentCarrierTransfer = (new ShipmentCarrierTransfer())->setName(static::NOT_VALID_SHIPMENT_CARRIER_NAME);
+
         // Act
-        $hasCarrierName = $this->tester->getShipmentFacade()
-            ->hasCarrierName(static::NOT_VALID_SHIPMENT_CARRIER_NAME);
+        $hasCarrierName = $this->tester->getShipmentFacade()->hasCarrierName($shipmentCarrierTransfer);
 
         // Assert
         $this->assertFalse($hasCarrierName);
