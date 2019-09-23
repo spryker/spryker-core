@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered table-hover gui-table-data">
+<table id="used-by-table" class="table table-striped table-bordered table-hover gui-table-data">
     <thead>
         <tr>
             <td>Title</td>
@@ -11,10 +11,16 @@
             <tr>
                 <td>{{ productListUsedByTableRow.entityTitle }}</td>
                 <td>{{ productListUsedByTableRow.entityName }}</td>
-                <td>{% include '@ProductListGui/_partials/button-collection.twig' with {
+                <td class="actions">
+                    {% include '@ProductListGui/_partials/button-collection.twig' with {
                         buttonCollection: productListUsedByTableRow.actionButtons
-                    } only %} </td>
+                    } only %}
+                </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+
+{% include '@ProductListGui/_partials/delete-confirmation-modal-widnow.twig' with {
+    modalMessage: 'Please ensure you saved information' | trans
+} only %}
