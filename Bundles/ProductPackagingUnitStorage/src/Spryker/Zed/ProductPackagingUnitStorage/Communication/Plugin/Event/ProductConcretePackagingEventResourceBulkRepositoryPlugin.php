@@ -36,7 +36,7 @@ class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends Abstract
 
     /**
      * {@inheritdoc}
-     * - Retrieves SpyProductPackagingUnitEntityTransfer collection, associated with provided product concrete IDs.
+     * - Retrieves SpyProductPackagingUnitEntityTransfer collection, to the provided limit and offset.
      *
      * @api
      *

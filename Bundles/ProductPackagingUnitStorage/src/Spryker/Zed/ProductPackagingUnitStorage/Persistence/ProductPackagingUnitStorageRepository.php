@@ -23,7 +23,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      */
     public function findProductConcretePackagingStorageEntitiesByProductConcreteIds(array $productConcreteIds): array
     {
-        if ($productConcreteIds !== []) {
+        if ($productConcreteIds === []) {
             return [];
         }
 
