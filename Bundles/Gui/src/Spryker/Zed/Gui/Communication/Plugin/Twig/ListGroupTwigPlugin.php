@@ -23,13 +23,14 @@ class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
     /**
      * {@inheritDoc}
+     * - Extends twig with "listGroup" function to generate custom list group for displaying a series of content.
+     *
+     * @api
      *
      * @param \Twig\Environment $twig
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
-     *
-     * @api
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {

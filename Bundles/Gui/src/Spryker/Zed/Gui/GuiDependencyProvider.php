@@ -78,6 +78,8 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `TwigPlugin` instead.
+     *
      * @return \Twig\TwigFunction[]
      */
     protected function getTwigFunctions()

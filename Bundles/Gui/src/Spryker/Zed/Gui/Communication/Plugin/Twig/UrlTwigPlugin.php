@@ -45,7 +45,7 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     protected function getUrlFunction(): TwigFunction
     {
-        return new TwigFunction(static::FUNCTION_NAME_URL, function ($url, array $query = [], array $options = []) {
+        return new TwigFunction(static::FUNCTION_NAME_URL, function (string $url, array $query = [], array $options = []) {
             $url = Url::generate($url, $query, $options);
             $html = $url->buildEscaped();
 

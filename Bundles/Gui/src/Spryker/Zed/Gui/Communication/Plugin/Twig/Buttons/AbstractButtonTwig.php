@@ -71,9 +71,21 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
                 $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;
             }
 
-            $buttonUrlGenerator = $this->getFactory()->createButtonUrlGenerator($url, $title, $options);
+            $buttonUrlGenerator = $this->createButtonUrlGenerator($url, $title, $options);
 
             return $buttonUrlGenerator->generate();
         }, ['is_safe' => ['html']]);
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\UrlGeneratorInterface
+     */
+    protected function createButtonUrlGenerator($url, $title, array $options): UrlGeneratorInterface
+    {
+        return new ButtonUrlGenerator($url, $title, $options);
     }
 }

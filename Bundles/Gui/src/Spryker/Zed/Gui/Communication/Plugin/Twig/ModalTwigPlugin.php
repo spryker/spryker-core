@@ -23,13 +23,14 @@ class ModalTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
     /**
      * {@inheritDoc}
+     * - Extends twig with "modal" function to add dialogs to your site for lightboxes, user notifications, or completely custom content.
+     *
+     * @api
      *
      * @param \Twig\Environment $twig
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
-     *
-     * @api
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
