@@ -152,6 +152,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -166,6 +168,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -204,21 +208,25 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
      *
-     * @return \Silex\ServiceProviderInterface[]
-     */
-    protected function getInternalCallServiceProviders(Container $container)
-    {
-        return [];
-    }
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getInternalCallServiceProviders(Container $container)
     {
         return [];
     }
