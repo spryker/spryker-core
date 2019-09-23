@@ -12,6 +12,7 @@ use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceCartConnector

@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSearch

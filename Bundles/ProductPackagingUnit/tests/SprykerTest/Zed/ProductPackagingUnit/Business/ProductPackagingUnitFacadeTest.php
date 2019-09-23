@@ -753,13 +753,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testDefaultProductPackagingUnitTypeName(): void
     {
         // Assign
-        $configDefaultProductPackagingUnitTypMockeName = $this->getConfigStub()->getDefaultProductPackagingUnitTypeName();
+        $configDefaultProductPackagingUnitTypMockName = $this->getConfigStub()->getDefaultProductPackagingUnitTypeName();
 
         //Act
         $defaultProductPackagingUnitTypeName = $this->getFacade()->getDefaultProductPackagingUnitTypeName();
 
         //Assert
-        $this->assertSame($configDefaultProductPackagingUnitTypMockeName, $defaultProductPackagingUnitTypeName);
+        $this->assertSame($configDefaultProductPackagingUnitTypMockName, $defaultProductPackagingUnitTypeName);
     }
 
     /**

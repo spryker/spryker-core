@@ -16,11 +16,11 @@
         <property name="store" type="Store" />
         <property name="currency" type="Currency" />
         <property name="customer" type="Customer" />
-        <property name="shippingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
         <property name="billingAddress" type="Address" />
         <property name="voucherDiscounts" type="Discount[]" />
         <property name="items" type="Item[]" />
-        <property name="shipment" type="Shipment" />
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="payment" type="Payment" />
         <property name="payments" type="Payment[]" />
         <property name="manualOrder" type="ManualOrder" />

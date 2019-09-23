@@ -26,6 +26,7 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Availability
@@ -46,7 +47,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock();
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProductWithStore')->willReturn(new Decimal(15));
+        $sellableMock->method('calculateAvailabilityForProductWithStore')->willReturn(new Decimal(15));
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
@@ -69,7 +70,7 @@ class AvailabilityHandlerTest extends Unit
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock('5');
 
         $sellableMock = $this->createSellableMock();
-        $sellableMock->method('calculateStockForProductWithStore')->willReturn(new Decimal(0));
+        $sellableMock->method('calculateAvailabilityForProductWithStore')->willReturn(new Decimal(0));
 
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');

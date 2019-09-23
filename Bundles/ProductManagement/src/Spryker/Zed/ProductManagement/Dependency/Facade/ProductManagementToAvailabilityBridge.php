@@ -29,8 +29,8 @@ class ProductManagementToAvailabilityBridge implements ProductManagementToAvaila
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct(string $sku): Decimal
+    public function calculateAvailabilityForProduct(string $sku): Decimal
     {
-        return $this->availabilityFacade->calculateStockForProduct($sku);
+        return $this->availabilityFacade->calculateAvailabilityForProduct($sku);
     }
 }

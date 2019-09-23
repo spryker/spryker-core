@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -30,7 +31,7 @@ interface ProductPackagingUnitToOmsFacadeInterface
     public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void;
 
     /**
-     * @return string[]
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStateNames(): array;
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;
 }

@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormView;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine

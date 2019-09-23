@@ -18,6 +18,7 @@ use SprykerTest\Zed\Kernel\Fixtures\Factory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

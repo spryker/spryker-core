@@ -63,7 +63,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @param string $locale
      *
-     * @@return void
+     * @return void
      */
     public function setLocale($locale): void
     {

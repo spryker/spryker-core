@@ -26,6 +26,8 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
+    protected const PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+
     /**
      * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
@@ -114,7 +116,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void
     {
-        $quantity = $this->sellable->calculateStockForProductWithStore($sku, $storeTransfer);
+        $quantity = $this->sellable->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
         $quantityWithReservedItems = $this->getQuantity($quantity);
 
         $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
@@ -212,6 +214,10 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     {
         if ($currentQuantity === null && $quantityWithReservedItems !== null) {
             return true;
+        }
+
+        if ($currentQuantity === null || $quantityWithReservedItems === null) {
+            return false;
         }
 
         if ($currentQuantity->equals(0) && $quantityWithReservedItems->greaterThan($currentQuantity)) {
@@ -329,7 +335,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
             return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         } catch (MissingProductException $exception) {
             throw new ProductNotFoundException(
-                sprintf('The product was not found with this SKU: %s', $sku)
+                sprintf(static::PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $sku)
             );
         }
     }

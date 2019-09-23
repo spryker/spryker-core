@@ -22,7 +22,7 @@
     <transfer name="ProductForBundle">
         <property name="idProductBundle" type="int" />
         <property name="idProductConcrete" type="int" />
-        <property name="quantity" type="decimal" />
+        <property name="quantity" type="int" />
         <property name="sku" type="string" />
         <property name="isActive" type="bool" />
     </transfer>

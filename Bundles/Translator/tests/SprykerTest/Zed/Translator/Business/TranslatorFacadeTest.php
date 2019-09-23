@@ -17,6 +17,7 @@ use Spryker\Zed\Translator\TranslatorConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Translator

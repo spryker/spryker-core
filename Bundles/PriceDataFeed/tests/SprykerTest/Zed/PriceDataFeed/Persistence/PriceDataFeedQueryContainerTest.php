@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceDataFeed

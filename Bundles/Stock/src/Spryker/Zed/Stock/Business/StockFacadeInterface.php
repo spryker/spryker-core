@@ -178,7 +178,6 @@ interface StockFacadeInterface
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer);
 
     /**
-     *
      * Specification:
      *  - Returns all available stock types
      *
@@ -189,7 +188,6 @@ interface StockFacadeInterface
     public function getAvailableStockTypes();
 
     /**
-     *
      * Specification:
      *  - Returns stock product by givent id product
      *
@@ -227,7 +225,6 @@ interface StockFacadeInterface
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
 
     /**
-     *
      * Specification:
      *  - Returns stock mapping per store/warehouse pair
      *

@@ -14,6 +14,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\CompletionQueryExpa
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

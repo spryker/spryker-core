@@ -18,6 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Application

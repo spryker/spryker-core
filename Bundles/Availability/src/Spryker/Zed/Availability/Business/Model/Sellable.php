@@ -63,7 +63,7 @@ class Sellable implements SellableInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProduct(string $sku): Decimal
+    public function calculateAvailabilityForProduct(string $sku): Decimal
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
@@ -104,7 +104,7 @@ class Sellable implements SellableInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->calculateStock($sku, $storeTransfer);
     }

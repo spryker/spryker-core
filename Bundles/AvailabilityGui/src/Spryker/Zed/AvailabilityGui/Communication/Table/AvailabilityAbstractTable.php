@@ -146,7 +146,7 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        return strpos($productAbstractEntity->getConcreteNeverOutOfStockSet(), 'true') !== false;
+        return strpos($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET), 'true') !== false;
     }
 
     /**

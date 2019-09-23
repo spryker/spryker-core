@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer;
 
+use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
@@ -36,6 +37,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_VALIDATE = 'SERVICE_UTIL_VALIDATE';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+    public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
 
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
@@ -65,6 +67,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
         $container = $this->addPostCustomerRegistrationPlugins($container);
+        $container = $this->addCustomerService($container);
 
         return $container;
     }
@@ -330,5 +333,19 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCustomerTableActionExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerService(Container $container): Container
+    {
+        $container->set(static::SERVICE_CUSTOMER, function (Container $container): CustomerServiceInterface {
+            return $container->getLocator()->customer()->service();
+        });
+
+        return $container;
     }
 }
