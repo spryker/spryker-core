@@ -223,7 +223,8 @@ interface WishlistFacadeInterface
     /**
      * Specification:
      * - Returns wishlist for a given customer by uuid.
-     * - Required values of WishlistRequestTransfer::$wishlist: fkCustomer, uuid.
+     * - Required values are WishlistRequestTransfer.wishlist.fkCustomer and WishlistRequestTransfer.wishlist.uuid.
+     * - Returns WishlistResponseTransfer.isSuccess true on success and false otherwise.
      *
      * @api
      *

@@ -24,13 +24,6 @@ interface WishlistRestResponseBuilderInterface
     public function createErrorResponseFromErrorIdentifier(string $errorIdentifier): RestResponseInterface;
 
     /**
-     * @param string[] $errorIdentifiers
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createErrorResponseFromErrorIdentifiers(array $errorIdentifiers): RestResponseInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\WishlistTransfer|null $wishlistTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

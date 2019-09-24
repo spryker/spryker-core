@@ -188,6 +188,8 @@ class WishlistStub implements WishlistStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Wishlist\Communication\Controller\GatewayController::getCustomerWishlistByUuidAction()
+     *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer

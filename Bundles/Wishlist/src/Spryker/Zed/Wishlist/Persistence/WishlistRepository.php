@@ -60,6 +60,13 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->filterByFkCustomer($idCustomer)
             ->filterByUuid($uuidWishlist)
             ->leftJoinWithSpyWishlistItem()
+            ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
+                ->withColumn(
+                    sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_ID_WISHLIST_ITEM),
+                    WishlistTransfer::NUMBER_OF_ITEMS
+                )
+                ->groupByFkWishlist()
+            ->endUse()
             ->find();
 
         if (!$wishlistEntityCollection->count()) {

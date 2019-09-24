@@ -62,8 +62,8 @@ class WishlistReader implements WishlistReaderInterface
      */
     public function getWishlistsByCustomerReference(string $customerReference): array
     {
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
-        $wishlistCollectionTransfer = $this->wishlistClient->getWishlistCollection($customerTransfer);
+        $wishlistCollectionTransfer = $this->wishlistClient
+            ->getWishlistCollection($this->createCustomerTransfer($customerReference));
 
         $restResources = [];
         foreach ($wishlistCollectionTransfer->getWishlists() as $wishlistTransfer) {
@@ -81,11 +81,8 @@ class WishlistReader implements WishlistReaderInterface
      */
     protected function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): RestResponseInterface
     {
-        $wishlistRequestTransfer = (new WishlistRequestTransfer())
-            ->setIdCustomer($idCustomer)
-            ->setUuid($uuidWishlist);
-
-        $wishlistResponseTransfer = $this->wishlistClient->getCustomerWishlistByUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistClient
+            ->getCustomerWishlistByUuid($this->createWishlistRequestTransfer($idCustomer, $uuidWishlist));
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->wishlistRestResponseBuilder->createRestErrorResponse($wishlistResponseTransfer->getErrors());
@@ -103,8 +100,31 @@ class WishlistReader implements WishlistReaderInterface
     protected function getCustomerWishlists(string $customerReference): RestResponseInterface
     {
         $customerWishlistCollectionTransfer = $this->wishlistClient
-            ->getWishlistCollection((new CustomerTransfer())->setCustomerReference($customerReference));
+            ->getWishlistCollection($this->createCustomerTransfer($customerReference));
 
         return $this->wishlistRestResponseBuilder->createWishlistCollectionResponse($customerWishlistCollectionTransfer);
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function createCustomerTransfer(string $customerReference): CustomerTransfer
+    {
+        return (new CustomerTransfer())->setCustomerReference($customerReference);
+    }
+
+    /**
+     * @param int $idCustomer
+     * @param string $uuidWishlist
+     *
+     * @return \Generated\Shared\Transfer\WishlistRequestTransfer
+     */
+    protected function createWishlistRequestTransfer(int $idCustomer, string $uuidWishlist): WishlistRequestTransfer
+    {
+        return (new WishlistRequestTransfer())
+            ->setIdCustomer($idCustomer)
+            ->setUuid($uuidWishlist);
     }
 }

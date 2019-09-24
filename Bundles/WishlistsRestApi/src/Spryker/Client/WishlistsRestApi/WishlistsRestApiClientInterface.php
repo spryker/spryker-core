@@ -18,9 +18,9 @@ interface WishlistsRestApiClientInterface
      * Specification:
      * - Makes Zed request.
      * - Updates existing wishlist records in DB.
-     * - Required properties: uuid, idCustomer and wishlist.
-     * - Returns wishlist response with updated wishlist.
-     * - If error occurs, returns wishlist response with errors.
+     * - Required properties: WishlistRequestTransfer.uuid, WishlistRequestTransfer.idCustomer and WishlistRequestTransfer.wishlist.
+     * - Returns WishlistResponseTransfer.isSuccessful = true and updated WishlistTransfer on success.
+     * - Returns WishlistResponseTransfer.isSuccessful = false if the wishlist was not found by uuid or update was not successful.
      *
      * @api
      *
@@ -33,9 +33,10 @@ interface WishlistsRestApiClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Requires uuid, idCustomer to be set on the WishlistRequestTransfer;
+     * - Requires uuid, idCustomer to be set on the WishlistRequestTransfer.
      * - Deletes existing wishlist from DB.
-     * - If error occurs, returns wishlist response with errors.
+     * - Returns WishlistResponseTransfer.isSuccessful = true on successful delete.
+     * - Returns WishlistResponseTransfer.isSuccessful = false if the wishlist was not found by uuid.
      *
      * @api
      *
@@ -51,7 +52,8 @@ interface WishlistsRestApiClientInterface
      * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
      * - Looks up the wishlist by uuid.
      * - Adds product to the wishlist found in the previous step.
-     * - If error occurs, returns wishlist response with errors.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = true and added WishlistItemTransfer on success.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = false if the wishlist was not found by uuid or adding the item was not successful.
      *
      * @api
      *
@@ -67,7 +69,8 @@ interface WishlistsRestApiClientInterface
      * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
      * - Looks up the wishlist by uuid.
      * - Removes product from the wishlist found in the previous step.
-     * - If error occurs, returns wishlist response with errors.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = true on successful delete.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = false if the wishlist was not found by uuid or the item is not found in the wishlist.
      *
      * @api
      *

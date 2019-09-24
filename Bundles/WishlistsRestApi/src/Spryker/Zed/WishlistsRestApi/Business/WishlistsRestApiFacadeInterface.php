@@ -29,9 +29,10 @@ interface WishlistsRestApiFacadeInterface
     /**
      * Specification:
      * - Updates existing wishlist records in DB.
-     * - Required properties: uuid, fkCustomer.
+     * - Required properties: WishlistRequestTransfer.uuid, WishlistRequestTransfer.fkCustomer.
      * - Returns wishlist response with updated wishlist.
-     * - If error occurred returns wishlist response with errors.
+     * - Returns WishlistResponseTransfer.isSuccessful = true and updated WishlistTransfer on success.
+     * - Returns WishlistResponseTransfer.isSuccessful = false if the wishlist was not found by uuid or update was not successful.
      *
      * @api
      *
@@ -44,7 +45,9 @@ interface WishlistsRestApiFacadeInterface
     /**
      * Specification:
      * - Deletes existing wishlist from DB.
-     * - If error occurred returns wishlist response with errors.
+     * - Required properties: WishlistRequestTransfer.uuid, WishlistRequestTransfer.fkCustomer.
+     * - Returns WishlistResponseTransfer.isSuccessful = true on successful delete.
+     * - Returns WishlistResponseTransfer.isSuccessful = false if the wishlist was not found by uuid.
      *
      * @api
      *
@@ -58,8 +61,9 @@ interface WishlistsRestApiFacadeInterface
      * Specification:
      * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
      * - Looks up the wishlist by uuid.
-     * - In case wishlist is not found, return error.
      * - Adds product to the wishlist found in the previous step.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = true and added WishlistItemTransfer on success.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = false if the wishlist was not found by uuid or adding the item was not successful.
      *
      * @api
      *
@@ -73,8 +77,9 @@ interface WishlistsRestApiFacadeInterface
      * Specification:
      * - Requires idCustomer, uuidWishlist, sku to be set on WishlistItemRequestTransfer.
      * - Looks up the wishlist by uuid.
-     * - In case wishlist is not found, return error.
      * - Removes product from the wishlist found in the previous step.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = true on successful delete.
+     * - Returns WishlistItemResponseTransfer.isSuccessful = false if the wishlist was not found by uuid or the item is not found in the wishlist.
      *
      * @api
      *

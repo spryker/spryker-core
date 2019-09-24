@@ -52,7 +52,6 @@ class WishlistMapper implements WishlistMapperInterface
                 $this->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, new WishlistItemTransfer())
             );
         }
-        $wishlistTransfer->setNumberOfItems($wishlistTransfer->getWishlistItems()->count());
 
         return $wishlistTransfer;
     }

@@ -23,8 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterface
 {
-    protected const SELF_LINK_FORMAT_PATTERN = '%s/%s/%s/%s';
-
     /**
      * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::ERROR_MESSAGE_NAME_ALREADY_EXISTS
      */
@@ -130,23 +128,6 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     {
         return $this->restResourceBuilder->createRestResponse()
             ->addError($this->createRestErrorMessageFromErrorIdentifier($errorIdentifier));
-    }
-
-    /**
-     * @param string[] $errorIdentifiers
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createErrorResponseFromErrorIdentifiers(array $errorIdentifiers): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        foreach ($errorIdentifiers as $errorIdentifier) {
-            $restResponse->addError(
-                $this->createRestErrorMessageFromErrorIdentifier($errorIdentifier)
-            );
-        }
-
-        return $restResponse;
     }
 
     /**
@@ -365,7 +346,7 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     protected function createSelfLinkForWishlistItem(string $wishlistResourceId, string $wishlistItemResourceId): string
     {
         return sprintf(
-            static::SELF_LINK_FORMAT_PATTERN,
+            '%s/%s/%s/%s',
             WishlistsRestApiConfig::RESOURCE_WISHLISTS,
             $wishlistResourceId,
             WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,

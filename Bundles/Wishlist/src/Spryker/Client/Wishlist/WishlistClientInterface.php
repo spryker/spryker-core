@@ -162,6 +162,7 @@ interface WishlistClientInterface
 
     /**
      * Specification:
+     * - Makes Zed request.
      * - Retrieves wishlist by customer id and wishlist uuid.
      *
      * @api

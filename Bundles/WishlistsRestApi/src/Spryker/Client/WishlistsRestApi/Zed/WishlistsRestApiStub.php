@@ -29,6 +29,8 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\WishlistsRestApi\Communication\Controller\GatewayController::updateWishlistAction()
+     *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
@@ -45,6 +47,8 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\WishlistsRestApi\Communication\Controller\GatewayController::deleteWishlistAction()
+     *
      * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
@@ -61,6 +65,8 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\WishlistsRestApi\Communication\Controller\GatewayController::addWishlistItemAction()
+     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
@@ -77,6 +83,8 @@ class WishlistsRestApiStub implements WishlistsRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\WishlistsRestApi\Communication\Controller\GatewayController::deleteWishlistItemAction()
+     *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
