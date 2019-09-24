@@ -47,6 +47,7 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     {
         return new ProductListWriter(
             $this->getRepository(),
+            $this->getEntityManager(),
             $this->getProductListFacade()
         );
     }

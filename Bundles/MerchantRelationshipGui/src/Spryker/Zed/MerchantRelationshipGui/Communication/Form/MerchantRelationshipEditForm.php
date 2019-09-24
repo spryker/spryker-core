@@ -26,6 +26,13 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
             ->addCompanyDisabledField($builder, $options)
             ->addOwnerCompanyBusinessUnitField($builder, $options)
             ->addAssignedCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]);
+
+        $merchantRelationshipEditFormExpanderPlugins = $this->getFactory()
+            ->getMerchantRelationshipEditFormExpanderPlugins();
+
+        foreach ($merchantRelationshipEditFormExpanderPlugins as $merchantRelationshipEditFormExpanderPlugin) {
+            $merchantRelationshipEditFormExpanderPlugin->expand($builder, $options);
+        }
     }
 
     /**

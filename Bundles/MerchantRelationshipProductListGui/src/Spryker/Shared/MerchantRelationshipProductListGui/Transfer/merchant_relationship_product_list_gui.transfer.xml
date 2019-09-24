@@ -16,4 +16,8 @@
         <property name="relation" type="string" />
         <property name="condition" type="string" />
     </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="productListIds" type="int[]" />
+    </transfer>
 </transfers>

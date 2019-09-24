@@ -27,6 +27,15 @@
                         <action>edit</action>
                         <visible>0</visible>
                     </configurable-bundle-template-edit>
+
+                    <configurable-bundle-confirm-delete>
+                        <label>Delete Configurable Bundle Template</label>
+                        <title>Delete Configurable Bundle Template</title>
+                        <bundle>configurable-bundle-gui</bundle>
+                        <controller>template</controller>
+                        <action>confirm-delete</action>
+                        <visible>0</visible>
+                    </configurable-bundle-confirm-delete>
                 </pages>
             </configurable-bundle-templates>
         </pages>
