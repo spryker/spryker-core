@@ -5,7 +5,7 @@
 
     <transfer name="Address">
         <property name="email" dataBuilderRule="email" />
-        <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"  />
+        <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>
         <property name="firstName" dataBuilderRule="firstName" />
         <property name="lastName" dataBuilderRule="lastName" />
         <property name="address1" dataBuilderRule="address" />

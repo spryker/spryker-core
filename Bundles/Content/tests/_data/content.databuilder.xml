@@ -15,7 +15,7 @@
     <transfer name="LocalizedContent">
         <property name="idContentLocalized" type="int" />
         <property name="localeName" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="fkLocale" type="int" dataBuilderRule="null"  />
+        <property name="fkLocale" type="int" dataBuilderRule="null"/>
         <property name="fkContent" type="int"/>
         <property name="parameters" type="string" />
     </transfer>
