@@ -6,28 +6,28 @@
     <transfer name="ProductPackagingUnitType">
         <property name="idProductPackagingUnitType" type="int"/>
         <property name="name" type="string"/>
-        <property name="translations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeTranslation" />
+        <property name="translations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeTranslation"/>
     </transfer>
 
     <transfer name="ProductPackagingUnitTypeTranslation">
-        <property name="name" type="string" />
-        <property name="localeCode" type="string" />
+        <property name="name" type="string"/>
+        <property name="localeCode" type="string"/>
     </transfer>
 
     <transfer name="ProductPackagingUnit">
-        <property name="idProductPackagingUnit" type="int" />
-        <property name="productPackagingUnitType" type="ProductPackagingUnitType" />
-        <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount" />
-        <property name="hasLeadProduct" type="bool" />
+        <property name="idProductPackagingUnit" type="int"/>
+        <property name="productPackagingUnitType" type="ProductPackagingUnitType"/>
+        <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount"/>
+        <property name="hasLeadProduct" type="bool"/>
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
-        <property name="idProductPackagingUnitAmount" type="int" />
-        <property name="isVariable" type="bool" />
-        <property name="defaultAmount" type="int" />
-        <property name="amountMin" type="int" />
-        <property name="amountMax" type="int" />
-        <property name="amountInterval" type="int" />
+        <property name="idProductPackagingUnitAmount" type="int"/>
+        <property name="isVariable" type="bool"/>
+        <property name="defaultAmount" type="int"/>
+        <property name="amountMin" type="int"/>
+        <property name="amountMax" type="int"/>
+        <property name="amountInterval" type="int"/>
     </transfer>
 
     <transfer name="ProductPackagingLeadProduct">

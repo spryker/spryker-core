@@ -5,14 +5,14 @@
 
     <table name="spy_dataset" phpName="SpyDataset" identifierQuoting="true">
         <column name="id_dataset"  required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255" />
+        <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
 
         <unique name="spy_dataset_name-unique-key">
             <unique-column name="name"/>
         </unique>
 
-        <behavior name="timestampable" />
+        <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_dataset_pk_seq"/>
     </table>
@@ -63,7 +63,7 @@
         <column name="id_dataset_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_dataset" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="title" required="false" type="VARCHAR" default="NULL" size="255" />
+        <column name="title" required="false" type="VARCHAR" default="NULL" size="255"/>
 
         <foreign-key name="spy_dataset_localized_attributes-fk_dataset" foreignTable="spy_dataset" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_dataset" foreign="id_dataset"/>

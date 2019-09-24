@@ -4,18 +4,18 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Url">
-        <property name="url" dataBuilderRule="url" />
+        <property name="url" dataBuilderRule="url"/>
     </transfer>
 
     <transfer name="UrlRedirect">
-        <property name="source" dataBuilderRule="Url" />
-        <property name="toUrl" dataBuilderRule="url" />
-        <property name="status" dataBuilderRule="=301" />
+        <property name="source" dataBuilderRule="Url"/>
+        <property name="toUrl" dataBuilderRule="url"/>
+        <property name="status" dataBuilderRule="=301"/>
     </transfer>
 
     <transfer name="CmsPageAttributes">
-        <property name="name" dataBuilderRule="unique()->sentence(2)" />
-        <property name="url" dataBuilderRule="unique()->sentence(2)" />
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="url" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
 </transfers>
