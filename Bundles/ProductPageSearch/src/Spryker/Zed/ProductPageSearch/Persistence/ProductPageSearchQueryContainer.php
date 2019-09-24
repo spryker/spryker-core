@@ -113,10 +113,10 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->useSpyProductAbstractQuery()
                 ->joinWithSpyProductAbstractStore()
                 ->useSpyProductAbstractStoreQuery()
-                ->joinWithSpyStore()
-                ->useSpyStoreQuery()
-                    ->filterByIdStore($storeTransfer->getIdStore())
-                ->endUse()
+                    ->joinWithSpyStore()
+                    ->useSpyStoreQuery()
+                        ->filterByIdStore($storeTransfer->getIdStore())
+                    ->endUse()
                 ->endUse()
             ->endUse()
             ->joinWithLocale()
@@ -129,7 +129,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
 
         $query
             ->join('SpyProductAbstract.SpyUrl')
-            ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
+            ->addJoinCondition('SpyUrl', SpyUrlTableMap::COL_FK_LOCALE . ' = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
             ->withColumn(SpyUrlTableMap::COL_URL, 'url');
 
         return $query;
