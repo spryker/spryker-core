@@ -4,20 +4,20 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Content">
-        <property name="idContent" type="int" />
+        <property name="idContent" type="int"/>
         <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="description" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="contentTermKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="contentTypeKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
+        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent"/>
     </transfer>
 
     <transfer name="LocalizedContent">
-        <property name="idContentLocalized" type="int" />
+        <property name="idContentLocalized" type="int"/>
         <property name="localeName" type="string" dataBuilderRule="unique()->sentence(5)"/>
         <property name="fkLocale" type="int" dataBuilderRule="null"/>
         <property name="fkContent" type="int"/>
-        <property name="parameters" type="string" />
+        <property name="parameters" type="string"/>
     </transfer>
 
 </transfers>

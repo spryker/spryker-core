@@ -18,7 +18,7 @@
 
     <transfer name="SharedQuoteCriteriaFilter">
         <property name="idCompanyUser" type="int"/>
-        <property name="idStore" type="int" />
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
@@ -70,48 +70,48 @@
     </transfer>
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
-        <property name="customerReference" type="string" />
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="idCompanyUser" type="int" />
-        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
-        <property name="idCompanyBusinessUnit" type="int" />
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="ResourceShare">
-        <property name="resourceType" type="string" />
-        <property name="resourceShareData" type="ResourceShareData" />
+        <property name="resourceType" type="string"/>
+        <property name="resourceShareData" type="ResourceShareData"/>
     </transfer>
 
     <transfer name="ResourceShareData">
-        <property name="shareOption" type="string" />
-        <property name="idQuote" type="int" />
-        <property name="ownerCompanyUserId" type="int" />
-        <property name="ownerCompanyBusinessUnitId" type="int" />
+        <property name="shareOption" type="string"/>
+        <property name="idQuote" type="int"/>
+        <property name="ownerCompanyUserId" type="int"/>
+        <property name="ownerCompanyBusinessUnitId" type="int"/>
     </transfer>
 
     <transfer name="ResourceShareRequest">
-        <property name="customer" type="Customer" />
-        <property name="resourceShare" type="ResourceShare" />
+        <property name="customer" type="Customer"/>
+        <property name="resourceShare" type="ResourceShare"/>
     </transfer>
 
     <transfer name="ResourceShareResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="resourceShare" type="ResourceShare" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="resourceShare" type="ResourceShare"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string" />
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="ShareDetailCriteriaFilter">

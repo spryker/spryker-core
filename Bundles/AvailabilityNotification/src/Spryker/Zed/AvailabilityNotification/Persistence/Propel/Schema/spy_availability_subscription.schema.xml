@@ -23,7 +23,7 @@
         </foreign-key>
 
         <index name="spy_availability_notification_subscription-subscription_key">
-            <index-column name="subscription_key" />
+            <index-column name="subscription_key"/>
         </index>
 
         <index name="spy_availability_notification_subscription-sku">

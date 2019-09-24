@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <transfers>
     <transfer name="Generated">
-        <property name="testString" type="string" />
-        <property name="testStringArray" type="string[]" />
-        <property name="testInt" type="int" />
-        <property name="testIntArray" type="int[]" />
-        <property name="testBool" type="bool" />
-        <property name="testBoolArray" type="bool[]" />
-        <property name="testArray" type="array" />
-        <property name="testTransfer" type="Generated" />
-        <property name="testTransfers" type="Generated[]" singular="transfer" />
+        <property name="testString" type="string"/>
+        <property name="testStringArray" type="string[]"/>
+        <property name="testInt" type="int"/>
+        <property name="testIntArray" type="int[]"/>
+        <property name="testBool" type="bool"/>
+        <property name="testBoolArray" type="bool[]"/>
+        <property name="testArray" type="array"/>
+        <property name="testTransfer" type="Generated"/>
+        <property name="testTransfers" type="Generated[]" singular="transfer"/>
     </transfer>
 </transfers>

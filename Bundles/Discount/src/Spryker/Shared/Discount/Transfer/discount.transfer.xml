@@ -4,35 +4,35 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Discount">
-        <property name="idDiscount" type="int" />
-        <property name="fkDiscountVoucherPool" type="int" />
-        <property name="idSalesDiscount" type="int" />
-        <property name="displayName" type="string" />
-        <property name="description" type="string" />
-        <property name="amount" type="int" />
+        <property name="idDiscount" type="int"/>
+        <property name="fkDiscountVoucherPool" type="int"/>
+        <property name="idSalesDiscount" type="int"/>
+        <property name="displayName" type="string"/>
+        <property name="description" type="string"/>
+        <property name="amount" type="int"/>
         <property name="voucherCode" type="string"/>
-        <property name="calculatorPlugin" type="string" />
-        <property name="isExclusive" type="string" />
-        <property name="isActive" type="string" />
-        <property name="validFrom" type="string" />
-        <property name="validTo" type="string" />
-        <property name="collectorQueryString" type="string" />
-        <property name="decisionRuleQueryString" type="string" />
-        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue" />
-        <property name="currency" type="Currency" />
-        <property name="priceMode" type="string" />
+        <property name="calculatorPlugin" type="string"/>
+        <property name="isExclusive" type="string"/>
+        <property name="isActive" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="collectorQueryString" type="string"/>
+        <property name="decisionRuleQueryString" type="string"/>
+        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
-        <property name="idDiscount" type="int" />
-        <property name="displayName" type="string" />
-        <property name="description" type="string" />
+        <property name="idDiscount" type="int"/>
+        <property name="displayName" type="string"/>
+        <property name="description" type="string"/>
         <property name="voucherCode" type="string"/>
-        <property name="unitAmount" type="int" />
-        <property name="sumAmount" type="int" />
-        <property name="unitGrossAmount" type="int" deprecated="use unitAmount" />
+        <property name="unitAmount" type="int"/>
+        <property name="sumAmount" type="int"/>
+        <property name="unitGrossAmount" type="int" deprecated="use unitAmount"/>
         <property name="sumGrossAmount" type="int" deprecated="use sumAmount"/>
-        <property name="quantity" type="int" />
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -45,14 +45,14 @@
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
-        <property name="priceMode" type="string" />
-        <property name="currency" type="Currency" />
+        <property name="priceMode" type="string"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
-        <property name="sku" type="string" />
-        <property name="abstractSku" type="string" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
     </transfer>
 
     <transfer name="DiscountableItem">
@@ -60,7 +60,7 @@
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
-        <property name="originalItem" type="Item" />
+        <property name="originalItem" type="Item"/>
     </transfer>
 
     <transfer name="DiscountableItemTransformer">
@@ -78,23 +78,23 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="items" type="Item[]"  singular="item" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="totals" type="Totals" />
+        <property name="items" type="Item[]"  singular="item"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="totals" type="Totals"/>
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
-        <property name="currency" type="Currency" />
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="Item[]" singular="orderItem" />
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="Clause">
-        <property name="field" type="string" />
-        <property name="attribute" type="string" />
-        <property name="operator" type="string" />
-        <property name="value" type="string" />
-        <property name="acceptedTypes" type="array" />
+        <property name="field" type="string"/>
+        <property name="attribute" type="string"/>
+        <property name="operator" type="string"/>
+        <property name="value" type="string"/>
+        <property name="acceptedTypes" type="array"/>
     </transfer>
 
     <transfer name="VoucherCreateInfo">
@@ -103,81 +103,81 @@
     </transfer>
 
     <transfer name="DiscountConfigurator">
-        <property name="discountGeneral" type="DiscountGeneral" />
-        <property name="discountCalculator" type="DiscountCalculator" />
-        <property name="discountCondition" type="DiscountCondition" />
-        <property name="discountVoucher" type="DiscountVoucher" />
+        <property name="discountGeneral" type="DiscountGeneral"/>
+        <property name="discountCalculator" type="DiscountCalculator"/>
+        <property name="discountCondition" type="DiscountCondition"/>
+        <property name="discountVoucher" type="DiscountVoucher"/>
     </transfer>
 
     <transfer name="DiscountGeneral">
-        <property name="idDiscount" type="int" />
-        <property name="discountType" type="string" />
-        <property name="displayName" type="string" />
-        <property name="description" type="string" />
-        <property name="validFrom" type="string" />
-        <property name="validTo" type="string" />
-        <property name="isExclusive" type="bool" />
-        <property name="isActive" type="bool" />
-        <property name="storeRelation" type="StoreRelation" />
+        <property name="idDiscount" type="int"/>
+        <property name="discountType" type="string"/>
+        <property name="displayName" type="string"/>
+        <property name="description" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="isExclusive" type="bool"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="idEntity" type="int" />
-        <property name="idStores" type="int[]" />
-        <property name="stores" type="Store[]" />
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]"/>
+        <property name="stores" type="Store[]"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
-        <property name="name" type="string" />
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="DiscountCalculator">
-        <property name="amount" type="string" />
-        <property name="calculatorPlugin" type="string" />
-        <property name="collectorQueryString" type="string" />
-        <property name="collectorStrategyType" type="string" />
-        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue" />
+        <property name="amount" type="string"/>
+        <property name="calculatorPlugin" type="string"/>
+        <property name="collectorQueryString" type="string"/>
+        <property name="collectorStrategyType" type="string"/>
+        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue"/>
     </transfer>
 
     <transfer name="DiscountCondition">
-        <property name="decisionRuleQueryString" type="string" />
-        <property name="minimumItemAmount" type="int" />
+        <property name="decisionRuleQueryString" type="string"/>
+        <property name="minimumItemAmount" type="int"/>
     </transfer>
 
     <transfer name="DiscountVoucher">
-        <property name="idDiscount" type="int" />
-        <property name="fkDiscountVoucherPool" type="int" />
-        <property name="voucherBatch" type="int" />
-        <property name="quantity" type="int" />
-        <property name="customCode" type="string" />
-        <property name="code" type="string" />
-        <property name="randomGeneratedCodeLength" type="int" />
-        <property name="maxNumberOfUses" type="int" />
-        <property name="numberOfUses" type="int" />
+        <property name="idDiscount" type="int"/>
+        <property name="fkDiscountVoucherPool" type="int"/>
+        <property name="voucherBatch" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="customCode" type="string"/>
+        <property name="code" type="string"/>
+        <property name="randomGeneratedCodeLength" type="int"/>
+        <property name="maxNumberOfUses" type="int"/>
+        <property name="numberOfUses" type="int"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
-        <property name="isExternalRedirect" type="bool" />
-        <property name="redirectUrl" type="string" />
-        <property name="saveOrder" type="SaveOrder" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="saveOrder" type="SaveOrder"/>
     </transfer>
 
     <transfer name="SaveOrder">
-        <property name="idSalesOrder" type="int" />
+        <property name="idSalesOrder" type="int"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="DiscountMoneyAmount">
-        <property name="idDiscountAmount" type="int" />
-        <property name="fkCurrency" type="int" />
-        <property name="fkDiscount" type="int" />
-        <property name="netAmount" type="int" />
-        <property name="grossAmount" type="int" />
-        <property name="currencyIsoCode" type="string" />
-        <property name="currencySymbol" type="string" />
+        <property name="idDiscountAmount" type="int"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="fkDiscount" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="currencySymbol" type="string"/>
     </transfer>
 
 </transfers>

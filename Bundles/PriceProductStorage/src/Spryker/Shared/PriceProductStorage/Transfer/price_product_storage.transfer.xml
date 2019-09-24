@@ -4,9 +4,9 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue" />
-        <property name="groupKey" type="string" />
-        <property name="isMergeable" type="bool" />
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="groupKey" type="string"/>
+        <property name="isMergeable" type="bool"/>
     </transfer>
 
     <transfer name="PriceProductStorage">
@@ -14,35 +14,35 @@
     </transfer>
 
     <transfer name="ProductView">
-        <property name="quantity" type="int" />
+        <property name="quantity" type="int"/>
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
-        <property name="currentProductPrice" type="CurrentProductPrice" />
+        <property name="currentProductPrice" type="CurrentProductPrice"/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="priceData" type="string" />
+        <property name="priceData" type="string"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
-        <property name="idProduct" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="quantity" type="int" />
+        <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="id" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="quantity" type="int" />
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
-        <property name="price" type="int" />
+        <property name="price" type="int"/>
     </transfer>
 
     <transfer name="ItemValidation">
-        <property name="item" type="Item" />
-        <property name="messages" type="Message[]" singular="Message" />
+        <property name="item" type="Item"/>
+        <property name="messages" type="Message[]" singular="Message"/>
     </transfer>
 
     <transfer name="Message">
