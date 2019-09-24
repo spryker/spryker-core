@@ -46,7 +46,7 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     {
         return new TwigFunction(static::FUNCTION_NAME_ASSETS_PATH, function (string $path) {
             return $this->getZedAssetsPathByName($path);
-        });
+        }, ['is_safe' => ['html']]);
     }
 
     /**

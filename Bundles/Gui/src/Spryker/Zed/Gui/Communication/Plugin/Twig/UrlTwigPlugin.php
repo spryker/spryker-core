@@ -50,6 +50,6 @@ class UrlTwigPlugin extends AbstractPlugin implements TwigPluginInterface
             $html = $url->buildEscaped();
 
             return $html;
-        });
+        }, ['is_safe' => ['html']]);
     }
 }

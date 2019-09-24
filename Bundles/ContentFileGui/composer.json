@@ -8,7 +8,7 @@
     "spryker/content-file": "^1.0.0",
     "spryker/content-gui-extension": "^1.1.0",
     "spryker/file-manager": "^1.1.0",
-    "spryker/gui": "^3.21.0",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.33.0",
     "spryker/locale": "^3.2.0",
     "spryker/symfony": "^3.2.2",

@@ -16,6 +16,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/gui": "If you want to use TwigPlugin"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

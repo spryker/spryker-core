@@ -47,6 +47,6 @@ class UrlDecodeTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     {
         return new TwigFunction(static::FUNCTION_NAME_URL_DECODE, function (string $url) {
             return urldecode($url);
-        });
+        }, ['is_safe' => ['html']]);
     }
 }
