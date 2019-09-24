@@ -31,7 +31,7 @@ class OrderResourceShipmentMapper implements OrderResourceShipmentMapperInterfac
             );
 
             if (!$defaultShipmentMethodPriceTransfer) {
-                return $restShipmentMethodTransfers;
+                continue;
             }
 
             $restShipmentMethodTransfers->append(
