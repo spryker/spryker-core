@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
 interface ConfigurableBundleTemplateSlotReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function getConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array;
+    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

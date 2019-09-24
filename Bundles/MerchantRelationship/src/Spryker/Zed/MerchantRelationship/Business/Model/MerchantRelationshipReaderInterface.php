@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -35,9 +36,11 @@ interface MerchantRelationshipReaderInterface
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array;
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array;
+    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
@@ -45,13 +48,6 @@ interface MerchantRelationshipReaderInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
-     */
-    public function getMerchantRelationshipsByProductList(ProductListTransfer $productListTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

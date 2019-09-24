@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -90,15 +91,16 @@ interface MerchantRelationshipFacadeInterface
 
     /**
      * Specification:
-     * - Returns all merchant relations.
-     * - Hydrate owner company business unit and merchant.
-     * - Populates name in transfer.
+     * - Finds merchant relations by criteria from MerchantRelationshipFilterTransfer.
+     * - Returns merchant relations expanded with names, company business units and merchants.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array;
+    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
 
     /**
      * Specification:

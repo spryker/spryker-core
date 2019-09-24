@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -143,20 +145,23 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @module CompanyBusinessUnit
-     * @module Merchant
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array
+    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
-        $merchantRelationEntities = $this->getFactory()
+        $merchantRelationshipQuery = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->leftJoinCompanyBusinessUnit()
-            ->innerJoinWithMerchant()
-            ->find();
+            ->innerJoinWithMerchant();
+
+        $merchantRelationshipQuery = $this->addFiltersToMerchantRelationshipQuery(
+            $merchantRelationshipQuery,
+            $merchantRelationshipFilterTransfer
+        );
+
+        $merchantRelationEntities = $merchantRelationshipQuery->find();
 
         $merchantRelationTransfers = [];
         foreach ($merchantRelationEntities as $merchantRelationEntity) {
@@ -169,32 +174,22 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * @param int $idProductList
+     * @param \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $merchantRelationshipQuery
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
      */
-    public function findMerchantRelationshipsByIdProductList(int $idProductList): array
-    {
-        $merchantRelatioshipEntityCollection = $this->getFactory()
-            ->createMerchantRelationshipQuery()
-            ->innerJoinWithMerchant()
-            ->useSpyProductListQuery()
-                ->filterByIdProductList($idProductList)
-            ->endUse()
-            ->find();
-
-        if (!$merchantRelatioshipEntityCollection->count()) {
-            return [];
+    protected function addFiltersToMerchantRelationshipQuery(
+        SpyMerchantRelationshipQuery $merchantRelationshipQuery,
+        MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+    ): SpyMerchantRelationshipQuery {
+        if ($merchantRelationshipFilterTransfer->getIdProductList()) {
+            $merchantRelationshipQuery
+                ->useSpyProductListQuery()
+                    ->filterByIdProductList($merchantRelationshipFilterTransfer->getIdProductList())
+                ->endUse();
         }
 
-        $merchantRelationshipTransfers = [];
-
-        foreach ($merchantRelatioshipEntityCollection as $merchantRelationshipEntity) {
-            $merchantRelationshipTransfers[] = $this->getFactory()
-                ->createPropelMerchantRelationshipMapper()
-                ->mapEntityToMerchantRelationshipTransfer($merchantRelationshipEntity, new MerchantRelationshipTransfer());
-        }
-
-        return $merchantRelationshipTransfers;
+        return $merchantRelationshipQuery;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface;
@@ -43,8 +44,14 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
      */
     public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
+        $productListUsedByTableDataTransfer->getProductList()->requireIdProductList();
+
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
+            $productListUsedByTableDataTransfer->getProductList()->getIdProductList()
+        );
+
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleTemplateSlotReader
-            ->getConfigurableBundleTemplateSlotsByProductList($productListUsedByTableDataTransfer->getProductList());
+            ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
 
         $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,

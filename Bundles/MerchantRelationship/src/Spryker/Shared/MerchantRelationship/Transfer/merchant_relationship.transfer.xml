@@ -34,4 +34,8 @@
         <property name="parameters" type="array" />
     </transfer>
 
+    <transfer name="MerchantRelationshipFilter">
+        <property name="idProductList" type="int" />
+    </transfer>
+
 </transfers>

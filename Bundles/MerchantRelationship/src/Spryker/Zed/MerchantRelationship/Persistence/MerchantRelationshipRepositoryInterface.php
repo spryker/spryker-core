@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipRepositoryInterface
@@ -52,21 +53,9 @@ interface MerchantRelationshipRepositoryInterface
     public function getMaxMerchantRelationshipId(): int;
 
     /**
-     * Specification:
-     * - Returns all merchant relations.
-     * - Hydrate owner company business unit and merchant
-     *
-     * @module CompanyBusinessUnit
-     * @module Merchant
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array;
-
-    /**
-     * @param int $idProductList
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
-     */
-    public function findMerchantRelationshipsByIdProductList(int $idProductList): array;
+    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
 }

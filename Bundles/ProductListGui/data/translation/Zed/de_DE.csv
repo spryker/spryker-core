@@ -26,8 +26,8 @@ Selected,Ausgewählt
 SKU,SKU
 Type,Typ
 Whitelist,Whitelist
-"Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Produktliste kann nicht gelöscht werden, da sie von dem konfigurierbaren Bündel-Vorlagen ""%template%"" (""% slot%""slot) verwendet wird."
-"Unable to delete Product List since it used by Merchant Relation ""%merchant_relation%"".","Produktliste kann nicht gelöscht werden, da sie von den Handelsbeziehung ""%merchant_relation%"" verwendet wird."
+"Unable to delete Product List since it's used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Produktliste kann nicht gelöscht werden, da sie von dem konfigurierbaren Bündel-Vorlagen ""%template%"" (""% slot%""slot) verwendet wird."
+"Unable to delete Product List since it's used by Merchant Relation ""%merchant_relation%"".","Produktliste kann nicht gelöscht werden, da sie von den Handelsbeziehung ""%merchant_relation%"" verwendet wird."
 "Configurable Bundle Template","Konfigurierbares Bündel-Vorlage"
 "Configurable Bundle Templates","Konfigurierbare Bundle-Vorlagen"
 "Edit Slot","Slot bearbeiten"

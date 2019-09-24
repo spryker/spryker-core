@@ -8,10 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -65,6 +67,41 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     */
+    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array
+    {
+        $configurableBundleTemplateSlotQuery = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->joinWithSpyConfigurableBundleTemplate();
+
+        $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
+            $configurableBundleTemplateSlotQuery,
+            $configurableBundleTemplateSlotFilterTransfer
+        );
+
+        $configurableBundleTemplateSlotEntityCollection = $configurableBundleTemplateSlotQuery->find();
+
+        if (!$configurableBundleTemplateSlotEntityCollection->count()) {
+            return [];
+        }
+
+        $configurableBundleTemplateSlotTransfers = [];
+        $configurableBundleMapper = $this->getFactory()->createConfigurableBundleMapper();
+
+        foreach ($configurableBundleTemplateSlotEntityCollection as $configurableBundleTemplateSlotEntity) {
+            $configurableBundleTemplateSlotTransfers[] = $configurableBundleMapper->mapConfigurableBundleTemplateSlotEntityToTransfer(
+                $configurableBundleTemplateSlotEntity,
+                new ConfigurableBundleTemplateSlotTransfer()
+            );
+        }
+
+        return $configurableBundleTemplateSlotTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
@@ -86,31 +123,21 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
-     * @param int $idProductList
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
      */
-    public function findConfigurableBundleTemplateSlotsByIdProductList(int $idProductList): array
-    {
-        $configurableBundleTemplateSlotEntityCollection = $this->getFactory()
-            ->createConfigurableBundleTemplateSlotQuery()
-            ->joinWithSpyConfigurableBundleTemplate()
-            ->filterByFkProductList($idProductList);
-
-        if (!$configurableBundleTemplateSlotEntityCollection->count()) {
-            return [];
-        }
-
-        $configurableBundleTemplateSlotTransfers = [];
-        $configurableBundleMapper = $this->getFactory()->createConfigurableBundleMapper();
-
-        foreach ($configurableBundleTemplateSlotEntityCollection as $configurableBundleTemplateSlotEntity) {
-            $configurableBundleTemplateSlotTransfers[] = $configurableBundleMapper->mapConfigurableBundleTemplateSlotEntityToTransfer(
-                $configurableBundleTemplateSlotEntity,
-                new ConfigurableBundleTemplateSlotTransfer()
+    protected function setConfigurableBundleTemplateSlotFilters(
+        SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery,
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): SpyConfigurableBundleTemplateSlotQuery {
+        if ($configurableBundleTemplateSlotFilterTransfer->getIdProductList()) {
+            $configurableBundleTemplateSlotQuery->filterByFkProductList(
+                $configurableBundleTemplateSlotFilterTransfer->getIdProductList()
             );
         }
 
-        return $configurableBundleTemplateSlotTransfers;
+        return $configurableBundleTemplateSlotQuery;
     }
 }

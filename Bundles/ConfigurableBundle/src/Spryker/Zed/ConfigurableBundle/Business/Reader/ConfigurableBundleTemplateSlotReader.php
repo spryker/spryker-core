@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
@@ -16,7 +17,7 @@ use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInter
 
 class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplateSlotReaderInterface
 {
-    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it used by Configurable Bundle Template "%template%" ("%slot%" slot).';
+    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Configurable Bundle Template "%template%" ("%slot%" slot).';
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface
@@ -41,16 +42,14 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function getConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array
+    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array
     {
-        $productListTransfer->requireIdProductList();
-
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleRepository
-            ->findConfigurableBundleTemplateSlotsByIdProductList($productListTransfer->getIdProductList());
+            ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
 
         return $this->expandConfigurableBundleTemplateSlotTransfersWithTranslations(
             $configurableBundleTemplateSlotTransfers
@@ -64,7 +63,13 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      */
     public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $configurableBundleTemplateSlotTransfers = $this->getConfigurableBundleTemplateSlotsByProductList($productListTransfer);
+        $productListTransfer->requireIdProductList();
+
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
+            $productListTransfer->getIdProductList()
+        );
+
+        $configurableBundleTemplateSlotTransfers = $this->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
 
         return $this->createProductListResponseTransfer($productListTransfer, $configurableBundleTemplateSlotTransfers);
     }

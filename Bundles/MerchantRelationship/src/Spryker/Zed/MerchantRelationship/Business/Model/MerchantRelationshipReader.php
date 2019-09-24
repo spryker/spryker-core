@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
@@ -17,7 +18,7 @@ use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryI
 
 class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
 {
-    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it used by Merchant Relation "%merchant_relation%".';
+    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Merchant Relation "%merchant_relation%".';
 
     /**
      * @var \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface
@@ -96,11 +97,13 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array
+    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
-        $merchantRelationships = $this->repository->getMerchantRelationshipCollection();
+        $merchantRelationships = $this->repository->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         foreach ($merchantRelationships as $merchantRelationshipTransfer) {
              $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
@@ -126,21 +129,6 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
-     */
-    public function getMerchantRelationshipsByProductList(ProductListTransfer $productListTransfer): array
-    {
-        $productListTransfer->requireIdProductList();
-
-        $merchantRelationshipTransfers = $this->repository
-            ->findMerchantRelationshipsByIdProductList($productListTransfer->getIdProductList());
-
-        return $this->expandMerchantRelationshipTransfersWithName($merchantRelationshipTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
     public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer
@@ -151,7 +139,11 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
             ->setProductList($productListTransfer)
             ->setIsSuccessful(true);
 
-        $merchantRelationshipTransfers = $this->getMerchantRelationshipsByProductList($productListTransfer);
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setIdProductList(
+            $productListTransfer->getIdProductList()
+        );
+
+        $merchantRelationshipTransfers = $this->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         if (!$merchantRelationshipTransfers) {
             return $productListResponseTransfer;

@@ -64,6 +64,10 @@
         <property name="idConfigurableBundleTemplate" type="int" />
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateSlotFilter">
+        <property name="idProductList" type="int" />
+    </transfer>
+
     <transfer name="ConfigurableBundleTemplateResponse">
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
         <property name="isSuccessful" type="bool" />

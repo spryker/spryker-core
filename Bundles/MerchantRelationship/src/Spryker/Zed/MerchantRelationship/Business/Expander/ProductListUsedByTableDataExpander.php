@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Expander;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 use Spryker\Zed\MerchantRelationship\Business\Mapper\ProductListUsedByTableDataMapperInterface;
@@ -43,9 +44,13 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
      */
     public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
-        $merchantRelationshipTransfers = $this->merchantRelationshipReader->getMerchantRelationshipsByProductList(
-            $productListUsedByTableDataTransfer->getProductList()
+        $productListUsedByTableDataTransfer->getProductList()->requireIdProductList();
+
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setIdProductList(
+            $productListUsedByTableDataTransfer->getProductList()->getIdProductList()
         );
+
+        $merchantRelationshipTransfers = $this->merchantRelationshipReader->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,

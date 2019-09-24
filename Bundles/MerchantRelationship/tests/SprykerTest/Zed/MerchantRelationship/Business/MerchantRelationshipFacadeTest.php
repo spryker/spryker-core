@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Business\MerchantRelationship;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
@@ -301,9 +302,45 @@ class MerchantRelationshipFacadeTest extends Unit
 
         // Assert
         $this->assertCount(1, $productListUsedByTableDataTransfer->getRows());
-        $productListUsedByTableRowTransfer = $productListUsedByTableDataTransfer->getRows()[0];
+        $productListUsedByTableRowTransfer = $productListUsedByTableDataTransfer->getRows()->offsetGet(0);
         $this->assertSame(static::MR_ENTITY_TITLE, $productListUsedByTableRowTransfer->getEntityTitle());
         $this->assertSame($merchantRelationshipTransfer->getName(), $productListUsedByTableRowTransfer->getEntityName());
         $this->assertCount(1, $productListUsedByTableRowTransfer->getActionButtons()->getButtons());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionWillReturnAllAvailableRelationships(): void
+    {
+        // Arrange
+        $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+
+        // Act
+        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection(new MerchantRelationshipFilterTransfer());
+
+        // Assert
+        $this->assertCount($this->tester->getMerchantRelationsCount(), $merhcantRelationTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantRelationshipCollectionWillReturnRelationshipsUsesProductList(): void
+    {
+        //Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $productListTransfer = $this->tester->createProductList([
+            ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
+        ]);
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setIdProductList(
+            $productListTransfer->getIdProductList()
+        );
+
+        // Act
+        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $merhcantRelationTransfers);
     }
 }

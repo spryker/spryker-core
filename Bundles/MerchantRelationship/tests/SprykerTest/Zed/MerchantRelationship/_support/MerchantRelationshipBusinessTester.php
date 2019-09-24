@@ -145,6 +145,14 @@ class MerchantRelationshipBusinessTester extends Actor
     }
 
     /**
+     * @return int
+     */
+    public function getMerchantRelationsCount(): int
+    {
+        return SpyMerchantRelationshipQuery::create()->count();
+    }
+
+    /**
      * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery
      */
     protected function getMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
