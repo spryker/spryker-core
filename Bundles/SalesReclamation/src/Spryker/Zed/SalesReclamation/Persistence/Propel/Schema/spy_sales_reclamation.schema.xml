@@ -31,7 +31,7 @@
         <column name="fk_sales_reclamation" type="INTEGER" required="true" />
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
 
-        <foreign-key name="spy_sales_reclamation_item-fk_sales_reclamation" foreignTable="spy_sales_reclamation" >
+        <foreign-key name="spy_sales_reclamation_item-fk_sales_reclamation" foreignTable="spy_sales_reclamation">
             <reference local="fk_sales_reclamation" foreign="id_sales_reclamation"/>
         </foreign-key>
         <foreign-key name="spy_sales_reclamation_item-fk_sales_order_item" foreignTable="spy_sales_order_item"

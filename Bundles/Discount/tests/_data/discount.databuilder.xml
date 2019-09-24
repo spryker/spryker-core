@@ -6,7 +6,7 @@
     <transfer name="Discount">
         <property name="displayName" dataBuilderRule="unique()->sentence" />
         <property name="description" dataBuilderRule="sentence(10)" />
-        <property name="amount" dataBuilderRule="=1"  />
+        <property name="amount" dataBuilderRule="=1"/>
         <property name="isActive" type="string" dataBuilderRule="=true" />
         <property name="validFrom" type="string" dataBuilderRule="=2016-01-01" />
         <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')" />
