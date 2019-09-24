@@ -24,6 +24,7 @@ class TabsTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
     /**
      * {@inheritDoc}
+     * - Extends twig with "tabs" function to generate tabs upon navs and cards internally.
      *
      * @api
      *

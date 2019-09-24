@@ -23,6 +23,7 @@ class SubmitButtonTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
 
     /**
      * {@inheritDoc}
+     * - Extends twig with "submit_button" function to generate a submit button for a form.
      *
      * @api
      *
@@ -45,7 +46,7 @@ class SubmitButtonTwigPlugin extends AbstractPlugin implements TwigPluginInterfa
      */
     protected function getZedSubmitButtonFunction(Environment $twig): TwigFunction
     {
-        return new TwigFunction(static::FUNCTION_NAME_SUBMIT_BUTTON, function ($value, array $attr = []) use ($twig) {
+        return new TwigFunction(static::FUNCTION_NAME_SUBMIT_BUTTON, function (string $value, array $attr = []) use ($twig) {
             return $twig->render(
                 $this->getConfig()->getSubmitButtonDefaultTemplatePath(),
                 [

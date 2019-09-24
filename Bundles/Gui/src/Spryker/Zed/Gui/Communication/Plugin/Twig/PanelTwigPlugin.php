@@ -23,6 +23,7 @@ class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
     /**
      * {@inheritDoc}
+     * - Extends twig with "panel" function to create bordered box with some padding around it's content.
      *
      * @api
      *

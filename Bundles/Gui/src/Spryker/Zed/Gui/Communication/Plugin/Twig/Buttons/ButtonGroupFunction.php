@@ -10,7 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons;
 use Spryker\Shared\Twig\TwigFunction;
 
 /**
- * @deprecated Use '\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupTwigPlugin` instead.
+ * @deprecated Use 'Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupTwigPlugin` instead.
  */
 class ButtonGroupFunction extends TwigFunction
 {

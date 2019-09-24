@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonTwigPlugin` instead.
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonTwigPlugin` instead.
  */
 class EditActionButtonFunction extends AbstractActionButtonFunction
 {

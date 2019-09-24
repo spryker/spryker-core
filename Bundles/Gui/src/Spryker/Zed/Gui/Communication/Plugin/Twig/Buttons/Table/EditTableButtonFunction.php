@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonTwigPlugin` instead.
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonTwigPlugin` instead.
  */
 class EditTableButtonFunction extends AbstractTableFunction
 {

@@ -23,6 +23,7 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
 
     /**
      * {@inheritDoc}
+     * - Extends twig with "groupActionButtons" function to generate a group of action buttons.
      *
      * @api
      *
@@ -52,16 +53,28 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
                 $options[ButtonGroupUrlGenerator::BUTTON_CLASS] = $this->getDefaultButtonClass();
             }
 
-            $buttonGroupUrlGenerator = $this->getFactory()->createButtonGroupUrlGenerator($buttons, $title, $options);
+            $buttonGroupUrlGenerator = $this->createButtonGroupUrlGenerator($buttons, $title, $options);
 
             return $buttonGroupUrlGenerator->generate();
         }, ['is_safe' => ['html']]);
     }
 
     /**
+     * @param array $buttons
+     * @param string $title
+     * @param array $options
+     *
+     * @return \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\UrlGeneratorInterface
+     */
+    protected function createButtonGroupUrlGenerator(array $buttons, string $title, array $options): UrlGeneratorInterface
+    {
+        return new ButtonGroupUrlGenerator($buttons, $title, $options);
+    }
+
+    /**
      * @return string
      */
-    protected function getDefaultButtonClass()
+    protected function getDefaultButtonClass(): string
     {
         return 'btn-view';
     }
@@ -69,7 +82,7 @@ class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterfac
     /**
      * @return string
      */
-    protected function getDefaultIcon()
+    protected function getDefaultIcon(): string
     {
         return '<i class="fa fa-caret-right"></i> ';
     }

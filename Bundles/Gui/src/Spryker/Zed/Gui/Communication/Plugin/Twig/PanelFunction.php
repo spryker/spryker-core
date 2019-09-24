@@ -10,7 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig;
 use Spryker\Shared\Twig\TwigFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\PanelTwigPlugin` instead.
+ * @deprecated Use `Spryker\Zed\Gui\Communication\Plugin\Twig\PanelTwigPlugin` instead.
  */
 class PanelFunction extends TwigFunction
 {
