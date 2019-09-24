@@ -23,6 +23,7 @@ use Propel\Runtime\Formatter\SimpleArrayFormatter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment

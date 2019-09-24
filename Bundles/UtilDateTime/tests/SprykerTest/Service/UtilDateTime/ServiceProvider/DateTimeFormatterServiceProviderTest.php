@@ -16,6 +16,7 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDateTime

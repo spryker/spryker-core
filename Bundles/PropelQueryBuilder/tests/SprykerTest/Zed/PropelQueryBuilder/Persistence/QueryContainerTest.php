@@ -26,6 +26,7 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\PropelQueryBuilderQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PropelQueryBuilder

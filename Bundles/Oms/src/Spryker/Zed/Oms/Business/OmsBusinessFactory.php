@@ -243,7 +243,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createActiveProcessFetcher(),
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 

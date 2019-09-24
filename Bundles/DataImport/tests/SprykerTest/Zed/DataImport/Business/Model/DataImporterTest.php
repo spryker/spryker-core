@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

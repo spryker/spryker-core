@@ -13,6 +13,7 @@ use Spryker\Service\ProductQuantity\Rounder\ProductQuantityRounder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group ProductQuantity

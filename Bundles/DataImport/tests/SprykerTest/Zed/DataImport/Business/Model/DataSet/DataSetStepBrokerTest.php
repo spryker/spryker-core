@@ -12,6 +12,7 @@ use SprykerTest\Zed\DataImport\_support\Helper\DataImportStepBeforeAndAfter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

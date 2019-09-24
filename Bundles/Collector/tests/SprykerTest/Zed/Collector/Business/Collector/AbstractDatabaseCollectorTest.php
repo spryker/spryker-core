@@ -22,6 +22,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Collector

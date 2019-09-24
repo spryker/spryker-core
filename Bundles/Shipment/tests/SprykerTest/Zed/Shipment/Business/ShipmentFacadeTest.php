@@ -30,6 +30,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment

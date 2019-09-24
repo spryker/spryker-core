@@ -17,6 +17,7 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

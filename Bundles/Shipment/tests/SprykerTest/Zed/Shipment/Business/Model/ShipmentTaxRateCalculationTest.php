@@ -29,6 +29,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment

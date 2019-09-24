@@ -31,6 +31,7 @@ use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryPageSearch

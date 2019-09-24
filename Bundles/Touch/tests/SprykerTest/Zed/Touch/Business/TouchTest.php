@@ -16,6 +16,7 @@ use Spryker\Zed\Touch\TouchDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
