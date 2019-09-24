@@ -21,6 +21,8 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
     /**
      * {@inheritdoc}
      *
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function register(Application $app)

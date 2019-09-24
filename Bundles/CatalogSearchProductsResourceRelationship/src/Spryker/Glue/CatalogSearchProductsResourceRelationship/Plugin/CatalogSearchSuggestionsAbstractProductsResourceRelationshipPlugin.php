@@ -25,6 +25,8 @@ class CatalogSearchSuggestionsAbstractProductsResourceRelationshipPlugin extends
      *
      * @param array $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {

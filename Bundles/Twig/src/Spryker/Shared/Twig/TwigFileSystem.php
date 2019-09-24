@@ -95,6 +95,8 @@ class TwigFileSystem extends FilesystemLoader
     /**
      * {@inheritdoc}
      *
+     * @param string $name
+     *
      * @throws \Twig\Error\LoaderError
      */
     protected function findTemplate($name)

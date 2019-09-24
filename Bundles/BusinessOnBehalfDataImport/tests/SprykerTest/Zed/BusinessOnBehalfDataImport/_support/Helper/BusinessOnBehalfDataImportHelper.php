@@ -34,9 +34,9 @@ class BusinessOnBehalfDataImportHelper extends Module
     }
 
     /**
-     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
-     *
      * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     *
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
      *
      * @return void
      */
@@ -46,9 +46,9 @@ class BusinessOnBehalfDataImportHelper extends Module
     }
 
     /**
-     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
-     *
      * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead
+     *
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param array $processedEntities

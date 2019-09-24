@@ -157,9 +157,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use findMethodById() instead.
-     *
      * @api
+     *
+     * @deprecated Use findMethodById() instead.
      *
      * @param int $idMethod
      *

@@ -28,6 +28,8 @@ class NoValidateTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getExtendedType()
     {
