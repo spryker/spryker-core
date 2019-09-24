@@ -9,6 +9,8 @@
 
     <transfer name="UrlRedirect" >
         <property name="source" dataBuilderRule="Url" />
+        <property name="toUrl" dataBuilderRule="url" />
+        <property name="status" dataBuilderRule="=301" />
     </transfer>
 
     <transfer name="CmsPageAttributes">
@@ -17,4 +19,3 @@
     </transfer>
 
 </transfers>
-
