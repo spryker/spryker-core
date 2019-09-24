@@ -43,7 +43,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $storeFacade;
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @var bool
      */

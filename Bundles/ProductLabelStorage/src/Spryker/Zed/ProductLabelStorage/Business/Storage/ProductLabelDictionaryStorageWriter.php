@@ -24,7 +24,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $queryContainer;
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @var bool
      */

@@ -35,6 +35,8 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     protected $store;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;

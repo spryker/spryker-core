@@ -26,7 +26,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     protected $utilEncoding;
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @var bool
      */
