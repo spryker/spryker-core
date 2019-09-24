@@ -43,4 +43,115 @@ class MerchantRelationshipProductListFacadeTest extends Unit
             ->filterByIdProductList($productListTransfer->getIdProductList())
             ->exists());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableProductListsForMerchantRelationshipReturnsUnassignedProductLists(): void
+    {
+        // Arrange
+        $this->tester->truncateProductListTableRelations();
+        $this->tester->clearProductListTable();
+
+        $this->tester->createProductList();
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+
+        // Act
+        $productListCollectionTransfer = $this->tester->getFacade()
+            ->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer);
+
+        // Assert
+        $this->assertNotEmpty($productListCollectionTransfer->getProductLists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableProductListsForMerchantRelationshipReturnsProductListsAssignedToIt(): void
+    {
+        // Arrange
+        $this->tester->truncateProductListTableRelations();
+        $this->tester->clearProductListTable();
+
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
+
+        // Act
+        $productListCollectionTransfer = $this->tester->getFacade()
+            ->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer);
+
+        // Assert
+        $this->assertNotEmpty($productListCollectionTransfer->getProductLists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableProductListsForMerchantRelationshipDoesNotReturnProductListsAssignedToOtherMerchantRelationship(): void
+    {
+        // Arrange
+        $this->tester->truncateProductListTableRelations();
+        $this->tester->clearProductListTable();
+
+        $firstMerchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $secondMerchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $this->tester->createProductListWithMerchantRelationship($firstMerchantRelationshipTransfer);
+
+        // Act
+        $productListCollectionTransfer = $this->tester->getFacade()
+            ->getAvailableProductListsForMerchantRelationship($secondMerchantRelationshipTransfer);
+
+        // Assert
+        $this->assertEmpty($productListCollectionTransfer->getProductLists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductListMerchantRelationshipAssignmentsUnassignsMerchantRelationshipFromProductList(): void
+    {
+        // Arrange
+        $this->tester->truncateProductListTableRelations();
+        $this->tester->clearProductListTable();
+
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $productListTransfer = $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
+
+        $merchantRelationshipTransfer->setProductListIds([]);
+
+        // Act
+        $this->tester->getFacade()
+            ->updateProductListMerchantRelationshipAssignments($merchantRelationshipTransfer);
+
+        // Assert
+        $updatedProductListTransfer = $this->tester->findProductListById($productListTransfer->getIdProductList());
+
+        $this->assertNull($updatedProductListTransfer->getFkMerchantRelationship());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateProductListMerchantRelationshipAssignmentsAssignMerchantRelationshipToProductList(): void
+    {
+        // Arrange
+        $this->tester->truncateProductListTableRelations();
+        $this->tester->clearProductListTable();
+
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $productListTransfer = $this->tester->createProductList();
+
+        $merchantRelationshipTransfer->setProductListIds([
+            $productListTransfer->getIdProductList(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()
+            ->updateProductListMerchantRelationshipAssignments($merchantRelationshipTransfer);
+
+        // Assert
+        $updatedProductListTransfer = $this->tester->findProductListById($productListTransfer->getIdProductList());
+
+        $this->assertSame($updatedProductListTransfer->getFkMerchantRelationship(), $merchantRelationshipTransfer->getIdMerchantRelationship());
+    }
 }

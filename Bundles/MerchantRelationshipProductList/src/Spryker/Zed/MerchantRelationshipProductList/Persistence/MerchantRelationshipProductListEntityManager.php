@@ -14,4 +14,41 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class MerchantRelationshipProductListEntityManager extends AbstractEntityManager implements MerchantRelationshipProductListEntityManagerInterface
 {
+    /**
+     * @param int[] $productListIds
+     * @param int $idMerchantRelationship
+     *
+     * @return void
+     */
+    public function assignProductListsToMerchantRelationship(array $productListIds, int $idMerchantRelationship): void
+    {
+        $productListEntities = $this->getFactory()
+            ->getProductListQuery()
+            ->filterByIdProductList_In($productListIds)
+            ->find();
+
+        foreach ($productListEntities as $productListEntity) {
+            $productListEntity->setFkMerchantRelationship($idMerchantRelationship)
+                ->save();
+        }
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return void
+     */
+    public function removeMerchantRelationshipFromProductList(int $idProductList): void
+    {
+        $productListEntity = $this->getFactory()
+            ->getProductListQuery()
+            ->findOneByIdProductList($idProductList);
+
+        if (!$productListEntity) {
+            return;
+        }
+
+        $productListEntity->setSpyMerchantRelationship(null)
+            ->save();
+    }
 }

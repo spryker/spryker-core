@@ -9,4 +9,18 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
 interface MerchantRelationshipProductListEntityManagerInterface
 {
+    /**
+     * @param int[] $productListIds
+     * @param int $idMerchantRelationship
+     *
+     * @return void
+     */
+    public function assignProductListsToMerchantRelationship(array $productListIds, int $idMerchantRelationship): void;
+
+    /**
+     * @param int $idProductList
+     *
+     * @return void
+     */
+    public function removeMerchantRelationshipFromProductList(int $idProductList): void;
 }

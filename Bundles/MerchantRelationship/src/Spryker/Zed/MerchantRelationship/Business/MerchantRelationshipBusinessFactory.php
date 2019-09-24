@@ -38,7 +38,9 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantRelationshipKeyGenerator(),
-            $this->getMerchantRelationshipPreDeletePlugins()
+            $this->getMerchantRelationshipPreDeletePlugins(),
+            $this->getMerchantRelationshipPostCreatePlugins(),
+            $this->getMerchantRelationshipPostUpdatePlugins()
         );
     }
 
@@ -94,5 +96,21 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     public function getMerchantRelationshipPreDeletePlugins(): array
     {
         return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface[]
+     */
+    public function getMerchantRelationshipPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface[]
+     */
+    public function getMerchantRelationshipPostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantRelationshipDependencyProvider::PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE);
     }
 }

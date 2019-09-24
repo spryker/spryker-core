@@ -80,6 +80,13 @@ class MerchantRelationshipCreateForm extends AbstractType
                 ->addOwnerCompanyBusinessUnitField($builder, $options)
                 ->addAssignedCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]);
         }
+
+        $merchantRelationshipCreateFormExpanderPlugins = $this->getFactory()
+            ->getMerchantRelationshipCreateFormExpanderPlugins();
+
+        foreach ($merchantRelationshipCreateFormExpanderPlugins as $merchantRelationshipCreateFormExpanderPlugin) {
+            $merchantRelationshipCreateFormExpanderPlugin->expand($builder, $options);
+        }
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
 
 interface MerchantRelationshipProductListFacadeInterface
 {
@@ -38,4 +39,28 @@ interface MerchantRelationshipProductListFacadeInterface
      * @return void
      */
     public function deleteProductListsByMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): void;
+
+    /**
+     * Specification:
+     * - Returns unassigned product lists or assigned to provided Merchant Relationship.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Adjusts "merchant relationshop - product list" assignments in Persistence according provided product list collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function updateProductListMerchantRelationshipAssignments(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 }
