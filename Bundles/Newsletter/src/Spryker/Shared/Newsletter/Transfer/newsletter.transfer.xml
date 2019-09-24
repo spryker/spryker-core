@@ -4,42 +4,42 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="NewsletterSubscriber">
-        <property name="idNewsletterSubscriber" type="int" />
-        <property name="fkCustomer" type="int" />
-        <property name="email" type="string" />
-        <property name="subscriberKey" type="string" />
-        <property name="isConfirmed" type="bool" />
-        <property name="locale" type="Locale" />
+        <property name="idNewsletterSubscriber" type="int"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="subscriberKey" type="string"/>
+        <property name="isConfirmed" type="bool"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="NewsletterType">
-        <property name="idNewsletterType" type="int" />
-        <property name="name" type="string" />
+        <property name="idNewsletterType" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="NewsletterSubscriptionRequest">
-        <property name="newsletterSubscriber" type="NewsletterSubscriber" />
-        <property name="newsletterTypes" type="NewsletterType[]" singular="subscriptionType" />
+        <property name="newsletterSubscriber" type="NewsletterSubscriber"/>
+        <property name="newsletterTypes" type="NewsletterType[]" singular="subscriptionType"/>
     </transfer>
 
     <transfer name="NewsletterSubscriptionResponse">
-        <property name="subscriptionResults" type="NewsletterSubscriptionResult[]" singular="subscriptionResult" />
+        <property name="subscriptionResults" type="NewsletterSubscriptionResult[]" singular="subscriptionResult"/>
     </transfer>
 
     <transfer name="NewsletterSubscriptionResult">
-        <property name="isSuccess" type="bool" default="true" />
-        <property name="newsletterType" type="NewsletterType" />
-        <property name="errorMessage" type="string" />
+        <property name="isSuccess" type="bool" default="true"/>
+        <property name="newsletterType" type="NewsletterType"/>
+        <property name="errorMessage" type="string"/>
     </transfer>
 
     <transfer name="NewsletterSubscriptionApprovalResult">
-        <property name="isSuccess" type="bool" default="true" />
-        <property name="errorMessage" type="string" />
+        <property name="isSuccess" type="bool" default="true"/>
+        <property name="errorMessage" type="string"/>
     </transfer>
 
     <transfer name="Mail">
-        <property name="newsletterSubscriber" type="NewsletterSubscriber" />
-        <property name="newsletterType" type="NewsletterType" />
+        <property name="newsletterSubscriber" type="NewsletterSubscriber"/>
+        <property name="newsletterType" type="NewsletterType"/>
     </transfer>
 
 </transfers>

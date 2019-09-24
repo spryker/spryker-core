@@ -53,13 +53,13 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @param string $locale
      *
@@ -71,13 +71,13 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @return string The locale
      */

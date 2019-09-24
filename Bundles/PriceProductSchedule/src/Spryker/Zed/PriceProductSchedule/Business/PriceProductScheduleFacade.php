@@ -43,6 +43,8 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
+     * @param int $daysRetained
+     *
      * @return void
      */
     public function cleanAppliedScheduledPrices(int $daysRetained): void

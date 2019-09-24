@@ -4,25 +4,25 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
-        <property name="idCustomer" type="int" />
-        <property name="currency" type="Currency" />
-        <property name="customer" type="Customer" />
-        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
-        <property name="billingAddress" type="Address" />
-        <property name="voucherCode" type="string" />
-        <property name="voucherDiscounts" type="Discount[]" />
-        <property name="items" type="Item[]" />
+        <property name="idCustomer" type="int"/>
+        <property name="currency" type="Currency"/>
+        <property name="customer" type="Customer"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="billingAddress" type="Address"/>
+        <property name="voucherCode" type="string"/>
+        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="items" type="Item[]"/>
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="unitGrossPrice" type="int" />
-        <property name="unitNetPrice" type="int" />
-        <property name="sourceUnitGrossPrice" type="int" />
-        <property name="sourceUnitNetPrice" type="int" />
-        <property name="offerDiscount" type="int" />
-        <property name="offerFee" type="int" />
-        <property name="stock" type="int" />
+        <property name="unitGrossPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sourceUnitGrossPrice" type="int"/>
+        <property name="sourceUnitNetPrice" type="int"/>
+        <property name="offerDiscount" type="int"/>
+        <property name="offerFee" type="int"/>
+        <property name="stock" type="int"/>
     </transfer>
 
 </transfers>

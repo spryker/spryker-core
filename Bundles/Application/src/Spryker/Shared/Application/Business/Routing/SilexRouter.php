@@ -48,6 +48,8 @@ class SilexRouter implements RouterInterface
     /**
      * {@inheritdoc}
      *
+     * @param \Symfony\Component\Routing\RequestContext $context
+     *
      * @return void
      */
     public function setContext(RequestContext $context)
@@ -56,7 +58,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getContext()
     {
@@ -64,7 +66,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRouteCollection()
     {
@@ -72,7 +74,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {
@@ -86,8 +88,6 @@ class SilexRouter implements RouterInterface
      *
      * If the matcher can not find information, it must throw one of the exceptions documented
      * below.
-     *
-     * @api
      *
      * @param string $pathinfo The path info to be parsed (raw format, i.e. not urldecoded)
      *

@@ -19,8 +19,8 @@
         <property name="title" type="string"/>
         <property name="url" type="string"/>
         <property name="cssClass" type="string"/>
-        <property name="validFrom" type="string" />
-        <property name="validTo" type="string" />
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
         <property name="children" type="NavigationNodeStorage[]"/>
     </transfer>
 

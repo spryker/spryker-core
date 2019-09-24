@@ -109,7 +109,7 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

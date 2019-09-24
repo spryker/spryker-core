@@ -83,6 +83,8 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
      * @api
      *
      * @param int $categoryId
+     *
+     * @return void
      */
     public function deleteProductCategoryFilterByCategoryId($categoryId)
     {

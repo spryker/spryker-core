@@ -10,7 +10,7 @@ namespace Spryker\Zed\Country\Business\Internal\Regions;
 class GermanyRegionInstaller implements RegionInstallInterface
 {
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
     public function getCodeArray()
     {
@@ -35,7 +35,7 @@ class GermanyRegionInstaller implements RegionInstallInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getCountryIso()
     {
