@@ -12,6 +12,7 @@ use Spryker\Yves\Twig\TwigConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig

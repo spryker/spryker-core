@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
+use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleListCreator implements PriceProductScheduleListCreatorInterface
 {
@@ -19,12 +20,20 @@ class PriceProductScheduleListCreator implements PriceProductScheduleListCreator
     protected $priceProductScheduleEntityManager;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
+     */
+    protected $priceProductScheduleConfig;
+
+    /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
+     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $priceProductScheduleConfig
      */
     public function __construct(
-        PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
+        PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
+        PriceProductScheduleConfig $priceProductScheduleConfig
     ) {
         $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
+        $this->priceProductScheduleConfig = $priceProductScheduleConfig;
     }
 
     /**
@@ -40,5 +49,20 @@ class PriceProductScheduleListCreator implements PriceProductScheduleListCreator
         return (new PriceProductScheduleListResponseTransfer())
             ->setIsSuccess(true)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
+     */
+    public function createDefaultPriceProductScheduleList(): PriceProductScheduleListTransfer
+    {
+        $priceProductScheduleListTransfer = new PriceProductScheduleListTransfer();
+        $priceProductScheduleListTransfer->setName(
+            $this->priceProductScheduleConfig->getPriceProductScheduleListDefaultName()
+        );
+        $priceProductScheduleListTransfer->setIsActive(true);
+
+        return $this->createPriceProductScheduleList($priceProductScheduleListTransfer)
+            ->getPriceProductScheduleList();
     }
 }

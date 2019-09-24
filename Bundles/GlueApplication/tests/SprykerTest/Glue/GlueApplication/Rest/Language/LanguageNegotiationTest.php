@@ -16,6 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication

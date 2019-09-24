@@ -43,6 +43,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected $eventConfig;
 
     /**
+     * @var int|null
+     */
+    protected $maxRetry;
+
+    /**
      * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
      * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\Event\EventConfig $eventConfig
@@ -128,6 +133,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         if (!($listener instanceof EventBulkHandlerInterface)) {
             return;
         }
+
         foreach ($eventItems as $eventName => $eventItem) {
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
@@ -216,7 +222,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);
 
-        if ($queueMessageBody[static::RETRY_KEY] < $this->eventConfig->getMaxRetryAmount()) {
+        if ($this->maxRetry === null) {
+            $this->maxRetry = $this->eventConfig->getMaxRetryAmount();
+        }
+
+        if ($queueMessageBody[static::RETRY_KEY] < $this->maxRetry) {
             $queueMessageBody[static::RETRY_KEY]++;
             $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
             $this->markMessageAsRetry($queueMessageTransfer, $retryMessage);

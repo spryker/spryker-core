@@ -30,6 +30,7 @@ use SprykerTest\Zed\Event\Stub\TestEventBulkListenerPluginStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Event

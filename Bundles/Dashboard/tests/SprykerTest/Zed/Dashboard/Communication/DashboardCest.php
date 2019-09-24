@@ -12,6 +12,7 @@ use SprykerTest\Zed\Dashboard\PageObject\DashboardPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Dashboard

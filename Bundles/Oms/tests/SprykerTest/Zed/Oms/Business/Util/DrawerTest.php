@@ -21,6 +21,7 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

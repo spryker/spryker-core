@@ -16,6 +16,7 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDataReader

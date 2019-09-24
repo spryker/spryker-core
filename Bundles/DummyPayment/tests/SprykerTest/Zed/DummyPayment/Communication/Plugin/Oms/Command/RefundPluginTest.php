@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment
