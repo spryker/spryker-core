@@ -31,9 +31,11 @@ class PriceTypeSubForm extends AbstractType
     {
         $resolver->setDefined([
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
         $resolver->setRequired([
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
     }
 
@@ -63,6 +65,7 @@ class PriceTypeSubForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
+            'disabled' => $options[PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED],
         ]);
 
         return $this;

@@ -282,7 +282,9 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
         return $this->getFormFactory()->create(
             PriceProductScheduleForm::class,
             $formDataProvider->getData($priceProductScheduleTransfer),
-            $formDataProvider->getOptions()
+            $formDataProvider->getOptions(
+                $priceProductScheduleTransfer->getIdPriceProductSchedule()
+            )
         );
     }
 

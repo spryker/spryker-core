@@ -18,6 +18,7 @@ class PriceProductScheduleFormDataProvider
     public const OPTION_STORE_CHOICES = 'option_store_choices';
     public const OPTION_CURRENCY_CHOICES = 'option_currency_choices';
     public const OPTION_PRICE_TYPE_CHOICES = 'option_price_type_choices';
+    public const OPTION_IS_PRICE_TYPE_DISABLED = 'option_is_price_type_disabled';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
@@ -122,17 +123,29 @@ class PriceProductScheduleFormDataProvider
     }
 
     /**
+     * @param int|null $idPriceProductSchedule
      * @param int|null $idStore
      *
      * @return array
      */
-    public function getOptions(?int $idStore = null): array
+    public function getOptions(?int $idPriceProductSchedule = null, ?int $idStore = null): array
     {
         return [
             static::OPTION_DATA_CLASS => PriceProductScheduleTransfer::class,
             static::OPTION_STORE_CHOICES => $this->getStoreValues(),
             static::OPTION_CURRENCY_CHOICES => $this->getCurrencyValues($idStore),
             static::OPTION_PRICE_TYPE_CHOICES => $this->getPriceTypeValues(),
+            static::OPTION_IS_PRICE_TYPE_DISABLED => $this->isPriceTypeDisabled($idPriceProductSchedule),
         ];
+    }
+
+    /**
+     * @param int|null $idPriceProductSchedule
+     *
+     * @return bool
+     */
+    protected function isPriceTypeDisabled(?int $idPriceProductSchedule): bool
+    {
+        return $idPriceProductSchedule !== null;
     }
 }

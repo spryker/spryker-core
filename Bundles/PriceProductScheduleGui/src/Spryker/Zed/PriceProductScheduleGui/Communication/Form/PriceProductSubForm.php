@@ -37,11 +37,13 @@ class PriceProductSubForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
 
         $resolver->setRequired([
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
     }
 
@@ -71,6 +73,7 @@ class PriceProductSubForm extends AbstractType
             'label' => false,
             'data_class' => PriceTypeTransfer::class,
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES],
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED => $options[PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED],
         ]);
 
         return $this;

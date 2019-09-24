@@ -43,11 +43,13 @@ class PriceProductScheduleForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
 
         $resolver->setRequired([
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
 
         $resolver->setDefaults([
@@ -92,6 +94,7 @@ class PriceProductScheduleForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES],
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED => $options[PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED],
         ]);
 
         return $this;
