@@ -10,6 +10,8 @@
 
     <transfer name="UrlRedirect">
         <property name="source" type="Url" />
+        <property name="toUrl" type="string" />
+        <property name="status" type="int" />
     </transfer>
 
 </transfers>
