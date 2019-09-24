@@ -15,8 +15,8 @@ class AvailablePaymentMethodsHelper extends Module
      */
     public function haveAvailablePaymentProvider(): PaymentProviderTransfer
     {
-        $availableMethods = $this->getLocator()->payment()->facade()->getAvailablePaymentProviders();
+        $availablePaymentProviders = $this->getLocator()->payment()->facade()->getAvailablePaymentProviders();
 
-        return current($availableMethods->getPaymentProviders());
+        return current($availablePaymentProviders->getPaymentProviders());
     }
 }

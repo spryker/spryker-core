@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
 
 class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutDataExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface
+     * @var \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface
      */
     protected $paymentMethodRestResponseBuilder;
 
@@ -27,11 +27,11 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
     protected $paymentMethodMapper;
 
     /**
-     * @param \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface $paymentMethodRestResponseBuilder
+     * @param \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder
      * @param \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface $paymentMethodMapper
      */
     public function __construct(
-        PaymentMethodsRestResponseBuilderInterface $paymentMethodRestResponseBuilder,
+        PaymentMethodRestResponseBuilderInterface $paymentMethodRestResponseBuilder,
         PaymentMethodMapperInterface $paymentMethodMapper
     ) {
         $this->paymentMethodRestResponseBuilder = $paymentMethodRestResponseBuilder;

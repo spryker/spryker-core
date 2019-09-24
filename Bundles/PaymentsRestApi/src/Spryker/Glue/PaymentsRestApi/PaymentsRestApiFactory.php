@@ -12,8 +12,8 @@ use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataE
 use Spryker\Glue\PaymentsRestApi\Processor\Expander\PaymentMethodByCheckoutDataExpanderInterface;
 use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapper;
 use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
-use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilder;
-use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilder;
+use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
 
 /**
  * @method \Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig getConfig()
@@ -26,24 +26,24 @@ class PaymentsRestApiFactory extends AbstractFactory
     public function createPaymentMethodByCheckoutDataExpander(): PaymentMethodByCheckoutDataExpanderInterface
     {
         return new PaymentMethodByCheckoutDataExpander(
-            $this->createPaymentMethodsRestResponseBuilder(),
-            $this->createPaymentMethodsMapper()
+            $this->createPaymentMethodRestResponseBuilder(),
+            $this->createPaymentMethodMapper()
         );
     }
 
     /**
      * @return \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface
      */
-    public function createPaymentMethodsMapper(): PaymentMethodMapperInterface
+    public function createPaymentMethodMapper(): PaymentMethodMapperInterface
     {
         return new PaymentMethodMapper($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodsRestResponseBuilderInterface
+     * @return \Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface
      */
-    public function createPaymentMethodsRestResponseBuilder(): PaymentMethodsRestResponseBuilderInterface
+    public function createPaymentMethodRestResponseBuilder(): PaymentMethodRestResponseBuilderInterface
     {
-        return new PaymentMethodsRestResponseBuilder($this->getResourceBuilder());
+        return new PaymentMethodRestResponseBuilder($this->getResourceBuilder());
     }
 }

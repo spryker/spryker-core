@@ -15,6 +15,27 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
 
     protected const PAYMENT_METHOD_PRIORITY = [];
 
+    protected const PAYMENT_REQUIRED_FIELDS = [
+        'paymentMethod',
+        'paymentProvider',
+    ];
+
+    protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
+
+    /**
+     * @param string $paymentMethodName
+     *
+     * @return array
+     */
+    public function getRequiredRequestDataForPaymentMethod(string $paymentMethodName): array
+    {
+        if (!isset(static::PAYMENT_METHOD_REQUIRED_FIELDS[$paymentMethodName])) {
+            return static::PAYMENT_REQUIRED_FIELDS;
+        }
+
+        return array_merge(static::PAYMENT_REQUIRED_FIELDS, static::PAYMENT_METHOD_REQUIRED_FIELDS[$paymentMethodName]);
+    }
+
     /**
      * @return int[]
      */

@@ -10,7 +10,7 @@ namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-interface PaymentMethodsRestResponseBuilderInterface
+interface PaymentMethodRestResponseBuilderInterface
 {
     /**
      * @param int $idPaymentMethod

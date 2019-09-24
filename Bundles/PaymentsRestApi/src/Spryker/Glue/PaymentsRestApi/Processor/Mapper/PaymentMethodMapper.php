@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
+use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
 class PaymentMethodMapper implements PaymentMethodMapperInterface
@@ -75,8 +76,9 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
     ): RestPaymentMethodsAttributesTransfer {
         $methodName = $paymentMethodTransfer->getMethodName();
         return (new RestPaymentMethodsAttributesTransfer())
-            ->setName($methodName)
+            ->setPaymentMethodName($methodName)
             ->setPaymentProviderName($paymentProviderTransfer->getName())
-            ->setPriority($this->config->getPaymentMethodPriority()[$methodName] ?? null);
+            ->setPriority($this->config->getPaymentMethodPriority()[$methodName] ?? null)
+            ->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($methodName));
     }
 }

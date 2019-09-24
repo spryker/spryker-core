@@ -12,7 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
-class PaymentMethodsRestResponseBuilder implements PaymentMethodsRestResponseBuilderInterface
+class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
