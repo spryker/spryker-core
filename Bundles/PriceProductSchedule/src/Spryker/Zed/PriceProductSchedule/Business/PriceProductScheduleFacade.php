@@ -42,7 +42,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      * {@inheritdoc}
      *
      * @api
-     * 
+     *
      * @param int $daysRetained
      *
      * @return void

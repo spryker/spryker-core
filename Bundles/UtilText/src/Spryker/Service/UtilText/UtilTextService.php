@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilTextService extends AbstractService implements UtilTextServiceInterface
 {
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -109,12 +109,12 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
      * @param string $rawToken
-     * @param string $token
+     * @param string $hash
      *
      * @return bool
      */

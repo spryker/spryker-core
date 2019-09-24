@@ -133,7 +133,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      * {@inheritdoc}
      *
      * @api
-     * 
+     *
      * @param int[] $productAbstractIds
      *
      * @return void

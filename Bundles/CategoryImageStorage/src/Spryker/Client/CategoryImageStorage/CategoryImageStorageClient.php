@@ -17,9 +17,9 @@ class CategoryImageStorageClient extends AbstractClient implements CategoryImage
 {
     /**
      * {@inheritdoc}
-     * 
+     *
      * @api
-     * 
+     *
      * @param int $idCategory
      * @param string $localeName
      *

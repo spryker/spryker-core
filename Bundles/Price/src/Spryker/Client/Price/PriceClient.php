@@ -33,7 +33,7 @@ class PriceClient extends AbstractClient implements PriceClientInterface
      * {@inheritdoc}
      *
      * @api
-     * 
+     *
      * @param string $priceMode
      *
      * @return void
