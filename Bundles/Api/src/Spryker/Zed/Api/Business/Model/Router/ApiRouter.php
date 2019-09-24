@@ -70,6 +70,10 @@ class ApiRouter implements RouterInterface
     /**
      * {@inheritdoc}
      *
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      *
      * @return void
