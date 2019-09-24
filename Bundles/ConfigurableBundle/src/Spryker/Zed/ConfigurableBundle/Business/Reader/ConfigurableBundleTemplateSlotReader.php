@@ -45,7 +45,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function findConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array
+    public function getConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array
     {
         $productListTransfer->requireIdProductList();
 
@@ -64,7 +64,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      */
     public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $configurableBundleTemplateSlotTransfers = $this->findConfigurableBundleTemplateSlotsByProductList($productListTransfer);
+        $configurableBundleTemplateSlotTransfers = $this->getConfigurableBundleTemplateSlotsByProductList($productListTransfer);
 
         return $this->createProductListResponseTransfer($productListTransfer, $configurableBundleTemplateSlotTransfers);
     }
@@ -77,7 +77,9 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
      */
     protected function createProductListResponseTransfer(ProductListTransfer $productListTransfer, array $configurableBundleTemplateSlotTransfers): ProductListResponseTransfer
     {
-        $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList()->setIsSuccessful(true);
+        $productListResponseTransfer = (new ProductListResponseTransfer())
+            ->setProductList($productListTransfer)
+            ->setIsSuccessful(true);
 
         if (!$configurableBundleTemplateSlotTransfers) {
             return $productListResponseTransfer;

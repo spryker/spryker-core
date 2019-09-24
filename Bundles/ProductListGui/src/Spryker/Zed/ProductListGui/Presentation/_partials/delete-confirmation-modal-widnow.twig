@@ -11,11 +11,9 @@
                 <p>{{ modalMessage | trans }}</p>
             </div>
             <div class="modal-footer">
-                <a id="delete-confirmation-link" href="">
-                    <button id="btn-confirm" type="button" class="btn btn-primary">
-                        {{ confirmButtonText | default('Сonfirm') | trans }}
-                    </button>
-                </a>
+                <button id="btn-confirm" type="button" class="btn btn-primary">
+                    {{ confirmButtonText | default('Сonfirm') | trans }}
+                </button>
                 <button id="btn-cancel" type="button" class="btn btn-danger" data-dismiss="modal">
                     {{ cancelButtonText | default('Cancel') | trans }}
                 </button>

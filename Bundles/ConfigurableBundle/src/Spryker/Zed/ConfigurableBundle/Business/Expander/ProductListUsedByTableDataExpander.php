@@ -44,7 +44,7 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleTemplateSlotReader
-            ->findConfigurableBundleTemplateSlotsByProductList($productListUsedByTableDataTransfer->getProductList());
+            ->getConfigurableBundleTemplateSlotsByProductList($productListUsedByTableDataTransfer->getProductList());
 
         $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,

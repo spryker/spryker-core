@@ -43,11 +43,11 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
      */
     public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
-        $merchantRelationshipTransfers = $this->merchantRelationshipReader->findMerchantRelationshipsByProductList(
+        $merchantRelationshipTransfers = $this->merchantRelationshipReader->getMerchantRelationshipsByProductList(
             $productListUsedByTableDataTransfer->getProductList()
         );
 
-        $merchantRelationshipTransfers = $this->expandProductListUsedByTableDataTransfer(
+        $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,
             $merchantRelationshipTransfers
         );

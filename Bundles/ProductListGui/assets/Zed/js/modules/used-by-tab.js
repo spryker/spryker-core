@@ -8,9 +8,7 @@ $(document).ready(function () {
         $('#delete-confirmation-modal-window').modal('show');
     });
 
-    $('#delete-confirmation-modal-window').on('click', '#btn-confirm', function (e) {
-        e.preventDefault();
-
+    $('#btn-confirm').on('click', function () {
         window.location.href = clickedButtonUrl;
     });
 });

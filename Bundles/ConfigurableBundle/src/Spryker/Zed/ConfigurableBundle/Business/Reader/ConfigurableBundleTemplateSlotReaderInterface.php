@@ -17,7 +17,7 @@ interface ConfigurableBundleTemplateSlotReaderInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function findConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array;
+    public function getConfigurableBundleTemplateSlotsByProductList(ProductListTransfer $productListTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

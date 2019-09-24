@@ -128,7 +128,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function findMerchantRelationshipsByProductList(ProductListTransfer $productListTransfer): array
+    public function getMerchantRelationshipsByProductList(ProductListTransfer $productListTransfer): array
     {
         $productListTransfer->requireIdProductList();
 
@@ -147,9 +147,11 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     {
         $productListTransfer->requireIdProductList();
 
-        $productListResponseTransfer = (new ProductListResponseTransfer())->setProductList()->setIsSuccessful(true);
+        $productListResponseTransfer = (new ProductListResponseTransfer())
+            ->setProductList($productListTransfer)
+            ->setIsSuccessful(true);
 
-        $merchantRelationshipTransfers = $this->findMerchantRelationshipsByProductList($productListTransfer);
+        $merchantRelationshipTransfers = $this->getMerchantRelationshipsByProductList($productListTransfer);
 
         if (!$merchantRelationshipTransfers) {
             return $productListResponseTransfer;
