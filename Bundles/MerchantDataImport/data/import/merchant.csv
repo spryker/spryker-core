@@ -1,8 +1,8 @@
-merchant_key,merchant_name,registration_number,status,contact_person_title,contact_person_first_name,contact_person_last_name,contact_person_phone,email
-kudu-merchant-1,Kudu Merchant,1,active,Mr,Kudu,Merchant,1,kudu.merchant@merchant.kudu
-oryx-merchant-1,Oryx Merchant,2,active,Mr,Oryx,Merchant,2,oryx.merchant@merchant.kudu
-impala-merchant-1,Impala Merchant,3,active,Mrs,Impala,Merchant,3,impala.merchant@merchant.kudu
-sugar-monster,Sugar Monster,4,active,Mr,Sugar,Monster,4,sugar.monster@merchant.kudu
-restrictions-merchant,Restrictions Merchant,5,active,Mr,Restrictions,Merchant,5,restrictions.merchant@merchant.kudu
-wolf-gmbh-und-co-kg,Roan GmbH und Co KG,HFD123456,waiting-for-approval,Mr,Harald,Schmidt,030/123456789,schmidt@roan.de
-safascan,Steenbok,1234.4567,waiting-for-approval,Ms,Sari,van Veenendaal,+31 123 345 678,maryam@steenbok.nl
+merchant_key,merchant_name,registration_number,status,email
+kudu-merchant-1,Kudu Merchant,1,active,kudu.merchant@merchant.kudu
+oryx-merchant-1,Oryx Merchant,2,active,oryx.merchant@merchant.kudu
+impala-merchant-1,Impala Merchant,3,active,impala.merchant@merchant.kudu
+sugar-monster,Sugar Monster,4,active,sugar.monster@merchant.kudu
+restrictions-merchant,Restrictions Merchant,5,active,restrictions.merchant@merchant.kudu
+wolf-gmbh-und-co-kg,Roan GmbH und Co KG,HFD123456,waiting-for-approval,schmidt@roan.de
+safascan,Steenbok,1234.4567,waiting-for-approval,maryam@steenbok.nl

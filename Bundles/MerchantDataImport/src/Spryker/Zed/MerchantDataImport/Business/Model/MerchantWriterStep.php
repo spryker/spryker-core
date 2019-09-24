@@ -20,10 +20,6 @@ class MerchantWriterStep implements DataImportStepInterface
         MerchantDataSetInterface::NAME,
         MerchantDataSetInterface::REGISTRATION_NUMBER,
         MerchantDataSetInterface::STATUS,
-        MerchantDataSetInterface::CONTACT_PERSON_TITLE,
-        MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME,
-        MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME,
-        MerchantDataSetInterface::CONTACT_PERSON_PHONE,
         MerchantDataSetInterface::EMAIL,
     ];
 
@@ -44,10 +40,6 @@ class MerchantWriterStep implements DataImportStepInterface
             ->setName($dataSet[MerchantDataSetInterface::NAME])
             ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])
             ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
-            ->setContactPersonTitle($dataSet[MerchantDataSetInterface::CONTACT_PERSON_TITLE])
-            ->setContactPersonFirstName($dataSet[MerchantDataSetInterface::CONTACT_PERSON_FIRST_NAME])
-            ->setContactPersonLastName($dataSet[MerchantDataSetInterface::CONTACT_PERSON_LAST_NAME])
-            ->setContactPersonPhone($dataSet[MerchantDataSetInterface::CONTACT_PERSON_PHONE])
             ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
             ->save();
     }
