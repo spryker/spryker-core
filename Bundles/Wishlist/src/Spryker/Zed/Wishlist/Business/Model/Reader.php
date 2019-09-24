@@ -420,8 +420,7 @@ class Reader implements ReaderInterface
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
-        $wishlistFilterTransfer
-            ->requireIdCustomer();
+        $wishlistFilterTransfer->requireIdCustomer();
 
         $wishlistTransfer = $this->wishlistRepository->findWishlistByFilter($wishlistFilterTransfer);
 

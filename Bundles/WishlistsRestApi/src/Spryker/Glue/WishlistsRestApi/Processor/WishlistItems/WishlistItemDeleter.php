@@ -9,7 +9,6 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\WishlistItems;
 
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\RestResponseBuilder\WishlistRestResponseBuilderInterface;
@@ -50,13 +49,12 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
             return $this->wishlistRestResponseBuilder->createItemSkuMissingErrorToResponse();
         }
 
-        $wishlistResource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
-        if (!$wishlistResource) {
+        if (!$restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS)) {
             return $this->wishlistRestResponseBuilder->createWishlistNotFoundErrorResponse();
         }
 
         $deleteWishlistItemResponse = $this->wishlistRestApiClient->deleteWishlistItem(
-            $this->createWishlistItemRequest($restRequest, $wishlistResource)
+            $this->createWishlistItemRequest($restRequest)
         );
 
         if (!$deleteWishlistItemResponse->getIsSuccess()) {
@@ -70,19 +68,14 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $wishlistResource
      *
      * @return \Generated\Shared\Transfer\WishlistItemRequestTransfer
      */
-    protected function createWishlistItemRequest(RestRequestInterface $restRequest, RestResourceInterface $wishlistResource): WishlistItemRequestTransfer
+    protected function createWishlistItemRequest(RestRequestInterface $restRequest): WishlistItemRequestTransfer
     {
-        $sku = $restRequest->getResource()->getId();
-        $idCustomer = $restRequest->getRestUser()->getSurrogateIdentifier();
-        $uuidWishlist = $wishlistResource->getId();
-
         return (new WishlistItemRequestTransfer())
-            ->setSku($sku)
-            ->setUuidWishlist($uuidWishlist)
-            ->setIdCustomer($idCustomer);
+            ->setSku($restRequest->getResource()->getId())
+            ->setUuidWishlist($restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS)->getId())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
     }
 }

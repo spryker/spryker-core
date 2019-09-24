@@ -33,8 +33,6 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistFacadeTest extends Test
 {
-    public const DEFAULT_NAME = 'default';
-
     /**
      * @var \SprykerTest\Zed\Wishlist\WishlistBusinessTester
      */
@@ -91,17 +89,17 @@ class WishlistFacadeTest extends Test
         $this->customer = $this->tester->haveCustomer();
         $this->wishlist = $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
         $this->tester->haveItemInWishlist([
-            'fkWishlist' => $this->wishlist->getIdWishlist(),
-            'fkCustomer' => $this->customer->getIdCustomer(),
-            'sku' => $this->product_1->getSku(),
-            'wishlistName' => $this->wishlist->getName(),
+            WishlistItemTransfer::FK_WISHLIST => $this->wishlist->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $this->product_1->getSku(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlist->getName(),
         ]);
 
         $this->tester->haveItemInWishlist([
-            'fkWishlist' => $this->wishlist->getIdWishlist(),
-            'fkCustomer' => $this->customer->getIdCustomer(),
-            'sku' => $this->product_2->getSku(),
-            'wishlistName' => $this->wishlist->getName(),
+            WishlistItemTransfer::FK_WISHLIST => $this->wishlist->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $this->product_2->getSku(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlist->getName(),
         ]);
     }
 
@@ -112,10 +110,10 @@ class WishlistFacadeTest extends Test
     {
         for ($i = 0; $i < 25; $i++) {
             $this->tester->haveItemInWishlist([
-                'fkWishlist' => $this->wishlist->getIdWishlist(),
-                'fkCustomer' => $this->customer->getIdCustomer(),
-                'sku' => $this->tester->haveProduct()->getSku(),
-                'wishlistName' => $this->wishlist->getName(),
+                WishlistItemTransfer::FK_WISHLIST => $this->wishlist->getIdWishlist(),
+                WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistItemTransfer::SKU => $this->tester->haveProduct()->getSku(),
+                WishlistItemTransfer::WISHLIST_NAME => $this->wishlist->getName(),
             ]);
         }
     }
@@ -525,10 +523,10 @@ class WishlistFacadeTest extends Test
         //Arrange
         $wishlistTransfer = $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
         $this->tester->haveItemInWishlist([
-            'fkWishlist' => $wishlistTransfer->getIdWishlist(),
-            'fkCustomer' => $this->customer->getIdCustomer(),
-            'sku' => $this->product_1->getSku(),
-            'wishlistName' => $wishlistTransfer->getName(),
+            WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $this->product_1->getSku(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
         ]);
 
         $wishlistFilterTransfer = (new WishlistFilterTransfer())

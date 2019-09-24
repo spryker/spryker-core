@@ -49,7 +49,7 @@ class WishlistReader implements WishlistReaderInterface
         $customerId = $restRequest->getRestUser()->getSurrogateIdentifier();
 
         if ($wishlistUuid) {
-            return $this->getCustomerWishlistByUuid($customerId, $wishlistUuid);
+            return $this->getWishlistByFilter($customerId, $wishlistUuid);
         }
 
         return $this->getCustomerWishlists($restRequest->getRestUser()->getNaturalIdentifier());
@@ -79,7 +79,7 @@ class WishlistReader implements WishlistReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): RestResponseInterface
+    protected function getWishlistByFilter(int $idCustomer, string $uuidWishlist): RestResponseInterface
     {
         $wishlistResponseTransfer = $this->wishlistClient
             ->getWishlistByFilter($this->createWishlistFilterTransfer($idCustomer, $uuidWishlist));

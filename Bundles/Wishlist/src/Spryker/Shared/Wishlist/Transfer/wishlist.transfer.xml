@@ -77,11 +77,6 @@
         <property name="errors" type="array" singular="error" />
     </transfer>
 
-    <transfer name="WishlistRequest">
-        <property name="idCustomer" type="int" />
-        <property name="wishlist" type="Wishlist" />
-    </transfer>
-
     <transfer name="WishlistFilter">
         <property name="idCustomer" type="int" />
         <property name="name" type="string" />
