@@ -11,8 +11,10 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypePublishListener;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypeUnpublishListener;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductConcretePackagingUnitPublishStorageListener;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductConcretePackagingUnitUnpublishStorageListener;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypePublishStorageListener;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypeUnpublishStorageListener;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
@@ -43,10 +45,10 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addProductConcretePublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductPackagingUnitTypePublishListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductConcretePackagingUnitPublishStorageListener());
 
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE, new ProductPackagingUnitTypePublishListener());
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE, new ProductPackagingUnitTypePublishListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE, new ProductPackagingUnitTypePublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE, new ProductPackagingUnitTypePublishStorageListener());
     }
 
     /**
@@ -56,7 +58,8 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addProductConcreteUnpublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductPackagingUnitTypeUnpublishListener());
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE, new ProductPackagingUnitTypeUnpublishListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductConcretePackagingUnitUnpublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE, new ProductPackagingUnitTypeUnpublishStorageListener());
     }
 }

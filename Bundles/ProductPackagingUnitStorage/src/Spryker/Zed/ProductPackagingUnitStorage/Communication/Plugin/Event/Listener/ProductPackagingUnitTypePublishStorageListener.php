@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductPackagingUnitTypePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductPackagingUnitTypePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}

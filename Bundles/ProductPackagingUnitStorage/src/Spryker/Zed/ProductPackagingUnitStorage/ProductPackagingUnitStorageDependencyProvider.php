@@ -20,7 +20,7 @@ use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUn
 class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
-    public const PROPEL_QUERY_PRODUCT_PACKAGING_UNIT = 'PROPEL_QUERY_PRODUCT_PACKAGING_LEAD_PRODUCT';
+    public const PROPEL_QUERY_PRODUCT_PACKAGING_UNIT = 'PROPEL_QUERY_PRODUCT_PACKAGING_UNIT';
     public const FACADE_PRODUCT_PACKAGING_UNIT = 'FACADE_PRODUCT_PACKAGING_UNIT';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
