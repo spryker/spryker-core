@@ -188,8 +188,6 @@ class EventFacadeTest extends Unit
     public function testProcessEnqueuedMessageWillSendOnlyErroredMessageFromBulkToRetry(): void
     {
         //Arrange
-        $this->tester->setConfig(EventConstants::EVENT_HANDLE_ERROR_BULK_OPERATION_BY_ITEMS, true);
-
         $eventCollection = $this->createEventListenerCollection();
         $eventBulkListenerStub = new TestEventBulkListenerPluginStub();
         $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventBulkListenerStub);

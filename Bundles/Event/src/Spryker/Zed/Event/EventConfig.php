@@ -54,12 +54,4 @@ class EventConfig extends AbstractBundleConfig
     {
         return $this->getConfig()->get(EventConstants::MAX_RETRY_ON_FAIL, static::DEFAULT_MAX_RETRY);
     }
-
-    /**
-     * @return bool
-     */
-    public function isHandleErrorBulkOperationByItemsActive(): bool
-    {
-        return $this->get(EventConstants::EVENT_HANDLE_ERROR_BULK_OPERATION_BY_ITEMS, false);
-    }
 }

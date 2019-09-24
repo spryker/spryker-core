@@ -132,12 +132,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
             } catch (Throwable $throwable) {
-                if ($this->eventConfig->isHandleErrorBulkOperationByItemsActive()) {
-                    $this->handleBulkByItems($eventItem, $eventName, $listener, $listenerClassName);
-
-                    return;
-                }
-                $this->handleFailedEventItem($eventItem, $eventName, $listenerClassName, $throwable);
+                $this->handleBulkByItems($eventItem, $eventName, $listener, $listenerClassName);
             }
         }
     }
