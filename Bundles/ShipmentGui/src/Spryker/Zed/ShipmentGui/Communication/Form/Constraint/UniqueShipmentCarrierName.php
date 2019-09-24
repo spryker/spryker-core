@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\Constraint;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Symfony\Component\Validator\Constraint;
 
-class ShipmentGuiUniqueShipmentCarrierName extends Constraint
+class UniqueShipmentCarrierName extends Constraint
 {
     /**
      * @var string

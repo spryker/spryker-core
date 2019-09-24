@@ -74,7 +74,7 @@ class ShipmentCarrierFormType extends AbstractType
             'label' => static::LABEL_NAME,
             'constraints' => [
                 new NotBlank(),
-                $this->getFactory()->createShipmentGuiUniqueShipmentCarrierNameConstraint([
+                $this->getFactory()->createUniqueShipmentCarrierNameConstraint([
                     static::FIELD_NAME_FIELD,
                 ]),
             ],

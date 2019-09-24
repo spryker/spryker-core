@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
+class UniqueShipmentCarrierNameValidator extends ConstraintValidator
 {
     /**
      * @param string $value
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName $constraint
      *
      * @return void
      */
@@ -30,22 +30,22 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
 
     /**
      * @param string $carrierName
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName $constraint
      *
      * @return bool
      */
-    protected function assertAlreadyExistsCarrierName(string $carrierName, ShipmentGuiUniqueShipmentCarrierName $constraint): bool
+    protected function assertAlreadyExistsCarrierName(string $carrierName, UniqueShipmentCarrierName $constraint): bool
     {
         return $constraint->getShipmentFacade()->hasCarrierName($this->createShipmentCarrierTransfer($carrierName, $constraint));
     }
 
     /**
      * @param string $carrierName
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName $constraint
      *
      * @return void
      */
-    protected function buildViolation(string $carrierName, ShipmentGuiUniqueShipmentCarrierName $constraint): void
+    protected function buildViolation(string $carrierName, UniqueShipmentCarrierName $constraint): void
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ name }}', $carrierName)
@@ -53,11 +53,11 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName $constraint
      *
      * @return int[]
      */
-    protected function getExcludedIdCarriers(ShipmentGuiUniqueShipmentCarrierName $constraint): array
+    protected function getExcludedIdCarriers(UniqueShipmentCarrierName $constraint): array
     {
         $idExcludedCarrierFields = $constraint->getIdExcludedCarrierFields();
         $idExcludedCarriers = [];
@@ -76,11 +76,11 @@ class ShipmentGuiUniqueShipmentCarrierNameValidator extends ConstraintValidator
 
     /**
      * @param string $carrierName
-     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName $constraint
+     * @param \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName $constraint
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    protected function createShipmentCarrierTransfer(string $carrierName, ShipmentGuiUniqueShipmentCarrierName $constraint): ShipmentCarrierTransfer
+    protected function createShipmentCarrierTransfer(string $carrierName, UniqueShipmentCarrierName $constraint): ShipmentCarrierTransfer
     {
         return (new ShipmentCarrierTransfer())
             ->setName($carrierName)

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName;
+use Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
@@ -105,11 +105,11 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param array $idExcludedCarrierFields
      *
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\ShipmentGuiUniqueShipmentCarrierName
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName
      */
-    public function createShipmentGuiUniqueShipmentCarrierNameConstraint(array $idExcludedCarrierFields = []): ShipmentGuiUniqueShipmentCarrierName
+    public function createUniqueShipmentCarrierNameConstraint(array $idExcludedCarrierFields = []): UniqueShipmentCarrierName
     {
-        return new ShipmentGuiUniqueShipmentCarrierName($this->getShipmentFacade(), $idExcludedCarrierFields);
+        return new UniqueShipmentCarrierName($this->getShipmentFacade(), $idExcludedCarrierFields);
     }
 
     /**
