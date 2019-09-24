@@ -15,8 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilTextService extends AbstractService implements UtilTextServiceInterface
 {
     /**
-     * Specification:
-     * - Generate slug based on value.
+     * {inheritdoc}
      *
      * @api
      *
@@ -32,8 +31,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Generates random string for given length value.
+     * {inheritdoc}
      *
      * @api
      *
@@ -49,8 +47,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Generates hash from value by specified algorithm.
+     * {inheritdoc}
      *
      * @api
      *
@@ -81,8 +78,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Converts a string with a given separator into a camel cased string.
+     * {inheritdoc}
      *
      * @api
      *
@@ -98,8 +94,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Generates a hash from an input string.
+     * {inheritdoc}
      *
      * @api
      *
@@ -114,8 +109,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Checks if a hash matches against an input string that gets hashed internally.
+     * {inheritdoc}
      *
      * @api
      *
