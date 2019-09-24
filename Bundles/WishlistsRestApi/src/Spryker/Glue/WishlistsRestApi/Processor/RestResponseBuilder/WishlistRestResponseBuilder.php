@@ -131,23 +131,6 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function createWishlistItemsResource(WishlistItemTransfer $wishlistItemTransfer): RestResourceInterface
-    {
-        $restWishlistsItemAttributesTransfer = $this->wishlistItemMapper
-            ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer, new RestWishlistItemsAttributesTransfer());
-
-        return $this->restResourceBuilder->createRestResource(
-            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
-            $restWishlistsItemAttributesTransfer->getSku(),
-            $restWishlistsItemAttributesTransfer
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
@@ -282,6 +265,23 @@ class WishlistRestResponseBuilder implements WishlistRestResponseBuilderInterfac
             ->setDetail(WishlistsRestApiConfig::RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createWishlistItemsResource(WishlistItemTransfer $wishlistItemTransfer): RestResourceInterface
+    {
+        $restWishlistsItemAttributesTransfer = $this->wishlistItemMapper
+            ->mapWishlistItemTransferToRestWishlistItemsAttributes($wishlistItemTransfer, new RestWishlistItemsAttributesTransfer());
+
+        return $this->restResourceBuilder->createRestResource(
+            WishlistsRestApiConfig::RESOURCE_WISHLIST_ITEMS,
+            $restWishlistsItemAttributesTransfer->getSku(),
+            $restWishlistsItemAttributesTransfer
+        );
     }
 
     /**

@@ -39,13 +39,6 @@ interface WishlistRestResponseBuilderInterface
     public function createWishlistItemsRestResponse(string $idWishlist, ?WishlistItemTransfer $wishlistItemTransfer = null): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function createWishlistItemsResource(WishlistItemTransfer $wishlistItemTransfer): RestResourceInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
