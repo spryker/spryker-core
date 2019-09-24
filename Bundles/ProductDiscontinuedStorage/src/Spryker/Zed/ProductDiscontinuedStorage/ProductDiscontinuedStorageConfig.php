@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
      *
      * @return bool
      */
