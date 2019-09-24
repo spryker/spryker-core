@@ -171,6 +171,10 @@ class MoneyType extends AbstractType
     /**
      * {@inheritdoc}
      *
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
      * @throws \Exception
      *
      * @return void

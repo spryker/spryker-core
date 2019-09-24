@@ -98,6 +98,8 @@ class TwigFileSystem extends FilesystemLoader
      * @param string $name
      *
      * @throws \Twig\Error\LoaderError
+     *
+     * @return string|false|null The template name or false/null
      */
     protected function findTemplate($name)
     {
