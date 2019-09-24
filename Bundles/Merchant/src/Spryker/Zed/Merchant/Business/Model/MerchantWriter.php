@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
@@ -23,6 +24,7 @@ class MerchantWriter implements MerchantWriterInterface
     use TransactionTrait;
 
     protected const ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
+    protected const ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID = 'Merchant status transition is not valid.';
 
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface
@@ -45,29 +47,45 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantAddressWriter;
 
     /**
+     * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     */
+    protected $merchantStatusValidator;
+
+    /**
      * @var \Spryker\Zed\Merchant\MerchantConfig
      */
     protected $merchantConfig;
+
+    /**
+     * @var \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface
+     */
+    protected $merchantPluginExecutor;
 
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
      * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
+     * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
+     * @param \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface $merchantPluginExecutor
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantRepositoryInterface $merchantRepository,
         MerchantKeyGeneratorInterface $merchantKeyGenerator,
         MerchantAddressWriterInterface $merchantAddressWriter,
-        MerchantConfig $merchantConfig
+        MerchantStatusValidatorInterface $merchantStatusValidator,
+        MerchantConfig $merchantConfig,
+        MerchantPluginExecutorInterface $merchantPluginExecutor
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
         $this->merchantKeyGenerator = $merchantKeyGenerator;
         $this->merchantAddressWriter = $merchantAddressWriter;
+        $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantConfig = $merchantConfig;
+        $this->merchantPluginExecutor = $merchantPluginExecutor;
     }
 
     /**
@@ -84,6 +102,8 @@ class MerchantWriter implements MerchantWriterInterface
                 $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
             );
         }
+
+        $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
 
         $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
             return $this->executeCreateTransaction($merchantTransfer);
@@ -119,6 +139,12 @@ class MerchantWriter implements MerchantWriterInterface
             return $merchantResponseTransfer;
         }
 
+        if (!$this->merchantStatusValidator->isMerchantStatusTransitionValid($existingMerchantTransfer->getStatus(), $merchantTransfer->getStatus())) {
+            $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID);
+
+            return $merchantResponseTransfer;
+        }
+
         if (empty($merchantTransfer->getMerchantKey())) {
             $merchantTransfer->setMerchantKey(
                 $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
@@ -150,6 +176,7 @@ class MerchantWriter implements MerchantWriterInterface
             $merchantTransfer->getIdMerchant()
         );
         $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
+        $merchantTransfer = $this->merchantPluginExecutor->executeMerchantPostSavePlugins($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -166,8 +193,10 @@ class MerchantWriter implements MerchantWriterInterface
             $merchantTransfer->getIdMerchant()
         );
         $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
+        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        $merchantTransfer = $this->merchantPluginExecutor->executeMerchantPostSavePlugins($merchantTransfer);
 
-        return $this->merchantEntityManager->saveMerchant($merchantTransfer);
+        return $merchantTransfer;
     }
 
     /**

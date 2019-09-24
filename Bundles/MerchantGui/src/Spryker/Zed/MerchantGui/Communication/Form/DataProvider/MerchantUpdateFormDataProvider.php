@@ -57,9 +57,11 @@ class MerchantUpdateFormDataProvider
      */
     public function getOptions(MerchantTransfer $merchantTransfer): array
     {
+        $applicableMerchantStatuses = $this->merchantFacade->getApplicableMerchantStatuses($merchantTransfer->getStatus());
         $options = [
             'data_class' => MerchantTransfer::class,
             MerchantUpdateForm::OPTION_CURRENT_ID => $merchantTransfer->getIdMerchant(),
+            MerchantUpdateForm::OPTION_STATUS_CHOICES => array_merge([$merchantTransfer->getStatus()], $applicableMerchantStatuses),
         ];
 
         return $options;

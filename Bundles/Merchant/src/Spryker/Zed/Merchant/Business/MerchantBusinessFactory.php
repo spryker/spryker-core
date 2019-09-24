@@ -12,12 +12,16 @@ use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriter;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutor;
+use Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
 use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriter;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriterInterface;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
+use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
@@ -38,7 +42,9 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createMerchantKeyGenerator(),
             $this->createMerchantAddressWriter(),
-            $this->getConfig()
+            $this->createMerchantStatusValidator(),
+            $this->getConfig(),
+            $this->createMerchantPluginExecutor()
         );
     }
 
@@ -48,7 +54,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function createMerchantReader(): MerchantReaderInterface
     {
         return new MerchantReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createMerchantPluginExecutor()
         );
     }
 
@@ -59,6 +66,16 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantStatusReader(
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     */
+    public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
+    {
+        return new MerchantStatusValidator(
+            $this->createMerchantStatusReader()
         );
     }
 
@@ -84,10 +101,37 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface
+     */
+    public function createMerchantPluginExecutor(): MerchantPluginExecutorInterface
+    {
+        return new MerchantPluginExecutor(
+            $this->getMerchantPostSavePlugins(),
+            $this->getMerchantHydratePlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface
      */
     public function getUtilTextService(): MerchantToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
+     */
+    public function getMerchantPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[]
+     */
+    public function getMerchantHydratePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_HYDRATE);
     }
 }

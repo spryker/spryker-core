@@ -20,6 +20,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const PROPEL_MERCHANT_QUERY = 'PROPEL_MERCHANT_QUERY';
+    public const PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER = 'PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,6 +33,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCountryFacade($container);
         $container = $this->addMerchantFacade($container);
         $container = $this->addPropelMerchantQuery($container);
+        $container = $this->addMerchantProfileFormExpanderPlugins($container);
 
         return $container;
     }
@@ -76,5 +78,27 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantProfileFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER] = function () {
+            return $this->getMerchantProfileFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface[]
+     */
+    protected function getMerchantProfileFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

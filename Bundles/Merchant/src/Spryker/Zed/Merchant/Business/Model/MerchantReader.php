@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -20,11 +21,20 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantRepository;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
+     * @var \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface
      */
-    public function __construct(MerchantRepositoryInterface $merchantRepository)
-    {
+    protected $merchantPluginExecutor;
+
+    /**
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
+     * @param \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface $merchantPluginExecutor
+     */
+    public function __construct(
+        MerchantRepositoryInterface $merchantRepository,
+        MerchantPluginExecutorInterface $merchantPluginExecutor
+    ) {
         $this->merchantRepository = $merchantRepository;
+        $this->merchantPluginExecutor = $merchantPluginExecutor;
     }
 
     /**
@@ -34,7 +44,10 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
     {
-        return $this->merchantRepository->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->merchantRepository->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->hydrateMerchantCollection($merchantCollectionTransfer);
+
+        return $merchantCollectionTransfer;
     }
 
     /**
@@ -44,6 +57,28 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
-        return $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
+        $merchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
+        if ($merchantTransfer === null) {
+            return null;
+        }
+
+        return $this->merchantPluginExecutor->executeMerchantHydratePlugins($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    protected function hydrateMerchantCollection(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer
+    {
+        $merchantTransfers = new ArrayObject();
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $merchantTransfer = $this->merchantPluginExecutor->executeMerchantHydratePlugins($merchantTransfer);
+            $merchantTransfers->append($merchantTransfer);
+        }
+        $merchantCollectionTransfer->setMerchants($merchantTransfers);
+
+        return $merchantCollectionTransfer;
     }
 }

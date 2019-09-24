@@ -67,6 +67,8 @@ class MerchantForm extends AbstractType
             ->addEmailField($builder)
             ->addRegistrationNumberField($builder)
             ->addAddressCollectionSubform($builder);
+
+        $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -220,5 +222,20 @@ class MerchantForm extends AbstractType
                 $context->addViolation('Email is already used.');
             }
         };
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function executeMerchantProfileFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($this->getFactory()->getMerchantProfileFormExpanderPlugins() as $formExpanderPlugin) {
+            $builder = $formExpanderPlugin->expand($builder, $options);
+        }
+
+        return $this;
     }
 }

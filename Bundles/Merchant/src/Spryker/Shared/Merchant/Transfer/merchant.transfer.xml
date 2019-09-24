@@ -9,6 +9,7 @@
         <property name="name" type="string" />
         <property name="registrationNumber" type="string" />
         <property name="email" type="string" />
+        <property name="status" type="string" />
         <property name="addressCollection" type="MerchantAddressCollection" />
     </transfer>
 

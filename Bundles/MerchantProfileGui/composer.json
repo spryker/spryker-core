@@ -4,7 +4,10 @@
   "description": "MerchantProfileGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant-gui-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

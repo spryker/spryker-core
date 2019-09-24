@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -25,6 +26,10 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class MerchantUpdateForm extends MerchantForm
 {
     public const OPTION_CURRENT_ID = 'current_id';
+    public const OPTION_STATUS_CHOICES = 'status_choices';
+    protected const FIELD_STATUS = 'status';
+
+    protected const LABEL_STATUS = 'Status';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -35,6 +40,7 @@ class MerchantUpdateForm extends MerchantForm
     {
         parent::configureOptions($resolver);
 
+        $resolver->setRequired(static::OPTION_STATUS_CHOICES);
         $resolver->setRequired(static::OPTION_CURRENT_ID);
     }
 
@@ -51,7 +57,32 @@ class MerchantUpdateForm extends MerchantForm
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
+            ->addStatusField($builder, $options[static::OPTION_STATUS_CHOICES])
             ->addAddressCollectionSubform($builder);
+
+        $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
+    protected function addStatusField(FormBuilderInterface $builder, array $choices = [])
+    {
+        $builder->add(static::FIELD_STATUS, ChoiceType::class, [
+            'label' => static::LABEL_STATUS,
+            'constraints' => $this->getStatusFieldConstraints($choices),
+            'choices' => array_combine(
+                array_values(array_map([$this, 'getStatusLabel'], $choices)),
+                array_values($choices)
+            ),
+            'choices_as_values' => true,
+            'placeholder' => false,
+        ]);
+
+        return $this;
     }
 
     /**
