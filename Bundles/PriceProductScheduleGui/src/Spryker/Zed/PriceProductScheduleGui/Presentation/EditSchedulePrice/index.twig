@@ -12,7 +12,12 @@
         {% block widget_content %}
             {{ form_start(form, {'method': 'POST', 'attr': {'id': 'price_product_schedule_form'}}) }}
             {{ form_errors(form) }}
-            {{ form_row(form.priceProduct) }}
+            {{ form_row(form.priceProduct.skuProductAbstract) }}
+            {{ form_row(form.priceProduct.skuProduct) }}
+            {{ form_row(form.priceProduct.moneyValue) }}
+            {{ form_row(form.priceProduct.priceType.idPriceType, {attr: {
+                disabled: true,
+            }}) }}
 
             {{ form_label(form.activeFrom) }}
             <br>
