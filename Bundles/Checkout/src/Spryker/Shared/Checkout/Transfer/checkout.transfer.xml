@@ -41,6 +41,7 @@
         <property name="unitGrossPrice" type="int" />
         <property name="sumGrossPrice" type="int" />
         <property name="quantity" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Address">

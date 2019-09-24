@@ -5,6 +5,11 @@
 
     <transfer name="Url">
         <property name="fkResourcePage" type="int" />
+        <property name="url" type="string" />
+    </transfer>
+
+    <transfer name="UrlRedirect">
+        <property name="source" type="Url" />
     </transfer>
 
 </transfers>
