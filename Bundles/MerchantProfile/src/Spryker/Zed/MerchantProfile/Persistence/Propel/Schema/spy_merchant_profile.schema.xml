@@ -13,6 +13,7 @@
         <column name="banner_url" size="255" type="VARCHAR"/>
         <column name="logo_url" size="255" type="VARCHAR"/>
         <column name="public_email" type="VARCHAR" size="255"/>
+        <column name="public_phone" type="VARCHAR" size="255"/>
 
         <column name="description_glossary_key" type="VARCHAR" size="255"/>
         <column name="banner_url_glossary_key" type="VARCHAR" size="255"/>

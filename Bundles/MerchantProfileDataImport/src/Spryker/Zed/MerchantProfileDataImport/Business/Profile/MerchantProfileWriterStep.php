@@ -43,6 +43,7 @@ class MerchantProfileWriterStep implements DataImportStepInterface
             ->setBannerUrl($dataSet[MerchantProfileDataSetInterface::BANNER_URL])
             ->setLogoUrl($dataSet[MerchantProfileDataSetInterface::LOGO_URL])
             ->setPublicEmail($dataSet[MerchantProfileDataSetInterface::PUBLIC_EMAIL])
+            ->setPublicPhone($dataSet[MerchantProfileDataSetInterface::PUBLIC_PHONE])
             ->setIsActive($dataSet[MerchantProfileDataSetInterface::IS_ACTIVE])
 
             ->setDescriptionGlossaryKey($this->generateMerchantGlossaryKey(MerchantProfileDataSetInterface::DESCRIPTION_GLOSSARY_KEY, $idMerchant))

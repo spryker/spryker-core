@@ -20,6 +20,7 @@ interface MerchantProfileDataSetInterface
     public const BANNER_URL = 'banner_url';
     public const LOGO_URL = 'logo_url';
     public const PUBLIC_EMAIL = 'public_email';
+    public const PUBLIC_PHONE = 'public_phone';
     public const IS_ACTIVE = 'is_active';
 
     public const DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
