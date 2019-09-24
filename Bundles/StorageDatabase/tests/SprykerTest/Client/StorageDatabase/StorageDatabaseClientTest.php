@@ -10,11 +10,11 @@ namespace SprykerTest\Client\StorageDatabase;
 use Codeception\Test\Unit;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Client\StorageDatabase\Plugin\MySqlStorageReaderProviderPlugin;
-use Spryker\Client\StorageDatabase\Plugin\PostgreSqlStorageReaderProviderPlugin;
+use Spryker\Client\StorageDatabase\Plugin\MySqlStorageReaderPlugin;
+use Spryker\Client\StorageDatabase\Plugin\PostgreSqlStorageReaderPlugin;
 use Spryker\Client\StorageDatabase\StorageDatabaseClient;
 use Spryker\Client\StorageDatabase\StorageDatabaseDependencyProvider;
-use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface;
+use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
@@ -22,6 +22,7 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase
@@ -186,14 +187,14 @@ class StorageDatabaseClientTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface
      */
-    protected function getStorageReaderProviderPlugin(): StorageReaderProviderPluginInterface
+    protected function getStorageReaderProviderPlugin(): StorageReaderPluginInterface
     {
         if (Config::get(StorageDatabaseConstants::DB_ENGINE) === StorageDatabaseConfig::DB_ENGINE_MYSQL) {
-            return new MySqlStorageReaderProviderPlugin();
+            return new MySqlStorageReaderPlugin();
         }
 
-        return new PostgreSqlStorageReaderProviderPlugin();
+        return new PostgreSqlStorageReaderPlugin();
     }
 }

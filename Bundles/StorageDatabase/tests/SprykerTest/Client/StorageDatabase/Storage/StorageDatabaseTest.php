@@ -11,17 +11,19 @@ use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingBridge;
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
-use Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader;
 use Spryker\Client\StorageDatabase\Storage\StorageDatabase;
+use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase
  * @group Storage
  * @group StorageDatabaseTest
  * Add your own group annotations below this line
+ *
  * @property \SprykerTest\Client\StorageDatabase\StorageDatabaseClientTester $tester
  */
 class StorageDatabaseTest extends Unit
@@ -32,7 +34,7 @@ class StorageDatabaseTest extends Unit
     /**
      * @var \Spryker\Client\StorageDatabase\Storage\Reader\AbstractStorageReader|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $storageReaderMock;
+    protected $storageReaderPluginMock;
 
     /**
      * @var \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
@@ -45,7 +47,7 @@ class StorageDatabaseTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
-        $this->setupStorageReaderMock();
+        $this->setupStorageReaderPluginMock();
         $this->setupStorageDatabase();
     }
 
@@ -56,7 +58,7 @@ class StorageDatabaseTest extends Unit
     {
         $dummyKey = static::DUMMY_KEY;
 
-        $this->storageReaderMock
+        $this->storageReaderPluginMock
             ->expects($this->once())
             ->method('get')
             ->with($dummyKey);
@@ -74,7 +76,7 @@ class StorageDatabaseTest extends Unit
      */
     public function testGetReturnsDecodedResultWhenPresent(string $storageReaderReturnValue, $expectedResult): void
     {
-        $this->storageReaderMock
+        $this->storageReaderPluginMock
             ->method('get')
             ->willReturn($storageReaderReturnValue);
 
@@ -100,7 +102,7 @@ class StorageDatabaseTest extends Unit
      */
     public function testGetReturnsNullWhenEmptyResult(): void
     {
-        $this->storageReaderMock
+        $this->storageReaderPluginMock
             ->method('get')
             ->willReturn('');
 
@@ -123,7 +125,7 @@ class StorageDatabaseTest extends Unit
      */
     public function testGetMultiReturnsResultWithPrefixedKeys(): void
     {
-        $this->storageReaderMock
+        $this->storageReaderPluginMock
             ->method('getMulti')
             ->willReturn(
                 $this->getMultiResult()
@@ -137,11 +139,14 @@ class StorageDatabaseTest extends Unit
      */
     public function testAddsReadAccessStatsForGetWhenDebugEnabled(): array
     {
+        // Arrange
         $this->storageDatabase->setDebug(true);
 
+        // Act
         $this->storageDatabase->get(static::DUMMY_KEY);
         $accessStats = $this->storageDatabase->getAccessStats();
 
+        // Assert
         $this->assertEquals(1, $accessStats['count']['read']);
         $this->assertCount(1, $accessStats['keys']['read']);
         $this->assertEquals(static::DUMMY_KEY, $accessStats['keys']['read'][0]);
@@ -170,11 +175,14 @@ class StorageDatabaseTest extends Unit
      */
     public function testDoesntAddReadAccessStatsForGetWhenDebugDisabled(): void
     {
+        // Arrange
         $this->storageDatabase->setDebug(false);
 
+        // Act
         $this->storageDatabase->get(static::DUMMY_KEY);
         $accessStats = $this->storageDatabase->getAccessStats();
 
+        // Assert
         $this->assertEquals($this->getEmptyAccessStats(), $accessStats);
     }
 
@@ -207,9 +215,9 @@ class StorageDatabaseTest extends Unit
     /**
      * @return void
      */
-    protected function setupStorageReaderMock(): void
+    protected function setupStorageReaderPluginMock(): void
     {
-        $this->storageReaderMock = $this->createMock(AbstractStorageReader::class);
+        $this->storageReaderPluginMock = $this->createMock(StorageReaderPluginInterface::class);
     }
 
     /**
@@ -246,8 +254,8 @@ class StorageDatabaseTest extends Unit
     protected function setupStorageDatabase(): void
     {
         $this->storageDatabase = new StorageDatabase(
-            $this->storageReaderMock,
-            $this->createUtilEncodingService()
+            $this->createUtilEncodingService(),
+            $this->storageReaderPluginMock
         );
     }
 

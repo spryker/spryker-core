@@ -8,7 +8,7 @@
 namespace SprykerTest\Client\StorageDatabase;
 
 use Codeception\Actor;
-use Spryker\Client\StorageDatabase\Plugin\PostgreSqlStorageReaderProviderPlugin;
+use Spryker\Client\StorageDatabase\Plugin\PostgreSqlStorageReaderPlugin;
 use Spryker\Client\StorageDatabase\StorageDatabaseDependencyProvider;
 
 /**
@@ -35,6 +35,6 @@ class StorageDatabaseClientTester extends Actor
      */
     public function setupStorageReaderPlugins(): void
     {
-        $this->setDependency(StorageDatabaseDependencyProvider::PLUGIN_STORAGE_READER_PROVIDER, new PostgreSqlStorageReaderProviderPlugin());
+        $this->setDependency(StorageDatabaseDependencyProvider::PLUGIN_STORAGE_READER_PROVIDER, new PostgreSqlStorageReaderPlugin());
     }
 }

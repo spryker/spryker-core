@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\StorageDatabaseExtension\Storage\Reader;
+namespace Spryker\Client\StorageDatabase\Storage\Reader;
 
 interface StorageReaderInterface
 {

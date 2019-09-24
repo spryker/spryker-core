@@ -10,7 +10,7 @@ namespace Spryker\Client\StorageDatabase;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingBridge;
-use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface;
+use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseConfig getConfig()
@@ -62,9 +62,9 @@ class StorageDatabaseDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface|null
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface|null
      */
-    protected function getStorageReaderProviderPlugin(): ?StorageReaderProviderPluginInterface
+    protected function getStorageReaderProviderPlugin(): ?StorageReaderPluginInterface
     {
         return null;
     }

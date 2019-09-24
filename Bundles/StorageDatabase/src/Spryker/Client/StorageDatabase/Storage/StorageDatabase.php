@@ -8,7 +8,8 @@
 namespace Spryker\Client\StorageDatabase\Storage;
 
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
-use Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface;
+use Spryker\Client\StorageDatabase\Exception\MissingStorageReaderPluginException;
+use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 
 class StorageDatabase implements StorageDatabaseInterface
 {
@@ -20,9 +21,9 @@ class StorageDatabase implements StorageDatabaseInterface
     protected const ACCESS_STATS_KEY_READ = 'read';
 
     /**
-     * @var \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface
+     * @var \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface|null
      */
-    protected $storageReader;
+    protected $storageReaderPlugin;
 
     /**
      * @var array
@@ -40,13 +41,13 @@ class StorageDatabase implements StorageDatabaseInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface $storageReader
      * @param \Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface|null $storageReaderPlugin
      */
-    public function __construct(StorageReaderInterface $storageReader, StorageDatabaseToUtilEncodingInterface $utilEncodingService)
+    public function __construct(StorageDatabaseToUtilEncodingInterface $utilEncodingService, ?StorageReaderPluginInterface $storageReaderPlugin = null)
     {
-        $this->storageReader = $storageReader;
         $this->utilEncodingService = $utilEncodingService;
+        $this->storageReaderPlugin = $storageReaderPlugin;
         $this->resetAccessStats();
     }
 
@@ -57,7 +58,7 @@ class StorageDatabase implements StorageDatabaseInterface
      */
     public function get(string $key)
     {
-        $result = $this->storageReader->get($key);
+        $result = $this->getStorageReaderPlugin()->get($key);
         $this->addReadAccessStats($key);
 
         $decodedResult = $this->decodeResult($result);
@@ -76,7 +77,7 @@ class StorageDatabase implements StorageDatabaseInterface
             return [];
         }
 
-        $results = array_combine($this->getPrefixedKeys($keys), $this->storageReader->getMulti($keys));
+        $results = array_combine($this->getPrefixedKeys($keys), $this->getStorageReaderPlugin()->getMulti($keys));
         $this->addMultiReadAccessStats($keys);
 
         return $results;
@@ -265,5 +266,26 @@ class StorageDatabase implements StorageDatabaseInterface
         }
 
         return $decodedResult;
+    }
+
+    /**
+     * @throws \Spryker\Client\StorageDatabase\Exception\MissingStorageReaderPluginException
+     *
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface
+     */
+    protected function getStorageReaderPlugin(): StorageReaderPluginInterface
+    {
+        if (!$this->storageReaderPlugin) {
+            throw new MissingStorageReaderPluginException(
+                sprintf(
+                    'There is no registered plugin which can perform storage database interaction.
+                    Make sure that StorageDatabaseDependencyProvider::getStorageReaderProviderPlugin() returns
+                    an implementation of %s',
+                    StorageReaderPluginInterface::class
+                )
+            );
+        }
+        
+        return $this->storageReaderPlugin;
     }
 }

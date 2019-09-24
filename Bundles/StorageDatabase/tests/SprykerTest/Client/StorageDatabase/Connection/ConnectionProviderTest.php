@@ -13,6 +13,7 @@ use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase

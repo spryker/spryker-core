@@ -13,12 +13,12 @@ use Spryker\Client\StorageDatabase\Connection\ConnectionProviderInterface;
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingInterface;
 use Spryker\Client\StorageDatabase\Storage\Reader\MySqlStorageReader;
 use Spryker\Client\StorageDatabase\Storage\Reader\PostgreSqlStorageReader;
+use Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderInterface;
 use Spryker\Client\StorageDatabase\Storage\StorageDatabase;
 use Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface;
 use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolver;
 use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolverInterface;
-use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface;
-use Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface;
+use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 
 /**
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseConfig getConfig()
@@ -41,8 +41,8 @@ class StorageDatabaseFactory extends AbstractFactory
     public function createStorageDatabaseService(): StorageDatabaseInterface
     {
         return new StorageDatabase(
-            $this->getStorageReader(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->getStorageReaderPlugin()
         );
     }
 
@@ -57,15 +57,7 @@ class StorageDatabaseFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface
-     */
-    public function getStorageReader(): StorageReaderInterface
-    {
-        return $this->getStorageReaderProviderPlugin()->getStorageReader();
-    }
-
-    /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface
+     * @return \Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderInterface
      */
     public function createPostgreSqlStorageReader(): StorageReaderInterface
     {
@@ -76,7 +68,7 @@ class StorageDatabaseFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Storage\Reader\StorageReaderInterface
+     * @return \Spryker\Client\StorageDatabase\Storage\Reader\StorageReaderInterface
      */
     public function createMySqlStorageReader(): StorageReaderInterface
     {
@@ -95,9 +87,9 @@ class StorageDatabaseFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderProviderPluginInterface|null
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface|null
      */
-    public function getStorageReaderProviderPlugin(): ?StorageReaderProviderPluginInterface
+    public function getStorageReaderPlugin(): ?StorageReaderPluginInterface
     {
         return $this->getProvidedDependency(StorageDatabaseDependencyProvider::PLUGIN_STORAGE_READER_PROVIDER);
     }

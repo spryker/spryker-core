@@ -14,12 +14,14 @@ use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageDatabase
  * @group StorageTableNameResolver
  * @group StorageTableNameResolverTest
  * Add your own group annotations below this line
+ *
  * @property \SprykerTest\Client\StorageDatabase\StorageDatabaseClientTester $tester
  */
 class StorageTableNameResolverTest extends Unit
