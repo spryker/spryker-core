@@ -16,7 +16,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Information' | trans} %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'General information' | trans} %}
 
         {% block widget_content %}
             <div class="row">
@@ -58,7 +58,7 @@
 
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Scheduled prices inside import' | trans} %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Scheduled prices inside this import' | trans} %}
 
         {% block widget_content %}
             {{ priceProductScheduleTable | raw }}
