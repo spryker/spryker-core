@@ -28,3 +28,16 @@ Type,Type
 Whitelist,Whitelist
 "Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot)."
 "Unable to delete Product List since it used by Merchant Relation ""%merchant_relation%"".","Unable to delete Product List since it used by Merchant Relation ""%merchant_relation%""."
+"Configurable Bundle Template","Configurable Bundle Template"
+"Configurable Bundle Templates","Configurable Bundle Templates"
+"Edit Slot","Edit Slot"
+"Merchant Relationship","Merchant Relationship"
+"Edit Merchant Relationship","Edit Merchant Relationship"
+"Merchant Relations","Merchant Relations"
+Сonfirm,Сonfirm
+Cancel,Cancel
+"Used By","Used By"
+Title,Title
+Name,Name
+Actions,Actions
+"Please ensure you saved information","Please ensure you saved information"
