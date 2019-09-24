@@ -9,11 +9,11 @@ namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
-use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -115,6 +115,8 @@ interface WishlistClientInterface
     /**
      * @api
      *
+     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -163,15 +165,13 @@ interface WishlistClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Retrieves wishlist by customer id and wishlist uuid.
+     * - Retrieves wishlist by data provided in the WishlistFilterTransfer.
      *
      * @api
      *
-     * {@internal will work if uuid field is provided.}
-     *
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
 }

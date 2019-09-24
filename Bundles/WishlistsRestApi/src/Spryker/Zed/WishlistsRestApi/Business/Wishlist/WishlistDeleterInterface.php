@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 
-use Generated\Shared\Transfer\WishlistRequestTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 
 interface WishlistDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function deleteWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer;
+    public function deleteWishlist(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
 }

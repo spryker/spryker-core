@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -48,17 +50,14 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
     }
 
     /**
-     * @param int $idCustomer
-     * @param string $uuidWishlist
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer|null
      */
-    public function findCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): ?WishlistTransfer
+    public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer
     {
-        $wishlistEntityCollection = $this->getFactory()
+        $wishlistQuery = $this->getFactory()
             ->createWishlistQuery()
-            ->filterByFkCustomer($idCustomer)
-            ->filterByUuid($uuidWishlist)
             ->leftJoinWithSpyWishlistItem()
             ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
@@ -66,7 +65,9 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
                     WishlistTransfer::NUMBER_OF_ITEMS
                 )
                 ->groupByFkWishlist()
-            ->endUse()
+            ->endUse();
+
+        $wishlistEntityCollection = $this->applyFilters($wishlistQuery, $wishlistFilterTransfer)
             ->find();
 
         if (!$wishlistEntityCollection->count()) {
@@ -76,5 +77,26 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
         return $this->getFactory()
             ->createWishlistMapper()
             ->mapWishlistEntityToWishlistTransfer($wishlistEntityCollection->getFirst(), new WishlistTransfer());
+    }
+
+    /**
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $wishlistQuery
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
+     */
+    protected function applyFilters(SpyWishlistQuery $wishlistQuery, WishlistFilterTransfer $wishlistFilterTransfer): SpyWishlistQuery
+    {
+        if ($wishlistFilterTransfer->getIdCustomer()) {
+            $wishlistQuery->filterByFkCustomer($wishlistFilterTransfer->getIdCustomer());
+        }
+        if ($wishlistFilterTransfer->getName()) {
+            $wishlistQuery->filterByName($wishlistFilterTransfer->getName());
+        }
+        if ($wishlistFilterTransfer->getUuid()) {
+            $wishlistQuery->filterByUuid($wishlistFilterTransfer->getUuid());
+        }
+
+        return $wishlistQuery;
     }
 }

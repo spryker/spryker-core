@@ -8,7 +8,7 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\WishlistRequestTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
@@ -82,7 +82,7 @@ class WishlistReader implements WishlistReaderInterface
     protected function getCustomerWishlistByUuid(int $idCustomer, string $uuidWishlist): RestResponseInterface
     {
         $wishlistResponseTransfer = $this->wishlistClient
-            ->getCustomerWishlistByUuid($this->createWishlistRequestTransfer($idCustomer, $uuidWishlist));
+            ->getWishlistByFilter($this->createWishlistFilterTransfer($idCustomer, $uuidWishlist));
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->wishlistRestResponseBuilder->createRestErrorResponse($wishlistResponseTransfer->getErrors());
@@ -119,11 +119,11 @@ class WishlistReader implements WishlistReaderInterface
      * @param int $idCustomer
      * @param string $uuidWishlist
      *
-     * @return \Generated\Shared\Transfer\WishlistRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistFilterTransfer
      */
-    protected function createWishlistRequestTransfer(int $idCustomer, string $uuidWishlist): WishlistRequestTransfer
+    protected function createWishlistFilterTransfer(int $idCustomer, string $uuidWishlist): WishlistFilterTransfer
     {
-        return (new WishlistRequestTransfer())
+        return (new WishlistFilterTransfer())
             ->setIdCustomer($idCustomer)
             ->setUuid($uuidWishlist);
     }

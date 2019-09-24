@@ -10,12 +10,12 @@ namespace Spryker\Zed\Wishlist\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewMetaTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
 use Generated\Shared\Transfer\WishlistPaginationTransfer;
-use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -414,20 +414,16 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
-        $wishlistRequestTransfer
-            ->requireUuid()
+        $wishlistFilterTransfer
             ->requireIdCustomer();
 
-        $wishlistTransfer = $this->wishlistRepository->findCustomerWishlistByUuid(
-            $wishlistRequestTransfer->getIdCustomer(),
-            $wishlistRequestTransfer->getUuid()
-        );
+        $wishlistTransfer = $this->wishlistRepository->findWishlistByFilter($wishlistFilterTransfer);
 
         if (!$wishlistTransfer) {
             return (new WishlistResponseTransfer())

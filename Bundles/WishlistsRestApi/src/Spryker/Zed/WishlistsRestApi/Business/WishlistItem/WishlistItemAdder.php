@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business\WishlistItem;
 
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -42,8 +43,8 @@ class WishlistItemAdder implements WishlistItemAdderInterface
             ->requireUuidWishlist()
             ->requireSku();
 
-        $wishlistRequestTransfer = $this->createWishlistRequestTransfer($wishlistItemRequestTransfer);
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistFacade
+            ->getWishlistByFilter($this->createWishlistFilterTransfer($wishlistItemRequestTransfer));
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
@@ -122,5 +123,17 @@ class WishlistItemAdder implements WishlistItemAdderInterface
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(true)
             ->setWishlistItem($wishlistItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistFilterTransfer
+     */
+    protected function createWishlistFilterTransfer(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistFilterTransfer
+    {
+        return (new WishlistFilterTransfer())
+            ->fromArray($wishlistItemRequestTransfer->toArray(), true)
+            ->setUuid($wishlistItemRequestTransfer->getUuidWishlist());
     }
 }

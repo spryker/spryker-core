@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business\WishlistItem;
 
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
-use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Shared\WishlistsRestApi\WishlistsRestApiConfig;
@@ -42,9 +42,9 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
             ->requireUuidWishlist()
             ->requireSku();
 
-        $wishlistRequestTransfer = $this->createWishlistRequestTransfer($wishlistItemRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistFacade
+            ->getWishlistByFilter($this->createWishlistFilterTransfer($wishlistItemRequestTransfer));
 
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             return $this->createWishlistNotFoundErrorResponse($wishlistResponseTransfer);
         }
@@ -101,20 +101,6 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistRequestTransfer
-     */
-    protected function createWishlistRequestTransfer(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistRequestTransfer
-    {
-        $wishlistRequestTransfer = (new WishlistRequestTransfer())
-            ->setUuid($wishlistItemRequestTransfer->getUuidWishlist())
-            ->setIdCustomer($wishlistItemRequestTransfer->getIdCustomer());
-
-        return $wishlistRequestTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
     protected function createWishlistItemNotFoundErrorResponse(): WishlistItemResponseTransfer
@@ -143,5 +129,17 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistFilterTransfer
+     */
+    protected function createWishlistFilterTransfer(WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistFilterTransfer
+    {
+        return (new WishlistFilterTransfer())
+            ->fromArray($wishlistItemRequestTransfer->toArray(), true)
+            ->setUuid($wishlistItemRequestTransfer->getUuidWishlist());
     }
 }

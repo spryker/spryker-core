@@ -82,6 +82,12 @@
         <property name="wishlist" type="Wishlist" />
     </transfer>
 
+    <transfer name="WishlistFilter">
+        <property name="idCustomer" type="int" />
+        <property name="name" type="string" />
+        <property name="uuid" type="string" />
+    </transfer>
+
     <transfer name="WishlistOverviewMeta">
         <property name="wishlistCollection" type="WishlistCollection" />
         <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta" />

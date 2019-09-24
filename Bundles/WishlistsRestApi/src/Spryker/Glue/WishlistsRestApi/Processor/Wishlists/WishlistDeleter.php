@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
-use Generated\Shared\Transfer\WishlistRequestTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Spryker\Client\WishlistsRestApi\WishlistsRestApiClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -45,7 +45,7 @@ class WishlistDeleter implements WishlistDeleterInterface
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
         $wishlistResponseTransfer = $this->wishlistsRestApiClient->deleteWishlist(
-            $this->createWishlistRequestTransferFromRequest($restRequest)
+            $this->createWishlistFilterTransferFromRequest($restRequest)
         );
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
@@ -60,11 +60,11 @@ class WishlistDeleter implements WishlistDeleterInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\WishlistRequestTransfer
+     * @return \Generated\Shared\Transfer\WishlistFilterTransfer
      */
-    protected function createWishlistRequestTransferFromRequest(RestRequestInterface $restRequest)
+    protected function createWishlistFilterTransferFromRequest(RestRequestInterface $restRequest)
     {
-        return (new WishlistRequestTransfer())
+        return (new WishlistFilterTransfer())
             ->setUuid($restRequest->getResource()->getId())
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier());
     }

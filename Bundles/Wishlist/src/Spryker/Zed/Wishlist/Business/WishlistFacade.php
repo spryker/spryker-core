@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
-use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -200,6 +200,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     /**
      * {@inheritdoc}
      *
+     * @deprecated Use WishlistFacade::getWishlistByFilter() instead.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -250,16 +252,14 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @api
      *
-     * {@internal will work if uuid field is provided.}
-     *
-     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
-    public function getCustomerWishlistByUuid(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getFactory()
             ->createReader()
-            ->getCustomerWishlistByUuid($wishlistRequestTransfer);
+            ->getWishlistByFilter($wishlistFilterTransfer);
     }
 }

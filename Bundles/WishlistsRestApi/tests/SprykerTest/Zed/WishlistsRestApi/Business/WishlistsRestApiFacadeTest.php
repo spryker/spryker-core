@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\WishlistsRestApi\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
@@ -179,12 +180,12 @@ class WishlistsRestApiFacadeTest extends Test
                 'name' => $wishlistName,
             ]
         );
-        $wishlistRequestTransfer = (new WishlistRequestTransfer())
+        $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setUuid($wishlist->getUuid())
             ->setIdCustomer($this->customer->getIdCustomer());
 
         //Act
-        $this->tester->getWishlistsRestApiFacade()->deleteWishlist($wishlistRequestTransfer);
+        $this->tester->getWishlistsRestApiFacade()->deleteWishlist($wishlistFilterTransfer);
 
         //Assert
         $this->expectException(MissingWishlistException::class);
@@ -197,7 +198,7 @@ class WishlistsRestApiFacadeTest extends Test
     public function testDeleteNonExistingWishlistShouldReturnError(): void
     {
         //Arrange
-        $wishlistRequestTransfer = (new WishlistRequestTransfer())
+        $wishlistRequestTransfer = (new WishlistFilterTransfer())
             ->setUuid('uuid-does-not-exist')
             ->setIdCustomer($this->customer->getIdCustomer());
 

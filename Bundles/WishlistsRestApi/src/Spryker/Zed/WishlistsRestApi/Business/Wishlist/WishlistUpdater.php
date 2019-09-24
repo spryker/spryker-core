@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\WishlistsRestApi\Business\Wishlist;
 
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Spryker\Shared\WishlistsRestApi\WishlistsRestApiConfig;
@@ -44,7 +45,8 @@ class WishlistUpdater implements WishlistUpdaterInterface
      */
     public function updateWishlist(WishlistRequestTransfer $wishlistRequestTransfer): WishlistResponseTransfer
     {
-        $wishlistResponseTransfer = $this->wishlistFacade->getCustomerWishlistByUuid($wishlistRequestTransfer);
+        $wishlistResponseTransfer = $this->wishlistFacade
+            ->getWishlistByFilter($this->createWishlistFilterTransfer($wishlistRequestTransfer));
 
         if (!$wishlistResponseTransfer->getIsSuccess()) {
             $wishlistResponseTransfer->setErrorIdentifier(
@@ -90,5 +92,15 @@ class WishlistUpdater implements WishlistUpdaterInterface
         return $wishlistResponseTransfer->setErrorIdentifier(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_CANT_BE_UPDATED
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistRequestTransfer $wishlistRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistFilterTransfer
+     */
+    protected function createWishlistFilterTransfer(WishlistRequestTransfer $wishlistRequestTransfer): WishlistFilterTransfer
+    {
+        return (new WishlistFilterTransfer())->fromArray($wishlistRequestTransfer->toArray(), true);
     }
 }

@@ -16,7 +16,6 @@
   },
   "require-dev": {
     "spryker/propel": "*",
-    "spryker/stock": "*",
     "spryker/testify": "*"
   },
   "autoload": {
