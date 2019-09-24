@@ -17,10 +17,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerTest\Shared\Stock\Helper\StockDataHelper;
 use SprykerTest\Shared\Tax\Helper\TaxSetDataHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -36,6 +38,11 @@ class ProductDataHelper extends Module
      * @var \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
      */
     protected $taxSetDataHelper;
+
+    /**
+     * @var \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
+     */
+    protected $stockDataHelper;
 
     /**
      * @param array $productConcreteOverride
@@ -135,6 +142,8 @@ class ProductDataHelper extends Module
 
         $productFacade->createProductConcrete($productConcreteTransfer);
 
+        $this->assignProductConcreteToStock($productConcreteTransfer);
+
         $productFacade->createProductUrl(
             $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
         );
@@ -164,6 +173,16 @@ class ProductDataHelper extends Module
     }
 
     /**
+     * @return \SprykerTest\Shared\Stock\Helper\StockDataHelper|null
+     */
+    protected function findStockDataHelper(): ?StockDataHelper
+    {
+        $this->stockDataHelper = $this->stockDataHelper ?: $this->findModule(StockDataHelper::class);
+
+        return $this->stockDataHelper;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
@@ -182,6 +201,22 @@ class ProductDataHelper extends Module
             ->taxProductConnector()
             ->facade()
             ->saveTaxSetToProductAbstract($productAbstractTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function assignProductConcreteToStock(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $stockDataHelper = $this->findStockDataHelper();
+
+        if (!$stockDataHelper) {
+            return;
+        }
+
+        $stockDataHelper->haveProductInStock([StockProductTransfer::SKU => $productConcreteTransfer->getSku()]);
     }
 
     /**
