@@ -125,9 +125,9 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
-     *
      * @api
+     *
+     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -231,7 +231,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @
      * @param string $repositoryName
      *
      * @return bool

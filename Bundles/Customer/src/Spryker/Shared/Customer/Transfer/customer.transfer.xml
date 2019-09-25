@@ -4,86 +4,87 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Mail">
-        <property name="customer" type="Customer" />
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="idCustomerAddress" type="int" />
-        <property name="customerId" type="string" />
-        <property name="fkCustomer" type="int" />
-        <property name="email" type="string" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="phone" type="string" />
-        <property name="comment" type="string" />
-        <property name="state" type="string" />
-        <property name="isDeleted" type="bool" />
-        <property name="isDefaultBilling" type="bool" />
-        <property name="isDefaultShipping" type="bool" />
-        <property name="fkCountry" type="int" />
-        <property name="fkRegion" type="int" />
-        <property name="iso2Code" type="string" />
-        <property name="anonymizedAt" type="string" />
-        <property name="country" type="Country" />
+        <property name="idCustomerAddress" type="int"/>
+        <property name="customerId" type="string"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="comment" type="string"/>
+        <property name="state" type="string"/>
+        <property name="isDeleted" type="bool"/>
+        <property name="isDefaultBilling" type="bool"/>
+        <property name="isDefaultShipping" type="bool"/>
+        <property name="fkCountry" type="int"/>
+        <property name="fkRegion" type="int"/>
+        <property name="iso2Code" type="string"/>
+        <property name="anonymizedAt" type="string"/>
+        <property name="country" type="Country"/>
+        <property name="isAddressSavingSkipped" type="bool"/>
     </transfer>
 
     <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="Address" />
+        <property name="addresses" type="Address[]" singular="Address"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" type="string" />
-        <property name="idCustomer" type="int" />
-        <property name="customerReference" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="company" type="string" />
-        <property name="gender" type="string" />
-        <property name="dateOfBirth" type="string" />
-        <property name="salutation" type="string" />
-        <property name="password" type="string" />
-        <property name="newPassword" type="string" />
-        <property name="billingAddress" type="Address[]" />
-        <property name="shippingAddress" type="Address[]" />
-        <property name="addresses" type="Addresses" singular="address" />
-        <property name="defaultBillingAddress" type="string" />
-        <property name="defaultShippingAddress" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
-        <property name="restorePasswordKey" type="string" />
-        <property name="restorePasswordLink" type="string" />
-        <property name="restorePasswordDate" type="string" />
-        <property name="registrationKey" type="string" />
-        <property name="confirmationLink" type="string" />
-        <property name="registered" type="string" />
-        <property name="message" type="string" />
-        <property name="sendPasswordToken" type="bool" />
-        <property name="isGuest" type="bool" />
-        <property name="locale" type="Locale" />
-        <property name="anonymizedAt" type="string" />
-        <property name="fkUser" type="int" />
-        <property name="username" type="string" />
-        <property name="phone" type="string" />
-        <property name="isDirty" type="bool" />
+        <property name="email" type="string"/>
+        <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="company" type="string"/>
+        <property name="gender" type="string"/>
+        <property name="dateOfBirth" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="password" type="string"/>
+        <property name="newPassword" type="string"/>
+        <property name="billingAddress" type="Address[]"/>
+        <property name="shippingAddress" type="Address[]"/>
+        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="defaultBillingAddress" type="string"/>
+        <property name="defaultShippingAddress" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="restorePasswordKey" type="string"/>
+        <property name="restorePasswordLink" type="string"/>
+        <property name="restorePasswordDate" type="string"/>
+        <property name="registrationKey" type="string"/>
+        <property name="confirmationLink" type="string"/>
+        <property name="registered" type="string"/>
+        <property name="message" type="string"/>
+        <property name="sendPasswordToken" type="bool"/>
+        <property name="isGuest" type="bool"/>
+        <property name="locale" type="Locale"/>
+        <property name="anonymizedAt" type="string"/>
+        <property name="fkUser" type="int"/>
+        <property name="username" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="isDirty" type="bool"/>
     </transfer>
 
     <transfer name="CustomerError">
-        <property name="message" type="string" />
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="CustomerResponse">
-        <property name="hasCustomer" type="bool" />
-        <property name="customerTransfer" type="Customer" />
-        <property name="isSuccess" type="bool" />
+        <property name="hasCustomer" type="bool"/>
+        <property name="customerTransfer" type="Customer"/>
+        <property name="isSuccess" type="bool"/>
         <property name="message" type="Message"/>
-        <property name="errors" type="CustomerError[]" singular="error" />
+        <property name="errors" type="CustomerError[]" singular="error"/>
     </transfer>
 
     <transfer name="Message">
@@ -92,18 +93,27 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="fkCustomer" type="int" />
-        <property name="customer" type="Customer" />
+        <property name="fkCustomer" type="int"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="CustomerCollection">
-        <property name="filter" type="Filter" />
-        <property name="customers" type="Customer[]" singular="customer" />
-        <property name="pagination" type="Pagination" />
+        <property name="filter" type="Filter"/>
+        <property name="customers" type="Customer[]" singular="customer"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="isAddressSavingSkipped" type="bool" />
+        <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="billingAddress" type="Address"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
 </transfers>

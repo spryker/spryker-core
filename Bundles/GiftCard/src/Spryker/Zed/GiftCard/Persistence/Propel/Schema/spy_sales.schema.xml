@@ -8,9 +8,9 @@
 >
 
     <table name="spy_sales_order_item_gift_card" phpName="SpySalesOrderItemGiftCard">
-        <column name="id_sales_order_item_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_item_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="pattern" type="VARCHAR" size="40" required="false"/>
-        <column name="value" type="INTEGER" required="false" />
+        <column name="value" type="INTEGER" required="false"/>
         <column name="code" type="VARCHAR" size="40" required="false"/>
         <column name="attributes" type="LONGVARCHAR" required="false"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>

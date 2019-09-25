@@ -95,7 +95,7 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -120,6 +120,8 @@ class MoneyCollectionType extends AbstractCollectionType
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getBlockPrefix()
     {

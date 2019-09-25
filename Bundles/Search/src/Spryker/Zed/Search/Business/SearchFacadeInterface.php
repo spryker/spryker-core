@@ -195,8 +195,6 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @
-     *
      * @param string $repositoryName
      *
      * @return bool

@@ -16,6 +16,7 @@ use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTra
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

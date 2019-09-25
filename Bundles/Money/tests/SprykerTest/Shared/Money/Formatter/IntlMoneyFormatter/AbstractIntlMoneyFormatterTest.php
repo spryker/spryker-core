@@ -15,6 +15,7 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money

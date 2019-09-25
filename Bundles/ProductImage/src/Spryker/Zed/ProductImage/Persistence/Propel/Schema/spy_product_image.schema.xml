@@ -4,7 +4,7 @@
     <table name="spy_product_image_set" idMethod="native" allowPkInsert="true">
         <column name="id_product_image_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255"/>
-        <column name="fk_locale" type="INTEGER" required="false" />
+        <column name="fk_locale" type="INTEGER" required="false"/>
         <column name="fk_product" type="INTEGER" required="false"/>
         <column name="fk_product_abstract" type="INTEGER" required="false"/>
 
@@ -27,11 +27,11 @@
         </unique>
 
         <index name="spy_product_image_set-index-fk_product">
-            <index-column name="fk_product" />
+            <index-column name="fk_product"/>
         </index>
 
         <index name="spy_product_image_set-index-fk_product_abstract">
-            <index-column name="fk_product_abstract" />
+            <index-column name="fk_product_abstract"/>
         </index>
 
         <id-method-parameter value="spy_product_image_set_pk_seq"/>

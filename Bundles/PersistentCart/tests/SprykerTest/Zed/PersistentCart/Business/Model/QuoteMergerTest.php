@@ -18,6 +18,7 @@ use Spryker\Zed\PersistentCart\Business\PersistentCartBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PersistentCart

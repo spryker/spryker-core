@@ -15,6 +15,7 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Graph

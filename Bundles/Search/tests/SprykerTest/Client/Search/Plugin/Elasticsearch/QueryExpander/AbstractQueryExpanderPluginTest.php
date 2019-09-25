@@ -24,11 +24,12 @@ use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
 use Spryker\Client\Search\SearchConfig as ClientSearchConfig;
 use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
-use Spryker\Shared\Search\SearchElasticsearchConfig as SharedSearchConfig;
+use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 use SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

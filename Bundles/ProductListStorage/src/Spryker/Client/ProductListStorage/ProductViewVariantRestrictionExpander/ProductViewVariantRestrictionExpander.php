@@ -33,9 +33,9 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter::filterAbstractProductVariantsData()
-     *
      * @deprecated Will be removed without replacement. Not recommended to use with spryker/product-storage ^1.4.0.
+     *
+     * @see \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter::filterAbstractProductVariantsData()
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *

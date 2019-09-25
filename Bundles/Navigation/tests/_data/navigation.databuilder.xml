@@ -6,8 +6,8 @@
 >
 
     <transfer name="Navigation">
-        <property name="key" dataBuilderRule="unique()->sentence(2)" />
-        <property name="name" dataBuilderRule="unique()->sentence(2)" />
+        <property name="key" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
     <transfer name="NavigationNodeLocalizedAttributes">

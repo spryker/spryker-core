@@ -59,9 +59,9 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      * @param array $data
      * @param string $format
      *
-     * @return string|null
-     *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
+     *
+     * @return string|null
      */
     public function encodeToFormat(array $data, string $format): ?string
     {
@@ -78,9 +78,9 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      * @param string $data
      * @param string $format
      *
-     * @return array|null
-     *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
+     *
+     * @return array|null
      */
     public function decodeFromFormat(string $data, string $format): ?array
     {

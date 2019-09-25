@@ -14,10 +14,11 @@ use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Config\SortConfigBuilder;
-use Spryker\Shared\Search\SearchElasticsearchConfig as SharedSearchConfig;
+use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

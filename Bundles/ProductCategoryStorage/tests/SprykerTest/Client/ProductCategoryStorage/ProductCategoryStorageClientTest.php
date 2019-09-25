@@ -13,6 +13,7 @@ use Spryker\Client\ProductCategoryStorage\ProductCategoryStorageClientInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ProductCategoryStorage

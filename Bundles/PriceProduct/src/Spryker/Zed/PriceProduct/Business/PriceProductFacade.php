@@ -318,6 +318,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @api
      *
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -337,6 +338,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -451,7 +453,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param array|int[] $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -485,6 +487,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -577,5 +580,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->createReaderModel()
             ->getValidPrices($priceProductFilterTransfers);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(PriceProductTransfer $priceProductTransfer): bool
+    {
+        return $this->getRepository()
+            ->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer);
     }
 }

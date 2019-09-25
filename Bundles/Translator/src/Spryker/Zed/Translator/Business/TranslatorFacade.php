@@ -88,16 +88,17 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * {@inheritdoc}
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
+     *
      * @param string $locale
      *
-     * @@return void
+     * @return void
      */
     public function setLocale($locale): void
     {
@@ -105,12 +106,13 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @return string The locale
      */

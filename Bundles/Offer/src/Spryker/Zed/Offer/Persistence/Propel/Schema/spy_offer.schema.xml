@@ -13,7 +13,7 @@
         <column name="note" type="LONGVARCHAR" required="false"/>
 
         <foreign-key name="spy_offer-fk_user" foreignTable="spy_user" phpName="User">
-            <reference local="fk_user" foreign="id_user" />
+            <reference local="fk_user" foreign="id_user"/>
         </foreign-key>
 
         <index name="spy_offer-customer_reference">

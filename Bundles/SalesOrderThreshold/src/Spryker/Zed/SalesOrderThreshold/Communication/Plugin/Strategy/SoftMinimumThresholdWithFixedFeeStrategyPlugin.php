@@ -13,7 +13,7 @@ use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderThresholdStrategyPlugin
 {
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -25,7 +25,7 @@ class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderT
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderT
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderT
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderT
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritdoc}
      *
      * @api
      *

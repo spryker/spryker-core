@@ -34,6 +34,8 @@ class PriceClient extends AbstractClient implements PriceClientInterface
      *
      * @api
      *
+     * @param string $priceMode
+     *
      * @return void
      */
     public function switchPriceMode(string $priceMode): void
