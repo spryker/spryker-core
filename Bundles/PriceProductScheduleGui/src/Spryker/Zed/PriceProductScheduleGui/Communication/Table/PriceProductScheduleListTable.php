@@ -53,7 +53,7 @@ class PriceProductScheduleListTable extends AbstractTable
     protected const BUTTON_DOWNLOAD = 'Download';
     protected const BUTTON_DELETE = 'Delete';
 
-    protected const DEFAULT_IMPORTED_BY_VALUE = 'Admin';
+    protected const DEFAULT_IMPORTED_BY_VALUE = 'N/A';
 
     public const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
