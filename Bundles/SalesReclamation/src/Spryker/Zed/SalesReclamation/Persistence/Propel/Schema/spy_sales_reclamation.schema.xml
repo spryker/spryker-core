@@ -10,10 +10,10 @@
         <column name="id_sales_reclamation" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="customer_name" size="511" type="VARCHAR" required="true" />
-        <column name="customer_reference" size="255" type="VARCHAR" required="false" />
-        <column name="customer_email" size="255" type="VARCHAR" required="true" />
-        <column name="is_open" type="BOOLEAN" required="true" />
+        <column name="customer_name" size="511" type="VARCHAR" required="true"/>
+        <column name="customer_reference" size="255" type="VARCHAR" required="false"/>
+        <column name="customer_email" size="255" type="VARCHAR" required="true"/>
+        <column name="is_open" type="BOOLEAN" required="true"/>
 
         <behavior name="timestampable"/>
 
@@ -28,10 +28,10 @@
 
     <table name="spy_sales_reclamation_item" phpName="SpySalesReclamationItem">
         <column name="id_sales_reclamation_item" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_sales_reclamation" type="INTEGER" required="true" />
+        <column name="fk_sales_reclamation" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
 
-        <foreign-key name="spy_sales_reclamation_item-fk_sales_reclamation" foreignTable="spy_sales_reclamation" >
+        <foreign-key name="spy_sales_reclamation_item-fk_sales_reclamation" foreignTable="spy_sales_reclamation">
             <reference local="fk_sales_reclamation" foreign="id_sales_reclamation"/>
         </foreign-key>
         <foreign-key name="spy_sales_reclamation_item-fk_sales_order_item" foreignTable="spy_sales_order_item"

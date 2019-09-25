@@ -30,10 +30,11 @@ class StoreClient extends AbstractClient implements StoreClientInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */

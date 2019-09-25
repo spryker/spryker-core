@@ -20,6 +20,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePr
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle

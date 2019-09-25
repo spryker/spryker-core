@@ -9,7 +9,7 @@
         <column name="id_quote_approval" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_quote" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
-        <column name="status" required="true" type="VARCHAR" size="255" />
+        <column name="status" required="true" type="VARCHAR" size="255"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
 
         <id-method-parameter value="id_quote_approval_pk_seq"/>

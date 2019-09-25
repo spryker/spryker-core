@@ -13,6 +13,7 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Mail

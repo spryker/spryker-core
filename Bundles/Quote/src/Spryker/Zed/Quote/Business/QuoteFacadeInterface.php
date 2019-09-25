@@ -169,9 +169,9 @@ interface QuoteFacadeInterface
      *  - Locks quote by setting `isLocked` transfer property to true.
      *  - Low level Quote locking (use CartFacadeInterface for features).
      *
-     * @see CartFacadeInterface::resetQuoteLock()
-     *
      * @api
+     *
+     * @see CartFacadeInterface::resetQuoteLock()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -184,9 +184,9 @@ interface QuoteFacadeInterface
      *  - Unlocks quote by setting `isLocked` transfer property to false.
      *  - Low level Quote unlocking (use CartFacadeInterface for features).
      *
-     * @see CartFacadeInterface::resetQuoteLock()
-     *
      * @api
+     *
+     * @see CartFacadeInterface::resetQuoteLock()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

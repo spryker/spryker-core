@@ -16,6 +16,7 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductBundle

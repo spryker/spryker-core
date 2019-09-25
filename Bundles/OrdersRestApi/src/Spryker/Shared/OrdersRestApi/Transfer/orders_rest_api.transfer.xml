@@ -31,31 +31,31 @@
         <property name="quantity" type="int"/>
         <property name="metadata" type="RestOrderItemMetadata"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="taxRate" type="float" />
-        <property name="unitNetPrice" type="int" />
-        <property name="sumNetPrice" type="int" />
-        <property name="unitPrice" type="int" />
-        <property name="sumPrice" type="int" />
-        <property name="unitTaxAmountFullAggregation" type="int" />
-        <property name="sumTaxAmountFullAggregation" type="int" />
-        <property name="refundableAmount" type="int" />
-        <property name="canceledAmount" type="int" />
-        <property name="sumSubtotalAggregation" type="int" />
-        <property name="unitSubtotalAggregation" type="int" />
-        <property name="unitProductOptionPriceAggregation" type="int" />
-        <property name="sumProductOptionPriceAggregation" type="int" />
-        <property name="unitExpensePriceAggregation" type="int" />
-        <property name="sumExpensePriceAggregation" type="int" />
-        <property name="unitDiscountAmountAggregation" type="int" />
-        <property name="sumDiscountAmountAggregation" type="int" />
-        <property name="unitDiscountAmountFullAggregation" type="int" />
-        <property name="sumDiscountAmountFullAggregation" type="int" />
-        <property name="unitPriceToPayAggregation" type="int" />
-        <property name="sumPriceToPayAggregation" type="int" />
-        <property name="taxRateAverageAggregation" type="float" />
-        <property name="taxAmountAfterCancellation" type="int" />
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="unitProductOptionPriceAggregation" type="int"/>
+        <property name="sumProductOptionPriceAggregation" type="int"/>
+        <property name="unitExpensePriceAggregation" type="int"/>
+        <property name="sumExpensePriceAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="sumDiscountAmountFullAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="taxRateAverageAggregation" type="float"/>
+        <property name="taxAmountAfterCancellation" type="int"/>
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
@@ -128,21 +128,21 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="shipment" type="Shipment" />
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="Shipment">
-        <property name="shippingAddress" type="Address" />
+        <property name="shippingAddress" type="Address"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="iso2Code" type="string" />
-        <property name="country" type="Country" />
+        <property name="iso2Code" type="string"/>
+        <property name="country" type="Country"/>
     </transfer>
 
     <transfer name="Country">
-        <property name="iso2Code" type="string" />
-        <property name="name" type="string" />
+        <property name="iso2Code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Filter">
@@ -164,11 +164,11 @@
     </transfer>
 
     <transfer name="Totals">
-        <property name="taxTotal" type="TaxTotal" />
+        <property name="taxTotal" type="TaxTotal"/>
     </transfer>
 
     <transfer name="TaxTotal">
-        <property name="amount" type="int" />
+        <property name="amount" type="int"/>
     </transfer>
 
 </transfers>

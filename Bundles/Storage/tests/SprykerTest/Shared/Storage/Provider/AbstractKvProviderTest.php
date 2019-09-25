@@ -12,6 +12,7 @@ use Spryker\Shared\Storage\Provider\AbstractKvProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Storage

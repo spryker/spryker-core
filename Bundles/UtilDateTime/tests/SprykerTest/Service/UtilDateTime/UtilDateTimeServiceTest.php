@@ -15,6 +15,7 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDateTime

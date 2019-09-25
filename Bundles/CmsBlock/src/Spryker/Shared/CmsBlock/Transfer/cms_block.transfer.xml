@@ -4,50 +4,50 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CmsBlock">
-        <property name="idCmsBlock" type="int" />
-        <property name="name" type="string" />
-        <property name="validFrom" type="string" />
-        <property name="validTo" type="string" />
-        <property name="isActive" type="bool" />
-        <property name="fkTemplate" type="int" />
-        <property name="templateName" type="string" />
-        <property name="glossary" type="CmsBlockGlossary" />
+        <property name="idCmsBlock" type="int"/>
+        <property name="name" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="fkTemplate" type="int"/>
+        <property name="templateName" type="string"/>
+        <property name="glossary" type="CmsBlockGlossary"/>
         <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="idEntity" type="int" />
-        <property name="idStores" type="int[]" />
-        <property name="stores" type="Store[]" />
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]"/>
+        <property name="stores" type="Store[]"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="CmsBlockGlossary">
-        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder" />
+        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholder">
-        <property name="idCmsBlockGlossaryKeyMapping" type="int" />
-        <property name="fkGlossaryKey" type="int" />
-        <property name="fkCmsBlock" type="int" />
-        <property name="placeholder" type="string" />
-        <property name="templateName" type="string" />
-        <property name="translationKey" type="string" />
-        <property name="translations" type="CmsBlockGlossaryPlaceholderTranslation[]" singular="translation" />
+        <property name="idCmsBlockGlossaryKeyMapping" type="int"/>
+        <property name="fkGlossaryKey" type="int"/>
+        <property name="fkCmsBlock" type="int"/>
+        <property name="placeholder" type="string"/>
+        <property name="templateName" type="string"/>
+        <property name="translationKey" type="string"/>
+        <property name="translations" type="CmsBlockGlossaryPlaceholderTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholderTranslation">
-        <property name="fkLocale" type="int" />
-        <property name="localeName" type="string" />
-        <property name="translation" type="string" />
+        <property name="fkLocale" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="translation" type="string"/>
     </transfer>
 
     <transfer name="CmsBlockTemplate">
-        <property name="idCmsBlockTemplate" type="int" />
-        <property name="templateName" type="string" />
-        <property name="templatePath" type="string" />
+        <property name="idCmsBlockTemplate" type="int"/>
+        <property name="templateName" type="string"/>
+        <property name="templatePath" type="string"/>
     </transfer>
 </transfers>

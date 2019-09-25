@@ -28,6 +28,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountCon
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentDiscountConnector

@@ -19,6 +19,7 @@ use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFac
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomersRestApi

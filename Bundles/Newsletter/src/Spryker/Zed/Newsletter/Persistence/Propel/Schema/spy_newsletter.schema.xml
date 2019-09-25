@@ -22,10 +22,10 @@
         </unique>
 
         <index name="spy_newsletter_subscriber-index-email">
-            <index-column name="email" />
+            <index-column name="email"/>
         </index>
         <index name="spy_newsletter_subscriber-index-subscriber_key">
-            <index-column name="subscriber_key" />
+            <index-column name="subscriber_key"/>
         </index>
 
         <id-method-parameter value="spy_newsletter_subscriber_pk_seq"/>
@@ -46,7 +46,7 @@
         </unique>
 
         <index name="spy_newsletter_type-index-name">
-            <index-column name="name" />
+            <index-column name="name"/>
         </index>
 
         <id-method-parameter value="spy_newsletter_type_pk_seq"/>

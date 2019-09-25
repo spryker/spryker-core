@@ -17,7 +17,8 @@ use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Oms\OmsDependencyProvider;
-use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMatrixMapper;
+use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapper;
+use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapperInterface;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
@@ -91,11 +92,11 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMatrixMapper
+     * @return \Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapperInterface
      */
-    public function createOrderItemMatrixMapper(): OrderItemMatrixMapper
+    public function createOrderItemMapper(): OrderItemMapperInterface
     {
-        return new OrderItemMatrixMapper();
+        return new OrderItemMapper();
     }
 
     /**

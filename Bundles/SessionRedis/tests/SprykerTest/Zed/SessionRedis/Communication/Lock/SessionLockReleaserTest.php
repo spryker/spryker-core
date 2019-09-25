@@ -14,6 +14,7 @@ use Spryker\Zed\SessionRedis\Communication\Lock\SessionLockReleaser;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SessionRedis
