@@ -25,8 +25,8 @@ class AuthRestApiClient extends AbstractClient implements AuthRestApiClientInter
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        return $this->getFactory()->createAuthRestApiZedStub()->processAccessToken($oauthRequestTransfer);
+        return $this->getFactory()->createAuthRestApiZedStub()->createAccessToken($oauthRequestTransfer);
     }
 }

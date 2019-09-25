@@ -71,7 +71,7 @@ class AccessTokensReader implements AccessTokensReaderInterface
             $oauthRequestTransfer->setCustomerReference($restUserTransfer->getNaturalIdentifier());
         }
 
-        $oauthResponseTransfer = $this->authRestApiClient->processAccessToken($oauthRequestTransfer);
+        $oauthResponseTransfer = $this->authRestApiClient->createAccessToken($oauthRequestTransfer);
 
         if (!$oauthResponseTransfer->getIsValid()) {
             $restErrorTransfer = (new RestErrorMessageTransfer())

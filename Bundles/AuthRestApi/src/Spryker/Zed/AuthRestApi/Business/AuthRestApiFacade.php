@@ -25,8 +25,8 @@ class AuthRestApiFacade extends AbstractFacade implements AuthRestApiFacadeInter
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        return $this->getFactory()->createAccessTokenProcessor()->processAccessToken($oauthRequestTransfer);
+        return $this->getFactory()->createAccessTokenProcessor()->createAccessToken($oauthRequestTransfer);
     }
 }

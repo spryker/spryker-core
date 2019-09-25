@@ -17,5 +17,5 @@ interface AuthRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

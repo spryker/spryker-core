@@ -14,9 +14,11 @@ interface AuthRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Processes token request.
+     * - Creates token request.
      * - Executes post auth plugins.
-     * - Returns new access token when user provider return valid user.
+     * - Sets anonymous customer reference in OauthResponseTransfer before passing to plugins.
+     * - Returns OauthResponseTransfer with new access token if user provider returned valid user.
+     * - Returns OauthResponseTransfer with error if user provider did not return valid user.
      *
      * @api
      *
@@ -24,5 +26,5 @@ interface AuthRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

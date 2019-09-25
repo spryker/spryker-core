@@ -8,8 +8,8 @@
 namespace Spryker\Zed\AuthRestApi\Business;
 
 use Spryker\Zed\AuthRestApi\AuthRestApiDependencyProvider;
-use Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenProcessor;
-use Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenProcessorInterface;
+use Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenCreator;
+use Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenCreatorInterface;
 use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -19,11 +19,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class AuthRestApiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenProcessorInterface
+     * @return \Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenCreatorInterface
      */
-    public function createAccessTokenProcessor(): AccessTokenProcessorInterface
+    public function createAccessTokenProcessor(): AccessTokenCreatorInterface
     {
-        return new AccessTokenProcessor(
+        return new AccessTokenCreator(
             $this->getOauthFacade(),
             $this->getPostAuthPlugins()
         );

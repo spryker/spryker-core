@@ -74,7 +74,7 @@ class QuoteMerger implements QuoteMergerInterface
             return;
         }
 
-        $this->addGuestQuoteItemsToCustomerCart($guestQuoteTransfer, $customerQuoteTransfer, $customerReference);
+        $this->addGuestQuoteItemsToCustomerCart($guestQuoteTransfer, $customerQuoteTransfer);
 
         $guestQuoteTransfer->setCustomer((new CustomerTransfer())->setCustomerReference($anonymousCustomerReference));
         $this->quoteFacade->deleteQuote($guestQuoteTransfer);
@@ -102,17 +102,15 @@ class QuoteMerger implements QuoteMergerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $guestQuoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $customerQuoteTransfer
-     * @param string $customerReference
      *
      * @return void
      */
     protected function addGuestQuoteItemsToCustomerCart(
         QuoteTransfer $guestQuoteTransfer,
-        QuoteTransfer $customerQuoteTransfer,
-        string $customerReference
+        QuoteTransfer $customerQuoteTransfer
     ): void {
         $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
-            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerReference))
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($customerQuoteTransfer->getCustomerReference()))
             ->setIdQuote($customerQuoteTransfer->getIdQuote())
             ->setItems($guestQuoteTransfer->getItems());
 

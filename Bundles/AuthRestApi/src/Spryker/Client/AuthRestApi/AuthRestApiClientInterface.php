@@ -14,8 +14,10 @@ interface AuthRestApiClientInterface
 {
     /**
      * Specification:
-     * - Processes token request.
-     * - Returns new access token when user provider return valid user.
+     * - Creates token request.
+     * - Executes post auth plugins.
+     * - Returns OauthResponseTransfer with new access token if user provider returned valid user.
+     * - Returns OauthResponseTransfer with error if user provider did not return valid user.
      * - Makes call to Zed.
      *
      * @api
@@ -24,5 +26,5 @@ interface AuthRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

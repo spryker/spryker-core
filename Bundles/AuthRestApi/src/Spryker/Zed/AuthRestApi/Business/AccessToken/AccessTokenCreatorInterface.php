@@ -10,12 +10,12 @@ namespace Spryker\Zed\AuthRestApi\Business\AccessToken;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 
-interface AccessTokenProcessorInterface
+interface AccessTokenCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 }

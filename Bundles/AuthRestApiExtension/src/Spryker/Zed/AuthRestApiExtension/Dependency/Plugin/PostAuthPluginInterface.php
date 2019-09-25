@@ -13,7 +13,7 @@ interface PostAuthPluginInterface
 {
     /**
      * Specification:
-     * - Executes after customer is logged in via REST API.
+     * - Executes after customer is authenticated.
      *
      * @api
      *

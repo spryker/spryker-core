@@ -8,11 +8,6 @@
 namespace SprykerTest\Zed\AuthRestApi\Business;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\AuthRestApi\Business\AuthRestApiBusinessFactory;
-use Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeBridge;
-use Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface;
-use Spryker\Zed\Oauth\Business\OauthFacade;
 
 /**
  * Auto-generated group annotations
@@ -37,10 +32,9 @@ class AuthRestApiFacadeTest extends Unit
     public function testProcessAccessTokenWillGetValidOauthResponseTransfer(): void
     {
         $authRestApiFacade = $this->tester->getFacade();
-        $authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactory());
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
-        $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
+        $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
 
         $this->assertEquals($oauthResponseTransfer->getAnonymousCustomerReference(), $oauthRequestTransfer->getCustomerReference());
         $this->assertTrue($oauthResponseTransfer->getIsValid());
@@ -52,138 +46,9 @@ class AuthRestApiFacadeTest extends Unit
     public function testProcessAccessTokenWillGetInvalidOauthResponseTransfer(): void
     {
         $authRestApiFacade = $this->tester->getFacade();
-        $authRestApiFacade->setFactory($this->getMockAuthRestApiBusinessFactoryWithInvalidProcessAccessTokenRequest());
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
-        $oauthResponseTransfer = $authRestApiFacade->processAccessToken($oauthRequestTransfer);
+        $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
         $this->assertFalse($oauthResponseTransfer->getIsValid());
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getMockAuthRestApiBusinessFactory(): MockObject
-    {
-        $authRestApiBusinessFactoryMock = $this->createPartialMock(
-            AuthRestApiBusinessFactory::class,
-            [
-                'getOauthFacade',
-                'getPostAuthPlugins',
-            ]
-        );
-
-        $authRestApiBusinessFactoryMock = $this->addMockOauthFacade($authRestApiBusinessFactoryMock);
-        $authRestApiBusinessFactoryMock = $this->addCalledMockAuthPlugin($authRestApiBusinessFactoryMock);
-
-        return $authRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getMockAuthRestApiBusinessFactoryWithInvalidProcessAccessTokenRequest(): MockObject
-    {
-        $authRestApiBusinessFactoryMock = $this->createPartialMock(
-            AuthRestApiBusinessFactory::class,
-            [
-                'getOauthFacade',
-                'getPostAuthPlugins',
-            ]
-        );
-
-        $authRestApiBusinessFactoryMock = $this->addMockOauthFacadeWithInvalidProcessAccessTokenRequest($authRestApiBusinessFactoryMock);
-        $authRestApiBusinessFactoryMock = $this->addIgnoredMockAuthPlugin($authRestApiBusinessFactoryMock);
-
-        return $authRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function addMockOauthFacade(MockObject $authRestApiBusinessFactoryMock): MockObject
-    {
-        $oauthFacadeMock = $this->createPartialMock(
-            OauthFacade::class,
-            [
-                'processAccessTokenRequest',
-            ]
-        );
-
-        $oauthFacadeMock->method('processAccessTokenRequest')
-            ->willReturn($this->tester->prepareOauthResponseTransfer());
-
-        $authRestApiBusinessFactoryMock->method('getOauthFacade')
-            ->willReturn((new AuthRestApiToOauthFacadeBridge($oauthFacadeMock)));
-
-        return $authRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function addMockOauthFacadeWithInvalidProcessAccessTokenRequest(MockObject $authRestApiBusinessFactoryMock): MockObject
-    {
-        $oauthFacadeMock = $this->createPartialMock(
-            OauthFacade::class,
-            [
-                'processAccessTokenRequest',
-            ]
-        );
-
-        $oauthFacadeMock->method('processAccessTokenRequest')
-            ->willReturn($this->tester->prepareInvalidOauthResponseTransfer());
-
-        $authRestApiBusinessFactoryMock->method('getOauthFacade')
-            ->willReturn((new AuthRestApiToOauthFacadeBridge($oauthFacadeMock)));
-
-        return $authRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function addCalledMockAuthPlugin(MockObject $authRestApiBusinessFactoryMock): MockObject
-    {
-        $pluginMock = $this->createPartialMock(
-            PostAuthPluginInterface::class,
-            [
-                'postAuth',
-            ]
-        );
-
-        $pluginMock->expects($this->once())->method('postAuth');
-
-        $authRestApiBusinessFactoryMock->method('getPostAuthPlugins')
-            ->willReturn([$pluginMock]);
-
-        return $authRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $authRestApiBusinessFactoryMock
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function addIgnoredMockAuthPlugin(MockObject $authRestApiBusinessFactoryMock): MockObject
-    {
-        $pluginMock = $this->createPartialMock(
-            PostAuthPluginInterface::class,
-            [
-                'postAuth',
-            ]
-        );
-
-        $pluginMock->expects($this->never())->method('postAuth');
-
-        $authRestApiBusinessFactoryMock->method('getPostAuthPlugins')
-            ->willReturn([$pluginMock]);
-
-        return $authRestApiBusinessFactoryMock;
     }
 }

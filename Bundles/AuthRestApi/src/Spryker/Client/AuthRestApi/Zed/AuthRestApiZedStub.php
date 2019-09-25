@@ -31,10 +31,10 @@ class AuthRestApiZedStub implements AuthRestApiZedStubInterface
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
+    public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
-        $oauthResponseTransfer = $this->zedRequestClient->call('/auth-rest-api/gateway/process-access-token', $oauthRequestTransfer);
+        $oauthResponseTransfer = $this->zedRequestClient->call('/auth-rest-api/gateway/create-access-token', $oauthRequestTransfer);
 
         return $oauthResponseTransfer;
     }
