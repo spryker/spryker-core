@@ -39,14 +39,12 @@ class PersistenceManager implements PersistenceManagerInterface
      */
     public function getStateEntity($stateName)
     {
-        return $this->getTransactionHandler()->handleTransaction(static function () use ($stateName): SpyOmsOrderItemState {
-            $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($stateName): SpyOmsOrderItemState {
+            $stateEntity = SpyOmsOrderItemStateQuery::create()
+                ->filterByName($stateName)
+                ->findOneOrCreate();
 
-            if ($stateEntity === null) {
-                $stateEntity = new SpyOmsOrderItemState();
-                $stateEntity->setName($stateName);
-                $stateEntity->save();
-            }
+            $stateEntity->save();
 
             return $stateEntity;
         });
@@ -68,14 +66,12 @@ class PersistenceManager implements PersistenceManagerInterface
             ));
         }
 
-        return $this->getTransactionHandler()->handleTransaction(static function () use ($processName): SpyOmsOrderProcess {
-            $processEntity = SpyOmsOrderProcessQuery::create()->findOneByName($processName);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($processName): SpyOmsOrderProcess {
+            $processEntity = SpyOmsOrderProcessQuery::create()
+                ->filterByName($processName)
+                ->findOneOrCreate();
 
-            if ($processEntity === null) {
-                $processEntity = new SpyOmsOrderProcess();
-                $processEntity->setName($processName);
-                $processEntity->save();
-            }
+            $processEntity->save();
 
             return $processEntity;
         });
