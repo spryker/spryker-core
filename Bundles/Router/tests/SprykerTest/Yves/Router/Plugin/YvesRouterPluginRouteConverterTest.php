@@ -14,6 +14,7 @@ use SprykerTest\Yves\Router\Plugin\Fixtures\RouteProviderPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Router

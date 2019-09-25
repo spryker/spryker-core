@@ -13,6 +13,7 @@ use stdClass;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Router

@@ -49,9 +49,12 @@ EOF
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException When route does not exist
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     *
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -21,9 +21,13 @@ abstract class Descriptor implements DescriptorInterface
     protected $output;
 
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param object $object
+     * @param array $options
      *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     public function describe(OutputInterface $output, $object, array $options = [])
     {

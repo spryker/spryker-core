@@ -34,7 +34,8 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactoryInter
 class RouterFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Router\Router\ChainRouter */
+     * @return \Spryker\Yves\Router\Router\ChainRouter
+     */
     public function createRouter()
     {
         return new ChainRouter($this->getRouterPlugins());

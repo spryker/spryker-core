@@ -17,7 +17,10 @@ use Symfony\Component\Routing\RouteCollection;
 class TextDescriptor extends Descriptor
 {
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Routing\RouteCollection $routes
+     * @param array $options
+     *
+     * @return void
      */
     protected function describeRouteCollection(RouteCollection $routes, array $options = [])
     {
@@ -58,7 +61,10 @@ class TextDescriptor extends Descriptor
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\Routing\Route $route
+     * @param array $options
+     *
+     * @return void
      */
     protected function describeRoute(Route $route, array $options = [])
     {

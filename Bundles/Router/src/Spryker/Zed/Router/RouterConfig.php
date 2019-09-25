@@ -19,9 +19,9 @@ class RouterConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a Router configuration which makes use of a Router cache.
      *
-     * @see \Symfony\Component\Routing\Router::setOptions()
-     *
      * @api
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
      *
      * @return array
      */
@@ -40,9 +40,9 @@ class RouterConfig extends AbstractBundleConfig
      * - Returns a Router configuration which does not make use of a Router cache.
      * - Fallback for development which is executed when the cached Router is not able to match.
      *
-     * @see \Symfony\Component\Routing\Router::setOptions()
-     *
      * @api
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
      *
      * @return array
      */

@@ -11,6 +11,7 @@ use Spryker\Zed\Router\Communication\Controller\MockController;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Spryker
  * @group Router
  * @group tests

@@ -16,6 +16,7 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Router

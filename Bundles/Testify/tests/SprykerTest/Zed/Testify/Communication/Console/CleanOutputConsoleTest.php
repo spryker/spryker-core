@@ -12,6 +12,7 @@ use Spryker\Zed\Testify\Communication\Console\CleanOutputConsole;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Testify

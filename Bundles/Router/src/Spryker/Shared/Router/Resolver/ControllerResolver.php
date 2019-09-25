@@ -28,10 +28,9 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * This method looks for a '_controller' request attribute that represents
-     * the controller.
+     * @return array|bool|callable|object|false
      */
     public function getController(Request $request)
     {
@@ -135,7 +134,7 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @deprecated This method is deprecated as of 3.1 and will be removed in 4.0. Implement the ArgumentResolverInterface and inject it in the HttpKernel instead.
      */
