@@ -16,6 +16,8 @@ use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLocker;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculator;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusChecker;
+use Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCheckerInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalMessageBuilder;
@@ -169,6 +171,17 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
         return new QuoteApprovalMessageBuilder(
             $this->getQuoteFacade(),
             $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCheckerInterface
+     */
+    public function createQuoteStatusChecker(): QuoteStatusCheckerInterface
+    {
+        return new QuoteStatusChecker(
+            $this->createQuoteStatusCalculator(),
+            $this->createPermissionContextProvider()
         );
     }
 

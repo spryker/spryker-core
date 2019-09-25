@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig as SharedQuoteApprovalConfig;
+use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 use Spryker\Zed\Quote\QuoteDependencyProvider;
@@ -26,7 +28,7 @@ use Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\ApproveQuotePermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissionPlugin;
 use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalExpanderPlugin;
-use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteFieldsAllowedForSavingProviderPlugin;
+use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalQuoteFieldsAllowedForSavingProviderPlugin;
 use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 /**
@@ -48,6 +50,41 @@ class QuoteApprovalFacadeTest extends Unit
      * @var \SprykerTest\Zed\QuoteApproval\QuoteApprovalBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteApprovalRequiredResponseIsSuccessful(): void
+    {
+        // Arrange
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
+        $quoteTransfer = $this->tester->createQuoteTransfer();
+
+        // Act
+        $quoteApprovalResponseTransfer = $this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
+
+        // Assert
+        $this->assertFalse($quoteApprovalResponseTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsQuoteApprovalRequiredResponseIsNotSuccessful(): void
+    {
+        // Arrange
+        $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
+        $quoteTransfer = $this->tester->createQuoteTransfer();
+        $quoteTransfer->setQuoteApprovals($this->tester->createQuoteApprovalTransfers([
+            SharedQuoteApprovalConfig::STATUS_WAITING,
+        ]));
+
+        // Act
+        $quoteApprovalResponseTransfer = $this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
+
+        // Assert
+        $this->assertTrue($quoteApprovalResponseTransfer);
+    }
 
     /**
      * @return void
@@ -653,7 +690,7 @@ class QuoteApprovalFacadeTest extends Unit
      */
     protected function setQuoteFieldsAllowedForSavingProviderPluginMock(): void
     {
-        $quoteFieldsAllowedForSavingProviderPluginMock = $this->getMockBuilder(QuoteFieldsAllowedForSavingProviderPlugin::class)
+        $quoteFieldsAllowedForSavingProviderPluginMock = $this->getMockBuilder(QuoteApprovalQuoteFieldsAllowedForSavingProviderPlugin::class)
             ->setMethods(['execute'])
             ->disableOriginalConstructor()
             ->getMock();
