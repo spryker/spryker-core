@@ -86,6 +86,8 @@ class CustomerApiFacade extends AbstractFacade implements CustomerApiFacadeInter
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\ApiCollectionTransfer
      */
     public function findCustomers(ApiRequestTransfer $apiRequestTransfer)

@@ -49,40 +49,40 @@
     </transfer>
 
     <transfer name="ShipmentGroup">
-        <property name="shipment" type="Shipment" />
-        <property name="items" type="Item[]" singular="item" />
+        <property name="shipment" type="Shipment"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Shipment">
         <property name="carrier" type="ShipmentCarrier"/>
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
-        <property name="shippingAddress" type="Address" />
-        <property name="requestedDeliveryDate" type="string" />
+        <property name="shippingAddress" type="Address"/>
+        <property name="requestedDeliveryDate" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="idCustomerAddress" type="int" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="phone" type="string" />
+        <property name="idCustomerAddress" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="name" type="string" />
-        <property name="sku" type="string" />
-        <property name="quantity" type="int" />
-        <property name="unitPrice" type="int" />
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
 </transfers>

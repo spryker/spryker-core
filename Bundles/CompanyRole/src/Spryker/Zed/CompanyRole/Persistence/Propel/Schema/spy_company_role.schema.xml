@@ -33,7 +33,7 @@
 
     <table name="spy_company_role_to_company_user" idMethod="native" allowPkInsert="true" phpName="SpyCompanyRoleToCompanyUser" isCrossRef="true">
         <column name="id_company_role_to_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_company_role" required="true" type="INTEGER" />
+        <column name="fk_company_role" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>
 
         <behavior name="timestampable"/>

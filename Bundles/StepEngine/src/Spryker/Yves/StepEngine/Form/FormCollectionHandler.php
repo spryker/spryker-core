@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class FormCollectionHandler implements FormCollectionHandlerInterface
 {
     /**
-     * @var \Symfony\Component\Form\FormTypeInterface[]|string[]
+     * @var (\Symfony\Component\Form\FormTypeInterface|string)[]
      */
     protected $formTypes;
 
@@ -37,7 +37,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     protected $forms = [];
 
     /**
-     * @param \Symfony\Component\Form\FormTypeInterface[]|string[] $formTypes
+     * @param (\Symfony\Component\Form\FormTypeInterface|string)[] $formTypes
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface|null $dataProvider
      */

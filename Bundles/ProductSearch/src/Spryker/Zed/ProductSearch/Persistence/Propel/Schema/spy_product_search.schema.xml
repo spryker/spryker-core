@@ -14,9 +14,9 @@
         </foreign-key>
 
         <index name="spy_product_search-index-fk-product-fk-locale-is_searchable">
-            <index-column name="fk_product" />
-            <index-column name="fk_locale" />
-            <index-column name="is_searchable" />
+            <index-column name="fk_product"/>
+            <index-column name="fk_locale"/>
+            <index-column name="is_searchable"/>
         </index>
 
         <id-method-parameter value="spy_product_search_pk_seq"/>
@@ -35,26 +35,26 @@
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>
         </foreign-key>
 
-        <behavior name="archivable" />
+        <behavior name="archivable"/>
     </table>
 
     <table name="spy_product_search_attribute" idMethod="native" allowPkInsert="true">
-        <column name="id_product_search_attribute" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="fk_product_attribute_key" type="INTEGER" required="true" />
-        <column name="filter_type" type="VARCHAR" required="true" />
-        <column name="position" type="INTEGER" required="true" defaultValue="0" />
+        <column name="id_product_search_attribute" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product_attribute_key" type="INTEGER" required="true"/>
+        <column name="filter_type" type="VARCHAR" required="true"/>
+        <column name="position" type="INTEGER" required="true" defaultValue="0"/>
         <column name="synced" type="BOOLEAN" defaultValue="false"/>
 
         <foreign-key name="spy_product_search_attribute-fk_product_attribute_key" foreignTable="spy_product_attribute_key">
-            <reference local="fk_product_attribute_key" foreign="id_product_attribute_key" />
+            <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>
         </foreign-key>
 
         <unique name="spy_product_search_attribute-unique-fk_product_attribute_key">
-            <unique-column name="fk_product_attribute_key" />
+            <unique-column name="fk_product_attribute_key"/>
         </unique>
 
-        <id-method-parameter value="spy_product_search_attribute_pk_seq" />
+        <id-method-parameter value="spy_product_search_attribute_pk_seq"/>
 
-        <behavior name="archivable" />
+        <behavior name="archivable"/>
     </table>
 </database>

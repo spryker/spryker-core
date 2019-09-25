@@ -37,6 +37,7 @@ class ProductSetStorageClient extends AbstractClient implements ProductSetStorag
      * @api
      *
      * @param int $idProductSet
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductSetDataStorageTransfer|null
      */

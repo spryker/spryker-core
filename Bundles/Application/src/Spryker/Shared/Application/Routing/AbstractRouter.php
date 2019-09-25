@@ -49,6 +49,8 @@ abstract class AbstractRouter implements RouterInterface
     /**
      * {@inheritdoc}
      *
+     * @param \Symfony\Component\Routing\RequestContext $context
+     *
      * @return void
      */
     public function setContext(RequestContext $context)
@@ -57,7 +59,7 @@ abstract class AbstractRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getContext()
     {
@@ -65,7 +67,7 @@ abstract class AbstractRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRouteCollection()
     {
