@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
 interface GiftCardFacadeInterface
 {
@@ -190,9 +191,11 @@ interface GiftCardFacadeInterface
 
     /**
      * Specification:
-     * - Filters non-available for gift cards shipment methods
+     * - Filters non-available for gift cards shipment methods.
      *
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods() instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -200,6 +203,18 @@ interface GiftCardFacadeInterface
      * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Filters non-available for gift cards shipment methods for each shipment group.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     */
+    public function filterShipmentGroupMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject;
 
     /**
      * Specification:
@@ -226,4 +241,16 @@ interface GiftCardFacadeInterface
      * @return \Generated\Shared\Transfer\GiftCardTransfer|null
      */
     public function findGiftCardByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
+     * Specification:
+     * - Sanitizes shipment in the shipment group collection which contains gift cards only.
+     *
+     * @api
+     *
+     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     *
+     * @return iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     */
+    public function sanitizeShipmentGroupCollection(iterable $shipmentGroupCollection): iterable;
 }

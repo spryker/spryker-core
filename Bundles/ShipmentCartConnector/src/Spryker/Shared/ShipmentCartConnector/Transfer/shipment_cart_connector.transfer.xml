@@ -15,16 +15,20 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="idShipmentMethod" type="int" />
-        <property name="shipmentDeliveryTime" type="int" />
+        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead." />
+        <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead." />
         <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" />
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used." />
         <property name="currencyIsoCode" type="string" />
     </transfer>
 
     <transfer name="Quote">
-        <property name="shipment" type="Shipment"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment" />
     </transfer>
 
     <transfer name="Expense">

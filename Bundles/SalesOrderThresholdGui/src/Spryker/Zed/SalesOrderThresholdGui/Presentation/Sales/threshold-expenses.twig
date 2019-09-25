@@ -1,0 +1,8 @@
+{% for expense in order.expenses if expense.type == thresholdExpenseType %}
+    <div class="col-sm-10">
+        <p>
+            {{ 'Surcharge' | trans }}
+        </p>
+    </div>
+    <div class="col-sm-2"><p>{{ expense.sumPrice | money(true, order.currencyIsoCode) }}</p></div>
+{% endfor %}

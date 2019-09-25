@@ -14,6 +14,7 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Session

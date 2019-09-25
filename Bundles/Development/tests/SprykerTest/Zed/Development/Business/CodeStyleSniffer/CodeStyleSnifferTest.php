@@ -12,6 +12,7 @@ use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development

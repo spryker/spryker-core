@@ -19,6 +19,7 @@ use Spryker\Zed\CustomersRestApi\Dependency\Facade\CustomersRestApiToCustomerFac
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomersRestApi
@@ -48,7 +49,30 @@ class CustomersRestApiFacadeTest extends Unit
 
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        $this->tester->assertBothAddressesMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnAllDataProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertShippingAddressMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
+
         $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
         $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
     }
@@ -67,7 +91,26 @@ class CustomersRestApiFacadeTest extends Unit
 
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
-        $this->tester->assertBothAddressesMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnAllDataProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareFullGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->tester->assertShippingAddressMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
     }
 
     /**
@@ -85,6 +128,31 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+
+        $this->assertNull($actualQuote->getShippingAddress());
+
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyBillingAddressProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyBillingRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment());
+        }
 
         $this->assertEquals($restCheckoutRequestAttributesTransfer->getBillingAddress()->getId(), $actualQuote->getBillingAddress()->getUuid());
     }
@@ -104,6 +172,29 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+
+        $this->assertNull($actualQuote->getShippingAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyBillingAddressProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyBillingGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertBillingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+
+        foreach ($actualQuote->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment());
+        }
     }
 
     /**
@@ -121,6 +212,26 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertNull($actualQuote->getBillingAddress());
+        $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteOnOnlyShippingAddressProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertShippingAddressMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertNull($actualQuote->getBillingAddress());
         $this->assertEquals($restCheckoutRequestAttributesTransfer->getShippingAddress()->getId(), $actualQuote->getShippingAddress()->getUuid());
     }
 
@@ -139,6 +250,25 @@ class CustomersRestApiFacadeTest extends Unit
         $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
 
         $this->tester->assertShippingAddressMapping($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertNull($actualQuote->getBillingAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnOnlyShippingAddressProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareOnlyShippingGuestRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->tester->assertShippingAddressMappingWithItemLevelShippingAddresses($restCheckoutRequestAttributesTransfer, $actualQuote);
+        $this->assertNull($actualQuote->getBillingAddress());
     }
 
     /**
@@ -162,6 +292,27 @@ class CustomersRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testMapAddressesToQuoteWillReturnQuoteOnNoAddressProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getBillingAddress());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment()->getShippingAddress());
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvided(): void
     {
         /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
@@ -175,6 +326,27 @@ class CustomersRestApiFacadeTest extends Unit
 
         $this->assertNull($actualQuote->getBillingAddress());
         $this->assertNull($actualQuote->getShippingAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapAddressesToQuoteWillReturnQuoteForGuestOnNoAddressProvidedWithItemLevelShippingAddresses(): void
+    {
+        /** @var \Spryker\Zed\CustomersRestApi\Business\CustomersRestApiFacade $customersRestApiFacade */
+        $customersRestApiFacade = $this->tester->getFacade();
+        $customersRestApiFacade->setFactory($this->getMockCustomersRestApiFactoryForGuest());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareGuestCustomerRestCheckoutRequestAttributesTransfer();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer();
+
+        $actualQuote = $customersRestApiFacade->mapAddressesToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        $this->assertNull($actualQuote->getBillingAddress());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertNull($itemTransfer->getShipment()->getShippingAddress());
+        }
     }
 
     /**

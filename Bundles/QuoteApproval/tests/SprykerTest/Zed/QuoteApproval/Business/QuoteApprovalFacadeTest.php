@@ -31,6 +31,7 @@ use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group QuoteApproval

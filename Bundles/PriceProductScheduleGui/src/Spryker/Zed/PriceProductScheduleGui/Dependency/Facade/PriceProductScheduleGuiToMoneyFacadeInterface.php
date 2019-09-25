@@ -17,4 +17,18 @@ interface PriceProductScheduleGuiToMoneyFacadeInterface
      * @return string
      */
     public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertIntegerToDecimal($value);
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToInteger($value);
 }

@@ -12,6 +12,7 @@ use SprykerTest\Zed\Dataset\DatasetObject\DatasetListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Dataset

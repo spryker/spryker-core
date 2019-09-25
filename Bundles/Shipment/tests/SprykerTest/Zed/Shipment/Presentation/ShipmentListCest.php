@@ -14,6 +14,7 @@ use SprykerTest\Zed\Shipment\ShipmentPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment

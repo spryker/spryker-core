@@ -17,6 +17,7 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
