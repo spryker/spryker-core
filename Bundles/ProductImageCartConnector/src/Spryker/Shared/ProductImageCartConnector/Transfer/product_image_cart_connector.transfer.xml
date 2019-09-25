@@ -4,7 +4,7 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Item">
-        <property name="images" type="ProductImage[]" singular="image" />
+        <property name="images" type="ProductImage[]" singular="image"/>
     </transfer>
 
 </transfers>

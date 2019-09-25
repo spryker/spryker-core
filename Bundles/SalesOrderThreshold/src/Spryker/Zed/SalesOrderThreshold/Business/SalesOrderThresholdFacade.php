@@ -193,7 +193,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
@@ -209,7 +209,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */

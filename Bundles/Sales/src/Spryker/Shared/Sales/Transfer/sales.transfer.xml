@@ -4,219 +4,219 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Order">
-        <property name="idSalesOrder" type="int" />
-        <property name="email" type="string" />
-        <property name="salutation" type="string" />
-        <property name="lastName" type="string" />
-        <property name="firstName" type="string" />
-        <property name="orderReference" type="string" />
-        <property name="billingAddress" type="Address" />
-        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead." />
-        <property name="customer" type="Customer" />
-        <property name="items" type="Item[]"  singular="item" />
-        <property name="createdAt" type="string" />
-        <property name="isTest" type="string" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="invoice" type="Invoice[]" />
-        <property name="invoiceReference" type="string" />
-        <property name="invoiceCreatedAt" type="string" />
-        <property name="fkShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.fkShipmentMethod) instead." />
-        <property name="fkCustomer" type="int" />
-        <property name="customerReference" type="string" />
-        <property name="totals" type="Totals" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="totalOrderCount" type="int" />
-        <property name="uniqueProductQuantity" type="int" />
-        <property name="locale" type="Locale" />
-        <property name="priceMode" type="string" />
-        <property name="store" type="string" />
-        <property name="currencyIsoCode" type="string" />
+        <property name="idSalesOrder" type="int"/>
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]"  singular="item"/>
+        <property name="createdAt" type="string"/>
+        <property name="isTest" type="string"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="invoice" type="Invoice[]"/>
+        <property name="invoiceReference" type="string"/>
+        <property name="invoiceCreatedAt" type="string"/>
+        <property name="fkShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.fkShipmentMethod) instead."/>
+        <property name="fkCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="totalOrderCount" type="int"/>
+        <property name="uniqueProductQuantity" type="int"/>
+        <property name="locale" type="Locale"/>
+        <property name="priceMode" type="string"/>
+        <property name="store" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="currency" type="Currency" />
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="OrderList">
-        <property name="idCustomer" type="int" />
-        <property name="filter" type="Filter" />
-        <property name="orders" type="Order[]" singular="order" />
-        <property name="pagination" type="Pagination" />
+        <property name="idCustomer" type="int"/>
+        <property name="filter" type="Filter"/>
+        <property name="orders" type="Order[]" singular="order"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="idSalesOrderAddress" type="int" />
-        <property name="idCustomerAddress" type="int" />
-        <property name="iso2Code" type="string" />
-        <property name="region" type="string" />
-        <property name="state" type="string" />
-        <property name="fkMiscCountry" type="int" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="middleName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="email" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="poBox" type="string" />
-        <property name="phone" type="string" />
-        <property name="cellPhone" type="string" />
-        <property name="comment" type="string" />
-        <property name="description" type="string" />
-        <property name="country" type="Country" />
+        <property name="idSalesOrderAddress" type="int"/>
+        <property name="idCustomerAddress" type="int"/>
+        <property name="iso2Code" type="string"/>
+        <property name="region" type="string"/>
+        <property name="state" type="string"/>
+        <property name="fkMiscCountry" type="int"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="middleName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="poBox" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="cellPhone" type="string"/>
+        <property name="comment" type="string"/>
+        <property name="description" type="string"/>
+        <property name="country" type="Country"/>
     </transfer>
 
     <transfer name="Comment">
-        <property name="idSalesOrderComment" type="int" />
-        <property name="message" type="string" />
-        <property name="username" type="string" />
-        <property name="fkSalesOrder" type="int" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
+        <property name="idSalesOrderComment" type="int"/>
+        <property name="message" type="string"/>
+        <property name="username" type="string"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="OrderDetailsComments">
-        <property name="comments" type="Comment[]" singular="comment" />
+        <property name="comments" type="Comment[]" singular="comment"/>
     </transfer>
 
     <transfer name="Document">
-        <property name="header" type="string" />
-        <property name="fileName" type="string" />
-        <property name="filePath" type="string" />
+        <property name="header" type="string"/>
+        <property name="fileName" type="string"/>
+        <property name="filePath" type="string"/>
     </transfer>
 
     <transfer name="Invoice">
-        <property name="invoiceNumber" type="string" />
-        <property name="fkSalesOrder" type="int" />
-        <property name="type" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="hash" type="string" />
-        <property name="customerId" type="string" />
+        <property name="invoiceNumber" type="string"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="type" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="hash" type="string"/>
+        <property name="customerId" type="string"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="idSalesOrderItem" type="int" />
-        <property name="fkSalesOrder" type="int" />
-        <property name="fkOmsOrderItemState" type="int" />
-        <property name="name" type="string" />
-        <property name="process" type="string" />
-        <property name="sku" type="string" />
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="fkOmsOrderItemState" type="int"/>
+        <property name="name" type="string"/>
+        <property name="process" type="string"/>
+        <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="taxRate" type="float" />
-        <property name="quantity" type="int" />
-        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
-        <property name="variety" type="string" />
-        <property name="state" type="ItemState" />
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="quantity" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="variety" type="string"/>
+        <property name="state" type="ItemState"/>
         <property name="canceledAmount" type="int"/>
-        <property name="stateHistory" type="ItemState[]" />
-        <property name="isOrdered" type="bool" />
-        <property name="shipment" type="Shipment" />
+        <property name="stateHistory" type="ItemState[]"/>
+        <property name="isOrdered" type="bool"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="idSalesExpense" type="int" />
-        <property name="type" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="name" type="string" />
-        <property name="taxRate" type="float" />
-        <property name="unitTaxAmount" type="int" />
-        <property name="sumTaxAmount" type="int" />
-        <property name="quantity" type="int" />
-        <property name="unitNetPrice" type="int" />
-        <property name="sumNetPrice" type="int" />
-        <property name="unitPrice" type="int" />
-        <property name="sumPrice" type="int" />
-        <property name="refundableAmount" type="int" />
-        <property name="canceledAmount" type="int" />
-        <property name="unitDiscountAmountAggregation" type="int" />
-        <property name="unitPriceToPayAggregation" type="int" />
-        <property name="sumPriceToPayAggregation" type="int" />
-        <property name="isOrdered" type="bool" />
-        <property name="fkSalesOrder" type="int" />
+        <property name="idSalesExpense" type="int"/>
+        <property name="type" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="name" type="string"/>
+        <property name="taxRate" type="float"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="isOrdered" type="bool"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="TaxSet">
-        <property name="effectiveRate" type="float" />
-        <property name="amount" type="int" />
+        <property name="effectiveRate" type="float"/>
+        <property name="amount" type="int"/>
     </transfer>
 
     <transfer name="OrderItems">
-        <property name="orderItems" type="Item[]" singular="orderItem" />
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="OrderItemsAndExpenses">
-        <property name="orderItems" type="Item[]" singular="orderItem" />
-        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="StatemachineTrigger" deprecated="Not in use anymore, will be removed with next major">
-        <property name="eventName" type="string" />
-        <property name="orderId" type="string" />
-        <property name="references" type="array" />
-        <property name="context" type="string" />
-        <property name="observer" type="string" />
+        <property name="eventName" type="string"/>
+        <property name="orderId" type="string"/>
+        <property name="references" type="array"/>
+        <property name="context" type="string"/>
+        <property name="observer" type="string"/>
     </transfer>
 
     <transfer name="SalesPayment">
-        <property name="method" type="string" />
-        <property name="redirectUrl" type="string" />
-        <property name="ccType" type="string" />
-        <property name="ccNumber" type="string" />
-        <property name="ccCardholder" type="string" />
-        <property name="ccExpirationMonth" type="string" />
-        <property name="ccExpirationYear" type="string" />
-        <property name="ccVerification" type="string" />
-        <property name="debitHolder" type="string" />
-        <property name="debitAccountNumber" type="string" />
-        <property name="debitBankCodeNumber" type="string" />
-        <property name="debitInstitute" type="string" />
-        <property name="pseudoCcNumber" type="string" />
-        <property name="paymentData" type="string" />
-        <property name="paymentDataClassName" type="string" />
+        <property name="method" type="string"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="ccType" type="string"/>
+        <property name="ccNumber" type="string"/>
+        <property name="ccCardholder" type="string"/>
+        <property name="ccExpirationMonth" type="string"/>
+        <property name="ccExpirationYear" type="string"/>
+        <property name="ccVerification" type="string"/>
+        <property name="debitHolder" type="string"/>
+        <property name="debitAccountNumber" type="string"/>
+        <property name="debitBankCodeNumber" type="string"/>
+        <property name="debitInstitute" type="string"/>
+        <property name="pseudoCcNumber" type="string"/>
+        <property name="paymentData" type="string"/>
+        <property name="paymentDataClassName" type="string"/>
     </transfer>
 
     <transfer name="RegularRedirectPaymentCancellation">
-        <property name="orderId" type="string" />
+        <property name="orderId" type="string"/>
     </transfer>
 
     <transfer name="Filter">
-        <property name="limit" type="int" />
-        <property name="offset" type="int" />
-        <property name="orderBy" type="string" />
-        <property name="orderDirection" type="string" />
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="OrderItemSaver">
-        <property name="idSalesOrderItem" type="int" />
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="SaveOrder">
-        <property name="idSalesOrder" type="int" />
-        <property name="orderReference" type="string" />
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="Pagination">
-        <property name="page" type="int" />
-        <property name="maxPerPage" type="int" />
-        <property name="nbResults" type="int" />
-        <property name="previousPage" type="int" />
-        <property name="nextPage" type="int" />
-        <property name="firstIndex" type="int" />
-        <property name="lastIndex" type="int" />
-        <property name="firstPage" type="int" />
-        <property name="lastPage" type="int" />
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
     </transfer>
 
     <transfer name="Shipment">

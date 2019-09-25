@@ -5,10 +5,10 @@
 >
     <table name="spy_cms_block_category_connector" phpName="SpyCmsBlockCategoryConnector">
         <column name="id_cms_block_category_connector" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_cms_block" type="INTEGER" required="true" />
-        <column name="fk_category" type="INTEGER" required="true" />
-        <column name="fk_category_template" type="INTEGER" required="true" />
-        <column name="fk_cms_block_category_position" type="INTEGER" />
+        <column name="fk_cms_block" type="INTEGER" required="true"/>
+        <column name="fk_category" type="INTEGER" required="true"/>
+        <column name="fk_category_template" type="INTEGER" required="true"/>
+        <column name="fk_cms_block_category_position" type="INTEGER"/>
 
         <foreign-key name="spy_cms_block_category_connector-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock" onDelete="CASCADE">
             <reference foreign="id_cms_block" local="fk_cms_block"/>

@@ -22,6 +22,8 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
     /**
      * {@inheritdoc}
      *
+     * @param \Silex\Application $app
+     *
      * @return void
      */
     public function register(Application $app)

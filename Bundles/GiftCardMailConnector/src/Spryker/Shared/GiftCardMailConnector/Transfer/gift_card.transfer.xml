@@ -6,7 +6,7 @@
 >
 
     <transfer name="Mail">
-        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
     </transfer>
 
 </transfers>

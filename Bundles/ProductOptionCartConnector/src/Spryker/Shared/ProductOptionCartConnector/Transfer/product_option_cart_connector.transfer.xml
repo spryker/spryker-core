@@ -4,34 +4,34 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Item">
-        <property name="quantity" type="int" />
-        <property name="groupKey" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
-        <property name="unitNetPrice" type="int" />
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="unitNetPrice" type="int"/>
     </transfer>
 
     <transfer name="ProductOption">
-        <property name="idSalesOrderItemOption" type="int" />
-        <property name="idProductOptionValue" type="int" />
-        <property name="localeCode" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="idSalesOrderItemOption" type="int"/>
+        <property name="idProductOptionValue" type="int"/>
+        <property name="localeCode" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
         <property name="refundableAmount" type="int"/>
-        <property name="unitTaxAmount" type="int" />
-        <property name="sumTaxAmount" type="int" />
-        <property name="unitNetPrice" type="int" />
-        <property name="sumNetPrice" type="int" />
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
     </transfer>
 
     <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="priceMode" type="string" />
+        <property name="priceMode" type="string"/>
     </transfer>
 
 </transfers>
