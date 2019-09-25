@@ -10,12 +10,16 @@ namespace SprykerTest\Glue\AuthRestApi\Helper;
 use Codeception\Exception\ModuleException;
 use Codeception\Module;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use SprykerTest\Glue\Testify\Helper\GlueRest;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
 
 class AuthRestApiHelper extends Module
 {
+    use LocatorHelperTrait;
     use ModuleLocatorTrait;
 
     /**
@@ -63,28 +67,26 @@ class AuthRestApiHelper extends Module
 
     /**
      * Specification:
-     * - Authorizes customer and returns access token data.
-     * - Returns empty array if authorization failed.
+     * - Authorizes customer and returns OauthResponseTransfer.
+     * - Returns OauthResponseTransfer with error if authorization failed.
      *
      * @part json
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): array
+    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): OauthResponseTransfer
     {
-        $this->glueRestProvider->sendPOST(AuthRestApiConfig::RESOURCE_ACCESS_TOKENS, [
-            'data' => [
-                'type' => AuthRestApiConfig::RESOURCE_ACCESS_TOKENS,
-                'attributes' => [
-                    'username' => $customerTransfer->getEmail(),
-                    'password' => $customerTransfer->getNewPassword() ?: $this->glueRestProvider::DEFAULT_PASSWORD,
-                ],
-            ],
-        ]);
+        $oauthRequestTransfer = (new OauthRequestTransfer())
+            ->setGrantType('password')
+            ->setUsername($customerTransfer->getEmail())
+            ->setPassword($customerTransfer->getNewPassword());
 
-        return $this->glueRestProvider->grabDataFromResponseByJsonPath('$.data.attributes')[0] ?: [];
+        return $this->getLocator()
+            ->oauth()
+            ->facade()
+            ->processAccessTokenRequest($oauthRequestTransfer);
     }
 
     /**

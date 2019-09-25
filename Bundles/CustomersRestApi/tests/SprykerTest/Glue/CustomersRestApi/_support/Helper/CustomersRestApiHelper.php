@@ -111,14 +111,12 @@ class CustomersRestApiHelper extends Module
     }
 
     /**
-     * @part json
-     *
      * @param string $withEmail
      * @param string $withPassword
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function createCustomerTransfer(string $withEmail, string $withPassword): CustomerTransfer
+    protected function createCustomerTransfer(string $withEmail, string $withPassword): CustomerTransfer
     {
         return (new CustomerBuilder([
             CustomerTransfer::FIRST_NAME => static::FIRST_NAME,

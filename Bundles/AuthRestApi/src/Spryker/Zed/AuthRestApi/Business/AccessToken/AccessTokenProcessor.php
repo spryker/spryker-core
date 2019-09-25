@@ -43,6 +43,7 @@ class AccessTokenProcessor implements AccessTokenProcessorInterface
     public function processAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
+
         if (!$oauthResponseTransfer->getIsValid()) {
             return $oauthResponseTransfer;
         }
