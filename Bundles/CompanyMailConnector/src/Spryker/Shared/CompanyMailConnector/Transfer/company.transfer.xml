@@ -6,7 +6,7 @@
 >
 
     <transfer name="Mail">
-        <property name="company" type="Company" singular="company" />
+        <property name="company" type="Company" singular="company"/>
     </transfer>
 
 </transfers>

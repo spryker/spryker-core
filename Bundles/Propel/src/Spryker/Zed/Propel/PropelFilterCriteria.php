@@ -34,9 +34,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritdoc
      */
     public function setFilterTransfer(FilterTransfer $filterTransfer)
     {

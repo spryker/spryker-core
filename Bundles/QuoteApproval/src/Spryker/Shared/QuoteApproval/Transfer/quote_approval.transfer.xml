@@ -5,8 +5,8 @@
 
     <transfer name="Quote">
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
-        <property name="totals" type="Totals" />
-        <property name="currency" type="Currency" />
+        <property name="totals" type="Totals"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -34,8 +34,8 @@
     <transfer name="QuoteApprovalResponse">
         <property name="quote" type="Quote"/>
         <property name="quoteApproval" type="QuoteApproval"/>
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="QuoteApprovalCollection">
@@ -48,7 +48,7 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="companyUserTransfer" type="CompanyUser" />
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -74,17 +74,17 @@
     </transfer>
 
     <transfer name="Currency">
-        <property name="code" type="string" />
-        <property name="symbol" type="string" />
+        <property name="code" type="string"/>
+        <property name="symbol" type="string"/>
     </transfer>
 
     <transfer name="Totals">
-        <property name="grandTotal" type="int" />
+        <property name="grandTotal" type="int"/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -92,11 +92,11 @@
     </transfer>
 
     <transfer name="ShipmentMethod">
-        <property name="storeCurrencyPrice" type="int" />
+        <property name="storeCurrencyPrice" type="int"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

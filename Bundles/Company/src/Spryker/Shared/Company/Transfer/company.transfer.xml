@@ -28,7 +28,7 @@
     </transfer>
 
     <transfer name="CompanyCollection">
-        <property name="companies" type="Company[]" singular="company" />
+        <property name="companies" type="Company[]" singular="company"/>
     </transfer>
 
 </transfers>

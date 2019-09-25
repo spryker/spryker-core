@@ -8,12 +8,12 @@
     </transfer>
 
     <transfer name="ProductOption">
-        <property name="idProductOptionValue" type="int" />
-        <property name="value" type="string" />
+        <property name="idProductOptionValue" type="int"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListItem">
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
     </transfer>
 
     <transfer name="ProductOptionValueStorage">
@@ -21,9 +21,9 @@
     </transfer>
 
     <transfer name="ProductOptionCriteria">
-        <property name="ProductOptionIds" type="array" />
-        <property name="productOptionGroupIsActive" type="bool" />
-        <property name="productConcreteSku" type="string" />
+        <property name="ProductOptionIds" type="array"/>
+        <property name="productOptionGroupIsActive" type="bool"/>
+        <property name="productConcreteSku" type="string"/>
     </transfer>
 
 </transfers>

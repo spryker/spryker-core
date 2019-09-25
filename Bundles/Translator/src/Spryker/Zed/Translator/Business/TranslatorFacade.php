@@ -88,13 +88,13 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @param string $locale
      *
@@ -106,13 +106,13 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @return string The locale
      */

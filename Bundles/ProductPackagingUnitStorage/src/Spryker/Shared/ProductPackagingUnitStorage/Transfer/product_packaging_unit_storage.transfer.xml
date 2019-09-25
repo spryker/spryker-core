@@ -18,7 +18,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="leadProduct" type="int"/>
         <property name="types" type="ProductConcretePackagingStorage[]"/>
-        <property name="key" type="string" />
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -31,7 +31,7 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>
