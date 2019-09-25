@@ -39,7 +39,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createSearchInstaller(?LoggerInterface $messenger)
     {
-        return new SearchInstaller($this->getSearchInstallerStack($messenger));
+        return new SearchInstaller($messenger, $this->getSearchInstallerStack($messenger));
     }
 
     /**
