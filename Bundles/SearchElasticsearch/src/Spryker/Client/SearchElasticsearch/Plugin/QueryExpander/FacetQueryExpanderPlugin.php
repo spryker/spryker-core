@@ -14,7 +14,7 @@ use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -40,7 +40,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        $facetConfig = $this->getFactory()->getFacetConfigBuilder();
+        $facetConfig = $this->getFactory()->getFacetConfig();
 
         $query = $searchQuery->getSearchQuery();
 
@@ -53,12 +53,12 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface $facetConfig
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
      * @param array $requestParameters
      *
      * @return \Elastica\Query\AbstractQuery[]
      */
-    protected function getFacetFilters(FacetConfigBuilderInterface $facetConfig, array $requestParameters = []): array
+    protected function getFacetFilters(FacetConfigInterface $facetConfig, array $requestParameters = []): array
     {
         $facetFilters = [];
         $activeFacetConfigTransfers = $facetConfig->getActive($requestParameters);
@@ -141,13 +141,13 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface $facetConfig
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
      * @param \Elastica\Query\AbstractQuery[] $facetFilters
      * @param array $requestParameters
      *
      * @return void
      */
-    protected function addFacetAggregationToQuery(Query $query, FacetConfigBuilderInterface $facetConfig, array $facetFilters, array $requestParameters): void
+    protected function addFacetAggregationToQuery(Query $query, FacetConfigInterface $facetConfig, array $facetFilters, array $requestParameters): void
     {
         $boolQuery = $this->getBoolQuery($query);
 

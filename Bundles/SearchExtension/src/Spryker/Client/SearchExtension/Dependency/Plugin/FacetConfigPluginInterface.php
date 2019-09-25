@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
-use Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 
-interface FacetSearchConfigBuilderPluginInterface
+interface FacetConfigPluginInterface
 {
     /**
      * Specification:
@@ -17,9 +17,9 @@ interface FacetSearchConfigBuilderPluginInterface
      *
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface $facetConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfigBuilder
      *
      * @return void
      */
-    public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder): void;
+    public function buildFacetConfig(FacetConfigInterface $facetConfigBuilder): void;
 }

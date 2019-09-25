@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchExtension\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-interface FacetConfigBuilderInterface
+interface FacetConfigInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer

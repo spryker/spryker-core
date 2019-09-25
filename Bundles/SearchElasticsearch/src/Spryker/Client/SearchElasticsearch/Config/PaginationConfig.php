@@ -5,14 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchElasticsearch\Plugin\Config;
+namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
 
-class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfigBuilderInterface
+class PaginationConfig implements PaginationConfigInterface
 {
     /**
      * @var \Generated\Shared\Transfer\PaginationConfigTransfer
@@ -20,9 +19,9 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
     protected $paginationConfigTransfer;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface|null $paginationConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface|null $paginationConfigBuilderPlugin
      */
-    public function __construct(?PaginationSearchConfigBuilderPluginInterface $paginationConfigBuilderPlugin = null)
+    public function __construct(?PaginationConfigPluginInterface $paginationConfigBuilderPlugin = null)
     {
         $this->buildPaginationConfig($paginationConfigBuilderPlugin);
     }
@@ -90,11 +89,11 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface|null $paginationConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface|null $paginationConfigBuilderPlugin
      *
      * @return void
      */
-    protected function buildPaginationConfig(?PaginationSearchConfigBuilderPluginInterface $paginationConfigBuilderPlugin = null): void
+    protected function buildPaginationConfig(?PaginationConfigPluginInterface $paginationConfigBuilderPlugin = null): void
     {
         if (!$paginationConfigBuilderPlugin) {
             return;

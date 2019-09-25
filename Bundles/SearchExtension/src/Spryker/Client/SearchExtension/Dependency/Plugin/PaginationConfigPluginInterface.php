@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
-use Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
 
-interface PaginationSearchConfigBuilderPluginInterface
+interface PaginationConfigPluginInterface
 {
     /**
      * Specification:
@@ -17,9 +17,9 @@ interface PaginationSearchConfigBuilderPluginInterface
      *
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface $paginationConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfigBuilder
      *
      * @return void
      */
-    public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder);
+    public function buildPaginationConfig(PaginationConfigInterface $paginationConfigBuilder);
 }

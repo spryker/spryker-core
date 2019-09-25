@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchExtension\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 
-interface PaginationConfigBuilderInterface
+interface PaginationConfigInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PaginationConfigTransfer $paginationConfigTransfer

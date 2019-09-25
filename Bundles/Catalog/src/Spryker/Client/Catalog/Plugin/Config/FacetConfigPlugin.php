@@ -8,13 +8,13 @@
 namespace Spryker\Client\Catalog\Plugin\Config;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
-class FacetConfigBuilderPlugin extends AbstractPlugin implements FacetSearchConfigBuilderPluginInterface
+class FacetConfigPlugin extends AbstractPlugin implements FacetConfigPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -22,11 +22,11 @@ class FacetConfigBuilderPlugin extends AbstractPlugin implements FacetSearchConf
      *
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface $facetConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfigBuilder
      *
      * @return void
      */
-    public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder): void
+    public function buildFacetConfig(FacetConfigInterface $facetConfigBuilder): void
     {
         $facetConfigBuilderPlugins = $this->getFactory()->getFacetConfigTransferBuilderPlugins();
 

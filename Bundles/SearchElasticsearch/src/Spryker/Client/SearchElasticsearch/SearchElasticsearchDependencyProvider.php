@@ -7,16 +7,16 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
-use Spryker\Client\Catalog\Plugin\Config\FacetConfigBuilderPlugin;
-use Spryker\Client\Catalog\Plugin\Config\PaginationConfigBuilderPlugin;
-use Spryker\Client\Catalog\Plugin\Config\SortConfigBuilderPlugin;
+use Spryker\Client\Catalog\Plugin\Config\FacetConfigPlugin;
+use Spryker\Client\Catalog\Plugin\Config\PaginationConfigPlugin;
+use Spryker\Client\Catalog\Plugin\Config\SortConfigPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
@@ -66,11 +66,11 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface|null
      */
-    protected function getFacetSearchConfigBuilderPlugin(Container $container): ?FacetSearchConfigBuilderPluginInterface
+    protected function getFacetSearchConfigBuilderPlugin(Container $container): ?FacetConfigPluginInterface
     {
-        return new FacetConfigBuilderPlugin();
+        return new FacetConfigPlugin();
     }
 
     /**
@@ -90,11 +90,11 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface|null
      */
-    protected function getPaginationSearchConfigBuilderPlugin(Container $container): ?PaginationSearchConfigBuilderPluginInterface
+    protected function getPaginationSearchConfigBuilderPlugin(Container $container): ?PaginationConfigPluginInterface
     {
-        return new PaginationConfigBuilderPlugin();
+        return new PaginationConfigPlugin();
     }
 
     /**
@@ -114,11 +114,11 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface|null
      */
-    protected function getSortSearchConfigBuilderPlugin(Container $container): ?SortSearchConfigBuilderPluginInterface
+    protected function getSortSearchConfigBuilderPlugin(Container $container): ?SortConfigPluginInterface
     {
-        return new SortConfigBuilderPlugin();
+        return new SortConfigPlugin();
     }
 
     /**

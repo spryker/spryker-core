@@ -8,13 +8,13 @@
 namespace Spryker\Client\Catalog\Plugin\Config;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\SortConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\SortConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
-class SortConfigBuilderPlugin extends AbstractPlugin implements SortSearchConfigBuilderPluginInterface
+class SortConfigPlugin extends AbstractPlugin implements SortConfigPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -22,11 +22,11 @@ class SortConfigBuilderPlugin extends AbstractPlugin implements SortSearchConfig
      *
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Config\SortConfigBuilderInterface $sortConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\SortConfigInterface $sortConfigBuilder
      *
      * @return void
      */
-    public function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder)
+    public function buildSortConfig(SortConfigInterface $sortConfigBuilder)
     {
         $sortConfigBuilderPlugins = $this->getFactory()->getSortConfigTransferBuilderPlugins();
 

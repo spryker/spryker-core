@@ -18,10 +18,11 @@ use Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractor
 use Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface;
 use Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactory;
 use Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface;
-use Spryker\Client\SearchElasticsearch\Plugin\Config\FacetConfigBuilder;
-use Spryker\Client\SearchElasticsearch\Plugin\Config\PaginationConfigBuilder;
-use Spryker\Client\SearchElasticsearch\Plugin\Config\SortConfigBuilder;
+use Spryker\Client\SearchElasticsearch\Config\FacetConfig;
+use Spryker\Client\SearchElasticsearch\Config\PaginationConfig;
+use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery;
+use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactory;
@@ -30,14 +31,13 @@ use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
-use Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Config\SortConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
+use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
+use Spryker\Client\SearchExtension\Config\SortConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface;
-use Spryker\Client\SearchExtension\Plugin\Query\SearchStringQuery;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactory;
@@ -56,19 +56,19 @@ class SearchElasticsearchFactory extends AbstractFactory
     protected static $client;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface
+     * @var \Spryker\Client\SearchExtension\Config\FacetConfigInterface
      */
-    protected static $facetConfigBuilder;
+    protected static $facetConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface
+     * @var \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
      */
-    protected static $paginationConfigBuilder;
+    protected static $paginationConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Config\SortConfigBuilderInterface
+     * @var \Spryker\Client\SearchExtension\Config\SortConfigInterface
      */
-    protected static $sortConfigBuilder;
+    protected static $sortConfig;
 
     /**
      * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
@@ -100,69 +100,69 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface
+     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
      */
-    public function getFacetConfigBuilder(): FacetConfigBuilderInterface
+    public function getFacetConfig(): FacetConfigInterface
     {
-        if (!static::$facetConfigBuilder) {
-            static::$facetConfigBuilder = new FacetConfigBuilder(
+        if (!static::$facetConfig) {
+            static::$facetConfig = new FacetConfig(
                 $this->getFacetSearchConfigBuilderPlugin(),
                 $this->getSearchConfigExpanderPlugins()
             );
         }
 
-        return static::$facetConfigBuilder;
+        return static::$facetConfig;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigBuilderInterface
+     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
      */
-    public function getSortConfigBuilder(): SortConfigBuilderInterface
+    public function getSortConfig(): SortConfigInterface
     {
-        if (!static::$sortConfigBuilder) {
-            static::$sortConfigBuilder = new SortConfigBuilder(
+        if (!static::$sortConfig) {
+            static::$sortConfig = new SortConfig(
                 $this->getSortSearchConfigBuilderPlugin(),
                 $this->getSearchConfigExpanderPlugins()
             );
         }
 
-        return static::$sortConfigBuilder;
+        return static::$sortConfig;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface
+     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
      */
-    public function getPaginationConfigBuilder(): PaginationConfigBuilderInterface
+    public function getPaginationConfig(): PaginationConfigInterface
     {
-        if (!static::$paginationConfigBuilder) {
-            static::$paginationConfigBuilder = new PaginationConfigBuilder(
+        if (!static::$paginationConfig) {
+            static::$paginationConfig = new PaginationConfig(
                 $this->getPaginationSearchConfigBuilderPlugin()
             );
         }
 
-        return static::$paginationConfigBuilder;
+        return static::$paginationConfig;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface|null
      */
-    public function getFacetSearchConfigBuilderPlugin(): ?FacetSearchConfigBuilderPluginInterface
+    public function getFacetSearchConfigBuilderPlugin(): ?FacetConfigPluginInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SEARCH_FACET_CONFIG_BUILDER_PLUGIN);
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface|null
      */
-    public function getPaginationSearchConfigBuilderPlugin(): ?PaginationSearchConfigBuilderPluginInterface
+    public function getPaginationSearchConfigBuilderPlugin(): ?PaginationConfigPluginInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SEARCH_PAGINATION_CONFIG_BUILDER_PLUGIN);
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface|null
      */
-    public function getSortSearchConfigBuilderPlugin(): ?SortSearchConfigBuilderPluginInterface
+    public function getSortSearchConfigBuilderPlugin(): ?SortConfigPluginInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SEARCH_SORT_CONFIG_BUILDER_PLUGIN);
     }

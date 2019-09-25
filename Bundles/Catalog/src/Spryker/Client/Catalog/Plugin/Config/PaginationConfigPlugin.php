@@ -9,13 +9,13 @@ namespace Spryker\Client\Catalog\Plugin\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
-class PaginationConfigBuilderPlugin extends AbstractPlugin implements PaginationSearchConfigBuilderPluginInterface
+class PaginationConfigPlugin extends AbstractPlugin implements PaginationConfigPluginInterface
 {
     public const DEFAULT_ITEMS_PER_PAGE = 12;
     public const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
@@ -28,11 +28,11 @@ class PaginationConfigBuilderPlugin extends AbstractPlugin implements Pagination
      *
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigBuilderInterface $paginationConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfigBuilder
      *
      * @return void
      */
-    public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder)
+    public function buildPaginationConfig(PaginationConfigInterface $paginationConfigBuilder)
     {
         $paginationConfigTransfer = (new PaginationConfigTransfer())
             ->setParameterName(static::PARAMETER_NAME_PAGE)

@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchElasticsearch\Plugin\Config;
+namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\SortConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\SortConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 
-class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
+class SortConfig implements SortConfigInterface
 {
     public const DIRECTION_ASC = 'asc';
     public const DIRECTION_DESC = 'desc';
@@ -31,12 +30,12 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     protected $sortParamKey;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface|null $sortSearchConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface|null $sortSearchConfigBuilderPlugin
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
      * @param string $sortParamName
      */
     public function __construct(
-        ?SortSearchConfigBuilderPluginInterface $sortSearchConfigBuilderPlugin = null,
+        ?SortConfigPluginInterface $sortSearchConfigBuilderPlugin = null,
         array $searchConfigExpanderPlugins = [],
         string $sortParamName = self::DEFAULT_SORT_PARAM_KEY
     ) {
@@ -128,11 +127,11 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SortSearchConfigBuilderPluginInterface|null $sortSearchConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface|null $sortSearchConfigBuilderPlugin
      *
      * @return void
      */
-    protected function buildSortConfig(?SortSearchConfigBuilderPluginInterface $sortSearchConfigBuilderPlugin): void
+    protected function buildSortConfig(?SortConfigPluginInterface $sortSearchConfigBuilderPlugin): void
     {
         if (!$sortSearchConfigBuilderPlugin) {
             return;

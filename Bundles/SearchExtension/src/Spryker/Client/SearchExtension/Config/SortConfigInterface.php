@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchExtension\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 
-interface SortConfigBuilderInterface
+interface SortConfigInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SortConfigTransfer $sortConfigTransfer

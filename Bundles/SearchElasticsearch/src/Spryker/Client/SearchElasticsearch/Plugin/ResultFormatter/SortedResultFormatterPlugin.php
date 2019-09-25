@@ -35,7 +35,7 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
     {
         $sortConfig = $this
             ->getFactory()
-            ->getSortConfigBuilder();
+            ->getSortConfig();
 
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 

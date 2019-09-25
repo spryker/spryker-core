@@ -38,6 +38,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function getTotalCount(?string $indexName = null): int
     {
+        // TODO Provide implementation
+        return 0;
     }
 
     /**
@@ -49,6 +51,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function getMetaData(?string $indexName = null): array
     {
+        // TODO Provide implementation
+        return [];
     }
 
     /**
@@ -61,6 +65,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function read(string $key, string $indexName)
     {
+        // TODO Provide implementation
+        return '';
     }
 
     /**
@@ -72,6 +78,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function delete(?string $indexName = null): bool
     {
+        // TODO Provide implementation
+        return true;
     }
 
     /**
@@ -83,5 +91,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
+        // TODO Provide implementation
+        return true;
     }
 }

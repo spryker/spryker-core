@@ -74,7 +74,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     protected function hasActiveSortParam(array $requestParameters): bool
     {
-        $sortConfig = $this->getFactory()->getSortConfigBuilder();
+        $sortConfig = $this->getFactory()->getSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 
         return !empty($sortParamName);
@@ -87,7 +87,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     protected function hasActiveCategoryFacet(array $requestParameters): bool
     {
-        $facetConfig = $this->getFactory()->getFacetConfigBuilder();
+        $facetConfig = $this->getFactory()->getFacetConfig();
         $activeFacetParamNames = $facetConfig->getActiveParamNames($requestParameters);
 
         return in_array($this->categoryParamName, $activeFacetParamNames);

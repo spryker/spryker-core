@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderInterface` instead.
+ * @deprecated Use `\Spryker\Client\SearchExtension\Config\PaginationConfigInterface` instead.
  */
 interface PaginationConfigBuilderInterface
 {

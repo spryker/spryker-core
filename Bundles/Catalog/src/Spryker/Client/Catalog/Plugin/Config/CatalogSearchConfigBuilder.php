@@ -15,9 +15,9 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\Catalog\Plugin\Config\FacetConfigBuilderPlugin` instead.
- * @deprecated Use `\Spryker\Client\Catalog\Plugin\Config\PaginationConfigBuilderPlugin` instead.
- * @deprecated Use `\Spryker\Client\Catalog\Plugin\Config\SortConfigBuilderPlugin` instead.
+ * @deprecated Use `\Spryker\Client\Catalog\Plugin\Config\FacetConfigPlugin` instead.
+ * @deprecated Use `\Spryker\Client\Catalog\Plugin\Config\PaginationConfigPlugin` instead.
+ * @deprecated Use `\Spryker\Client\Catalog\Plugin\Config\SortConfigPlugin` instead.
  *
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */

@@ -38,7 +38,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
      */
     protected function addSortingToQuery(Query $query, array $requestParameters): void
     {
-        $sortConfig = $this->getFactory()->getSortConfigBuilder();
+        $sortConfig = $this->getFactory()->getSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
         $sortConfigTransfer = $sortConfig->get($sortParamName);
 

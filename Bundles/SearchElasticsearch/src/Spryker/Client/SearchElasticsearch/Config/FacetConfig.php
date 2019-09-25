@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchElasticsearch\Plugin\Config;
+namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
-use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\FacetConfigBuilderInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
 
-class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
+class FacetConfig implements FacetConfigInterface
 {
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer[]
@@ -21,10 +20,10 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     protected $facetConfigTransfers = [];
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface|null $facetSearchConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface|null $facetSearchConfigBuilderPlugin
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
      */
-    public function __construct(?FacetSearchConfigBuilderPluginInterface $facetSearchConfigBuilderPlugin = null, array $searchConfigExpanderPlugins = [])
+    public function __construct(?FacetConfigPluginInterface $facetSearchConfigBuilderPlugin = null, array $searchConfigExpanderPlugins = [])
     {
         $this->buildFacetConfig($facetSearchConfigBuilderPlugin);
         $this->expandFacetConfig($searchConfigExpanderPlugins);
@@ -113,11 +112,11 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchConfigBuilderPluginInterface|null $facetSearchConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface|null $facetSearchConfigBuilderPlugin
      *
      * @return void
      */
-    protected function buildFacetConfig(?FacetSearchConfigBuilderPluginInterface $facetSearchConfigBuilderPlugin = null): void
+    protected function buildFacetConfig(?FacetConfigPluginInterface $facetSearchConfigBuilderPlugin = null): void
     {
         if (!$facetSearchConfigBuilderPlugin) {
             return;
