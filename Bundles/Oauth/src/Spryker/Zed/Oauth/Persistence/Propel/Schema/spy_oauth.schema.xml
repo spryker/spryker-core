@@ -7,7 +7,7 @@
         <column name="identifier" type="VARCHAR" size="3024" required="true"/>
         <column name="scopes" type="VARCHAR" size="1024" required="false"/>
         <column name="user_identifier" type="VARCHAR" size="1024" required="true"/>
-        <column name="fk_oauth_client" type="VARCHAR" size="1024" required="true" />
+        <column name="fk_oauth_client" type="VARCHAR" size="1024" required="true"/>
 
         <column name="expirity_date" type="TIMESTAMP" required="true"/>
 

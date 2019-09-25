@@ -240,7 +240,6 @@ interface CartsRestApiFacadeInterface
     public function addItemToGuestCart(RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer): QuoteResponseTransfer;
 
  /**
-
   * Specification:
   * - Adds an item to the guest cart.
   * - sku, quantity and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.

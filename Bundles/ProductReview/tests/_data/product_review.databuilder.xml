@@ -6,10 +6,10 @@
 >
 
     <transfer name="ProductReview">
-        <property name="rating" dataBuilderRule="numberBetween(1,5)" />
-        <property name="summary" dataBuilderRule="sentence(2)" />
-        <property name="description" dataBuilderRule="sentence(6)" />
-        <property name="nickname" dataBuilderRule="name(2)" />
+        <property name="rating" dataBuilderRule="numberBetween(1,5)"/>
+        <property name="summary" dataBuilderRule="sentence(2)"/>
+        <property name="description" dataBuilderRule="sentence(6)"/>
+        <property name="nickname" dataBuilderRule="name(2)"/>
     </transfer>
 
 </transfers>

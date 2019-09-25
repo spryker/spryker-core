@@ -29,6 +29,8 @@ class SharedCartClient extends AbstractClient implements SharedCartClientInterfa
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */
     public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer

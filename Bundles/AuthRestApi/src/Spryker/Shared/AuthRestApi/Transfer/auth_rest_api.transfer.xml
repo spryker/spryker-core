@@ -4,31 +4,31 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestAccessTokensAttributes">
-        <property name="username" type="string" restRequestParameter="required" />
-        <property name="password" type="string" restRequestParameter="required" />
-        <property name="tokenType" type="string" />
-        <property name="expiresIn" type="string" />
-        <property name="accessToken" type="string" />
-        <property name="refreshToken" type="string" />
+        <property name="username" type="string" restRequestParameter="required"/>
+        <property name="password" type="string" restRequestParameter="required"/>
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string"/>
     </transfer>
 
     <transfer name="RestRefreshTokensAttributes">
-        <property name="tokenType" type="string" />
-        <property name="expiresIn" type="string" />
-        <property name="accessToken" type="string" />
-        <property name="refreshToken" type="string" restRequestParameter="required" />
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestTokenResponseAttributes">
-        <property name="tokenType" type="string" />
-        <property name="expiresIn" type="string" />
-        <property name="accessToken" type="string" />
-        <property name="refreshToken" type="string" />
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string"/>
     </transfer>
 
     <transfer name="OauthAccessTokenData">
-        <property name="oauthScopes" type="array" />
-        <property name="oauthUserId" type="string" />
+        <property name="oauthScopes" type="array"/>
+        <property name="oauthUserId" type="string"/>
     </transfer>
 
     <transfer name="OauthRequest">

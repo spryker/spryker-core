@@ -8,17 +8,17 @@
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="idEntity" type="int" />
-        <property name="idStores" type="int[]" />
-        <property name="stores" type="Store[]" />
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]"/>
+        <property name="stores" type="Store[]"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="priceData" type="string" />
+        <property name="priceData" type="string"/>
     </transfer>
 
 </transfers>

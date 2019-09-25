@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="TabsView">
-        <property name="tabs" type="TabItem[]" singular="tab" />
+        <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="activeTabName" type="string"/>
         <property name="footerTemplate" type="string"/>
         <property name="isNavigable" type="bool"/>
@@ -41,10 +41,10 @@
     </transfer>
 
     <transfer name="Button">
-        <property name="url" type="string" />
-        <property name="title" type="string" />
-        <property name="defaultOptions" type="array" />
-        <property name="customOptions" type="array" />
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
     </transfer>
 
 </transfers>

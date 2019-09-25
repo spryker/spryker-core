@@ -16,6 +16,7 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Synchronization

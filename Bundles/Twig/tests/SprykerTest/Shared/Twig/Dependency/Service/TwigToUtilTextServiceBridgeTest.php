@@ -13,6 +13,7 @@ use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig

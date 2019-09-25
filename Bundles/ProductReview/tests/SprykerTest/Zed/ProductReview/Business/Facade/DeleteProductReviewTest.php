@@ -12,6 +12,7 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReview

@@ -12,6 +12,7 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch

@@ -4,30 +4,30 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="FlysystemResource">
-        <property name="type" type="string" />
-        <property name="path" type="string" />
-        <property name="timestamp" type="int" />
-        <property name="size" type="int" />
-        <property name="dirname" type="string" />
-        <property name="basename" type="string" />
-        <property name="extension" type="string" />
-        <property name="filename" type="string" />
-        <property name="isFile" type="bool" />
+        <property name="type" type="string"/>
+        <property name="path" type="string"/>
+        <property name="timestamp" type="int"/>
+        <property name="size" type="int"/>
+        <property name="dirname" type="string"/>
+        <property name="basename" type="string"/>
+        <property name="extension" type="string"/>
+        <property name="filename" type="string"/>
+        <property name="isFile" type="bool"/>
     </transfer>
 
     <transfer name="FlysystemResourceMetadata">
-        <property name="type" type="string" />
-        <property name="path" type="string" />
-        <property name="timestamp" type="int" />
-        <property name="size" type="int" />
-        <property name="isFile" type="bool" />
+        <property name="type" type="string"/>
+        <property name="path" type="string"/>
+        <property name="timestamp" type="int"/>
+        <property name="size" type="int"/>
+        <property name="isFile" type="bool"/>
     </transfer>
 
     <transfer name="FlysystemConfig">
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="adapterConfig" type="array" />
-        <property name="flysystemConfig" type="array" />
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="adapterConfig" type="array"/>
+        <property name="flysystemConfig" type="array"/>
     </transfer>
 
 </transfers>

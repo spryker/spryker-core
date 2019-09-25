@@ -86,7 +86,9 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $name
+     *
+     * @return string
      */
     protected function findTemplate($name)
     {

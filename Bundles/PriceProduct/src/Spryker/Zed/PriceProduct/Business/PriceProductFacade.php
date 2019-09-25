@@ -318,6 +318,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @api
      *
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -337,6 +338,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -485,6 +487,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */

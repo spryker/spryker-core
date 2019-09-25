@@ -14,6 +14,7 @@ use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductDiscontinuedProductBundleConnector

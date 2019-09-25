@@ -73,7 +73,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function current()
     {
@@ -81,9 +81,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritdoc
      */
     public function next()
     {
@@ -91,7 +89,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function key()
     {
@@ -99,7 +97,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function valid()
     {
@@ -107,9 +105,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritdoc
      */
     public function rewind()
     {
@@ -119,7 +115,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function count()
     {

@@ -17,6 +17,7 @@ use Spryker\Zed\TaxProductStorage\Persistence\TaxProductStorageRepository;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductStorage

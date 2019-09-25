@@ -18,6 +18,7 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Permission

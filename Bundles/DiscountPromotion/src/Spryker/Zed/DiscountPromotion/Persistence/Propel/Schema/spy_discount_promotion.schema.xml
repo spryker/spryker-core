@@ -2,13 +2,13 @@
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\DiscountPromotion\Persistence" package="src.Orm.Zed.DiscountPromotion.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
     <table name="spy_discount_promotion" phpName="SpyDiscountPromotion">
-        <column name="id_discount_promotion" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_discount" type="INTEGER" required="true" />
-        <column name="abstract_sku" type="VARCHAR" size="255"  required="true" />
-        <column name="quantity" type="INTEGER" required="true" />
+        <column name="id_discount_promotion" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_discount" type="INTEGER" required="true"/>
+        <column name="abstract_sku" type="VARCHAR" size="255"  required="true"/>
+        <column name="quantity" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_discount_promotion-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountPromotion">
-            <reference local="fk_discount" foreign="id_discount" />
+            <reference local="fk_discount" foreign="id_discount"/>
         </foreign-key>
 
         <id-method-parameter value="spy_discount_promotion_pk_seq"/>
