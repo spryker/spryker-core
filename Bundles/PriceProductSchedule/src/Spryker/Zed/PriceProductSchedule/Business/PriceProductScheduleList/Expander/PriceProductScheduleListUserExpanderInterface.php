@@ -9,12 +9,12 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Exp
 
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 
-interface PriceProductScheduleListExpanderInterface
+interface PriceProductScheduleListUserExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
      */
-    public function expandPriceProductScheduleListWithCurrentUser(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer;
+    public function expand(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer;
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Exp
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeInterface;
 
-class PriceProductScheduleListExpander implements PriceProductScheduleListExpanderInterface
+class PriceProductScheduleListUserExpander implements PriceProductScheduleListUserExpanderInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeInterface
@@ -30,7 +30,7 @@ class PriceProductScheduleListExpander implements PriceProductScheduleListExpand
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
      */
-    public function expandPriceProductScheduleListWithCurrentUser(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer
+    public function expand(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer
     {
         $userTransfer = $this->userFacade->getCurrentUser();
 

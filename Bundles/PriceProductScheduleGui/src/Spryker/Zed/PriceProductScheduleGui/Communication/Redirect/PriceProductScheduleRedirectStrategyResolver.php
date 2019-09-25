@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect;
+namespace Spryker\Zed\PriceProductScheduleGui\Communication\Redirect;
 
 use Exception;
 use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
@@ -17,12 +17,12 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
     public const KEY_CONCRETE_PRODUCT = 'concrete_product';
     protected const EXCEPTION_MESSAGE = 'Container is not valid';
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface[]
+     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[]
      */
     protected $priceProductScheduleStrategyContainer;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface[] $priceProductScheduleStrategyContainer
+     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[] $priceProductScheduleStrategyContainer
      */
     public function __construct(array $priceProductScheduleStrategyContainer)
     {

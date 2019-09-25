@@ -37,11 +37,9 @@ class CurrencyDataHelper extends Module
      */
     public function haveCurrencyTransfer(array $override = []): CurrencyTransfer
     {
-        $currencyFacade = $this->getCurrencyFacade();
-        $currencyTransfer = (new CurrencyBuilder($override))->build();
-        $idCurrency = $currencyFacade->createCurrency($currencyTransfer);
+        $idCurrency = $this->haveCurrency($override);
 
-        return $currencyFacade->getByIdCurrency($idCurrency);
+        return $this->getCurrencyFacade()->getByIdCurrency($idCurrency);
     }
 
     /**

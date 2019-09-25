@@ -57,8 +57,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\Pric
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Updater\PriceProductScheduleUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Updater\PriceProductScheduleUpdaterInterface;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListExpander;
-use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListExpanderInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinder;
@@ -211,11 +211,11 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListExpanderInterface
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface
      */
-    public function createPriceProductScheduleListExpander(): PriceProductScheduleListExpanderInterface
+    public function createPriceProductScheduleListExpander(): PriceProductScheduleListUserExpanderInterface
     {
-        return new PriceProductScheduleListExpander(
+        return new PriceProductScheduleListUserExpander(
             $this->getUserFacade()
         );
     }

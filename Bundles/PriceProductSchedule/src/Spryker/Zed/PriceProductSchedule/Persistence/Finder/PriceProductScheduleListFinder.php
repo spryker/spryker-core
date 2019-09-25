@@ -13,8 +13,8 @@ use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductSched
 
 class PriceProductScheduleListFinder implements PriceProductScheduleListFinderInterface
 {
-    protected const ALIAS_NUMBER_OF_PRICES = 'numberOfPrices';
-    protected const ALIAS_NUMBER_OF_PRODUCTS = 'numberOfProducts';
+    public const ALIAS_NUMBER_OF_PRICES = 'numberOfPrices';
+    public const ALIAS_NUMBER_OF_PRODUCTS = 'numberOfProducts';
 
     protected const EXPRESSION_NUMBER_OF_PRICES = 'COUNT(%s)';
     protected const EXPRESSION_NUMBER_OF_PRODUCTS = 'COUNT(DISTINCT %s) + COUNT(DISTINCT %s)';

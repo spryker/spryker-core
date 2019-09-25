@@ -32,16 +32,16 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\DateTrans
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolver;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectToProductAbstract;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectToProductConcrete;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectToScheduleList;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatter;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapper;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Mapper\CurrencyMapperInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectStrategyResolver;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectStrategyResolverInterface;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectToProductAbstract;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectToProductConcrete;
+use Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectToScheduleList;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreator;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\AbstractProductTabCreatorInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\TabCreator\ConcreteProductTabCreator;
@@ -419,8 +419,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleDataExtractor(
             $this->getStoreFacade(),
-            $this->createPriceProductScheduleDataFormatter(),
-            $this->createPriceProductScheduleRedirectStrategyResolver()
+            $this->createPriceProductScheduleDataFormatter()
         );
     }
 
@@ -435,7 +434,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface
      */
     public function createPriceProductScheduleRedirectToProductAbstract(): PriceProductScheduleRedirectInterface
     {
@@ -443,7 +442,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface
      */
     public function createPriceProductScheduleRedirectToProductConcrete(): PriceProductScheduleRedirectInterface
     {
@@ -451,7 +450,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface
      */
     public function createPriceProductScheduleRedirectToScheduleList(): PriceProductScheduleRedirectInterface
     {
@@ -459,7 +458,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface
+     * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectStrategyResolverInterface
      */
     public function createPriceProductScheduleRedirectStrategyResolver(): PriceProductScheduleRedirectStrategyResolverInterface
     {

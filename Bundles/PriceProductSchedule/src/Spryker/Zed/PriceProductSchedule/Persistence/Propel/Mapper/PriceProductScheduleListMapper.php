@@ -11,12 +11,10 @@ use Generated\Shared\Transfer\PriceProductScheduleListMetaDataTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
+use Spryker\Zed\PriceProductSchedule\Persistence\Finder\PriceProductScheduleListFinder;
 
 class PriceProductScheduleListMapper implements PriceProductScheduleListMapperInterface
 {
-    protected const COL_NUMBER_OF_PRICES = 'numberOfPrices';
-    protected const COL_NUMBER_OF_PRODUCTS = 'numberOfProducts';
-
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList $priceProductScheduleListEntity
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
@@ -85,15 +83,15 @@ class PriceProductScheduleListMapper implements PriceProductScheduleListMapperIn
         SpyPriceProductScheduleList $priceProductScheduleListEntity,
         PriceProductScheduleListMetaDataTransfer $priceProductScheduleListMetadataTransfer
     ): PriceProductScheduleListMetaDataTransfer {
-        if ($priceProductScheduleListEntity->hasVirtualColumn(static::COL_NUMBER_OF_PRICES)) {
+        if ($priceProductScheduleListEntity->hasVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRICES)) {
             $priceProductScheduleListMetadataTransfer->setNumberOfPrices(
-                $priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRICES)
+                $priceProductScheduleListEntity->getVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRICES)
             );
         }
 
-        if ($priceProductScheduleListEntity->hasVirtualColumn(static::COL_NUMBER_OF_PRODUCTS)) {
+        if ($priceProductScheduleListEntity->hasVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRODUCTS)) {
             $priceProductScheduleListMetadataTransfer->setNumberOfProducts(
-                $priceProductScheduleListEntity->getVirtualColumn(static::COL_NUMBER_OF_PRODUCTS)
+                $priceProductScheduleListEntity->getVirtualColumn(PriceProductScheduleListFinder::ALIAS_NUMBER_OF_PRODUCTS)
             );
         }
 

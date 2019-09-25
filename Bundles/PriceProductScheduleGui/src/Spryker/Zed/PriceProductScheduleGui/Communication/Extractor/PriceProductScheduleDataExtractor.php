@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Extractor;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface;
-use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
 class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtractorInterface
@@ -25,23 +24,15 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     protected $priceProductScheduleDataFormatter;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface
-     */
-    protected $priceProductScheduleRedirectStrategyResolver;
-
-    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\PriceProductScheduleDataFormatterInterface $priceProductScheduleDataFormatter
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect\PriceProductScheduleRedirectStrategyResolverInterface $priceProductScheduleRedirectStrategyResolver
      */
     public function __construct(
         PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleDataFormatterInterface $priceProductScheduleDataFormatter,
-        PriceProductScheduleRedirectStrategyResolverInterface $priceProductScheduleRedirectStrategyResolver
+        PriceProductScheduleDataFormatterInterface $priceProductScheduleDataFormatter
     ) {
         $this->storeFacade = $storeFacade;
         $this->priceProductScheduleDataFormatter = $priceProductScheduleDataFormatter;
-        $this->priceProductScheduleRedirectStrategyResolver = $priceProductScheduleRedirectStrategyResolver;
     }
 
     /**

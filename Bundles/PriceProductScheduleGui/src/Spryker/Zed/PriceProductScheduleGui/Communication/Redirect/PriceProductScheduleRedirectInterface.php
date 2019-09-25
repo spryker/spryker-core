@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\Redirect;
+namespace Spryker\Zed\PriceProductScheduleGui\Communication\Redirect;
 
 use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 
-interface PriceProductScheduleRedirectStrategyResolverInterface
+interface PriceProductScheduleRedirectInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer
      */
-    public function resolve(PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer): PriceProductScheduleRedirectTransfer;
+    public function makeRedirectUrl(PriceProductScheduleRedirectTransfer $priceProductScheduleRedirectTransfer): PriceProductScheduleRedirectTransfer;
 }

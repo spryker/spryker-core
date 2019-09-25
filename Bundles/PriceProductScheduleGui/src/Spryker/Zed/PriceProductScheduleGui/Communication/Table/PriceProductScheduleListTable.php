@@ -55,6 +55,14 @@ class PriceProductScheduleListTable extends AbstractTable
 
     protected const DEFAULT_IMPORTED_BY_VALUE = 'Admin';
 
+    public const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
+
+    public const URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW = '/price-product-schedule-gui/view-schedule-list';
+    public const URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT = '/price-product-schedule-gui/edit-schedule-list';
+    public const URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD = '/price-product-schedule-gui/download-schedule-list';
+    public const URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE = '/price-product-schedule-gui/delete-schedule-list';
+    public const URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT = '/price-product-schedule-gui/dry-run-import';
+
     /**
      * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
      */
@@ -254,16 +262,16 @@ class PriceProductScheduleListTable extends AbstractTable
     ): string {
         if ($priceProductScheduleListEntity->getIsActive()) {
             return $this->generateViewButton(
-                Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW, [
-                    PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+                Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_VIEW, [
+                    static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
                 ]),
                 static::BUTTON_VIEW
             );
         }
 
         return $this->generateViewButton(
-            Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
-                PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+            Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
+                static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
             static::BUTTON_VIEW
         );
@@ -279,16 +287,16 @@ class PriceProductScheduleListTable extends AbstractTable
     ): string {
         if ($priceProductScheduleListEntity->getIsActive()) {
             return $this->generateEditButton(
-                Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT, [
-                    PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+                Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_EDIT, [
+                    static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
                 ]),
                 static::BUTTON_EDIT
             );
         }
 
         return $this->generateEditButton(
-            Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
-                PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+            Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DRY_RUN_IMPORT, [
+                static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
             static::BUTTON_EDIT
         );
@@ -303,8 +311,8 @@ class PriceProductScheduleListTable extends AbstractTable
         SpyPriceProductScheduleList $priceProductScheduleListEntity
     ): string {
         return $this->generateViewButton(
-            Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD, [
-                PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+            Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DOWNLOAD, [
+                static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
             static::BUTTON_DOWNLOAD
         );
@@ -319,8 +327,8 @@ class PriceProductScheduleListTable extends AbstractTable
         SpyPriceProductScheduleList $priceProductScheduleListEntity
     ): string {
         return $this->generateRemoveButton(
-            Url::generate(PriceProductScheduleListTableConstants::URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE, [
-                PriceProductScheduleListTableConstants::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
+            Url::generate(static::URL_PRICE_PRODUCT_SCHEDULE_LIST_DELETE, [
+                static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListEntity->getIdPriceProductScheduleList(),
             ]),
             static::BUTTON_DELETE
         );
