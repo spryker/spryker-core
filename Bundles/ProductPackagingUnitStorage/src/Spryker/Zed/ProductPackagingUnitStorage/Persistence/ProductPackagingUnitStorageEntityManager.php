@@ -21,7 +21,7 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
      *
      * @return void
      */
-    public function saveProductConcretePackagingStorageEntity(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer): void
+    public function saveProductConcretePackagingStorage(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer): void
     {
         $productConcretePackagingStorageEntity = $this->getFactory()
             ->createSpyProductConcretePackagingStorageQuery()
@@ -38,7 +38,7 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
      *
      * @return void
      */
-    public function deleteProductConcretePackagingStorageEntity(SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity): void
+    public function deleteProductConcretePackagingStorage(SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity): void
     {
         $productConcretePackagingStorageEntity = $this->getFactory()
             ->createSpyProductConcretePackagingStorageQuery()

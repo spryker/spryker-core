@@ -17,12 +17,12 @@ interface ProductPackagingUnitStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveProductConcretePackagingStorageEntity(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer): void;
+    public function saveProductConcretePackagingStorage(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity
      *
      * @return void
      */
-    public function deleteProductConcretePackagingStorageEntity(SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity): void;
+    public function deleteProductConcretePackagingStorage(SpyProductConcretePackagingStorageEntityTransfer $productConcretePackagingStorageEntity): void;
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
-use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClient;
+use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface;
 
 /**
  * Auto-generated group annotations
@@ -56,7 +56,7 @@ class ProductPackagingUnitStorageClientTest extends Unit
         );
 
         // Act
-        $productConcretePackagingStorageTransfer = $this->createProductPackagingUnitStorageClient()
+        $productConcretePackagingStorageTransfer = $this->getProductPackagingUnitStorageClient()
             ->findProductConcretePackagingById(
                 $boxProductConcreteTransfer->getIdProductConcrete()
             );
@@ -66,10 +66,10 @@ class ProductPackagingUnitStorageClientTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClient
+     * @return \Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClientInterface
      */
-    protected function createProductPackagingUnitStorageClient(): ProductPackagingUnitStorageClient
+    protected function getProductPackagingUnitStorageClient(): ProductPackagingUnitStorageClientInterface
     {
-        return new ProductPackagingUnitStorageClient();
+        return $this->tester->getLocator()->productPackagingUnitStorage()->client();
     }
 }

@@ -55,7 +55,7 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
     protected function storeData(array $productConcretePackagingTransfers): void
     {
         foreach ($productConcretePackagingTransfers as $productConcretePackagingTransfer) {
-            $this->productPackagingUnitStorageEntityManager->saveProductConcretePackagingStorageEntity($productConcretePackagingTransfer);
+            $this->productPackagingUnitStorageEntityManager->saveProductConcretePackagingStorage($productConcretePackagingTransfer);
         }
     }
 
@@ -70,7 +70,7 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
             ->findProductConcretePackagingStorageEntitiesByProductConcreteIds($productConcreteIds);
 
         foreach ($productConcretePackagingStorageEntities as $productConcretePackagingStorageEntity) {
-            $this->productPackagingUnitStorageEntityManager->deleteProductConcretePackagingStorageEntity($productConcretePackagingStorageEntity);
+            $this->productPackagingUnitStorageEntityManager->deleteProductConcretePackagingStorage($productConcretePackagingStorageEntity);
         }
     }
 }

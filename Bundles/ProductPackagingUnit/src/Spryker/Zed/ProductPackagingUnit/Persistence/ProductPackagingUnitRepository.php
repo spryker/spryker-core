@@ -126,8 +126,6 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @module ProductPackagingUnit
-     *
      * @param int[] $productPackagingUnitTypeIds
      *
      * @return int[]
