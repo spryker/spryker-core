@@ -73,20 +73,25 @@ class AuthRestApiHelper extends Module
      * @part json
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string|null $anonymousCustomerReference
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): OauthResponseTransfer
+    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer, $anonymousCustomerReference = null): OauthResponseTransfer
     {
         $oauthRequestTransfer = (new OauthRequestTransfer())
             ->setGrantType('password')
             ->setUsername($customerTransfer->getEmail())
             ->setPassword($customerTransfer->getNewPassword());
 
+        if ($anonymousCustomerReference) {
+            $oauthRequestTransfer->setCustomerReference($anonymousCustomerReference);
+        }
+
         return $this->getLocator()
-            ->oauth()
+            ->authRestApi()
             ->facade()
-            ->processAccessTokenRequest($oauthRequestTransfer);
+            ->processAccessToken($oauthRequestTransfer);
     }
 
     /**
