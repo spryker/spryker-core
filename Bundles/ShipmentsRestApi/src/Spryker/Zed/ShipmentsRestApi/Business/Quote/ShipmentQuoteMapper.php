@@ -54,7 +54,8 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentTransfer->setMethod($shipmentMethodTransfer)
-            ->setShipmentSelection((string)$idShipmentMethod);
+            ->setShipmentSelection((string)$idShipmentMethod)
+            ->setShippingAddress($quoteTransfer->getShippingAddress());
 
         $quoteTransfer = $this->setShipmentTransferIntoQuote($quoteTransfer, $shipmentTransfer);
 
