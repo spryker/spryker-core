@@ -135,7 +135,7 @@ class SessionFactory extends AbstractFactory
     /**
      * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
      */
-    public function createMockSessionStorage(): SessionStorageInterface
+    public function createMemorySessionStorage(): SessionStorageInterface
     {
         return new MockFileSessionStorage();
     }

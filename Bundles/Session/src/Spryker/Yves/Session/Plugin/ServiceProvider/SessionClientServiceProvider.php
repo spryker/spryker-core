@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @deprecated This is service provider for BC. Session should be added for session client before every other service that can use it. E.g. `WebProfilerServiceProvider`.
+ * @deprecated This service provider exists for backward-compatibility reasons. Session should be added for session client before every other service that can use it. E.g. `WebProfilerServiceProvider`.
  *
  * @method \Spryker\Yves\Session\SessionConfig getConfig()
  * @method \Spryker\Yves\Session\SessionFactory getFactory()

@@ -8,7 +8,7 @@
 namespace Spryker\Glue\Session;
 
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\Session\Storage\MockArraySessionStorage;
+use Spryker\Glue\Session\Storage\MemorySessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
@@ -20,14 +20,14 @@ class SessionFactory extends AbstractFactory
      */
     public function createSession(): SessionInterface
     {
-        return new Session($this->createMockArraySessionStorage());
+        return new Session($this->createMemorySessionStorage());
     }
 
     /**
      * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
      */
-    public function createMockArraySessionStorage(): SessionStorageInterface
+    public function createMemorySessionStorage(): SessionStorageInterface
     {
-        return new MockArraySessionStorage();
+        return new MemorySessionStorage();
     }
 }

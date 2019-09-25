@@ -25,7 +25,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     protected const SERVICE_SESSION = 'session';
-    protected const SERVICE_SESSION_TEST = 'session.test';
+    protected const FLAG_SESSION_TEST = 'session.test';
 
     protected const EVENT_PRIORITY_EARLY_KERNEL_REQUEST = 128;
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 192;
@@ -35,7 +35,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      * {@inheritDoc}
      * - Adds early request event listener that adds session to request.
      * - Adds kernel request event listener that gets session id from cookie or migrate old one. Works only with `session.test` service enabled.
-     * - Adds kernel response event listener that saves session and create a session cookie. Works only with `session.test` service enabled.
+     * - Adds kernel response event listener that saves session and create a session cookie.
      *
      * @api
      *
@@ -167,6 +167,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      */
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
-        return $container->has(static::SERVICE_SESSION_TEST) && $container->get(static::SERVICE_SESSION_TEST);
+        return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
     }
 }

@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
     protected const SERVICE_SESSION = 'session';
-    protected const SERVICE_SESSION_TEST = 'session.test';
+    protected const FLAG_SESSION_TEST = 'session.test';
 
     /**
      * {@inheritDoc}
@@ -38,7 +38,7 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container = $this->addSessionTestService($container);
+        $container = $this->addSessionTestFlag($container);
         $container = $this->addSessionService($container);
 
         return $container;
@@ -49,9 +49,9 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function addSessionTestService(ContainerInterface $container): ContainerInterface
+    protected function addSessionTestFlag(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_SESSION_TEST, false);
+        $container->set(static::FLAG_SESSION_TEST, false);
 
         return $container;
     }
@@ -77,8 +77,8 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      */
     protected function createSessionStorage(ContainerInterface $container): SessionStorageInterface
     {
-        if ($this->isSessionTestServiceEnabled($container)) {
-            return $this->getFactory()->createMockSessionStorage();
+        if ($this->isSessionTestEnabled($container)) {
+            return $this->getFactory()->createMemorySessionStorage();
         }
 
         return $this->getFactory()->createNativeSessionStorage();
@@ -89,9 +89,9 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      *
      * @return bool
      */
-    protected function isSessionTestServiceEnabled(ContainerInterface $container): bool
+    protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
-        return $container->has(static::SERVICE_SESSION_TEST) && $container->get(static::SERVICE_SESSION_TEST);
+        return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
     }
 
     /**

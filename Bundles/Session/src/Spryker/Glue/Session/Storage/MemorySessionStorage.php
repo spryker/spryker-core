@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  * This class is used as workaround for Clients which depend on session, this will provide in memory storage that means after request complected it's discarded.
  * When using SessionClient within GLUE application context, it will use this storage.
  */
-class MockArraySessionStorage implements SessionStorageInterface
+class MemorySessionStorage implements SessionStorageInterface
 {
     /**
      * @var string

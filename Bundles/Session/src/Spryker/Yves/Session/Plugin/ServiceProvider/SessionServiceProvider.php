@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use `Spryker\Yves\Session\Plugin\Application\Session\ApplicationPluginInterface` instead.
+ * @deprecated Use `Spryker\Yves\Session\Plugin\Application\Session\SessionApplicationPlugin` instead.
  * @deprecated Use `Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin` instead.
  *
  * @method \Spryker\Yves\Session\SessionFactory getFactory()
