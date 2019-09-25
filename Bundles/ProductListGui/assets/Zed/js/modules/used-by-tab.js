@@ -5,7 +5,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         clickedButtonUrl = $(this).attr('href');
-        $('#delete-confirmation-modal-window').modal('show');
+        $('#confirmation-modal-window').modal('show');
     });
 
     $('#btn-confirm').on('click', function () {
