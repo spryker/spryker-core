@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfile\Business;
+namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 
-interface MerchantProfileFacadeInterface
+interface MerchantProfileWriterInterface
 {
     /**
-     * Specification:
-     * - Saves merchant profile data provided by MerchantTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
