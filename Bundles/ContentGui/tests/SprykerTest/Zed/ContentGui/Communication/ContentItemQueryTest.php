@@ -13,6 +13,7 @@ use Spryker\Zed\ContentGui\Communication\Table\ContentTableConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentGui

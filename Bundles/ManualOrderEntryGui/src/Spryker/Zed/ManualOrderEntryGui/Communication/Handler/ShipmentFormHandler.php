@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\ManualOrderEntryGui\ManualOrderEntryGuiConfig;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -67,7 +67,7 @@ class ShipmentFormHandler implements FormHandlerInterface
     {
         $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
-        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpenseTransfer->setType(ManualOrderEntryGuiConfig::SHIPMENT_EXPENSE_TYPE);
         $shipmentExpenseTransfer->setUnitNetPrice(0);
         $shipmentExpenseTransfer->setUnitGrossPrice($shipmentMethodTransfer->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);

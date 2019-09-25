@@ -25,6 +25,7 @@ class AccessTokenValidatorPlugin extends AbstractPlugin implements ValidateRestR
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */

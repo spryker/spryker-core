@@ -20,7 +20,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Pyz\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
@@ -29,6 +29,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -41,6 +42,11 @@ class ShipmentTaxRateCalculationTest extends Unit
 {
     public const DEFAULT_TAX_RATE = 19;
     public const DEFAULT_TAX_COUNTRY = 'DE';
+
+    /**
+     * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -216,7 +222,8 @@ class ShipmentTaxRateCalculationTest extends Unit
     {
         return new ShipmentTaxRateCalculator(
             $this->createQueryContainerMock($countryTaxRate),
-            $this->createProductOptionToTaxBridgeMock()
+            $this->createProductOptionToTaxBridgeMock(),
+            $this->tester->getShipmentService()
         );
     }
 
@@ -306,7 +313,7 @@ class ShipmentTaxRateCalculationTest extends Unit
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->setName($shipmentMethodTransfer->getName());
-        $expenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $expenseTransfer->setType(ShipmentConfig::SHIPMENT_EXPENSE_TYPE);
 
         $quoteTransfer->addExpense($expenseTransfer);
 

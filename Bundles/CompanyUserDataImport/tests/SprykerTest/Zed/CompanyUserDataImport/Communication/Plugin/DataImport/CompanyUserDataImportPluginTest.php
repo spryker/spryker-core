@@ -18,6 +18,7 @@ use Spryker\Zed\CompanyUserDataImport\CompanyUserDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUserDataImport

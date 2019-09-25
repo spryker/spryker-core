@@ -10,11 +10,11 @@ namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 interface ManualOrderEntryGuiToProductFacadeInterface
 {
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return bool
      */
-    public function hasProductConcrete($concreteSku);
+    public function hasProductConcrete($sku);
 
     /**
      * @param string $concreteSku

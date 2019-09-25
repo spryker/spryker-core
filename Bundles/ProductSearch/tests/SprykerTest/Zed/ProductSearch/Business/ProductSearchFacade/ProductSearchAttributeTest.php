@@ -14,6 +14,7 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSearch

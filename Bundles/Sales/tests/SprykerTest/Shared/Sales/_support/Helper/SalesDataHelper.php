@@ -16,27 +16,33 @@ use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Oms\Helper\OmsHelper;
 
 class SalesDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    public const NAMESPACE_ROOT = '\\';
+
+    /**
+     * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
+     */
+    protected $saveOrderStack = [];
+
     /**
      * @param array $override
      * @param string|null $stateMachineProcessName
+     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function haveOrder(array $override = [], $stateMachineProcessName = null)
-    {
-        $quoteTransfer = (new QuoteBuilder())
-            ->withItem($override)
-            ->withCustomer()
-            ->withTotals()
-            ->withShippingAddress()
-            ->withBillingAddress()
-            ->withCurrency()
-            ->build();
+    public function haveOrder(
+        array $override = [],
+        $stateMachineProcessName = null,
+        array $saveOrderStack = []
+    ) {
+        $this->saveOrderStack = $saveOrderStack;
+        $quoteTransfer = $this->createQuoteTransfer($override);
 
         return $this->persistOrder($quoteTransfer, $stateMachineProcessName);
     }
@@ -64,13 +70,30 @@ class SalesDataHelper extends Module
          * @var \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
          */
         $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
+        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
+        $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
 
-        $salesFacade = $this->getSalesFacade();
-        if ($stateMachineProcessName) {
-            $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
-        }
+        return $saveOrderTransfer;
+    }
 
-        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $stateMachineProcessName
+     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function haveOrderUsingPreparedQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
+        ?string $stateMachineProcessName = null,
+        array $saveOrderStack = []
+    ): SaveOrderTransfer {
+        $this->getOmsHelperModule()->configureTestStateMachine([$stateMachineProcessName]);
+
+        $this->saveOrderStack = $saveOrderStack;
+
+        $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
+        $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
 
         return $saveOrderTransfer;
     }
@@ -89,16 +112,81 @@ class SalesDataHelper extends Module
         $salesConfig->setStateMachineProcessName($stateMachineProcessName);
         $salesBusinessFactory->setConfig($salesConfig);
 
+        /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $salesFacade */
         $salesFacade->setFactory($salesBusinessFactory);
 
         return $salesFacade;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $stateMachineProcessName
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function createOrder(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
+    {
+        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
+
+        $salesFacade = $this->getSalesFacade();
+        if ($stateMachineProcessName) {
+            $salesFacade = $this->configureSalesFacadeForTests($salesFacade, $stateMachineProcessName);
+        }
+
+        $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+
+        return $saveOrderTransfer;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    private function getSalesFacade()
+    protected function getSalesFacade()
     {
         return $this->getLocator()->sales()->facade();
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(array $override = []): QuoteTransfer
+    {
+        return (new QuoteBuilder())
+            ->withItem($override)
+            ->withCustomer()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveOrderPlugins(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    {
+        foreach ($this->saveOrderStack as $orderSaver) {
+            $orderSaver->saveOrder($quoteTransfer, $saveOrderTransfer);
+        }
+    }
+
+    /**
+     * @return \Codeception\Module|\SprykerTest\Zed\Oms\Helper\OmsHelper
+     */
+    protected function getOmsHelperModule(): OmsHelper
+    {
+        if ($this->hasModule(static::NAMESPACE_ROOT . OmsHelper::class)) {
+            return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
+        }
+
+        $this->moduleContainer->create(static::NAMESPACE_ROOT . OmsHelper::class);
+
+        return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
     }
 }

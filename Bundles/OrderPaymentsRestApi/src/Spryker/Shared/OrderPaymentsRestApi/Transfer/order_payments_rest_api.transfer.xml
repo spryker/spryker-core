@@ -4,17 +4,17 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestOrderPaymentsAttributes">
-        <property name="paymentIdentifier" type="string" restRequestParameter="required" />
-        <property name="dataPayload" type="array" restRequestParameter="required" />
+        <property name="paymentIdentifier" type="string" restRequestParameter="required"/>
+        <property name="dataPayload" type="array" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="UpdateOrderPaymentRequest">
-        <property name="paymentIdentifier" type="string" />
-        <property name="dataPayload" type="array" />
+        <property name="paymentIdentifier" type="string"/>
+        <property name="dataPayload" type="array"/>
     </transfer>
 
     <transfer name="UpdateOrderPaymentResponse">
-        <property name="isSuccessful" type="bool" />
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
 </transfers>

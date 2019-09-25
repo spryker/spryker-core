@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

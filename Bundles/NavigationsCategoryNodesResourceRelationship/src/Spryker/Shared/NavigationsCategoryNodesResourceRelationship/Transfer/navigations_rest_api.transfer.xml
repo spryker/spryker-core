@@ -4,13 +4,13 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestNavigationAttributes">
-        <property name="nodes" type="RestNavigationNode[]" singular="node" />
+        <property name="nodes" type="RestNavigationNode[]" singular="node"/>
     </transfer>
 
     <transfer name="RestNavigationNode">
-        <property name="resourceId" type="int" />
-        <property name="nodeType" type="string" />
-        <property name="children" type="RestNavigationNode[]" singular="child" />
+        <property name="resourceId" type="int"/>
+        <property name="nodeType" type="string"/>
+        <property name="children" type="RestNavigationNode[]" singular="child"/>
     </transfer>
 
 </transfers>

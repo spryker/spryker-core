@@ -15,6 +15,7 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group SessionRedis

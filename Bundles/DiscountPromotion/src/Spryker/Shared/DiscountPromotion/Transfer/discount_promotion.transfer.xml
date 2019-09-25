@@ -4,7 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Discount">
-        <property name="discountPromotion" type="DiscountPromotion" />
+        <property name="discountPromotion" type="DiscountPromotion"/>
     </transfer>
 
     <transfer name="Quote">
@@ -13,39 +13,39 @@
     </transfer>
 
     <transfer name="PromotionItem">
-        <property name="idDiscountPromotion" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="maxQuantity" type="int" />
-        <property name="sku" type="string" />
-        <property name="abstractSku" type="string" />
-        <property name="maxQuantity" type="int" />
-        <property name="discount" type="Discount" />
+        <property name="idDiscountPromotion" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="maxQuantity" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
+        <property name="maxQuantity" type="int"/>
+        <property name="discount" type="Discount"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount" />
-        <property name="sku" type="string" />
-        <property name="abstractSku" type="string" />
-        <property name="maxQuantity" type="int" />
-        <property name="idDiscountPromotion" type="int" />
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
+        <property name="maxQuantity" type="int"/>
+        <property name="idDiscountPromotion" type="int"/>
     </transfer>
 
     <transfer name="DiscountableItem">
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
-        <property name="originalItem" type="Item" />
+        <property name="originalItem" type="Item"/>
     </transfer>
 
     <transfer name="DiscountCalculator">
-        <property name="discountPromotion" type="DiscountPromotion" />
+        <property name="discountPromotion" type="DiscountPromotion"/>
     </transfer>
 
     <transfer name="DiscountPromotion">
-        <property name="idDiscountPromotion" type="int" />
-        <property name="abstractSku" type="string" />
-        <property name="quantity" type="int" />
-        <property name="fkDiscount" type="int" />
+        <property name="idDiscountPromotion" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="fkDiscount" type="int"/>
     </transfer>
 
     <transfer name="CalculableObject">

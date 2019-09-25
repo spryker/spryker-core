@@ -14,6 +14,7 @@ use Spryker\Zed\StateMachine\Business\Process\Transition;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine

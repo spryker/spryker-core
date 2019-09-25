@@ -10,126 +10,126 @@
     </transfer>
 
     <transfer name="ElasticsearchIndexDefinition">
-        <property name="indexName" type="string" />
-        <property name="settings" type="array" />
-        <property name="mappings" type="array" />
+        <property name="indexName" type="string"/>
+        <property name="settings" type="array"/>
+        <property name="mappings" type="array"/>
     </transfer>
 
     <transfer name="FacetConfig">
-        <property name="name" type="string" />
-        <property name="parameterName" type="string" />
-        <property name="shortParameterName" type="string" />
-        <property name="fieldName" type="string" />
-        <property name="type" type="string" />
-        <property name="isMultiValued" type="bool" />
-        <property name="size" type="int" deprecated="Use aggregationParams instead" />
-        <property name="valueTransformer" type="string" />
-        <property name="aggregationParams" type="array" />
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="shortParameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isMultiValued" type="bool"/>
+        <property name="size" type="int" deprecated="Use aggregationParams instead"/>
+        <property name="valueTransformer" type="string"/>
+        <property name="aggregationParams" type="array"/>
     </transfer>
 
     <transfer name="SortConfig">
-        <property name="name" type="string" />
-        <property name="parameterName" type="string" />
-        <property name="fieldName" type="string" />
-        <property name="isDescending" type="bool" />
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="isDescending" type="bool"/>
     </transfer>
 
     <transfer name="PaginationConfig">
-        <property name="parameterName" type="string" />
-        <property name="itemsPerPageParameterName" type="string" />
-        <property name="defaultItemsPerPage" type="int" />
-        <property name="validItemsPerPageOptions" type="array" />
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="validItemsPerPageOptions" type="array"/>
     </transfer>
 
     <transfer name="PageMap">
-        <property name="searchResultData" type="SearchResultDataMap[]" />
-        <property name="type" type="string" />
-        <property name="store" type="string" />
-        <property name="locale" type="string" />
-        <property name="fullText" type="array" />
-        <property name="fullTextBoosted" type="array" />
-        <property name="stringFacet" type="StringFacetMap[]" />
-        <property name="integerFacet" type="IntegerFacetMap[]" />
-        <property name="completionTerms" type="array" />
-        <property name="suggestionTerms" type="array" />
-        <property name="stringSort" type="StringSortMap[]" />
-        <property name="integerSort" type="IntegerSortMap[]" />
-        <property name="category" type="CategoryMap" />
-        <property name="isActive" type="bool" />
-        <property name="activeFrom" type="string" />
-        <property name="activeTo" type="string" />
+        <property name="searchResultData" type="SearchResultDataMap[]"/>
+        <property name="type" type="string"/>
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="fullText" type="array"/>
+        <property name="fullTextBoosted" type="array"/>
+        <property name="stringFacet" type="StringFacetMap[]"/>
+        <property name="integerFacet" type="IntegerFacetMap[]"/>
+        <property name="completionTerms" type="array"/>
+        <property name="suggestionTerms" type="array"/>
+        <property name="stringSort" type="StringSortMap[]"/>
+        <property name="integerSort" type="IntegerSortMap[]"/>
+        <property name="category" type="CategoryMap"/>
+        <property name="isActive" type="bool"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
     </transfer>
 
     <transfer name="SearchResultDataMap">
-        <property name="name" type="string" />
-        <property name="value" type="string" />
+        <property name="name" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="StringFacetMap">
-        <property name="name" type="string" />
-        <property name="value" type="array" />
+        <property name="name" type="string"/>
+        <property name="value" type="array"/>
     </transfer>
 
     <transfer name="IntegerFacetMap">
-        <property name="name" type="string" />
-        <property name="value" type="array" />
+        <property name="name" type="string"/>
+        <property name="value" type="array"/>
     </transfer>
 
     <transfer name="StringSortMap">
-        <property name="name" type="string" />
-        <property name="value" type="string" />
+        <property name="name" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="IntegerSortMap">
-        <property name="name" type="string" />
-        <property name="value" type="int" />
+        <property name="name" type="string"/>
+        <property name="value" type="int"/>
     </transfer>
 
     <transfer name="CategoryMap">
-        <property name="directParents" type="array" />
-        <property name="allParents" type="array" />
+        <property name="directParents" type="array"/>
+        <property name="allParents" type="array"/>
     </transfer>
 
     <transfer name="FacetSearchResult">
-        <property name="name" type="string" />
-        <property name="docCount" type="int" />
-        <property name="values" type="FacetSearchResultValue[]" singular="value" />
-        <property name="activeValue" type="string" />
-        <property name="config" type="FacetConfig" />
+        <property name="name" type="string"/>
+        <property name="docCount" type="int"/>
+        <property name="values" type="FacetSearchResultValue[]" singular="value"/>
+        <property name="activeValue" type="string"/>
+        <property name="config" type="FacetConfig"/>
     </transfer>
 
     <transfer name="FacetSearchResultValue">
-        <property name="value" type="string" />
-        <property name="docCount" type="int" />
+        <property name="value" type="string"/>
+        <property name="docCount" type="int"/>
     </transfer>
 
     <transfer name="RangeSearchResult">
-        <property name="name" type="string" />
-        <property name="min" type="float" />
-        <property name="max" type="float" />
-        <property name="activeMin" type="float" />
-        <property name="activeMax" type="float" />
-        <property name="config" type="FacetConfig" />
-        <property name="docCount" type="int" />
+        <property name="name" type="string"/>
+        <property name="min" type="float"/>
+        <property name="max" type="float"/>
+        <property name="activeMin" type="float"/>
+        <property name="activeMax" type="float"/>
+        <property name="config" type="FacetConfig"/>
+        <property name="docCount" type="int"/>
     </transfer>
 
     <transfer name="PaginationSearchResult">
-        <property name="numFound" type="int" />
-        <property name="currentPage" type="int" />
-        <property name="maxPage" type="int" />
-        <property name="currentItemsPerPage" type="int" />
-        <property name="config" type="PaginationConfig" />
+        <property name="numFound" type="int"/>
+        <property name="currentPage" type="int"/>
+        <property name="maxPage" type="int"/>
+        <property name="currentItemsPerPage" type="int"/>
+        <property name="config" type="PaginationConfig"/>
     </transfer>
 
     <transfer name="SortSearchResult">
-        <property name="sortParamNames" type="array" />
-        <property name="currentSortParam" type="string" />
-        <property name="currentSortOrder" type="string" />
+        <property name="sortParamNames" type="array"/>
+        <property name="currentSortParam" type="string"/>
+        <property name="currentSortOrder" type="string"/>
     </transfer>
 
     <transfer name="SearchConfigExtension">
-        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig" />
-        <property name="sortConfigs" type="SortConfig[]" singular="sortConfig" />
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+        <property name="sortConfigs" type="SortConfig[]" singular="sortConfig"/>
     </transfer>
 
     <transfer name="SearchDocument">

@@ -43,7 +43,6 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
@@ -76,7 +75,6 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api

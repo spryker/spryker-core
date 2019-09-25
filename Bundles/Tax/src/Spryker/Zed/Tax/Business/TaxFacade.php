@@ -407,7 +407,6 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api

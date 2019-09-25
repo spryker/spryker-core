@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Checkout

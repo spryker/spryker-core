@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\BundleControllerAction;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel

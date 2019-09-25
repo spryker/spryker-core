@@ -64,7 +64,7 @@ class ZedRequestFactory extends AbstractFactory
         $httpClient = new HttpClient(
             $this->getConfig()->getZedRequestBaseUrl(),
             $this->getConfig()->getRawToken(),
-            $this->getConfig()->isAuthenticationEnabled(),
+            true,
             $this->getUtilTextService(),
             $this->getUtilNetworkService(),
             $this->getConfig()->getTokenOptions(),

@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="Order">
-        <property name="idSalesOrder" type="int" />
+        <property name="idSalesOrder" type="int"/>
         <property name="DummyPayment" type="DummyPayment"/>
         <property name="items" type="Item[]" singular="item"/>
     </transfer>

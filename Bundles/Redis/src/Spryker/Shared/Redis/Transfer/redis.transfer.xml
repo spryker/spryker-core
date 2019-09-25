@@ -5,18 +5,18 @@
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RedisConfiguration">
-        <property name="dataSourceNames" type="array" />
-        <property name="connectionCredentials" type="RedisCredentials" />
-        <property name="clientOptions" type="array" singular="clientOption" associative="true" />
+        <property name="dataSourceNames" type="array"/>
+        <property name="connectionCredentials" type="RedisCredentials"/>
+        <property name="clientOptions" type="array" singular="clientOption" associative="true"/>
     </transfer>
 
     <transfer name="RedisCredentials">
-        <property name="protocol" type="string" />
-        <property name="host" type="string" />
-        <property name="port" type="string" />
-        <property name="password" type="string" />
-        <property name="database" type="int" />
-        <property name="isPersistent" type="bool" />
+        <property name="protocol" type="string"/>
+        <property name="host" type="string"/>
+        <property name="port" type="string"/>
+        <property name="password" type="string"/>
+        <property name="database" type="int"/>
+        <property name="isPersistent" type="bool"/>
     </transfer>
 
 </transfers>
