@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Customer\Persistence" package="src.Orm.Zed.Customer.Persistence">
 
     <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER"/>
-        <column name="customer_reference" required="true" type="VARCHAR" size="255" />
-        <column name="email" required="true" size="255" type="VARCHAR" caseInsensitive="true" />
+        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
+        <column name="email" required="true" size="255" type="VARCHAR" caseInsensitive="true"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, Ms"/>
         <column name="first_name" size="100" type="VARCHAR"/>
         <column name="last_name" size="100" type="VARCHAR"/>

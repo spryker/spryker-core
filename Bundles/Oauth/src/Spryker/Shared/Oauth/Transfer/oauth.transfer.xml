@@ -5,92 +5,92 @@
 
     <transfer name="OauthRequest">
         <property name="grantType" type="string"/>
-        <property name="clientId" type="string" />
-        <property name="clientSecret" type="string" />
-        <property name="scope" type="string" />
-        <property name="username" type="string" />
-        <property name="password" type="string" />
+        <property name="clientId" type="string"/>
+        <property name="clientSecret" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
         <property name="refreshToken" type="string"/>
     </transfer>
 
     <transfer name="OauthResponse">
-        <property name="isValid" type="bool" />
+        <property name="isValid" type="bool"/>
         <property name="tokenType" type="string"/>
         <property name="expiresIn" type="int"/>
         <property name="accessToken" type="string"/>
         <property name="refreshToken" type="string"/>
-        <property name="error" type="OauthError" />
+        <property name="error" type="OauthError"/>
     </transfer>
 
     <transfer name="OauthAccessTokenValidationResponse">
-        <property name="isValid" type="bool" />
-        <property name="oauthAccessTokenId" type="string" />
-        <property name="oauthClientId" type="string" />
-        <property name="oauthScopes" type="array" />
-        <property name="oauthUserId" type="string" />
-        <property name="error" type="OauthError" />
+        <property name="isValid" type="bool"/>
+        <property name="oauthAccessTokenId" type="string"/>
+        <property name="oauthClientId" type="string"/>
+        <property name="oauthScopes" type="array"/>
+        <property name="oauthUserId" type="string"/>
+        <property name="error" type="OauthError"/>
     </transfer>
 
     <transfer name="OauthError">
-        <property name="errorType" type="string" />
-        <property name="message" type="string" />
+        <property name="errorType" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="OauthAccessTokenValidationRequest">
-        <property name="accessToken" type="string" />
-        <property name="type" type="string" />
+        <property name="accessToken" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="OauthUser">
-        <property name="isSuccess" type="bool" />
-        <property name="username" type="string" />
-        <property name="password" type="string" />
+        <property name="isSuccess" type="bool"/>
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
         <property name="grantType" type="string"/>
-        <property name="clientId" type="string" />
-        <property name="clientName" type="string" />
-        <property name="userIdentifier" type="string" />
+        <property name="clientId" type="string"/>
+        <property name="clientName" type="string"/>
+        <property name="userIdentifier" type="string"/>
     </transfer>
 
     <transfer name="OauthScopeRequest">
-        <property name="defaultScopes" type="OauthScope[]" singular="scope" />
+        <property name="defaultScopes" type="OauthScope[]" singular="scope"/>
         <property name="grantType" type="string"/>
-        <property name="clientId" type="string" />
-        <property name="clientName" type="string" />
-        <property name="userIdentifier" type="string" />
+        <property name="clientId" type="string"/>
+        <property name="clientName" type="string"/>
+        <property name="userIdentifier" type="string"/>
     </transfer>
 
     <transfer name="OauthScope">
-        <property name="idOauthScope" type="int" />
-        <property name="identifier" type="string" />
-        <property name="description" type="string" />
+        <property name="idOauthScope" type="int"/>
+        <property name="identifier" type="string"/>
+        <property name="description" type="string"/>
     </transfer>
 
     <transfer name="OauthClient">
-        <property name="idOauthClient" type="int" />
-        <property name="identifier" type="string" />
-        <property name="name" type="string" />
-        <property name="redirectUri" type="string" />
-        <property name="secret" type="string" />
-        <property name="isConfidential" type="bool" />
+        <property name="idOauthClient" type="int"/>
+        <property name="identifier" type="string"/>
+        <property name="name" type="string"/>
+        <property name="redirectUri" type="string"/>
+        <property name="secret" type="string"/>
+        <property name="isConfidential" type="bool"/>
     </transfer>
 
     <transfer name="OauthGrantTypeConfiguration">
-        <property name="identifier" type="string" />
-        <property name="fullyQualifiedClassName" type="string" />
+        <property name="identifier" type="string"/>
+        <property name="fullyQualifiedClassName" type="string"/>
     </transfer>
 
     <transfer name="OauthAccessTokenData">
-        <property name="oauthAccessTokenId" type="string" />
-        <property name="oauthClientId" type="string" />
-        <property name="oauthScopes" type="array" />
-        <property name="oauthUserId" type="string" />
+        <property name="oauthAccessTokenId" type="string"/>
+        <property name="oauthClientId" type="string"/>
+        <property name="oauthScopes" type="array"/>
+        <property name="oauthUserId" type="string"/>
     </transfer>
 
     <transfer name="JwtToken">
-        <property name="headers" type="array" />
-        <property name="claims" type="array" />
-        <property name="signature" type="string" />
-        <property name="payload" type="array" />
+        <property name="headers" type="array"/>
+        <property name="claims" type="array"/>
+        <property name="signature" type="string"/>
+        <property name="payload" type="array"/>
     </transfer>
 
 </transfers>

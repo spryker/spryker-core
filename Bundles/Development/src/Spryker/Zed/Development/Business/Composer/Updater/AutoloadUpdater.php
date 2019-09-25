@@ -21,6 +21,7 @@ class AutoloadUpdater implements UpdaterInterface
     public const BASE_SRC_DIRECTORY = 'src';
     public const BASE_SUPPORT_DIRECTORY = '_support';
     public const BASE_HELPER_DIRECTORY = 'Helper';
+    protected const BASE_PAGE_OBJECT_DIRECTORY = 'PageObject';
     public const BASE_TESTER_DIRECTORY = 'Tester';
     public const BASE_FIXTURES_DIRECTORY = 'Fixtures';
     public const BASE_STEP_OVERRIDE_DIRECTORY = 'StepOverride';
@@ -74,6 +75,7 @@ class AutoloadUpdater implements UpdaterInterface
         self::SPRYKER_SHOP_NAMESPACE,
         self::SPRYKER_ECO_NAMESPACE,
         self::BASE_HELPER_DIRECTORY,
+        self::BASE_PAGE_OBJECT_DIRECTORY,
         self::BASE_TESTER_DIRECTORY,
         self::BASE_STEP_OVERRIDE_DIRECTORY,
         self::BASE_FIXTURES_DIRECTORY,
@@ -332,7 +334,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return implode($pathParts, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 
     /**

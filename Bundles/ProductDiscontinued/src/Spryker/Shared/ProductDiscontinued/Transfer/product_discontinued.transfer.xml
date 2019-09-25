@@ -67,13 +67,18 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
     <transfer name="WishlistItem">
-        <property name="sku" type="string" />
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="WishlistPreAddItemCheckResponse">
@@ -81,7 +86,7 @@
     </transfer>
 
     <transfer name="ShoppingListItem">
-        <property name="sku" type="string" />
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListPreAddItemCheckResponse">

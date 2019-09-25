@@ -14,6 +14,7 @@ use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel

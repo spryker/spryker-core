@@ -8,6 +8,8 @@
 namespace SprykerTest\Client\Storage;
 
 use Codeception\Test\Unit;
+use Spryker\Client\Storage\StorageClient;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -15,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Storage
@@ -26,9 +29,19 @@ class StorageClientTest extends Unit
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $storageClientMock;
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+        $storageClient = $this->createStorageClient();
+        $storageClient::$service = null;
+    }
 
     /**
      * @param string $uri
@@ -182,5 +195,29 @@ class StorageClientTest extends Unit
             $expectedCacheKey,
             $getParameters
         );
+    }
+
+    /**
+     * @expectedException \Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException
+     *
+     * @return void
+     */
+    public function testInvalidStorageScanPluginInterfaceExceptionThrown(): void
+    {
+        /** @var \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\PHPUnit\Framework\MockObject\MockObject $storagePluginMock */
+        $storagePluginMock = $this->getMockBuilder(StoragePluginInterface::class)->getMock();
+
+        $storageClient = $this->createStorageClient();
+        $storageClient::$service = $storagePluginMock;
+
+        $storageClient->scanKeys('*', 100);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageClient
+     */
+    protected function createStorageClient(): StorageClient
+    {
+        return new StorageClient();
     }
 }

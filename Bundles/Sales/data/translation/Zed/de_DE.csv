@@ -12,6 +12,7 @@ Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
 "Grand Total",Gesamtsumme
 "Hide history","Historie ausblenden"
+"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
 "Included tax amount","Enthaltener Steuerbetrag"
 "Item total","Artikel Gesamt"
 Legend,Legende
@@ -37,7 +38,7 @@ Shipment,Versand
 "Show more","Mehr anzeigen"
 Sku,SKU
 State,Status
-"Sub total",Zwischensumme
+Subtotal,Zwischensumme
 Totals,Gesamtsummen
 "Trigger all matching states","Alle passenden Stati antriggern"
 "Trigger event","Trigger Event"

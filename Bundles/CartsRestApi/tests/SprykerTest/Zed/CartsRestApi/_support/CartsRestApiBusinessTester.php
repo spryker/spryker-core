@@ -26,6 +26,7 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -92,9 +93,16 @@ class CartsRestApiBusinessTester extends Actor
      */
     public function prepareQuoteResponseTransferWithQuote(): QuoteResponseTransfer
     {
+        $quoteOverride = [
+            'uuid' => static::TEST_QUOTE_UUID,
+            'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+            'idQuote' => static::TEST_ID_QUOTE,
+        ];
+        $itemOverride = ['groupKey' => static::TEST_SKU, 'sku' => static::TEST_SKU];
+
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer(['uuid' => static::TEST_QUOTE_UUID, 'customerReference' => static::TEST_CUSTOMER_REFERENCE, 'idQuote' => static::TEST_ID_QUOTE])
+            ->withQuoteTransfer((new QuoteBuilder($quoteOverride))->withItem($itemOverride))
             ->build();
 
         return $quoteResponseTransfer;

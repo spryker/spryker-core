@@ -1,17 +1,15 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\ProductMeasurementUnit\Persistence"
           package="src.Orm.Zed.ProductMeasurementUnit.Persistence">
 
     <table name="spy_product_measurement_unit" idMethod="native" allowPkInsert="true">
         <column name="id_product_measurement_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="default_precision" required="true" type="INTEGER" />
-        <column name="name" required="true" type="VARCHAR" size="255" />
-        <column name="code" required="true" type="VARCHAR" size="255" />
+        <column name="default_precision" required="true" type="INTEGER"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="code" required="true" type="VARCHAR" size="255"/>
 
-        <behavior name="timestampable" />
+        <behavior name="timestampable"/>
 
         <id-method-parameter value="id_product_measurement_unit_pk_seq"/>
 
@@ -25,7 +23,7 @@
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
         <column name="fk_product_abstract" type="INTEGER" required="true"/>
 
-        <behavior name="timestampable" />
+        <behavior name="timestampable"/>
 
         <id-method-parameter value="id_product_measurement_base_unit_pk_seq"/>
 
@@ -44,12 +42,12 @@
         <column name="precision" type="INTEGER" required="false"/>
         <column name="is_displayed" type="BOOLEAN" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true"/>
-        <column name="key" required="false" type="VARCHAR" size="255" />
+        <column name="key" required="false" type="VARCHAR" size="255"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_unit" type="INTEGER" required="true"/>
         <column name="fk_product_measurement_base_unit" type="INTEGER" required="true"/>
 
-        <behavior name="timestampable" />
+        <behavior name="timestampable"/>
 
         <id-method-parameter value="id_product_measurement_sales_unit_pk_seq"/>
 

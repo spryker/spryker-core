@@ -15,6 +15,7 @@ use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRes
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductList

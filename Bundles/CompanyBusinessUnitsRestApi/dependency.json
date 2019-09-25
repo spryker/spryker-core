@@ -1,6 +1,6 @@
 {
   "include": {
-    "CompanyBusinessUnit": "CompanyBusinessUnit provides base functionality.",
-    "UuidBehavior": "Used to generate UUIDs for entities."
+    "spryker/company-business-unit": "CompanyBusinessUnit provides base functionality.",
+    "spryker/uuid-behavior": "Used to generate UUIDs for entities."
   }
 }

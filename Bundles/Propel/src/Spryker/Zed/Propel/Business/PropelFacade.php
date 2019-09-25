@@ -40,11 +40,11 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * @deprecated Use `createDatabase()` instead.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Use `createDatabase()` instead.
      *
      * @return void
      */
@@ -116,11 +116,11 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
-     * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
      *
      * @return \Symfony\Component\Console\Command\Command[]
      */

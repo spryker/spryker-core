@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CmsBlock\Persistence" package="src.Orm.Zed.CmsBlock.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CmsBlock\Persistence" package="src.Orm.Zed.CmsBlock.Persistence">
     <table name="spy_cms_block_template" phpName="SpyCmsBlockTemplate">
         <column name="id_cms_block_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="template_name" type="VARCHAR" size="255" required="true"/>
@@ -36,7 +36,7 @@
 
     <table name="spy_cms_block" phpName="SpyCmsBlock">
         <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_template" type="INTEGER" required="false" />
+        <column name="fk_template" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>

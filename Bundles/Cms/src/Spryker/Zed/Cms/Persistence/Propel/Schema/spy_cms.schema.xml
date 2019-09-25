@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence">
 
     <table name="spy_cms_template" phpName="SpyCmsTemplate">
         <column name="id_cms_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -32,9 +32,9 @@
         <column name="fk_cms_page" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
-        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" />
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" />
-        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL"/>
         <foreign-key name="spy_cms_page_localized_attributes-fk_cms_page" foreignTable="spy_cms_page" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_cms_page" foreign="id_cms_page"/>
         </foreign-key>

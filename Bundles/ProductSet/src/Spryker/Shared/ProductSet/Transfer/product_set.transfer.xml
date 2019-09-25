@@ -4,52 +4,52 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductSet">
-        <property name="idProductSet" type="int" />
-        <property name="isActive" type="bool" />
-        <property name="productSetKey" type="string" />
-        <property name="weight" type="int" />
-        <property name="idProductAbstracts" type="array" singular="idProductAbstract" />
-        <property name="localizedData" type="LocalizedProductSet[]" singular="localizedData" />
-        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" />
+        <property name="idProductSet" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="productSetKey" type="string"/>
+        <property name="weight" type="int"/>
+        <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
+        <property name="localizedData" type="LocalizedProductSet[]" singular="localizedData"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
     </transfer>
 
     <transfer name="LocalizedProductSet">
-        <property name="locale" type="Locale" />
-        <property name="productSetData" type="ProductSetData" />
-        <property name="url" type="string" />
+        <property name="locale" type="Locale"/>
+        <property name="productSetData" type="ProductSetData"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="ProductSetData">
-        <property name="idProductSetData" type="int" />
-        <property name="fkProductSet" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="name" type="string" />
-        <property name="description" type="string" />
-        <property name="metaTitle" type="string" />
-        <property name="metaDescription" type="string" />
-        <property name="metaKeywords" type="string" />
+        <property name="idProductSetData" type="int"/>
+        <property name="fkProductSet" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
     </transfer>
 
     <transfer name="ProductSetStorage">
-        <property name="idProductSet" type="int" />
-        <property name="isActive" type="bool" />
-        <property name="weight" type="int" />
-        <property name="productSetKey" type="string" />
-        <property name="idProductAbstracts" type="array" singular="idProductAbstract" />
-        <property name="url" type="string" />
-        <property name="name" type="string" />
-        <property name="description" type="string" />
-        <property name="metaTitle" type="string" />
-        <property name="metaDescription" type="string" />
-        <property name="metaKeywords" type="string" />
-        <property name="imageSets" type="array" singular="imageSet" /> <!-- associative array of StorageProductImage[] where the key is the name of the image set -->
-        <property name="images" type="StorageProductImage[]" singular="image" />
+        <property name="idProductSet" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="weight" type="int"/>
+        <property name="productSetKey" type="string"/>
+        <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
+        <property name="url" type="string"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="imageSets" type="array" singular="imageSet"/> <!-- associative array of StorageProductImage[] where the key is the name of the image set -->
+        <property name="images" type="StorageProductImage[]" singular="image"/>
     </transfer>
 
     <transfer name="StorageProductImage">
-        <property name="idProductImage" type="int" />
-        <property name="externalUrlSmall" type="string" />
-        <property name="externalUrlLarge" type="string" />
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
     </transfer>
 
 </transfers>

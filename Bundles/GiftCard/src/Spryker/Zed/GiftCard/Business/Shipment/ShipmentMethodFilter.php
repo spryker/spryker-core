@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\GiftCard\GiftCardConfig;
 
+/**
+ * @deprecated Use \Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilter instead.
+ */
 class ShipmentMethodFilter implements ShipmentMethodFilterInterface
 {
     /**

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" name="zed"
           namespace="Orm\Zed\SharedCart\Persistence"
           package="src.Orm.Zed.SharedCart.Persistence"
 >
@@ -54,8 +54,8 @@
 
     <table name="spy_quote_permission_group_to_permission" idMethod="native" allowPkInsert="true" phpName="SpyQuotePermissionGroupToPermission">
         <column name="id_quote_permission_group_to_permission" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
-        <column name="fk_quote_permission_group" type="INTEGER" required="true" />
-        <column name="fk_permission" type="INTEGER" required="true" />
+        <column name="fk_quote_permission_group" type="INTEGER" required="true"/>
+        <column name="fk_permission" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_quote_permission_group_to_permission-fk_permission" foreignTable="spy_permission" phpName="Permission" onDelete="CASCADE">
             <reference local="fk_permission" foreign="id_permission"/>

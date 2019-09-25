@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -122,7 +123,6 @@ class ResponseFormatterTest extends Unit
         EncoderMatcherInterface $encoderMatcher,
         ResponseBuilderInterface $responseBuilder
     ): ResponseFormatterInterface {
-
         return new ResponseFormatter($encoderMatcher, $responseBuilder);
     }
 

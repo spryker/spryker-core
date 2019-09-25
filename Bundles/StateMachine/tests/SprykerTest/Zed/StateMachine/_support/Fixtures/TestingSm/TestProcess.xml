@@ -19,17 +19,17 @@
                 <flag>Flag1</flag>
                 <flag>Flag2</flag>
             </state>
-            <state name="order exported" />
-            <state name="order shipped" />
-            <state name="waiting for payment" />
-            <state name="payment received" />
-            <state name="reminder I sent" />
-            <state name="reminder II sent" />
-            <state name="dunning process started" />
-            <state name="ready for return" />
-            <state name="order export failed" />
-            <state name="state with condition" />
-            <state name="completed" />
+            <state name="order exported"/>
+            <state name="order shipped"/>
+            <state name="waiting for payment"/>
+            <state name="payment received"/>
+            <state name="reminder I sent"/>
+            <state name="reminder II sent"/>
+            <state name="dunning process started"/>
+            <state name="ready for return"/>
+            <state name="order export failed"/>
+            <state name="state with condition"/>
+            <state name="completed"/>
         </states>
 
         <transitions>
@@ -170,22 +170,22 @@
         </transitions>
 
         <events>
-            <event name="create invoice" onEnter="true" command="Test/CreateInvoice" />
+            <event name="create invoice" onEnter="true" command="Test/CreateInvoice"/>
             <event name="send invoice" onEnter="true" command="Test/SendInvoice"/>
-            <event name="export order" onEnter="true" />
-            <event name="ship order" manual="true" />
-            <event name="check with condition" manual="true" />
-            <event name="waiting for payment" onEnter="true" />
-            <event name="payment not received" timeout="1hour" />
-            <event name="payment received" manual="true" />
-            <event name="ready for return"  onEnter="true" />
-            <event name="item not returned" timeout="14days" />
-            <event name="Enter Sub-process 1" manual="true" />
-            <event name="Leave Sub-process 1" manual="true" />
-            <event name="Enter Sub-process 2" manual="true" />
-            <event name="Leave Sub-process 2" manual="true" />
+            <event name="export order" onEnter="true"/>
+            <event name="ship order" manual="true"/>
+            <event name="check with condition" manual="true"/>
+            <event name="waiting for payment" onEnter="true"/>
+            <event name="payment not received" timeout="1hour"/>
+            <event name="payment received" manual="true"/>
+            <event name="ready for return"  onEnter="true"/>
+            <event name="item not returned" timeout="14days"/>
+            <event name="Enter Sub-process 1" manual="true"/>
+            <event name="Leave Sub-process 1" manual="true"/>
+            <event name="Enter Sub-process 2" manual="true"/>
+            <event name="Leave Sub-process 2" manual="true"/>
         </events>
     </process>
     <process name="TestSubProcess" file="SubProcesses/TestSubProcess"/>
-    <process name="TestSubProcessFoo" file="SubProcesses/TestSubProcess" prefix="Foo 1" />
+    <process name="TestSubProcessFoo" file="SubProcesses/TestSubProcess" prefix="Foo 1"/>
 </statemachine>

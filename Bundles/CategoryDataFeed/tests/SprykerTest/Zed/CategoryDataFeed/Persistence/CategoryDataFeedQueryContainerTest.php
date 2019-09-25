@@ -15,6 +15,7 @@ use Spryker\Zed\CategoryDataFeed\Persistence\CategoryDataFeedQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryDataFeed

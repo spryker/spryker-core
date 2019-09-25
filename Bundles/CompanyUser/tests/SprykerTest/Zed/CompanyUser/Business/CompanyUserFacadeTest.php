@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUser

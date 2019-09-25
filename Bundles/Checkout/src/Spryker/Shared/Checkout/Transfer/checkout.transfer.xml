@@ -4,82 +4,83 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Order">
-        <property name="idSalesOrder" type="int" />
-        <property name="items" type="Item[]"  singular="item" />
-        <property name="customer" type="Customer" />
-        <property name="totals" type="Totals" />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="billingAddresses" type="Address[]" singular="billingAddress" />
-        <property name="shippingAddresses" type="Address[]" singular="shippingAddress" />
+        <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]"  singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="billingAddresses" type="Address[]" singular="billingAddress"/>
+        <property name="shippingAddresses" type="Address[]" singular="shippingAddress" deprecated="Obsolete. Not used anymore"/>
     </transfer>
 
     <transfer name="CheckoutError">
-        <property name="errorCode" type="int" />
-        <property name="message" type="string" />
+        <property name="errorCode" type="int"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
-        <property name="isExternalRedirect" type="bool" />
-        <property name="redirectUrl" type="string" />
-        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
     </transfer>
 
     <transfer name="Comment">
-        <property name="idSalesOrderComment" type="int" />
-        <property name="message" type="string" />
-        <property name="username" type="string" />
-        <property name="fkSalesOrder" type="int" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
+        <property name="idSalesOrderComment" type="int"/>
+        <property name="message" type="string"/>
+        <property name="username" type="string"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="idSalesOrderItem" type="int" />
-        <property name="sku" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="state" type="string" />
-        <property name="iso2Code" type="string" />
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="state" type="string"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">
-        <property name="idSalesOrderItemOption" type="int" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
+        <property name="idSalesOrderItemOption" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="idSalesExpense" type="int" />
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
-        <property name="totals" type="Totals" />
+        <property name="totals" type="Totals"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="billingAddress" type="Address"/>
-        <property name="shippingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingSameAsShipping" type="bool"/>
-        <property name="customer" type="Customer" />
-        <property name="orderReference" type="string" />
+        <property name="customer" type="Customer"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Message">

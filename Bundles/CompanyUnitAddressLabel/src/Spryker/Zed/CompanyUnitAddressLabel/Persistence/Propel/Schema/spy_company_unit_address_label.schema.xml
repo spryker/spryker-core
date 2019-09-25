@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\CompanyUnitAddressLabel\Persistence"
           package="src.Orm.Zed.CompanyUnitAddressLabel.Persistence">
 
@@ -20,8 +18,8 @@
 
     <table name="spy_company_unit_address_label_to_company_unit_address" idMethod="native" phpName="SpyCompanyUnitAddressLabelToCompanyUnitAddress" allowPkInsert="true">
         <column name="id_company_unit_address_label_to_company_unit_address" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
-        <column name="fk_company_unit_address" type="INTEGER" required="true" />
-        <column name="fk_company_unit_address_label" type="INTEGER" required="true" />
+        <column name="fk_company_unit_address" type="INTEGER" required="true"/>
+        <column name="fk_company_unit_address_label" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_c_u_a_l_to_c_u_a-fk_company_unit_address" foreignTable="spy_company_unit_address" phpName="CompanyUnitAddress" onDelete="CASCADE">
             <reference local="fk_company_unit_address" foreign="id_company_unit_address"/>

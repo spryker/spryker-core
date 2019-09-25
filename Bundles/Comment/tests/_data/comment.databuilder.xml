@@ -4,21 +4,21 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CommentRequest">
-        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)" />
-        <property name="ownerType" type="string" dataBuilderRule="unique()->word" />
+        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)"/>
+        <property name="ownerType" type="string" dataBuilderRule="unique()->word"/>
     </transfer>
 
     <transfer name="CommentFilter">
-        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)" />
-        <property name="ownerType" type="string" dataBuilderRule="unique()->word" />
+        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)"/>
+        <property name="ownerType" type="string" dataBuilderRule="unique()->word"/>
     </transfer>
 
     <transfer name="Comment">
-        <property name="message" type="string" dataBuilderRule="sentence(5)" />
+        <property name="message" type="string" dataBuilderRule="sentence(5)"/>
     </transfer>
 
     <transfer name="CommentTag">
-        <property name="name" type="string" dataBuilderRule="unique()->word" />
+        <property name="name" type="string" dataBuilderRule="unique()->word"/>
     </transfer>
 
 </transfers>

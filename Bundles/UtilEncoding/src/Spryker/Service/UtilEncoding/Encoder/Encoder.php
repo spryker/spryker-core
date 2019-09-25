@@ -34,7 +34,6 @@ class Encoder implements EncoderInterface
      */
     public function encodeToFormat(array $data, string $formatName): ?string
     {
-
         foreach ($this->formatEncoders as $formatDecoder) {
             if ($formatDecoder->getFormatName() === $formatName) {
                 return $formatDecoder->encode($data);

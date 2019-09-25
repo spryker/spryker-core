@@ -13,6 +13,7 @@ use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig

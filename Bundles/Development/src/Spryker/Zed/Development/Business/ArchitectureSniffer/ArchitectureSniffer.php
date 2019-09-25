@@ -103,7 +103,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $options = $this->configurationBuilder->getConfiguration($directory, $options);
 
         if ($options === []) {
-            return $this->formatResult($options);
+            return [];
         }
 
         if ($this->isCoreModule($options)) {

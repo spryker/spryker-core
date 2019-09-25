@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
 
     <table name="spy_product_abstract" idMethod="native" allowPkInsert="true" phpName="SpyProductAbstract">
         <column name="id_product_abstract" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -17,10 +17,10 @@
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
-        <column name="description" required="false" type="LONGVARCHAR" default="NULL" />
-        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" />
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" />
-        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <foreign-key name="spy_product_abstract_localized_attributes-fk_product_abstract" foreignTable="spy_product_abstract" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_product_abstract" foreign="id_product_abstract"/>
@@ -78,7 +78,7 @@
         <column name="fk_product" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
-        <column name="description" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="description" required="false" type="LONGVARCHAR" default="NULL"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN"/>
         <foreign-key name="spy_product_localized_attributes-fk_product" foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
@@ -98,7 +98,7 @@
     <table name="spy_product_attribute_key" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeKey" identifierQuoting="true">
         <column name="id_product_attribute_key" primaryKey="true" type="INTEGER" autoIncrement="true"/>
         <column name="key" required="true" type="VARCHAR"/>
-        <column name="is_super" type="BOOLEAN" required="true" defaultValue="false" />
+        <column name="is_super" type="BOOLEAN" required="true" defaultValue="false"/>
         <unique name="spy_product_attribute_key-unique-key">
             <unique-column name="key"/>
         </unique>
