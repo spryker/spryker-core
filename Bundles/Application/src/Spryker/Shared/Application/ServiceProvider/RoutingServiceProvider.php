@@ -14,7 +14,7 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 class RoutingServiceProvider implements ServiceProviderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Silex\Application $app
      *

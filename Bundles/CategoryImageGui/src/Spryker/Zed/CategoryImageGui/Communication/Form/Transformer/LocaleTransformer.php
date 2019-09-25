@@ -26,7 +26,7 @@ class LocaleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $value The value in the original representation
      *
@@ -42,7 +42,7 @@ class LocaleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int|null $value The value in the transformed representation
      *

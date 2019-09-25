@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CartPermissionGroupByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds cart-permission-groups resource as a relationship.
      * - Relationship applies only if QuoteTransfer is provided as resource's payload.
      * - Uses QuoteTransfer::quotePermissionGroup from the resource's payload.
@@ -38,7 +38,7 @@ class CartPermissionGroupByQuoteResourceRelationshipPlugin extends AbstractPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

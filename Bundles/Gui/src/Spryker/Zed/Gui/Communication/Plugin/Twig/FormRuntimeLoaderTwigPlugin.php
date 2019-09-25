@@ -29,7 +29,7 @@ class FormRuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginIn
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

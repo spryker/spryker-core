@@ -18,7 +18,7 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInte
 class ProductPriceItemValidatorPlugin extends AbstractPlugin implements ItemValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Requires ItemTransfer inside ItemValidationTransfer.
      * - Returns not modified ItemValidationTransfer if ItemValidationTransfer.Item.id is missing.
      * - Gets ItemTransfer from the ItemValidationTransfer.

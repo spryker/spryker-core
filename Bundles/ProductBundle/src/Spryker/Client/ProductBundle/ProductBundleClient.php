@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductBundleClient extends AbstractClient implements ProductBundleClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

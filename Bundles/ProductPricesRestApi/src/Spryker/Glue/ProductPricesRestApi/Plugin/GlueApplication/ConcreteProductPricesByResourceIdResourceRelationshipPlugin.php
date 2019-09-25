@@ -18,7 +18,7 @@ use Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig;
 class ConcreteProductPricesByResourceIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds concrete-product-prices resource as relationship by the resource id.
      * - Identifier of passed resources should contain concrete product sku.
      *
@@ -37,7 +37,7 @@ class ConcreteProductPricesByResourceIdResourceRelationshipPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

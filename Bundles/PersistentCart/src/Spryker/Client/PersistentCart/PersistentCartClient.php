@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PersistentCartClient extends AbstractClient implements PersistentCartClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -103,7 +103,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,7 +119,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

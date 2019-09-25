@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlockCategoryConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +76,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -108,7 +108,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,7 +138,7 @@ class CmsBlockCategoryConnectorFacade extends AbstractFacade implements CmsBlock
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

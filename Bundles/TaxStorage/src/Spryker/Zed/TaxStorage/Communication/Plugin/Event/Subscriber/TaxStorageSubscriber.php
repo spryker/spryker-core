@@ -24,7 +24,7 @@ use Spryker\Zed\TaxStorage\Communication\Plugin\Event\Listener\TaxSetTaxStorageP
 class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

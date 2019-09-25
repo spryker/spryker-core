@@ -20,7 +20,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface;
 class ReservationExportPlugin extends AbstractPlugin implements ReservationExportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * Example plugin! Synchronous implementation. Change it according to implementation requirements.
      *

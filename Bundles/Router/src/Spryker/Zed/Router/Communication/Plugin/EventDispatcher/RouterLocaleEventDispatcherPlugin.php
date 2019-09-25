@@ -27,7 +27,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds event listener that set the locale to the router context.
      *
      * @api

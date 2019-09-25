@@ -25,7 +25,7 @@ class CurrencyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -46,7 +46,7 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

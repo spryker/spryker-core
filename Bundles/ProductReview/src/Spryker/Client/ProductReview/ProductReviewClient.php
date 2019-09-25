@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductReviewClient extends AbstractClient implements ProductReviewClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

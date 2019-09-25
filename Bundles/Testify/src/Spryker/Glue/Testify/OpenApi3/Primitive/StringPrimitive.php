@@ -10,7 +10,7 @@ namespace Spryker\Glue\Testify\OpenApi3\Primitive;
 class StringPrimitive extends AbstractPrimitive
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function cast($value)
     {

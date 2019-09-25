@@ -23,7 +23,7 @@ class CmsPageStoreStorageListener extends AbstractPlugin implements EventBulkHan
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Saves new store relation on cms page store table changes.
      *
      * @api

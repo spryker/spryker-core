@@ -17,7 +17,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
     protected const SHARE_OPTION_GROUP_INTERNAL = 'internal';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if customer is provided and it is a company user.
      * - Returns false otherwise.
      *
@@ -51,7 +51,7 @@ class FullAccessCartShareOptionPlugin extends AbstractPlugin implements CartShar
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

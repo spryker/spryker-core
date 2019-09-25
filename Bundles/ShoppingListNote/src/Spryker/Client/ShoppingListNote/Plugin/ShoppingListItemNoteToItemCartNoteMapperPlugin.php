@@ -18,7 +18,7 @@ use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToIte
 class ShoppingListItemNoteToItemCartNoteMapperPlugin extends AbstractPlugin implements ShoppingListItemToItemMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Copies the shopping list note to cart item note if not empty.
      *
      * @api

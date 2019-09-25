@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ConfigurableBundleStorageClient extends AbstractClient implements ConfigurableBundleStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

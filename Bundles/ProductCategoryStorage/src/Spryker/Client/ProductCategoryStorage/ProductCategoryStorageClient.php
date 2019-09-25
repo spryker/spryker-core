@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCategoryStorageClient extends AbstractClient implements ProductCategoryStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

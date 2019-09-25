@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class AbstractProductsCategoriesResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class AbstractProductsCategoriesResourceRelationshipPlugin extends AbstractPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

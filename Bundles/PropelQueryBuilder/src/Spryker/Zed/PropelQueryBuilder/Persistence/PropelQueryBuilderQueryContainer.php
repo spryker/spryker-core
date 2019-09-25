@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class PropelQueryBuilderQueryContainer extends AbstractQueryContainer implements PropelQueryBuilderQueryContainerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class PropelQueryBuilderQueryContainer extends AbstractQueryContainer implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

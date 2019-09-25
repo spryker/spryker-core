@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -103,7 +103,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +117,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -131,7 +131,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -145,7 +145,7 @@ class CollectorFacade extends AbstractFacade implements CollectorFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

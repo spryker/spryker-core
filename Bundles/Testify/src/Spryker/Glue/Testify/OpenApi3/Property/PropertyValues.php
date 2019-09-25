@@ -78,7 +78,7 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetSet($offset, $value)
     {
@@ -86,7 +86,7 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetUnset($offset)
     {

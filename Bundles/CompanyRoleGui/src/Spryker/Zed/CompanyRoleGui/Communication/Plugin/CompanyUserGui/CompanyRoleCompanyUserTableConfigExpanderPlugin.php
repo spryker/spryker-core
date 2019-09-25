@@ -21,7 +21,7 @@ class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin imp
     protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands company user table with company role column.
      *
      * @api

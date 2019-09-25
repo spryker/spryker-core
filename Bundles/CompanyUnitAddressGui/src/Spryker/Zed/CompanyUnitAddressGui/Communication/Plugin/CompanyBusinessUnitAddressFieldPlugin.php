@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyBusinessUnitAddressFieldPlugin extends AbstractPlugin implements CompanyBusinessUnitFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

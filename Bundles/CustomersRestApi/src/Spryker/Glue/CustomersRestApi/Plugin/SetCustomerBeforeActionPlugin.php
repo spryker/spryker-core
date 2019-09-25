@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class SetCustomerBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets the CustomerTransfer to session without execution of CustomerSessionSetPluginInterface plugins.
      * - Executes CustomerExpanderPluginInterface plugin stack before setting the customer to session.
      * - Will do nothing if RestRequestInterface::$restUser is not set.

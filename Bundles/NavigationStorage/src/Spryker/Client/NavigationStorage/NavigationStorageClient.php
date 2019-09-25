@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class NavigationStorageClient extends AbstractClient implements NavigationStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

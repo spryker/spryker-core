@@ -22,7 +22,7 @@ class CategoryNodeCategoryPageSearchPublishListener extends AbstractPlugin imple
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

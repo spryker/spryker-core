@@ -18,7 +18,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPlugin
 class OauthUserIdentifierFilterPermissionPlugin extends AbstractPlugin implements OauthUserIdentifierFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Filters user identifier array to remove configured in
      * \Spryker\Zed\OauthPermission\OauthPermissionConfig::getOauthUserIdentifierFilterKeys() keys.
      *

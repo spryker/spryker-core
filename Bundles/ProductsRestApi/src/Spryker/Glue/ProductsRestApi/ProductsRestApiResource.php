@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ProductsRestApiResource extends AbstractRestResource implements ProductsRestApiResourceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

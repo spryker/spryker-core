@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductLabelClient extends AbstractClient implements ProductLabelClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ProductLabelClient extends AbstractClient implements ProductLabelClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

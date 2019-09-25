@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CheckCompanyUserUniquenessCompanyUserSavePreCheckPlugin extends AbstractPlugin implements CompanyUserSavePreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if company user with the same customer and business unit does not exist yet.
      *
      * @api

@@ -35,7 +35,7 @@ class ShareCartByResourceShareZedActivatorStrategyPlugin extends AbstractPlugin 
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Creates cart share for provided Quote and provided company user within the same business unit.
      * - Updates permission to Full-access, if resource was shared with higher permission.
      * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was shared successfully.
@@ -53,7 +53,7 @@ class ShareCartByResourceShareZedActivatorStrategyPlugin extends AbstractPlugin 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns 'true', when resource type is Quote, share option is Read-only or Full access and provided customer is company user.
      * - Returns 'false' otherwise.
      *

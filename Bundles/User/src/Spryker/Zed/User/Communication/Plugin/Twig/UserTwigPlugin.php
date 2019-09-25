@@ -23,7 +23,7 @@ class UserTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const TWIG_GLOBAL_VARIABLE_USERNAME = 'username';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

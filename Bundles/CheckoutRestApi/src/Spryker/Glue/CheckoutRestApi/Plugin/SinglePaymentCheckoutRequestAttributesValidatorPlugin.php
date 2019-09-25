@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class SinglePaymentCheckoutRequestAttributesValidatorPlugin extends AbstractPlugin implements CheckoutRequestAttributesValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks that only one payment method is set.
      *
      * @api

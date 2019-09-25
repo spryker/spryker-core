@@ -27,7 +27,7 @@ class DefaultKeyGeneratorPlugin extends BaseKeyGenerator implements Synchronizat
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $dataTransfer
      *

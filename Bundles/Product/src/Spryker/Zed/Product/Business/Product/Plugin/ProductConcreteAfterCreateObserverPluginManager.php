@@ -26,7 +26,7 @@ class ProductConcreteAfterCreateObserverPluginManager implements ProductConcrete
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

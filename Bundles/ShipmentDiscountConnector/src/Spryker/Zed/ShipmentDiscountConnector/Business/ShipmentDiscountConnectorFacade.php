@@ -19,7 +19,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\StrategyResolver\MultiShipmen
 class ShipmentDiscountConnectorFacade extends AbstractFacade implements ShipmentDiscountConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -101,7 +101,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -139,7 +139,7 @@ class ShipmentDiscountConnectorFacade extends AbstractFacade implements Shipment
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

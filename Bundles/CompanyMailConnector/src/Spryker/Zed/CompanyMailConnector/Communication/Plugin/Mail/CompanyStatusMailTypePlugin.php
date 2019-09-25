@@ -20,7 +20,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
     public const MAIL_TYPE = 'company status mail';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

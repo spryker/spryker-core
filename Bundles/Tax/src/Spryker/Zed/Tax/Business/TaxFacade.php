@@ -117,7 +117,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -133,7 +133,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -359,7 +359,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -391,7 +391,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -407,7 +407,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -423,7 +423,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -439,7 +439,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -455,7 +455,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

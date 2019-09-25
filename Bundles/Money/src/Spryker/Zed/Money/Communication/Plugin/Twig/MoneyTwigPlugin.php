@@ -30,7 +30,7 @@ class MoneyTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected const WRONG_MONEY_TYPE_ERROR_MESSAGE = 'Argument 1 passed to %s::getMoneyTransfer() must be of the type integer, string or float, %s given.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

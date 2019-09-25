@@ -21,7 +21,7 @@ class TaxProductStorageUnpublishListener extends AbstractPlugin implements Event
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Handles product tax sets delete events.
      *
      * @api

@@ -22,7 +22,7 @@ class CategoryTreeStorageUnpublishListener extends AbstractPlugin implements Eve
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

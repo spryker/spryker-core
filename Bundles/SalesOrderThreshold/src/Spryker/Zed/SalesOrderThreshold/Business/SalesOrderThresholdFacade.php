@@ -26,7 +26,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThresholdFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -115,7 +115,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -153,7 +153,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -173,7 +173,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -189,7 +189,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -205,7 +205,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -221,7 +221,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -233,7 +233,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -247,7 +247,7 @@ class SalesOrderThresholdFacade extends AbstractFacade implements SalesOrderThre
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

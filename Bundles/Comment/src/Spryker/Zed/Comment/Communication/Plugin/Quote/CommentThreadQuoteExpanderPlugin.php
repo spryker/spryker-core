@@ -22,7 +22,7 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
     protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands quote transfer with CommentThread.
      *
      * @api

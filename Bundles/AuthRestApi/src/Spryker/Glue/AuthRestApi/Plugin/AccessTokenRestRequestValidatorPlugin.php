@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AccessTokenRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Validates access token passed via Authorization header.
      *
      * @api

@@ -19,7 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginIn
 class DefaultCurrencyQuoteExpandBeforeCreatePlugin extends AbstractPlugin implements QuoteExpandBeforeCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands quote with default currency.
      * - Does nothing if quote has currency.
      *

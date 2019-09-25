@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormView;
 class NoValidateTypeExtension extends AbstractTypeExtension
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
@@ -31,7 +31,7 @@ class NoValidateTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */

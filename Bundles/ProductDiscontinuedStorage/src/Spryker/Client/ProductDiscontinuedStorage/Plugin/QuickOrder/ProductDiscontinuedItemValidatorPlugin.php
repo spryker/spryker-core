@@ -18,7 +18,7 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInte
 class ProductDiscontinuedItemValidatorPlugin extends AbstractPlugin implements ItemValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns not modified ItemValidationTransfer if ItemTransfer.id is missing.
      * - Requires sku inside ItemTransfer.
      * - Calls ProductDiscontinuedStorageClient::findProductDiscontinuedStorage() to know if product is discontinued or not (uses current locale).

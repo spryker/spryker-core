@@ -23,7 +23,7 @@ class ShoppingListItemStorageListener extends AbstractPlugin implements EventBul
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Handles shipping list item create and delete events.
      *
      * @api

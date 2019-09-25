@@ -20,7 +20,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginI
 class OrderItemReferenceExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds merchant order reference to sales order item before saving
      * - If there is no fkMerchant in ItemTransfer, returns $salesOrderItemEntity without changes
      *

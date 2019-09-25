@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyUserRestUserMapperPlugin extends AbstractPlugin implements RestUserMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps company user data to the rest user identifier.
      *
      * @api

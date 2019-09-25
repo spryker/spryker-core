@@ -20,7 +20,7 @@ use Spryker\Zed\SalesOrderThresholdDataImport\SalesOrderThresholdDataImportConfi
 class SalesOrderThresholdDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class SalesOrderThresholdDataImportPlugin extends AbstractPlugin implements Data
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

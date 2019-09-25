@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UrlCollectorFacade extends AbstractFacade implements UrlCollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

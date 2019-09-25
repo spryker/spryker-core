@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CatalogPriceProductConnectorClient extends AbstractClient implements CatalogPriceProductConnectorClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -27,7 +27,7 @@ class CatalogPriceProductConnectorClient extends AbstractClient implements Catal
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

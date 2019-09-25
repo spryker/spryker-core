@@ -18,7 +18,7 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\NavigationsCategor
 class CategoryNodeByResourceIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Adds category node resource as a relationship.
      *  - Collects list of category ids from nodes of navigation resource recursively.
      *
@@ -37,7 +37,7 @@ class CategoryNodeByResourceIdResourceRelationshipPlugin extends AbstractPlugin 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +104,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -118,7 +118,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -132,7 +132,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -144,7 +144,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,7 +160,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -176,7 +176,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +190,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +206,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -225,7 +225,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -242,7 +242,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -256,7 +256,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -272,7 +272,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

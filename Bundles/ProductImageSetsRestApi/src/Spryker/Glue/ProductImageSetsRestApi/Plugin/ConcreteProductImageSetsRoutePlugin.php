@@ -18,7 +18,7 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 class ConcreteProductImageSetsRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ConcreteProductImageSetsRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ConcreteProductImageSetsRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class ConcreteProductImageSetsRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ConcreteProductImageSetsRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToIte
 class ShoppingListItemProductOptionToItemProductOptionMapperPlugin extends AbstractPlugin implements ShoppingListItemToItemMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Copies product options from ShoppingListItemTransfer to ItemTransfer.
      *
      * @api

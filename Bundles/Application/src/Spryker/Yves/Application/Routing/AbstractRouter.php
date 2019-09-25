@@ -32,7 +32,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     protected $sslEnabled = false;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Symfony\Component\Routing\RequestContext $context
      *
@@ -44,7 +44,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getContext()
     {
@@ -52,7 +52,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRouteCollection()
     {

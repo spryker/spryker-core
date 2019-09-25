@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ShoppingListStorageClient extends AbstractClient implements ShoppingListStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

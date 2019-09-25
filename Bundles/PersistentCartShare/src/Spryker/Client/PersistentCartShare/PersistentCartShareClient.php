@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PersistentCartShareClient extends AbstractClient implements PersistentCartShareClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class PersistentCartShareClient extends AbstractClient implements PersistentCart
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

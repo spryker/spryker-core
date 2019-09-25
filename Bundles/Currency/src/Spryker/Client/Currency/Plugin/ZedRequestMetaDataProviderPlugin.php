@@ -17,7 +17,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 class ZedRequestMetaDataProviderPlugin extends AbstractPlugin implements MetaDataProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

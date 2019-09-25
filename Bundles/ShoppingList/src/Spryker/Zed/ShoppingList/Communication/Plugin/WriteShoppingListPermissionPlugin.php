@@ -32,7 +32,7 @@ class WriteShoppingListPermissionPlugin extends AbstractPlugin implements Execut
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

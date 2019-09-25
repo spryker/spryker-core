@@ -95,7 +95,7 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -119,7 +119,7 @@ class MoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */

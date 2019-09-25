@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyTypeFieldPlugin extends AbstractPlugin implements CompanyFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

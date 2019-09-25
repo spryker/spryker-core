@@ -84,7 +84,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class DefaultBillingAddressMapperPlugin extends AbstractPlugin implements CompanyBusinessUnitMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps and replaces defaultBillingAddress id to uuid in the RestCompanyBusinessUnitAttributesTransfer.
      * - Searches company unit address collection for defaultBillingAddress uuid.
      *

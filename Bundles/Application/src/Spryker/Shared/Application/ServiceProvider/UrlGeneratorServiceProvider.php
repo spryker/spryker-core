@@ -16,7 +16,7 @@ use Silex\ServiceProviderInterface;
 class UrlGeneratorServiceProvider implements ServiceProviderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Silex\Application $app
      *

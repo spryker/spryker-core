@@ -22,7 +22,7 @@ class ProductListProductConcreteProductConcretePageSearchPublishListener extends
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles product list update event.
      *
      * @api

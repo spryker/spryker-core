@@ -20,7 +20,7 @@ use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 class SharedCartDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Call shared cart import.
      *
      * @api
@@ -35,7 +35,7 @@ class SharedCartDataImportPlugin extends AbstractPlugin implements DataImportPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

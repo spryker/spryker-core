@@ -13,7 +13,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class ServerVariables extends AbstractCollection
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementDefinition(): PropertyDefinition
     {

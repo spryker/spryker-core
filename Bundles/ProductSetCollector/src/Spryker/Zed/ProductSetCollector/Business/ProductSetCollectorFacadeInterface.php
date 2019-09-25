@@ -46,7 +46,7 @@ interface ProductSetCollectorFacadeInterface
     );
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

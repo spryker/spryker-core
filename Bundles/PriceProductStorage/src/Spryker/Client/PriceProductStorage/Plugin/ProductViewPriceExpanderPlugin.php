@@ -17,7 +17,7 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
 class ProductViewPriceExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds price value based on current store settings.
      * - Adds prices key-value array of available price types (e.g. DEFAULT, ORIGINAL).
      *

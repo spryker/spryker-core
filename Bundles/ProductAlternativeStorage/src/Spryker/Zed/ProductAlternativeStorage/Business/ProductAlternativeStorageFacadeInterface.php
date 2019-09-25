@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductAlternativeStorage\Business;
 interface ProductAlternativeStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

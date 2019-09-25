@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class OrderPaymentsRestApiClient extends AbstractClient implements OrderPaymentsRestApiClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

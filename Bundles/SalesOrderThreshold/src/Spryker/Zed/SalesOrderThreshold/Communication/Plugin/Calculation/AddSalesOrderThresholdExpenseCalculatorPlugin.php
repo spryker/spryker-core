@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AddSalesOrderThresholdExpenseCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds expenses for the applicable thresholds if there's any surcharge fees.
      *
      * @api

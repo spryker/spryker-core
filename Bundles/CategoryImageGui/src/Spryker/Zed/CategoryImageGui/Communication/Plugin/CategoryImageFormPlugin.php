@@ -21,7 +21,7 @@ class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPlug
     public const FIELD_IMAGE_SETS = 'imageSets';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

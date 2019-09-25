@@ -46,7 +46,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Symfony\Component\Routing\RequestContext $context
      *
@@ -58,7 +58,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getContext()
     {
@@ -66,7 +66,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRouteCollection()
     {
@@ -74,7 +74,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

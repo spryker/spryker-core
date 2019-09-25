@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCategoryFilterClient extends AbstractClient implements ProductCategoryFilterClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -32,7 +32,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscontinuedFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,7 +98,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -113,7 +113,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -130,7 +130,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -147,7 +147,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -163,7 +163,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -179,7 +179,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +195,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -211,7 +211,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -225,7 +225,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

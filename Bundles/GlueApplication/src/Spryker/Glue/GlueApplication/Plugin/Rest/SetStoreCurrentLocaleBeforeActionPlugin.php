@@ -17,7 +17,7 @@ use Spryker\Shared\Kernel\Store;
 class SetStoreCurrentLocaleBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

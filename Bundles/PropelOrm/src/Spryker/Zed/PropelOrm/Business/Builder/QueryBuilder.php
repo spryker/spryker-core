@@ -396,7 +396,7 @@ SCRIPT;
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function addClassOpen(&$script)
     {

@@ -20,7 +20,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class OAuthFlow extends AbstractObject
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {

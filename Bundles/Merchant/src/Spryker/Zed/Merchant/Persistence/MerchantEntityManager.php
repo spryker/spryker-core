@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantEntityManager extends AbstractEntityManager implements MerchantEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idMerchant
      *
@@ -31,7 +31,7 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *

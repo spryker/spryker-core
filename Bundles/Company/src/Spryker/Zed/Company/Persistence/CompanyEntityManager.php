@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CompanyEntityManager extends AbstractEntityManager implements CompanyEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
@@ -42,7 +42,7 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idCompany
      *
@@ -57,7 +57,7 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $idStores
      * @param int $idCompany
@@ -75,7 +75,7 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $idStores
      * @param int $idCompany

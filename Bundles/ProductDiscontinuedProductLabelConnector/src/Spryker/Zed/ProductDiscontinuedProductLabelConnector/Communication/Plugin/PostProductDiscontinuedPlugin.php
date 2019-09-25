@@ -18,7 +18,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscon
 class PostProductDiscontinuedPlugin extends AbstractPlugin implements PostProductDiscontinuePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

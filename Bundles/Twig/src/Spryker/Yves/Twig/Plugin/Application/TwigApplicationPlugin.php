@@ -26,7 +26,7 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_CHARSET = 'charset';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

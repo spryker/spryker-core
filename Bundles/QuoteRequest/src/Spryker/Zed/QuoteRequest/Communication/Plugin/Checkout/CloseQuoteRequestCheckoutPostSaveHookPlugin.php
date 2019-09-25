@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CloseQuoteRequestCheckoutPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostSaveHookInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - If quote contains quote request version reference - marks quote request as closed.
      *
      * @api

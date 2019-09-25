@@ -21,7 +21,7 @@ class JsonPath extends Module
     use LastConnectionConsumerTrait;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _initialize(): void
     {

@@ -16,7 +16,7 @@ use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for product-labels resource.
      *
      * @api
@@ -31,7 +31,7 @@ class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class ProductLabelsResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

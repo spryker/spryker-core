@@ -20,7 +20,7 @@ use Spryker\Zed\ProductListDataImport\ProductListDataImportConfig;
 class ProductListCategoryDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductListCategoryDataImportPlugin extends AbstractPlugin implements Data
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

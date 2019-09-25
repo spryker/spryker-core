@@ -104,7 +104,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */
@@ -118,7 +118,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string|null
      */
@@ -128,7 +128,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return bool
      */
@@ -138,7 +138,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return bool
      */
@@ -148,7 +148,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return bool
      */
@@ -158,7 +158,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return bool
      */
@@ -168,7 +168,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string|null
      */
@@ -178,7 +178,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return bool
      */
@@ -188,7 +188,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws \InvalidArgumentException
      *

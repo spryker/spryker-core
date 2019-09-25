@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CustomerAccessSecuredPatternRulePlugin extends AbstractPlugin implements CustomerSecuredPatternRulePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if customer is logged in.
      * - Returns false if customer is logged out.
      *
@@ -33,7 +33,7 @@ class CustomerAccessSecuredPatternRulePlugin extends AbstractPlugin implements C
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Modifies secured pattern by configured customer access for unauthenticated users.
      *
      * @api

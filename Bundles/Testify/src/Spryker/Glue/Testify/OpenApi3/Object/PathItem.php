@@ -33,7 +33,7 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 class PathItem extends AbstractObject implements ReferableInterface
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {

@@ -45,7 +45,7 @@ abstract class AbstractConnection implements Connection
     protected $responseContentType = 'application/json';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRequestUrl(): string
     {
@@ -65,7 +65,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRequestMethod(): string
     {
@@ -85,7 +85,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRequestParameters(): array
     {
@@ -105,7 +105,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRequestFiles(): array
     {
@@ -125,7 +125,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getResponseBody(): string
     {
@@ -145,7 +145,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getResponseCode(): int
     {
@@ -165,7 +165,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getResponseContentType(): string
     {

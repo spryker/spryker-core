@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class UrlStorageClient extends AbstractClient implements UrlStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

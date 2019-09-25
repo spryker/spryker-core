@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 class UtilDataReaderService extends AbstractService implements UtilDataReaderServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,7 +79,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -97,7 +97,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -114,7 +114,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -131,7 +131,7 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

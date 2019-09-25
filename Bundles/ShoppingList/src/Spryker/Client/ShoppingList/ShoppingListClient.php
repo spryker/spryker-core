@@ -30,7 +30,7 @@ use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 class ShoppingListClient extends AbstractClient implements ShoppingListClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +87,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -129,7 +129,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +148,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -166,7 +166,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -184,7 +184,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -198,7 +198,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -214,7 +214,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -230,7 +230,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -244,7 +244,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,7 +258,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -272,7 +272,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -286,7 +286,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -305,7 +305,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -317,7 +317,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -338,7 +338,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -352,7 +352,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -386,7 +386,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -398,7 +398,7 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

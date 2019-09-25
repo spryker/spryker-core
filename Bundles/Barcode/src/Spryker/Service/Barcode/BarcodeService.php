@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractService;
 class BarcodeService extends AbstractService implements BarcodeServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

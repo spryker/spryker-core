@@ -18,7 +18,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSave
 class ShoppingListItemNotePostSavePlugin extends AbstractPlugin implements ShoppingListItemPostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Creates, updates or deletes note for shopping list item.
      *
      * @api

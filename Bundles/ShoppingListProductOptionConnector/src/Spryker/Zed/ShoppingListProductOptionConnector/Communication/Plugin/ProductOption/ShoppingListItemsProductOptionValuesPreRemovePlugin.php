@@ -18,7 +18,7 @@ use Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreR
 class ShoppingListItemsProductOptionValuesPreRemovePlugin extends AbstractPlugin implements ProductOptionValuesPreRemovePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes deleted or deactivated product option values by ids from shopping list items.
      * - Product option values ids are taken from ProductOptionGroupTransfer::productOptionValuesToBeRemoved.
      *

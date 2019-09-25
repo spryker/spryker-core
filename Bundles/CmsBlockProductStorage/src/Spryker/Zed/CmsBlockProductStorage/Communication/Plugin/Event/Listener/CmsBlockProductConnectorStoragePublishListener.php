@@ -22,7 +22,7 @@ class CmsBlockProductConnectorStoragePublishListener extends AbstractPlugin impl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
