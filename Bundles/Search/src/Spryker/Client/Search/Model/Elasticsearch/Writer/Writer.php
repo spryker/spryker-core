@@ -43,16 +43,6 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @return void
-     */
-    public function getIndices()
-    {
-        $response = $this->client->request('_aliases');
-
-        echo '<pre>' . PHP_EOL . VarDumper::dump($response) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-    }
-
-    /**
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
