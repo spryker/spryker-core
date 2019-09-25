@@ -52,6 +52,10 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
     /**
      * {@inheritdoc}
      *
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
+     *
      * @return void
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)

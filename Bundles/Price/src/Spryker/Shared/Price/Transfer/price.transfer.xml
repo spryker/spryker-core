@@ -14,8 +14,8 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="store" type="Store" />
-        <property name="priceMode" type="string" />
+        <property name="store" type="Store"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
 </transfers>

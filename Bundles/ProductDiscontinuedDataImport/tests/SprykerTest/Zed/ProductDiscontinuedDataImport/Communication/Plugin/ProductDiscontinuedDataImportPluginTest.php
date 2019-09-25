@@ -18,6 +18,7 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductDiscontinuedDataImport

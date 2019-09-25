@@ -14,6 +14,7 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelation

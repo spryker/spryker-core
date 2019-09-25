@@ -8,11 +8,14 @@
 namespace SprykerTest\Zed\SalesStatistics\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ChartDataTraceTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesStatistics
@@ -23,6 +26,8 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesStatisticsFacadeTest extends Unit
 {
+    protected const ITEM_NAME = 'test1';
+
     /**
      * @var \SprykerTest\Zed\SalesStatistics\SalesStatisticsBusinessTester
      */
@@ -39,7 +44,11 @@ class SalesStatisticsFacadeTest extends Unit
     protected function setUp()
     {
         parent::setUp();
-        $this->spySalesOrder = $this->tester->create();
+
+        $items = [];
+        $items[] = (new ItemBuilder([ItemTransfer::NAME => static::ITEM_NAME]))->build();
+
+        $this->spySalesOrder = $this->tester->haveSalesOrderEntity($items);
     }
 
     /**
@@ -76,10 +85,15 @@ class SalesStatisticsFacadeTest extends Unit
      */
     public function testTopOrderStatistic()
     {
-        $chartDataTraceTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(1);
+        // Act
+        $chartDataTraceTransfer = $this->tester->getLocator()
+            ->salesStatistics()
+            ->facade()
+            ->getTopOrderStatistic(1);
 
+        // Assert
         $this->assertInstanceOf(ChartDataTraceTransfer::class, $chartDataTraceTransfer);
-        $this->assertEquals($chartDataTraceTransfer->getValues(), ['test1']);
+        $this->assertEquals($chartDataTraceTransfer->getValues(), [static::ITEM_NAME]);
         $this->assertEquals($chartDataTraceTransfer->getLabels(), [count($this->spySalesOrder->getItems())]);
     }
 }

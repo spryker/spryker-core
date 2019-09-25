@@ -22,6 +22,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Cart

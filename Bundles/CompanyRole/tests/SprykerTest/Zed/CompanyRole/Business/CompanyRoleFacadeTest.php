@@ -18,6 +18,7 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyRole

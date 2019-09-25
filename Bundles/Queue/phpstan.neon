@@ -1,3 +1,5 @@
 parameters:
     ignoreErrors:
-    - '#Method .+QueueQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
+        - '#Method .+QueueQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
+        - "#Call to function method_exists\\(\\) .+ 'fromShellCommandline'#"
+        - '#Parameter \#1 \$command of class Symfony\\Component\\Process\\Process constructor expects array, string given.#'

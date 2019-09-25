@@ -15,6 +15,7 @@ use SprykerTest\Shared\Log\Fixtures\TestLoggerConfig2;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Log

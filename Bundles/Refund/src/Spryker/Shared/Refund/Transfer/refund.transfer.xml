@@ -4,31 +4,31 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Refund">
-        <property name="idRefund" type="int" />
-        <property name="fkSalesOrder" type="int" />
-        <property name="amount" type="int" />
-        <property name="comment" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="items" singular="item" type="Item[]" />
-        <property name="expenses" singular="expense" type="Expense[]" />
+        <property name="idRefund" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="amount" type="int"/>
+        <property name="comment" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="items" singular="item" type="Item[]"/>
+        <property name="expenses" singular="expense" type="Expense[]"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="idOrderItem" type="int" />
+        <property name="idOrderItem" type="int"/>
         <property name="refundableAmount" type="int"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="idExpense" type="int" />
-        <property name="refundableAmount" type="int" />
+        <property name="idExpense" type="int"/>
+        <property name="refundableAmount" type="int"/>
     </transfer>
 
     <transfer name="Totals">
-        <property name="refundTotal" type="int" />
+        <property name="refundTotal" type="int"/>
     </transfer>
 
     <transfer name="Order">
-        <property name="currencyIsoCode" type="string" />
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
 </transfers>

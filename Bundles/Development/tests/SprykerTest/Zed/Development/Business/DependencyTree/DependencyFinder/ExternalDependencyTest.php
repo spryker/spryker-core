@@ -17,6 +17,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development

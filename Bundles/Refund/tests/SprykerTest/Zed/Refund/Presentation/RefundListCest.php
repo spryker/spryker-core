@@ -11,6 +11,7 @@ use SprykerTest\Zed\Refund\RefundPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund

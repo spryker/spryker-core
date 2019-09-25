@@ -4,12 +4,12 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="SequenceNumberSettings">
-        <property name="name" type="string" />
-        <property name="prefix" type="string" />
-        <property name="padding" type="int" />
-        <property name="offset" type="int" />
-        <property name="incrementMinimum" type="int" />
-        <property name="incrementMaximum" type="int" />
+        <property name="name" type="string"/>
+        <property name="prefix" type="string"/>
+        <property name="padding" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="incrementMinimum" type="int"/>
+        <property name="incrementMaximum" type="int"/>
 
     </transfer>
 

@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel

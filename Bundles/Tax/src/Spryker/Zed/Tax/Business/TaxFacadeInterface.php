@@ -295,7 +295,6 @@ interface TaxFacadeInterface
     public function resetAccruedTaxCalculatorRoundingErrorDelta();
 
     /**
-     *
      * Specification:
      * - Calculate tax amount after cancellation
      *
@@ -308,7 +307,6 @@ interface TaxFacadeInterface
     public function calculateTaxAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate tax amount after cancellation
      *

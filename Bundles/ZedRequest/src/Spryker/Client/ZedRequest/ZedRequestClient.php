@@ -89,7 +89,6 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     /**
      * {@inheritdoc}
      *
-     *
      * @api
      *
      * @return void

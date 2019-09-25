@@ -12,6 +12,7 @@ use SprykerTest\Zed\CustomerNoteGui\PageObject\CustomerNotePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerNoteGui

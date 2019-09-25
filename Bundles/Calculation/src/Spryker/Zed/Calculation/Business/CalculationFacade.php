@@ -388,11 +388,11 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     }
 
     /**
-     * @deprecated Will be removed in the next major version.
-     *
      * {@inheritdoc}
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
