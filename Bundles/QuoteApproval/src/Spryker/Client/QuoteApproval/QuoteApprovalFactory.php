@@ -26,6 +26,9 @@ use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
+/**
+ * @method \Spryker\Client\QuoteApproval\QuoteApprovalConfig getConfig()
+ */
 class QuoteApprovalFactory extends AbstractFactory
 {
     /**
