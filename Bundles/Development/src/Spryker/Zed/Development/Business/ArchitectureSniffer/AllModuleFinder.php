@@ -139,9 +139,9 @@ class AllModuleFinder implements AllModuleFinderInterface
     /**
      * @param array $modules
      *
-     * @return mixed
+     * @return array
      */
-    protected function addApplication(array $modules)
+    protected function addApplication(array $modules): array
     {
         foreach ($modules as $i => $moduleData) {
             $moduleDataExploded = explode('/', $moduleData['directory']);
