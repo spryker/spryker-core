@@ -730,6 +730,8 @@ abstract class AbstractTable
             $conditions
         );
 
+        $gluedCondition = '(' . $gluedCondition . ')';
+
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
             return $query->having($gluedCondition);
         }
