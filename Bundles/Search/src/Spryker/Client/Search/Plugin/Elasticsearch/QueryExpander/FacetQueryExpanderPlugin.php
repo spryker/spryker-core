@@ -26,7 +26,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     public const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Applies facet filters to query
      * - Facet filter values that equal null, empty string or false are dropped other values are kept including 0(zero)
      *

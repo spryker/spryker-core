@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class AccessTokensResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

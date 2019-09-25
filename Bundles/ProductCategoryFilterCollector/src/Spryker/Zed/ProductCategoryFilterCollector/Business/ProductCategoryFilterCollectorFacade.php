@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductCategoryFilterCollectorFacade extends AbstractFacade implements ProductCategoryFilterCollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

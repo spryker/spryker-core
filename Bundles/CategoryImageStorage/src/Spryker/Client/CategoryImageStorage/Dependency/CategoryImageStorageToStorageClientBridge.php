@@ -23,7 +23,7 @@ class CategoryImageStorageToStorageClientBridge implements CategoryImageStorageT
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

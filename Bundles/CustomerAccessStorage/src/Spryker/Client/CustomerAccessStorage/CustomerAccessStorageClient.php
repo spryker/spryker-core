@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CustomerAccessStorageClient extends AbstractClient implements CustomerAccessStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -28,7 +28,7 @@ class CustomerAccessStorageClient extends AbstractClient implements CustomerAcce
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ResourceShareFacade extends AbstractFacade implements ResourceShareFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

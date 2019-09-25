@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilValidateService extends AbstractService implements UtilValidateServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

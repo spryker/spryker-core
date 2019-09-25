@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class QuoteRequestDataImportFacade extends AbstractFacade implements QuoteRequestDataImportFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class QuoteRequestDataImportFacade extends AbstractFacade implements QuoteReques
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

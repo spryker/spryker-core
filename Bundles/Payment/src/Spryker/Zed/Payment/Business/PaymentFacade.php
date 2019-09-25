@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -90,7 +90,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,7 +138,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -19,7 +19,7 @@ use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePlugi
 class ProductBundleProductListPreUpdatePlugin extends AbstractPlugin implements ProductListPreUpdatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands blacklist product list with bundle product if assigned product is added.
      * - Expands whitelist product list with assigned products if bundle id added.
      *

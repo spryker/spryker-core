@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelationshipFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,7 +98,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -112,7 +112,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

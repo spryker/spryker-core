@@ -20,7 +20,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
 class PriceProductMerchantRelationshipAbstractDeleteListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ContentStorageClient extends AbstractClient implements ContentStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

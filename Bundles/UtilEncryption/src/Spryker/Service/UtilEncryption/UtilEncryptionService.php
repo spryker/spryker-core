@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilEncryptionService extends AbstractService implements UtilEncryptionServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class UtilEncryptionService extends AbstractService implements UtilEncryptionSer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

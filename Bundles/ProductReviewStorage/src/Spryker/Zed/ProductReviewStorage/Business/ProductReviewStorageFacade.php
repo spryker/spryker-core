@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductReviewStorageFacade extends AbstractFacade implements ProductReviewStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class ProductReviewStorageFacade extends AbstractFacade implements ProductReview
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

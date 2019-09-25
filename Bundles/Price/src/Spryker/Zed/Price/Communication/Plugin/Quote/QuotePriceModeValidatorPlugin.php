@@ -20,7 +20,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 class QuotePriceModeValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates if provided price mode in quote is available.
      *
      * @api

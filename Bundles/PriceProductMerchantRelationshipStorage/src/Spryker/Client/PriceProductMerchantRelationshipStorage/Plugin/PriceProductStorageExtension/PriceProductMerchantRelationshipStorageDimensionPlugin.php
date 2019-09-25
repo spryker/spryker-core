@@ -17,7 +17,7 @@ use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductSt
 class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlugin implements PriceProductStoragePriceDimensionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

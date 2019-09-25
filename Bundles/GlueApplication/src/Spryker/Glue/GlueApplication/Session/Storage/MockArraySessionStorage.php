@@ -78,7 +78,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function start()
     {
@@ -96,7 +96,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function regenerate($destroy = false, $lifetime = null)
     {
@@ -153,7 +153,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws \RuntimeException
      *
@@ -170,7 +170,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return void
      */
@@ -189,7 +189,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
      *
@@ -201,7 +201,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \InvalidArgumentException
      */
@@ -219,7 +219,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function isStarted()
     {

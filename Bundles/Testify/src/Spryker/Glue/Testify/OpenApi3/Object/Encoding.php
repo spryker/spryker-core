@@ -23,7 +23,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class Encoding extends AbstractObject
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {

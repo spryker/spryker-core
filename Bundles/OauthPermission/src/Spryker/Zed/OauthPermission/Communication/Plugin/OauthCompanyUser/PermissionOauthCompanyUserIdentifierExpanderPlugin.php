@@ -20,7 +20,7 @@ use Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIden
 class PermissionOauthCompanyUserIdentifierExpanderPlugin extends AbstractPlugin implements OauthCompanyUserIdentifierExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands the CompanyUserIdentifierTransfer with permissions collection if idCompanyUser is set up in CompanyUserTransfer.
      *
      * @api

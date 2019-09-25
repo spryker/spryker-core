@@ -23,12 +23,12 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     protected $elements = [];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     abstract public function getElementDefinition(): PropertyDefinition;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function hydrate($content): SchemaFieldInterface
     {
@@ -55,7 +55,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function export(): CollectionInterface
     {
@@ -63,7 +63,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function toArray(): array
     {
@@ -79,7 +79,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     // ----------------------------------------------------
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getIterator()
     {
@@ -89,7 +89,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function count()
     {
@@ -97,7 +97,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetExists($offset)
     {
@@ -105,7 +105,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetGet($offset)
     {
@@ -121,7 +121,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetSet($offset, $value)
     {
@@ -129,7 +129,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetUnset($offset)
     {
@@ -137,7 +137,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __debugInfo()
     {

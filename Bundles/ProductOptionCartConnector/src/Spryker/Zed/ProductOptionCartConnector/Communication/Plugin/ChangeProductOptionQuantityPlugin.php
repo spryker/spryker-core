@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

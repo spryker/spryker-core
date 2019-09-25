@@ -19,7 +19,7 @@ use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresho
 class GlobalSalesOrderThresholdDataSourceStrategyPlugin extends AbstractPlugin implements SalesOrderThresholdDataSourceStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Finds the applicable global store and currency thresholds for the cart sub total.
      *
      * @api

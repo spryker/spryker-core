@@ -17,7 +17,7 @@ class SecurityTwigPlugin implements TwigPluginInterface
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

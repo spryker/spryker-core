@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CatalogSearchRequestParametersIntegerRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates Rest API request with type catalog search.
      * - Gets parameter names to validate from module config file.
      * - Parameter names specified in dot notation (e.g rating.min checks rating[min] parameter from http request).

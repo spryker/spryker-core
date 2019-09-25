@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class ShipmentsRestApiFacade extends AbstractFacade implements ShipmentsRestApiF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductResourceAliasStorageClient extends AbstractClient implements ProductResourceAliasStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductResourceAliasStorageClient extends AbstractClient implements Produc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

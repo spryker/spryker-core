@@ -21,7 +21,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
 class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +85,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -31,7 +31,7 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

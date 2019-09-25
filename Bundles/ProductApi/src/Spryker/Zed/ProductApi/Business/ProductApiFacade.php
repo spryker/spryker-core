@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

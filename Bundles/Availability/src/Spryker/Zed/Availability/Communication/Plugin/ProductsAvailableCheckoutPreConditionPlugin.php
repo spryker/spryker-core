@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

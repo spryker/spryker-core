@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyUnitAddressEditFormExpanderPlugin extends AbstractPlugin implements CompanyUnitAddressEditFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

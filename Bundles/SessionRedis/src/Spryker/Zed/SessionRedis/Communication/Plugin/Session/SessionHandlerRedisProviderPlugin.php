@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SessionHandlerRedisProviderPlugin extends AbstractPlugin implements SessionHandlerProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class SessionHandlerRedisProviderPlugin extends AbstractPlugin implements Sessio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

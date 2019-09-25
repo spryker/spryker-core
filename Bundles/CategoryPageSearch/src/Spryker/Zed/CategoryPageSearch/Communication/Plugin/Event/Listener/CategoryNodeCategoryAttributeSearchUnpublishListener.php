@@ -23,7 +23,7 @@ class CategoryNodeCategoryAttributeSearchUnpublishListener extends AbstractPlugi
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

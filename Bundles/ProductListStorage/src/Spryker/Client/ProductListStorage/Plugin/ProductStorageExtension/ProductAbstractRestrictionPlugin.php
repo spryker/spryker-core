@@ -16,7 +16,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRest
 class ProductAbstractRestrictionPlugin extends AbstractPlugin implements ProductAbstractRestrictionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

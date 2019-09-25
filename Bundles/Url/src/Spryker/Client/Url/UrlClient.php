@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class UrlClient extends AbstractClient implements UrlClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class UrlClient extends AbstractClient implements UrlClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends EventDispatch with a KernelEvents::RESPONSE event to add security headers from config.
      *
      * @api

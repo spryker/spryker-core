@@ -53,7 +53,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +70,7 @@ class TaxProductConnectorFacade extends AbstractFacade implements TaxProductConn
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

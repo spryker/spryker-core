@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CommentClient extends AbstractClient implements CommentClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,7 +107,7 @@ class CommentClient extends AbstractClient implements CommentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -32,7 +32,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -112,7 +112,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -128,7 +128,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -144,7 +144,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,7 +160,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -176,7 +176,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -192,7 +192,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +208,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -224,7 +224,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -238,7 +238,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -252,7 +252,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -264,7 +264,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -276,7 +276,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -290,7 +290,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -304,7 +304,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -318,7 +318,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -332,7 +332,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -346,7 +346,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -360,7 +360,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

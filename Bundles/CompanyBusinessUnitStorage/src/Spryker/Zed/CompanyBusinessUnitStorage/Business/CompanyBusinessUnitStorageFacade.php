@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyBusinessUnitStorageFacade extends AbstractFacade implements CompanyBusinessUnitStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

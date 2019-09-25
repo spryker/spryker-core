@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

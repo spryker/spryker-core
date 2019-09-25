@@ -20,7 +20,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 class ProductOptionGroupIdHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

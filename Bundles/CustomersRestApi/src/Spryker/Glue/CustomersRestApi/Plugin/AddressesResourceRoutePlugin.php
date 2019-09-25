@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class AddressesResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

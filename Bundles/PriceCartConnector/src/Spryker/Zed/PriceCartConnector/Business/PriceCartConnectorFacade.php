@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnectorFacadeInterface
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @api
      *
@@ -32,7 +32,7 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class PriceCartConnectorFacade extends AbstractFacade implements PriceCartConnec
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

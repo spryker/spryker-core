@@ -19,7 +19,7 @@ class ProductPageProductAbstractUnpublishListener extends AbstractProductPageSea
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

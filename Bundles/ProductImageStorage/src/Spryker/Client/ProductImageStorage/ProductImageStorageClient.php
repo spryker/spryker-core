@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductImageStorageClient extends AbstractClient implements ProductImageStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class ProductImageStorageClient extends AbstractClient implements ProductImageSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

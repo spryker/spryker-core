@@ -14,7 +14,7 @@ class RequestQuoteApprovalPermissionPlugin implements PermissionPluginInterface
     public const KEY = 'RequestQuoteApprovalPermissionPlugin';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

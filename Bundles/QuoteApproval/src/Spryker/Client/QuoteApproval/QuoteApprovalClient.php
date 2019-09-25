@@ -21,7 +21,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +81,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -95,7 +95,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -109,7 +109,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -123,7 +123,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +140,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -157,7 +157,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -173,7 +173,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -189,7 +189,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +206,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -222,7 +222,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

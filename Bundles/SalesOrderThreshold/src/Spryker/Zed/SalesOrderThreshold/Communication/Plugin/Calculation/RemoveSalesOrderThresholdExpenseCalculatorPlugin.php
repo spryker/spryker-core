@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveSalesOrderThresholdExpenseCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes all threshold expenses from CalculableObjectTransfer.
      *
      * @api

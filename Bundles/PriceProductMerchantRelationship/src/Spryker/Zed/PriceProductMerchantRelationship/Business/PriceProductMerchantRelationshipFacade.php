@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PriceProductMerchantRelationshipFacade extends AbstractFacade implements PriceProductMerchantRelationshipFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +81,7 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -24,7 +24,7 @@ use Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface
 class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterface, StorageScanPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -108,7 +108,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -146,7 +146,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,7 +160,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Uses Redis `SCAN` command.
      *
      * @api
@@ -177,7 +177,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -189,7 +189,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -201,7 +201,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Uses Redis `DBSIZE` command.
      *
      * @api
@@ -214,7 +214,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

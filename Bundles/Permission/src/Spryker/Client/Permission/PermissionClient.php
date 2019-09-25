@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class PermissionClient extends AbstractClient implements PermissionClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class PermissionClient extends AbstractClient implements PermissionClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

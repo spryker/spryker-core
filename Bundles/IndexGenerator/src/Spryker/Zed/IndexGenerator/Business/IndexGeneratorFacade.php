@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class IndexGeneratorFacade extends AbstractFacade implements IndexGeneratorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class IndexGeneratorFacade extends AbstractFacade implements IndexGeneratorFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

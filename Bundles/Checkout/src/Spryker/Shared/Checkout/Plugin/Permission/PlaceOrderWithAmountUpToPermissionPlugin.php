@@ -19,7 +19,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if customer is allowed to place order with cent amount up to some value, provided in configuration.
      * - Returns false, if customer cent amount is not provided.
      * - Returns true, if configuration does not have cent amount set.

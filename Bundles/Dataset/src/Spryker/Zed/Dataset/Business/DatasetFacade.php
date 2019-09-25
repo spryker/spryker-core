@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +63,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,7 +119,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -133,7 +133,7 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

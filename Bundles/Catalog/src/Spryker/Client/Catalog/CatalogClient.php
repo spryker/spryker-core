@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CatalogClient extends AbstractClient implements CatalogClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -113,7 +113,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

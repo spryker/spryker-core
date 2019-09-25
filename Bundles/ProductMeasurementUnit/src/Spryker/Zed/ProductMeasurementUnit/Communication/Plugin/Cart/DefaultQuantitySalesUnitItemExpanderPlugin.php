@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DefaultQuantitySalesUnitItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands items without measurement sales unit with default measurement sales unit if it exists by store and product concrete sku.
      *
      * @api

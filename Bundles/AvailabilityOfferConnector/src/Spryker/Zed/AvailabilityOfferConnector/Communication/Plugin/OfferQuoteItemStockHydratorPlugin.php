@@ -17,7 +17,7 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -23,7 +23,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +104,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -136,7 +136,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -185,7 +185,7 @@ class CompanyRoleClient extends AbstractClient implements CompanyRoleClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

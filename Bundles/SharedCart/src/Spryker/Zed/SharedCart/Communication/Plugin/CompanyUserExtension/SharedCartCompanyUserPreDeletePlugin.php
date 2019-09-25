@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SharedCartCompanyUserPreDeletePlugin extends AbstractPlugin implements CompanyUserPreDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Un-shares quotes for company user.
      *
      * @api

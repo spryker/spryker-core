@@ -17,7 +17,7 @@ use Spryker\Glue\SharedCartsRestApi\SharedCartsRestApiConfig;
 class SharedCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures available actions for `shared-carts` resource.
      *
      * @api
@@ -35,7 +35,7 @@ class SharedCartsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class SharedCartsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class SharedCartsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class SharedCartsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

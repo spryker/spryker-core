@@ -23,7 +23,7 @@ class CmsBlockCategoryConnectorEntityStorageUnpublishListener extends AbstractPl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

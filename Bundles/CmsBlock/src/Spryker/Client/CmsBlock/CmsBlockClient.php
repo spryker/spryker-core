@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CmsBlockClient extends AbstractClient implements CmsBlockClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

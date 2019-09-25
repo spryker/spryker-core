@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +76,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class CompanyFacade extends AbstractFacade implements CompanyFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDe
 class ShoppingListItemProductOptionBeforeDeletePlugin extends AbstractPlugin implements ShoppingListItemBeforeDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes product options from list item before delete.
      *
      * @api

@@ -91,7 +91,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -213,7 +213,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -229,7 +229,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -246,7 +246,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -264,7 +264,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

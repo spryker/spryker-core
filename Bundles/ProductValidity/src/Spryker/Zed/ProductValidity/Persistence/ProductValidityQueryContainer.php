@@ -17,7 +17,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductValidityQueryContainer extends AbstractQueryContainer implements ProductValidityQueryContainerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +63,7 @@ class ProductValidityQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

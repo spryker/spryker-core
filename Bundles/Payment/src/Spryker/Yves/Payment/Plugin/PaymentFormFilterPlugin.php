@@ -19,7 +19,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

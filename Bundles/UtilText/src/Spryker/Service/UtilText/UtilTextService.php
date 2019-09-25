@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilTextService extends AbstractService implements UtilTextServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -109,7 +109,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

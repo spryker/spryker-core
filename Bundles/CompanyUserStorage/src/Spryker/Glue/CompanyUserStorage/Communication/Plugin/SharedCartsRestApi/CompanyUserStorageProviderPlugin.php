@@ -17,7 +17,7 @@ use Spryker\Glue\SharedCartsRestApiExtension\Dependency\Plugin\CompanyUserProvid
 class CompanyUserStorageProviderPlugin extends AbstractPlugin implements CompanyUserProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Provides the company user information from key-value storage.
      *
      * @api

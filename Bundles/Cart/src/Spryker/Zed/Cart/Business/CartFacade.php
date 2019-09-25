@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CartFacade extends AbstractFacade implements CartFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -116,7 +116,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -21,7 +21,7 @@ class TranslationTwigPlugin implements TwigPluginInterface
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

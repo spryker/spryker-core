@@ -23,7 +23,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionUnconditio
 class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface, PriceDimensionUnconditionalQueryCriteriaPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

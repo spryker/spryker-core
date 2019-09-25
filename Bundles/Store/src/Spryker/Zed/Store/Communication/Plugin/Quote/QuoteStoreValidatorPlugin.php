@@ -21,7 +21,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 class QuoteStoreValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates if provided store in quote is available.
      *
      * @api

@@ -20,7 +20,7 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Silex\Application $app
      *

@@ -67,7 +67,7 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      */
@@ -77,7 +77,7 @@ class MvcRouter implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */

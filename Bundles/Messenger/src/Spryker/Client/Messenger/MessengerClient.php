@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 class MessengerClient extends AbstractClient implements MessengerClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

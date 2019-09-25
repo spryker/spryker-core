@@ -16,7 +16,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class Responses extends AbstractCollection
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementDefinition(): PropertyDefinition
     {

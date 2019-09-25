@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class SynchronizationService extends AbstractService implements SynchronizationServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class SynchronizationService extends AbstractService implements SynchronizationS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

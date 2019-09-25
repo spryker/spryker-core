@@ -22,7 +22,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 class ProductOptionSortHydratePlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

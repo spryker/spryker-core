@@ -30,7 +30,7 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *

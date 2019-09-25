@@ -18,7 +18,7 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\ProductAvailabilitiesRestApiConfig
 class AbstractProductAvailabilitiesByResourceIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds abstract-product-availabilities resource as a relationship by the resource id.
      * - Identifier of passed resources should contain abstract product sku.
      *
@@ -37,7 +37,7 @@ class AbstractProductAvailabilitiesByResourceIdResourceRelationshipPlugin extend
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

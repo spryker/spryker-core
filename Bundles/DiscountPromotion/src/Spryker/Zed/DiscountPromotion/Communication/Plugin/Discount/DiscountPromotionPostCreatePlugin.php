@@ -17,7 +17,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface;
 class DiscountPromotionPostCreatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

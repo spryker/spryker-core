@@ -21,7 +21,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusinessUnitClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class CompanyBusinessUnitClient extends AbstractClient implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

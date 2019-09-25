@@ -23,7 +23,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class UrlEventResourceQueryContainerPlugin extends AbstractPlugin implements Eve
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

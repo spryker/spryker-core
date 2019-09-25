@@ -25,7 +25,7 @@ class WriteShoppingListPermissionPlugin extends AbstractPlugin implements Execut
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $configuration
      * @param int|null $idShoppingList

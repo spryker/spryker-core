@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CatalogSearchResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CatalogSearchResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class CatalogSearchResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class CatalogSearchResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

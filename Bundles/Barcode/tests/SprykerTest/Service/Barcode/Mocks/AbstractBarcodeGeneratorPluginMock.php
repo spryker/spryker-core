@@ -16,7 +16,7 @@ abstract class AbstractBarcodeGeneratorPluginMock implements BarcodeGeneratorPlu
     public const GENERATED_ENCODING = 'abstract_mock_generated_encoding';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductValidityFacade extends AbstractFacade implements ProductValidityFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class ProductValidityFacade extends AbstractFacade implements ProductValidityFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class ProductValidityFacade extends AbstractFacade implements ProductValidityFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

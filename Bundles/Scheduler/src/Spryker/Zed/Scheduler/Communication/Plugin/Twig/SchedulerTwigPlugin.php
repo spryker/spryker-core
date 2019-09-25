@@ -23,7 +23,7 @@ class SchedulerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     public const FUNCTION_NAME_GET_ENV = 'getenv';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends twig with "getenv" function to get the value of an environment variable.
      *
      * @api

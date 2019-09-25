@@ -26,7 +26,7 @@ class QuoteSaveQuotePostRecalculateStrategyPlugin extends AbstractPlugin impleme
     protected const STORAGE_STRATEGY_DATABASE = 'database';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Saves quote attributes described in QuoteUpdateRequestAttributesTransfer to database.
      *
      * @api
@@ -44,7 +44,7 @@ class QuoteSaveQuotePostRecalculateStrategyPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns false if quote does't have ID.
      * - Returns true if `DatabaseStorageStrategy` is enabled.
      * - Returns false if `DatabaseStorageStrategy` is disabled.

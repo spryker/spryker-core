@@ -22,7 +22,7 @@ class UrlStoragePublishListener extends AbstractPlugin implements EventBulkHandl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

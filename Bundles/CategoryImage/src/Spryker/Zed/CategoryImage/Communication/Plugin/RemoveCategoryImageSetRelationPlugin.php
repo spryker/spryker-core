@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveCategoryImageSetRelationPlugin extends AbstractPlugin implements CategoryRelationDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

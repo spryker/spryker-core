@@ -55,7 +55,7 @@ EOF;
     protected $schema;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _initialize(): void
     {

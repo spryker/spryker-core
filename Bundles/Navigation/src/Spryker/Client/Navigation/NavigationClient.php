@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class NavigationClient extends AbstractClient implements NavigationClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

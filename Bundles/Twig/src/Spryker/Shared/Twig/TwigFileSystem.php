@@ -93,7 +93,7 @@ class TwigFileSystem extends FilesystemLoader
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $name
      *

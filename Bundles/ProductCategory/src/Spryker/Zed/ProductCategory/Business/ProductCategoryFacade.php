@@ -120,7 +120,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +154,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

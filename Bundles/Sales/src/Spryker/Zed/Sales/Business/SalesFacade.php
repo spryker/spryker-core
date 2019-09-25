@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -108,7 +108,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -125,7 +125,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -142,7 +142,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -159,7 +159,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +178,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -215,7 +215,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -267,7 +267,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -284,7 +284,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -300,7 +300,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -317,7 +317,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -333,7 +333,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -349,7 +349,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -365,7 +365,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

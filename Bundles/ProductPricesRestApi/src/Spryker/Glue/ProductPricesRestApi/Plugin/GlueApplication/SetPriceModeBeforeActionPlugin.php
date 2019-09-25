@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class SetPriceModeBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets the current priceMode from request.
      * - Uses PriceClient to set priceMode.
      *

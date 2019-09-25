@@ -17,7 +17,7 @@ use Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInte
 class YvesSessionRedisLockReleaserPlugin extends AbstractPlugin implements SessionLockReleaserPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class YvesSessionRedisLockReleaserPlugin extends AbstractPlugin implements Sessi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

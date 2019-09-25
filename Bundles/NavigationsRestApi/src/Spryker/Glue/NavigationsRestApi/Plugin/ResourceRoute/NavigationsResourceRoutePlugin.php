@@ -16,7 +16,7 @@ use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig;
 class NavigationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures available actions for navigations resource.
      *
      * @api
@@ -32,7 +32,7 @@ class NavigationsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class NavigationsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class NavigationsResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

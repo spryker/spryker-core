@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -27,7 +27,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +70,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class PriceModeParameterValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates priceMode get request parameter.
      * - Checks that price mode exists and is available.
      *

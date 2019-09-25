@@ -26,7 +26,7 @@ class JsonFileReader implements ReaderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \Spryker\Glue\Testify\OpenApi3\Exception\ParseException
      */

@@ -22,7 +22,7 @@ class CategoryNodeSearchPublishListener extends AbstractPlugin implements EventB
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

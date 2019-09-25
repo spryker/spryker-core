@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements CompanyBusinessUnitDataImportFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CompanyBusinessUnitDataImportFacade extends AbstractFacade implements Comp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

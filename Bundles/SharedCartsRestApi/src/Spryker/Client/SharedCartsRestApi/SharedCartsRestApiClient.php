@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRestApiClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRest
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRest
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class SharedCartsRestApiClient extends AbstractClient implements SharedCartsRest
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

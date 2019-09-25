@@ -26,7 +26,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusinessUnitFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -111,7 +111,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -128,7 +128,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -143,7 +143,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,7 +160,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -176,7 +176,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -191,7 +191,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -207,7 +207,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -221,7 +221,7 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

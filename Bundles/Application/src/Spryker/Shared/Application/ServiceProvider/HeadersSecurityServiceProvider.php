@@ -38,7 +38,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
     public const HEADER_X_XSS_PROTECTION = 'X-XSS-Protection';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Silex\Application $app
      *

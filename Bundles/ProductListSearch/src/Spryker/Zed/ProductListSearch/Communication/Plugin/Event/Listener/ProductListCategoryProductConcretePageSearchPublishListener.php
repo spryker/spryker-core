@@ -22,7 +22,7 @@ class ProductListCategoryProductConcretePageSearchPublishListener extends Abstra
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles product list category create, update and delete events.
      *
      * @api

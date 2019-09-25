@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

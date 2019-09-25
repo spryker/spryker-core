@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class AvailabilityClient extends AbstractClient implements AvailabilityClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePlugin
 class OauthPermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Reads permission collection from the authorization header.
      *
      * @api

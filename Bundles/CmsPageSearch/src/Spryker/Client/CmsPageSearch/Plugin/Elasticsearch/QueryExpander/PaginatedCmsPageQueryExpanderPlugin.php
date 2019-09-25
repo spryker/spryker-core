@@ -18,7 +18,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class PaginatedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Allows to fetch cms pages result by page
      *
      * @api

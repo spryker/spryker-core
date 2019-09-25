@@ -19,7 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class UpdateShareDetailsQuoteAfterSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Saves quote share details on quote save.
      *
      * @api

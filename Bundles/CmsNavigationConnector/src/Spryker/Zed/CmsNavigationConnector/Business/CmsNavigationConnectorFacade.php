@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsNavigationConnectorFacade extends AbstractFacade implements CmsNavigationConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

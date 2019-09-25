@@ -20,7 +20,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class TaxSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class TaxSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

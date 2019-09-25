@@ -17,7 +17,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 class MoneyClient extends AbstractClient implements MoneyClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class MoneyClient extends AbstractClient implements MoneyClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class CategoriesRestApiResource extends AbstractRestResource implements CategoriesRestApiResourceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

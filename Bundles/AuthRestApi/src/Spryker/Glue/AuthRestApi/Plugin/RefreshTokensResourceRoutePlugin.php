@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class RefreshTokensResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class RefreshTokensResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class RefreshTokensResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class RefreshTokensResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

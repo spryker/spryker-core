@@ -17,7 +17,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEdit
 class ScheduledPriceProductConcreteEditViewExpanderPlugin extends AbstractPlugin implements ProductConcreteEditViewExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands view data of edit product concrete page with scheduled price data.
      *
      * @api

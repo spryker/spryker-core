@@ -24,7 +24,7 @@ abstract class AbstractPrimitive implements PrimitiveInterface
     abstract protected function cast($value);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function hydrate($content): SchemaFieldInterface
     {
@@ -34,7 +34,7 @@ abstract class AbstractPrimitive implements PrimitiveInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function export()
     {
@@ -42,7 +42,7 @@ abstract class AbstractPrimitive implements PrimitiveInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __toString()
     {

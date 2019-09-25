@@ -20,7 +20,7 @@ use Twig\TwigFunction;
 class CmsContentWidgetTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

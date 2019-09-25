@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductPackagingLeadProductEntityStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

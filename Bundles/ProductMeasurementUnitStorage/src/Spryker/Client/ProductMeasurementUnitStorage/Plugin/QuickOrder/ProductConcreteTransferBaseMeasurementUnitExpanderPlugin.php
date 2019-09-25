@@ -17,7 +17,7 @@ use Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpander
 class ProductConcreteTransferBaseMeasurementUnitExpanderPlugin extends AbstractPlugin implements ProductConcreteExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands provided array of ProductConcreteTransfers with base measurement unit information if available for product.
      * - Returns the unchanged provided ProductConcreteTransfers when no base measurement unit is defined for the product.
      *

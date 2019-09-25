@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerUserConnectorFacade extends AbstractFacade implements CustomerUserConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

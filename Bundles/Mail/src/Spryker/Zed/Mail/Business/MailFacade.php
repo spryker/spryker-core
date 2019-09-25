@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MailFacade extends AbstractFacade implements MailFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class MailFacade extends AbstractFacade implements MailFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

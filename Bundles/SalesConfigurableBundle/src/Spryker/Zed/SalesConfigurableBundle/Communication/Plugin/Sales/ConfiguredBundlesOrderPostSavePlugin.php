@@ -20,7 +20,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
 class ConfiguredBundlesOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Persists configured bundles from ItemTransfer in Quote to sales_order configured bundle tables.
      *
      * @api

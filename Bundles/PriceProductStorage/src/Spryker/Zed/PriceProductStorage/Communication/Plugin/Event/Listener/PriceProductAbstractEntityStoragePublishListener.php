@@ -23,7 +23,7 @@ class PriceProductAbstractEntityStoragePublishListener extends AbstractPlugin im
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

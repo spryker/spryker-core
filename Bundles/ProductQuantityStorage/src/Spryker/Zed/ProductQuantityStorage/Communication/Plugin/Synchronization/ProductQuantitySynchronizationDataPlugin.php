@@ -23,7 +23,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +87,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +99,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

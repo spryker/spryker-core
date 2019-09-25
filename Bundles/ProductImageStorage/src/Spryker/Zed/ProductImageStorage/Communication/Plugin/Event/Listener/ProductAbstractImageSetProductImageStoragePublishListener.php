@@ -22,7 +22,7 @@ class ProductAbstractImageSetProductImageStoragePublishListener extends Abstract
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

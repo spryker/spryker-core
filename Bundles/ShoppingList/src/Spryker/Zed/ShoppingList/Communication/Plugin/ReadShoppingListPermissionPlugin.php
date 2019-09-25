@@ -32,7 +32,7 @@ class ReadShoppingListPermissionPlugin extends AbstractPlugin implements Executa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

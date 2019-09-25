@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class SetCurrencyBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets the current currency from request.
      * - Uses CurrencyClient to set currency.
      *

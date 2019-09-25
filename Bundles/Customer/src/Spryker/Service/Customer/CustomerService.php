@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractService;
 class CustomerService extends AbstractService implements CustomerServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

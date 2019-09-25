@@ -34,7 +34,7 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

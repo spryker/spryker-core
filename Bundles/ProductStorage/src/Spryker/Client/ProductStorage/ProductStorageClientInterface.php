@@ -108,7 +108,7 @@ interface ProductStorageClientInterface
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +208,7 @@ interface ProductStorageClientInterface
     public function isProductConcreteRestricted(int $idProductConcrete): bool;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
