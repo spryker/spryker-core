@@ -31,18 +31,10 @@ class MerchantForm extends AbstractType
     protected const FIELD_ID_MERCHANT = 'id_merchant';
     protected const FIELD_NAME = 'name';
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
-    protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
-    protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
-    protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
-    protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
     protected const FIELD_EMAIL = 'email';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
-    protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'Contact person first name';
-    protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Contact person last name';
-    protected const LABEL_CONTACT_PERSON_PHONE = 'Contact person phone';
-    protected const LABEL_CONTACT_PERSON_TITLE = 'Contact person title';
     protected const LABEL_EMAIL = 'Email';
 
     /**

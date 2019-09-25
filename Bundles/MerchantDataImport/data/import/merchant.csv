@@ -1,8 +1,8 @@
 merchant_key,merchant_name,registration_number,status,email
-kudu-merchant-1,Kudu Merchant,1,active,kudu.merchant@merchant.kudu
-oryx-merchant-1,Oryx Merchant,2,active,oryx.merchant@merchant.kudu
-impala-merchant-1,Impala Merchant,3,active,impala.merchant@merchant.kudu
-sugar-monster,Sugar Monster,4,active,sugar.monster@merchant.kudu
-restrictions-merchant,Restrictions Merchant,5,active,restrictions.merchant@merchant.kudu
-wolf-gmbh-und-co-kg,Roan GmbH und Co KG,HFD123456,waiting-for-approval,schmidt@roan.de
+kudu-merchant-1,Kudu Merchant,1,waiting-for-approval,kudu.merchant@merchant.kudu
+oryx-merchant-1,Oryx Merchant,2,waiting-for-approval,oryx.merchant@merchant.kudu
+impala-merchant-1,Impala Merchant,3,waiting-for-approval,impala.merchant@merchant.kudu
+sugar-monster,Sugar Monster,4,waiting-for-approval,sugar.monster@merchant.kudu
+restrictions-merchant,Restrictions Merchant,5,waiting-for-approval,restrictions.merchant@merchant.kudu
+wolf-gmbh-und-co-kg,Roan GmbH und Co KG,HFD123456,approved,schmidt@roan.de
 safascan,Steenbok,1234.4567,waiting-for-approval,maryam@steenbok.nl

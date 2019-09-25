@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDa
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
+use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutor;
+use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
@@ -31,7 +33,11 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantTable(): MerchantTable
     {
-        return new MerchantTable($this->getPropelMerchantQuery());
+        return new MerchantTable(
+            $this->getPropelMerchantQuery(),
+            $this->getMerchantFacade(),
+            $this->createMerchantTablePluginExecutor()
+        );
     }
 
     /**
@@ -88,6 +94,19 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface
+     */
+    public function createMerchantTablePluginExecutor(): MerchantTablePluginExecutorInterface
+    {
+        return new MerchantTablePluginExecutor(
+            $this->getMerchantTableActionExpanderPlugins(),
+            $this->getMerchantTableHeaderExpanderPlugins(),
+            $this->getMerchantTableDataExpanderPlugins(),
+            $this->getMerchantTableConfigExpanderPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface
      */
     public function getCountryFacade(): MerchantGuiToCountryFacadeInterface
@@ -117,5 +136,37 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantProfileFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
+     */
+    public function getMerchantTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_TABLE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
+     */
+    public function getMerchantTableActionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
+     */
+    public function getMerchantTableHeaderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
+     */
+    public function getMerchantTableConfigExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER);
     }
 }

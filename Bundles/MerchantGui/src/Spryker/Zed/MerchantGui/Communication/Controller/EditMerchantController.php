@@ -46,6 +46,8 @@ class EditMerchantController extends AbstractController
             )
             ->handleRequest($request);
 
+        $applicableMerchantStatuses = $this->getFactory()->getMerchantFacade()->getApplicableMerchantStatuses($merchantTransfer->getStatus());
+
         if ($merchantForm->isSubmitted() && $merchantForm->isValid()) {
             return $this->updateMerchant($request, $merchantForm);
         }
@@ -53,6 +55,7 @@ class EditMerchantController extends AbstractController
         return $this->viewResponse([
             'form' => $merchantForm->createView(),
             'idMerchant' => $idMerchant,
+            'applicableMerchantStatuses' => $applicableMerchantStatuses,
         ]);
     }
 

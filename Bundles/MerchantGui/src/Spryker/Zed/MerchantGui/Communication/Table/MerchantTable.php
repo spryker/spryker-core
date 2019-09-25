@@ -12,11 +12,13 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface;
+use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 
 class MerchantTable extends AbstractTable
 {
     protected const STATUS_CLASS_MAPPING = [
-        'waiting-for-approval' => 'label-info',
+        'waiting-for-approval' => 'label-warning',
         'approved' => 'label-success',
         'denied' => 'label-danger',
     ];
@@ -27,12 +29,28 @@ class MerchantTable extends AbstractTable
     protected $merchantQuery;
 
     /**
+     * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
+     */
+    protected $merchantFacade;
+
+    /**
+     * @var \Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface
+     */
+    protected $merchantTablePluginExecutor;
+
+    /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
+     * @param \Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface $merchantTablePluginExecutor
      */
     public function __construct(
-        SpyMerchantQuery $merchantQuery
+        SpyMerchantQuery $merchantQuery,
+        MerchantGuiToMerchantFacadeInterface $merchantFacade,
+        MerchantTablePluginExecutorInterface $merchantTablePluginExecutor
     ) {
         $this->merchantQuery = $merchantQuery;
+        $this->merchantFacade = $merchantFacade;
+        $this->merchantTablePluginExecutor = $merchantTablePluginExecutor;
     }
 
     /**
@@ -62,7 +80,29 @@ class MerchantTable extends AbstractTable
             MerchantTableConstants::COL_STATUS,
         ]);
 
+        $config = $this->executeConfigExpanderPlugins($config);
+
         return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $tableConfiguration
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function executeConfigExpanderPlugins(TableConfiguration $tableConfiguration): TableConfiguration
+    {
+        return $this->merchantTablePluginExecutor->executeConfigExpanderPlugins($tableConfiguration);
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function executeDataExpanderPlugins(array $item): array
+    {
+        return $this->merchantTablePluginExecutor->executeDataExpanderPlugins($item);
     }
 
     /**
@@ -77,10 +117,11 @@ class MerchantTable extends AbstractTable
             MerchantTableConstants::COL_NAME => 'Name',
             MerchantTableConstants::COL_STATUS => 'Status',
         ];
+        $externalData = $this->merchantTablePluginExecutor->executeTableHeaderExpanderPlugins();
 
         $actions = [MerchantTableConstants::COL_ACTIONS => 'Actions'];
 
-        $config->setHeader($baseData + $actions);
+        $config->setHeader($baseData + $externalData + $actions);
 
         return $config;
     }
@@ -96,12 +137,12 @@ class MerchantTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-            $rowData = [
+            $rowData = array_merge([
                 MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
                 MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
-                MerchantTableConstants::COL_ACTIONS => $this->buildLinks($item),
-            ];
+            ], $this->executeDataExpanderPlugins($item));
+            $rowData[MerchantTableConstants::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
         }
         unset($queryResults);
@@ -116,15 +157,46 @@ class MerchantTable extends AbstractTable
      */
     protected function buildLinks(array $item): string
     {
-        $buttons = [];
+        $buttons = $this->generateMerchantTableExpanderPluginsActionButtons($item);
 
         $urlParams = [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]];
         $buttons[] = $this->generateEditButton(
             Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, $urlParams),
             'Edit'
         );
+        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[MerchantTableConstants::COL_STATUS]);
+
+        foreach ($availableStatuses as $availableStatus) {
+            $buttons[] = $this->generateButton(
+                Url::generate(MerchantTableConstants::URL_MERCHANT_STATUS, array_merge($urlParams, ['status' => $availableStatus])),
+                $availableStatus,
+                ['icon' => 'fa-pencil', 'class' => static::STATUS_CLASS_MAPPING[$availableStatus]]
+            );
+        }
 
         return implode(' ', $buttons);
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string[]
+     */
+    protected function generateMerchantTableExpanderPluginsActionButtons(array $item): array
+    {
+        $buttonTransfers = $this->merchantTablePluginExecutor->executeActionButtonExpanderPlugins($item);
+
+        $actionButtons = [];
+        foreach ($buttonTransfers as $buttonTransfer) {
+            $actionButtons[] = $this->generateButton(
+                $buttonTransfer->getUrl(),
+                $buttonTransfer->getTitle(),
+                $buttonTransfer->getDefaultOptions(),
+                $buttonTransfer->getCustomOptions()
+            );
+        }
+
+        return $actionButtons;
     }
 
     /**
@@ -132,7 +204,7 @@ class MerchantTable extends AbstractTable
      *
      * @return string
      */
-    public function createStatusLabel(array $merchant): string
+    protected function createStatusLabel(array $merchant): string
     {
         $currentStatus = $merchant[SpyMerchantTableMap::COL_STATUS];
 

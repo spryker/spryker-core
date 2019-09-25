@@ -20,4 +20,5 @@ interface MerchantTableConstants
 
     public const URL_MERCHANT_LIST = '/merchant-gui/list-merchant';
     public const URL_MERCHANT_EDIT = '/merchant-gui/edit-merchant';
+    public const URL_MERCHANT_STATUS = '/merchant-gui/status-merchant';
 }

@@ -8,11 +8,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/gui": "*",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/symfony": "Required to use form in plugins."
+    "spryker/symfony": "Required to use form in plugins.",
+    "spryker/gui": "Required to use gui in plugins."
   },
   "autoload": {
     "psr-4": {

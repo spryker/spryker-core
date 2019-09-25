@@ -27,6 +27,7 @@
         <property name="imprintGlossaryKey" type="string" />
         <property name="dataPrivacyGlossaryKey" type="string" />
         <property name="fkMerchant" type="int" />
+        <property name="isActive" type="int" />
     </transfer>
 
 </transfers>

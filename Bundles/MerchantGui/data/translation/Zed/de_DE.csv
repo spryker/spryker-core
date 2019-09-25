@@ -10,9 +10,10 @@
 "Merchant with id %s doesn't exists.","Händler mit der ID %s existiert nicht."
 "Overview of Merchants","Übersicht der Händler"
 Save,Speichern
-waiting-for-approval,"warten auf die bestätigung"
-approved,genehmigt
-active,aktiv
+waiting-for-approval,"Warten auf die bestätigung"
+approved,Zugang gewähren
+denied,Zugang verweigern
+active,Ist Aktiviert
 inactive,inaktiv
 E-Mail,E-Mail
 City,Stadt

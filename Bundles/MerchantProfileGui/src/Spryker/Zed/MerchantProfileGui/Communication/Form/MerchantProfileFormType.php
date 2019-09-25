@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -45,6 +46,7 @@ class MerchantProfileFormType extends AbstractType
     public const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
     public const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
     public const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
+    public const FIELD_IS_ACTIVE = 'is_active';
 
     public const LABEL_CONTACT_PERSON_ROLE = 'Role';
     public const LABEL_CONTACT_PERSON_TITLE = 'Title';
@@ -62,6 +64,7 @@ class MerchantProfileFormType extends AbstractType
     public const LABEL_CANCELLATION_POLICY_GLOSSARY_KEY = 'Cancellation Policy';
     public const LABEL_IMPRINT_GLOSSARY_KEY = 'Imprint';
     public const LABEL_DATA_PRIVACY_GLOSSARY_KEY = 'Data Privacy';
+    public const LABEL_IS_ACTIVE = 'Is Active';
 
     public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
@@ -94,7 +97,24 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicEmailField($builder)
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
+            ->addIsActiveField($builder)
             ->addBannerUrlField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIsActiveField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
+                'label' => static::LABEL_IS_ACTIVE,
+                'required' => false,
+            ]);
+
+        return $this;
     }
 
     /**
