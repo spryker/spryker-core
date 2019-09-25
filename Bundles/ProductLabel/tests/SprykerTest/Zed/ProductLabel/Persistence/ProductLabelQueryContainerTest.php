@@ -15,6 +15,7 @@ use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductLabel

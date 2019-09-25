@@ -18,6 +18,7 @@ use Spryker\Zed\MultiCartDataImport\MultiCartDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MultiCartDataImport

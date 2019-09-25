@@ -27,7 +27,6 @@ class ReservationExportPlugin extends AbstractPlugin implements ReservationExpor
      * This is example plugin, here should be export to external storage, for example put message to queue, export to file. (serialize $reservationRequestTransfer)
      * The import would be done in other store which would read/consume exported message/file. Using importReservation facade method.
      *
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer $reservationRequestTransfer

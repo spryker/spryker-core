@@ -15,6 +15,7 @@ use Spryker\Zed\PriceProductVolume\Business\PriceProductVolumeFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductVolume

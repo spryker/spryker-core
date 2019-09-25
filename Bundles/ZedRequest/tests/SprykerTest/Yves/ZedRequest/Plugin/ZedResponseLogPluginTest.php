@@ -15,6 +15,7 @@ use Spryker\Yves\ZedRequest\Plugin\ZedResponseLogPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group ZedRequest

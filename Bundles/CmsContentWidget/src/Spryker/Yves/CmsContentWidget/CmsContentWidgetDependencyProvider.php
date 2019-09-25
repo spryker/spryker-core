@@ -48,7 +48,6 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     *
      * Returns list of cms content widget plugins which are twig functions used in cms content pages/blocks.
      * Should return key value pair where key is function name and value is concrete content widget plugin.
      *

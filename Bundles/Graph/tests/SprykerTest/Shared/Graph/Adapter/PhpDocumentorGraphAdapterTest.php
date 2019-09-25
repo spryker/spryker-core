@@ -12,6 +12,7 @@ use Spryker\Shared\Graph\Adapter\PhpDocumentorGraphAdapter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Graph

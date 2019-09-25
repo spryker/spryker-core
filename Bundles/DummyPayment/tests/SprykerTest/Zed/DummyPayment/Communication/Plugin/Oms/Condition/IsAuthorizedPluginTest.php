@@ -15,6 +15,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Oms\Condition\IsAuthorizedPlug
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment

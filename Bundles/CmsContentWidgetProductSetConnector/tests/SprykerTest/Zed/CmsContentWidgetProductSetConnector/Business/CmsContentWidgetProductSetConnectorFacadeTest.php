@@ -13,6 +13,7 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetPro
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsContentWidgetProductSetConnector

@@ -16,6 +16,7 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
