@@ -19,7 +19,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderP
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
-use Spryker\Shared\Search\SearchElasticsearchConfig as SharedSearchConfig;
+use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 
 /**
  * Auto-generated group annotations
