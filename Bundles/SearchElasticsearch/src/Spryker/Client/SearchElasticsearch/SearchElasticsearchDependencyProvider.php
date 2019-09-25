@@ -7,13 +7,9 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
-use Spryker\Client\Catalog\Plugin\Config\FacetConfigPlugin;
-use Spryker\Client\Catalog\Plugin\Config\PaginationConfigPlugin;
-use Spryker\Client\Catalog\Plugin\Config\SortConfigPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
-use Spryker\Client\ProductSearchConfigStorage\Plugin\Config\ProductSearchConfigExpanderPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
@@ -70,7 +66,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function getFacetSearchConfigBuilderPlugin(Container $container): ?FacetConfigPluginInterface
     {
-        return new FacetConfigPlugin();
+        return null;
     }
 
     /**
@@ -94,7 +90,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function getPaginationSearchConfigBuilderPlugin(Container $container): ?PaginationConfigPluginInterface
     {
-        return new PaginationConfigPlugin();
+        return null;
     }
 
     /**
@@ -118,7 +114,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function getSortSearchConfigBuilderPlugin(Container $container): ?SortConfigPluginInterface
     {
-        return new SortConfigPlugin();
+        return null;
     }
 
     /**
@@ -156,9 +152,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function getSearchConfigExpanderPlugins(Container $container): array
     {
-        return [
-            new ProductSearchConfigExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
