@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

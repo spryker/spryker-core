@@ -19,6 +19,7 @@ use Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInte
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Session

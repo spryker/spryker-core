@@ -13,6 +13,7 @@ use Spryker\Zed\Session\SessionConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Session

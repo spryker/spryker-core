@@ -21,6 +21,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Not used anymore and obsolete.
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers();
@@ -35,12 +37,16 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethods();
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodById() instead.
      *
      * @param int $idMethod
      *
@@ -51,6 +57,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findTaxSetByShipmentMethodAndCountryIso2Code() instead.
+     *
      * @param int $idShipmentMethod
      * @param string $countryIso2Code
      *
@@ -60,6 +68,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentTransfersByOrder() instead.
      *
      * @param int $idSalesOrder
      *
@@ -95,6 +105,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
@@ -138,6 +150,8 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodByIdWithPricesAndCarrier() instead.
      *
      * @param int $idShipmentMethod
      *

@@ -13,6 +13,7 @@ use Spryker\Shared\Graph\GraphAdapterInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Graph

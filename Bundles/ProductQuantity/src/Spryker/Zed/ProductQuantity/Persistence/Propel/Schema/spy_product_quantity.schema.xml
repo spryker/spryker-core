@@ -10,7 +10,7 @@
         <column name="quantity_max" type="INTEGER" required="false"/>
         <column name="quantity_interval" type="INTEGER" required="true"/>
 
-        <behavior name="timestampable" />
+        <behavior name="timestampable"/>
 
         <id-method-parameter value="id_product_quantity_pk_seq"/>
 

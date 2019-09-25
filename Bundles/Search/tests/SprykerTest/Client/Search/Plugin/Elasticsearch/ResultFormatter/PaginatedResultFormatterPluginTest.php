@@ -16,6 +16,7 @@ use Spryker\Client\Search\SearchFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

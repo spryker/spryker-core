@@ -134,6 +134,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
+     * @param int[] $productAbstractIds
+     *
      * @return void
      */
     public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void

@@ -54,7 +54,6 @@ class ProductApiFacade extends AbstractFacade implements ProductApiFacadeInterfa
      * @api
      *
      * @param int $idProductAbstract
-     *
      * @param \Generated\Shared\Transfer\ApiDataTransfer $apiDataTransfer
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer

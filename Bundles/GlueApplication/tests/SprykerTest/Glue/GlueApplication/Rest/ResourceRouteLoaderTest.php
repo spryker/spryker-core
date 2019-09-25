@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -159,7 +160,6 @@ class ResourceRouteLoaderTest extends Unit
         array $plugins,
         VersionResolverInterface $versionResolverMock
     ): ResourceRouteLoaderInterface {
-
         return new ResourceRouteLoader($plugins, $versionResolverMock);
     }
 

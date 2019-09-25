@@ -18,6 +18,7 @@ use SprykerTest\Zed\ProductReviewSearch\ProductReviewSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReviewSearch

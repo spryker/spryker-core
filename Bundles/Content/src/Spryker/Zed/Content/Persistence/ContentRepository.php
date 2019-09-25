@@ -20,7 +20,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
      *
      * @param int $idContent
      *
-     * @return null|\Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
     public function findContentById(int $idContent): ?ContentTransfer
     {

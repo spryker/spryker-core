@@ -76,7 +76,7 @@
     <table name="spy_sales_order" phpName="SpySalesOrder">
         <column name="id_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_address_billing" type="INTEGER" required="true"/>
-        <column name="fk_sales_order_address_shipping" type="INTEGER" required="true"/>
+        <column name="fk_sales_order_address_shipping" type="INTEGER" required="false"/>
         <column name="fk_locale" type="INTEGER"/>
 
         <column name="email" required="false" size="255" type="VARCHAR"/>
@@ -86,8 +86,8 @@
         <column name="order_reference" type="VARCHAR" size="45" required="true"/>
         <column name="is_test" type="BOOLEAN" required="true" default="false"/>
 
-        <column name="store" type="VARCHAR" size="255" required="false" />
-        <column name="currency_iso_code" type="VARCHAR" size="5" required="false" />
+        <column name="store" type="VARCHAR" size="255" required="false"/>
+        <column name="currency_iso_code" type="VARCHAR" size="5" required="false"/>
 
         <column name="price_mode" type="ENUM" valueSet="NET_MODE, GROSS_MODE" required="false"/>
 
@@ -120,13 +120,13 @@
         <column name="id_sales_order_totals" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true" default="0"/>
 
-        <column name="subtotal" type="INTEGER" required="false" default="0" />
-        <column name="order_expense_total" type="INTEGER" required="false" default="0" />
-        <column name="discount_total" type="INTEGER" required="false" default="0" />
-        <column name="grand_total" type="INTEGER" required="false" default="0" />
-        <column name="refund_total" type="INTEGER" required="false" default="0" />
-        <column name="canceled_total" type="INTEGER" required="false" default="0" />
-        <column name="tax_total" type="INTEGER" required="false" default="0" />
+        <column name="subtotal" type="INTEGER" required="false" default="0"/>
+        <column name="order_expense_total" type="INTEGER" required="false" default="0"/>
+        <column name="discount_total" type="INTEGER" required="false" default="0"/>
+        <column name="grand_total" type="INTEGER" required="false" default="0"/>
+        <column name="refund_total" type="INTEGER" required="false" default="0"/>
+        <column name="canceled_total" type="INTEGER" required="false" default="0"/>
+        <column name="tax_total" type="INTEGER" required="false" default="0"/>
 
         <foreign-key name="spy_sales_order_totals-fk_sales_order" foreignTable="spy_sales_order" phpName="Order" refPhpName="OrderTotal">
             <reference local="fk_sales_order" foreign="id_sales_order"/>
@@ -152,19 +152,19 @@
         <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
         <column name="group_key" type="VARCHAR" size="255" required="false" description=""/>
 
-        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/" />
-        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/" />
-        <column name="subtotal_aggregation" type="INTEGER" required="false" description="/Subtotal price amount (item + options + item expenses) before discounts/" />
-        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/" />
-        <column name="tax_amount_full_aggregation" type="INTEGER" default="0" required="false" description="/Calculated tax full amount based on tax mode, includes options, item expenses/" />
-        <column name="tax_rate_average_aggregation" type="DECIMAL" size="8" scale="2" required="false" description="/Calculated tax rate, includes options, item expenses, /" />
-        <column name="tax_amount_after_cancellation" type="INTEGER" default="0" required="false" description="/Calculated tax full amount based on tax mode, includes options, item expenses, /" />
-        <column name="product_option_price_aggregation" type="INTEGER" required="false" default="0" description="/Total price amount for item from options/" />
-        <column name="expense_price_aggregation" type="INTEGER" required="false" default="0" description="/Total price amount for item from item expenses/" />
-        <column name="discount_amount_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item/" />
-        <column name="discount_amount_full_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item with options or item expenses/" />
-        <column name="price_to_pay_aggregation" type="INTEGER" required="false" default="0" description="/Total item price to pay after discounts including options or item expenses/" />
-        <column name="refundable_amount" type="INTEGER" required="false" default="0" description="/Total item refundable amount/" />
+        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/"/>
+        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/"/>
+        <column name="subtotal_aggregation" type="INTEGER" required="false" description="/Subtotal price amount (item + options + item expenses) before discounts/"/>
+        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/"/>
+        <column name="tax_amount_full_aggregation" type="INTEGER" default="0" required="false" description="/Calculated tax full amount based on tax mode, includes options, item expenses/"/>
+        <column name="tax_rate_average_aggregation" type="DECIMAL" size="8" scale="2" required="false" description="/Calculated tax rate, includes options, item expenses, /"/>
+        <column name="tax_amount_after_cancellation" type="INTEGER" default="0" required="false" description="/Calculated tax full amount based on tax mode, includes options, item expenses, /"/>
+        <column name="product_option_price_aggregation" type="INTEGER" required="false" default="0" description="/Total price amount for item from options/"/>
+        <column name="expense_price_aggregation" type="INTEGER" required="false" default="0" description="/Total price amount for item from item expenses/"/>
+        <column name="discount_amount_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item/"/>
+        <column name="discount_amount_full_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item with options or item expenses/"/>
+        <column name="price_to_pay_aggregation" type="INTEGER" required="false" default="0" description="/Total item price to pay after discounts including options or item expenses/"/>
+        <column name="refundable_amount" type="INTEGER" required="false" default="0" description="/Total item refundable amount/"/>
 
         <behavior name="timestampable"/>
 
@@ -224,13 +224,13 @@
         <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
 
-        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/" />
-        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/" />
-        <column name="discount_amount_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item/" />
-        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/" />
-        <column name="refundable_amount" type="INTEGER" required="false" default="0" description="/Total item refundable amount/" />
-        <column name="price_to_pay_aggregation" type="INTEGER" required="false" default="0" description="/Total item price to pay after discounts/" />
-        <column name="tax_amount_after_cancellation" type="INTEGER" default="0" required="false" description="/Calculated tax full amount based on tax mode, includes options, item expenses, /" />
+        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/"/>
+        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/"/>
+        <column name="discount_amount_aggregation" type="INTEGER" required="false" default="0" description="/Total discount amount for item/"/>
+        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/"/>
+        <column name="refundable_amount" type="INTEGER" required="false" default="0" description="/Total item refundable amount/"/>
+        <column name="price_to_pay_aggregation" type="INTEGER" required="false" default="0" description="/Total item price to pay after discounts/"/>
+        <column name="tax_amount_after_cancellation" type="INTEGER" default="0" required="false" description="/Calculated tax full amount based on tax mode, includes options, item expenses, /"/>
 
         <behavior name="timestampable"/>
 
@@ -248,7 +248,7 @@
         <column name="id_sales_order_item_metadata" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="super_attributes" type="LONGVARCHAR" required="true"/>
-        <column name="image" type="LONGVARCHAR" />
+        <column name="image" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
 
@@ -257,7 +257,7 @@
         </foreign-key>
 
         <index name="spy_sales_order_item_metadata-index-fk_sales_order_item">
-            <index-column name="fk_sales_order_item" />
+            <index-column name="fk_sales_order_item"/>
         </index>
 
         <id-method-parameter value="spy_sales_order_item_metadata_pk_seq"/>

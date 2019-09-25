@@ -13,6 +13,8 @@ class SimpleMoneyType extends SymfonyMoneyType
 {
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
     public function getBlockPrefix()
     {

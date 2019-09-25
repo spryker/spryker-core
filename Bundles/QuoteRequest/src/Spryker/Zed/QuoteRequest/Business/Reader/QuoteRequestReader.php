@@ -160,7 +160,6 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     protected function expandQuoteRequestCollectionWithBusinessUnits(
         QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
     ): QuoteRequestCollectionTransfer {
-
         if (!$quoteRequestCollectionTransfer->getQuoteRequests()->count()) {
             return $quoteRequestCollectionTransfer;
         }

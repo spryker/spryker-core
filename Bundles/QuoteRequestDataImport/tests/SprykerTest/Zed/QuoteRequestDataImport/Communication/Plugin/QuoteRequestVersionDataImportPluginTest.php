@@ -22,6 +22,7 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group QuoteRequestDataImport

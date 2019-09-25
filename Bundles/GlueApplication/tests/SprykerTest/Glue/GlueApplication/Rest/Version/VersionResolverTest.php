@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -113,7 +114,6 @@ class VersionResolverTest extends Unit
     protected function createVersionResolver(
         ContentTypeResolverInterface $contentTypeResolverMock
     ): VersionResolverInterface {
-
         return new VersionResolver($contentTypeResolverMock);
     }
 

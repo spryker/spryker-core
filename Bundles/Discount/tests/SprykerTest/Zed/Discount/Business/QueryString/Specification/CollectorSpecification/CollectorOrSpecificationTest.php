@@ -15,6 +15,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecificati
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

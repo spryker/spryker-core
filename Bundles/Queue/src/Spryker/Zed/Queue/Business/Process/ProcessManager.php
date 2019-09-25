@@ -187,6 +187,10 @@ class ProcessManager implements ProcessManagerInterface
      */
     protected function createProcess($command)
     {
-        return new Process(explode(' ', $command));
+        if (method_exists(Process::class, 'fromShellCommandline')) {
+            return Process::fromShellCommandline($command, APPLICATION_ROOT_DIR);
+        }
+
+        return new Process($command);
     }
 }

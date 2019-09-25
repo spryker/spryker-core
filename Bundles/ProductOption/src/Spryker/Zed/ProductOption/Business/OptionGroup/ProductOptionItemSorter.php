@@ -11,6 +11,9 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Not used any more.
+ */
 class ProductOptionItemSorter implements ProductOptionItemSorterInterface
 {
     /**
