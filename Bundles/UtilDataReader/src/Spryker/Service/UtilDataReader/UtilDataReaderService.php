@@ -120,6 +120,8 @@ class UtilDataReaderService extends AbstractService implements UtilDataReaderSer
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param int $chunkSize
+     * @param string $orderBy
+     * @param string $orderByDirection
      *
      * @return \Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterface
      */

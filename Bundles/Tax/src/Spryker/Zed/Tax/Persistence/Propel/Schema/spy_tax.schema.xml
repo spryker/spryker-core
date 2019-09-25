@@ -13,7 +13,7 @@
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="rate" type="DECIMAL" size="8" scale="2" required="true" />
+        <column name="rate" type="DECIMAL" size="8" scale="2" required="true"/>
         <column name="fk_country" type="INTEGER"/>
 
         <foreign-key name="spy_tax_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="SpyTaxRate">

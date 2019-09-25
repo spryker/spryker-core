@@ -85,9 +85,9 @@ interface QuoteClientInterface
      *  - Locks quote by setting `isLocked` transfer property to true.
      *  - Low level Quote locking (use CartClientInterface for features).
      *
-     * @see CartClientInterface::lockQuote()
-     *
      * @api
+     *
+     * @see CartClientInterface::lockQuote()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

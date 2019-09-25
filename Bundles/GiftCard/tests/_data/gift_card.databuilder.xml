@@ -22,7 +22,7 @@
         <property name="name" dataBuilderRule="word"/>
     </transfer>
 
-    <transfer name="Item" >
+    <transfer name="Item">
         <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 

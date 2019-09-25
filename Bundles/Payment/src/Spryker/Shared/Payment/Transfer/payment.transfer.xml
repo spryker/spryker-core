@@ -9,51 +9,51 @@
         <property name="paymentMethod" type="string"/>
         <property name="paymentSelection" type="string"/>
         <property name="amount" type="int"/>
-        <property name="isLimitedAmount" type="bool" />
-        <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method" />
+        <property name="isLimitedAmount" type="bool"/>
+        <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="payment" type="Payment" deprecated="Use payments property instead." />
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="payments" type="Payment[]" singular="payment"/>
     </transfer>
 
     <transfer name="Order">
         <property name="payments" type="Payment[]" singular="payment"/>
-        <property name="currencyIsoCode" type="string" />
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="SalesPayment">
-        <property name="fkSalesOrder" type="int" />
-        <property name="paymentProvider" type="string" />
-        <property name="paymentMethod" type="string" />
+        <property name="fkSalesOrder" type="int"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
     </transfer>
 
     <transfer name="SalesPaymentMethodType">
-        <property name="idSalesPaymentMethodType" type="int" />
-        <property name="paymentProvider" type="PaymentProvider" />
-        <property name="paymentMethod" type="PaymentMethod" />
+        <property name="idSalesPaymentMethodType" type="int"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
+        <property name="paymentMethod" type="PaymentMethod"/>
     </transfer>
 
     <transfer name="SalesPaymentMethodTypeCollection">
-        <property name="salesPaymentMethodTypes" singular="salesPaymentMethodType" type="SalesPaymentMethodType[]" />
+        <property name="salesPaymentMethodTypes" singular="salesPaymentMethodType" type="SalesPaymentMethodType[]"/>
     </transfer>
 
     <transfer name="PaymentMethods">
-        <property name="methods" singular="method" type="PaymentMethod[]" />
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
     </transfer>
 
     <transfer name="PaymentProviderCollection">
-        <property name="paymentProviders" singular="paymentProvider" type="PaymentProvider[]" />
+        <property name="paymentProviders" singular="paymentProvider" type="PaymentProvider[]"/>
     </transfer>
 
     <transfer name="PaymentProvider">
         <property name="name" type="string"/>
-        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]" />
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
     </transfer>
 
     <transfer name="PaymentMethod">
-        <property name="methodName" type="string" />
+        <property name="methodName" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -61,13 +61,13 @@
     </transfer>
 
     <transfer name="Payment">
-        <property name="isLimitedAmount" type="bool" />
-        <property name="availableAmount" type="int" />
+        <property name="isLimitedAmount" type="bool"/>
+        <property name="availableAmount" type="int"/>
     </transfer>
 
     <transfer name="CalculableObject">
         <property name="payments" type="Payment[]" singular="payment"/>
-        <property name="payment" type="Payment" />
+        <property name="payment" type="Payment"/>
     </transfer>
 
 </transfers>

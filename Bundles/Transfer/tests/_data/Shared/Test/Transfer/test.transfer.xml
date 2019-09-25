@@ -4,14 +4,14 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CatFace">
-        <property name="name" type="string" />
-        <property name="item" type="Item" />
-        <property name="items" type="Item[]" singular="item" />
-        <property name="typedArray" type="string[]" />
-        <property name="typedAssociativeStringArray" type="string[]" associative="true" />
-        <property name="typedAssociativeCollection" type="Item[]" associative="1" />
-        <property name="typedNotAssociativeStringArray" type="string[]" associative="false" />
-        <property name="typedNotAssociativeArray" type="array" associative="0" />
+        <property name="name" type="string"/>
+        <property name="item" type="Item"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="typedArray" type="string[]"/>
+        <property name="typedAssociativeStringArray" type="string[]" associative="true"/>
+        <property name="typedAssociativeCollection" type="Item[]" associative="1"/>
+        <property name="typedNotAssociativeStringArray" type="string[]" associative="false"/>
+        <property name="typedNotAssociativeArray" type="array" associative="0"/>
     </transfer>
 
 </transfers>

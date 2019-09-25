@@ -156,9 +156,9 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * {@inheritdoc}
      *
-     * @deprecated Please use `getModules()` instead.
-     *
      * @api
+     *
+     * @deprecated Please use `getModules()` instead.
      *
      * @return array
      */

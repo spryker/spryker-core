@@ -4,11 +4,11 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Touch">
-        <property name="idTouch" type="int" />
-        <property name="itemType" type="int" />
-        <property name="itemEvent" type="int" />
-        <property name="itemId" type="int" />
-        <property name="touched" type="string" />
+        <property name="idTouch" type="int"/>
+        <property name="itemType" type="int"/>
+        <property name="itemEvent" type="int"/>
+        <property name="itemId" type="int"/>
+        <property name="touched" type="string"/>
     </transfer>
 
 </transfers>

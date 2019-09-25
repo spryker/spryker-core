@@ -9,20 +9,20 @@
         <property name="salesOrderThresholdValue" type="SalesOrderThresholdValue"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
-        <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage" />
+        <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
-        <property name="idMerchantRelationship" type="int" />
+        <property name="idMerchantRelationship" type="int"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="store" type="Store" />
-        <property name="currency" type="Currency" />
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="priceProduct" type="PriceProduct" />
+        <property name="priceProduct" type="PriceProduct"/>
     </transfer>
 
 </transfers>

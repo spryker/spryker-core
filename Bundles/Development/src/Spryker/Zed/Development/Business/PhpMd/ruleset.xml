@@ -19,13 +19,13 @@
     <exclude-pattern>*/Generated/*</exclude-pattern>
 
     <rule ref="rulesets/cleancode.xml">
-        <exclude name="StaticAccess" />
-        <exclude name="ElseExpression" />
+        <exclude name="StaticAccess"/>
+        <exclude name="ElseExpression"/>
     </rule>
 
     <rule ref="rulesets/design.xml">
-        <exclude name="NumberOfChildren" />
-        <exclude name="CouplingBetweenObjects" />
+        <exclude name="NumberOfChildren"/>
+        <exclude name="CouplingBetweenObjects"/>
     </rule>
 
     <rule name="NumberOfChildren"
@@ -41,7 +41,7 @@ class hierarchy. You should consider to refactor this class hierarchy.
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="15" description="Maximum number of acceptable child classes." />
+            <property name="minimum" value="15" description="Maximum number of acceptable child classes."/>
         </properties>
     </rule>
 
@@ -59,14 +59,14 @@ maintainability and understandability
         </description>
         <priority>2</priority>
         <properties>
-            <property name="minimum" value="25" description="Maximum number of acceptable dependencies." />
+            <property name="minimum" value="25" description="Maximum number of acceptable dependencies."/>
         </properties>
     </rule>
 
     <rule ref="rulesets/codesize.xml">
-        <exclude name="TooManyMethods" />
-        <exclude name="TooManyPublicMethods" />
-        <exclude name="ExcessivePublicCount" />
+        <exclude name="TooManyMethods"/>
+        <exclude name="TooManyPublicMethods"/>
+        <exclude name="ExcessivePublicCount"/>
     </rule>
 
     <rule name="TooManyMethods"
@@ -112,16 +112,16 @@ By default it ignores methods starting with 'get' or 'set'.
     </rule>
 
     <rule ref="rulesets/controversial.xml">
-        <exclude name="CamelCaseMethodName" />
+        <exclude name="CamelCaseMethodName"/>
     </rule>
 
     <rule ref="rulesets/naming.xml">
-        <exclude name="LongVariable" />
-        <exclude name="ShortVariable" />
+        <exclude name="LongVariable"/>
+        <exclude name="ShortVariable"/>
     </rule>
 
     <rule ref="rulesets/unusedcode.xml">
-        <exclude name="UnusedFormalParameter" />
+        <exclude name="UnusedFormalParameter"/>
     </rule>
 
     <rule name="ShortVariable"
@@ -166,10 +166,10 @@ It is considered best practice to use the camelCase notation to name methods.
         <properties>
             <property name="allow-underscore"
                       description="Allow an optional, single underscore at the beginning."
-                      value="false" />
+                      value="false"/>
             <property name="allow-underscore-test"
                       description="Is it allowed to have underscores in test method names."
-                      value="false" />
+                      value="false"/>
         </properties>
         <example>
             <![CDATA[
