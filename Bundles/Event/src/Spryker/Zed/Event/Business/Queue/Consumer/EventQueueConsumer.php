@@ -25,8 +25,6 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     public const EVENT_MESSAGES = 'eventMessages';
     public const RETRY_KEY = 'retry';
 
-    protected const ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT = 'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".';
-
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -101,16 +99,13 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
                 $queueMessageTransfer->setAcknowledge(true);
             } catch (Throwable $exception) {
-                $errorMessage = sprintf(
-                    static::ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT,
+                $errorMessage = $this->createErrorMessage(
                     $eventQueueSentMessageBodyTransfer->getEventName(),
                     $eventQueueSentMessageBodyTransfer->getListenerClassName(),
-                    $exception->getMessage(),
-                    $exception->getTraceAsString()
+                    $exception
                 );
                 $this->logConsumerAction($errorMessage, $exception);
-                $this->retryMessage($queueMessageTransfer, $errorMessage);
-                $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
+                $this->handleFailedMessage($queueMessageTransfer, $errorMessage);
             }
         }
 
@@ -138,7 +133,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
             } catch (Throwable $throwable) {
-                $this->handleBulkByItems($eventItem, $eventName, $listener, $listenerClassName);
+                $this->handleBulkItemsIndividually($eventItem, $eventName, $listener, $listenerClassName);
             }
         }
     }
@@ -151,60 +146,71 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      *
      * @return void
      */
-    protected function handleBulkByItems(array $eventItem, string $eventName, EventBulkHandlerInterface $listener, string $listenerClassName): void
+    protected function handleBulkItemsIndividually(array $eventItem, string $eventName, EventBulkHandlerInterface $listener, string $listenerClassName): void
     {
         foreach ($eventItem[static::EVENT_TRANSFERS] as $key => $eventItemTransfer) {
             try {
                 $listener->handleBulk([$eventItemTransfer], $eventName);
             } catch (Throwable $throwable) {
-                $failedEventItem = [
-                    static::EVENT_TRANSFERS => [$eventItemTransfer],
-                    static::EVENT_MESSAGES => [$eventItem[static::EVENT_MESSAGES][$key]],
-                ];
-
-                $this->handleFailedEventItem($failedEventItem, $eventName, $listenerClassName, $throwable);
+                $this->handleFailedEventItem($eventItem[static::EVENT_MESSAGES][$key], $eventName, $listenerClassName, $throwable);
             }
         }
     }
 
     /**
-     * @param array $eventItem
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
      * @param string $eventName
      * @param string $listenerClassName
      * @param \Throwable $throwable
      *
      * @return void
      */
-    protected function handleFailedEventItem(array $eventItem, string $eventName, string $listenerClassName, Throwable $throwable): void
-    {
-        $errorMessage = sprintf(
-            static::ERROR_MESSAGE_FAILED_TO_HANDLE_EVENT,
-            $eventName,
-            $listenerClassName,
-            $throwable->getMessage(),
-            $throwable->getTraceAsString()
-        );
+    protected function handleFailedEventItem(
+        QueueReceiveMessageTransfer $queueMessageTransfer,
+        string $eventName,
+        string $listenerClassName,
+        Throwable $throwable
+    ): void {
+        $errorMessage = $this->createErrorMessage($eventName, $listenerClassName, $throwable);
 
         $this->logConsumerAction($errorMessage, $throwable);
         if (!$this->eventConfig->isLoggerActivated()) {
             $errorMessage = 'Please enable the event logger in the config_* files to see the error message: `$config[EventConstants::LOGGER_ACTIVE] = true;`';
         }
 
-        $this->handleFailedMessages($eventItem, $errorMessage);
+        $this->handleFailedMessage($queueMessageTransfer, $errorMessage);
     }
 
     /**
-     * @param array $eventItem
+     * @param string $eventName
+     * @param string $listenerClassName
+     * @param \Throwable $exception
+     *
+     * @return string
+     */
+    protected function createErrorMessage(string $eventName, string $listenerClassName, Throwable $exception): string
+    {
+        $errorMessage = sprintf(
+            'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
+            $eventName,
+            $listenerClassName,
+            $exception->getMessage(),
+            $exception->getTraceAsString()
+        );
+
+        return $errorMessage;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
      * @param string $errorMessage
      *
      * @return void
      */
-    protected function handleFailedMessages(array $eventItem, string $errorMessage): void
+    protected function handleFailedMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $errorMessage): void
     {
-        foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
-            $this->retryMessage($queueMessageTransfer, $errorMessage);
-            $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
-        }
+        $this->retryMessage($queueMessageTransfer, $errorMessage);
+        $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
     }
 
     /**
