@@ -13,6 +13,7 @@ use Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth\CustomerOauthU
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group AuthRestApi
@@ -50,6 +51,7 @@ class AuthRestApiFacadeTest extends Unit
 
         $this->assertEquals($oauthResponseTransfer->getAnonymousCustomerReference(), $oauthRequestTransfer->getCustomerReference());
         $this->assertTrue($oauthResponseTransfer->getIsValid());
+        $this->assertNotEmpty($oauthResponseTransfer->getAccessToken());
     }
 
     /**
@@ -63,6 +65,8 @@ class AuthRestApiFacadeTest extends Unit
         $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
 
         $this->assertFalse($oauthResponseTransfer->getIsValid());
+        $this->assertEmpty($oauthResponseTransfer->getAccessToken());
+        $this->assertEmpty($oauthResponseTransfer->getCustomerReference());
     }
 
     /**
