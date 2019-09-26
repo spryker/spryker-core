@@ -18,6 +18,7 @@ use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment

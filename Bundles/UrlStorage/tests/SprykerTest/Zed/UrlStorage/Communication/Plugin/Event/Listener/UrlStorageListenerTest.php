@@ -28,6 +28,7 @@ use SprykerTest\Zed\UrlStorage\UrlStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group UrlStorage

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryNavigationConnector

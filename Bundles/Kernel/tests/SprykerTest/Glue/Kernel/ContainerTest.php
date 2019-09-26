@@ -14,6 +14,7 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel

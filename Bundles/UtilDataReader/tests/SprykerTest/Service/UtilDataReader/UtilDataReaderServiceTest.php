@@ -13,6 +13,7 @@ use Spryker\Service\UtilDataReader\UtilDataReaderService;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDataReader

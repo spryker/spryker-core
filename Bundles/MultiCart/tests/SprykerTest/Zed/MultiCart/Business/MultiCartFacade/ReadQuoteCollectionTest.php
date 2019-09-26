@@ -18,6 +18,7 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MultiCart

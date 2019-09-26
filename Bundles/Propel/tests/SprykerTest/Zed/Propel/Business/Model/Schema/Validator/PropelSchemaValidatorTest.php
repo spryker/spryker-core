@@ -17,6 +17,7 @@ use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel

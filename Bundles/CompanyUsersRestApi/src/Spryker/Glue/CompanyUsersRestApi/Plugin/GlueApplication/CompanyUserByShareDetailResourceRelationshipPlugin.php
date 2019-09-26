@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyUserByShareDetailResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds company-users resource as a relationship.
      * - Relationship applies only if ShareDetailTransfer is provided in resource's payload.
      * - Uses ShareDetailTransfer::companyUser from the resource's payload.
@@ -38,7 +38,7 @@ class CompanyUserByShareDetailResourceRelationshipPlugin extends AbstractPlugin 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

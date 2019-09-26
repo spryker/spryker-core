@@ -14,7 +14,7 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInter
 class CartItemAddTripleStrategy implements CartOperationStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class CartItemAddTripleStrategy implements CartOperationStrategyPluginInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

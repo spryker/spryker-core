@@ -12,6 +12,7 @@ use SprykerTest\Zed\Category\PageObject\CategoryEditPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category

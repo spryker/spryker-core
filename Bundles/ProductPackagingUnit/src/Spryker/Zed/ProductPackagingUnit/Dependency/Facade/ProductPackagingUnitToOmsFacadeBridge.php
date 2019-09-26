@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOmsFacadeInterface
@@ -26,11 +27,11 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): int
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->omsFacade->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
@@ -48,10 +49,10 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     }
 
     /**
-     * @return string[]
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function getReservedStateNames(): array
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
-        return $this->omsFacade->getReservedStateNames();
+        return $this->omsFacade->getOmsReservedStateCollection();
     }
 }

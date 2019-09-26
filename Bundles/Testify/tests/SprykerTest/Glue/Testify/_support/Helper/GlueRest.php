@@ -32,7 +32,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     protected $lastConnection;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _initialize(): void
     {
@@ -40,7 +40,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getLastConnection(): ?Connection
     {
@@ -441,7 +441,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function resetVariables(): void
     {
@@ -449,7 +449,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function execute($method, $url, $parameters = [], $files = [])
     {

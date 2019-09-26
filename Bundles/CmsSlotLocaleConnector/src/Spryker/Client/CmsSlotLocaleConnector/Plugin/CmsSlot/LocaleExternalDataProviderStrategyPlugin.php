@@ -19,7 +19,7 @@ class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements
     protected const DATA_KEY = 'locale';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Returns the current locale name.
      *
      * @api

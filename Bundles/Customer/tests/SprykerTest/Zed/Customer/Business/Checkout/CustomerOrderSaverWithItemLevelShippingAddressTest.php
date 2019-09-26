@@ -18,6 +18,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Customer

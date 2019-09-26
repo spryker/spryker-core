@@ -24,6 +24,7 @@ use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchResourceMapp
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group CatalogSearchRestApi
@@ -39,7 +40,9 @@ class CatalogSearchResourceMapperTest extends Unit
     protected const GROSS_MODE = 'GROSS_MODE';
     protected const NET_MODE = 'NET_MODE';
 
-    /** @deprecated Will be removed in next major release. */
+    /**
+     * @deprecated Will be removed in next major release.
+     */
     protected const KEY_PRODUCTS = 'products';
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 

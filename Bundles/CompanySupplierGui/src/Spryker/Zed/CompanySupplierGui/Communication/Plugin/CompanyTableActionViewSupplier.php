@@ -28,7 +28,7 @@ class CompanyTableActionViewSupplier extends AbstractPlugin implements CompanyTa
     ];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

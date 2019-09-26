@@ -16,6 +16,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group SessionFile

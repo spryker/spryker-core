@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -90,11 +90,12 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
@@ -106,7 +107,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -125,7 +126,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -143,7 +144,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,7 +161,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -177,7 +178,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +196,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -212,7 +213,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -228,7 +229,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -247,7 +248,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

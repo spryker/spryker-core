@@ -91,7 +91,6 @@ interface CustomerGroupFacadeInterface
     public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer);
 
     /**
-     *
      * Specification:
      *  - Finds Customer group by given customer id
      *

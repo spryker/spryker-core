@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class VoucherDiscountMaxUsageCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates voucher discounts on Max Usage in Quote.
      * - Returns `true` if all used vouchers are under the usage limit.
      * - Otherwise it returns `false` and adds messages to `$checkoutResponseTransfer`.

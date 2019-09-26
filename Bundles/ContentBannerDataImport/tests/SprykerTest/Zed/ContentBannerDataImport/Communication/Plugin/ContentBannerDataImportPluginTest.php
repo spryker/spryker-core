@@ -15,6 +15,7 @@ use Spryker\Zed\ContentBannerDataImport\Communication\Plugin\ContentBannerDataIm
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentBannerDataImport

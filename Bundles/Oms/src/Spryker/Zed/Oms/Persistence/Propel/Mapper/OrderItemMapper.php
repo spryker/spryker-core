@@ -10,7 +10,7 @@ namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 
-class OrderItemMatrixMapper
+class OrderItemMapper implements OrderItemMapperInterface
 {
     /**
      * @param array $orderItemsMatrixResult

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentCheckoutConnector

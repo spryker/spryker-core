@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductLabelStorageClient extends AbstractClient implements ProductLabelStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

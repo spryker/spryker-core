@@ -17,6 +17,7 @@ use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportCon
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductScheduleDataImport

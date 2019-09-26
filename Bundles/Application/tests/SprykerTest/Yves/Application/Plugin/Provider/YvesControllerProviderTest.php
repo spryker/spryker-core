@@ -14,6 +14,7 @@ use SprykerTest\Yves\Application\Plugin\Provider\Fixtures\ControllerProviderMock
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Application

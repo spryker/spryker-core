@@ -38,7 +38,7 @@ class CustomerUnsubscribePlugin extends AbstractPlugin implements CustomerAnonym
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

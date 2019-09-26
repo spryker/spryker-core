@@ -29,6 +29,7 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Session
