@@ -71,6 +71,7 @@ class FindPriceProductScheduleByIdPriceProductScheduleListTest extends Unit
         $storeTransfer = $this->storeFacade->getCurrentStore();
         $currencyId = $this->tester->haveCurrency([CurrencyTransfer::CODE => 'c22']);
         $currencyTransfer = $this->currencyFacade->getByIdCurrency($currencyId);
+        $priceProductScheduleListTransfer = $this->tester->havePriceProductScheduleList();
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::PRICE_TYPE => $defaultPriceTypeTransfer,
@@ -84,6 +85,7 @@ class FindPriceProductScheduleByIdPriceProductScheduleListTest extends Unit
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 hour')),
             PriceProductScheduleTransfer::IS_CURRENT => false,
+            PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListTransfer,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                 PriceProductTransfer::PRICE_TYPE => [
@@ -105,6 +107,7 @@ class FindPriceProductScheduleByIdPriceProductScheduleListTest extends Unit
             PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
             PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 hour')),
             PriceProductScheduleTransfer::IS_CURRENT => false,
+            PriceProductScheduleTransfer::PRICE_PRODUCT_SCHEDULE_LIST => $priceProductScheduleListTransfer,
             PriceProductScheduleTransfer::PRICE_PRODUCT => [
                 PriceProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
                 PriceProductTransfer::PRICE_TYPE => [

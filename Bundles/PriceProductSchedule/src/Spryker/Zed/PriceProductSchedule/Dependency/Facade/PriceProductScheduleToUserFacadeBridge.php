@@ -29,4 +29,12 @@ class PriceProductScheduleToUserFacadeBridge implements PriceProductScheduleToUs
     {
         return $this->userFacade->getCurrentUser();
     }
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser()
+    {
+        return $this->userFacade->hasCurrentUser();
+    }
 }

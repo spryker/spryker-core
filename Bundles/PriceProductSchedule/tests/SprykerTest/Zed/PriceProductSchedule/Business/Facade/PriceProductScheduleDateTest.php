@@ -210,7 +210,6 @@ class PriceProductScheduleDateTest extends Unit
             [
                 PriceProductScheduleTransfer::ACTIVE_FROM => $oldActiveFrom,
                 PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+1 year')),
-                PriceProductScheduleTransfer::IS_CURRENT => true,
                 PriceProductScheduleTransfer::PRICE_PRODUCT => $priceProductData,
             ]
         );

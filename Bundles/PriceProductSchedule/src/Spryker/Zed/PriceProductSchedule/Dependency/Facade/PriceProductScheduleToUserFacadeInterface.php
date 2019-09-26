@@ -13,4 +13,9 @@ interface PriceProductScheduleToUserFacadeInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getCurrentUser();
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser();
 }

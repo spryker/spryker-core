@@ -32,6 +32,10 @@ class PriceProductScheduleListUserExpander implements PriceProductScheduleListUs
      */
     public function expand(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer
     {
+        if (!$this->userFacade->hasCurrentUser()) {
+            return $priceProductScheduleListTransfer;
+        }
+
         $userTransfer = $this->userFacade->getCurrentUser();
 
         $priceProductScheduleListTransfer->setUser($userTransfer)

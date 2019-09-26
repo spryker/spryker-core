@@ -102,7 +102,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -123,7 +123,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -209,7 +209,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -230,7 +230,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -316,7 +316,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -337,7 +337,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -421,7 +421,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -442,7 +442,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -528,7 +528,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
@@ -549,7 +549,7 @@ class RemovePriceProductScheduleListTest extends Unit
                 ],
                 PriceProductTransfer::MONEY_VALUE => [
                     MoneyValueTransfer::FK_STORE => $storeTransfer->getIdStore(),
-                    MoneyValueTransfer::FK_CURRENCY => $currencyId,
+                    MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
                     MoneyValueTransfer::CURRENCY => $currencyTransfer,
                     MoneyValueTransfer::NET_AMOUNT => 100,
                     MoneyValueTransfer::GROSS_AMOUNT => 100,
