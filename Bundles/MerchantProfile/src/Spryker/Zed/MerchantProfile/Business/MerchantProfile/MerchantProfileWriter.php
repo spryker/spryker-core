@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
-use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface;
 
 class MerchantProfileWriter implements MerchantProfileWriterInterface
@@ -18,25 +19,32 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     protected $merchantProfileEntityManager;
 
     /**
-     * @param \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface $merchantProfileEntityManager
+     * @var \Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface
      */
-    public function __construct(MerchantProfileEntityManagerInterface $merchantProfileEntityManager)
-    {
+    protected $merchantProfileGlossaryWriter;
+
+    /**
+     * @param \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface $merchantProfileEntityManager
+     * @param \Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface $merchantProfileGlossaryWriter
+     */
+    public function __construct(
+        MerchantProfileEntityManagerInterface $merchantProfileEntityManager,
+        MerchantProfileGlossaryWriterInterface $merchantProfileGlossaryWriter
+    ) {
         $this->merchantProfileEntityManager = $merchantProfileEntityManager;
+        $this->merchantProfileGlossaryWriter = $merchantProfileGlossaryWriter;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
-        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->saveMerchantProfile($merchantProfileTransfer);
-        $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
 
-        return $merchantTransfer;
+        return $merchantProfileTransfer;
     }
 }

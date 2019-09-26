@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
-use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 
 interface MerchantProfileWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function saveMerchantProfile(MerchantProfileTransfer $merchantTransfer): MerchantProfileTransfer;
 }

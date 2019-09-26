@@ -27,26 +27,22 @@
         <property name="imprintGlossaryKey" type="string" />
         <property name="dataPrivacyGlossaryKey" type="string" />
         <property name="fkMerchant" type="int" />
-        <property name="merchantProfileGlossaryAttributes" type="MerchantProfileGlossaryAttributes[]" />
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" />
+    </transfer>
+
+    <transfer name="MerchantProfileLocalizedGlossaryAttributes">
+        <property name="fkLocale" type="int" />
+        <property name="merchantProfileGlossaryAttributes" type="MerchantProfileGlossaryAttributes" />
     </transfer>
 
     <transfer name="MerchantProfileGlossaryAttributes">
-        <property name="descriptionGlossary" type="MerchantProfileGlossaryTranslations" />
-        <property name="bannerUrlGlossary" type="MerchantProfileGlossaryTranslations" />
-        <property name="deliveryTimeGlossary" type="MerchantProfileGlossaryTranslations" />
-        <property name="termsConditionsGlossary" type="MerchantProfileGlossaryTranslations" />
-        <property name="cancellationPolicyGlossary" type="MerchantProfileGlossaryTranslations" />
-        <property name="imprintGlossary" type="MerchantProfileGlossaryTranslations" />
-        <property name="dataPrivacyGlossary" type="MerchantProfileGlossaryTranslations" />
-    </transfer>
-
-    <transfer name="MerchantProfileGlossaryTranslations">
-        <property name="fkMerchantProfile" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="localeName" type="string" />
-        <property name="value" type="string" />
-        <property name="fkGlossaryKey" type="int" />
-        <property name="translationKey" type="int" />
+        <property name="descriptionGlossary" type="string" />
+        <property name="bannerUrlGlossary" type="string" />
+        <property name="deliveryTimeGlossary" type="string" />
+        <property name="termsConditionsGlossary" type="string" />
+        <property name="cancellationPolicyGlossary" type="string" />
+        <property name="imprintGlossary" type="string" />
+        <property name="dataPrivacyGlossary" type="string" />
     </transfer>
 
 </transfers>

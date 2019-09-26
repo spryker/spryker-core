@@ -5,21 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfile\Business;
+namespace Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 
-interface MerchantProfileFacadeInterface
+interface MerchantProfileGlossaryWriterInterface
 {
     /**
-     * Specification:
-     * - Saves merchant profile data provided by MerchantTransfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+    public function saveMerchantProfileGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Business;
 
-use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -22,14 +22,14 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileWriter()
-            ->saveMerchantProfile($merchantTransfer);
+            ->saveMerchantProfile($merchantProfileTransfer);
     }
 }
