@@ -32,7 +32,7 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         }
 
         return $this->getFactory()
-            ->createMerchantProfileMapper()
+            ->createPropelMerchantProfileMapper()
             ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantEntity, new MerchantProfileTransfer());
     }
 

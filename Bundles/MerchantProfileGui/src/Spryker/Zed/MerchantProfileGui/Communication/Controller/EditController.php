@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    public const URL_PARAM_ID_MERCHANT = 'id-merchant-profile';
+    public const URL_PARAM_ID_MERCHANT_PROFILE = 'id-merchant-profile';
 
     public const MESSAGE_SUCCESS_DEACTIVATE = 'merchant_profile.deactivated';
     public const MESSAGE_SUCCESS_ACTIVATE = 'merchant_profile.activated';
@@ -30,13 +30,13 @@ class EditController extends AbstractController
      */
     public function activateAction(Request $request): RedirectResponse
     {
-        $idMerchant = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT));
+        $idMerchant = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
 
         $merchantProfileTransfer = new MerchantProfileTransfer();
-        $merchantProfileTransfer->setFkMerchant($idMerchant);
+        $merchantProfileTransfer->setIdMerchantProfile($idMerchant);
         $merchantProfileTransfer->setIsActive(true);
 
-//        $this->getFactory()->getMerchantProfileFacade()->saveMerchantProfile($merchantProfileTransfer);
+        $this->getFactory()->getMerchantProfileFacade()->saveMerchantProfile($merchantProfileTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_ACTIVATE);
 
@@ -50,13 +50,13 @@ class EditController extends AbstractController
      */
     public function deactivateAction(Request $request): RedirectResponse
     {
-        $idMerchant = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT));
+        $idMerchant = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
 
         $merchantProfileTransfer = new MerchantProfileTransfer();
-        $merchantProfileTransfer->setFkMerchant($idMerchant);
+        $merchantProfileTransfer->setIdMerchantProfile($idMerchant);
         $merchantProfileTransfer->setIsActive(false);
 
-//        $this->getFactory()->getMerchantProfileFacade()->saveMerchantProfile($merchantProfileTransfer);
+        $this->getFactory()->getMerchantProfileFacade()->saveMerchantProfile($merchantProfileTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_DEACTIVATE);
 

@@ -46,14 +46,16 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
      */
     public function saveMerchantProfileGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
+        if ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes()) {
+            $localeTransfers = $this->localeFacade->getLocaleCollection();
 
-        foreach ($localeTransfers as $localeTransfer) {
-            $this->saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
-                $localeTransfer,
-                $merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes(),
-                $merchantProfileTransfer
-            );
+            foreach ($localeTransfers as $localeTransfer) {
+                $this->saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
+                    $localeTransfer,
+                    $merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes(),
+                    $merchantProfileTransfer
+                );
+            }
         }
 
         return $merchantProfileTransfer;

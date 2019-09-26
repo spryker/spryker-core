@@ -29,7 +29,7 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
 
         $merchantProfileEntity = $this->getFactory()
             ->createPropelMerchantProfileMapper()
-            ->mapMerchantProfileTransferToMerchantEntity($merchantProfileTransfer, $merchantProfileEntity);
+            ->mapMerchantProfileTransferToMerchantProfileEntity($merchantProfileTransfer, $merchantProfileEntity);
 
         $merchantProfileEntity->save();
 

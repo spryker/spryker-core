@@ -8,9 +8,9 @@
 {% block action %}
     {%  for applicableMerchantStatus in applicableMerchantStatuses %}
         {% if applicableMerchantStatus == 'denied' %}
-            {{ removeActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), applicableMerchantStatus | trans, {'icon':''}) }}
+            {{ removeActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':''}) }}
         {% else %}
-            {{ createActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), applicableMerchantStatus | trans, {'icon':''}) }}
+            {{ createActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':''}) }}
         {%  endif %}
     {%  endfor %}
     {{ backActionButton(url('/merchant-gui/list-merchant'), 'Back to Merchants' | trans) }}
