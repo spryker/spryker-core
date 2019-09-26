@@ -145,12 +145,12 @@ class Builder implements BuilderInterface
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
+        /** @var \SimpleXMLElement[] $xmlElements */
         $xmlElements = $fromXmlElement->children();
         if (!$xmlElements) {
             return;
         }
 
-        /** @var \SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
             $xmlElement = $this->prefixSubProcessElementValue($xmlElement, $prefix);
             $xmlElement = $this->prefixSubProcessElementAttributes($xmlElement, $prefix);
@@ -359,7 +359,9 @@ class Builder implements BuilderInterface
                     $state->setReserved($this->getAttributeBoolean($xmlState, 'reserved'));
                     $state->setProcess($process);
 
-                    if ($xmlState->flag) {
+                    /** @var array $stateFlag */
+                    $stateFlag = $xmlState->flag;
+                    if ($stateFlag) {
                         $flags = $xmlState->children();
                         foreach ($flags->flag as $flag) {
                             $state->addFlag((string)$flag);
@@ -437,7 +439,7 @@ class Builder implements BuilderInterface
      * @param \SimpleXMLElement $xmlElement
      * @param string $attributeName
      *
-     * @return string
+     * @return string|null
      */
     protected function getAttributeString(SimpleXMLElement $xmlElement, $attributeName)
     {
