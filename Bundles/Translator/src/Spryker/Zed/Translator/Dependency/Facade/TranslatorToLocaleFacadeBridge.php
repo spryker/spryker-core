@@ -29,4 +29,12 @@ class TranslatorToLocaleFacadeBridge implements TranslatorToLocaleFacadeInterfac
     {
         return $this->localeFacade->getCurrentLocaleName();
     }
+
+    /**
+     * @return string[]
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        return $this->localeFacade->getSupportedLocaleCodes();
+    }
 }

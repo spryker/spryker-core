@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel

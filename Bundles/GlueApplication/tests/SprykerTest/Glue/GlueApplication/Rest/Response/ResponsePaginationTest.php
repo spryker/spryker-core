@@ -15,6 +15,7 @@ use SprykerTest\Glue\GlueApplication\Stub\RestResponse;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication

@@ -35,3 +35,11 @@ Prices,Prices
 "Your prices are now available to your custoers based on their start and end date.","Your prices are now available to your customers based on their start and end date."
 "Your prices are now available to your customers based on their start and end date.",
 "Your scheduled prices have been published","Your scheduled prices have been published"
+"Are you sure about deleting this scheduled price?","Are you sure about deleting this scheduled price?"
+"No, I want to keep this price","No, I want to keep this price"
+"Yes, delete this price","Yes, delete this price"
+"The timezone used for the scheduled price will be %s as defined on the store selected","The timezone used for the scheduled price will be %s as defined on the store selected"
+"Scheduled price has been successfully saved","Scheduled price has been successfully saved"
+"Schedule price haven not been saved","Schedule price haven not been saved"
+"Finish at must be greater than start from","Finish at must be greater than start from"
+"An identical scheduled price already exists for this product.","An identical scheduled price already exists for this product."

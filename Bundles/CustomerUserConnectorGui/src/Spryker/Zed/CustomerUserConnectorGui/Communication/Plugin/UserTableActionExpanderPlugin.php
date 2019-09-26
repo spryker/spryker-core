@@ -22,7 +22,8 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInt
 class UserTableActionExpanderPlugin extends AbstractPlugin implements UserTableActionExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $user

@@ -17,6 +17,7 @@ use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedStorageFa
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

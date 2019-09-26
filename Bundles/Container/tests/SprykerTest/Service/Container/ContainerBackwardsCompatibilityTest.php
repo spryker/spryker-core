@@ -12,6 +12,7 @@ use Spryker\Service\Container\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Container

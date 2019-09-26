@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class SchedulerJenkinsFacade extends AbstractFacade implements SchedulerJenkinsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

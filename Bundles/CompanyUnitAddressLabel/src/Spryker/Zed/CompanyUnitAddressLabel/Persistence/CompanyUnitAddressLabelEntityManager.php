@@ -23,7 +23,6 @@ class CompanyUnitAddressLabelEntityManager extends AbstractEntityManager impleme
     public function saveLabelToAddressRelations(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): void {
-
         $labelCollection = $companyUnitAddressTransfer->getLabelCollection();
         if (empty($labelCollection) || empty($labelCollection->getLabels())) {
             return;

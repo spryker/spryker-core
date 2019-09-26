@@ -14,6 +14,7 @@ use Spryker\Zed\Twig\Business\TwigFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig

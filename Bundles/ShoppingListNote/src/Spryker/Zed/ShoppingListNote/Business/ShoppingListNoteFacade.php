@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class ShoppingListNoteFacade extends AbstractFacade implements ShoppingListNoteF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

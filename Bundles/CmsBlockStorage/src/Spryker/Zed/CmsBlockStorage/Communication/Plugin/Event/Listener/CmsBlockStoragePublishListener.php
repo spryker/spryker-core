@@ -22,7 +22,7 @@ class CmsBlockStoragePublishListener extends AbstractPlugin implements EventBulk
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -4,7 +4,7 @@
     <table name="spy_category_image_set" idMethod="native" allowPkInsert="true">
         <column name="id_category_image_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255"/>
-        <column name="fk_locale" type="INTEGER" required="false" />
+        <column name="fk_locale" type="INTEGER" required="false"/>
         <column name="fk_category" type="INTEGER" required="false"/>
 
         <foreign-key name="spy_category_image_set-fk_locale" foreignTable="spy_locale">
@@ -17,7 +17,7 @@
         <behavior name="timestampable"/>
 
         <index name="spy_category_image_set-index-fk_category">
-            <index-column name="fk_category" />
+            <index-column name="fk_category"/>
         </index>
 
         <id-method-parameter value="spy_category_image_set_pk_seq"/>

@@ -8,11 +8,11 @@
     </transfer>
 
     <transfer name="CustomerGroup">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="idCustomer" type="int" />
+        <property name="idCustomer" type="int"/>
     </transfer>
 
 </transfers>

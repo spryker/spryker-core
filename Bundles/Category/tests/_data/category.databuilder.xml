@@ -6,33 +6,33 @@
 >
 
     <transfer name="Category">
-        <property name="idCategory" dataBuilderRule="=" />
-        <property name="categoryKey" dataBuilderRule="unique()->sentence(2)" />
-        <property name="isActive" dataBuilderRule="boolean(100)" />
-        <property name="isInMenu" dataBuilderRule="boolean(100)" />
-        <property name="isClickable" dataBuilderRule="boolean(100)" />
-        <property name="isSearchable" dataBuilderRule="boolean(100)" />
-        <property name="name" dataBuilderRule="unique()->sentence(2)" />
-        <property name="url" dataBuilderRule="unique()->sentence(2)" />
-        <property name="imageName" dataBuilderRule="unique()->sentence(2)" />
-        <property name="categoryImageName" dataBuilderRule="unique()->sentence(2)" />
-        <property name="metaTitle" dataBuilderRule="unique()->sentence(2)" />
-        <property name="metaDescription" dataBuilderRule="unique()->sentence(2)" />
-        <property name="metaKeywords" dataBuilderRule="unique()->sentence(2)" />
-        <property name="fkCategoryTemplate" dataBuilderRule="=" />
+        <property name="idCategory" dataBuilderRule="="/>
+        <property name="categoryKey" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="isActive" dataBuilderRule="boolean(100)"/>
+        <property name="isInMenu" dataBuilderRule="boolean(100)"/>
+        <property name="isClickable" dataBuilderRule="boolean(100)"/>
+        <property name="isSearchable" dataBuilderRule="boolean(100)"/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="url" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="imageName" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="categoryImageName" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="metaTitle" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="metaDescription" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="metaKeywords" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="fkCategoryTemplate" dataBuilderRule="="/>
     </transfer>
 
     <transfer name="Node">
-        <property name="isRoot" dataBuilderRule="boolean(0)" />
-        <property name="isMain" dataBuilderRule="boolean(100)" />
-        <property name="nodeOrder" dataBuilderRule="randomDigit" />
-        <property name="name" dataBuilderRule="unique()->sentence(2)" />
-        <property name="path" dataBuilderRule="unique()->sentence(2)" />
+        <property name="isRoot" dataBuilderRule="boolean(0)"/>
+        <property name="isMain" dataBuilderRule="boolean(100)"/>
+        <property name="nodeOrder" dataBuilderRule="randomDigit"/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="path" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
         <property name="url" dataBuilderRule="unique()->sentence(2)"/>
-        <property name="name" dataBuilderRule="unique()->sentence(2)" />
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
 </transfers>

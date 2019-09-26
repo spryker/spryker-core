@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Are you sure about deleting this scheduled price?' | trans %}
+
+{% block head_title %}
+    {{ widget_title }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title }}
+{% endblock %}
+
+{% set redirectUrl = app.request.headers.get('referer')~'#tab-content-scheduled_prices' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <a href="{{ redirectUrl }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
+            {{ form(form, {'method': 'POST'}) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

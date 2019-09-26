@@ -13,7 +13,7 @@ use League\OAuth2\Server\ResponseTypes\BearerTokenResponse as LeagueBearerTokenR
 class BearerTokenResponse extends LeagueBearerTokenResponse
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \League\OAuth2\Server\Entities\AccessTokenEntityInterface $accessToken
      *

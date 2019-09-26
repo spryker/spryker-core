@@ -14,6 +14,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

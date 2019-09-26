@@ -12,6 +12,7 @@ use SprykerTest\Zed\Glossary\PageObject\GlossaryListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary

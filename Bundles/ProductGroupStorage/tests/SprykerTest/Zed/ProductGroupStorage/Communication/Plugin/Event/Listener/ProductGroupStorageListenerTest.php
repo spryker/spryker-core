@@ -21,6 +21,7 @@ use SprykerTest\Zed\ProductGroupStorage\ProductGroupStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroupStorage

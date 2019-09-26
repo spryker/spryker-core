@@ -126,7 +126,6 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
      */
     public function addResponseResourceSchemaForPlugin(ResourceRoutePluginInterface $plugin, ?AnnotationTransfer $annotationTransfer = null): string
     {
-
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $resourceRelationships = $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
 

@@ -19,6 +19,7 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAv
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group ProductAvailabilitiesRestApi

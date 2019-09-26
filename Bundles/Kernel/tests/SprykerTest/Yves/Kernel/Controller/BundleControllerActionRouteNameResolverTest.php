@@ -13,6 +13,7 @@ use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel

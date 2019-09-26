@@ -12,31 +12,25 @@
     <div>
         <table align="center" border="0.1" cellpadding="1" cellspacing="1">
             <tbody>
-                <tr>
-                    <td><strong>{{ 'mail.order.confirmation.details' | trans }}</strong></td>
-                    <td><strong>{{ 'mail.order.confirmation.shipping_address' | trans }}</strong></td>
-                    <td><strong>{{ 'mail.order.confirmation.billing_address' | trans }}</strong></td>
-                </tr>
-                <tr>
-                    <td>
-                        {{ 'mail.order.confirmation.order_number' | trans }}: {{ mail.order.orderReference }}<br />
-                        {{ 'mail.order.confirmation.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}<br />
-                        {{ 'mail.order.confirmation.date' | trans }}: {{ mail.order.createdAt | date }}
-                    </td>
-                    <td>
-                        {{ mail.order.shippingAddress.firstName }} {{ mail.order.shippingAddress.lastName }}<br />
-                        {{ mail.order.shippingAddress.address1 }} {{ mail.order.shippingAddress.address2 }} {{ mail.order.shippingAddress.address3 }}<br />
-                        {{ mail.order.shippingAddress.zipCode }} {{ mail.order.shippingAddress.city }}<br />
-                        {{ mail.order.shippingAddress.region }}
-                    </td>
-                    <td>
-                        {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }}<br />
-                        {{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }}<br />
-                        {{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }}<br />
-                        {{ mail.order.billingAddress.region }}
-                    </td>
-                </tr>
+            <tr>
+                <td><strong>{{ 'mail.order.confirmation.details' | trans }}</strong></td>
+            </tr>
+            <tr>
+                <td>
+                    {{ 'mail.order.confirmation.order_number' | trans }}: {{ mail.order.orderReference }}<br />
+                    {{ 'mail.order.confirmation.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}<br />
+                    {{ 'mail.order.confirmation.date' | trans }}: {{ mail.order.createdAt | date }}<br />
+                    {{ 'mail.order.confirmation.billing_address' | trans }}: {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }}<br />
+                    {{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }}<br />
+                    {{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }}<br />
+                    {{ mail.order.billingAddress.region }}
+                </td>
+            </tr>
             </tbody>
         </table>
+        {% include [
+            '@ShipmentGui/Oms/mail/order_confirmation-shipping-addresses.html.twig',
+            '@Oms/Mail/order_confirmation-shipping-addresses.html.twig'
+        ] %}
     </div>
 </div>

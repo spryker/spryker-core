@@ -16,6 +16,7 @@ use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group BusinessOnBehalf

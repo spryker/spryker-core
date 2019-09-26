@@ -7,10 +7,24 @@
 
 namespace Spryker\Zed\Redis\Business\Import;
 
+use Spryker\Zed\Redis\RedisConfig;
 use Symfony\Component\Process\Process;
 
 class RedisImporter implements RedisImporterInterface
 {
+    /**
+     * @var \Spryker\Zed\Redis\RedisConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Redis\RedisConfig $config
+     */
+    public function __construct(RedisConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param string $source
      * @param string $destination
@@ -21,6 +35,7 @@ class RedisImporter implements RedisImporterInterface
     {
         $command = $this->buildImportCliCommand($source, $destination);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         return $process->isSuccessful();

@@ -13,6 +13,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch

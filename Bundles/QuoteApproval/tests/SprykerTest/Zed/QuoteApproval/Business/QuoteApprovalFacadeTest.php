@@ -26,6 +26,7 @@ use Spryker\Zed\QuoteApproval\Communication\Plugin\Quote\QuoteApprovalExpanderPl
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group QuoteApproval

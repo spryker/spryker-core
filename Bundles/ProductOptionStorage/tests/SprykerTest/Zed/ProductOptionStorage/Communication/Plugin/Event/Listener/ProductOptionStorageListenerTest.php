@@ -30,6 +30,7 @@ use SprykerTest\Zed\ProductOptionStorage\ProductOptionStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOptionStorage

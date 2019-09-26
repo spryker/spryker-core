@@ -148,6 +148,10 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
+        if ($this->priceProductConfig->getIsDeleteOrphanStorePricesOnSaveEnabled()) {
+            $this->deleteOrphanPriceProductStoreEntities();
+        }
+
         return $priceProductTransfer;
     }
 
@@ -300,7 +304,6 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         PriceProductTransfer $priceProductTransfer,
         MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
-
         return $this->priceProductQueryContainer
             ->queryPriceProductStoreByProductCurrencyStore(
                 $priceProductTransfer->getIdPriceProduct(),

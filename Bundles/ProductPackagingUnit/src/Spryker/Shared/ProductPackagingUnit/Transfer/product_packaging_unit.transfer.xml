@@ -6,28 +6,28 @@
     <transfer name="ProductPackagingUnitType">
         <property name="idProductPackagingUnitType" type="int"/>
         <property name="name" type="string"/>
-        <property name="translations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeTranslation" />
+        <property name="translations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeTranslation"/>
     </transfer>
 
     <transfer name="ProductPackagingUnitTypeTranslation">
-        <property name="name" type="string" />
-        <property name="localeCode" type="string" />
+        <property name="name" type="string"/>
+        <property name="localeCode" type="string"/>
     </transfer>
 
     <transfer name="ProductPackagingUnit">
-        <property name="idProductPackagingUnit" type="int" />
-        <property name="productPackagingUnitType" type="ProductPackagingUnitType" />
-        <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount" />
-        <property name="hasLeadProduct" type="bool" />
+        <property name="idProductPackagingUnit" type="int"/>
+        <property name="productPackagingUnitType" type="ProductPackagingUnitType"/>
+        <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount"/>
+        <property name="hasLeadProduct" type="bool"/>
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
-        <property name="idProductPackagingUnitAmount" type="int" />
-        <property name="isVariable" type="bool" />
-        <property name="defaultAmount" type="int" />
-        <property name="amountMin" type="int" />
-        <property name="amountMax" type="int" />
-        <property name="amountInterval" type="int" />
+        <property name="idProductPackagingUnitAmount" type="int"/>
+        <property name="isVariable" type="bool"/>
+        <property name="defaultAmount" type="int"/>
+        <property name="amountMin" type="int"/>
+        <property name="amountMax" type="int"/>
+        <property name="amountInterval" type="int"/>
     </transfer>
 
     <transfer name="ProductPackagingLeadProduct">
@@ -40,6 +40,26 @@
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="int"/>
         <property name="productPackagingUnit" type="ProductPackagingUnit"/>
+    </transfer>
+
+    <transfer name="OmsStateCollection">
+        <property name="states" type="OmsState[]" associative="true" singular="state"/>
+    </transfer>
+
+    <transfer name="OmsState">
+        <property name="name" type="string"/>
+        <property name="processes" type="OmsProcess[]" associative="true" singular="process"/>
+    </transfer>
+
+    <transfer name="OmsProcess">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemStateAggregation">
+        <property name="sku" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="sumAmount" type="int"/>
     </transfer>
 
 </transfers>

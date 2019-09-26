@@ -27,6 +27,7 @@ use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
  * @deprecated Will be replaced by `\SprykerTest\Zed\GlossaryStorage\Business\GlossaryStorageFacadeTest`
  *
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group GlossaryStorage

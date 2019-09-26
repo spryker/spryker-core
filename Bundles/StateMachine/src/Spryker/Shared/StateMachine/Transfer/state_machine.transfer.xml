@@ -5,18 +5,18 @@
 
     <transfer name="StateMachineItem">
         <property name="identifier" type="int"/>
-        <property name="idStateMachineProcess" type="int" />
-        <property name="idItemState" type="int" />
-        <property name="processName" type="string" />
-        <property name="stateMachineName" type="string" />
-        <property name="stateName" type="string" />
-        <property name="eventName" type="string" />
-        <property name="createdAt" type="string" />
+        <property name="idStateMachineProcess" type="int"/>
+        <property name="idItemState" type="int"/>
+        <property name="processName" type="string"/>
+        <property name="stateMachineName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="eventName" type="string"/>
+        <property name="createdAt" type="string"/>
     </transfer>
 
     <transfer name="StateMachineProcess">
         <property name="processName" type="string"/>
-        <property name="stateMachineName" type="string" />
+        <property name="stateMachineName" type="string"/>
     </transfer>
 
 </transfers>

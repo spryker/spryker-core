@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class MerchantRelationshipSalesOrderThresholdDataImportFacade extends AbstractFacade implements MerchantRelationshipSalesOrderThresholdDataImportFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

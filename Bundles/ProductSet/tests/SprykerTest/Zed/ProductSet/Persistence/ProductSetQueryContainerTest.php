@@ -14,6 +14,7 @@ use Spryker\Zed\ProductSet\Persistence\ProductSetQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSet

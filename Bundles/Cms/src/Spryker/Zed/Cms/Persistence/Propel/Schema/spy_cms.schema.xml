@@ -32,9 +32,9 @@
         <column name="fk_cms_page" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
-        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255" />
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL" />
-        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="meta_title" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR" default="NULL"/>
+        <column name="meta_description" required="false" type="LONGVARCHAR" default="NULL"/>
         <foreign-key name="spy_cms_page_localized_attributes-fk_cms_page" foreignTable="spy_cms_page" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_cms_page" foreign="id_cms_page"/>
         </foreign-key>

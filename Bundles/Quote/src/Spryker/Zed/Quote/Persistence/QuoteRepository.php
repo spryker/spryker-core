@@ -24,13 +24,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class QuoteRepository extends AbstractRepository implements QuoteRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
      *
      * @param string $customerReference
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer
     {
@@ -47,7 +47,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $customerReference
      * @param int $idStore
@@ -70,7 +70,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idQuote
      *
@@ -91,7 +91,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *

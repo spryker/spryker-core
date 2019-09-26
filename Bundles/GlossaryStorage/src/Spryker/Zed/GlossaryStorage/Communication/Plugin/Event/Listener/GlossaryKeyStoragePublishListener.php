@@ -24,7 +24,7 @@ class GlossaryKeyStoragePublishListener extends AbstractPlugin implements EventB
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

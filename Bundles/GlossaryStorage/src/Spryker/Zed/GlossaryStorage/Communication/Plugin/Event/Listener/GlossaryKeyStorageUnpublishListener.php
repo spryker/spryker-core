@@ -24,7 +24,7 @@ class GlossaryKeyStorageUnpublishListener extends AbstractPlugin implements Even
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

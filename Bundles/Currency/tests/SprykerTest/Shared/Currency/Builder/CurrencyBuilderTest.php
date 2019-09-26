@@ -16,6 +16,7 @@ use Symfony\Component\Intl\Intl;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Currency

@@ -41,7 +41,7 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return void
      */
@@ -50,7 +50,11 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @param string $name
+     * @param array $parameters
+     * @param int $referenceType
      *
      * @return void
      */

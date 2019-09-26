@@ -19,7 +19,9 @@ interface KernelConstants
     public const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
     public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 
-    /** @deprecated Use Module Config class directly instead. */
+    /**
+     * @deprecated Use Module Config class directly instead.
+     */
     public const SPRYKER_ROOT = 'SPRYKER_ROOT';
 
     public const STORE_PREFIX = 'STORE_PREFIX';
@@ -33,9 +35,20 @@ interface KernelConstants
     public const AUTO_LOADER_CACHE_FILE_PATH = 'KERNEL:AUTO_LOADER_CACHE_FILE_PATH';
 
     /**
-     * A set of whitelist domains, that every external URL is checked against, before redirect.
+     * Specification:
+     * - Defines a set of whitelist domains, that every external URL is checked against, before redirect.
+     *
+     * @api
      */
     public const DOMAIN_WHITELIST = 'KERNEL:DOMAIN_WHITELIST';
+
+    /**
+     * Specification:
+     * - Enables/disables strict external redirect check.
+     * - When enabled, only the domains from whitelist are allowed to be used as a destination for external redirect.
+     *
+     * @api
+     */
     public const STRICT_DOMAIN_REDIRECT = 'KERNEL:STRICT_DOMAIN_REDIRECT';
 
     /**
