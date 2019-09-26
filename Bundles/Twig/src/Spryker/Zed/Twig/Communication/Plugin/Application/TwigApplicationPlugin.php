@@ -48,9 +48,10 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected function addTwigService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_TWIG, function (ContainerInterface $container) {
-            $twigChainLoader = $this->getTwigChainLoader();
+            /** @var \Twig\Loader\LoaderInterface $twigLoader */
+            $twigLoader = $this->getTwigChainLoader();
             $twigOptions = $this->getTwigOptions($container);
-            $twig = new Environment($twigChainLoader, $twigOptions);
+            $twig = new Environment($twigLoader, $twigOptions);
             $twig->addGlobal('app', $container);
 
             $twig = $this->extendTwig($twig, $container);
