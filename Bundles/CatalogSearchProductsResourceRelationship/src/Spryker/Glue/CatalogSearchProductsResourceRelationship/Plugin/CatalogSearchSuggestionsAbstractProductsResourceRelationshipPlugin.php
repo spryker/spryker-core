@@ -19,12 +19,14 @@ class CatalogSearchSuggestionsAbstractProductsResourceRelationshipPlugin extends
     protected const RELATIONSHIP_RESOURCE_TYPE = 'abstract-products';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param array $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
@@ -34,7 +36,7 @@ class CatalogSearchSuggestionsAbstractProductsResourceRelationshipPlugin extends
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -78,7 +78,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function start()
     {
@@ -96,7 +96,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function regenerate($destroy = false, $lifetime = null)
     {
@@ -111,7 +111,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getId()
     {
@@ -119,9 +119,11 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $id
      *
      * @throws \LogicException
+     *
+     * @return void
      */
     public function setId($id)
     {
@@ -133,7 +135,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getName()
     {
@@ -141,7 +143,9 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $name
+     *
+     * @return void
      */
     public function setName($name)
     {
@@ -149,9 +153,11 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     public function save()
     {
@@ -164,7 +170,9 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @return void
      */
     public function clear()
     {
@@ -181,7 +189,11 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @param \Symfony\Component\HttpFoundation\Session\SessionBagInterface $bag
+     *
+     * @return void
      */
     public function registerBag(SessionBagInterface $bag)
     {
@@ -189,7 +201,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      *
      * @throws \InvalidArgumentException
      */
@@ -207,7 +219,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function isStarted()
     {

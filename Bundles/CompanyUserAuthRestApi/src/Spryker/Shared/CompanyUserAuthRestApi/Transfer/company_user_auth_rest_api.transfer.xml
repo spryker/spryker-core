@@ -9,20 +9,20 @@
     </transfer>
 
     <transfer name="RestCompanyUserAccessTokensAttributes">
-        <property name="idCompanyUser" type="string" restRequestParameter="required" />
+        <property name="idCompanyUser" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="RestCompanyUserAccessTokenResponseAttributes">
-        <property name="tokenType" type="string" />
-        <property name="expiresIn" type="string" />
-        <property name="accessToken" type="string" />
-        <property name="refreshToken" type="string" />
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string"/>
     </transfer>
 
     <transfer name="RestUser">
-        <property name="idCompanyUser" type="int" />
-        <property name="uuidCompanyUser" type="string" />
-        <property name="idCompany" type="int" />
+        <property name="idCompanyUser" type="int"/>
+        <property name="uuidCompanyUser" type="string"/>
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>

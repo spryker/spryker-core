@@ -19,7 +19,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 class ReservationVersionHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

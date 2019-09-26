@@ -15,9 +15,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
+use Symfony\Component\Routing\Loader\ClosureLoader;
+use Symfony\Component\Routing\Router;
 
 class Application implements HttpKernelInterface, TerminableInterface
 {
+    /**
+     * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
+     * @see \Symfony\Component\HttpFoundation\Request
+     */
+    public const SERVICE_REQUEST = 'request';
+
+    /**
+     * @see \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
@@ -108,12 +125,30 @@ class Application implements HttpKernelInterface, TerminableInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement. This method was only used for Silex Controller. Once a project moved to using Application Plugins instead of Silex Service Providers it can stop using it.
+     *
      * @return void
      */
     public function flushControllers()
     {
-        $this->container->get('routes')
-            ->addCollection($this->container->get('controllers')->flush());
+        $routeCollection = $this->container->get('controllers')->flush();
+
+        // `controllers` is set by the `\Silex\Provider\RoutingServiceProvider` and might not be used anymore.
+        // For projects which make use of the previous router this ensures that `routes` is filled with a
+        // proper RouteCollection which contains all routes.
+        $this->container->get('routes')->addCollection($routeCollection);
+
+        // When projects make use of the new Router we need to make sure that we add all `controllers` as new Router to
+        // the ChainRouter.
+        /** @var \Symfony\Cmf\Component\Routing\ChainRouterInterface $chainRouter */
+        $chainRouter = $this->container->get(static::SERVICE_ROUTER);
+
+        $loader = new ClosureLoader();
+        $resource = function () use ($routeCollection) {
+            return $routeCollection;
+        };
+        $router = new Router($loader, $resource);
+        $chainRouter->add($router);
     }
 
     /**

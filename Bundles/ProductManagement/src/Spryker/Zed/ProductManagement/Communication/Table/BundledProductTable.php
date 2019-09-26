@@ -115,7 +115,7 @@ class BundledProductTable extends AbstractTable
     {
         $config->setUrl(
             sprintf(
-                'bundledProductTable?id-product-concrete=%d',
+                'bundled-product-table?id-product-concrete=%d',
                 $this->idProductConcrete
             )
         );

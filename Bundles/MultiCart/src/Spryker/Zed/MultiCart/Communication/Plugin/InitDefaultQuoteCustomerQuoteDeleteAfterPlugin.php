@@ -19,7 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface
 class InitDefaultQuoteCustomerQuoteDeleteAfterPlugin extends AbstractPlugin implements QuoteDeleteAfterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Activates any customer quote, if active customer quote was removed.
      *
      * @api

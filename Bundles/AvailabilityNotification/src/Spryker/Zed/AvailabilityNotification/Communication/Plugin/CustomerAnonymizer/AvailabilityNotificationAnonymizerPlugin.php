@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AvailabilityNotificationAnonymizerPlugin extends AbstractPlugin implements CustomerAnonymizerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes all customer subscriptions on product availability notifications.
      *
      * @api

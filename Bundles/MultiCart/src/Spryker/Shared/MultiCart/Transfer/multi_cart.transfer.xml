@@ -6,16 +6,16 @@
     <transfer name="Quote">
         <property name="idQuote" type="int"/>
         <property name="name" type="string"/>
-        <property name="isDefault" type="bool" />
-        <property name="store" type="Store" />
-        <property name="customer" type="Customer" />
+        <property name="isDefault" type="bool"/>
+        <property name="store" type="Store"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="quoteTransfer" type="Quote"/>
-        <property name="isSuccessful" type="bool" />
+        <property name="isSuccessful" type="bool"/>
         <property name="customerQuotes" type="QuoteCollection"/>
-        <property name="customer" type="Customer" />
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteCollection">
@@ -35,20 +35,20 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="name" type="string"/>
-        <property name="totals" type="Totals" />
+        <property name="totals" type="Totals"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="idSalesExpense" type="int" />
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="Totals">
-        <property name="grandTotal" type="int" />
+        <property name="grandTotal" type="int"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="Filter">

@@ -28,7 +28,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
     protected const ORDER_DIRECTION = 'ASC';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDe
 class ShoppingListItemNoteBeforeDeletePlugin extends AbstractPlugin implements ShoppingListItemBeforeDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes note from shopping list item.
      *
      * @api

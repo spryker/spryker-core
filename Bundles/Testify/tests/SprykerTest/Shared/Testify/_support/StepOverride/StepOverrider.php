@@ -100,7 +100,7 @@ class StepOverrider extends Scenario
     // ------------------------------------------------------------------------
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getMetadata()
     {
@@ -108,7 +108,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setFeature($feature)
     {
@@ -116,7 +116,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getFeature()
     {
@@ -124,7 +124,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getGroups()
     {
@@ -132,7 +132,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function current($key)
     {
@@ -140,7 +140,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function addStep(Step $step)
     {
@@ -148,7 +148,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getSteps()
     {
@@ -156,7 +156,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getHtml()
     {
@@ -164,7 +164,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getText()
     {
@@ -172,7 +172,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function comment($comment)
     {
@@ -180,7 +180,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function skip($message = '')
     {
@@ -188,7 +188,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function incomplete($message = '')
     {
@@ -196,7 +196,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setMetaStep($metaStep)
     {
@@ -204,7 +204,7 @@ class StepOverrider extends Scenario
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getMetaStep()
     {

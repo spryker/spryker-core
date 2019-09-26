@@ -6,19 +6,19 @@
 >
 
     <transfer name="CmsBlock">
-        <property name="idCmsBlock" dataBuilderRule="=" />
-        <property name="name" dataBuilderRule="unique()->sentence(2)" />
-        <property name="validFrom" dataBuilderRule="time('Y-m-d', '-1 days')" />
-        <property name="validTo" dataBuilderRule="time('Y-m-d', '+1 days')" />
-        <property name="isActive" dataBuilderRule="boolean(100)" />
-        <property name="fkTemplate" dataBuilderRule="=" />
-        <property name="templateName" dataBuilderRule="unique()->sentence(2)" />
+        <property name="idCmsBlock" dataBuilderRule="="/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="validFrom" dataBuilderRule="time('Y-m-d', '-1 days')"/>
+        <property name="validTo" dataBuilderRule="time('Y-m-d', '+1 days')"/>
+        <property name="isActive" dataBuilderRule="boolean(100)"/>
+        <property name="fkTemplate" dataBuilderRule="="/>
+        <property name="templateName" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
     <transfer name="CmsBlockTemplate">
-        <property name="idCmsBlockTemplate" dataBuilderRule="=" />
-        <property name="templateName" dataBuilderRule="unique()->sentence(2)" />
-        <property name="templatePath" dataBuilderRule="unique()->sentence(2)" />
+        <property name="idCmsBlockTemplate" dataBuilderRule="="/>
+        <property name="templateName" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="templatePath" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
 </transfers>

@@ -20,7 +20,7 @@
 
     <table name="spy_availability" phpName="SpyAvailability">
         <column name="id_availability" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_availability_abstract" required="true" type="INTEGER" />
+        <column name="fk_availability_abstract" required="true" type="INTEGER"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="quantity" type="DECIMAL" size="20" scale="10" required="true"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>

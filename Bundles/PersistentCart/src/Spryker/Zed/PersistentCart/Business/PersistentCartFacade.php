@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PersistentCartFacade extends AbstractFacade implements PersistentCartFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +148,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -177,7 +177,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -191,7 +191,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -205,7 +205,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -219,7 +219,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -233,7 +233,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -247,7 +247,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

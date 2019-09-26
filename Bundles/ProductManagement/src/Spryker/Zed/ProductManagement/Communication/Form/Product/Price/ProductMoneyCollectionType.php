@@ -67,7 +67,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getBlockPrefix()
     {

@@ -22,7 +22,7 @@ class ProductAbstractImageStoragePublishListener extends AbstractPlugin implemen
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

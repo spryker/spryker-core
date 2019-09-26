@@ -81,7 +81,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $availability = $this->storageClient->get($key);
 
         $spyAvailabilityAbstractEntityTransfer = new SpyAvailabilityAbstractEntityTransfer();
-        if ($availability === null) {
+        if (!$availability) {
             return $spyAvailabilityAbstractEntityTransfer;
         }
 

@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CustomerPasswordResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class CustomerPasswordResourceRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class CustomerPasswordResourceRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class CustomerPasswordResourceRoutePlugin extends AbstractPlugin implements Reso
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
