@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\AuthRestApi\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Oauth\OauthDependencyProvider;
+use Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth\CustomerOauthUserProviderPlugin;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +31,16 @@ class AuthRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setUserProvider();
+    }
+
+    /**
+     * @return void
+     */
     public function testProcessAccessTokenWillGetValidOauthResponseTransfer(): void
     {
         $authRestApiFacade = $this->tester->getFacade();
@@ -46,9 +58,20 @@ class AuthRestApiFacadeTest extends Unit
     public function testProcessAccessTokenWillGetInvalidOauthResponseTransfer(): void
     {
         $authRestApiFacade = $this->tester->getFacade();
-        $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
+        $oauthRequestTransfer = $this->tester->prepareOauthRequestTransferWithoutCustomerData();
 
         $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
+
         $this->assertFalse($oauthResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUserProvider(): void
+    {
+        $this->tester->setDependency(OauthDependencyProvider::PLUGIN_USER_PROVIDER, [
+            new CustomerOauthUserProviderPlugin(),
+        ]);
     }
 }

@@ -43,7 +43,6 @@ class AccessTokenCreator implements AccessTokenCreatorInterface
     public function createAccessToken(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         $oauthResponseTransfer = $this->oauthFacade->processAccessTokenRequest($oauthRequestTransfer);
-
         if (!$oauthResponseTransfer->getIsValid()) {
             return $oauthResponseTransfer;
         }
