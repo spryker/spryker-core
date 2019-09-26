@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cms\Business\Template;
 
 use Spryker\Zed\Cms\CmsConfig;
+use Symfony\Component\Finder\SplFileInfo;
 
 class TemplateReader implements TemplateReaderInterface
 {
@@ -17,12 +18,20 @@ class TemplateReader implements TemplateReaderInterface
     protected $cmsConfig;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParserInterface
+     */
+    protected $templatePlaceholderParser;
+
+    /**
      * @param \Spryker\Zed\Cms\CmsConfig $cmsConfig
+     * @param \Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParserInterface $templatePlaceholderParser
      */
     public function __construct(
-        CmsConfig $cmsConfig
+        CmsConfig $cmsConfig,
+        TemplatePlaceholderParserInterface $templatePlaceholderParser
     ) {
         $this->cmsConfig = $cmsConfig;
+        $this->templatePlaceholderParser = $templatePlaceholderParser;
     }
 
     /**
@@ -32,56 +41,17 @@ class TemplateReader implements TemplateReaderInterface
      */
     public function getPlaceholdersByTemplatePath(string $templatePath): array
     {
-        $templateFiles = $this->cmsConfig->getTemplateRealPaths($templatePath);
+        $templateFilePaths = $this->cmsConfig->getTemplateRealPaths($templatePath);
 
-        $placeholders = [];
-        foreach ($templateFiles as $templateFile) {
-            if (!$this->fileExists($templateFile)) {
+        foreach ($templateFilePaths as $templateFile) {
+            $fileInfo = new SplFileInfo($templateFile, '', '');
+            if (!$fileInfo->isFile()) {
                 continue;
             }
 
-            $placeholders = $this->getTemplatePlaceholders($templateFile);
+            return $this->templatePlaceholderParser->getTemplatePlaceholders($fileInfo->getContents());
         }
 
-        return $placeholders;
-    }
-
-    /**
-     * @param string $templateFile
-     *
-     * @return string[]
-     */
-    protected function getTemplatePlaceholders(string $templateFile): array
-    {
-        $templateContent = $this->readTemplateContents($templateFile);
-
-        preg_match_all($this->cmsConfig->getPlaceholderPattern(), $templateContent, $cmsPlaceholderLine);
-        if (count($cmsPlaceholderLine[0]) === 0) {
-            return [];
-        }
-
-        preg_match_all($this->cmsConfig->getPlaceholderValuePattern(), implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
-
-        return $placeholderMap[1];
-    }
-
-    /**
-     * @param string $templateFile
-     *
-     * @return string
-     */
-    protected function readTemplateContents(string $templateFile): string
-    {
-        return file_get_contents($templateFile);
-    }
-
-    /**
-     * @param string $templateFile
-     *
-     * @return bool
-     */
-    protected function fileExists(string $templateFile): bool
-    {
-        return file_exists($templateFile);
+        return [];
     }
 }

@@ -68,13 +68,13 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
             return null;
         }
 
-        $pagePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
+        $pageTemplatePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
             $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
         );
-        $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pagePlaceholders, $idCmsPage);
+        $glossaryKeyEntityMap = $this->createKeyMappingByPlaceholder($pageTemplatePlaceholders, $idCmsPage);
 
         $cmsGlossaryTransfer = new CmsGlossaryTransfer();
-        foreach ($pagePlaceholders as $pagePlaceholder) {
+        foreach ($pageTemplatePlaceholders as $pagePlaceholder) {
             $glossaryAttributeTransfer = $this->mapGlossaryAttributeTransfer($cmsPageEntity, $pagePlaceholder);
             $this->addGlossaryAttributeTranslations($glossaryKeyEntityMap, $pagePlaceholder, $glossaryAttributeTransfer);
             $cmsGlossaryTransfer->addGlossaryAttribute($glossaryAttributeTransfer);

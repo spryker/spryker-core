@@ -39,6 +39,8 @@ use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriter;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
 use Spryker\Zed\Cms\Business\Template\TemplateManagerInterface;
+use Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParser;
+use Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParserInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateReader;
 use Spryker\Zed\Cms\Business\Template\TemplateReaderInterface;
 use Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapper;
@@ -441,6 +443,14 @@ class CmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createTemplateReader(): TemplateReaderInterface
     {
-        return new TemplateReader($this->getConfig());
+        return new TemplateReader($this->getConfig(), $this->createTemplatePlaceholderParser());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParserInterface
+     */
+    public function createTemplatePlaceholderParser(): TemplatePlaceholderParserInterface
+    {
+        return new TemplatePlaceholderParser($this->getConfig());
     }
 }

@@ -89,7 +89,7 @@ class EditPageController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
-            'isPageTemplatePlaceholdersExists' => $this->getIsTemplatePlaceholderExists($idCmsPage),
+            'isPageTemplatePlaceholdersExists' => $this->isPageTemplateWithPlaceholders($idCmsPage),
         ];
     }
 
@@ -98,7 +98,7 @@ class EditPageController extends AbstractController
      *
      * @return bool
      */
-    protected function getIsTemplatePlaceholderExists(int $idCmsPage): bool
+    protected function isPageTemplateWithPlaceholders(int $idCmsPage): bool
     {
         $cmsGlossaryTransfer = $this->getFactory()->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
 
