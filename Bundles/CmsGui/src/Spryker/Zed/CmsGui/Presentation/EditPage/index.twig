@@ -15,7 +15,7 @@
 {% block action %}
     {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : idCmsPage}) %}
     {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
-    {%  if isPageTemplatePlaceholdersExists is not defined or isPageTemplatePlaceholdersExists %}
+    {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
         {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': idCmsPage}), 'Edit placeholders' | trans) }}
     {% endif %}
     {% if cmsVersion is not null %}

@@ -89,7 +89,7 @@ class EditPageController extends AbstractController
             'idCmsPage' => $idCmsPage,
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
-            'isPageTemplatePlaceholdersExists' => $this->isPageTemplateWithPlaceholders($idCmsPage),
+            'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
         ];
     }
 
