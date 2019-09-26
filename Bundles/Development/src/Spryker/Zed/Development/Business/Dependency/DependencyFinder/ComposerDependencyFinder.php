@@ -10,16 +10,16 @@ namespace Spryker\Zed\Development\Business\Dependency\DependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\DependencyFinderContextInterface;
 
-class TravisDependencyFinder extends AbstractFileDependencyFinder
+class ComposerDependencyFinder extends AbstractFileDependencyFinder
 {
-    public const TYPE_TRAVIS = 'travis';
+    public const TYPE_COMPOSER = 'composer';
 
     /**
      * @return string
      */
     public function getType(): string
     {
-        return static::TYPE_TRAVIS;
+        return static::TYPE_COMPOSER;
     }
 
     /**
@@ -33,7 +33,7 @@ class TravisDependencyFinder extends AbstractFileDependencyFinder
             return false;
         }
 
-        if ($context->getFileInfo()->getFilename() !== '.travis.yml') {
+        if ($context->getFileInfo()->getFilename() !== 'composer.json') {
             return false;
         }
 
