@@ -68,7 +68,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
     {
         $eventDispatcher->addListener(
             KernelEvents::REQUEST,
-            function (GetResponseEvent $event) use ($container) {
+            function (GetResponseEvent $event) use ($container): void {
                 $request = $event->getRequest();
                 $this->setRouterContext($request, $this->getUrlMatcher($container));
             },
@@ -88,7 +88,7 @@ class RouterLocaleEventDispatcherPlugin extends AbstractPlugin implements EventD
     {
         $eventDispatcher->addListener(
             KernelEvents::FINISH_REQUEST,
-            function (FinishRequestEvent $event) use ($container) {
+            function (FinishRequestEvent $event) use ($container): void {
                 $requestStack = $this->getRequestStack($container);
                 $parentRequest = $requestStack->getParentRequest();
                 if ($parentRequest !== null) {

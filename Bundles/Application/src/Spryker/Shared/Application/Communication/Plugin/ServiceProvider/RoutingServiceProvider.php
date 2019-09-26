@@ -9,10 +9,15 @@ namespace Spryker\Shared\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Shared\Application\Application as SprykerApplication;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 
 /**
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\RoutingServiceProvider instead
+ * @deprecated Use `\Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin` instead.
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin` instead.
+ *
+ * Requesting the `url_matcher` from the container returned an instance of the ChainRouter. Instead of using several keys
+ * pointing to the ChainRouter we only use `routers` from now on.
  */
 class RoutingServiceProvider implements ServiceProviderInterface
 {
@@ -27,13 +32,13 @@ class RoutingServiceProvider implements ServiceProviderInterface
     {
         $app['url_matcher'] = $app->share(function () use ($app) {
             /** @var \Symfony\Cmf\Component\Routing\ChainRouter $chainRouter */
-            $chainRouter = $app['routers'];
+            $chainRouter = $app[SprykerApplication::SERVICE_ROUTER];
             $chainRouter->setContext($app['request_context']);
 
             return $chainRouter;
         });
 
-        $app['routers'] = $app->share(function () {
+        $app[SprykerApplication::SERVICE_ROUTER] = $app->share(function () {
             return new ChainRouter();
         });
     }

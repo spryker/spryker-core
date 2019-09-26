@@ -21,7 +21,7 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
      * @api
      *
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */

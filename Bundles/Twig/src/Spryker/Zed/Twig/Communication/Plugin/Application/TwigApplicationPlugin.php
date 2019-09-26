@@ -20,11 +20,9 @@ use Twig\Environment;
  */
 class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    protected const SERVICE_TWIG = 'twig';
-
-    protected const SERVICE_DEBUG = 'debug';
-
-    protected const SERVICE_CHARSET = 'charset';
+    public const SERVICE_TWIG = 'twig';
+    public const SERVICE_DEBUG = 'debug';
+    public const SERVICE_CHARSET = 'charset';
 
     /**
      * {@inheritDoc}
