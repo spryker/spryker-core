@@ -74,6 +74,8 @@ class ZedHelper extends Module
         $tester->fillField('#auth_password', $password);
         $tester->click('Login');
 
+        $tester->waitForElementVisible('#side-menu');
+
         static::$alreadyLoggedIn = true;
     }
 

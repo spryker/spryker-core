@@ -97,7 +97,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function current()
     {
@@ -105,7 +105,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function next()
     {
@@ -113,7 +113,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function key()
     {
@@ -121,7 +121,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function valid()
     {
@@ -129,7 +129,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return void
      */
@@ -140,7 +140,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function count()
     {

@@ -19,7 +19,7 @@ class StoreExternalDataProviderStrategyPlugin extends AbstractPlugin implements 
     protected const DATA_KEY = 'store';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class StoreExternalDataProviderStrategyPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Returns the current store name.
      *
      * @api

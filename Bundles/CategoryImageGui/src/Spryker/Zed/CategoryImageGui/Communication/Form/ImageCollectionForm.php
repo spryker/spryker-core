@@ -66,7 +66,7 @@ class ImageCollectionForm extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */
@@ -76,7 +76,7 @@ class ImageCollectionForm extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *

@@ -17,7 +17,7 @@ use Spryker\Service\Kernel\AbstractService;
 class ShipmentService extends AbstractService implements ShipmentServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class ShipmentService extends AbstractService implements ShipmentServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

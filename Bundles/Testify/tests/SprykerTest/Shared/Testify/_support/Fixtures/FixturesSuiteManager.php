@@ -13,7 +13,7 @@ use Codeception\SuiteManager;
 class FixturesSuiteManager extends SuiteManager
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function loadTests($path = null)
     {

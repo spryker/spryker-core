@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CustomerTransferSessionRefreshPlugin extends AbstractPlugin implements CustomerSessionGetPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Executed if customer marked as dirty.
      * - Marks customer as not dirty.
      * - Retrieves customer by either provided id, email or restore password key.

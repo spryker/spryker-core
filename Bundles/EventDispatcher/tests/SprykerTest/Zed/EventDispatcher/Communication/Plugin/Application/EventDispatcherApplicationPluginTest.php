@@ -34,6 +34,11 @@ class EventDispatcherApplicationPluginTest extends Unit
     public const DUMMY_EVENT = 'DUMMY_EVENT';
 
     /**
+     * @var \SprykerTest\Zed\EventDispatcher\EventDispatcherCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testEventDispatcherSetNewDispatcher(): void

@@ -12,7 +12,7 @@ use Codeception\Test\Loader;
 class FixturesLoader extends Loader
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __construct(array $options = [])
     {

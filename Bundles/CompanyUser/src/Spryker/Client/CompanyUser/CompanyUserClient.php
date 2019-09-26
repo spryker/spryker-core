@@ -23,7 +23,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     use PermissionAwareTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +104,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -128,7 +128,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class CompanyUserClient extends AbstractClient implements CompanyUserClientInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

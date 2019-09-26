@@ -20,7 +20,7 @@ use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelation
 class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
