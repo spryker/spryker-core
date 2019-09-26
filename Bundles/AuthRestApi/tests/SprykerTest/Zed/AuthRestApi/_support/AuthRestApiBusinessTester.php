@@ -9,10 +9,8 @@ namespace SprykerTest\Zed\AuthRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\OauthRequestBuilder;
-use Generated\Shared\DataBuilder\OauthResponseBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
-use Generated\Shared\Transfer\OauthResponseTransfer;
 
 /**
  * Inherited Methods
@@ -75,31 +73,6 @@ class AuthRestApiBusinessTester extends Actor
             [
                 'customerReference' => static::TEST_ANONYMOUS_CUSTOMER_REFERENCE,
                 'grantType' => static::TEST_GRANT_TYPE,
-            ]
-        ))->build();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer
-     */
-    public function prepareOauthResponseTransfer(): OauthResponseTransfer
-    {
-        return (new OauthResponseBuilder(
-            [
-                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-                'isValid' => true,
-            ]
-        ))->build();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer
-     */
-    public function prepareInvalidOauthResponseTransfer(): OauthResponseTransfer
-    {
-        return (new OauthResponseBuilder(
-            [
-                'isValid' => false,
             ]
         ))->build();
     }
