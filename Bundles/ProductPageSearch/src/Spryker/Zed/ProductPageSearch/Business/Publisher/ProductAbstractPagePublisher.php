@@ -149,7 +149,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         $productAbstractLocalizedEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
-        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntities($productAbstractLocalizedEntities, $productAbstractIds);
+        $productCategories = $this->getProductCategoriesByProductAbstractIds($productAbstractIds);
+        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
 
         $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
 
@@ -160,28 +161,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         $this->storeData($productAbstractLocalizedEntities, $productAbstractPageSearchEntities, $pageDataExpanderPlugins, $productPageLoadTransfer, $isRefresh);
-    }
-
-    /**
-     * @param array $productAbstractLocalizedEntities
-     * @param int[] $productAbstractIds
-     *
-     * @return array
-     */
-    protected function hydrateProductAbstractLocalizedEntities(array $productAbstractLocalizedEntities, array $productAbstractIds): array
-    {
-        $localeIsoCodes = $this->getAvailableLocaleIsoCodes();
-
-        $productCategories = $this->getProductCategoriesByProductAbstractIds($productAbstractIds);
-
-        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
-        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
-        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
-
-        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
-        $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities($productConcreteEntities, $productAbstractLocalizedEntities);
-
-        return $productAbstractLocalizedEntities;
     }
 
     /**
@@ -435,12 +414,38 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      */
     protected function findProductAbstractLocalizedEntities(array $productAbstractIds)
     {
-        $productAbstractLocalizedEntities = [];
+        $allProductAbstractLocalizedEntities = [];
+        $localesByStore = [];
         foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $productAbstractLocalizedEntities[] = $this->queryContainer->queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore($productAbstractIds, $storeTransfer)->find()->getData();
+            $productAbstractLocalizedEntities = $this
+                ->queryContainer
+                ->queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore($productAbstractIds, $storeTransfer)
+                ->find()
+                ->getData();
+
+            if (!isset($localesByStore[$storeTransfer->getName()])) {
+                $localesByStore[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+            }
+            $productConcreteEntities = $this->getProductConcreteEntitiesWithProductSearchEntities($productAbstractIds, $localesByStore[$storeTransfer->getName()]);
+            $allProductAbstractLocalizedEntities[] = $this->hydrateProductAbstractLocalizedEntitiesWithProductConcreteEntities($productConcreteEntities, $productAbstractLocalizedEntities);
         }
 
-        return array_merge(...$productAbstractLocalizedEntities);
+        return array_merge(...$allProductAbstractLocalizedEntities);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string[] $localeIsoCodes
+     *
+     * @return array[][]
+     */
+    protected function getProductConcreteEntitiesWithProductSearchEntities(array $productAbstractIds, array $localeIsoCodes): array
+    {
+        $productConcreteEntities = $this->getProductConcreteEntitiesByProductAbstractIdsAndLocaleIsoCodes($productAbstractIds, $localeIsoCodes);
+        $productSearchEntities = $this->getProductSearchEntitiesByProductConcreteIdsAndLocaleIsoCodes(array_column($productConcreteEntities, 'id_product'), $localeIsoCodes);
+        $productConcreteEntities = $this->hydrateProductConcreteEntitiesWithProductSearchEntities($productSearchEntities, $productConcreteEntities);
+
+        return $productConcreteEntities;
     }
 
     /**
