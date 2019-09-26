@@ -29,7 +29,7 @@ class MerchantProfilePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper\MerchantProfileMapperInterface
      */
-    public function createMerchantProfileMapper(): MerchantProfileMapperInterface
+    public function createPropelMerchantProfileMapper(): MerchantProfileMapperInterface
     {
         return new MerchantProfileMapper();
     }

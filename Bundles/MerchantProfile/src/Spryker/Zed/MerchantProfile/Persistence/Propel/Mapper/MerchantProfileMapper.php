@@ -13,6 +13,25 @@ use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 class MerchantProfileMapper implements MerchantProfileMapperInterface
 {
     /**
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $merchantProfileEntity
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function mapMerchantProfileEntityToMerchantProfileTransfer(
+        SpyMerchantProfile $merchantProfileEntity,
+        MerchantProfileTransfer $merchantProfileTransfer
+    ): MerchantProfileTransfer {
+        $merchantProfileTransfer = new MerchantProfileTransfer();
+        $merchantProfileTransfer->fromArray(
+            $merchantProfileEntity->toArray(),
+            true
+        );
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $spyMerchantProfile
      *
@@ -27,23 +46,5 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         );
 
         return $spyMerchantProfile;
-    }
-
-    /**
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $spyMerchantProfile
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    public function mapMerchantProfileEntityToMerchantProfileTransfer(
-        SpyMerchantProfile $spyMerchantProfile,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $merchantProfileTransfer->fromArray(
-            $spyMerchantProfile->toArray(),
-            true
-        );
-
-        return $merchantProfileTransfer;
     }
 }

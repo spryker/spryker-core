@@ -12,6 +12,11 @@ use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriterInterface;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriter;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
+use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
+use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
+use Spryker\Zed\MerchantProfile\MerchantProfileDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface getRepository()
@@ -25,7 +30,8 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     public function createMerchantProfileWriter(): MerchantProfileWriterInterface
     {
         return new MerchantProfileWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createMerchantProfileGlossaryWriter()
         );
     }
 
@@ -37,5 +43,32 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
         return new MerchantProfileReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface
+     */
+    protected function createMerchantProfileGlossaryWriter(): MerchantProfileGlossaryWriterInterface
+    {
+        return new MerchantProfileGlossaryWriter(
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface
+     */
+    protected function getGlossaryFacade(): MerchantProfileToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface
+     */
+    protected function getLocaleFacade(): MerchantProfileToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_LOCALE);
     }
 }

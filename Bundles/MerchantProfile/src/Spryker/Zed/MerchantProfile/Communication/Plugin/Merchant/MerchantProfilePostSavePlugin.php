@@ -28,6 +28,11 @@ class MerchantProfilePostSavePlugin extends AbstractPlugin implements MerchantPo
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
-        return $this->getFacade()->saveMerchantProfile($merchantTransfer);
+        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileTransfer = $this->getFacade()->saveMerchantProfile($merchantProfileTransfer);
+        $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
+
+        return $merchantTransfer;
     }
 }

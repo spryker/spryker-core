@@ -13,6 +13,17 @@ use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 interface MerchantProfileMapperInterface
 {
     /**
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $merchantProfileEntity
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function mapMerchantProfileEntityToMerchantProfileTransfer(
+        SpyMerchantProfile $merchantProfileEntity,
+        MerchantProfileTransfer $merchantProfileTransfer
+    ): MerchantProfileTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $spyMerchantProfile
      *
@@ -22,15 +33,4 @@ interface MerchantProfileMapperInterface
         MerchantProfileTransfer $merchantProfileTransfer,
         SpyMerchantProfile $spyMerchantProfile
     ): SpyMerchantProfile;
-
-    /**
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $spyMerchantProfile
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    public function mapMerchantProfileEntityToMerchantProfileTransfer(
-        SpyMerchantProfile $spyMerchantProfile,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer;
 }
