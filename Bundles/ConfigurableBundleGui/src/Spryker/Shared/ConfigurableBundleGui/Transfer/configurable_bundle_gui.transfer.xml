@@ -19,8 +19,9 @@
         <property name="locale" type="Locale" />
     </transfer>
 
-    <transfer name="ConfigurableBundleTemplateResponse">
+    <transfer name="ConfigurableBundleResponse">
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot" />
         <property name="isSuccessful" type="bool" />
         <property name="messages" type="Message[]"  singular="message" />
     </transfer>

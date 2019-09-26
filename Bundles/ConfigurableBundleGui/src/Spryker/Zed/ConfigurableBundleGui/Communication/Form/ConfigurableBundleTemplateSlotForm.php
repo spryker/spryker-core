@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
  * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
  */
-class ConfigurableBundleTemplateForm extends AbstractConfigurableBundleForm
+class ConfigurableBundleTemplateSlotForm extends AbstractConfigurableBundleForm
 {
     /**
      * @return array
@@ -22,7 +22,7 @@ class ConfigurableBundleTemplateForm extends AbstractConfigurableBundleForm
     protected function getDefaultOptions(): array
     {
         return [
-            static::OPTION_DATA_CLASS => ConfigurableBundleTemplateTransfer::class,
+            static::OPTION_DATA_CLASS => ConfigurableBundleTemplateSlotTransfer::class,
         ];
     }
 
@@ -31,6 +31,6 @@ class ConfigurableBundleTemplateForm extends AbstractConfigurableBundleForm
      */
     protected function getTranslationFormClass(): string
     {
-        return ConfigurableBundleTemplateTranslationForm::class;
+        return ConfigurableBundleTemplateSlotTranslationForm::class;
     }
 }

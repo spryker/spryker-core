@@ -5,65 +5,37 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Persistence;
+namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleEntityManagerInterface
+interface ConfigurableBundleTranslationExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function createConfigurableBundleTemplate(
+    public function expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function updateConfigurableBundleTemplate(
+    public function expandConfigurableBundleTemplateWithDefaultLocaleTranslation(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): bool;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    ): ConfigurableBundleTemplateTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    public function createConfigurableBundleTemplateSlot(
+    public function expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer;
 }

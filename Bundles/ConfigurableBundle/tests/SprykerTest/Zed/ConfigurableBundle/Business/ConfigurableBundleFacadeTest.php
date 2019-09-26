@@ -159,13 +159,13 @@ class ConfigurableBundleFacadeTest extends Unit
         );
 
         // Act
-        $configurableBundleTemplateResponseTransfer = $this->tester
+        $configurableBundleResponseTransfer = $this->tester
             ->getFacade()
             ->updateConfigurableBundleTemplate($updatedConfigurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
-        $updatedConfigurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
+        $this->assertTrue($configurableBundleResponseTransfer->getIsSuccessful());
+        $updatedConfigurableBundleTemplateTransfer = $configurableBundleResponseTransfer->getConfigurableBundleTemplate();
         $this->assertNotNull($updatedConfigurableBundleTemplateTransfer);
         $this->assertNotSame($configurableBundleTemplateTransfer->getName(), $updatedConfigurableBundleTemplateTransfer->getName());
     }
@@ -180,12 +180,12 @@ class ConfigurableBundleFacadeTest extends Unit
         $configurableBundleTemplateTransfer->setIdConfigurableBundleTemplate(0);
 
         // Act
-        $configurableBundleTemplateResponseTransfer = $this->tester
+        $configurableBundleResponseTransfer = $this->tester
             ->getFacade()
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertFalse($configurableBundleTemplateResponseTransfer->getIsSuccessful());
+        $this->assertFalse($configurableBundleResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -197,13 +197,13 @@ class ConfigurableBundleFacadeTest extends Unit
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplateTransfer();
 
         // Act
-        $configurableBundleTemplateResponseTransfer = $this->tester
+        $configurableBundleResponseTransfer = $this->tester
             ->getFacade()
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
-        $configurableBundleTemplateTransfer = $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate();
+        $this->assertTrue($configurableBundleResponseTransfer->getIsSuccessful());
+        $configurableBundleTemplateTransfer = $configurableBundleResponseTransfer->getConfigurableBundleTemplate();
         $this->assertNotNull($configurableBundleTemplateTransfer);
         $this->assertGreaterThan(0, $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
     }

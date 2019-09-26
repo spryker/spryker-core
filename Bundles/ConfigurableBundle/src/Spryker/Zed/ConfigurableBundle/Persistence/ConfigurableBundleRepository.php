@@ -44,6 +44,31 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    public function findConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleTemplateQuery();
+        $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
+            $configurableBundleTemplateQuery,
+            $configurableBundleTemplateFilterTransfer
+        );
+
+        $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->find()->getFirst();
+
+        if (!$configurableBundleTemplateEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+    }
+
+    /**
      * @param string[] $allowedTemplateUuids
      *
      * @return string[]
@@ -56,9 +81,9 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         return $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
-            ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
             ->filterByUuid_In($allowedTemplateUuids)
             ->filterByIsActive(true)
+            ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
             ->find()
             ->toArray();
     }

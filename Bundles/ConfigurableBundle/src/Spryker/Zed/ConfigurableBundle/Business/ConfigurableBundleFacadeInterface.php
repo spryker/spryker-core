@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -23,11 +24,11 @@ interface ConfigurableBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     public function createConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer;
+    ): ConfigurableBundleResponseTransfer;
 
     /**
      * Specification:
@@ -38,11 +39,11 @@ interface ConfigurableBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer;
+    ): ConfigurableBundleResponseTransfer;
 
     /**
      * Specification:
@@ -109,4 +110,20 @@ interface ConfigurableBundleFacadeInterface
      * @return void
      */
     public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+
+    /**
+     * Specification:
+     * - Persists configurable bundle template slot.
+     * - Generates translation key and persists configurable bundle template name translations.
+     * - Creates new product list, assigns it to a slot.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     */
+    public function createConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleResponseTransfer;
 }

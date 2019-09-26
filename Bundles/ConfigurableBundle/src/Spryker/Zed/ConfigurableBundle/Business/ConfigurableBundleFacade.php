@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -27,11 +28,11 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     public function createConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer {
+    ): ConfigurableBundleResponseTransfer {
         return $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
@@ -44,11 +45,11 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer {
+    ): ConfigurableBundleResponseTransfer {
         return $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
@@ -133,5 +134,22 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
         $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
             ->deactivateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     */
+    public function createConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleResponseTransfer {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotWriter()
+            ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
     }
 }

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -128,5 +130,25 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
 
         $configurableBundleTemplateEntity->setIsActive(false)
             ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function createConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleTemplateSlotTransfer {
+        $configurableBundleTemplateSlotEntity = $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateSlotTransferToEntity($configurableBundleTemplateSlotTransfer, new SpyConfigurableBundleTemplateSlot());
+
+        $configurableBundleTemplateSlotEntity->save();
+        $configurableBundleTemplateSlotTransfer->setIdConfigurableBundleTemplateSlot(
+            $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot()
+        );
+
+        return $configurableBundleTemplateSlotTransfer;
     }
 }

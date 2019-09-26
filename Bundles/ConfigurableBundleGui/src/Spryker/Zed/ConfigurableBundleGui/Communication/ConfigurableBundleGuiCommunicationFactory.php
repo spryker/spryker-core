@@ -7,17 +7,21 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateEditTabs;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotCreateTabs;
 use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
@@ -52,11 +56,40 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getConfigurableBundleTemplateSlotForm(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
+        array $options = []
+    ): FormInterface {
+        return $this->getFormFactory()->create(
+            ConfigurableBundleTemplateSlotForm::class,
+            $configurableBundleTemplateSlotTransfer,
+            $options
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider
      */
     public function createConfigurableBundleTemplateFormDataProvider(): ConfigurableBundleTemplateFormDataProvider
     {
         return new ConfigurableBundleTemplateFormDataProvider(
+            $this->getConfigurableBundleFacade(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotFormDataProvider
+     */
+    public function createConfigurableBundleTemplateSlotFormDataProvider(): ConfigurableBundleTemplateSlotFormDataProvider
+    {
+        return new ConfigurableBundleTemplateSlotFormDataProvider(
             $this->getConfigurableBundleFacade(),
             $this->getLocaleFacade(),
             $this->getGlossaryFacade()
@@ -119,6 +152,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function createConfigurableBundleTemplateEditTabs(): ConfigurableBundleTemplateEditTabs
     {
         return new ConfigurableBundleTemplateEditTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotCreateTabs
+     */
+    public function createConfigurableBundleTemplateSlotCreateTabs(): ConfigurableBundleTemplateSlotCreateTabs
+    {
+        return new ConfigurableBundleTemplateSlotCreateTabs();
     }
 
     /**

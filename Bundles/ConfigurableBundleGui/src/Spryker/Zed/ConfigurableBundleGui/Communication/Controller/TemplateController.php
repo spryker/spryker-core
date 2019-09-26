@@ -104,12 +104,12 @@ class TemplateController extends AbstractController
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $configurableBundleTemplateResponseTransfer = $this->getFactory()
+            $configurableBundleResponseTransfer = $this->getFactory()
                 ->getConfigurableBundleFacade()
                 ->createConfigurableBundleTemplate($form->getData());
 
-            if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
-                $idConfigurableBundleTemplate = $configurableBundleTemplateResponseTransfer
+            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
+                $idConfigurableBundleTemplate = $configurableBundleResponseTransfer
                     ->getConfigurableBundleTemplate()
                     ->getIdConfigurableBundleTemplate();
 
@@ -120,7 +120,7 @@ class TemplateController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $this->handleErrors($configurableBundleTemplateResponseTransfer->getMessages());
+            $this->handleErrors($configurableBundleResponseTransfer->getMessages());
         }
 
         return [
@@ -164,11 +164,11 @@ class TemplateController extends AbstractController
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $configurableBundleTemplateResponseTransfer = $this->getFactory()
+            $configurableBundleResponseTransfer = $this->getFactory()
                 ->getConfigurableBundleFacade()
                 ->updateConfigurableBundleTemplate($form->getData());
 
-            if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
+            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
                     static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $idConfigurableBundleTemplate,
                 ]);
