@@ -151,4 +151,29 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
 
         return $configurableBundleTemplateSlotTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return bool
+     */
+    public function updateConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): bool {
+        $configurableBundleTemplateSlotEntity = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->findOneByIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot());
+
+        if (!$configurableBundleTemplateSlotEntity) {
+            return false;
+        }
+
+        $configurableBundleTemplateSlotEntity = $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateSlotTransferToEntity($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotEntity);
+
+        $configurableBundleTemplateSlotEntity->save();
+
+        return true;
+    }
 }

@@ -63,4 +63,20 @@ class ConfigurableBundleMapper
 
         return $configurableBundleTemplateSlotEntity;
     }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function mapConfigurableBundleTemplateSlotEntityToTransfer(
+        SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity,
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleTemplateSlotTransfer {
+        return $configurableBundleTemplateSlotTransfer->fromArray(
+            $configurableBundleTemplateSlotEntity->toArray(),
+            true
+        );
+    }
 }

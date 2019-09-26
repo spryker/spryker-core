@@ -15,6 +15,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGene
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotWriter;
@@ -99,6 +101,17 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
     {
         return new ConfigurableBundleTemplateReader(
+            $this->getRepository(),
+            $this->createConfigurableBundleTranslationExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
+     */
+    public function createConfigurableBundleTemplateSlotReader(): ConfigurableBundleTemplateSlotReaderInterface
+    {
+        return new ConfigurableBundleTemplateSlotReader(
             $this->getRepository(),
             $this->createConfigurableBundleTranslationExpander()
         );

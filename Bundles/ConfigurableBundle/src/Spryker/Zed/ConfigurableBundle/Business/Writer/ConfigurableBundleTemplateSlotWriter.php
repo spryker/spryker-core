@@ -18,6 +18,10 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
 {
     use TransactionTrait;
 
+    protected const ERROR_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
+    protected const ERROR_MESSAGE_TYPE = 'error';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface
      */
@@ -74,6 +78,19 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
+    public function updateConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleResponseTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateSlotTransfer) {
+            return $this->executeUpdateConfigurableBundleTemplateSlotTransaction($configurableBundleTemplateSlotTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     */
     protected function executeCreateConfigurableBundleTemplateSlotTransaction(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleResponseTransfer {
@@ -97,6 +114,33 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
 
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleEntityManager
             ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+        $this->configurableBundleTemplateSlotTranslationWriter->saveTranslations($configurableBundleTemplateSlotTransfer);
+
+        return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateSlotTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     */
+    protected function executeUpdateConfigurableBundleTemplateSlotTransaction(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleResponseTransfer {
+        $configurableBundleTemplateSlotTransfer = $this->configurableBundleNameGenerator
+            ->setConfigurableBundleTemplateSlotName($configurableBundleTemplateSlotTransfer);
+
+        if (!$this->configurableBundleEntityManager->updateConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer)) {
+            $messageTransfer = (new MessageTransfer())
+                ->setValue(static::ERROR_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_FOUND)
+                ->setType(static::ERROR_MESSAGE_TYPE)
+                ->setParameters([
+                    static::ERROR_MESSAGE_PARAM_ID => $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot(),
+                ]);
+
+            return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateSlotTransfer, $messageTransfer);
+        }
+
         $this->configurableBundleTemplateSlotTranslationWriter->saveTranslations($configurableBundleTemplateSlotTransfer);
 
         return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateSlotTransfer);

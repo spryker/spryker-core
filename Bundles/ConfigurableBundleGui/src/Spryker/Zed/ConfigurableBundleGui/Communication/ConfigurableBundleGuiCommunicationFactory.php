@@ -22,6 +22,7 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemp
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateCreateTabs;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateEditTabs;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotCreateTabs;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotEditTabs;
 use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
@@ -160,6 +161,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function createConfigurableBundleTemplateSlotCreateTabs(): ConfigurableBundleTemplateSlotCreateTabs
     {
         return new ConfigurableBundleTemplateSlotCreateTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotEditTabs
+     */
+    public function createConfigurableBundleTemplateSlotEditTabs(): ConfigurableBundleTemplateSlotEditTabs
+    {
+        return new ConfigurableBundleTemplateSlotEditTabs();
     }
 
     /**

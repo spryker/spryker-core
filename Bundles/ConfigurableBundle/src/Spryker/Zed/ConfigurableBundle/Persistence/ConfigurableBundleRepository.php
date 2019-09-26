@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -44,28 +47,28 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
      */
     public function findConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-    ): ?ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleTemplateQuery();
-        $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
-            $configurableBundleTemplateQuery,
-            $configurableBundleTemplateFilterTransfer
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ?ConfigurableBundleTemplateSlotTransfer {
+        $configurableBundleTemplateSlotQuery = $this->getFactory()->createConfigurableBundleTemplateSlotQuery();
+        $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
+            $configurableBundleTemplateSlotQuery,
+            $configurableBundleTemplateSlotFilterTransfer
         );
 
-        $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->find()->getFirst();
+        $configurableBundleTemplateSlotEntity = $configurableBundleTemplateSlotQuery->find()->getFirst();
 
-        if (!$configurableBundleTemplateEntity) {
+        if (!$configurableBundleTemplateSlotEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+            ->mapConfigurableBundleTemplateSlotEntityToTransfer($configurableBundleTemplateSlotEntity, new ConfigurableBundleTemplateSlotTransfer());
     }
 
     /**
@@ -107,5 +110,24 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         $configurableBundleTemplateQuery->limit(1);
 
         return $configurableBundleTemplateQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
+     */
+    protected function setConfigurableBundleTemplateSlotFilters(
+        SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery,
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): SpyConfigurableBundleTemplateSlotQuery {
+        if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()) {
+            $configurableBundleTemplateSlotQuery->filterByIdConfigurableBundleTemplateSlot(
+                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()
+            );
+        }
+
+        return $configurableBundleTemplateSlotQuery;
     }
 }

@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
-use ArrayObject;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -21,10 +19,9 @@ class SlotController extends AbstractController
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
      */
-    protected const ROUTE_EDIT_TEMPLATE_SLOT = '/configurable-bundle-gui/template/edit';
+    protected const ROUTE_EDIT_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/edit';
 
-    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
-    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
+    protected const ERROR_MESSAGE_TEMPLATE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +44,23 @@ class SlotController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
-    public function executeCreateAction(Request $request)
+    public function editAction(Request $request)
+    {
+        $response = $this->executeEditAction($request);
+
+        if (!is_array($response)) {
+            return $response;
+        }
+
+        return $this->viewResponse($response);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     */
+    protected function executeCreateAction(Request $request)
     {
         $idConfigurableBundleTemplate = $this->castId(
             $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
@@ -89,14 +102,54 @@ class SlotController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messages
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
-    protected function handleErrors(ArrayObject $messages): void
+    protected function executeEditAction(Request $request)
     {
-        foreach ($messages as $messageTransfer) {
-            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
+        $idConfigurableBundleTemplateSlot = $this->castId(
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+        );
+
+        $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotFormDataProvider();
+        $configurableBundleTemplateSlotTransfer = $formDataProvider->getData(
+            null,
+            $idConfigurableBundleTemplateSlot
+        );
+
+        if (!$configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_SLOT_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplateSlot,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
+
+        $form = $this->getFactory()
+            ->getConfigurableBundleTemplateSlotForm(
+                $configurableBundleTemplateSlotTransfer,
+                $formDataProvider->getOptions()
+            )->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $configurableBundleResponseTransfer = $this->getFactory()
+                ->getConfigurableBundleFacade()
+                ->updateConfigurableBundleTemplateSlot($form->getData());
+
+            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
+                $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE_SLOT, [
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $idConfigurableBundleTemplateSlot,
+                ]);
+
+                return $this->redirectResponse($redirectUrl);
+            }
+        }
+
+        return [
+            'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotEditTabs()->createView(),
+            'form' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+        ];
     }
 }
