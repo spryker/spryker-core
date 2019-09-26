@@ -6,20 +6,22 @@
     {{ widget_title }}
 {% endblock %}
 {% block section_title %}
-    {{ widget_title }}
+    {{ 'Scheduled Prices'| trans }}
 {% endblock %}
-
-{% set redirectUrl = app.request.headers.get('referer')~'#tab-content-scheduled_prices' %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-
-            <a href="{{ redirectUrl }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
-            {{ form(form, {'method': 'POST'}) }}
-
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="{{ redirectUrl }}" class="btn btn-back">{{ 'No, I want to keep this price' | trans}}</a>
+                </div>
+                <div class="col-md-2">
+                    {{ form(form, {'method': 'POST'}) }}
+                </div>
+            </div>
         {% endblock %}
 
     {% endembed %}

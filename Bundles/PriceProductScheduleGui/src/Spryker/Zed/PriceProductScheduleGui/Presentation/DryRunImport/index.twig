@@ -70,7 +70,7 @@
     {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Errors found inside your file' | trans} %}
 
         {% block widget_content %}
-            {% if errorTable.data is not empty %}
+            {% if errorTable and errorTable.data is not empty %}
                 {% include '@Gui/Table/table.twig' with {table: errorTable, id: 'scheduled-prices-errors-form'} %}
             {% else %}
                 <div>
