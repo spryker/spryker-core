@@ -28,7 +28,8 @@ class RefreshTokensResourceController extends AbstractController
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
-     *              "401": "Failed to authenticate user."
+     *              "401": "Failed to authenticate user.",
+     *              "400": "Bad request."
      *          },
      *          "isIdNullable": true
      *     }
