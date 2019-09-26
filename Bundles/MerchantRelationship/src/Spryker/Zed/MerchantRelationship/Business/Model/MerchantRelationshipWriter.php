@@ -152,7 +152,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
             return [];
         }
 
-        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]|null */
+        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]|null $companyBusinessUnits */
         $companyBusinessUnits = $merchantRelationTransfer->getAssigneeCompanyBusinessUnits()->getCompanyBusinessUnits();
         if (!$companyBusinessUnits) {
             return [];
