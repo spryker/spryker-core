@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class TwigEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds TwigEventSubscriber.
      *
      * @api

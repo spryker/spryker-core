@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets voucher discount to the quote if the code hasn't been added already.
      *
      * @api
@@ -36,7 +36,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes matching applied and not applied voucher discount from quote.
      *
      * @api
@@ -54,7 +54,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns voucher apply success message in case the given voucher code has been applied successfully.
      * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
      * - Returns an empty failed message if code is not relevant.
@@ -74,7 +74,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Clears all applied and not applied voucher codes from the quote.
      *
      * @api

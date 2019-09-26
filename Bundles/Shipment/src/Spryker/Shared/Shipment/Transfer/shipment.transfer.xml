@@ -81,6 +81,8 @@
     </transfer>
 
     <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
         <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
     </transfer>
 
@@ -102,11 +104,6 @@
         <property name="isExternalRedirect" type="bool"/>
         <property name="redirectUrl" type="string"/>
         <property name="saveOrder" type="SaveOrder"/>
-    </transfer>
-
-    <transfer name="SaveOrder">
-        <property name="idSalesOrder" type="int"/>
-        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="MoneyValue">

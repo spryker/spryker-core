@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilEncodingService extends AbstractService implements UtilEncodingServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

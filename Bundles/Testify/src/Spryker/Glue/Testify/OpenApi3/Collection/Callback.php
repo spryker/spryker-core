@@ -14,7 +14,7 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 class Callback extends AbstractCollection implements ReferableInterface
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementDefinition(): PropertyDefinition
     {

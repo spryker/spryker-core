@@ -17,7 +17,7 @@ class DebugTwigPlugin implements TwigPluginInterface
     protected const SERVICE_DEBUG = 'debug';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

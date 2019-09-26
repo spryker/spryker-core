@@ -30,7 +30,7 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

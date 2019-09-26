@@ -28,11 +28,11 @@
         <property name="order" type="int"/>
     </transfer>
 
-
     <!-- Query rule -->
     <transfer name="RuleQueryDataProvider">
         <property name="idProductAbstract" type="int"/>
         <property name="idLocale" type="int"/>
+        <property name="data" type="array" singular="dataItem"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderRuleSet">
@@ -54,10 +54,6 @@
     <transfer name="PropelQueryBuilderCriteriaMapping">
         <property name="alias" type="string"/>
         <property name="columns" type="array"/>
-    </transfer>
-
-    <transfer name="RuleQueryDataProvider">
-        <property name="data" type="array" singular="dataItem"/>
     </transfer>
 
 </transfers>

@@ -63,6 +63,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
+     *
      * @return bool
      */
     public function isSslEnabled()
@@ -71,6 +73,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     *
      * @return array
      */
     public function getSslExcludedResources()

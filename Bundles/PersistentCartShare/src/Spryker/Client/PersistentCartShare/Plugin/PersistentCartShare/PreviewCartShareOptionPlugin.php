@@ -20,7 +20,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
     protected const SHARE_OPTION_GROUP_EXTERNAL = 'external';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true, since preview share option is available for all customers by default.
      *
      * @api
@@ -47,7 +47,7 @@ class PreviewCartShareOptionPlugin extends AbstractPlugin implements CartShareOp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
