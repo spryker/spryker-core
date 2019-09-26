@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class AuthRestApiHelper extends Module
@@ -34,7 +35,7 @@ class AuthRestApiHelper extends Module
         ?string $anonymousCustomerReference = null
     ): OauthResponseTransfer {
         $oauthRequestTransfer = (new OauthRequestTransfer())
-            ->setGrantType('password')
+            ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_PASSWORD)
             ->setUsername($customerTransfer->getEmail())
             ->setPassword($customerTransfer->getNewPassword());
 
