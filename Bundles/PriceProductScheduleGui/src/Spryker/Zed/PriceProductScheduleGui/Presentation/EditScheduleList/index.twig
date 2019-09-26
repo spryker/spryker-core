@@ -16,7 +16,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Information' | trans} %}
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'General information' | trans} %}
 
         {% block widget_content %}
             {{ form_start(form, {method: 'POST'}) }}

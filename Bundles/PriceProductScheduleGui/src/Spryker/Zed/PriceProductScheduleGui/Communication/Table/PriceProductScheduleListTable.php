@@ -140,7 +140,7 @@ class PriceProductScheduleListTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList[] $priceProductScheduleListCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductScheduleListCollection
      * @param array $priceProductScheduleList
      *
      * @return array

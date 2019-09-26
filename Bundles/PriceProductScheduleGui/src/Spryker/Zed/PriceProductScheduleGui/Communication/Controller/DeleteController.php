@@ -26,6 +26,7 @@ class DeleteController extends AbstractController
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
     protected const PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE = 'idPriceProductSchedule';
     protected const PARAM_TEMPLATE_FORM = 'form';
+    protected const PARAM_REDIRECT_URL = 'redirectUrl';
     protected const SUCCESS_MESSAGE = 'Scheduled price was successfully removed';
     protected const REDIRECT_URL_MAIN_PAGE = '/';
 
@@ -56,6 +57,7 @@ class DeleteController extends AbstractController
         return $this->viewResponse([
             static::PARAM_TEMPLATE_FORM => $form->createView(),
             static::PARAM_TEMPLATE_ID_PRICE_PRODUCT_SCHEDULE => $priceProductScheduleTransfer->getIdPriceProductSchedule(),
+            static::PARAM_REDIRECT_URL => $redirectUrl,
         ]);
     }
 

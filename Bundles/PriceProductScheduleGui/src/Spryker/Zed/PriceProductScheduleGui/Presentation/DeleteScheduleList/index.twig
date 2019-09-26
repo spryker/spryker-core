@@ -19,14 +19,21 @@
     } %}
 
         {% block widget_content %}
-            <div>
                 {{ "You will delete %d prices for %d products. Is this what you want?"| format(
                     priceProductScheduleList.metaData.numberOfPrices,
                     priceProductScheduleList.metaData.numberOfProducts
                 ) }}
-            </div><br>
-            <a href="/price-product-schedule-gui/import" class="btn btn-back">{{ 'No, I want to keep those prices' | trans}}</a>
-            {{ form(form, {'method': 'POST'}) }}
+            <br><br>
+            <div class="row">
+                <div class="col-md-2">
+                    <a href="/price-product-schedule-gui/import" class="btn btn-back">{{ 'No, I want to keep those prices' | trans}}</a>
+                </div>
+                <div class="col-md-2">
+                    {{ form(form, {'method': 'POST'}) }}
+                </div>
+            </div>
+
+            {#{{ form(form, {'method': 'POST'}) }}#}
 
         {% endblock %}
 

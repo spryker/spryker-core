@@ -35,8 +35,8 @@
                         <visible>0</visible>
                     </price-product-schedule-publish>
                     <price-product-schedule-list-view>
-                        <label>View</label>
-                        <title>View</title>
+                        <label>View Import</label>
+                        <title>View Import</title>
                         <bundle>price-product-schedule-gui</bundle>
                         <controller>view-schedule-list</controller>
                         <action>index</action>
@@ -53,8 +53,8 @@
                         <visible>0</visible>
                     </price-product-schedule-list-edit>
                     <price-product-schedule-edit>
-                        <label>Edit Schedule Price</label>
-                        <title>Edit Schedule Price</title>
+                        <label>Edit Scheduled Price</label>
+                        <title>Edit Scheduled Price</title>
                         <bundle>price-product-schedule-gui</bundle>
                         <controller>edit-schedule-price</controller>
                         <action>index</action>
