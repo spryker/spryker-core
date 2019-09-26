@@ -17,10 +17,15 @@ use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterfa
 
 class MerchantTable extends AbstractTable
 {
-    protected const STATUS_CLASS_MAPPING = [
+    protected const STATUS_CLASS_LABEL_MAPPING = [
         'waiting-for-approval' => 'label-warning',
-        'approved' => 'label-success',
+        'approved' => 'label-info',
         'denied' => 'label-danger',
+    ];
+
+    protected const STATUS_CLASS_BUTTON_MAPPING = [
+        'approved' => 'btn-create',
+        'denied' => 'btn-remove',
     ];
 
     /**
@@ -157,24 +162,42 @@ class MerchantTable extends AbstractTable
      */
     protected function buildLinks(array $item): string
     {
-        $buttons = $this->generateMerchantTableExpanderPluginsActionButtons($item);
-
-        $urlParams = [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]];
+        $buttons = [];
         $buttons[] = $this->generateEditButton(
-            Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, $urlParams),
+            Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]]),
             'Edit'
         );
-        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[MerchantTableConstants::COL_STATUS]);
 
+        $buttons = array_merge(
+            $buttons,
+            $this->generateMerchantTableExpanderPluginsActionButtons($item),
+            $this->buildAvailableStatusButtons($item)
+        );
+
+        return implode(' ', $buttons);
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function buildAvailableStatusButtons(array $item): array
+    {
+        $availableStatusButtons = [];
+        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[MerchantTableConstants::COL_STATUS]);
         foreach ($availableStatuses as $availableStatus) {
-            $buttons[] = $this->generateButton(
-                Url::generate(MerchantTableConstants::URL_MERCHANT_STATUS, array_merge($urlParams, ['status' => $availableStatus])),
-                $availableStatus,
-                ['icon' => 'fa-pencil', 'class' => static::STATUS_CLASS_MAPPING[$availableStatus]]
+            $availableStatusButtons[] = $this->generateButton(
+                Url::generate(
+                    MerchantTableConstants::URL_MERCHANT_STATUS,
+                    [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT], 'status' => $availableStatus]
+                ),
+                $availableStatus . '_button',
+                ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]]
             );
         }
 
-        return implode(' ', $buttons);
+        return $availableStatusButtons;
     }
 
     /**
@@ -208,10 +231,10 @@ class MerchantTable extends AbstractTable
     {
         $currentStatus = $merchant[SpyMerchantTableMap::COL_STATUS];
 
-        if (!isset(static::STATUS_CLASS_MAPPING[$currentStatus])) {
+        if (!isset(static::STATUS_CLASS_LABEL_MAPPING[$currentStatus])) {
             return '';
         }
 
-        return $this->generateLabel($currentStatus, static::STATUS_CLASS_MAPPING[$currentStatus]);
+        return $this->generateLabel($currentStatus, static::STATUS_CLASS_LABEL_MAPPING[$currentStatus]);
     }
 }

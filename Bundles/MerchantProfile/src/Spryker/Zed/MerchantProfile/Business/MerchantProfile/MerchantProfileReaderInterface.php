@@ -7,6 +7,15 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
+
 interface MerchantProfileReaderInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
+     */
+    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer;
 }

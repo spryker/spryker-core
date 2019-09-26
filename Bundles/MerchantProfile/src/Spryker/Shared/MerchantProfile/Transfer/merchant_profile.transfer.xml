@@ -27,7 +27,7 @@
         <property name="imprintGlossaryKey" type="string" />
         <property name="dataPrivacyGlossaryKey" type="string" />
         <property name="fkMerchant" type="int" />
-        <property name="isActive" type="int" />
+        <property name="isActive" type="bool" />
         <property name="merchantProfileGlossaryAttributes" type="MerchantProfileGlossaryAttributes[]" />
     </transfer>
 
@@ -50,4 +50,7 @@
         <property name="translationKey" type="int" />
     </transfer>
 
+    <transfer name="MerchantProfileCriteriaFilter">
+        <property name="idMerchant" type="int" />
+    </transfer>
 </transfers>

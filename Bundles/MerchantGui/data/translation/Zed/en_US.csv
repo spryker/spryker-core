@@ -11,10 +11,10 @@
 "Overview of Merchants","Overview of Merchants"
 Save,Save
 waiting-for-approval,"Waiting for Approval"
-approved,Approve Access
-denied,Deny Access
-active,active
-inactive,inactive
+approved,Approved
+denied,Denied
+approved_button,Approve Access
+denied_button,Deny Access
 E-Mail,E-Mail
 City,City
 "Zip Code","Zip Code"

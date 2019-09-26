@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface;
 
 class MerchantProfileReader implements MerchantProfileReaderInterface
@@ -22,5 +24,15 @@ class MerchantProfileReader implements MerchantProfileReaderInterface
     public function __construct(MerchantProfileRepositoryInterface $merchantProfileRepository)
     {
         $this->merchantProfileRepository = $merchantProfileRepository;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
+     */
+    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
+    {
+        return $this->merchantProfileRepository->findOne($merchantProfileCriteriaFilterTransfer);
     }
 }

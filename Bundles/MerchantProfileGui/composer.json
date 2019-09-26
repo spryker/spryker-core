@@ -7,18 +7,21 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-gui-extension": "^1.0.0",
+    "spryker/merchant-profile": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/util-text": "*",
     "spryker/testify": "*",
     "spryker/gui": "*",
     "spryker/merchant": "*"
   },
   "suggest": {
-    "spryker/gui": "Required to use gui in plugins.",
-    "spryker/merchant": "Required to use merchant information in plugins."
+    "spryker/util-text": "Required to use gui in plugins.",
+    "spryker/gui": "Required to use util text in plugins.",
+    "spryker/merchant": "Required to use merchant in plugins."
   },
   "autoload": {
     "psr-4": {

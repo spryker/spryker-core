@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\MerchantProfileGui\Communication\Plugin\MerchantGui\Table;
 
+use Generated\Shared\Transfer\ButtonTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface;
@@ -24,6 +28,10 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
     protected const COL_IS_ACTIVE = 'is_active';
     protected const COL_IS_ACTIVE_LABEL = 'active';
     protected const ID_MERCHANT = SpyMerchantTableMap::COL_ID_MERCHANT;
+
+    protected const REQUEST_ID_MERCHANT_PROFILE = 'id-merchant-profile';
+    protected const URL_MERCHANT_PROFILE_ACTIVATE = '/merchant-profile-gui/edit/activate';
+    protected const URL_MERCHANT_PROFILE_DEACTIVATE = '/merchant-profile-gui/edit/deactivate';
 
     /**
      * {@inheritdoc}
@@ -78,7 +86,14 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
      */
     public function getActionButtonDefinitions(array $item): array
     {
-        return [];
+        $buttons = [];
+        $activeButton = $this->getAtiveButton($item);
+
+        if ($activeButton) {
+            $buttons[] = $activeButton;
+        }
+
+        return $buttons;
     }
 
     /**
@@ -88,11 +103,13 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
      */
     protected function getIsActive(array $item): string
     {
-        if (true) {
-            return $this->generateLabel('Inactive', 'label-danger');
-        }
+        $merchantProfileTransfer = $this->getMerchantProfileByIdMerchant($item[static::ID_MERCHANT]);
 
-        return $this->generateLabel('Active', 'label-info');
+        if ($merchantProfileTransfer && $merchantProfileTransfer->getIsActive()) {
+            return $this->generateLabel('Active', 'label-info');
+        }
+        
+        return $this->generateLabel('Inactive', 'label-danger');
     }
 
     /**
@@ -109,18 +126,54 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
         ]);
     }
 
-//    /**
-//     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
-//     *
-//     * @return string
-//     */
-//    protected function generateActivateButton(SpyProductSet $productSetEntity)
-//    {
-//        return $this->generateViewButton(
-//            Url::generate('/product-set-gui/edit/activate', [
-//                EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
-//            ]),
-//            'Activate'
-//        );
-//    }
+    /**
+     * @param array $item
+     *
+     * @return \Generated\Shared\Transfer\ButtonTransfer|null
+     */
+    protected function getAtiveButton(array $item): ?ButtonTransfer
+    {
+        $merchantProfileTransfer = $this->getMerchantProfileByIdMerchant($item[static::ID_MERCHANT]);
+        if ($merchantProfileTransfer === null) {
+            return null;
+        }
+        $idMerchantProfile = $merchantProfileTransfer->getIdMerchantProfile();
+
+        if ($merchantProfileTransfer->getIsActive()) {
+            return (new ButtonTransfer())
+                ->setUrl(Url::generate(
+                    static::URL_MERCHANT_PROFILE_DEACTIVATE,
+                    [static::REQUEST_ID_MERCHANT_PROFILE => $idMerchantProfile]
+                ))
+                ->setTitle('Deactivate')
+                ->setDefaultOptions([
+                    'class' => 'btn-remove',
+                    'icon' => 'fa fa-trash',
+                ]);
+        }
+
+        return (new ButtonTransfer())
+            ->setUrl(Url::generate(
+                static::URL_MERCHANT_PROFILE_ACTIVATE,
+                [static::REQUEST_ID_MERCHANT_PROFILE => $idMerchantProfile]
+            ))
+            ->setTitle('Activate')
+            ->setDefaultOptions([
+                'class' => 'btn-view',
+                'icon' => 'fa fa-caret-right',
+            ]);
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
+     */
+    protected function getMerchantProfileByIdMerchant(int $idMerchant): ?MerchantProfileTransfer
+    {
+        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
+        $merchantProfileCriteriaFilterTransfer->setIdMerchant($idMerchant);
+
+        return $this->getFactory()->getMerchantProfileFacade()->findOne($merchantProfileCriteriaFilterTransfer);
+    }
 }

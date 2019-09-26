@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfile\Business;
 
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -31,5 +33,21 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
         return $this->getFactory()
             ->createMerchantProfileWriter()
             ->saveMerchantProfile($merchantTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
+     */
+    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantProfileReader()
+            ->findOne($merchantProfileCriteriaFilterTransfer);
     }
 }

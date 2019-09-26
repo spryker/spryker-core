@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProfileGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileForm;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\MerchantProfileGuiDependencyProvider;
 use Symfony\Component\Form\FormTypeInterface;
 use Twig\Environment;
@@ -43,5 +44,13 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getTwigEnvironment(): Environment
     {
         return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::TWIG_ENVIRONMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeInterface
+     */
+    public function getMerchantProfileFacade(): MerchantProfileGuiToMerchantProfileFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_MERCHANT_PROFILE);
     }
 }

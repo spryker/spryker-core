@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantProfile\Persistence;
 
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper\MerchantProfileMapper;
+use Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper\MerchantProfileMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface getEntityManager()
@@ -22,5 +24,13 @@ class MerchantProfilePersistenceFactory extends AbstractPersistenceFactory
     public function createMerchantProfileQuery(): SpyMerchantProfileQuery
     {
         return SpyMerchantProfileQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper\MerchantProfileMapperInterface
+     */
+    public function createMerchantProfileMapper(): MerchantProfileMapperInterface
+    {
+        return new MerchantProfileMapper();
     }
 }
