@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 class DataImporterDataSetWriterAware extends DataImporter implements DataImporterDataSetWriterAwareInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface|null
      */
     protected $dataSetWriter;
 
