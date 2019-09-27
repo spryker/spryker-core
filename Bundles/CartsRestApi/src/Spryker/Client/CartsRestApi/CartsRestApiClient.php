@@ -22,7 +22,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +70,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -136,7 +136,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +154,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -170,7 +170,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -188,7 +188,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -204,7 +204,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -222,7 +222,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -238,7 +238,7 @@ class CartsRestApiClient extends AbstractClient implements CartsRestApiClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

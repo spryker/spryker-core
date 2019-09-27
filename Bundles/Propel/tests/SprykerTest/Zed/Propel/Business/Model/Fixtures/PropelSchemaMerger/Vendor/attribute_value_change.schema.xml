@@ -7,7 +7,7 @@
           package="Package">
 
     <table name="spy_foo" idMethod="native">
-        <column name="attribute_value_change" type="VARCHAR" />
+        <column name="attribute_value_change" type="VARCHAR"/>
     </table>
 
 </database>

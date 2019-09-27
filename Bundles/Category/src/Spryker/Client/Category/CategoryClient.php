@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CategoryClient extends AbstractClient implements CategoryClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

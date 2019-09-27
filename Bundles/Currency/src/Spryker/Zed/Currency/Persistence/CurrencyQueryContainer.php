@@ -18,7 +18,7 @@ class CurrencyQueryContainer extends AbstractQueryContainer implements CurrencyQ
     /**
      * @api
      *
-     * @param int $isoCode
+     * @param string $isoCode
      *
      * @return \Orm\Zed\Currency\Persistence\SpyCurrencyQuery
      */

@@ -20,7 +20,7 @@ class RuntimeLoaderTwigPlugin implements TwigPluginInterface
     protected const SERVICE_FRAGMENT_RENDERERS = 'fragment.renderers';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

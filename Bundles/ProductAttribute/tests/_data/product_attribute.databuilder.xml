@@ -6,18 +6,18 @@
 >
 
     <transfer name="ProductManagementAttribute">
-        <property name="idProductManagementAttribute" dataBuilderRule="=" />
-        <property name="key" dataBuilderRule="unique()->text(10)" />
-        <property name="inputType" dataBuilderRule="unique()->text(10)" />
-        <property name="allowInput" dataBuilderRule="boolean(100)" />
-        <property name="isSuper" dataBuilderRule="boolean(0)" />
-        <property name="localizedKeys" dataBuilderRule="=" />
-        <property name="values" dataBuilderRule="=" />
+        <property name="idProductManagementAttribute" dataBuilderRule="="/>
+        <property name="key" dataBuilderRule="unique()->text(10)"/>
+        <property name="inputType" dataBuilderRule="unique()->text(10)"/>
+        <property name="allowInput" dataBuilderRule="boolean(100)"/>
+        <property name="isSuper" dataBuilderRule="boolean(0)"/>
+        <property name="localizedKeys" dataBuilderRule="="/>
+        <property name="values" dataBuilderRule="="/>
     </transfer>
 
     <transfer name="LocalizedProductManagementAttributeKey">
-        <property name="localeName" dataBuilderRule="unique()->text(5)" />
-        <property name="keyTranslation" dataBuilderRule="=" />
+        <property name="localeName" dataBuilderRule="unique()->text(5)"/>
+        <property name="keyTranslation" dataBuilderRule="="/>
     </transfer>
 
 </transfers>

@@ -23,14 +23,14 @@
 
     <transfer name="ShipmentMethod">
         <property name="id" type="int"/>
-        <property name="idShipmentMethod" type="int" />
+        <property name="idShipmentMethod" type="int"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="type" type="string" />
-        <property name="unitNetPrice" type="int" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="type" type="string"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
         <property name="shipment" type="Shipment"/>
     </transfer>
 
@@ -39,16 +39,16 @@
     </transfer>
 
     <transfer name="CheckoutData">
-        <property name="shipment" type="RestShipment" />
+        <property name="shipment" type="RestShipment"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
     <transfer name="CheckoutError">
-        <property name="message" type="string" />
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

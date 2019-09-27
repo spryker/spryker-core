@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUnitAddressLabelDataImportFacade extends AbstractFacade implements CompanyUnitAddressLabelDataImportFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class CompanyUnitAddressLabelDataImportFacade extends AbstractFacade implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

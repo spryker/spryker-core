@@ -4,69 +4,69 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ShipmentCarrier">
-        <property name="idShipmentCarrier" type="int" />
-        <property name="name" type="string" />
-        <property name="isActive" type="bool" />
+        <property name="idShipmentCarrier" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ShipmentMethods">
-        <property name="methods" type="ShipmentMethod[]" singular="method" />
+        <property name="methods" type="ShipmentMethod[]" singular="method"/>
         <property name="shipmentHash" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
-        <property name="idShipmentMethod" type="int" />
-        <property name="fkSalesExpense" type="int" />
-        <property name="fkShipmentCarrier" type="int" />
-        <property name="fkTaxSet" type="int" />
-        <property name="availabilityPlugin" type="string" />
-        <property name="pricePlugin" type="string" />
-        <property name="deliveryTimePlugin" type="string" />
-        <property name="name" type="string" />
-        <property name="carrierName" type="string" />
-        <property name="taxRate" type="float" />
-        <property name="isActive" type="bool" />
-        <property name="deliveryTime" type="int" />
-        <property name="prices" type="MoneyValue[]" singular="price" />
-        <property name="storeCurrencyPrice" type="int" />
-        <property name="currencyIsoCode" type="string" />
+        <property name="idShipmentMethod" type="int"/>
+        <property name="fkSalesExpense" type="int"/>
+        <property name="fkShipmentCarrier" type="int"/>
+        <property name="fkTaxSet" type="int"/>
+        <property name="availabilityPlugin" type="string"/>
+        <property name="pricePlugin" type="string"/>
+        <property name="deliveryTimePlugin" type="string"/>
+        <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="taxRate" type="float"/>
+        <property name="isActive" type="bool"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="prices" type="MoneyValue[]" singular="price"/>
+        <property name="storeCurrencyPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Order">
-        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead." />
-        <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead." />
-        <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used." />
-        <property name="currencyIsoCode" type="string" />
+        <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead."/>
+        <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead."/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used."/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="idCustomerAddress" type="int" />
-        <property name="customerId" type="string" />
-        <property name="fkCustomer" type="int" />
-        <property name="email" type="string" />
-        <property name="salutation" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
-        <property name="address1" type="string" />
-        <property name="address2" type="string" />
-        <property name="address3" type="string" />
-        <property name="company" type="string" />
-        <property name="city" type="string" />
-        <property name="zipCode" type="string" />
-        <property name="phone" type="string" />
-        <property name="state" type="string" />
-        <property name="fkCountry" type="int" />
-        <property name="fkRegion" type="int" />
-        <property name="iso2Code" type="string" />
+        <property name="idCustomerAddress" type="int"/>
+        <property name="customerId" type="string"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="state" type="string"/>
+        <property name="fkCountry" type="int"/>
+        <property name="fkRegion" type="int"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="Shipment">
         <property name="carrier" type="ShipmentCarrier"/>
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
-        <property name="shippingAddress" type="Address" />
-        <property name="requestedDeliveryDate" type="string" />
+        <property name="shippingAddress" type="Address"/>
+        <property name="requestedDeliveryDate" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -77,56 +77,53 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="shipment" type="Shipment" />
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
         <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="idSalesExpense" type="int" />
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
-        <property name="unitTaxAmount" type="int" />
-        <property name="sumTaxAmount" type="int" />
-        <property name="taxRate" type="float" />
-        <property name="shipment" type="Shipment" />
+        <property name="idSalesExpense" type="int"/>
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
-        <property name="isExternalRedirect" type="bool" />
-        <property name="redirectUrl" type="string" />
-        <property name="saveOrder" type="SaveOrder" />
-    </transfer>
-
-    <transfer name="SaveOrder">
-        <property name="idSalesOrder" type="int" />
-        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="saveOrder" type="SaveOrder"/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="idEntity" type="int" />
-        <property name="fkCurrency" type="int" />
+        <property name="idEntity" type="int"/>
+        <property name="fkCurrency" type="int"/>
         <property name="fkStore"  type="int"/>
-        <property name="currency" type="Currency" />
-        <property name="netAmount" type="int" />
-        <property name="grossAmount" type="int" />
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="Money">
-        <property name="amount" type="string" />
-        <property name="currency" type="Currency" />
+        <property name="amount" type="string"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
-        <property name="shipment" type="Shipment" />
-        <property name="items" type="Item[]" singular="item" />
-        <property name="availableShipmentMethods" type="ShipmentMethods" />
+        <property name="shipment" type="Shipment"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="availableShipmentMethods" type="ShipmentMethods"/>
         <property name="hash" type="string"/>
     </transfer>
 
@@ -151,7 +148,7 @@
 
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
-        <property name="originalQuote" type="Quote" />
+        <property name="originalQuote" type="Quote"/>
     </transfer>
 
 </transfers>

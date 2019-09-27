@@ -53,7 +53,7 @@ class ShoppingListToCustomerClientBridge implements ShoppingListToCustomerClient
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

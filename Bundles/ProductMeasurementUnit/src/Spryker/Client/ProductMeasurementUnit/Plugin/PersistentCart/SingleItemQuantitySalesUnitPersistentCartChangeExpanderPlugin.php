@@ -17,7 +17,7 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
 class SingleItemQuantitySalesUnitPersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

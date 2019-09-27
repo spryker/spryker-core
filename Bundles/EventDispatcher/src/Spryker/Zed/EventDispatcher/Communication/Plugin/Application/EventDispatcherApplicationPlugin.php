@@ -22,7 +22,7 @@ class EventDispatcherApplicationPlugin extends AbstractPlugin implements Applica
     public const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends EventDispatcher with EventDispatcherExtensionPlugins.
      *
      * @api

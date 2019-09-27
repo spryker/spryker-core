@@ -43,7 +43,7 @@ class SessionStorageHandlerPool implements SessionStorageHandlerPoolInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $sessionHandlerName
      *

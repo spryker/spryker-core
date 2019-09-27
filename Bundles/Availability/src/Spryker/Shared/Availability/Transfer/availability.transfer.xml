@@ -4,36 +4,36 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="AvailabilityStock">
-        <property name="idAvailability" type="int" />
-        <property name="sku" type="string" />
+        <property name="idAvailability" type="int"/>
+        <property name="sku" type="string"/>
         <property name="stocks" type="StockProduct[]" singular="StockProduct"/>
     </transfer>
 
     <transfer name="StorageAvailability">
-        <property name="isAbstractProductAvailable" type="bool" />
+        <property name="isAbstractProductAvailable" type="bool"/>
         <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
     </transfer>
 
     <transfer name="ProductAbstractAvailability">
-        <property name="availability" type="int" />
-        <property name="productName" type="string" />
-        <property name="reservationQuantity" type="int" />
-        <property name="sku" type="string" />
-        <property name="stockQuantity" type="int" />
-        <property name="isNeverOutOfStock" type="bool" />
+        <property name="availability" type="int"/>
+        <property name="productName" type="string"/>
+        <property name="reservationQuantity" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="stockQuantity" type="int"/>
+        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductConcreteAvailability">
-        <property name="availability" type="int" />
-        <property name="isNeverOutOfStock" type="bool" />
+        <property name="availability" type="int"/>
+        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductConcreteAvailabilityRequest">
-        <property name="sku" type="string" />
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="store" type="Store" />
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="AvailabilityNotificationData">

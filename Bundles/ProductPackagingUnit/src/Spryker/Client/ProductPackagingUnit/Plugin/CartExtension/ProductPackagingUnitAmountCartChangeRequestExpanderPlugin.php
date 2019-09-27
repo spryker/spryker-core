@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class ProductPackagingUnitAmountCartChangeRequestExpanderPlugin extends AbstractPlugin implements CartChangeRequestExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

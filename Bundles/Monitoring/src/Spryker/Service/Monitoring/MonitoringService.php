@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class MonitoringService extends AbstractService implements MonitoringServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +84,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -108,7 +108,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -123,7 +123,7 @@ class MonitoringService extends AbstractService implements MonitoringServiceInte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -4,7 +4,7 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceDataFeed">
-        <property name="joinPriceType" type="bool" />
+        <property name="joinPriceType" type="bool"/>
     </transfer>
 
 </transfers>
