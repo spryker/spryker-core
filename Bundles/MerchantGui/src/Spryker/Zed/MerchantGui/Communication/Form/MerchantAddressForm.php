@@ -94,7 +94,6 @@ class MerchantAddressForm extends AbstractType
             'label' => static::LABEL_FK_COUNTRY,
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'constraints' => $this->getRequiredConstraints(),
         ]);
 

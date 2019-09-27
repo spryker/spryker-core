@@ -139,7 +139,6 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_TITLE, ChoiceType::class, [
             'choices' => array_flip($choices),
-            'choices_as_values' => true,
             'label' => static::LABEL_CONTACT_PERSON_TITLE,
             'constraints' => $this->getSalutationFieldConstraints($choices),
             'placeholder' => 'Select one',
