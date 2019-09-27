@@ -471,6 +471,7 @@
     "spryker/resource-share-extension": "*",
     "spryker/rest-request-validator": "*",
     "spryker/router": "*",
+    "spryker/router-extension": "*",
     "spryker/sales": "*",
     "spryker/sales-configurable-bundle": "*",
     "spryker/sales-extension": "*",
