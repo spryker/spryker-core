@@ -311,7 +311,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @api
      *
      * @param int $idNode
-     * @param string $idLocale
+     * @param int $idLocale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode
      *
@@ -370,7 +370,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $nodeQuery = $this->getFactory()->createCategoryNodeQuery();
 
         if ($excludeRootNode) {
-            $nodeQuery->filterByIsRoot(0);
+            $nodeQuery->filterByIsRoot(false);
         }
 
         $nodeQuery
