@@ -36,7 +36,7 @@ class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements Co
 
     /**
      * {@inheritDoc}
-     * - Returns instance of `Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator` constraint.
+     * - Returns an instance of `Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator` constraint.
      *
      * @api
      *

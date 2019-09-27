@@ -10,7 +10,7 @@ namespace Spryker\Yves\Validator;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Security\Plugin\Validator\UserPasswordValidatorConstraintPlugin;
-use Spryker\Yves\Validator\Plugin\Validator\ConstraintFactoryValidatorPlugin;
+use Spryker\Yves\Validator\Plugin\Validator\ConstraintValidatorFactoryValidatorPlugin;
 use Spryker\Yves\Validator\Plugin\Validator\MetadataFactoryValidatorPlugin;
 
 class ValidatorDependencyProvider extends AbstractBundleDependencyProvider
@@ -80,7 +80,7 @@ class ValidatorDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [
             new MetadataFactoryValidatorPlugin(),
-            new ConstraintFactoryValidatorPlugin(),
+            new ConstraintValidatorFactoryValidatorPlugin(),
         ];
     }
 

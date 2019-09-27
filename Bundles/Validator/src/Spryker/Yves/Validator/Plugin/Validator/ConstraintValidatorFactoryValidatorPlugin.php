@@ -17,7 +17,7 @@ use Symfony\Component\Validator\ValidatorBuilderInterface;
 /**
  * @method \Spryker\Yves\Validator\ValidatorFactory getFactory()
  */
-class ConstraintFactoryValidatorPlugin extends AbstractPlugin implements ValidatorPluginInterface
+class ConstraintValidatorFactoryValidatorPlugin extends AbstractPlugin implements ValidatorPluginInterface
 {
     protected const SERVICE_VALIDATOR_SERVICE_IDS = 'validator.validator_service_ids';
 

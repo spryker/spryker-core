@@ -1,7 +1,7 @@
 # Security Module
 [![Build Status](https://travis-ci.org/spryker/security.svg)](https://travis-ci.org/spryker/security)
 
-Security module contains all security related code.
+Security module contains security related code.
 
 ## Installation
 

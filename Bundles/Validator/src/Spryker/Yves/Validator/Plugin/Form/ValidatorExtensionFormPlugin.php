@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
 /**
  * @method \Spryker\Yves\Validator\ValidatorFactory getFactory()
  */
-class ValidatorFormPlugin extends AbstractPlugin implements FormPluginInterface
+class ValidatorExtensionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     protected const SERVICE_VALIDATOR = 'validator';
 

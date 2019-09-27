@@ -5,22 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Gui\Communication\Plugin\Form;
+namespace Spryker\Yves\Http\Plugin\Form;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
 
 /**
- * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\Gui\GuiConfig getConfig()
+ * @method \Spryker\Yves\Http\HttpFactory getFactory()
  */
-class NoValidateTypeFormPlugin extends AbstractPlugin implements FormPluginInterface
+class HttpFoundationTypeExtensionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
-     * {@inheritdoc}
-     * - Adds `Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension`.
+     * {@inheritDoc}
+     * - Adds the basic Symfony HttpFoundation extension.
      *
      * @api
      *
@@ -32,7 +31,7 @@ class NoValidateTypeFormPlugin extends AbstractPlugin implements FormPluginInter
     public function extend(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
         $formFactoryBuilder->addTypeExtension(
-            $this->getFactory()->createNoValidateFormTypeExtension()
+            $this->getFactory()->createFormTypeHttpFoundationExtension()
         );
 
         return $formFactoryBuilder;

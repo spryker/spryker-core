@@ -15,9 +15,9 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "ADD SUGGEST DESCRIPTION",
-    "spryker/kernel": "ADD SUGGEST DESCRIPTION",
-    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
+    "spryker/container": "If you want to use Validator plugins.",
+    "spryker/kernel": "If you want to use Validator plugins.",
+    "spryker/symfony": "If you want to use Validator plugins."
   },
   "autoload": {
     "psr-4": {

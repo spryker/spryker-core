@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/form.svg)](https://travis-ci.org/spryker/form)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/form/badge.svg)](https://coveralls.io/github/spryker/form)
 
-Form module provides a plugin that adds a form factory to the Application. And plugins that extend form factory.
+Form module provides a plugin that adds a form factory to the Application.
 
 ## Installation
 

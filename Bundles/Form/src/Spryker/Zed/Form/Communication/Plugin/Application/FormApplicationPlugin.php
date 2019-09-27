@@ -28,7 +28,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `form.factory` service.
      * - Adds global `FORM_FACTORY` service as an alias for `form.factory`.
      * - Adds `form.csrf_provider` service.
@@ -83,29 +83,6 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     }
 
     /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
-     */
-    protected function getFormPlugins(): array
-    {
-        return array_merge($this->getFactory()->getCoreFormPlugins(), $this->getFactory()->getFormPlugins());
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormFactoryBuilderInterface $formFactoryBuilder
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Symfony\Component\Form\FormFactoryBuilderInterface
-     */
-    protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
-    {
-        foreach ($this->getFormPlugins() as $formPlugin) {
-            $formFactoryBuilder = $formPlugin->extend($formFactoryBuilder, $container);
-        }
-
-        return $formFactoryBuilder;
-    }
-
-    /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\Security\Csrf\CsrfTokenManagerInterface
@@ -130,5 +107,28 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         }
 
         return $this->getFactory()->createDefaultTokenStorage();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormFactoryBuilderInterface $formFactoryBuilder
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\Form\FormFactoryBuilderInterface
+     */
+    protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
+    {
+        foreach ($this->getFormPlugins() as $formPlugin) {
+            $formFactoryBuilder = $formPlugin->extend($formFactoryBuilder, $container);
+        }
+
+        return $formFactoryBuilder;
+    }
+
+    /**
+     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     */
+    protected function getFormPlugins(): array
+    {
+        return array_merge($this->getFactory()->getCoreFormPlugins(), $this->getFactory()->getFormPlugins());
     }
 }

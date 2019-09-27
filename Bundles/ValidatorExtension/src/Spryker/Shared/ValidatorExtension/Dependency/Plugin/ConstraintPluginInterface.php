@@ -14,7 +14,7 @@ interface ConstraintPluginInterface
 {
     /**
      * Specification:
-     * - Returns constraint name.
+     * - Returns a constraint name.
      *
      * @api
      *
@@ -24,7 +24,7 @@ interface ConstraintPluginInterface
 
     /**
      * Specification:
-     * - Returns constraint instance.
+     * - Returns a constraint instance.
      *
      * @api
      *

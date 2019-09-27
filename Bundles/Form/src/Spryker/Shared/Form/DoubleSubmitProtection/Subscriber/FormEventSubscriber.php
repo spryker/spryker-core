@@ -121,7 +121,7 @@ class FormEventSubscriber implements EventSubscriberInterface
      *
      * @return $this
      */
-    public function setTranslationOptions($translationOptions)
+    public function setTranslationOptions(array $translationOptions)
     {
         $this->translationOptions = $translationOptions;
 
