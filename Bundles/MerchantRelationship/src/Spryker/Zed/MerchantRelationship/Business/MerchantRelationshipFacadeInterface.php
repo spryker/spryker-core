@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 
 interface MerchantRelationshipFacadeInterface
 {
@@ -129,18 +128,4 @@ interface MerchantRelationshipFacadeInterface
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
     public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
-
-    /**
-     * Specification:
-     * - Finds merchant relationships which use given product list.
-     * - Uses idProductList property from ProductListUsedByTableDataTransfer::ProductList to filter records.
-     * - Expands UsedByTableDataTransfer::rows with found data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
-     */
-    public function expandProductListUsedByTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer;
 }

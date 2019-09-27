@@ -131,7 +131,7 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle template slots by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
-     * - Expands found configurable bundle template slots with translations.
+     * - Expands found configurable bundle template slots with translations for current locale.
      * - Returns array of transfers.
      *
      * @api

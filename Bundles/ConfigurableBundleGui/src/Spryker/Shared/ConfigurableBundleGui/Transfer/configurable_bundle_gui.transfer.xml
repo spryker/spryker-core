@@ -44,4 +44,19 @@
         <property name="defaultOptions" type="array" />
     </transfer>
 
+    <transfer name="ProductListUsedByTableData">
+        <property name="productList" type="ProductList" />
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="entityTitle" type="string" />
+        <property name="entityName" type="string" />
+        <property name="actionButtons" type="ButtonCollection" />
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int" />
+    </transfer>
+
 </transfers>

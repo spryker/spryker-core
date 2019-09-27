@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -147,21 +146,5 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
         return $this->getFactory()
             ->createMerchantRelationshipReader()
             ->checkProductListUsageAmongMerchantRelationships($productListTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
-     */
-    public function expandProductListUsedByTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
-    {
-        return $this->getFactory()
-            ->createProductListUsedByTableDataExpander()
-            ->expandTableData($productListUsedByTableDataTransfer);
     }
 }

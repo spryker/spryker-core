@@ -85,19 +85,4 @@
         <property name="localeName" type="string"/>
     </transfer>
 
-    <transfer name="ProductListUsedByTableData">
-        <property name="productList" type="ProductList" />
-        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
-    </transfer>
-
-    <transfer name="ProductListUsedByTableRow">
-        <property name="entityTitle" type="string" />
-        <property name="entityName" type="string" />
-        <property name="actionButtons" type="ButtonCollection" />
-    </transfer>
-
-    <transfer name="ButtonCollection">
-        <property name="buttons" type="Button[]" singular="button" />
-    </transfer>
-
 </transfers>

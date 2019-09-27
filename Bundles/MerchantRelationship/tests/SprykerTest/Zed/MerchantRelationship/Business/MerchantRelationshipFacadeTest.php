@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 
 /**
  * Auto-generated group annotations
@@ -266,46 +265,6 @@ class MerchantRelationshipFacadeTest extends Unit
         // Assert
         $this->assertFalse($productListResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $productListResponseTransfer->getMessages());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandProductListUsedByTableDataWillReturnUnchangedTransfer(): void
-    {
-        // Arrange
-        $productListTransfer = $this->tester->createProductList();
-        $productListUsedByTableDataTransfer = (new ProductListUsedByTableDataTransfer())->setProductList($productListTransfer);
-
-        // Act
-        $updatedProductListUsedByTableDataTransfer = $this->tester->getFacade()->expandProductListUsedByTableData($productListUsedByTableDataTransfer);
-
-        // Assert
-        $this->assertSame($productListUsedByTableDataTransfer->getRows(), $updatedProductListUsedByTableDataTransfer->getRows());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandProductListUsedByTableDataWillExpandTransferWithMerchantRelationship(): void
-    {
-        // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
-        $merchantRelationshipTransfer = $this->tester->expandMecrhantRelationshipWithName($merchantRelationshipTransfer);
-        $productListTransfer = $this->tester->createProductList([
-            ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
-        ]);
-        $productListUsedByTableDataTransfer = (new ProductListUsedByTableDataTransfer())->setProductList($productListTransfer);
-
-        // Act
-        $productListUsedByTableDataTransfer = $this->tester->getFacade()->expandProductListUsedByTableData($productListUsedByTableDataTransfer);
-
-        // Assert
-        $this->assertCount(1, $productListUsedByTableDataTransfer->getRows());
-        $productListUsedByTableRowTransfer = $productListUsedByTableDataTransfer->getRows()->offsetGet(0);
-        $this->assertSame(static::MR_ENTITY_TITLE, $productListUsedByTableRowTransfer->getEntityTitle());
-        $this->assertSame($merchantRelationshipTransfer->getName(), $productListUsedByTableRowTransfer->getEntityName());
-        $this->assertCount(1, $productListUsedByTableRowTransfer->getActionButtons()->getButtons());
     }
 
     /**
