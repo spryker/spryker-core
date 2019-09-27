@@ -12,6 +12,7 @@ use Spryker\Client\Price\PriceConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Price
