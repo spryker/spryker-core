@@ -166,9 +166,9 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * {@inheritDoc}
      *
-     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
-     *
      * @api
+     *
+     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
@@ -259,7 +259,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
