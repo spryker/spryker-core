@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +63,7 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class CmsContentWidgetFacade extends AbstractFacade implements CmsContentWidgetF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -47,7 +47,9 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
             $spyMerchantRelationship->toArray(),
             true
         );
-        if ($spyMerchantRelationship->getMerchant()) {
+        /** @var \Orm\Zed\Merchant\Persistence\SpyMerchant|null $spyMerchant */
+        $spyMerchant = $spyMerchantRelationship->getMerchant();
+        if ($spyMerchant) {
             $merchantTransfer = $merchantRelationshipTransfer->getMerchant() ?: new MerchantTransfer();
             $merchantTransfer->fromArray($spyMerchantRelationship->getMerchant()->toArray(), true);
             $merchantRelationshipTransfer->setMerchant($merchantTransfer);

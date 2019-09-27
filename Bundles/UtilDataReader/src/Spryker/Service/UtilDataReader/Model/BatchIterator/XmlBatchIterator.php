@@ -49,7 +49,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function current()
     {
@@ -57,9 +57,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function next()
     {
@@ -86,7 +84,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function key()
     {
@@ -94,7 +92,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function valid()
     {
@@ -102,9 +100,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function rewind()
     {
@@ -112,7 +108,7 @@ class XmlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count()
     {

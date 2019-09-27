@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -28,6 +29,8 @@ class PriceProductScheduleForm extends AbstractType
     public const FIELD_ACTIVE_FROM = 'activeFrom';
     public const FIELD_ACTIVE_TO = 'activeTo';
     protected const PATTERN_DATE_FORMAT = 'Y-m-d H:i:s';
+    public const GROUP_AFTER = 'After';
+    public const GROUP_DEFAULT = 'Default';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -40,15 +43,21 @@ class PriceProductScheduleForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
 
         $resolver->setRequired([
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
         ]);
 
         $resolver->setDefaults([
             'data_class' => PriceProductScheduleTransfer::class,
+            'validation_groups' => new GroupSequence([
+                static::GROUP_DEFAULT,
+                static::GROUP_AFTER,
+            ]),
             'constraints' => [
                 $this->getFactory()->createPriceProductScheduleDateConstraint(),
                 $this->getFactory()->createPriceProductSchedulePriceConstraint(),
@@ -85,6 +94,7 @@ class PriceProductScheduleForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES],
+            PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED => $options[PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED],
         ]);
 
         return $this;

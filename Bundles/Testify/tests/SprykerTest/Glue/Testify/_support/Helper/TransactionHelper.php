@@ -16,7 +16,7 @@ class TransactionHelper extends SharedTransactionHelper
     /**
      * Preventing opening transaction
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _before(TestInterface $test): void
     {
@@ -26,7 +26,7 @@ class TransactionHelper extends SharedTransactionHelper
     /**
      * Preventing to rollback transaction
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _after(TestInterface $test): void
     {

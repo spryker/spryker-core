@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CountryCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Verifies if countries can be found by countryIso2Codes given in billingAddress and shippingAddress.
      * - Verifies if billingAddress and shippingAddress are set.
      * - Returns CheckoutResponseTransfer with error if any check was failed.

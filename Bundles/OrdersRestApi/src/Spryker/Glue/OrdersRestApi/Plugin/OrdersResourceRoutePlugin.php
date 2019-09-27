@@ -16,7 +16,7 @@ use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class OrdersResourceRoutePlugin extends AbstractPlugin implements ResourceRouteP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -54,7 +54,7 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
