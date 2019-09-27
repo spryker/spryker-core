@@ -47,7 +47,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class DataImportBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface
      */
     public function getImporter()
     {
@@ -64,7 +64,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     {
         $dataImporterCollection = new DataImporterCollection(
             $this->getDataImportBeforeImportHookPlugins(),
-            $this->getDataImportAfterImportHookPlugins()
+            $this->getDataImportAfterImportHookPlugins(),
+            $this->getConfig()
         );
 
         return $dataImporterCollection;

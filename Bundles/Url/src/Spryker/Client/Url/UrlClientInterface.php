@@ -10,7 +10,6 @@ namespace Spryker\Client\Url;
 interface UrlClientInterface
 {
     /**
-     *
      * Specification:
      * - Retrieves locale specific URL details from Storage if found.
      *

@@ -13,6 +13,7 @@ use Spryker\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Heartbeat

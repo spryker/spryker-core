@@ -15,6 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

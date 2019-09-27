@@ -9,7 +9,6 @@ namespace Spryker\Service\UtilSanitize;
 interface UtilSanitizeServiceInterface
 {
     /**
-     *
      * Specification:
      *  - Escapes any string for safe output in HTML.
      *

@@ -21,7 +21,7 @@ class ProductCategoryAbstractStorageListener extends AbstractPlugin implements E
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

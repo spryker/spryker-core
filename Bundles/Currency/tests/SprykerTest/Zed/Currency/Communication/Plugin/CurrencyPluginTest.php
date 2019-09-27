@@ -13,6 +13,7 @@ use Spryker\Zed\Currency\Communication\Plugin\CurrencyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Currency

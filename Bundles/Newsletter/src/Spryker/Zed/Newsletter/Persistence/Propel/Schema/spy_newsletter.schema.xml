@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-<database
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         name="zed"
         defaultIdMethod="native"
-        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+        xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
         namespace="Orm\Zed\Newsletter\Persistence" package="src.Orm.Zed.Newsletter.Persistence">
 
     <table name="spy_newsletter_subscriber" idMethod="native" identifierQuoting="true">
@@ -23,10 +22,10 @@
         </unique>
 
         <index name="spy_newsletter_subscriber-index-email">
-            <index-column name="email" />
+            <index-column name="email"/>
         </index>
         <index name="spy_newsletter_subscriber-index-subscriber_key">
-            <index-column name="subscriber_key" />
+            <index-column name="subscriber_key"/>
         </index>
 
         <id-method-parameter value="spy_newsletter_subscriber_pk_seq"/>
@@ -47,7 +46,7 @@
         </unique>
 
         <index name="spy_newsletter_type-index-name">
-            <index-column name="name" />
+            <index-column name="name"/>
         </index>
 
         <id-method-parameter value="spy_newsletter_type_pk_seq"/>

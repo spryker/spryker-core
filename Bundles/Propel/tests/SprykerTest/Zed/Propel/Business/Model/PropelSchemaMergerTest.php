@@ -14,6 +14,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel

@@ -1,13 +1,12 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\CmsBlockProductConnector\Persistence"
           package="src.Orm.Zed.CmsBlockProductConnector.Persistence"
 >
     <table name="spy_cms_block_product_connector" phpName="SpyCmsBlockProductConnector">
         <column name="id_cms_block_product_connector" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_cms_block" type="INTEGER" required="true" />
-        <column name="fk_product_abstract" type="INTEGER" required="true" />
+        <column name="fk_cms_block" type="INTEGER" required="true"/>
+        <column name="fk_product_abstract" type="INTEGER" required="true"/>
 
         <foreign-key name="spy_cms_block_product_connector-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock" onDelete="CASCADE">
             <reference foreign="id_cms_block" local="fk_cms_block"/>

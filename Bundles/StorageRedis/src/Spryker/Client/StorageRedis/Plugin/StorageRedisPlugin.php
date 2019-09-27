@@ -7,18 +7,24 @@
 
 namespace Spryker\Client\StorageRedis\Plugin;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
+use Spryker\Client\StorageExtension\Dependency\Plugin\StorageScanPluginInterface;
 
 /**
+ * - The method `getKeys()` uses Redis `KEYS` command which should only be used in production environments with extreme care.
+ * - The methods `scanKeys()` and `getCountItems()` uses Redis `SCAN` and `DBSIZE` commands.
+ * - Be aware that `SCAN` offers limited guarantees about the returned elements because it's non-blocking command.
+ *
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()
  * @method \Spryker\Client\StorageRedis\StorageRedisConfig getConfig()
  * @method \Spryker\Client\StorageRedis\StorageRedisClientInterface getClient()
  */
-class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterface
+class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterface, StorageScanPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +40,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +54,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +68,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +82,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +94,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +108,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -116,7 +122,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -128,7 +134,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +146,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +160,24 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     * - Uses Redis `SCAN` command.
+     *
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int|null $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, ?int $cursor = 0): StorageScanResultTransfer
+    {
+        return $this->getClient()->scanKeys($pattern, $limit, $cursor);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -166,7 +189,7 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +201,8 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     * - Uses Redis `DBSIZE` command.
      *
      * @api
      *
@@ -186,11 +210,11 @@ class StorageRedisPlugin extends AbstractPlugin implements StoragePluginInterfac
      */
     public function getCountItems(): int
     {
-        return $this->getClient()->getCountItems();
+        return $this->getClient()->getDbSize();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

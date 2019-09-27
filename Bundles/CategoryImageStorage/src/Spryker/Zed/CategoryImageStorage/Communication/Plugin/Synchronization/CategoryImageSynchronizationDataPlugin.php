@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\CategoryImageStorage\CategoryImageStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -21,7 +22,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +34,7 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +46,7 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,20 +57,17 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
     public function getData(array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $categoryImageStorageEntities = $this->getRepository()->getCategoryImageStorageByFkCategoryIn($ids);
+        $categoryImageStorageEntityTransfers = $this->getRepository()->getCategoryImageStorageByFkCategoryIn($ids);
 
-        foreach ($categoryImageStorageEntities as $categoryImageStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData(json_encode($categoryImageStorageEntity->getData()));
-            $synchronizationDataTransfer->setKey($categoryImageStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+        foreach ($categoryImageStorageEntityTransfers as $categoryImageStorageEntityTransfer) {
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($categoryImageStorageEntityTransfer);
         }
 
         return $synchronizationDataTransfers;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +79,7 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -93,7 +91,7 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -101,6 +99,22 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getProductImageSynchronizationPoolName();
+        return $this->getFactory()->getConfig()->getCategoryImageSynchronizationPoolName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    protected function createSynchronizationDataTransfer(
+        SpyCategoryImageStorageEntityTransfer $categoryImageStorageEntityTransfer
+    ): SynchronizationDataTransfer {
+        /** @var string $categoryImageStorageData */
+        $categoryImageStorageData = $categoryImageStorageEntityTransfer->getData();
+
+        return (new SynchronizationDataTransfer())
+            ->setData($categoryImageStorageData)
+            ->setKey($categoryImageStorageEntityTransfer->getKey());
     }
 }

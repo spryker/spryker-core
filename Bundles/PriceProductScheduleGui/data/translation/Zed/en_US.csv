@@ -35,3 +35,32 @@ Prices,Prices
 "Your prices are now available to your custoers based on their start and end date.","Your prices are now available to your customers based on their start and end date."
 "Your prices are now available to your customers based on their start and end date.",
 "Your scheduled prices have been published","Your scheduled prices have been published"
+Draft,Draft
+Published,Published
+"Import ID","Import ID"
+Name,Name
+"Imported by and on the","Imported by and on the"
+Status,Status
+"Number of prices","Number of prices"
+"Number of products","Number of products"
+Actions,Actions
+View,View
+Edit,Edit
+Download,Download
+Delete,Delete
+"Import n","Import n"
+"Imported by on the","Imported by on the"
+"Scheduled prices inside import","Scheduled prices inside import"
+"Are you sure about deleting this scheduled price?","Are you sure about deleting this scheduled price?"
+"No, I want to keep this price","No, I want to keep this price"
+"Yes, delete this price","Yes, delete this price"
+"The timezone used for the scheduled price will be %s as defined on the store selected","The timezone used for the scheduled price will be %s as defined on the store selected"
+"Scheduled price has been successfully saved","Scheduled price has been successfully saved"
+"Schedule price haven not been saved","Schedule price haven not been saved"
+"Finish at must be greater than start from","Finish at must be greater than start from"
+"An identical scheduled price already exists for this product.","An identical scheduled price already exists for this product."
+"Yes, delete those prices","Yes, delete those prices"
+"Scheduled price list was successfully removed","Scheduled price list was successfully removed"
+"Are you sure about deleting the Scheduled prices %s?","Are you sure about deleting the Scheduled prices %s?"
+"You will delete %d prices for %d products. Is this what you want?","You will delete %d prices for %d products. Is this what you want?"
+"Via data import","Via data import"

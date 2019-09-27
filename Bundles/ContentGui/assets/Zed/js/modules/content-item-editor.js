@@ -34,6 +34,7 @@ var ContentItemEditor = function(options) {
     };
 
     this.getEditorConfig = function (baseConfig = '') {
+        var self = this;
         baseConfig = editorConfig.getGlobalConfig(baseConfig);
 
         if (!baseConfig) {
@@ -54,7 +55,10 @@ var ContentItemEditor = function(options) {
                 'editContentItem': ['editWidget', 'editContentItem', 'removeContentItem']
             },
             callbacks: {
-                onKeydown: this.onKeydownHandler
+                onKeydown: this.onKeydownHandler,
+                onChange: function () {
+                    self.onChangeHandler($(this), self);
+                }
             },
             dialogsInBody: true
         };
@@ -141,6 +145,46 @@ var ContentItemEditor = function(options) {
             addNewLineAfterWidget($editorRange.sc.parentNode);
         }
 
+    };
+
+    this.onChangeHandler = function ($editor, self) {
+        var curlyBracesRegExp = /\{\{\s*((?!\}\}).)*\s*\}\}/;
+        var $editorRange = $editor.summernote('createRange');
+        var $editorNode = $($editorRange.sc);
+        var nodeContent = $editorNode.text();
+        var hasCurlyBraces = curlyBracesRegExp.test(nodeContent);
+
+        if (!hasCurlyBraces) {
+            return;
+        }
+
+        var $editorParentNode = $editorNode.parents('p');
+
+        self.changeEditorNode($editorParentNode);
+    };
+
+    this.changeEditorNode = function ($editorParentNode) {
+        if (!$editorParentNode.is('p')) {
+            return;
+        }
+
+        var $elementForInsert = $(
+            '<div>' +
+            $editorParentNode.html() +
+            '</div>'
+        );
+
+        $editorParentNode.replaceWith($elementForInsert);
+        this.putCaretAtTheLineEnd($elementForInsert);
+    };
+
+    this.putCaretAtTheLineEnd = function ($insertedElement) {
+        var range = document.createRange();
+        range.selectNode($insertedElement[0].childNodes[0]);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        range.collapse(false);
     };
 
     this.generateDropdownList = function () {

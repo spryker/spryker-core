@@ -159,7 +159,6 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected function mapPriceProductStoreEntityToTransfer(
         SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductTransfer {
-
         $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
 
         $priceTypeTransfer = (new PriceTypeTransfer())
@@ -192,7 +191,6 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected function getPriceProductDimensionTransfer(
         SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductDimensionTransfer {
-
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),

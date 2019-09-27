@@ -17,6 +17,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Validation\Validator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesSplit

@@ -21,7 +21,7 @@ class CompanyUserCreatePlugin extends AbstractPlugin implements CompanyPostCreat
      * Specification:
      * - Plugin is used for creating initial admin user during registration company in Yves.
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

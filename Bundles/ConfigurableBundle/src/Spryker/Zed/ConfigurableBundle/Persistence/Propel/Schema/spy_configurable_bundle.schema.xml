@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\ConfigurableBundle\Persistence" package="src.Orm.Zed.ConfigurableBundle.Persistence"
+>
+    <table name="spy_configurable_bundle_template" phpName="SpyConfigurableBundleTemplate">
+        <column name="id_configurable_bundle_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
+
+        <unique name="spy_configurable_bundle_template-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_configurable_bundle_template"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_configurable_bundle_template_pk_seq"/>
+    </table>
+
+    <table name="spy_configurable_bundle_template_slot" phpName="SpyConfigurableBundleTemplateSlot">
+        <column name="id_configurable_bundle_template_slot" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" required="false" type="VARCHAR" size="255"/>
+        <column name="fk_configurable_bundle_template" type="INTEGER" required="true"/>
+        <column name="fk_product_list" type="INTEGER"/>
+
+        <index name="spy_conf_bundle_template_slot-fk_conf_bundle_template">
+            <index-column name="fk_configurable_bundle_template"/>
+        </index>
+
+        <index name="spy_configurable_bundle_template_slot-fk_product_list">
+            <index-column name="fk_product_list"/>
+        </index>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_configurable_bundle_template_slot"/>
+        </behavior>
+
+        <foreign-key name="spy_conf_bundle_template_slot-fk_conf_bundle_template" foreignTable="spy_configurable_bundle_template">
+            <reference foreign="id_configurable_bundle_template" local="fk_configurable_bundle_template"/>
+        </foreign-key>
+
+        <foreign-key name="spy_configurable_bundle_template_slot-fk_product_list" foreignTable="spy_product_list">
+            <reference foreign="id_product_list" local="fk_product_list"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_configurable_bundle_template_slot_pk_seq"/>
+    </table>
+
+</database>

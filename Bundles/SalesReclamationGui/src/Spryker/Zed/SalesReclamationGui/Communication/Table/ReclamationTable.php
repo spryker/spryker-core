@@ -58,6 +58,15 @@ class ReclamationTable extends AbstractTable
             SpySalesReclamationTableMap::COL_CUSTOMER_NAME,
         ]);
 
+        $config->setSortable([
+            SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION,
+            SpySalesReclamationTableMap::COL_CREATED_AT,
+            SpySalesReclamationTableMap::COL_CUSTOMER_NAME,
+            SpySalesReclamationTableMap::COL_CUSTOMER_EMAIL,
+            SpySalesReclamationTableMap::COL_IS_OPEN,
+            SpySalesReclamationTableMap::COL_FK_SALES_ORDER,
+        ]);
+
         $config->addRawColumn(SpySalesReclamationTableMap::COL_IS_OPEN);
         $config->addRawColumn(static::COL_ACTIONS);
 

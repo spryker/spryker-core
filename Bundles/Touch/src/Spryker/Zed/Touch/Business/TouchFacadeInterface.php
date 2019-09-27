@@ -113,7 +113,20 @@ interface TouchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use TouchFacadeInterface::cleanTouchEntitiesForDeletedItemEvent() instead.
+     *
      * @return int
      */
     public function removeTouchEntriesMarkedAsDeleted();
+
+    /**
+     * Specification:
+     * - Removes all touch entities for 'deleted' item event.
+     * - Returns deleted touch entities count.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function cleanTouchEntitiesForDeletedItemEvent(): int;
 }

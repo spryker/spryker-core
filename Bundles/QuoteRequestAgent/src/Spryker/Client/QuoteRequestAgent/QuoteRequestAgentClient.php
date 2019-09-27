@@ -22,7 +22,7 @@ use Spryker\Client\QuoteRequestAgent\Zed\QuoteRequestAgentStubInterface;
 class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgentClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,7 +138,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +154,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -170,7 +170,7 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -12,6 +12,7 @@ use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MerchantRelationshipProductList

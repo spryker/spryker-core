@@ -63,6 +63,7 @@ class QuoteItemReader implements QuoteItemReaderInterface
 
         if (!$ifRequestedItemIsInQuote) {
             $quoteResponseTransfer
+                ->setIsSuccessful(false)
                 ->addError((new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_ITEM_NOT_FOUND));
         }

@@ -14,6 +14,7 @@ use Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin\CmsProductSearchC
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CmsContentWidgetProductSetConnector

@@ -109,6 +109,11 @@ class CodeArchitectureSnifferConsole extends Console
     protected function runForCore(OutputInterface $output, $moduleArgument, $subPath): bool
     {
         $moduleTransferCollection = $this->getModulesToExecute($moduleArgument);
+        if (!$moduleTransferCollection) {
+            $output->writeln(sprintf('<error>No module(s) found: `%s`.</error>', $moduleArgument));
+
+            return false;
+        }
 
         $count = 0;
 
@@ -116,7 +121,7 @@ class CodeArchitectureSnifferConsole extends Console
             $path = $this->getCorePath($moduleTransfer, $subPath);
 
             if (!is_dir($path)) {
-                $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
+                $output->writeln(sprintf('<error>Path not found: `%s`</error>', $path));
 
                 return false;
             }

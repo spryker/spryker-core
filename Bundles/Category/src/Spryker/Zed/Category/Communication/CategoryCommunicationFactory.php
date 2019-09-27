@@ -108,7 +108,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
         return $formFactory->create(
             CategoryType::class,
             $categoryTransfer,
-            $categoryCreateDataFormProvider->getOptions()
+            $categoryCreateDataFormProvider->getOptions($categoryTransfer->getIdCategory())
         );
     }
 
@@ -155,7 +155,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Will be removed with next major release
      *
-     * @param int $idCategoryNode
+     * @param int|null $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\CategoryAttributeTable
      */
@@ -176,7 +176,7 @@ class CategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int $idCategoryNode
+     * @param int|null $idCategoryNode
      *
      * @return \Spryker\Zed\Category\Communication\Table\UrlTable
      */

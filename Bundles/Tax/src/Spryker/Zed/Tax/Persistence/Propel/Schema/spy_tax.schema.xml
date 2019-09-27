@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Tax\Persistence" package="src.Orm.Zed.Tax.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Tax\Persistence" package="src.Orm.Zed.Tax.Persistence">
 
     <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet">
         <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -13,7 +13,7 @@
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="rate" type="DECIMAL" size="8" scale="2" required="true" />
+        <column name="rate" type="DECIMAL" size="8" scale="2" required="true"/>
         <column name="fk_country" type="INTEGER"/>
 
         <foreign-key name="spy_tax_rate-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="SpyTaxRate">

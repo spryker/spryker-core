@@ -40,13 +40,20 @@ class DataImporterCollection implements
     protected $afterImportHooks = [];
 
     /**
+     * @var \Spryker\Zed\DataImport\DataImportConfig|null
+     */
+    protected $config = null;
+
+    /**
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[] $afterImportHooks
+     * @param \Spryker\Zed\DataImport\DataImportConfig|null $config
      */
-    public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [])
+    public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [], ?DataImportConfig $config = null)
     {
         $this->beforeImportHooks = $beforeImportHooks;
         $this->afterImportHooks = $afterImportHooks;
+        $this->config = $config;
     }
 
     /**
@@ -120,7 +127,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -146,13 +153,7 @@ class DataImporterCollection implements
             return $dataImporterReportTransfer;
         }
 
-        foreach ($dataImporters as $dataImporter) {
-            $this->executeDataImporter(
-                $dataImporter,
-                $dataImporterReportTransfer,
-                $dataImporterConfigurationTransfer
-            );
-        }
+        $this->runDataImporters($dataImporters, $dataImporterReportTransfer, $dataImporterConfigurationTransfer);
 
         $this->afterImport();
 
@@ -170,7 +171,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */
@@ -198,6 +199,45 @@ class DataImporterCollection implements
 
         if (!$innerDataImportReportTransfer->getIsSuccess()) {
             $dataImporterReportTransfer->setIsSuccess(false);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[] $dataImporters
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return void
+     */
+    protected function runDataImporters(
+        array $dataImporters,
+        DataImporterReportTransfer $dataImporterReportTransfer,
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
+    ): void {
+        if ($this->config === null) {
+            foreach ($dataImporters as $dataImporter) {
+                $this->executeDataImporter(
+                    $dataImporter,
+                    $dataImporterReportTransfer,
+                    $dataImporterConfigurationTransfer
+                );
+            }
+
+            return;
+        }
+
+        foreach ($dataImporters as $dataImporter) {
+            if ($this->config->getFullImportTypes()
+                && !in_array($dataImporter->getImportType(), $this->config->getFullImportTypes(), true)
+            ) {
+                continue;
+            }
+
+            $this->executeDataImporter(
+                $dataImporter,
+                $dataImporterReportTransfer,
+                $dataImporterConfigurationTransfer
+            );
         }
     }
 

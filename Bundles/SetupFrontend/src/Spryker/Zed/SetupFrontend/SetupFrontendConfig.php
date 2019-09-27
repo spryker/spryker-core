@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SetupFrontendConfig extends AbstractBundleConfig
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getProjectFrontendDependencyDirectories()
     {
@@ -46,11 +46,23 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
+     *
      * @return string
      */
     public function getYvesInstallerDirectoryPattern()
     {
         return $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Yves';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getYvesInstallMultiPathDirectoryPatterns(): array
+    {
+        return [
+            $this->getYvesInstallerDirectoryPattern(),
+        ];
     }
 
     /**
@@ -75,7 +87,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getZedAssetsDirectories()
     {
@@ -85,11 +97,23 @@ class SetupFrontendConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
+     *
      * @return string
      */
     public function getZedInstallerDirectoryPattern()
     {
         return $this->get(KernelConstants::SPRYKER_ROOT) . '/*/assets/Zed';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getZedInstallMultiPathDirectoryPatterns(): array
+    {
+        return [
+            $this->getZedInstallerDirectoryPattern(),
+        ];
     }
 
     /**

@@ -11,10 +11,12 @@ use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyUnitAddress
@@ -26,6 +28,13 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 class CompanyUnitAddressFacadeTest extends Test
 {
     protected const TEST_ADDRESS = 'TEST ADDRESS';
+
+    protected const VALUE_COMPANY_UNIT_ADDRESSES_COUNT = 3;
+
+    protected const VALUE_COMPANY_UNIT_ADDRESSES_MAX_PER_PAGE = 2;
+    protected const VALUE_COMPANY_UNIT_ADDRESSES_PAGE = 2;
+
+    protected const VALUE_COMPANY_UNIT_ADDRESSES_COUNT_EXPECTED = 1;
 
     /**
      * @var \SprykerTest\Zed\CompanyUnitAddress\CompanyUnitAddressBusinessTester
@@ -224,5 +233,37 @@ class CompanyUnitAddressFacadeTest extends Test
 
         // Assert
         $this->assertEquals(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyUnitAddressCollectionReturnsPaginatedCompanyUnitAddressesWhenPaginationIsSet(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $this->tester->haveCompany()->getIdCompany(),
+            CompanyBusinessUnitTransfer::ADDRESS_COLLECTION => $this->tester->createCompanyUnitAddressesCollection(static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT),
+        ]);
+        $this->tester->getFacade()->saveCompanyBusinessUnitAddresses($companyBusinessUnitTransfer);
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setMaxPerPage(static::VALUE_COMPANY_UNIT_ADDRESSES_MAX_PER_PAGE)
+            ->setPage(static::VALUE_COMPANY_UNIT_ADDRESSES_PAGE);
+
+        $companyUnitAddressCriteriaFilterTransfer = (new CompanyUnitAddressCriteriaFilterTransfer())
+            ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            ->setPagination($paginationTransfer);
+
+        // Act
+        $companyUnitAddressCollectionTransfer = $this->tester->getFacade()->getCompanyUnitAddressCollection(
+            $companyUnitAddressCriteriaFilterTransfer
+        );
+
+        // Assert
+        $this->assertCount(
+            static::VALUE_COMPANY_UNIT_ADDRESSES_COUNT_EXPECTED,
+            $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()
+        );
     }
 }

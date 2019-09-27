@@ -22,7 +22,7 @@ use Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Listener\TaxProduct
 class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

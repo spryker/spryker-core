@@ -23,6 +23,9 @@ class ViewController extends AbstractController
 {
     protected const PARAM_CUSTOMER = 'customerTransfer';
 
+    protected const URL_CUSTOMER_LIST_PAGE = '/customer';
+    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id `%s` does not exist';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -33,12 +36,18 @@ class ViewController extends AbstractController
         $idCustomer = $request->get(CustomerConstants::PARAM_ID_CUSTOMER);
 
         if (empty($idCustomer)) {
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
         }
 
         $idCustomer = $this->castId($idCustomer);
 
-        $customerTransfer = $this->loadCustomerTransfer($idCustomer);
+        $customerTransfer = $this->findCustomerById($idCustomer);
+
+        if ($customerTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_CUSTOMER_NOT_EXIST, ['%s' => $idCustomer]);
+
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
+        }
 
         $addressTable = $this->getFactory()
             ->createCustomerAddressTable($idCustomer);
@@ -92,20 +101,6 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @param int $idCustomer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function loadCustomerTransfer($idCustomer)
-    {
-        $customerTransfer = $this->createCustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-        $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
-
-        return $customerTransfer;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -146,5 +141,18 @@ class ViewController extends AbstractController
         }
 
         return $blockResponse->getContent();
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function findCustomerById(int $idCustomer): ?CustomerTransfer
+    {
+        $customerTransfer = $this->createCustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+
+        return $this->getFacade()->findCustomerById($customerTransfer);
     }
 }

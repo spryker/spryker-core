@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use Spryker\Zed\Cart\CartConfig;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
@@ -156,6 +157,7 @@ class Operation implements OperationInterface
             $currentCartChangeTransfer = new CartChangeTransfer();
             $currentCartChangeTransfer->setQuote($quoteTransfer);
             $currentCartChangeTransfer->setItems($itemsCollection);
+            $currentCartChangeTransfer->setOperation(CartConfig::OPERATION_ADD);
 
             $quoteTransfer = $this->addToCart($currentCartChangeTransfer)->getQuoteTransfer();
         }
@@ -181,6 +183,7 @@ class Operation implements OperationInterface
     public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
     {
         $cartChangeTransfer->requireQuote();
+        $cartChangeTransfer->setOperation(CartConfig::OPERATION_ADD);
         $quoteResponseTransfer = (new QuoteResponseTransfer())->setIsSuccessful(false);
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
@@ -226,6 +229,7 @@ class Operation implements OperationInterface
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
         $cartChangeTransfer->requireQuote();
+        $cartChangeTransfer->setOperation(CartConfig::OPERATION_REMOVE);
 
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 

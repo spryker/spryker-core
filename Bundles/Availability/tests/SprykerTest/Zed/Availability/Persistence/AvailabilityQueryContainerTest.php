@@ -14,6 +14,7 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Availability

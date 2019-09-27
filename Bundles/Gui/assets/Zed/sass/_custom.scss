@@ -135,6 +135,14 @@ body.login {
   white-space: nowrap;
 }
 
+.note-editor {
+    .note-editable {
+        p + div {
+            margin-bottom: 10px;
+        }
+    }
+}
+
 .note-editor *,
 .note-editor *:before {
   color: #444 !important;

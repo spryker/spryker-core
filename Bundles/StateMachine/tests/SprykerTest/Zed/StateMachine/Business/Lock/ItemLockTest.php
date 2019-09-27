@@ -17,6 +17,7 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine

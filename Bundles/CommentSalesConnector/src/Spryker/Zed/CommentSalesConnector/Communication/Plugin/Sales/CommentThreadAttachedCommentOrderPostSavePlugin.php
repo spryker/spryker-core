@@ -19,7 +19,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
 class CommentThreadAttachedCommentOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Executes when commentThread in QuoteTransfer is not empty.
      * - Duplicates commentThread from Quote to new order.
      *

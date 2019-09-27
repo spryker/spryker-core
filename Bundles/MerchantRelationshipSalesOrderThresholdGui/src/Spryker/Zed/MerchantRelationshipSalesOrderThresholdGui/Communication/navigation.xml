@@ -9,8 +9,8 @@
                 <icon>fa-angle-double-right</icon>
             </sales-order-threshold-merchant-relationship>
             <sales-order-threshold-merchant-relationship-edit>
-                <label>Edit Merchant Relationhip Threshold</label>
-                <title>Edit Merchant Relationhip Threshold</title>
+                <label>Edit Merchant Relationship Threshold</label>
+                <title>Edit Merchant Relationship Threshold</title>
                 <uri>/merchant-relationship-sales-order-threshold-gui/edit</uri>
                 <visible>0</visible>
             </sales-order-threshold-merchant-relationship-edit>

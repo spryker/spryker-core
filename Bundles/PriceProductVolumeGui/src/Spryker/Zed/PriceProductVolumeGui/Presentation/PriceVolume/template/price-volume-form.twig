@@ -9,25 +9,25 @@
 
 {% block content %}
 
-    <h4>Enter a quantity and the item price that should be applied if customer buys above that threshold</h4>
+    <h4>{{ 'Enter a quantity and the item price that should be applied if customer buys above that threshold' | trans }}</h4>
 
     {{ form_start(form) }}
     <table class="price-volume-table">
         <tbody>
         <tr>
-            <td>Price Dimension:</td>
+            <td>{{ 'Price Dimension Name' | trans }}:</td>
             <td>{{ price_product.priceDimension.name }}</td>
         </tr>
         <tr>
-            <td>Price Type:</td>
+            <td>{{ 'Price Type' | trans }}:</td>
             <td>{{ price_product.priceType.name }}</td>
         </tr>
         <tr>
-            <td>Currency:</td>
+            <td>{{ 'Currency' | trans }}:</td>
             <td>{{ price_product.moneyValue.currency.name }}</td>
         </tr>
         <tr>
-            <td>Store:</td>
+            <td>{{ 'Store' | trans }}:</td>
             <td>{{ store_name }}</td>
         </tr>
         </tbody>

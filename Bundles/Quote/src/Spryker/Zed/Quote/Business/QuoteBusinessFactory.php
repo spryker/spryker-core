@@ -77,7 +77,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteReader(
             $this->getRepository(),
-            $this->getQuoteExpanderPlugins()
+            $this->getQuoteExpanderPlugins(),
+            $this->getStoreFacade()
         );
     }
 

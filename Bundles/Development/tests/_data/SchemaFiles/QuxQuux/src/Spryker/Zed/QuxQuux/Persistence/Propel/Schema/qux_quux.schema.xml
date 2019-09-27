@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<database xmlns="spryker:schema-01"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Qux\Quux\Persistence"
+        package="src.Orm.Qux.Quux.Persistence">
+
+    <table name="spy_qux_quux" idMethod="native" phpName="SpyQuxQuux">
+        <column name="id_qux_quux" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" type="INTEGER"/>
+    </table>
+
+</database>

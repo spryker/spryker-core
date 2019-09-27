@@ -27,11 +27,13 @@
 
     <transfer name="DependencyModule">
         <property name="module" type="string"/>
+        <property name="composerName" type="string"/>
         <property name="dependencies" type="Dependency[]" singular="dependency"/>
     </transfer>
 
     <transfer name="Dependency">
         <property name="module" type="string"/>
+        <property name="composerName" type="string"/>
         <property name="type" type="string"/>
         <property name="isInTest" type="bool"/>
         <property name="isOptional" type="bool"/>
@@ -53,7 +55,8 @@
 
     <transfer name="ComposerDependency">
         <property name="name" type="string"/>
-        <property name="module" type="Module"/>
+        <property name="module" type="Module" deprecated="Use moduleName instead."/>
+        <property name="moduleName" type="string"/>
         <property name="isDev" type="bool"/>
         <property name="isOptional" type="bool"/>
     </transfer>
@@ -82,7 +85,9 @@
     </transfer>
 
     <transfer name="ModuleDependency">
-        <property name="module" type="string"/>
+        <property name="module" type="string" deprecated="Use moduleName instead."/>
+        <property name="moduleName" type="string"/>
+        <property name="composerName" type="string"/>
         <property name="isValid" type="bool"/>
         <property name="isSrcDependency" type="bool"/>
         <property name="isTestDependency" type="bool"/>

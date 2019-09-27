@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

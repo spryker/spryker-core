@@ -35,7 +35,7 @@ class Mapper implements MapperInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function mapObjectFromPayload(ObjectInterface $object, $payload): SchemaFieldInterface
     {
@@ -59,7 +59,7 @@ class Mapper implements MapperInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function mapCollectionFromPayload(CollectionInterface $collection, $payload): SchemaFieldInterface
     {
@@ -74,7 +74,7 @@ class Mapper implements MapperInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function mapPrimitiveFromPayload(PrimitiveInterface $primitive, $payload): SchemaFieldInterface
     {
@@ -91,7 +91,6 @@ class Mapper implements MapperInterface
         PropertyDefinition $definition,
         $payload
     ): PropertyValueInterface {
-
         $class = $definition->getType();
         $instance = new $class();
 

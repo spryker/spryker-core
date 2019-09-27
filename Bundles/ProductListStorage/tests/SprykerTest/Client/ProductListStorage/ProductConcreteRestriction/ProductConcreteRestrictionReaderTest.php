@@ -17,6 +17,7 @@ use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductL
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ProductListStorage

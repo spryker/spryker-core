@@ -1,49 +1,48 @@
 <?xml version="1.0"?>
-<transfers xmlns="http://xsd.spryker.com"
+<transfers xmlns="spryker:transfer-01"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="https://static.spryker.com https://static.spryker.com/transfer-01.xsd" >
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductManagementAttribute">
-        <property name="idProductManagementAttribute" type="int" />
-        <property name="key" type="string" />
-        <property name="inputType" type="string" />
-        <property name="allowInput" type="bool" />
-        <property name="isSuper" type="bool" />
-        <property name="localizedKeys" type="LocalizedProductManagementAttributeKey[]" singular="localizedKey" />
-        <property name="values" type="ProductManagementAttributeValue[]" singular="value" />
+        <property name="idProductManagementAttribute" type="int"/>
+        <property name="key" type="string"/>
+        <property name="inputType" type="string"/>
+        <property name="allowInput" type="bool"/>
+        <property name="isSuper" type="bool"/>
+        <property name="localizedKeys" type="LocalizedProductManagementAttributeKey[]" singular="localizedKey"/>
+        <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
     </transfer>
 
     <transfer name="LocalizedProductManagementAttributeKey">
-        <property name="localeName" type="string" />
-        <property name="keyTranslation" type="string" />
+        <property name="localeName" type="string"/>
+        <property name="keyTranslation" type="string"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeValue">
-        <property name="idProductManagementAttributeValue" type="int" />
-        <property name="fkProductManagementAttribute" type="int" />
-        <property name="value" type="string" />
-        <property name="localizedValues" type="ProductManagementAttributeValueTranslation[]" singular="localizedValue" />
+        <property name="idProductManagementAttributeValue" type="int"/>
+        <property name="fkProductManagementAttribute" type="int"/>
+        <property name="value" type="string"/>
+        <property name="localizedValues" type="ProductManagementAttributeValueTranslation[]" singular="localizedValue"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeValueTranslation">
-        <property name="idProductManagementAttributeValue" type="int" />
-        <property name="fkProductManagementAttributeValue" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="translation" type="string" />
+        <property name="idProductManagementAttributeValue" type="int"/>
+        <property name="fkProductManagementAttributeValue" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="translation" type="string"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeSet">
-        <property name="idProductAbstract" type="int" />
-        <property name="abstractAttributes" type="array" singular="abstractAttribute" />
-        <property name="attributes" type="array" singular="attribute" />
-        <property name="localizedAttributes" type="array" singular="localizedAttribute" />
-        <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute" />
+        <property name="idProductAbstract" type="int"/>
+        <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="localizedAttributes" type="array" singular="localizedAttribute"/>
+        <property name="abstractLocalizedAttributes" type="array" singular="localizedAttribute"/>
     </transfer>
 
     <transfer name="ProductAbstract">
-        <property name="newFrom" type="string" />
-        <property name="newTo" type="string" />
+        <property name="newFrom" type="string"/>
+        <property name="newTo" type="string"/>
     </transfer>
 
 </transfers>
-

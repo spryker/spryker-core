@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Navigation\Persistence" package="src.Orm.Zed.Navigation.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Navigation\Persistence" package="src.Orm.Zed.Navigation.Persistence">
 
     <table name="spy_navigation" idMethod="native" identifierQuoting="true">
         <column name="id_navigation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -31,8 +31,8 @@
         <column name="node_type" type="VARCHAR" size="255" required="false" default="null"/>
         <column name="position" type="INTEGER" required="false" default="NULL"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <column name="valid_from" type="TIMESTAMP" required="false" />
-        <column name="valid_to" type="TIMESTAMP" required="false" />
+        <column name="valid_from" type="TIMESTAMP" required="false"/>
+        <column name="valid_to" type="TIMESTAMP" required="false"/>
 
         <foreign-key foreignTable="spy_navigation_node" phpName="ParentNavigationNode" refPhpName="ChildrenNavigationNode" onDelete="CASCADE">
             <reference foreign="id_navigation_node" local="fk_parent_navigation_node"/>

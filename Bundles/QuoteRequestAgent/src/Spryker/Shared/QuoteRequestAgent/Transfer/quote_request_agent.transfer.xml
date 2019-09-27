@@ -4,44 +4,39 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="QuoteRequestOverviewCollection">
-        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
-        <property name="currentQuoteRequest" type="QuoteRequest" />
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest"/>
+        <property name="currentQuoteRequest" type="QuoteRequest"/>
     </transfer>
 
     <transfer name="QuoteRequestOverviewFilter">
-        <property name="quoteRequestReference" type="string" />
-        <property name="pagination" type="Pagination" />
-        <property name="excludedStatuses" type="array" />
+        <property name="quoteRequestReference" type="string"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="excludedStatuses" type="array"/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="idQuoteRequest" type="int" />
-        <property name="quoteRequestReference" type="string" />
-        <property name="status" type="string" />
-        <property name="latestVersion" type="QuoteRequestVersion" />
-        <property name="latestVisibleVersion" type="QuoteRequestVersion" />
+        <property name="idQuoteRequest" type="int"/>
+        <property name="quoteRequestReference" type="string"/>
+        <property name="status" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="latestVisibleVersion" type="QuoteRequestVersion"/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
-        <property name="quote" type="Quote" />
-        <property name="metadata" type="array" />
-    </transfer>
-
-    <transfer name="QuoteRequestFilter">
-        <property name="excludedStatuses" type="array" />
-        <property name="pagination" type="Pagination" />
+        <property name="quote" type="Quote"/>
+        <property name="metadata" type="array"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="quoteRequestVersionReference" type="string" />
-        <property name="quoteRequestReference" type="string" />
+        <property name="quoteRequestVersionReference" type="string"/>
+        <property name="quoteRequestReference" type="string"/>
         <property name="name" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequestResponse">
-        <property name="quoteRequest" type="QuoteRequest" />
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="quoteRequest" type="QuoteRequest"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Message">
@@ -49,8 +44,8 @@
     </transfer>
 
     <transfer name="Pagination">
-        <property name="page" type="int" />
-        <property name="maxPerPage" type="int" />
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -62,16 +57,16 @@
     </transfer>
 
     <transfer name="QuoteRequestCollection">
-        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest" />
-        <property name="pagination" type="Pagination" />
+        <property name="quoteRequests" type="QuoteRequest[]" singular="quoteRequest"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="QuoteRequestFilter">
-        <property name="quoteRequestReference" type="string" />
-        <property name="excludedStatuses" type="array" />
-        <property name="pagination" type="Pagination" />
-        <property name="withHidden" type="bool" />
-        <property name="idCompanyUser" type="int" />
+        <property name="quoteRequestReference" type="string"/>
+        <property name="excludedStatuses" type="array"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="withHidden" type="bool"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>

@@ -13,6 +13,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PathPreProcessor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api

@@ -1,16 +1,27 @@
 <?xml version="1.0"?>
-<transfers xmlns="http://xsd.spryker.com"
+<transfers xmlns="spryker:transfer-01"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd" >
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductAbstract">
-        <property name="idTaxSet" type="int" />
+        <property name="idTaxSet" type="int"/>
     </transfer>
 
     <transfer name="TaxSetResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="error" type="string" />
-        <property name="taxSet" type="TaxSet" />
+        <property name="isSuccess" type="bool"/>
+        <property name="error" type="string"/>
+        <property name="taxSet" type="TaxSet"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="shippingAddress" type="Address"/>
+    </transfer>
 </transfers>

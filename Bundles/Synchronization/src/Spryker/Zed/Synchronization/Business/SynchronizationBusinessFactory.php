@@ -133,7 +133,9 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createQueueMessageCreator()
     {
-        return new QueueMessageCreator();
+        return new QueueMessageCreator(
+            $this->getUtilEncodingService()
+        );
     }
 
     /**

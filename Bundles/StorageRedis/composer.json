@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.33.0",
     "spryker/redis": "^2.1.0",
-    "spryker/storage-extension": "^1.0.0",
+    "spryker/storage-extension": "^1.1.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {

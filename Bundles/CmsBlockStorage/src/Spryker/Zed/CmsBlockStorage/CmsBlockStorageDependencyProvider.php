@@ -19,7 +19,11 @@ use Spryker\Zed\Kernel\Container;
 class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const FACADE_EVENT_BEHAVIOUR = 'FACADE_EVENT_BEHAVIOUR';
+    /**
+     * @deprecated Use FACADE_EVENT_BEHAVIOR class constant instead.
+     */
+    public const FACADE_EVENT_BEHAVIOUR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
     public const STORE = 'store';
 
@@ -30,7 +34,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addEventBehaviourFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -68,9 +72,9 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventBehaviourFacade(Container $container)
+    protected function addEventBehaviorFacade(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOUR] = function (Container $container) {
+        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new CmsBlockStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 

@@ -10,6 +10,8 @@ namespace Spryker\Glue\CategoriesRestApi;
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapper;
 use Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlResolverAttributesMapper;
+use Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlResolverAttributesMapperInterface;
 use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReader;
 use Spryker\Glue\CategoriesRestApi\Processor\Reader\CategoryReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -34,7 +36,7 @@ class CategoriesRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface
      */
-    protected function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
+    public function getCategoryStorageClient(): CategoriesRestApiToCategoryStorageClientInterface
     {
         return $this->getProvidedDependency(CategoriesRestApiDependencyProvider::CLIENT_CATEGORY_STORAGE);
     }
@@ -42,8 +44,16 @@ class CategoriesRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
      */
-    protected function createCategoryMapper(): CategoryMapperInterface
+    public function createCategoryMapper(): CategoryMapperInterface
     {
         return new CategoryMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CategoriesRestApi\Processor\Mapper\RestUrlResolverAttributesMapperInterface
+     */
+    public function createRestUrlResolverAttributesMapper(): RestUrlResolverAttributesMapperInterface
+    {
+        return new RestUrlResolverAttributesMapper();
     }
 }

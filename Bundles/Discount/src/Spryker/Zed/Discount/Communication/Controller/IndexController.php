@@ -83,16 +83,16 @@ class IndexController extends AbstractController
         }
 
         $discountForm = $this->getFactory()->getDiscountForm($idDiscount, $discountConfiguratorTransfer);
-        $this->handleDiscountForm($request, $discountForm);
+        $isDiscountFormSubmittedSuccessfully = $this->isDiscountFormSubmittedSuccessfully($request, $discountForm);
 
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
         $voucherForm = $this->getFactory()->getVoucherForm(
             $voucherFormDataProvider->getData($idDiscount)
         );
+        $isVoucherFormSubmittedSuccessfully = $this->isVoucherFormSubmittedSuccessfully($request, $voucherForm);
 
-        $voucherFormHandleResponse = $this->handleVoucherForm($request, $voucherForm, $idDiscount);
-        if ($voucherFormHandleResponse instanceof RedirectResponse) {
-            return $voucherFormHandleResponse;
+        if ($isDiscountFormSubmittedSuccessfully || $isVoucherFormSubmittedSuccessfully) {
+            return $this->redirectResponse($this->createEditRedirectUrl($idDiscount));
         }
 
         $voucherCodesTable = $this->renderVoucherCodeTable($request, $discountConfiguratorTransfer);
@@ -114,24 +114,20 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $voucherForm
-     * @param int $idDiscount
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return bool
      */
-    protected function handleVoucherForm(Request $request, FormInterface $voucherForm, $idDiscount)
+    protected function isVoucherFormSubmittedSuccessfully(Request $request, FormInterface $voucherForm): bool
     {
         $voucherForm->handleRequest($request);
 
         if ($voucherForm->isSubmitted() && $voucherForm->isValid()) {
             $voucherCreateInfoTransfer = $this->getFacade()->saveVoucherCodes($voucherForm->getData());
-            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
 
-            return new RedirectResponse(
-                $this->createEditRedirectUrl($idDiscount)
-            );
+            return $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
         }
 
-        return [];
+        return false;
     }
 
     /**
@@ -195,7 +191,7 @@ class IndexController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()['sub_request'];
+        return $this->getApplication()->get('sub_request');
     }
 
     /**
@@ -272,18 +268,24 @@ class IndexController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
-     * @return $this
+     * @return bool
      */
-    protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
+    protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface): bool
     {
         if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_SUCCESS) {
-            return $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());
+            $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());
+
+            return true;
         }
         if ($voucherCreateInfoInterface->getType() === DiscountConstants::MESSAGE_TYPE_ERROR) {
-            return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
+            $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
+
+            return false;
         }
 
-        return $this->addInfoMessage($voucherCreateInfoInterface->getMessage());
+        $this->addInfoMessage($voucherCreateInfoInterface->getMessage());
+
+        return true;
     }
 
     /**
@@ -354,9 +356,9 @@ class IndexController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Form\FormInterface $discountForm
      *
-     * @return void
+     * @return bool
      */
-    protected function handleDiscountForm(Request $request, FormInterface $discountForm)
+    protected function isDiscountFormSubmittedSuccessfully(Request $request, FormInterface $discountForm): bool
     {
         $discountForm->handleRequest($request);
 
@@ -366,9 +368,13 @@ class IndexController extends AbstractController
                 if ($isUpdated === true) {
                     $this->addSuccessMessage('Discount successfully updated.');
                 }
-            } else {
-                $this->addErrorMessage('Please fill all required fields.');
+
+                return true;
             }
+
+            $this->addErrorMessage('Please fill all required fields.');
         }
+
+        return false;
     }
 }

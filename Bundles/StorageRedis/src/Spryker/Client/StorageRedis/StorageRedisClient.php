@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\StorageRedis;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class StorageRedisClient extends AbstractClient implements StorageRedisClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +32,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +46,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +60,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +74,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +86,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +100,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -113,7 +114,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -125,7 +126,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +138,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -151,7 +152,23 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer
+    {
+        return $this->getFactory()->createStorageRedisWrapper()->scanKeys($pattern, $limit, $cursor);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -163,7 +180,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -175,7 +192,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -187,7 +204,19 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDbSize(): int
+    {
+        return $this->getFactory()->createStorageRedisWrapper()->getDbSize();
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *

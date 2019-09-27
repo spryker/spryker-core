@@ -5,15 +5,21 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/calculation": "^4.8.0",
     "spryker/calculation-extension": "^1.0.0",
+    "spryker/country": "^3.0.0",
     "spryker/currency": "^3.1.0",
+    "spryker/customer": "^7.25.0",
     "spryker/gui": "^3.17.0",
     "spryker/kernel": "^3.30.0",
     "spryker/money": "^2.0.0",
+    "spryker/oms-extension": "^1.0.0",
+    "spryker/price": "^5.5.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
+    "spryker/sales": "^11.0.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
-    "spryker/store": "^1.0.0",
+    "spryker/shipment-extension": "^1.0.0",
+    "spryker/store": "^1.4.0",
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^5.0.0",
     "spryker/util-text": "^1.1.0",
@@ -21,17 +27,16 @@
   },
   "require-dev": {
     "spryker/application": "*",
-    "spryker/calculation": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
-    "spryker/country": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
+    "spryker/tax-product-connector": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {
-    "spryker/calculation": "If you want to use Calculation plugins.",
     "spryker/checkout": "If you want to use Checkout plugins."
   },
   "autoload": {

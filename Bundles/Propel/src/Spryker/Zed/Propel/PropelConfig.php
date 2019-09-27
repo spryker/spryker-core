@@ -17,6 +17,8 @@ class PropelConfig extends AbstractBundleConfig
     public const DB_ENGINE_MYSQL = 'mysql';
     public const DB_ENGINE_PGSQL = 'pgsql';
 
+    protected const PROCESS_TIMEOUT = 600;
+
     /**
      * Specification:
      * - This also applies to all identifiers in Postgres such as table names, fields, etc.
@@ -41,6 +43,22 @@ class PropelConfig extends AbstractBundleConfig
     public function getPropelConfig()
     {
         return $this->get(PropelConstants::PROPEL);
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->get(PropelConstants::ZED_DB_USERNAME);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->get(PropelConstants::ZED_DB_PASSWORD);
     }
 
     /**
@@ -150,5 +168,25 @@ class PropelConfig extends AbstractBundleConfig
             'id-method-parameter',
             'behavior',
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebugEnabled(): bool
+    {
+        return $this->get(PropelConstants::PROPEL_DEBUG, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
+     * - Can return int, float or null to disable timeout.
+     *
+     * @return int|float|null
+     */
+    public function getProcessTimeout()
+    {
+        return static::PROCESS_TIMEOUT;
     }
 }

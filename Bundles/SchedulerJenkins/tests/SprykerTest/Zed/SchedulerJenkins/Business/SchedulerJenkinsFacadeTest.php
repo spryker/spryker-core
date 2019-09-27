@@ -24,6 +24,7 @@ use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SchedulerJenkins

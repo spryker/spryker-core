@@ -23,7 +23,7 @@ class CmsBlockGlossaryKeyMappingBlockStoragePublishListener extends AbstractPlug
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,6 +47,6 @@ class CmsBlockGlossaryKeyMappingBlockStoragePublishListener extends AbstractPlug
      */
     public function findCmsBlockIds(array $eventTransfers)
     {
-        return $this->getFactory()->getEventBehaviourFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK);
+        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK);
     }
 }

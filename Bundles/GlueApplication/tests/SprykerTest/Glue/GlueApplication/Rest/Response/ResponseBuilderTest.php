@@ -17,6 +17,7 @@ use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication
@@ -70,7 +71,6 @@ class ResponseBuilderTest extends Unit
         ResponsePaginationInterface $responsePaginationMock,
         ResponseRelationshipInterface $responseRelationshipMock
     ): ResponseBuilderInterface {
-
         return new ResponseBuilder('', $responsePaginationMock, $responseRelationshipMock);
     }
 

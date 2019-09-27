@@ -210,7 +210,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     protected function createPostgreSqlDatabaseCreator()
     {
-        return new PostgreSqlDatabaseCreator();
+        return new PostgreSqlDatabaseCreator($this->getConfig());
     }
 
     /**
@@ -371,7 +371,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
      */
     protected function createAdapterFactory()
     {
-        return new AdapterFactory();
+        return new AdapterFactory($this->getConfig());
     }
 
     /**

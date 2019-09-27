@@ -297,8 +297,9 @@ function updateAttributeInputsWithAutoComplete() {
     $('[data-allow_input=""],[data-allow_input="false"],[data-allow_input="0"]').each(function(key, value) {
         var input = $(value);
         var is_super = castToBoolean(input.attr('data-is_super'));
+        var is_read_only = castToBoolean(input.attr('data-is_read_only'));
 
-        if (!is_super) {
+        if (!is_super && !is_read_only) {
             input
                 .on('focus click', function(event, ui) {
                     $(this).autocomplete('search', '');
@@ -310,9 +311,9 @@ function updateAttributeInputsWithAutoComplete() {
         var input = $(value);
         var id = input.attr('data-id_attribute') || null;
         var locale_code = input.attr('data-locale_code') || null;
-        var is_super = castToBoolean(input.attr('data-is_super'));
+        var is_read_only = castToBoolean(input.attr('data-is_read_only'));
 
-        if (!is_super) {
+        if (!is_read_only) {
             input.on('dblclick', function(event, ui) {
                 $(this).autocomplete('search', '');
             });

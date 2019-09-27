@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SanitizeSourcePricesQuoteLockPreResetPlugin extends AbstractPlugin implements QuoteLockPreResetPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sanitizes source prices in quote items.
      *
      * @api

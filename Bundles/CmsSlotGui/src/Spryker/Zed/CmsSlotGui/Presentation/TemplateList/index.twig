@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Overview of Slots' | trans %}
+{% endif %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Templates' | trans }}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ templateListTable | raw }}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Slots' | trans }}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ slotListTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-cms-slot-gui-main.js"></script>
+{% endblock %}

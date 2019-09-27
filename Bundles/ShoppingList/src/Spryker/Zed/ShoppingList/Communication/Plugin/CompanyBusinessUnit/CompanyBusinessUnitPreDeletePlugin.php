@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyBusinessUnitPreDeletePlugin extends AbstractPlugin implements CompanyBusinessUnitPreDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -28,10 +28,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block url_widget %}
-    {%- set type = type|default('password') -%}
-    <div class="form-group">
-        <a href="{{ attr.href | default('') }}" {{ block('widget_attributes') }}>{{ attr.title | default('') | raw | trans }}</a>
-    </div>
-{% endblock %}

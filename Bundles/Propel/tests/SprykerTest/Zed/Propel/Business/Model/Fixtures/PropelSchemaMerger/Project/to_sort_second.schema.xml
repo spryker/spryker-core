@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<database name="zed"
+<database xmlns="spryker:schema-01"
+    name="zed"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+    xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
     namespace="Namespace"
     package="Package">
 
@@ -10,7 +11,7 @@
         <index name="index-table_a-fk_column">
             <index-column name="fk_column"/>
         </index>
-        <column name="column_b" type="INTEGER" />
+        <column name="column_b" type="INTEGER"/>
     </table>
 
 </database>

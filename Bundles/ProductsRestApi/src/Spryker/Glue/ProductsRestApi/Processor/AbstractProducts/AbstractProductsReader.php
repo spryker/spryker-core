@@ -45,6 +45,11 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     protected $concreteProductsReader;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig
+     */
+    protected $productsRestApiConfig;
+
+    /**
      * @var \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface
      */
     protected $abstractProductAttributeTranslationExpander;
@@ -54,6 +59,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface $abstractProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface $concreteProductsReader
+     * @param \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig $productsRestApiConfig
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
      */
     public function __construct(
@@ -61,12 +67,14 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         RestResourceBuilderInterface $restResourceBuilder,
         AbstractProductsResourceMapperInterface $abstractProductsResourceMapper,
         ConcreteProductsReaderInterface $concreteProductsReader,
+        ProductsRestApiConfig $productsRestApiConfig,
         AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->abstractProductsResourceMapper = $abstractProductsResourceMapper;
         $this->concreteProductsReader = $concreteProductsReader;
+        $this->productsRestApiConfig = $productsRestApiConfig;
         $this->abstractProductAttributeTranslationExpander = $abstractProductAttributeTranslationExpander;
     }
 
@@ -157,6 +165,8 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -164,6 +174,10 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     protected function addConcreteProducts(RestResourceInterface $restResource, RestRequestInterface $restRequest): RestResourceInterface
     {
+        if (!$this->productsRestApiConfig->getAllowedProductConcreteEagerRelationship()) {
+            return $restResource;
+        }
+
         /** @var \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $attributes */
         $attributes = $restResource->getAttributes();
         $concreteProductsResourceList = $this->concreteProductsReader

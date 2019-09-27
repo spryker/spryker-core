@@ -33,7 +33,7 @@ class CmsBlockStorageListener extends AbstractPlugin implements EventBulkHandler
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        $cmsBlockIds = $this->getFactory()->getEventBehaviourFacade()->getEventTransferIds($eventTransfers);
+        $cmsBlockIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE ||
             $eventName === CmsBlockEvents::CMS_BLOCK_UNPUBLISH

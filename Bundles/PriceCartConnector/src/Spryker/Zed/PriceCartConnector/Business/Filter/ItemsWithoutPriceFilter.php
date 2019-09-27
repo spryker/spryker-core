@@ -96,7 +96,7 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     {
         foreach ($itemTransfers as $key => $itemTransfer) {
             if ($itemTransfer->getSku() === $sku) {
-                return $key;
+                return (int)$key;
             }
         }
 

@@ -11,7 +11,8 @@
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/price": "^5.0.0"
+    "spryker/price": "^5.0.0",
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

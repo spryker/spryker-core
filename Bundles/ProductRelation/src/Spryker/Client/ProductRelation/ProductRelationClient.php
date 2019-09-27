@@ -15,8 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductRelationClient extends AbstractClient implements ProductRelationClientInterface
 {
     /**
-     *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

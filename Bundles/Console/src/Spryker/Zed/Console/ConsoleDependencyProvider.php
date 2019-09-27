@@ -17,6 +17,12 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const COMMANDS = 'commands';
     public const EVENT_SUBSCRIBER = 'event_subscriber';
+
+    public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS` instead.
+     */
     public const SERVICE_PROVIDERS = 'service providers';
 
     public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
@@ -31,6 +37,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addCommands($container);
         $container = $this->addEventSubscriber($container);
+        $container = $this->addApplicationPlugins($container);
         $container = $this->addServiceProviders($container);
         $container = $this->addConsoleHookPlugins($container);
 
@@ -44,9 +51,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCommands(Container $container)
     {
-        $container[self::COMMANDS] = function (Container $container) {
+        $container->set(static::COMMANDS, function (Container $container) {
             return $this->getConsoleCommands($container);
-        };
+        });
 
         return $container;
     }
@@ -68,9 +75,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventSubscriber(Container $container)
     {
-        $container[static::EVENT_SUBSCRIBER] = function (Container $container) {
+        $container->set(static::EVENT_SUBSCRIBER, function (Container $container) {
             return $this->getEventSubscriber($container);
-        };
+        });
 
         return $container;
     }
@@ -92,13 +99,13 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConsoleHookPlugins(Container $container)
     {
-        $container[static::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
+        $container->set(static::PLUGINS_CONSOLE_PRE_RUN_HOOK, function (Container $container) {
             return $this->getConsolePreRunHookPlugins($container);
-        };
+        });
 
-        $container[static::PLUGINS_CONSOLE_POST_RUN_HOOK] = function (Container $container) {
+        $container->set(static::PLUGINS_CONSOLE_POST_RUN_HOOK, function (Container $container) {
             return $this->getConsolePostRunHookPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -128,16 +135,44 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addServiceProviders(Container $container)
+    protected function addApplicationPlugins(Container $container): Container
     {
-        $container[static::SERVICE_PROVIDERS] = function (Container $container) {
-            return $this->getServiceProviders($container);
-        };
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container) {
+            return $this->getApplicationPlugins($container);
+        });
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(Container $container): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::addApplicationPlugins()` instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addServiceProviders(Container $container)
+    {
+        $container->set(static::SERVICE_PROVIDERS, function (Container $container) {
+            return $this->getServiceProviders($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::getApplicationPlugins()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]

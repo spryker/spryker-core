@@ -12,6 +12,7 @@ use Spryker\Service\CodeItNow\Plugin\Code128BarcodeGeneratorPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group CodeItNow

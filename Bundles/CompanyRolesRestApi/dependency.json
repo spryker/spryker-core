@@ -1,6 +1,6 @@
 {
   "include": {
-    "CompanyRole": "CompanyRole provides base functionality.",
-    "UuidBehavior": "Used to generate UUIDs for entities."
+    "spryker/company-role": "CompanyRole provides base functionality.",
+    "spryker/uuid-behavior": "Used to generate UUIDs for entities."
   }
 }

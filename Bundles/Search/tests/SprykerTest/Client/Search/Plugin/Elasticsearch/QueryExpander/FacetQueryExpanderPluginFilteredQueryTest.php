@@ -18,6 +18,7 @@ use Spryker\Shared\Search\SearchConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

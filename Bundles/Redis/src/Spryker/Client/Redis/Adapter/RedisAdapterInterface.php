@@ -94,4 +94,22 @@ interface RedisAdapterInterface
      * @return string[]
      */
     public function keys(string $pattern): array;
+
+    /**
+     * @param int $cursor
+     * @param array $options
+     *
+     * @return array [string, string[]]
+     */
+    public function scan(int $cursor, array $options): array;
+
+    /**
+     * @return int
+     */
+    public function dbSize(): int;
+
+    /**
+     * @return void
+     */
+    public function flushDb(): void;
 }

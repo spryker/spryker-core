@@ -20,8 +20,8 @@ class CmsBlockStorageCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToEventBehaviorFacadeInterface
      */
-    public function getEventBehaviourFacade()
+    public function getEventBehaviorFacade()
     {
-        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::FACADE_EVENT_BEHAVIOUR);
+        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 }

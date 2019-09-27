@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Touch\Persistence" package="src.Orm.Zed.Touch.Persistence">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Touch\Persistence" package="src.Orm.Zed.Touch.Persistence">
 
     <table name="spy_touch" phpName="SpyTouch" identifierQuoting="true">
         <column name="id_touch" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -25,7 +25,7 @@
 
         <id-method-parameter value="spy_touch_pk_seq"/>
         <behavior name="query_cache">
-            <parameter name="backend" value="custom" />
+            <parameter name="backend" value="custom"/>
         </behavior>
     </table>
 
@@ -44,7 +44,7 @@
         </index>
         <id-method-parameter value="spy_touch_storage_pk_seq"/>
         <behavior name="query_cache">
-            <parameter name="backend" value="custom" />
+            <parameter name="backend" value="custom"/>
         </behavior>
         <foreign-key name="spy_touch_storage-fk_touch" foreignTable="spy_touch" phpName="Touch" refPhpName="TouchStorage">
             <reference foreign="id_touch" local="fk_touch"/>
@@ -72,7 +72,7 @@
         </index>
         <id-method-parameter value="spy_touch_search_pk_seq"/>
         <behavior name="query_cache">
-            <parameter name="backend" value="custom" />
+            <parameter name="backend" value="custom"/>
         </behavior>
         <foreign-key name="spy_touch_search-fk_touch" foreignTable="spy_touch" phpName="Touch" refPhpName="TouchSearch">
             <reference foreign="id_touch" local="fk_touch"/>

@@ -10,6 +10,9 @@ namespace Spryker\Zed\GiftCard\Business\Shipment;
 use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Use \Spryker\Zed\GiftCard\Business\Shipment\ShipmentGroupMethodFilterInterface instead.
+ */
 interface ShipmentMethodFilterInterface
 {
     /**

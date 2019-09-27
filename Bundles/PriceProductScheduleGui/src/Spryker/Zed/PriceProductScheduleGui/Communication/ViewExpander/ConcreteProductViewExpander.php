@@ -67,6 +67,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
 
             $priceProductScheduleConcreteTable = $this->viewExpanderTableFactory->createPriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
+                $viewData['idProductAbstract'],
                 $priceTypeTransfer->getIdPriceType()
             );
 
