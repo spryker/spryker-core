@@ -5,16 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationship\Communication\Plugin\ProductListGui;
+namespace Spryker\Zed\MerchantRelationshipGui\Communication\Plugin\ProductListGui;
 
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
- * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantRelationship\Communication\MerchantRelationshipCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipGui\Business\MerchantRelationshipGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantRelationshipGui\Communication\MerchantRelationshipGuiCommunicationFactory getFactory()
  */
 class MerchantRelationshipProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
 {
@@ -30,6 +29,8 @@ class MerchantRelationshipProductListUsedByTableDataExpanderPlugin extends Abstr
      */
     public function expand(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
-        return $this->getFacade()->expandProductListUsedByTableData($productListUsedByTableDataTransfer);
+        return $this->getFactory()
+            ->createProductListUsedByTableDataExpander()
+            ->expandTableData($productListUsedByTableDataTransfer);
     }
 }

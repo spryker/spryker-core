@@ -5,35 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
+namespace Spryker\Zed\MerchantRelationshipGui\Communication\Expander;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
-use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
+use Spryker\Zed\MerchantRelationshipGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToMerchantRelationshipFacadeInterface;
 
 class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
+     * @var \Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
      */
-    protected $configurableBundleTemplateSlotReader;
+    protected $merchantRelationshipFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface
+     * @var \Spryker\Zed\MerchantRelationshipGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
      */
     protected $productListUsedByTableDataMapper;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface $configurableBundleTemplateSlotReader
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
+     * @param \Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade
+     * @param \Spryker\Zed\MerchantRelationshipGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
      */
     public function __construct(
-        ConfigurableBundleTemplateSlotReaderInterface $configurableBundleTemplateSlotReader,
+        MerchantRelationshipGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade,
         ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
     ) {
-        $this->configurableBundleTemplateSlotReader = $configurableBundleTemplateSlotReader;
+        $this->merchantRelationshipFacade = $merchantRelationshipFacade;
         $this->productListUsedByTableDataMapper = $productListUsedByTableDataMapper;
     }
 
@@ -46,16 +46,15 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     {
         $productListUsedByTableDataTransfer->getProductList()->requireIdProductList();
 
-        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setIdProductList(
             $productListUsedByTableDataTransfer->getProductList()->getIdProductList()
         );
 
-        $configurableBundleTemplateSlotTransfers = $this->configurableBundleTemplateSlotReader
-            ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
+        $merchantRelationshipTransfers = $this->merchantRelationshipFacade->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,
-            $configurableBundleTemplateSlotTransfers
+            $merchantRelationshipTransfers
         );
 
         return $productListUsedByTableDataTransfer;
@@ -63,18 +62,18 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
 
     /**
      * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $merchantRelationshipTransfers
      *
      * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
      */
     protected function expandProductListUsedByTableDataTransfer(
         ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer,
-        array $configurableBundleTemplateSlotTransfers
+        array $merchantRelationshipTransfers
     ): ProductListUsedByTableDataTransfer {
-        foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
+        foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
             $productListUsedByTableDataTransfer->addRow(
-                $this->productListUsedByTableDataMapper->mapConfigurableBundleTemplateSlotTransferToProductListUsedByTableRowTransfer(
-                    $configurableBundleTemplateSlotTransfer,
+                $this->productListUsedByTableDataMapper->mapMerchantRelationshipTransferToProductListUsedByTableRowTransfer(
+                    $merchantRelationshipTransfer,
                     new ProductListUsedByTableRowTransfer()
                 )
             );

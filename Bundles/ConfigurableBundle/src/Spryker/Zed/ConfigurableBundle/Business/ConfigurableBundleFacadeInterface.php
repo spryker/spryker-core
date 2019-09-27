@@ -9,10 +9,10 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleFacadeInterface
@@ -130,15 +130,15 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template slots which use given product list.
-     * - Uses idProductList property from ProductListUsedByTableDataTransfer::ProductList to filter records.
-     * - Expands UsedByTableDataTransfer::rows with found data.
+     * - Finds configurable bundle template slots by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
+     * - Expands found configurable bundle template slots with translations.
+     * - Returns array of transfers.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    public function expandProductListUsedByTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer;
+    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array;
 }

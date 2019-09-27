@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationship\Business\Expander;
+namespace Spryker\Zed\ConfigurableBundleGui\Communication\Expander;
 
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationship\Business\Mapper;
+namespace Spryker\Zed\MerchantRelationshipGui\Communication\Mapper;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\ButtonTransfer;

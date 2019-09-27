@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Communication\Plugin\ProductListGui;
+namespace Spryker\Zed\ConfigurableBundleGui\Communication\Plugin\ProductListGui;
 
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundle\ConfigurableBundleConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundle\Business\ConfigurableBundleFacadeInterface getFacade()
- * @method \Spryker\Zed\ConfigurableBundle\Communication\ConfigurableBundleCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
  */
 class ConfigurableBundleTemplateProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
 {
@@ -30,6 +30,8 @@ class ConfigurableBundleTemplateProductListUsedByTableDataExpanderPlugin extends
      */
     public function expand(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
     {
-        return $this->getFacade()->expandProductListUsedByTableData($productListUsedByTableDataTransfer);
+        return $this->getFactory()
+            ->createProductListUsedByTableDataExpander()
+            ->expandTableData($productListUsedByTableDataTransfer);
     }
 }

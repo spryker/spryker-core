@@ -9,14 +9,10 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpander;
-use Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapper;
-use Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
@@ -85,38 +81,11 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ProductListUsedByTableDataExpanderInterface
-     */
-    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
-    {
-        return new ProductListUsedByTableDataExpander(
-            $this->createConfigurableBundleTemplateSlotReader(),
-            $this->createProductListUsedByTableDataMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Mapper\ProductListUsedByTableDataMapperInterface
-     */
-    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
-    {
-        return new ProductListUsedByTableDataMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface
      */
     public function createConfigurableBundleTranslationExpander(): ConfigurableBundleTranslationExpanderInterface
     {
         return new ConfigurableBundleTranslationExpander($this->getGlossaryFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
-     */
-    public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
@@ -127,6 +96,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new InactiveConfiguredBundleItemFilter(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
