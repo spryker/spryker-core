@@ -20,7 +20,7 @@ use Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerI
 class CompanyUserOauthCustomerIdentifierExpanderPlugin extends AbstractPlugin implements OauthCustomerIdentifierExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands the CustomerIdentifierTransfer with company user's uuid if it is set up in CustomerTransfer.
      *
      * @api

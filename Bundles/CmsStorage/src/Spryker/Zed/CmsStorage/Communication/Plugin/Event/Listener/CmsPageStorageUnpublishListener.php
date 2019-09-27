@@ -22,7 +22,7 @@ class CmsPageStorageUnpublishListener extends AbstractPlugin implements EventBul
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

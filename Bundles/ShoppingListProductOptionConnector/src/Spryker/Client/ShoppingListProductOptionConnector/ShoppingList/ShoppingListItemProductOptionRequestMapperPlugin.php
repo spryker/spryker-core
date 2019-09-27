@@ -17,7 +17,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin extends AbstractPlugin im
     protected const REQUEST_PARAM_PRODUCT_OPTION = 'product-option';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps ShoppingListItemTransfer with product option IDs.
      * - Expects an array of product option IDs in "product-option" key of "params".
      *

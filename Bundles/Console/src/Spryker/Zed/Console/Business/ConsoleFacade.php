@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,11 +53,11 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacade::getApplicationPlugins()` instead.
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleFacade::getApplicationPlugins()` instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */
@@ -67,7 +67,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +82,7 @@ class ConsoleFacade extends AbstractFacade implements ConsoleFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

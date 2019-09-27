@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class ResourceRoutePluginsProviderPlugin extends AbstractPlugin implements ResourceRoutePluginsProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Returns plugins that are defined for GlueApplication on project level
      *
      * @api

@@ -23,7 +23,7 @@ class PriceProductConcreteEntityStorageUnpublishListener extends AbstractPlugin 
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

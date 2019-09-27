@@ -25,7 +25,7 @@ class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlug
     protected const FORM_PRICE_DIMENSION = 'price_dimension';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Adds sub-form with merchant relationship dimension dropdown.
      *
      * @api

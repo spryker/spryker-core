@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +71,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +87,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -103,7 +103,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -150,7 +150,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -166,7 +166,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -182,7 +182,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -198,7 +198,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @deprecated Use WishlistFacade::getWishlistByFilter() instead.
      *
@@ -216,7 +216,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -232,7 +232,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

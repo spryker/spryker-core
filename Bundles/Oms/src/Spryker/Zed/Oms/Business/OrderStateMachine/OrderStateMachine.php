@@ -566,10 +566,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByEvent($eventId, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        if ($sourceStateBuffer === null) {
-            $sourceStateBuffer = [];
-        }
-
         $targetStateMap = [];
         foreach ($orderItems as $i => $orderItem) {
             $stateId = $orderItem->getState()->getName();
@@ -607,9 +603,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByTransition($stateToTransitionsMap, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        if ($sourceStateBuffer === null) {
-            $sourceStateBuffer = [];
-        }
         $targetStateMap = [];
         foreach ($orderItems as $i => $orderItem) {
             $stateId = $orderItem->getState()->getName();

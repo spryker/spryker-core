@@ -8,13 +8,13 @@
     </transfer>
 
     <transfer name="ContentProductAbstractListType">
-        <property name="idProductAbstracts" type="int[]" />
+        <property name="idProductAbstracts" type="int[]"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int" />
-        <property name="code" type="string" />
-        <property name="detail" type="string" />
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
     </transfer>
 
 </transfers>

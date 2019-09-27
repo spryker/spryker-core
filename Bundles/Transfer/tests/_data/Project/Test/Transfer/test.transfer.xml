@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <transfers>
     <transfer name="FooBar">
-        <property name="name" type="string" />
-        <property name="bla" type="int" />
+        <property name="name" type="string"/>
+        <property name="bla" type="int"/>
     </transfer>
 
     <transfer name="AnEmptyOne">

@@ -22,7 +22,7 @@ class UrlStorageUnpublishListener extends AbstractPlugin implements EventBulkHan
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

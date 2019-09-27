@@ -36,7 +36,7 @@ class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements R
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
