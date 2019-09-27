@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\Oauth\Helper;
@@ -28,7 +28,7 @@ class OauthHelper extends Module
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): OauthResponseTransfer
+    public function haveAuth(CustomerTransfer $customerTransfer): OauthResponseTransfer
     {
         $oauthRequestTransfer = (new OauthRequestTransfer())
             ->setGrantType('password')
