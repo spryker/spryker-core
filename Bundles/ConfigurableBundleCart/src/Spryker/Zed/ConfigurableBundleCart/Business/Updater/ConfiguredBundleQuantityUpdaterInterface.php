@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundleCart\Business\Calculator;
+namespace Spryker\Zed\ConfigurableBundleCart\Business\Updater;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ConfiguredBundleQuantityCalculatorInterface
+interface ConfiguredBundleQuantityUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

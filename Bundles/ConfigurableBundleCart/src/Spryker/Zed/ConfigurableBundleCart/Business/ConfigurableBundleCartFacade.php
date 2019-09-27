@@ -27,7 +27,7 @@ class ConfigurableBundleCartFacade extends AbstractFacade implements Configurabl
     public function updateConfiguredBundleQuantityForQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createConfiguredBundleQuantityCalculator()
+            ->createConfiguredBundleQuantityUpdater()
             ->updateConfiguredBundleQuantity($quoteTransfer);
     }
 
@@ -43,7 +43,7 @@ class ConfigurableBundleCartFacade extends AbstractFacade implements Configurabl
     public function updateConfiguredBundleQuantityPerSlotForQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createConfiguredBundleQuantityCalculator()
+            ->createConfiguredBundleQuantityUpdater()
             ->updateConfiguredBundleQuantityPerSlot($quoteTransfer);
     }
 

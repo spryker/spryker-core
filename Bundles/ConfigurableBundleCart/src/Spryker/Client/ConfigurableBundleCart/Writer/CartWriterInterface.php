@@ -8,21 +8,21 @@
 namespace Spryker\Client\ConfigurableBundleCart\Writer;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
 interface CartWriterInterface
 {
     /**
-     * @param string $configuredBundleGroupKey
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function removeConfiguredBundle(string $configuredBundleGroupKey): QuoteResponseTransfer;
+    public function removeConfiguredBundle(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer;
 
     /**
-     * @param string $configuredBundleGroupKey
-     * @param int $configuredBundleQuantity
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $configuredBundleQuantity): QuoteResponseTransfer;
+    public function updateConfiguredBundleQuantity(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer;
 }

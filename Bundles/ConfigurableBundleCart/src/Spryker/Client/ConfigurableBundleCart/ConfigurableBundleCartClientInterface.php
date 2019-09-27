@@ -8,6 +8,7 @@
 namespace Spryker\Client\ConfigurableBundleCart;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
 interface ConfigurableBundleCartClientInterface
 {
@@ -17,11 +18,11 @@ interface ConfigurableBundleCartClientInterface
      *
      * @api
      *
-     * @param string $configuredBundleGroupKey
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function removeConfiguredBundle(string $configuredBundleGroupKey): QuoteResponseTransfer;
+    public function removeConfiguredBundle(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -29,10 +30,9 @@ interface ConfigurableBundleCartClientInterface
      *
      * @api
      *
-     * @param string $configuredBundleGroupKey
-     * @param int $configuredBundleQuantity
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $configuredBundleQuantity): QuoteResponseTransfer;
+    public function updateConfiguredBundleQuantity(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer;
 }

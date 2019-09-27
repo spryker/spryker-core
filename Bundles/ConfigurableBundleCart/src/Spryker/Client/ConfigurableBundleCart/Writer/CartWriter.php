@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Writer;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface;
+use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
+use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
 
 class CartWriter implements CartWriterInterface
 {
@@ -26,74 +26,69 @@ class CartWriter implements CartWriterInterface
     protected $cartClient;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface
+     * @var \Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface
      */
-    protected $quoteReader;
+    protected $quoteItemReader;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface
+     * @var \Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface
      */
-    protected $itemQuantityCalculator;
+    protected $quoteItemUpdater;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
-     * @param \Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface $quoteReader
-     * @param \Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface $itemQuantityCalculator
+     * @param \Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface $quoteItemReader
+     * @param \Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface $quoteItemUpdater
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
-        QuoteReaderInterface $quoteReader,
-        ItemQuantityCalculatorInterface $itemQuantityCalculator
+        QuoteItemReaderInterface $quoteItemReader,
+        QuoteItemUpdaterInterface $quoteItemUpdater
     ) {
         $this->cartClient = $cartClient;
-        $this->quoteReader = $quoteReader;
-        $this->itemQuantityCalculator = $itemQuantityCalculator;
+        $this->quoteItemReader = $quoteItemReader;
+        $this->quoteItemUpdater = $quoteItemUpdater;
     }
 
     /**
-     * @param string $configuredBundleGroupKey
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function removeConfiguredBundle(string $configuredBundleGroupKey): QuoteResponseTransfer
+    public function removeConfiguredBundle(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
-        $itemTransfers = $this->quoteReader
-            ->getItemsByConfiguredBundleGroupKey($configuredBundleGroupKey, $this->cartClient->getQuote());
+        $cartChangeTransfer = $this->quoteItemReader->getItemsByConfiguredBundleGroupKey($updateConfiguredBundleRequestTransfer);
 
-        if (!$itemTransfers->count()) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND);
+        if (!$cartChangeTransfer->getItems()->count()) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND);
         }
 
-        $quoteTransfer = $this->cartClient->removeItems($itemTransfers);
-
-        if ($this->quoteReader->getItemsByConfiguredBundleGroupKey($configuredBundleGroupKey, $quoteTransfer)->count()) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED);
-        }
-
-        return (new QuoteResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setQuoteTransfer($quoteTransfer);
-    }
-
-    /**
-     * @param string $configuredBundleGroupKey
-     * @param int $configuredBundleQuantity
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateConfiguredBundleQuantity(string $configuredBundleGroupKey, int $configuredBundleQuantity): QuoteResponseTransfer
-    {
-        $quoteTransfer = $this->cartClient->getQuote();
-        $itemTransfers = $this->quoteReader->getItemsByConfiguredBundleGroupKey($configuredBundleGroupKey, $quoteTransfer);
-
-        $itemTransfers = $this->itemQuantityCalculator->changeQuantity($itemTransfers, $configuredBundleQuantity);
-
-        $quoteResponseTransfer = $this->cartClient->updateQuantity(
-            (new CartChangeTransfer())->setItems($itemTransfers)
-        );
+        $quoteResponseTransfer = $this->cartClient->removeFromCart($cartChangeTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->getErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED);
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED);
+        }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateConfiguredBundleQuantity(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): QuoteResponseTransfer
+    {
+        $cartChangeTransfer = $this->quoteItemUpdater->changeQuantity($updateConfiguredBundleRequestTransfer);
+
+        if (!$cartChangeTransfer->getItems()->count()) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND);
+        }
+
+        $quoteResponseTransfer = $this->cartClient->updateQuantity($cartChangeTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED);
         }
 
         return $quoteResponseTransfer;
@@ -104,7 +99,7 @@ class CartWriter implements CartWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function getErrorResponse(string $message): QuoteResponseTransfer
+    protected function createErrorResponse(string $message): QuoteResponseTransfer
     {
         $quoteErrorTransfer = (new QuoteErrorTransfer())
             ->setMessage($message);

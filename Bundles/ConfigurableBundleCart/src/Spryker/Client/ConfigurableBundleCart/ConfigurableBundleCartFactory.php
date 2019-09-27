@@ -7,11 +7,11 @@
 
 namespace Spryker\Client\ConfigurableBundleCart;
 
-use Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculator;
-use Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Reader\QuoteReader;
-use Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface;
+use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader;
+use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
+use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater;
+use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriter;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriterInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -28,25 +28,27 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     {
         return new CartWriter(
             $this->getCartClient(),
-            $this->createQuoteReader(),
-            $this->createItemQuantityCalculator()
+            $this->createQuoteItemReader(),
+            $this->createQuoteItemUpdater()
         );
     }
 
     /**
-     * @return \Spryker\Client\ConfigurableBundleCart\Calculator\ItemQuantityCalculatorInterface
+     * @return \Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface
      */
-    public function createItemQuantityCalculator(): ItemQuantityCalculatorInterface
+    public function createQuoteItemUpdater(): QuoteItemUpdaterInterface
     {
-        return new ItemQuantityCalculator();
+        return new QuoteItemUpdater(
+            $this->createQuoteItemReader()
+        );
     }
 
     /**
-     * @return \Spryker\Client\ConfigurableBundleCart\Reader\QuoteReaderInterface
+     * @return \Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface
      */
-    public function createQuoteReader(): QuoteReaderInterface
+    public function createQuoteItemReader(): QuoteItemReaderInterface
     {
-        return new QuoteReader();
+        return new QuoteItemReader();
     }
 
     /**

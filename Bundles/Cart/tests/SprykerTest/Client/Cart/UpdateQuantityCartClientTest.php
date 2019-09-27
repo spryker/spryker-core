@@ -326,7 +326,7 @@ class UpdateQuantityCartClientTest extends Unit
      */
     protected function createCartFactoryMock(QuoteTransfer $quoteTransfer, $cartStubMock)
     {
-        $carFactoryMock = $this
+        $cartFactoryMock = $this
             ->getMockBuilder(CartFactory::class)
             ->setMethods([
                 'createCartChangeRequestExpander',
@@ -336,19 +336,19 @@ class UpdateQuantityCartClientTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $carFactoryMock
+        $cartFactoryMock
             ->method('createCartChangeRequestExpander')
             ->willReturn($this->createCartChangeRequestExpanderMock());
 
-        $carFactoryMock
+        $cartFactoryMock
             ->method('createZedStub')
             ->willReturn($cartStubMock);
 
-        $carFactoryMock
+        $cartFactoryMock
             ->method('getQuoteClient')
             ->willReturn($this->createQuoteClientMock($quoteTransfer));
 
-        return $carFactoryMock;
+        return $cartFactoryMock;
     }
 
     /**
@@ -403,7 +403,7 @@ class UpdateQuantityCartClientTest extends Unit
      */
     protected function createQuoteClientMock(QuoteTransfer $quoteTransfer)
     {
-        $cartStubMock = $this->getMockBuilder(CartToQuoteBridge::class)
+        $quoteClientMock = $this->getMockBuilder(CartToQuoteBridge::class)
             ->setMethods([
                 'getQuote',
                 'setQuote',
@@ -411,16 +411,16 @@ class UpdateQuantityCartClientTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $cartStubMock
+        $quoteClientMock
             ->method('getQuote')
             ->willReturn($quoteTransfer);
 
-        $cartStubMock
+        $quoteClientMock
             ->method('setQuote')
             ->willReturnCallback(function (QuoteTransfer $quoteTransfer) {
                 return $quoteTransfer;
             });
 
-        return $cartStubMock;
+        return $quoteClientMock;
     }
 }

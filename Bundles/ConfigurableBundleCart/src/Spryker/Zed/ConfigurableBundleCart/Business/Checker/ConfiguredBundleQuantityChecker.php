@@ -27,7 +27,7 @@ class ConfiguredBundleQuantityChecker implements ConfiguredBundleQuantityChecker
         }
 
         foreach ($configuredBundleTransfers as $configuredBundleTransfer) {
-            if (!$this->checkConfiguredBundleProportionality($configuredBundleTransfer)) {
+            if (!$this->checkConfiguredBundleQuantityCorrectness($configuredBundleTransfer)) {
                 return false;
             }
         }
@@ -86,7 +86,7 @@ class ConfiguredBundleQuantityChecker implements ConfiguredBundleQuantityChecker
      *
      * @return bool
      */
-    protected function checkConfiguredBundleProportionality(ConfiguredBundleTransfer $configuredBundleTransfer): bool
+    protected function checkConfiguredBundleQuantityCorrectness(ConfiguredBundleTransfer $configuredBundleTransfer): bool
     {
         $bundleQuantity = $configuredBundleTransfer->getQuantity();
 

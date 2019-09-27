@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\CartExtension\Dependency\Plugin\ItemsQuantityUpdateQuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -23,7 +23,7 @@ use Spryker\Shared\Quote\QuoteConfig;
  * @method \Spryker\Client\Cart\CartClientInterface getClient()
  * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
-class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, ItemsQuantityUpdateQuoteStorageStrategyPluginInterface
+class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, CartOperationQuoteStorageStrategyPluginInterface
 {
     /**
      * @return string
@@ -210,6 +210,42 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     /**
      * Specification:
      * - Makes zed request.
+     * - Adds items to quote.
+     * - Stores quote in session internally after success zed request.
+     * - Returns response with updated quote.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartOperation()
+            ->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Adds items to quote.
+     * - Stores quote in session internally after success zed request.
+     * - Returns response with updated quote.
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartOperation()
+            ->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * Specification:
+     * - Makes zed request.
      * - Updates quantity for given items.
      * - Stores quote in session internally after successful zed request.
      * - Returns response with updated quote.
@@ -220,111 +256,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      */
     public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->getQuote();
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setQuoteTransfer($quoteTransfer)
-            ->setIsSuccessful(true);
-
-        $cartChangeTransferForAdding = $this->prepareCartChangeTransferForAdding($cartChangeTransfer);
-
-        if ($cartChangeTransferForAdding->getItems()->count()) {
-            $quoteResponseTransfer = $this->getCartZedStub()->addToCart($cartChangeTransferForAdding);
-        }
-
-        $cartChangeTransferForRemoval = $this->prepareCartChangeTransferForRemoval($cartChangeTransfer);
-
-        if ($quoteResponseTransfer->getIsSuccessful() && $cartChangeTransferForRemoval->getItems()->count()) {
-            $quoteResponseTransfer = $this->getCartZedStub()->removeFromCart($cartChangeTransferForRemoval);
-        }
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return (new QuoteResponseTransfer())
-                ->setQuoteTransfer($quoteTransfer)
-                ->setIsSuccessful(false);
-        }
-
-        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function prepareCartChangeTransferForAdding(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
-    {
-        $cartChangeTransferForAdding = $this->createCartChangeTransfer();
-
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
-
-            if (!$quoteItemTransfer || $itemTransfer->getQuantity() === 0) {
-                continue;
-            }
-
-            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
-
-            if ($delta === 0 || $quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
-                continue;
-            }
-
-            $changeItemTransfer = clone $quoteItemTransfer;
-            $changeItemTransfer->setQuantity($delta);
-
-            $cartChangeTransferForAdding->addItem($changeItemTransfer);
-        }
-
-        if (!$cartChangeTransferForAdding->getItems()->count()) {
-            return $cartChangeTransferForAdding;
-        }
-
         return $this->getFactory()
-            ->createCartChangeRequestExpander()
-            ->addItemsRequestExpand($cartChangeTransferForAdding);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function prepareCartChangeTransferForRemoval(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
-    {
-        $cartChangeTransferForRemoval = $this->createCartChangeTransfer();
-
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
-
-            if (!$quoteItemTransfer) {
-                continue;
-            }
-
-            if ($itemTransfer->getQuantity() === 0) {
-                $cartChangeTransferForRemoval->addItem($quoteItemTransfer);
-                continue;
-            }
-
-            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
-
-            if ($delta === 0 || $quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
-                continue;
-            }
-
-            $changeItemTransfer = clone $quoteItemTransfer;
-            $changeItemTransfer->setQuantity($delta);
-
-            $cartChangeTransferForRemoval->addItem($changeItemTransfer);
-        }
-
-        if (!$cartChangeTransferForRemoval->getItems()->count()) {
-            return $cartChangeTransferForRemoval;
-        }
-
-        return $this->getFactory()
-            ->createCartChangeRequestExpander()
-            ->removeItemRequestExpand($cartChangeTransferForRemoval);
+            ->createCartOperation()
+            ->updateQuantity($cartChangeTransfer);
     }
 
     /**

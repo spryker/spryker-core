@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
-use Spryker\Zed\ConfigurableBundleCart\Business\Calculator\ConfiguredBundleQuantityCalculator;
-use Spryker\Zed\ConfigurableBundleCart\Business\Calculator\ConfiguredBundleQuantityCalculatorInterface;
 use Spryker\Zed\ConfigurableBundleCart\Business\Checker\ConfiguredBundleQuantityChecker;
 use Spryker\Zed\ConfigurableBundleCart\Business\Checker\ConfiguredBundleQuantityCheckerInterface;
+use Spryker\Zed\ConfigurableBundleCart\Business\Updater\ConfiguredBundleQuantityUpdater;
+use Spryker\Zed\ConfigurableBundleCart\Business\Updater\ConfiguredBundleQuantityUpdaterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -19,11 +19,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class ConfigurableBundleCartBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ConfigurableBundleCart\Business\Calculator\ConfiguredBundleQuantityCalculatorInterface
+     * @return \Spryker\Zed\ConfigurableBundleCart\Business\Updater\ConfiguredBundleQuantityUpdaterInterface
      */
-    public function createConfiguredBundleQuantityCalculator(): ConfiguredBundleQuantityCalculatorInterface
+    public function createConfiguredBundleQuantityUpdater(): ConfiguredBundleQuantityUpdaterInterface
     {
-        return new ConfiguredBundleQuantityCalculator();
+        return new ConfiguredBundleQuantityUpdater();
     }
 
     /**

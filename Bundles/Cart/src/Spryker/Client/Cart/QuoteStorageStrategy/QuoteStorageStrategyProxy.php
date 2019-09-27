@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
-use Spryker\Client\CartExtension\Dependency\Plugin\ItemsQuantityUpdateQuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
@@ -161,6 +161,54 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        if ($this->isQuoteLocked()) {
+            $this->addPermissionFailedMessage();
+
+            return $this->createNotSuccessfulQuoteResponseTransfer();
+        }
+
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `addToCart` functionality.'
+            );
+        }
+
+        return $this->quoteStorageStrategy->addToCart($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        if ($this->isQuoteLocked()) {
+            $this->addPermissionFailedMessage();
+
+            return $this->createNotSuccessfulQuoteResponseTransfer();
+        }
+
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `removeFromCart` functionality.'
+            );
+        }
+
+        return $this->quoteStorageStrategy->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function updateQuantity(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
     {
         if ($this->isQuoteLocked()) {
@@ -169,9 +217,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof ItemsQuantityUpdateQuoteStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement ItemsQuantityUpdateQuoteStorageStrategyPluginInterface in order to use `updateQuantity` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `updateQuantity` functionality.'
             );
         }
 
