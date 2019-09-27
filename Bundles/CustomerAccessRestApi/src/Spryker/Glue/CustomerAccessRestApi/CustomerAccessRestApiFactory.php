@@ -10,8 +10,8 @@ namespace Spryker\Glue\CustomerAccessRestApi;
 use Spryker\Glue\CustomerAccessRestApi\Dependency\Client\CustomerAccessRestApiToCustomerAccessStorageClientInterface;
 use Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessReader;
 use Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessReaderInterface;
-use Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessRequestValidator;
-use Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessRequestValidatorInterface;
+use Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessRequestFormatter;
+use Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessRequestFormatterInterface;
 use Spryker\Glue\CustomerAccessRestApi\Processor\Mapper\CustomerAccessMapper;
 use Spryker\Glue\CustomerAccessRestApi\Processor\Mapper\CustomerAccessMapperInterface;
 use Spryker\Glue\CustomerAccessRestApi\Processor\RestResponseBuilder\CustomerAccessRestResponseBuilder;
@@ -24,11 +24,14 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CustomerAccessRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessRequestValidatorInterface
+     * @return \Spryker\Glue\CustomerAccessRestApi\Processor\CustomerAccess\CustomerAccessRequestFormatterInterface
      */
-    public function createCustomerAccessRequestValidator(): CustomerAccessRequestValidatorInterface
+    public function createCustomerAccessRequestFormatter(): CustomerAccessRequestFormatterInterface
     {
-        return new CustomerAccessRequestValidator($this->getConfig());
+        return new CustomerAccessRequestFormatter(
+            $this->getCustomerAccessStorageClient(),
+            $this->getConfig()
+        );
     }
 
     /**
