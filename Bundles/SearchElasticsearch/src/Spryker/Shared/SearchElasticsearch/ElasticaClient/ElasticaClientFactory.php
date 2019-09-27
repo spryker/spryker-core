@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SearchElasticsearch\ElasticsearchClient;
+namespace Spryker\Shared\SearchElasticsearch\ElasticaClient;
 
 use Elastica\Client;
 
-class ElasticsearchClientFactory implements ElasticsearchClientFactoryInterface
+class ElasticaClientFactory implements ElasticaClientFactoryInterface
 {
     /**
      * @var \Elastica\Client

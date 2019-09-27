@@ -40,8 +40,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
-use Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactory;
-use Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactoryInterface;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 
@@ -76,7 +76,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearch(): SearchInterface
     {
         return new Search(
-            $this->getElasticsearchClient(),
+            $this->getElasticaClient(),
             $this->createIndexNameResolver()
         );
     }
@@ -230,19 +230,19 @@ class SearchElasticsearchFactory extends AbstractFactory
     /**
      * @return \Elastica\Client
      */
-    public function getElasticsearchClient(): Client
+    public function getElasticaClient(): Client
     {
-        return $this->createElasticsearchClientFactory()->createClient(
+        return $this->createElasticaClientFactory()->createClient(
             $this->getConfig()->getClientConfig()
         );
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactoryInterface
+     * @return \Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface
      */
-    public function createElasticsearchClientFactory(): ElasticsearchClientFactoryInterface
+    public function createElasticaClientFactory(): ElasticaClientFactoryInterface
     {
-        return new ElasticsearchClientFactory();
+        return new ElasticaClientFactory();
     }
 
     /**

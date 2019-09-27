@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
 use Elastica\Client;
-use Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactory;
-use Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactoryInterface;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -245,10 +245,10 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\ElasticsearchClient\ElasticsearchClientFactoryInterface
+     * @return \Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface
      */
-    public function createElasticsearchClientFactory(): ElasticsearchClientFactoryInterface
+    public function createElasticsearchClientFactory(): ElasticaClientFactoryInterface
     {
-        return new ElasticsearchClientFactory();
+        return new ElasticaClientFactory();
     }
 }
