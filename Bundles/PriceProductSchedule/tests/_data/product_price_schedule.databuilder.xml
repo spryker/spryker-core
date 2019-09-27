@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="PriceProductScheduleList">
-        <property name="fk_user" type="string" dataBuilderRule="=1"/>
+        <property name="fkUser" type="string" dataBuilderRule="=1"/>
         <property name="isActive" type="bool" dataBuilderRule="=true"/>
         <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
     </transfer>
