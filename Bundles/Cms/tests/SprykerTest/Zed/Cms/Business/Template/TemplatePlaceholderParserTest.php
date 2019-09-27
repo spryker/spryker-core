@@ -13,6 +13,7 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
