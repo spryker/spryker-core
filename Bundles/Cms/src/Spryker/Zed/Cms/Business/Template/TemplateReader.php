@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\Cms\Business\Template;
 
-use Spryker\Zed\Cms\CmsConfig;
-use Symfony\Component\Finder\SplFileInfo;
+use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 
 class TemplateReader implements TemplateReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Cms\CmsConfig
+     * @var \Spryker\Zed\Cms\Business\Template\TemplateContentReaderInterface
      */
-    protected $cmsConfig;
+    protected $templateContentReader;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParserInterface
@@ -23,14 +22,14 @@ class TemplateReader implements TemplateReaderInterface
     protected $templatePlaceholderParser;
 
     /**
-     * @param \Spryker\Zed\Cms\CmsConfig $cmsConfig
+     * @param \Spryker\Zed\Cms\Business\Template\TemplateContentReaderInterface $templateContentReader
      * @param \Spryker\Zed\Cms\Business\Template\TemplatePlaceholderParserInterface $templatePlaceholderParser
      */
     public function __construct(
-        CmsConfig $cmsConfig,
+        TemplateContentReaderInterface $templateContentReader,
         TemplatePlaceholderParserInterface $templatePlaceholderParser
     ) {
-        $this->cmsConfig = $cmsConfig;
+        $this->templateContentReader = $templateContentReader;
         $this->templatePlaceholderParser = $templatePlaceholderParser;
     }
 
@@ -41,17 +40,12 @@ class TemplateReader implements TemplateReaderInterface
      */
     public function getPlaceholdersByTemplatePath(string $templatePath): array
     {
-        $templateFilePaths = $this->cmsConfig->getTemplateRealPaths($templatePath);
-
-        foreach ($templateFilePaths as $templateFile) {
-            $fileInfo = new SplFileInfo($templateFile, '', '');
-            if (!$fileInfo->isFile()) {
-                continue;
-            }
-
-            return $this->templatePlaceholderParser->getTemplatePlaceholders($fileInfo->getContents());
+        try {
+            $content = $this->templateContentReader->getTemplateContent($templatePath);
+        } catch (TemplateFileNotFoundException $exception) {
+            return [];
         }
 
-        return [];
+        return $this->templatePlaceholderParser->getTemplatePlaceholders($content);
     }
 }
