@@ -16,7 +16,7 @@ use Spryker\Glue\UrlsRestApi\UrlsRestApiConfig;
 class UrlResolverResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for url-resolver resource.
      *
      * @api
@@ -33,7 +33,7 @@ class UrlResolverResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class UrlResolverResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class UrlResolverResourceRoutePlugin extends AbstractPlugin implements ResourceR
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

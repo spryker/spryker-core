@@ -19,7 +19,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMa
 class CartItemProductOptionToShoppingListItemProductOptionMapperPlugin extends AbstractPlugin implements ItemToShoppingListItemMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps ItemTransfer product options to ShoppingListItemTransfer product options.
      *
      * @api

@@ -22,7 +22,7 @@ class PriceTypeProductAbstractStoragePublishListener extends AbstractPlugin impl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

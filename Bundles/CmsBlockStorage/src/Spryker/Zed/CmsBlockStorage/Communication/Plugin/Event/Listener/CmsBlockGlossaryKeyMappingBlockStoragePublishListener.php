@@ -23,7 +23,7 @@ class CmsBlockGlossaryKeyMappingBlockStoragePublishListener extends AbstractPlug
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

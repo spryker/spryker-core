@@ -45,7 +45,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
      */
     public function getSearchTerm(): array
     {
-        $searchTerm = $this->request->query->get('search', null);
+        $searchTerm = $this->request->query->get('search');
 
         if (!$this->isSearchTermValid($searchTerm)) {
             return $this->getDefaultSearchTerm();

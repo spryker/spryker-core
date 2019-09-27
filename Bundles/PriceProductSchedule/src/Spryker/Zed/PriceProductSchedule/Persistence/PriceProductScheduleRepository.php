@@ -169,4 +169,17 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
             ->createPriceProductScheduleFinder()
             ->isPriceProductScheduleUnique($priceProductScheduleTransfer);
     }
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array {
+        return $this->getFactory()
+            ->createPriceProductScheduleFinder()
+            ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
+    }
 }

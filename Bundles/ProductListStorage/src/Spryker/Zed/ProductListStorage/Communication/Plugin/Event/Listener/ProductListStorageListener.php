@@ -21,7 +21,7 @@ class ProductListStorageListener extends AbstractPlugin implements EventBulkHand
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

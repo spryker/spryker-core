@@ -16,7 +16,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPrices
 class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductReaderPricesExtractorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

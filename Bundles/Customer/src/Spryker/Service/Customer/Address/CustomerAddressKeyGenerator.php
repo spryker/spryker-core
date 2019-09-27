@@ -42,12 +42,17 @@ class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterfac
      */
     public function getUniqueAddressKey(AddressTransfer $addressTransfer): string
     {
+        $addressKeyData = [];
         $addressData = $addressTransfer->toArray(true, true);
 
-        foreach ($this->customerConfig->getAddressKeyGenerationExcludedFields() as $addressExcludedField) {
-            unset($addressData[$addressExcludedField]);
+        foreach ($this->customerConfig->getAddressKeyGenerationWhiteListedFields() as $addressWhiteListedField) {
+            if (!isset($addressData[$addressWhiteListedField])) {
+                continue;
+            }
+
+            $addressKeyData[$addressWhiteListedField] = $addressData[$addressWhiteListedField];
         }
 
-        return md5($this->utilEncodingService->encodeJson($addressData));
+        return md5($this->utilEncodingService->encodeJson($addressKeyData));
     }
 }

@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class UserLocaleFormExpanderPlugin extends AbstractPlugin implements UserFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expand User form with Locale field.
      *
      * @api

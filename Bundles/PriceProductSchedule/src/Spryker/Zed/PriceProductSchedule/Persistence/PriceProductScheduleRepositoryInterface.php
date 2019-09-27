@@ -68,6 +68,15 @@ interface PriceProductScheduleRepositoryInterface
     ): ?PriceProductScheduleListTransfer;
 
     /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array;
+
+    /**
      * @param int $idPriceProductSchedule
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer|null
