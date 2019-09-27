@@ -105,9 +105,7 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
             );
         }
 
-        $configurableBundleTemplateSlotTransfer->setFkProductList(
-            $productListResponseTransfer->getProductList()->getIdProductList()
-        );
+        $configurableBundleTemplateSlotTransfer->setProductList($productListResponseTransfer->getProductList());
 
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleNameGenerator
             ->setConfigurableBundleTemplateSlotName($configurableBundleTemplateSlotTransfer);
@@ -127,8 +125,15 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
     protected function executeUpdateConfigurableBundleTemplateSlotTransaction(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleResponseTransfer {
+        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate()
+            ->requireProductList()
+            ->getProductList()
+            ->requireIdProductList();
+
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleNameGenerator
             ->setConfigurableBundleTemplateSlotName($configurableBundleTemplateSlotTransfer);
+
+        $this->productListWriter->updateProductListForConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
 
         if (!$this->configurableBundleEntityManager->updateConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer)) {
             $messageTransfer = (new MessageTransfer())

@@ -51,12 +51,36 @@ class ProductListWriter implements ProductListWriterInterface
     public function createProductListForConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ProductListResponseTransfer {
-        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate()->requireTranslations();
+        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate();
 
         $configurableBundleTemplateTransfer = $this->getConfigurableBundleTemplateTransfer($configurableBundleTemplateSlotTransfer);
-        $configurableBundleTemplateTransfer->requireTranslations();
+        $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
-        return $this->createProductList($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateTransfer);
+        return $this->createProductList($configurableBundleTemplateSlotTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function updateProductListForConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ProductListResponseTransfer {
+        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate()
+            ->requireTranslations()
+            ->requireProductList()
+            ->getProductList()
+            ->requireIdProductList();
+
+        $configurableBundleTemplateTransfer = $this->getConfigurableBundleTemplateTransfer($configurableBundleTemplateSlotTransfer);
+        $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+
+        $configurableBundleTemplateSlotTransfer->getProductList()->setTitle(
+            $this->generateProductListTitle($configurableBundleTemplateSlotTransfer)
+        );
+
+        return $this->productListFacade->updateProductList($configurableBundleTemplateSlotTransfer->getProductList());
     }
 
     /**
@@ -85,42 +109,46 @@ class ProductListWriter implements ProductListWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function createProductList(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ProductListResponseTransfer {
-        $productListTransfer = $this->createProductListTransfer(
-            $configurableBundleTemplateSlotTransfer,
-            $configurableBundleTemplateTransfer
-        );
+    protected function createProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer
+    {
+        $productListTransfer = $this->createProductListTransfer($configurableBundleTemplateSlotTransfer);
 
         return $this->productListFacade->createProductList($productListTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    protected function createProductListTransfer(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ProductListTransfer {
-        $productListTitle = sprintf(
-            '%s - %s',
-            $configurableBundleTemplateTransfer->getTranslations()[0]->getName(),
-            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()
-        );
-
+    protected function createProductListTransfer(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListTransfer
+    {
         return (new ProductListTransfer())
-            ->setTitle($productListTitle)
+            ->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer))
             ->setType(SpyProductListTableMap::COL_TYPE_WHITELIST)
             ->setProductListProductConcreteRelation(new ProductListProductConcreteRelationTransfer())
             ->setProductListCategoryRelation(new ProductListCategoryRelationTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return string
+     */
+    protected function generateProductListTitle(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string
+    {
+        $configurableBundleTemplateSlotTransfer->requireTranslations()
+            ->requireConfigurableBundleTemplate()
+            ->getConfigurableBundleTemplate()
+            ->requireTranslations();
+
+        return sprintf(
+            '%s - %s',
+            $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),
+            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()
+        );
     }
 }

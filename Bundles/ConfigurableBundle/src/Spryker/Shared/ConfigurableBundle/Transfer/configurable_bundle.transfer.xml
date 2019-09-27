@@ -35,8 +35,9 @@
         <property name="idConfigurableBundleTemplateSlot" type="int" />
         <property name="name" type="string"/>
         <property name="uuid" type="string" />
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
         <property name="fkConfigurableBundleTemplate" type="int" />
-        <property name="fkProductList" type="int" />
+        <property name="productList" type="ProductList" />
         <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
     </transfer>
 

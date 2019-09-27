@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
 
@@ -61,7 +62,9 @@ class ConfigurableBundleMapper
             $configurableBundleTemplateSlotTransfer->toArray()
         );
 
-        return $configurableBundleTemplateSlotEntity;
+        return $configurableBundleTemplateSlotEntity->setFkProductList(
+            $configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList()
+        );
     }
 
     /**
@@ -74,9 +77,15 @@ class ConfigurableBundleMapper
         SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity,
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer {
-        return $configurableBundleTemplateSlotTransfer->fromArray(
+        $configurableBundleTemplateSlotTransfer = $configurableBundleTemplateSlotTransfer->fromArray(
             $configurableBundleTemplateSlotEntity->toArray(),
             true
         );
+
+        $productListTransfer = (new ProductListTransfer())->setIdProductList(
+            $configurableBundleTemplateSlotEntity->getFkProductList()
+        );
+
+        return $configurableBundleTemplateSlotTransfer->setProductList($productListTransfer);
     }
 }

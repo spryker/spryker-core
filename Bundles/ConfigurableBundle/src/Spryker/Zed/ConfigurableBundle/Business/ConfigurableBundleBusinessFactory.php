@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpander;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
@@ -113,7 +115,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateSlotReader(
             $this->getRepository(),
-            $this->createConfigurableBundleTranslationExpander()
+            $this->createConfigurableBundleTranslationExpander(),
+            $this->createConfigurableBundleTemplateSlotProductListExpander()
         );
     }
 
@@ -134,6 +137,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface
+     */
+    public function createConfigurableBundleTemplateSlotProductListExpander(): ConfigurableBundleTemplateSlotProductListExpanderInterface
+    {
+        return new ConfigurableBundleTemplateSlotProductListExpander($this->getProductListFacade());
     }
 
     /**
