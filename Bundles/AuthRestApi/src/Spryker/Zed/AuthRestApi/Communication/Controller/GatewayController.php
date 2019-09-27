@@ -21,7 +21,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function processAccessTokenAction(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
+    public function createAccessTokenAction(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         return $this->getFacade()->createAccessToken($oauthRequestTransfer);
     }
