@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteStatusCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool;
+    public function getQuoteApprovalCheckoutResponseTransfer(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer;
 }

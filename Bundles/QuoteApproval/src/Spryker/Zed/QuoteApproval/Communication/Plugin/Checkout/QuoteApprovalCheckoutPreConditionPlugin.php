@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\QuoteApproval\Communication\Plugin\Checkout;
 
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface;
@@ -19,8 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
-    protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
-
     /**
      * {@inheritdoc}
      * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
@@ -35,13 +32,8 @@ class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements 
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        if (!$this->getFacade()->isQuoteApprovalRequired($quoteTransfer)) {
-            return true;
-        }
+        $checkoutResponseTransfer = $this->getFacade()->getQuoteApprovalCheckoutResponseTransfer($quoteTransfer, $checkoutResponseTransfer);
 
-        $checkoutResponseTransfer->setIsSuccess(false)
-            ->addError((new CheckoutErrorTransfer())->setMessage(static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL));
-
-        return false;
+        return $checkoutResponseTransfer->getIsSuccess();
     }
 }

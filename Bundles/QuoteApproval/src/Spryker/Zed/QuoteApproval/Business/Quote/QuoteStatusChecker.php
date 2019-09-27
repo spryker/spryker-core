@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -16,6 +18,9 @@ use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissi
 class QuoteStatusChecker implements QuoteStatusCheckerInterface
 {
     use PermissionAwareTrait;
+
+    protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+    protected const GLOSSARY_KEY_CART_WAITING_APPROVAL = 'quote_approval.cart.waiting_approval';
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
@@ -41,18 +46,36 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool
+    public function getQuoteApprovalCheckoutResponseTransfer(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
     {
         $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
         if ($quoteStatus === QuoteApprovalConfig::STATUS_WAITING) {
-            return true;
+            return $checkoutResponseTransfer->setIsSuccess(false)
+                ->addError((new CheckoutErrorTransfer())->setMessage(static::GLOSSARY_KEY_CART_WAITING_APPROVAL));
         }
 
+        if ($this->isQuoteApprovalRequired($quoteTransfer, $quoteStatus)) {
+            $checkoutResponseTransfer->setIsSuccess(false)
+                ->addError((new CheckoutErrorTransfer())->setMessage(static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL));
+        }
+
+        return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $quoteStatus
+     *
+     * @return bool
+     */
+    protected function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer, $quoteStatus): bool
+    {
         $idCompanyUser = $quoteTransfer->requireCustomer()
             ->getCustomer()
             ->requireCompanyUserTransfer()

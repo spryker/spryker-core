@@ -54,36 +54,40 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteApprovalRequiredResponseIsSuccessful(): void
+    public function testGetQuoteApprovalCheckoutResponseTransferResponseIsSuccessful(): void
     {
         // Arrange
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
         $quoteTransfer = $this->tester->createQuoteTransfer();
+        $heckoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
 
         // Act
-        $quoteApprovalResponseTransfer = $this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
+        $checkoutResponseTransfer = $this->getFacade()->getQuoteApprovalCheckoutResponseTransfer($quoteTransfer, $heckoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($quoteApprovalResponseTransfer);
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertEmpty($checkoutResponseTransfer->getErrors());
     }
 
     /**
      * @return void
      */
-    public function testIsQuoteApprovalRequiredResponseIsNotSuccessful(): void
+    public function testGetQuoteApprovalCheckoutResponseTransferResponseIsNotSuccessful(): void
     {
         // Arrange
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
         $quoteTransfer = $this->tester->createQuoteTransfer();
+        $heckoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
         $quoteTransfer->setQuoteApprovals($this->tester->createQuoteApprovalTransfers([
             SharedQuoteApprovalConfig::STATUS_WAITING,
         ]));
 
         // Act
-        $quoteApprovalResponseTransfer = $this->getFacade()->isQuoteApprovalRequired($quoteTransfer);
+        $checkoutResponseTransfer = $this->getFacade()->getQuoteApprovalCheckoutResponseTransfer($quoteTransfer, $heckoutResponseTransfer);
 
         // Assert
-        $this->assertTrue($quoteApprovalResponseTransfer);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($checkoutResponseTransfer->getErrors());
     }
 
     /**
