@@ -31,7 +31,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     protected $translator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $translationDomain;
 
