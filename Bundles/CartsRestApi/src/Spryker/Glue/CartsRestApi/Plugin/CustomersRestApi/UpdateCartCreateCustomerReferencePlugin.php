@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class UpdateCartCreateCustomerReferencePlugin extends AbstractPlugin implements CustomerPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Updates cart of guest customer with customer reference after registration.
      *
      * @api

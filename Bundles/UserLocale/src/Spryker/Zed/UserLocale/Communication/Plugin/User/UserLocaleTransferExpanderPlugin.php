@@ -19,7 +19,7 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterf
 class UserLocaleTransferExpanderPlugin extends AbstractPlugin implements UserTransferExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expand UserTransfer with Locale Id and Locale Name.
      *
      * @api

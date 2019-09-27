@@ -4,29 +4,29 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Customer">
-        <property name="customerReference" type="string" />
-        <property name="companyUserTransfer" type="CompanyUser" />
+        <property name="customerReference" type="string"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="isActive" type="bool" />
-        <property name="uuid" type="string" />
+        <property name="isActive" type="bool"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="OauthResponse">
-        <property name="idCompanyUser" type="string" />
+        <property name="idCompanyUser" type="string"/>
     </transfer>
 
     <transfer name="RestTokenResponseAttributes">
-        <property name="idCompanyUser" type="string" />
+        <property name="idCompanyUser" type="string"/>
     </transfer>
 
     <transfer name="CustomerIdentifier">
-        <property name="idCompanyUser" type="string" />
+        <property name="idCompanyUser" type="string"/>
     </transfer>
 
     <transfer name="RestCompanyUserAttributes">
-        <property name="isActive" type="bool" />
+        <property name="isActive" type="bool"/>
         <property name="isDefault" type="bool"/>
     </transfer>
 
@@ -44,17 +44,17 @@
     </transfer>
 
     <transfer name="CompanyUserCollection">
-        <property name="filter" type="Filter" />
-        <property name="total" type="int" />
+        <property name="filter" type="Filter"/>
+        <property name="total" type="int"/>
     </transfer>
 
     <transfer name="CustomerCollection">
-        <property name="customer" type="Customer" />
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Filter">
-        <property name="limit" type="int" />
-        <property name="offset" type="int" />
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="ShareDetail">

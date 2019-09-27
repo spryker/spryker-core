@@ -4,8 +4,8 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProduct">
-        <property name="groupKey" type="string" />
-        <property name="isMergeable" type="bool" />
+        <property name="groupKey" type="string"/>
+        <property name="isMergeable" type="bool"/>
     </transfer>
 
     <transfer name="PriceProductStorage">
@@ -13,30 +13,30 @@
     </transfer>
 
     <transfer name="PriceProductMerchantRelationshipStorage">
-        <property name="storeName" type="string" />
-        <property name="idMerchantRelationship" type="int" deprecated="Use PriceProductMerchantRelationshipValueTransfer::idMerchantRelationship instead." />
-        <property name="idCompanyBusinessUnit" type="int" />
-        <property name="idProduct" type="int" />
-        <property name="priceKey" type="string" />
-        <property name="prices" type="array" />
-        <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice" />
+        <property name="storeName" type="string"/>
+        <property name="idMerchantRelationship" type="int" deprecated="Use PriceProductMerchantRelationshipValueTransfer::idMerchantRelationship instead."/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="priceKey" type="string"/>
+        <property name="prices" type="array"/>
+        <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice"/>
     </transfer>
 
     <transfer name="PriceProductMerchantRelationshipValue">
-        <property name="idMerchantRelationship" type="int" />
-        <property name="priceType" type="string" />
-        <property name="priceData" type="string" />
-        <property name="grossPrice" type="int" />
-        <property name="netPrice" type="int" />
-        <property name="currencyCode" type="string" />
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="priceType" type="string"/>
+        <property name="priceData" type="string"/>
+        <property name="grossPrice" type="int"/>
+        <property name="netPrice" type="int"/>
+        <property name="currencyCode" type="string"/>
     </transfer>
 
     <transfer name="PriceProductMerchantRelationship">
-        <property name="idPriceProductMerchantRelationship" type="int" />
-        <property name="fkPriceProductStore" type="int" />
-        <property name="fkMerchantRelationship" type="int" />
-        <property name="fkProduct" type="int" />
-        <property name="fkProductAbstract" type="int" />
+        <property name="idPriceProductMerchantRelationship" type="int"/>
+        <property name="fkPriceProductStore" type="int"/>
+        <property name="fkMerchantRelationship" type="int"/>
+        <property name="fkProduct" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
 </transfers>

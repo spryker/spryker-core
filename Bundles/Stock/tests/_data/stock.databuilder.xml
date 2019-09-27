@@ -4,13 +4,13 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="StockProduct">
-        <property name="sku" dataBuilderRule="isbn10" />
-        <property name="quantity" dataBuilderRule="randomDigitNotNull" />
-        <property name="isNeverOutOfStock" dataBuilderRule="numberBetween(0,1)" />
+        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="quantity" dataBuilderRule="randomDigitNotNull"/>
+        <property name="isNeverOutOfStock" dataBuilderRule="numberBetween(0,1)"/>
     </transfer>
 
     <transfer name="Type">
-        <property name="name" dataBuilderRule="unique->lexify('??????')" />
+        <property name="name" dataBuilderRule="unique->lexify('??????')"/>
     </transfer>
 
 </transfers>
