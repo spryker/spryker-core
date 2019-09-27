@@ -4,5 +4,5 @@ oryx-merchant-1,Oryx Merchant,2,waiting-for-approval,oryx.merchant@merchant.kudu
 impala-merchant-1,Impala Merchant,3,waiting-for-approval,impala.merchant@merchant.kudu
 sugar-monster,Sugar Monster,4,waiting-for-approval,sugar.monster@merchant.kudu
 restrictions-merchant,Restrictions Merchant,5,waiting-for-approval,restrictions.merchant@merchant.kudu
-wolf-gmbh-und-co-kg,Roan GmbH und Co KG,HFD123456,approved,schmidt@roan.de
-safascan,Steenbok,1234.4567,waiting-for-approval,maryam@steenbok.nl
+roan-gmbh-und-co-k-g,Roan GmbH und Co KG,HFD123456,approved,schmidt@roan.de
+steenbok,Steenbok,1234.4567,waiting-for-approval,maryam@steenbok.nl
