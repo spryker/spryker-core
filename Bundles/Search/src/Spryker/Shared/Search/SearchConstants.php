@@ -23,6 +23,8 @@ interface SearchConstants
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     *
      * Elasticsearch connection host name. (Required)
      *
      * @api
@@ -30,6 +32,8 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     *
      * Elasticsearch connection port number. (Required)
      *
      * @api
@@ -37,6 +41,8 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     *
      * Elasticsearch connection transport name (i.e. "http"). (Required)
      *
      * @api
@@ -53,6 +59,8 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * Elasticsearch connection document type. (Required)
      *
      * @api
@@ -60,6 +68,8 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     *
      * Elasticsearch connection authentication header parameters. (Optional)
      *
      * @api
@@ -67,6 +77,8 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::EXTRA` instead.
+     *
      * Specification:
      * - Defines an array of extra Elasticsearch connection parameters (i.e. ['foo' => 'bar', ...]). (Optional)
      *
@@ -75,6 +87,8 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * Specification:
      * - Defines a suffix string for the index name to be installed. (Optional)
      *
@@ -83,6 +97,8 @@ interface SearchConstants
     public const SEARCH_INDEX_NAME_SUFFIX = 'SEARCH_INDEX_NAME_SUFFIX';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::CLIENT_CONFIGURATION` instead.
+     *
      * Specification:
      * - Defines a custom configuration for \Elastica\Client.
      * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
@@ -93,6 +109,8 @@ interface SearchConstants
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::DIRECTORY_PERMISSION` instead.
+     *
      * Specification:
      * - Sets the permission mode for generated directories.
      *
