@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Search\Helper;
+namespace SprykerTest\Client\SearchElasticsearch\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
@@ -13,17 +13,10 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Index;
 use Elastica\Request;
+use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
 class ElasticsearchHelper extends Module
 {
-    /**
-     * @var array
-     */
-    protected $config = [
-        'host' => 'localhost',
-        'port' => 10005,
-    ];
-
     /**
      * @var array
      */
@@ -91,27 +84,6 @@ class ElasticsearchHelper extends Module
     }
 
     /**
-     * @param string $indexName
-     *
-     * @return void
-     */
-    public function assertIndexExists(string $indexName)
-    {
-        $client = $this->getClient();
-        $index = $client->getIndex($indexName);
-
-        $this->asserTrue($index->exists(), sprintf('Expected that index "%s" exists but doesn\'t exist.' . $indexName));
-    }
-
-    /**
-     * @return \Elastica\Client
-     */
-    protected function getClient(): Client
-    {
-        return new Client($this->config);
-    }
-
-    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
@@ -119,7 +91,23 @@ class ElasticsearchHelper extends Module
     public function _after(TestInterface $test): void
     {
         foreach ($this->cleanup as $indexName => $cleanup) {
-            $deleted = $cleanup();
+            $cleanup();
         }
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
+     */
+    public function getConfig(): SearchElasticsearchConfig
+    {
+        return new SearchElasticsearchConfig();
+    }
+
+    /**
+     * @return \Elastica\Client
+     */
+    protected function getClient(): Client
+    {
+        return new Client($this->getConfig()->getClientConfig());
     }
 }
