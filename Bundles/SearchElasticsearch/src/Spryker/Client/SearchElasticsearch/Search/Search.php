@@ -9,6 +9,7 @@ namespace Spryker\Client\SearchElasticsearch\Search;
 
 use Elastica\Client;
 use Elastica\Exception\ResponseException;
+use Elastica\Index;
 use Elastica\ResultSet;
 use Spryker\Client\SearchElasticsearch\Exception\SearchResponseException;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -82,10 +83,10 @@ class Search implements SearchInterface
     protected function executeQuery(QueryInterface $query): ResultSet
     {
         try {
-            $indexName = $this->getIndexName($query);
-            $query = $query->getSearchQuery();
-            $index = $this->client->getIndex($indexName);
-            $rawSearchResult = $index->search($query);
+            $index = $this->getIndexForQuery($query);
+            $rawSearchResult = $index->search(
+                $query->getSearchQuery()
+            );
         } catch (ResponseException $e) {
             $rawQuery = json_encode($query->toArray());
 
@@ -102,19 +103,29 @@ class Search implements SearchInterface
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
      *
+     * @return \Elastica\Index
+     */
+    protected function getIndexForQuery(QueryInterface $query): Index
+    {
+        $indexName = $this->getIndexName($query);
+
+        return $this->client->getIndex($indexName);
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $query
+     *
      * @return string|null
      */
     protected function getIndexName(QueryInterface $query): ?string
     {
-        $indexName = null;
+        $sourceName = '';
+        $searchContextTransfer = $query->getSearchContext();
 
-        if (method_exists($query, 'getSearchContext')) {
-            /** @var \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer */
-            $searchContextTransfer = $query->getSearchContext();
+        if (method_exists($searchContextTransfer, 'getElasticsearchContext')) {
             $sourceName = $searchContextTransfer->getElasticsearchContext()->getSourceName();
-            $indexName = $this->indexNameResolver->resolve($sourceName);
         }
 
-        return $indexName;
+        return $this->indexNameResolver->resolve($sourceName);
     }
 }

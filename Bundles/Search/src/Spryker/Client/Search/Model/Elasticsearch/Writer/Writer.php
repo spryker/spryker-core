@@ -11,7 +11,6 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Exception\NotFoundException;
 use Spryker\Client\Search\Exception\InvalidDataSetException;
-use Symfony\Component\VarDumper\VarDumper;
 
 class Writer implements WriterInterface
 {
