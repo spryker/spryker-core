@@ -16,7 +16,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRest
 class ProductConcreteListStorageRestrictionFilterPlugin extends AbstractPlugin implements ProductConcreteRestrictionFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Filters concrete product ids based on white and blacklists.
      *
      * @api

@@ -16,7 +16,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRest
 class ProductAbstractListStorageRestrictionFilterPlugin extends AbstractPlugin implements ProductAbstractRestrictionFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Filters abstract product ids based on white and blacklists.
      *
      * @api

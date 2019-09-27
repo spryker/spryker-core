@@ -81,7 +81,7 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -97,7 +97,7 @@ class ProductListStorageClient extends AbstractClient implements ProductListStor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
