@@ -60,6 +60,16 @@
         <property name="sku" type="string" />
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int" />
+        <property name="sku" type="string" />
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
     <transfer name="WishlistPagination">
         <property name="page" type="int" />
         <property name="pagesTotal" type="int" />

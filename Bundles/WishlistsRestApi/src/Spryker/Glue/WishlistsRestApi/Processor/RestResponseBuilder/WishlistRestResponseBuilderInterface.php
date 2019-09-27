@@ -90,4 +90,9 @@ interface WishlistRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createItemSkuMissingErrorToResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createMissingAccessTokenErrorResponse(): RestResponseInterface;
 }

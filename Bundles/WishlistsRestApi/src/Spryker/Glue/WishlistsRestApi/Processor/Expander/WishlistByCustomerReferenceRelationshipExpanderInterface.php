@@ -9,7 +9,7 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface WishlistRelationshipExpanderByResourceIdInterface
+interface WishlistByCustomerReferenceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -17,5 +17,5 @@ interface WishlistRelationshipExpanderByResourceIdInterface
      *
      * @return void
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void;
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }

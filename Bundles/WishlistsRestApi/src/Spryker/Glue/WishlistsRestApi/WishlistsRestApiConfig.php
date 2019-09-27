@@ -28,6 +28,11 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_ID_IS_NOT_SPECIFIED = '209';
     public const RESPONSE_CODE_WISHLIST_NAME_INVALID = '210';
 
+    /**
+     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN
+     */
+    public const RESPONSE_CODE_FORBIDDEN = '002';
+
     public const RESPONSE_DETAIL_WISHLIST_UNKNOWN_ERROR = 'Unknown error.';
     public const RESPONSE_DETAIL_WISHLIST_NOT_FOUND = 'Can\'t find wishlist.';
     public const RESPONSE_DETAIL_WISHLIST_WITH_SAME_NAME_ALREADY_EXISTS = 'A wishlist with the same name already exists.';
@@ -36,6 +41,11 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_ID_IS_NOT_SPECIFIED = 'Id is not specified.';
     public const RESPONSE_DETAIL_WISHLIST_NAME_INVALID = 'Please enter name using only letters, numbers, underscores, spaces or dashes.';
     public const RESPONSE_DETAIL_WISHLIST_CANT_BE_UPDATED = 'Can\'t update wishlist';
+
+    /**
+     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN
+     */
+    public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';
 
     /**
      * @return array

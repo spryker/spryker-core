@@ -10,7 +10,7 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\Expander;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface;
 
-class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipExpanderByResourceIdInterface
+class WishlistByCustomerReferenceRelationshipExpander implements WishlistByCustomerReferenceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface
@@ -31,7 +31,7 @@ class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipEx
      *
      * @return void
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
             $wishlistsResources = $this->wishlistReader->getWishlistsByCustomerReference($resource->getId());

@@ -19,6 +19,7 @@
         <property name="idWishlist" type="int" />
         <property name="fkCustomer" type="int" />
         <property name="name" type="string" />
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem" />
     </transfer>
 
     <transfer name="WishlistResponse">
@@ -32,6 +33,12 @@
         <property name="uuid" type="string" />
         <property name="idCustomer" type="int"/>
         <property name="wishlist" type="Wishlist"/>
+    </transfer>
+
+    <transfer name="WishlistFilter">
+        <property name="idCustomer" type="int" />
+        <property name="name" type="string" />
+        <property name="uuid" type="string" />
     </transfer>
 
     <transfer name="WishlistItemRequest">
@@ -55,6 +62,10 @@
 
     <transfer name="Customer">
         <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="WishlistCollection">
+        <property name="wishlists" type="Wishlist[]" singular="wishlist" />
     </transfer>
 
 </transfers>

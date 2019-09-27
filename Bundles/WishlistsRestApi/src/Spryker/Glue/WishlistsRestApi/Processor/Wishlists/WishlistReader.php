@@ -45,6 +45,11 @@ class WishlistReader implements WishlistReaderInterface
      */
     public function findWishlists(RestRequestInterface $restRequest): RestResponseInterface
     {
+        if (!$restRequest->getRestUser()) {
+            return $this->wishlistRestResponseBuilder
+                ->createMissingAccessTokenErrorResponse();
+        }
+
         $wishlistUuid = $restRequest->getResource()->getId();
         $customerId = $restRequest->getRestUser()->getSurrogateIdentifier();
 

@@ -9,8 +9,8 @@ namespace Spryker\Glue\WishlistsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistClientInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceId;
-use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceIdInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistByCustomerReferenceRelationshipExpander;
+use Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistByCustomerReferenceRelationshipExpanderInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapper;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistItemMapperInterface;
 use Spryker\Glue\WishlistsRestApi\Processor\Mapper\WishlistMapper;
@@ -134,11 +134,11 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistRelationshipExpanderByResourceIdInterface
+     * @return \Spryker\Glue\WishlistsRestApi\Processor\Expander\WishlistByCustomerReferenceRelationshipExpanderInterface
      */
-    public function createWishlistRelationshipExpanderByResourceId(): WishlistRelationshipExpanderByResourceIdInterface
+    public function createWishlistByCustomerReferenceRelationshipExpander(): WishlistByCustomerReferenceRelationshipExpanderInterface
     {
-        return new WishlistRelationshipExpanderByResourceId($this->createWishlistReader());
+        return new WishlistByCustomerReferenceRelationshipExpander($this->createWishlistReader());
     }
 
     /**
