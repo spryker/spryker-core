@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class SalesOrderExpanderPlugin extends AbstractPlugin implements CheckoutPreSaveInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

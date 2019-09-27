@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AssignDefaultBusinessUnitToCompanyUserPlugin extends AbstractPlugin implements CompanyUserPreSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList;
 
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
@@ -20,19 +21,27 @@ class PriceProductScheduleListCreator implements PriceProductScheduleListCreator
     protected $priceProductScheduleEntityManager;
 
     /**
+     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface
+     */
+    protected $priceProductScheduleListUserExpander;
+
+    /**
      * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
     protected $priceProductScheduleConfig;
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
+     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface $priceProductScheduleListUserExpander
      * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $priceProductScheduleConfig
      */
     public function __construct(
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,
+        PriceProductScheduleListUserExpanderInterface $priceProductScheduleListUserExpander,
         PriceProductScheduleConfig $priceProductScheduleConfig
     ) {
         $this->priceProductScheduleEntityManager = $priceProductScheduleEntityManager;
+        $this->priceProductScheduleListUserExpander = $priceProductScheduleListUserExpander;
         $this->priceProductScheduleConfig = $priceProductScheduleConfig;
     }
 
@@ -44,7 +53,11 @@ class PriceProductScheduleListCreator implements PriceProductScheduleListCreator
     public function createPriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListResponseTransfer {
-        $priceProductScheduleListTransfer = $this->priceProductScheduleEntityManager->createPriceProductScheduleList($priceProductScheduleListTransfer);
+        $priceProductScheduleListTransfer = $this->priceProductScheduleListUserExpander
+            ->expand($priceProductScheduleListTransfer);
+
+        $priceProductScheduleListTransfer = $this->priceProductScheduleEntityManager
+            ->createPriceProductScheduleList($priceProductScheduleListTransfer);
 
         return (new PriceProductScheduleListResponseTransfer())
             ->setIsSuccess(true)

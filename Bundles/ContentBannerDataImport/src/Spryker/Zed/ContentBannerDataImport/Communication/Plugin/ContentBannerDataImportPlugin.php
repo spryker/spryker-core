@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ContentBannerDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ContentBannerDataImportPlugin extends AbstractPlugin implements DataImport
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

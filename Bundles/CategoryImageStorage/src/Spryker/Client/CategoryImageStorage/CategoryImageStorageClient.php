@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CategoryImageStorageClient extends AbstractClient implements CategoryImageStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

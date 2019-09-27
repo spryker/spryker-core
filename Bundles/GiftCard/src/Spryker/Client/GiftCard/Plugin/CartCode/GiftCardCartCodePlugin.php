@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets gift card to the quote if the code hasn't been added already.
      *
      * @api
@@ -36,7 +36,7 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes matching applied gift card and gift card payment from quote.
      *
      * @api
@@ -54,7 +54,7 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns gift card apply success message in case the given gift card code has been applied successfully.
      * - Returns gift card apply failed message in case the given gift card code hasn't been applied successfully.
      * - Returns an empty failed message if code is not relevant.
@@ -74,7 +74,7 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Clears all gift cards and gift card payments from the quote.
      *
      * @api

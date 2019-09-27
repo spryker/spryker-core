@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class CustomerNoteFacade extends AbstractFacade implements CustomerNoteFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

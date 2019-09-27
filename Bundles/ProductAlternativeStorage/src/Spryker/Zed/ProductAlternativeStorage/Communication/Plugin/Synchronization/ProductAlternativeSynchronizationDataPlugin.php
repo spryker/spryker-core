@@ -20,7 +20,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

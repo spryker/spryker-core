@@ -16,7 +16,7 @@ use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class PriceProductVolumeFilterPlugin extends AbstractPlugin implements PriceProd
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

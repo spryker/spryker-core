@@ -26,7 +26,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -58,7 +58,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -90,7 +90,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +140,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -156,7 +156,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -174,7 +174,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +190,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -238,7 +238,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -254,7 +254,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -272,7 +272,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -288,7 +288,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

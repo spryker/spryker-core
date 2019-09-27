@@ -134,6 +134,17 @@ interface PriceProductScheduleFacadeInterface
 
     /**
      * Specification:
+     * - Finds all scheduled prices related to given scheduled price list.
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array;
+
+    /**
      * - Creates scheduled price.
      * - Apply scheduled prices for product, related to given scheduled price.
      *
@@ -195,4 +206,18 @@ interface PriceProductScheduleFacadeInterface
      * @return bool
      */
     public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
+
+    /**
+     * Specification:
+     * - Removes price product schedule list.
+     * - Removes all scheduled prices inside this list.
+     * - Executes apply logic if there are active scheduled prices inside this list.
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer;
 }

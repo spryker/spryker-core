@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class StorageRedisClient extends AbstractClient implements StorageRedisClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,7 +100,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -114,7 +114,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -126,7 +126,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,7 +138,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -180,7 +180,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -192,7 +192,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -204,7 +204,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -216,7 +216,7 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

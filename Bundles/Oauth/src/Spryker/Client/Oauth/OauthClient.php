@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class OauthClient extends AbstractClient implements OauthClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class OauthClient extends AbstractClient implements OauthClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

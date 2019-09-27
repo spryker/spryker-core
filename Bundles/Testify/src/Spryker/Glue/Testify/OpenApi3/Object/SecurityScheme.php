@@ -24,7 +24,7 @@ use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 class SecurityScheme extends AbstractObject implements ReferableInterface
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {
