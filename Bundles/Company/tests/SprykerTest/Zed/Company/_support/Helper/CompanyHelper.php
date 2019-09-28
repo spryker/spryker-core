@@ -10,10 +10,15 @@ namespace SprykerTest\Zed\Company\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Spryker\Zed\CompanyMailConnector\Business\CompanyMailConnectorBusinessFactory;
+use Spryker\Zed\CompanyMailConnector\CompanyMailConnectorDependencyProvider;
+use Spryker\Zed\CompanyMailConnector\Dependency\Facade\CompanyMailConnectorToMailFacadeBridge;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyHelper extends Module
 {
+    use DependencyHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -25,6 +30,8 @@ class CompanyHelper extends Module
     {
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);
+
+        $this->prepareCompanyMailConnectorDependency();
 
         return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
     }
@@ -51,5 +58,19 @@ class CompanyHelper extends Module
         $seedData[CompanyTransfer::IS_ACTIVE] = false;
 
         return $this->haveCompany($seedData);
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareCompanyMailConnectorDependency(): void
+    {
+        $mailFacade = $this->getLocator()->mail()->facade();
+        $companyMailConnectorToMailFacadeBridge = new CompanyMailConnectorToMailFacadeBridge($mailFacade);
+        $this->getDependencyHelper()->setDependency(
+            CompanyMailConnectorDependencyProvider::FACADE_MAIL,
+            $companyMailConnectorToMailFacadeBridge,
+            CompanyMailConnectorBusinessFactory::class
+        );
     }
 }
