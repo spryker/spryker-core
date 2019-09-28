@@ -29,8 +29,10 @@ class CompanyUserAccessTokensResourceController extends AbstractController
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCompanyUserAccessTokenResponseAttributesTransfer",
      *          "responses": {
+     *              "400": "Bad request.",
      *              "401": "Failed to authenticate user.",
-     *              "403": "Unauthorized request."
+     *              "403": "Unauthorized request.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
