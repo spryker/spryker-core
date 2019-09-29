@@ -24,6 +24,9 @@ class ConfiguredBundleQuantityUpdater implements ConfiguredBundleQuantityUpdater
                 continue;
             }
 
+            $itemTransfer->getConfiguredBundleItem()
+                ->requireQuantityPerSlot();
+
             $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());
             $itemTransfer->getConfiguredBundle()->setQuantity($quantity);
         }
@@ -42,6 +45,9 @@ class ConfiguredBundleQuantityUpdater implements ConfiguredBundleQuantityUpdater
             if (!$this->isConfiguredBundleItem($itemTransfer)) {
                 continue;
             }
+
+            $itemTransfer->getConfiguredBundle()
+                ->requireQuantity();
 
             $quantityPerSlot = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());
             $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot($quantityPerSlot);

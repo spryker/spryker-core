@@ -21,6 +21,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -28,7 +29,20 @@ class PersistentCartBusinessTester extends Actor
 {
     use _generated\PersistentCartBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function haveProducts(array $skus): array
+    {
+        $productTransfers = [];
+        $skus = array_unique($skus);
+
+        foreach ($skus as $sku) {
+            $productTransfers[] = $this->haveProduct(['sku' => $sku]);
+        }
+
+        return $productTransfers;
+    }
 }

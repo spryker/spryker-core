@@ -19,6 +19,7 @@
     "spryker/zed-request": "^3.6.0"
   },
   "require-dev": {
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

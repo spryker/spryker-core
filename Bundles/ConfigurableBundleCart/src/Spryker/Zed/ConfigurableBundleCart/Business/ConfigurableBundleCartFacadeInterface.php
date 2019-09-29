@@ -13,7 +13,9 @@ interface ConfigurableBundleCartFacadeInterface
 {
     /**
      * Specification:
-     * - Updates configured bundle quantity for quote items.
+     * - Applies to items that have configurable properties.
+     * - Requires quantityPerSlot inside ConfigurableBundleItemTransfer.
+     * - Updates configured bundle quantity.
      *
      * @api
      *
@@ -25,7 +27,9 @@ interface ConfigurableBundleCartFacadeInterface
 
     /**
      * Specification:
-     * - Updates configured bundle quantity per slot for quote items.
+     * - Applies to items that have configurable properties.
+     * - Requires quantity inside ConfigurableBundleTransfer.
+     * - Updates configured bundle quantity per slot.
      *
      * @api
      *
@@ -37,7 +41,10 @@ interface ConfigurableBundleCartFacadeInterface
 
     /**
      * Specification:
-     * - Checks configured bundle quantity proportionality to product quantity.
+     * - Maps configured bundles from quote.
+     * - Requires quantityPerSlot inside ConfigurableBundleItemTransfer.
+     * - Requires quantity inside ConfigurableBundleTransfer.
+     * - Checks configured bundle quantity correctness to item quantity.
      *
      * @api
      *

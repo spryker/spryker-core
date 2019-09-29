@@ -218,7 +218,7 @@ class CartOperation implements CartOperationInterface
         }
 
         $quoteTransfer = $this->mergeQuotes(
-            $persistentQuoteResponseTransfer->getQuoteTransfer(),
+            (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true),
             $persistentCartChangeTransfer->getQuote()
         );
 
