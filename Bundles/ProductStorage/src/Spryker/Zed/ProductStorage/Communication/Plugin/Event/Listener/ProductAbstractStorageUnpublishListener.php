@@ -22,7 +22,7 @@ class ProductAbstractStorageUnpublishListener extends AbstractPlugin implements 
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

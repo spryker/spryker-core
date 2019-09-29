@@ -23,7 +23,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

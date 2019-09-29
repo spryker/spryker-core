@@ -63,6 +63,7 @@ class PriceProductFacadeStub extends PriceProductFacade
         }
 
         return (new PriceProductTransfer())
+            ->setSkuProduct($priceFilterTransfer->getSku())
             ->setMoneyValue(
                 (new MoneyValueTransfer())
                     ->setGrossAmount($price)
@@ -112,5 +113,20 @@ class PriceProductFacadeStub extends PriceProductFacade
     public function getDefaultPriceTypeName()
     {
         return 'DEFAULT';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getValidPrices(array $priceProductFilterTransfers): array
+    {
+        $priceProductTransfers = [];
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $priceProductTransfers[] = $this->findPriceProductFor($priceProductFilterTransfer);
+        }
+
+        return array_filter($priceProductTransfers);
     }
 }

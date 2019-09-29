@@ -63,7 +63,7 @@ class ProductCategoryFilterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGeneratorInterface
+     * @return \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGenerator
      */
     public function createProductCategoryFilterTransferGenerator()
     {

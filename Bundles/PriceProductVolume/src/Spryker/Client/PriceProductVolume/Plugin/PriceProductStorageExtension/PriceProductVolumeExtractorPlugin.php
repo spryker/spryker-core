@@ -16,7 +16,7 @@ use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductSt
 class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceProductStoragePricesExtractorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class PriceProductVolumeExtractorPlugin extends AbstractPlugin implements PriceP
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

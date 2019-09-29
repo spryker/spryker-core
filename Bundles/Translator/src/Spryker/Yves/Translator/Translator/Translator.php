@@ -58,9 +58,9 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
     }
 
     /**
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @param string $identifier The message id (may also be an object that can be cast to string)
      * @param int $number The number to use to find the indice of the message
@@ -104,9 +104,9 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
     }
 
     /**
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @param string $localeName
      *
@@ -120,9 +120,9 @@ class Translator implements LegacyTranslatorInterface, TranslatorInterface
     }
 
     /**
-     * @see \Symfony\Contracts\Translation\TranslatorInterface
-     *
      * @deprecated Will be removed without replacement.
+     *
+     * @see \Symfony\Contracts\Translation\TranslatorInterface
      *
      * @return string
      */

@@ -3,9 +3,9 @@
 
     <table name="spy_sales_shipment" phpName="SpySalesShipment">
         <column name="id_sales_shipment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_sales_order" type="INTEGER" required="true" />
-        <column name="fk_sales_expense" type="INTEGER" required="false" />
-        <column name="fk_sales_order_address" type="INTEGER" required="false" />
+        <column name="fk_sales_order" type="INTEGER" required="true"/>
+        <column name="fk_sales_expense" type="INTEGER" required="false"/>
+        <column name="fk_sales_order_address" type="INTEGER" required="false"/>
 
         <column name="name" type="VARCHAR" size="255"/>
         <column name="delivery_time" type="VARCHAR" size="255"/>
@@ -33,7 +33,7 @@
     </table>
 
     <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
-        <column name="fk_sales_shipment" type="INTEGER" required="false" />
+        <column name="fk_sales_shipment" type="INTEGER" required="false"/>
 
         <foreign-key name="spy_sales_order_item-fk_sales_shipment" foreignTable="spy_sales_shipment" phpName="SpySalesShipment" refPhpName="SpySalesOrderItem">
             <reference local="fk_sales_shipment" foreign="id_sales_shipment"/>
