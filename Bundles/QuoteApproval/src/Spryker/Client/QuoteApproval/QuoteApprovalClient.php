@@ -302,7 +302,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -313,7 +313,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createShipmentStepAccessChecker()
-            ->checkShipmentStepAccessibility($quoteTransfer);
+            ->createPaymentStepAccessChecker()
+            ->checkPaymentStepAccessibility($quoteTransfer);
     }
 }
