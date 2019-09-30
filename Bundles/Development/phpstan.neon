@@ -3,3 +3,4 @@ parameters:
     - '#Constant T_SEMICOLON not found.#'
     - '#Constant T_OPEN_PARENTHESIS not found.#'
     - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
+    - '#If condition is always false.#'

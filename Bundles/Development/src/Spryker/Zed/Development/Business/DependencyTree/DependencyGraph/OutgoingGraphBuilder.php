@@ -140,7 +140,7 @@ class OutgoingGraphBuilder
 
         $allDependencies[$moduleName] = $dependencies;
         foreach ($dependencies as $dependentBundle) {
-            if (array_key_exists($dependentBundle, $allDependencies)) {
+            if ($allDependencies->offsetExists($dependentBundle)) {
                 continue;
             }
             $this->buildGraph($dependentBundle, $allDependencies);
