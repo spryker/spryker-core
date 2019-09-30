@@ -8,12 +8,15 @@
 namespace SprykerTest\Client\Storage\Cache\CacheKey;
 
 use Codeception\Test\Unit;
-use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGenerator;
-use Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface;
+use Spryker\Client\Storage\StorageConfig;
+use Spryker\Client\Storage\StorageFactory;
+use Spryker\Shared\Kernel\Store;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Storage
@@ -24,47 +27,101 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CacheKeyGeneratorTest extends Unit
 {
+    protected const KEY_NAME_PREFIX = 'storage';
+    protected const KEY_NAME_SEPARATOR = ':';
+
     /**
-     * @expectedException \Spryker\Client\Storage\Exception\InvalidCacheKeyGeneratorStrategyException
+     * @var \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorInterface
+     */
+    protected $cacheKeyGenerator;
+
+    /**
+     * @var string[]
+     */
+    protected $allowedQueryStringParameters = [
+        'allowedParameter1',
+        'allowedParameter2',
+    ];
+
+    /**
+     * @var \Spryker\Client\Storage\StorageConfig|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $storageConfigMock;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setUpStorageConfigMock();
+        $this->setUpCacheKeyGenerator();
+    }
+
+    /**
+     * @dataProvider generatesEmptyKeyWhenServerNameOrUriAreEmptyProvider
+     *
+     * @param string $serverName
+     * @param string $requestUri
+     * @param bool $expectedResult
      *
      * @return void
      */
-    public function testThrowsExceptionWhenNoStrategyApplied(): void
+    public function testGeneratesEmptyKeyWhenServerNameOrUriAreEmpty(string $serverName, string $requestUri, bool $expectedResult): void
     {
-        $cacheKeyGenerator = new CacheKeyGenerator([]);
+        // Arrange
+        $request = new Request();
+        $request->server->set('SERVER_NAME', $serverName);
+        $request->server->set('REQUEST_URI', $requestUri);
 
-        $cacheKeyGenerator->generateCacheKey(
-            Request::createFromGlobals()
-        );
+        $this->storageConfigMock->method('isStorageCachingEnabled')->willReturn(true);
+
+        // Act
+        $cacheKey = $this->cacheKeyGenerator->generateCacheKey($request);
+
+        // Assert
+        $this->assertEquals($expectedResult, empty($cacheKey));
+    }
+
+    /**
+     * @return array
+     */
+    public function generatesEmptyKeyWhenServerNameOrUriAreEmptyProvider(): array
+    {
+        return [
+            'server name empty' => ['', 'uri', true],
+            'request uri empty' => ['server name', '', true],
+            'server name and request uri empty' => ['', '', true],
+            'server name and request uri not empty' => ['server name', 'uri', false],
+        ];
     }
 
     /**
      * @dataProvider generatesCacheKeyProvider
      *
-     * @param bool $isFirstStrategyAllowed
-     * @param bool $isSecondStrategyAllowed
-     * @param string $firstCacheKey
-     * @param string $secondCacheKey
      * @param string $expectedCacheKey
+     * @param string $requestUri
+     * @param string[] $queryStringParameters
+     * @param bool $isCacheEnabled
      *
      * @return void
      */
-    public function testGeneratesCacheKey(bool $isFirstStrategyAllowed, bool $isSecondStrategyAllowed, string $firstCacheKey, string $secondCacheKey, string $expectedCacheKey): void
+    public function testGeneratesCacheKey(string $expectedCacheKey, string $requestUri, array $queryStringParameters = [], bool $isCacheEnabled = true): void
     {
-        $dummyCacheKeyGeneratorStrategy = $this->createDummyCacheKeyGeneratorStrategy();
-        $dummyCacheKeyGeneratorStrategy->method('isApplicable')->willReturn($isFirstStrategyAllowed);
-        $dummyCacheKeyGeneratorStrategy->method('generateCacheKey')->willReturn($firstCacheKey);
+        // Arrange
+        $request = new Request();
+        $request->server->set('SERVER_NAME', 'localhost');
+        $request->server->set('REQUEST_URI', $requestUri);
+        $request->query = new ParameterBag($queryStringParameters);
 
-        $anotherDummyCacheKeyGeneratorStrategy = $this->createDummyCacheKeyGeneratorStrategy();
-        $anotherDummyCacheKeyGeneratorStrategy->method('isApplicable')->willReturn($isSecondStrategyAllowed);
-        $anotherDummyCacheKeyGeneratorStrategy->method('generateCacheKey')->willReturn($secondCacheKey);
+        $this->storageConfigMock->method('isStorageCachingEnabled')->willReturn($isCacheEnabled);
 
-        $cacheKeyGenerator = new CacheKeyGenerator([
-            $dummyCacheKeyGeneratorStrategy,
-            $anotherDummyCacheKeyGeneratorStrategy,
-        ]);
+        // Act
+        $actualCacheKey = $this->cacheKeyGenerator->generateCacheKey($request);
 
-        $this->assertEquals($expectedCacheKey, $cacheKeyGenerator->generateCacheKey(Request::createFromGlobals()));
+        // Assert
+        $this->assertEquals($expectedCacheKey, $actualCacheKey);
     }
 
     /**
@@ -72,21 +129,108 @@ class CacheKeyGeneratorTest extends Unit
      */
     public function generatesCacheKeyProvider(): array
     {
-        $cacheKey = 'cache key';
-        $anotherCacheKey = 'another cache key';
-
         return [
-            'first strategy allowed' => [true, false, $cacheKey, $anotherCacheKey, $cacheKey],
-            'second strategy allowed' => [false, true, $cacheKey, $anotherCacheKey, $anotherCacheKey],
-            'both strategies allowed' => [true, true, $cacheKey, $anotherCacheKey, $cacheKey],
+            'no query string parameters' => [
+                $this->buildExpectedCacheKey('/en/request-uri'),
+                '/en/request-uri',
+            ],
+            'one allowed query string parameter' => [
+                $this->buildExpectedCacheKey('/en/another-request-uri?allowedParameter1=1'),
+                '/en/another-request-uri',
+                [
+                    'allowedParameter1' => '1',
+                ],
+            ],
+            'both allowed query string parameters' => [
+                $this->buildExpectedCacheKey('/en/yet-another-request-uri?allowedParameter1=1&allowedParameter2=2'),
+                '/en/yet-another-request-uri',
+                [
+                    'allowedParameter1' => '1',
+                    'allowedParameter2' => '2',
+                ],
+            ],
+            'one allowed and one disallowed query string parameter' => [
+                $this->buildExpectedCacheKey('/en/cameras-&-camcorders?allowedParameter2=2'),
+                '/en/cameras-&-camcorders',
+                [
+                    'disallowedParameter1' => '1',
+                    'allowedParameter2' => '2',
+                ],
+            ],
+            'only disallowed query string parameters' => [
+                $this->buildExpectedCacheKey('/en/computers'),
+                '/en/computers',
+                [
+                    'disallowedParameter1' => '1',
+                    'disallowedParameter2' => '2',
+                ],
+            ],
+            'cache is disabled' => [
+                '',
+                '/',
+                [],
+                false,
+            ],
         ];
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @param string $expectedRequestUriFragment
+     *
+     * @return string
      */
-    protected function createDummyCacheKeyGeneratorStrategy(): CacheKeyGeneratorStrategyInterface
+    protected function buildExpectedCacheKey(string $expectedRequestUriFragment): string
     {
-        return $this->createMock(CacheKeyGeneratorStrategyInterface::class);
+        return implode(static::KEY_NAME_SEPARATOR, [$this->buildCacheKeyPrefix(), $expectedRequestUriFragment]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function buildCacheKeyPrefix(): string
+    {
+        return implode(static::KEY_NAME_SEPARATOR, [
+            $this->getStore()->getStoreName(),
+            $this->getStore()->getCurrentLocale(),
+            static::KEY_NAME_PREFIX,
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    protected function getStore(): Store
+    {
+        return Store::getInstance();
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\StorageFactory
+     */
+    protected function createStorageFactory(): StorageFactory
+    {
+        $storageFactory = new StorageFactory();
+        $storageFactory->setConfig($this->storageConfigMock);
+
+        return $storageFactory;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpStorageConfigMock(): void
+    {
+        $this->storageConfigMock = $this->createMock(StorageConfig::class);
+        $this->storageConfigMock->method('getAllowedGetParametersList')->willReturn(
+            $this->allowedQueryStringParameters
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpCacheKeyGenerator(): void
+    {
+        $this->cacheKeyGenerator = $this->createStorageFactory()->createCacheKeyGenerator();
     }
 }

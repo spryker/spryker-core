@@ -7,22 +7,44 @@
 
 namespace Spryker\Client\Storage\Cache\CacheKey;
 
-use Spryker\Client\Storage\Exception\InvalidCacheKeyGeneratorStrategyException;
+use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
+use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
+use Spryker\Client\Storage\StorageConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class CacheKeyGenerator implements CacheKeyGeneratorInterface
 {
-    /**
-     * @var \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface[]
-     */
-    protected $cacheKeyGeneratorStrategies;
+    protected const KEY_NAME_PREFIX = 'storage';
+    protected const KEY_NAME_SEPARATOR = ':';
 
     /**
-     * @param \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface[] $cacheKeyGeneratorStrategies
+     * @var \Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface
      */
-    public function __construct(array $cacheKeyGeneratorStrategies)
-    {
-        $this->cacheKeyGeneratorStrategies = $cacheKeyGeneratorStrategies;
+    protected $storeClient;
+
+    /**
+     * @var \Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface
+     */
+    protected $localeClient;
+
+    /**
+     * @var \Spryker\Client\Storage\StorageConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface $storeClient
+     * @param \Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface $localeClient
+     * @param \Spryker\Client\Storage\StorageConfig $config
+     */
+    public function __construct(
+        StorageToStoreClientInterface $storeClient,
+        StorageToLocaleClientInterface $localeClient,
+        StorageConfig $config
+    ) {
+        $this->storeClient = $storeClient;
+        $this->localeClient = $localeClient;
+        $this->config = $config;
     }
 
     /**
@@ -32,22 +54,87 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
      */
     public function generateCacheKey(?Request $request = null): string
     {
-        return $this->resolveCacheKeyGeneratorStrategy()->generateCacheKey($request);
+        if (!$this->config->isStorageCachingEnabled()) {
+            return '';
+        }
+
+        return $this->generateCacheKeyFromRequest($request);
     }
 
     /**
-     * @throws \Spryker\Client\Storage\Exception\InvalidCacheKeyGeneratorStrategyException
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
      *
-     * @return \Spryker\Client\Storage\Cache\CacheKey\CacheKeyGeneratorStrategyInterface
+     * @return string
      */
-    protected function resolveCacheKeyGeneratorStrategy(): CacheKeyGeneratorStrategyInterface
+    protected function generateCacheKeyFromRequest(?Request $request = null): string
     {
-        foreach ($this->cacheKeyGeneratorStrategies as $cacheKeyGenerationStrategy) {
-            if ($cacheKeyGenerationStrategy->isApplicable()) {
-                return $cacheKeyGenerationStrategy;
-            }
+        $request = $this->prepareRequest($request);
+        $requestUri = $request->getRequestUri();
+        $serverName = $request->server->get('SERVER_NAME');
+        $queryStringParameters = $request->query->all();
+
+        if (!$requestUri || !$serverName) {
+            return '';
         }
 
-        throw new InvalidCacheKeyGeneratorStrategyException('None of the applied CacheKeyStrategyInterface is accepted, please check your configuration for those.');
+        $urlSegments = strtok($requestUri, '?');
+
+        $queryStringParametersFragment = $this->buildQueryStringParametersFragment($queryStringParameters);
+        $cacheKey = $this->buildCacheKey($urlSegments, $queryStringParametersFragment);
+
+        return $cacheKey;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request|null $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function prepareRequest(?Request $request = null): Request
+    {
+        return $request ?? Request::createFromGlobals();
+    }
+
+    /**
+     * @param string[] $queryStringParameters
+     *
+     * @return string
+     */
+    protected function buildQueryStringParametersFragment(array $queryStringParameters): string
+    {
+        $allowedQueryStringParametersList = $this->config->getAllowedGetParametersList();
+
+        if (count($allowedQueryStringParametersList) === 0) {
+            return '';
+        }
+
+        $allowedQueryStringParameters = array_intersect_key($queryStringParameters, array_flip($allowedQueryStringParametersList));
+
+        if (count($allowedQueryStringParameters) === 0) {
+            return '';
+        }
+
+        ksort($allowedQueryStringParameters);
+
+        return sprintf('?%s', http_build_query($allowedQueryStringParameters));
+    }
+
+    /**
+     * @param string $urlSegments
+     * @param string $queryStringParametersKey
+     *
+     * @return string
+     */
+    protected function buildCacheKey(string $urlSegments, string $queryStringParametersKey): string
+    {
+        $storeName = $this->storeClient->getCurrentStore()->getName();
+        $locale = $this->localeClient->getCurrentLocale();
+
+        return implode(static::KEY_NAME_SEPARATOR, [
+            $storeName,
+            $locale,
+            static::KEY_NAME_PREFIX,
+            sprintf('%s%s', $urlSegments, $queryStringParametersKey),
+        ]);
     }
 }
