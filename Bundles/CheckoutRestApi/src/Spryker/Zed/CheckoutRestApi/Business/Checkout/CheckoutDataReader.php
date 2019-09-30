@@ -101,8 +101,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
 
         return (new RestCheckoutDataResponseTransfer())
-                ->setIsSuccess(true)
-                ->setCheckoutData($checkoutDataTransfer);
+            ->setIsSuccess(true)
+            ->setCheckoutData($checkoutDataTransfer);
     }
 
     /**
