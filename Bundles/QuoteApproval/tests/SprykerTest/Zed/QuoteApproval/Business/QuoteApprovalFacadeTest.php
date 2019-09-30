@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -54,39 +55,39 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQuoteApprovalCheckoutResponseTransferResponseIsSuccessful(): void
+    public function testIsQuoteApprovalReadyForCheckoutResponseIsSuccessful(): void
     {
         // Arrange
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
         $quoteTransfer = $this->tester->createQuoteTransfer();
-        $heckoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $checkoutResponseTransfer = $this->getFacade()->getQuoteApprovalCheckoutResponseTransfer($quoteTransfer, $heckoutResponseTransfer);
+        $isQuoteApprovalReadyForCheckout = $this->getFacade()->isQuoteApprovalReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
+        $this->assertTrue($isQuoteApprovalReadyForCheckout);
         $this->assertEmpty($checkoutResponseTransfer->getErrors());
     }
 
     /**
      * @return void
      */
-    public function testGetQuoteApprovalCheckoutResponseTransferResponseIsNotSuccessful(): void
+    public function testIsQuoteApprovalReadyForCheckoutIsNotSuccessful(): void
     {
         // Arrange
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
         $quoteTransfer = $this->tester->createQuoteTransfer();
-        $heckoutResponseTransfer = $this->tester->createCheckoutResponseTransfer();
+        $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
         $quoteTransfer->setQuoteApprovals($this->tester->createQuoteApprovalTransfers([
             SharedQuoteApprovalConfig::STATUS_WAITING,
         ]));
 
         // Act
-        $checkoutResponseTransfer = $this->getFacade()->getQuoteApprovalCheckoutResponseTransfer($quoteTransfer, $heckoutResponseTransfer);
+        $isQuoteApprovalReadyForCheckout = $this->getFacade()->isQuoteApprovalReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
+        $this->assertFalse($isQuoteApprovalReadyForCheckout);
         $this->assertNotEmpty($checkoutResponseTransfer->getErrors());
     }
 

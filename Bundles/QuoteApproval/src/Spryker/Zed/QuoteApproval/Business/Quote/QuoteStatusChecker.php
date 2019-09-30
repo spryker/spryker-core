@@ -48,24 +48,24 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return bool
      */
-    public function getQuoteApprovalCheckoutResponseTransfer(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
+    public function isQuoteApprovalReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
         if ($quoteStatus === QuoteApprovalConfig::STATUS_WAITING) {
-            return $checkoutResponseTransfer->setIsSuccess(false)
-                ->addError((new CheckoutErrorTransfer())->setMessage(static::GLOSSARY_KEY_CART_WAITING_APPROVAL));
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_WAITING_APPROVAL);
+
+            return false;
         }
 
         if ($this->isQuoteApprovalRequired($quoteTransfer, $quoteStatus)) {
-            $checkoutResponseTransfer->setIsSuccess(false)
-                ->addError((new CheckoutErrorTransfer())->setMessage(static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL));
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL);
         }
 
-        return $checkoutResponseTransfer;
+        return $checkoutResponseTransfer->getIsSuccess();
     }
 
     /**
@@ -74,7 +74,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      *
      * @return bool
      */
-    protected function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer, $quoteStatus): bool
+    protected function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer, ?string $quoteStatus): bool
     {
         $idCompanyUser = $quoteTransfer->requireCustomer()
             ->getCustomer()
@@ -88,5 +88,20 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
         }
 
         return $quoteStatus !== QuoteApprovalConfig::STATUS_APPROVED;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function addCheckoutError(CheckoutResponseTransfer $checkoutResponseTransfer, string $message): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer->setIsSuccess(false)
+            ->addError((new CheckoutErrorTransfer())
+            ->setMessage($message));
+
+        return $checkoutResponseTransfer;
     }
 }

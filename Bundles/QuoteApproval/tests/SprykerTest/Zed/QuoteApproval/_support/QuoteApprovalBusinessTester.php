@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\QuoteApproval;
 
 use ArrayObject;
 use Codeception\Actor;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteApprovalTransfer;
@@ -73,14 +72,5 @@ class QuoteApprovalBusinessTester extends Actor
             );
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function createCheckoutResponseTransfer()
-    {
-        return (new CheckoutResponseTransfer())
-            ->setIsSuccess(true);
     }
 }
