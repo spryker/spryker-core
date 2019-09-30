@@ -36,7 +36,7 @@ class SearchElasticsearchClientTest extends Unit
     protected const INDEX_NAME = 'index_name';
 
     /**
-     * @var \SprykerTest\Zed\Search\SearchElasticsearchClientTester
+     * @var \SprykerTest\Client\SearchElasticsearch\SearchElasticsearchClientTester
      */
     protected $tester;
 

@@ -1,4 +1,4 @@
-namespace: SprykerTest\Client\SearchElasticsearch
+namespace: SprykerTest\Shared\SearchElasticsearch
 paths:
     tests: .
     data: ../../../_data
@@ -11,9 +11,9 @@ coverage:
         include:
             - '../../../../src/*'
 suites:
-    Client:
+    Shared:
         path: .
-        class_name: SearchElasticsearchClientTester
+        class_name: SearchElasticsearchSharedTester
         modules:
             enabled:
             - Asserts
@@ -21,4 +21,3 @@ suites:
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-            - \SprykerTest\Client\SearchElasticsearch\Helper\ElasticsearchHelper

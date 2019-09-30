@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\SearchElasticsearch;
+namespace SprykerTest\Shared\SearchElasticsearch;
 
 use Codeception\Actor;
 
@@ -24,7 +24,7 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class SearchElasticsearchClientTester extends Actor
+class SearchElasticsearchSharedTester extends Actor
 {
-    use _generated\SearchElasticsearchClientTesterActions;
+    use _generated\SearchElasticsearchSharedTesterActions;
 }
