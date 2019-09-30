@@ -247,7 +247,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Makes a call to quote client to get quote lock.
-     * - Returns true if quote is locked and not in status declined, false otherwise.
+     * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
      *
      * @api
      *
@@ -260,7 +260,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Makes a call to quote client to get quote lock.
-     * - Returns true if quote is locked and not in status declined, false otherwise.
+     * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
      *
      * @api
      *
@@ -273,7 +273,7 @@ interface QuoteApprovalClientInterface
     /**
      * Specification:
      * - Makes a call to quote client to get quote lock.
-     * - Returns true if quote is locked and not in status declined, false otherwise.
+     * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
      *
      * @api
      *
