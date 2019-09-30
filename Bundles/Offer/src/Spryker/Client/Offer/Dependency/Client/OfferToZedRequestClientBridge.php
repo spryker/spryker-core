@@ -25,7 +25,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

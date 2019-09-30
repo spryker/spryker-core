@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductListFacade extends AbstractFacade implements ProductListFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +104,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -136,7 +136,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -184,7 +184,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -200,7 +200,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -216,7 +216,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -232,7 +232,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -248,7 +248,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -264,7 +264,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -280,7 +280,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -296,7 +296,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -312,7 +312,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -328,7 +328,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

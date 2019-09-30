@@ -27,7 +27,7 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\ArrayObject $value The value in the original representation
      *
@@ -52,7 +52,7 @@ class ImageSetCollectionTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array|null $value The value in the transformed representation
      *

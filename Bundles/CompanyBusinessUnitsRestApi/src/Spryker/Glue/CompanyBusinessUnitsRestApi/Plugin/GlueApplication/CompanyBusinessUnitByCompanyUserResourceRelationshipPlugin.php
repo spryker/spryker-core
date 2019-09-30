@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyBusinessUnitByCompanyUserResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Adds company business unit resource as relationship.
      *  - Requires CompanyUserTransfer be provided in resource payload.
      *
@@ -37,7 +37,7 @@ class CompanyBusinessUnitByCompanyUserResourceRelationshipPlugin extends Abstrac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

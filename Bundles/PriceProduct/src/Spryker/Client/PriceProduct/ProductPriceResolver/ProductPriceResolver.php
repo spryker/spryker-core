@@ -71,7 +71,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $priceMap
      *

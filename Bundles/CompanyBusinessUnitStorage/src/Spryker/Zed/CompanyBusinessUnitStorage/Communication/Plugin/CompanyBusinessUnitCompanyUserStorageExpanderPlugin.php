@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyBusinessUnitCompanyUserStorageExpanderPlugin extends AbstractPlugin implements CompanyUserStorageExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Expands CompanyUserStorageTransfer with company business unit id.
      *
      * @api

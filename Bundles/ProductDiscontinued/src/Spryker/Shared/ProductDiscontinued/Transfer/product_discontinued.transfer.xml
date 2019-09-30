@@ -39,14 +39,11 @@
 
     <transfer name="ProductConcrete">
         <property name="productDiscontinued" type="ProductDiscontinued"/>
+        <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
     </transfer>
 
     <transfer name="ProductDiscontinuedCriteriaFilter">
         <property name="ids" type="array"/>
-    </transfer>
-
-    <transfer name="ProductConcrete">
-        <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
     </transfer>
 
     <transfer name="CartChange">

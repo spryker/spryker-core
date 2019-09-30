@@ -25,4 +25,14 @@ class ProductAbstractStorageDataMapper extends ProductStorageDataMapper
 
         return true;
     }
+
+    /**
+     * @param array $productStorageData
+     *
+     * @return array
+     */
+    protected function filterAbstractProductVariantsData(array $productStorageData): array
+    {
+        return $productStorageData;
+    }
 }

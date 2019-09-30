@@ -26,7 +26,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Eve
 class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -13,7 +13,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class ImageCollectionTransformer implements DataTransformerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CategoryImageTransfer[] $value The value in the original representation
      *
@@ -34,7 +34,7 @@ class ImageCollectionTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $value The value in the transformed representation
      *

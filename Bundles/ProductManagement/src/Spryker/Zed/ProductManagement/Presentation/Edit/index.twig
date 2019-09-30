@@ -11,9 +11,9 @@
     {{ parent() }}
     {{ createActionButton('/product-management/add', 'Create Product' | trans) }}
     {% if superAttributesCount > 0 %}
-        {{ createActionButton('/product-management/addVariant?id-product-abstract=' ~ idProductAbstract, 'Add Variant' | trans) }}
+        {{ createActionButton('/product-management/add-variant?id-product-abstract=' ~ idProductAbstract, 'Add Variant' | trans) }}
     {% endif %}
-    {{ editActionButton('/product-attribute-gui/view/productAbstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
+    {{ editActionButton('/product-attribute-gui/view/product-abstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
 {% endblock %}
 
 {% block content %}

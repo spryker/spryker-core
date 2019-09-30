@@ -19,7 +19,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class ServerVariable extends AbstractObject
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {

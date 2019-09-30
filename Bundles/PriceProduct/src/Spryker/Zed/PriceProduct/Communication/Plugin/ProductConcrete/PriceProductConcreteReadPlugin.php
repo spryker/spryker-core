@@ -24,7 +24,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 class PriceProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

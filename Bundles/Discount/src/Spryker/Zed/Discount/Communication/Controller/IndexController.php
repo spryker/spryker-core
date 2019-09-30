@@ -191,7 +191,7 @@ class IndexController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()['sub_request'];
+        return $this->getApplication()->get('sub_request');
     }
 
     /**

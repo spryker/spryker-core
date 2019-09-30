@@ -124,13 +124,13 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param string $reservationQuantity
+     * @param int $reservationQuantity
      *
      * @return int
      */
     protected function calculateReservation($reservationQuantity)
     {
-        $reservationItems = explode(',', $reservationQuantity);
+        $reservationItems = explode(',', (string)$reservationQuantity);
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);

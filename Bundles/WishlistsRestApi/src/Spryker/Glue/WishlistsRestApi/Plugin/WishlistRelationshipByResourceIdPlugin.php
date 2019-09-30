@@ -18,7 +18,7 @@ use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
 class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * - Identifier of passed resources should contain customer reference.
      *
@@ -37,7 +37,7 @@ class WishlistRelationshipByResourceIdPlugin extends AbstractPlugin implements R
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
