@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Persistence;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -33,23 +32,5 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)
             ->filterByFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier())
             ->exists();
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
-     */
-    public function getShipmentMethodPricesByIdShipmentMethod(int $idShipmentMethod): ArrayObject
-    {
-        $shipmentMethodPriceEntities = $this->getFactory()
-            ->createShipmentMethodPriceQuery()
-            ->filterByFkShipmentMethod($idShipmentMethod)
-            ->find()
-            ->getData();
-
-        return $this->getFactory()
-            ->createShipmentMethodPriceMapper()
-            ->mapShipmentMethodPriceEntitiesToMoneyValueTransfers($shipmentMethodPriceEntities);
     }
 }

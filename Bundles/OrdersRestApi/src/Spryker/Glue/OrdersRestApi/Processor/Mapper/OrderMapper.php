@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
@@ -62,7 +63,7 @@ class OrderMapper implements OrderMapperInterface
         $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($orderTransfer->getShippingAddress()->getCountry()->getIso2Code());
 
         $restOrderDetailsAttributesTransfer->setShipments(
-            $this->orderResourceShipmentMapper->mapShipmentMethodTransfersToRestOrderShipmentTransfers($orderTransfer)
+            $this->orderResourceShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
         );
 
         return $restOrderDetailsAttributesTransfer;

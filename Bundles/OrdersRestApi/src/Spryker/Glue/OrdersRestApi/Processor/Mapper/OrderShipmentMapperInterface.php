@@ -14,8 +14,9 @@ interface OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject $restShipmentMethodTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderShipmentTransfer[]
      */
-    public function mapShipmentMethodTransfersToRestOrderShipmentTransfers(OrderTransfer $orderTransfer): ArrayObject;
+    public function mapOrderTransferToRestOrderShipmentTransfers(OrderTransfer $orderTransfer, ArrayObject $restShipmentMethodTransfers): ArrayObject;
 }

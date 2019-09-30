@@ -12,30 +12,27 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 
 class OrderShipmentMapper implements OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \ArrayObject $restShipmentMethodTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderShipmentTransfer[]
      */
-    public function mapShipmentMethodTransfersToRestOrderShipmentTransfers(OrderTransfer $orderTransfer): ArrayObject
-    {
-        $restShipmentMethodTransfers = new ArrayObject();
-
+    public function mapOrderTransferToRestOrderShipmentTransfers(
+        OrderTransfer $orderTransfer,
+        ArrayObject $restShipmentMethodTransfers
+    ): ArrayObject {
         foreach ($orderTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
-            $defaultShipmentMethodPriceTransfer = $this->findDefaultShipmentMethodPriceTransfer(
-                $shipmentMethodTransfer,
-                $orderTransfer
-            );
-
-            if (!$defaultShipmentMethodPriceTransfer) {
-                continue;
-            }
-
             $restShipmentMethodTransfers->append(
-                $this->createRestShipmentMethodTransfer($shipmentMethodTransfer, $defaultShipmentMethodPriceTransfer)
+                $this->createRestShipmentMethodTransfer(
+                    $shipmentMethodTransfer,
+                    $orderTransfer->getExpenses(),
+                    $orderTransfer->getCurrencyIsoCode()
+                )
             );
         }
 
@@ -80,22 +77,30 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param string $currencyIsoCode
      *
      * @return \Generated\Shared\Transfer\RestOrderShipmentTransfer
      */
     protected function createRestShipmentMethodTransfer(
         ShipmentMethodTransfer $shipmentMethodTransfer,
-        MoneyValueTransfer $moneyValueTransfer
+        ArrayObject $expenseTransfers,
+        string $currencyIsoCode
     ): RestOrderShipmentTransfer {
-        $moneyValueTransfer->requireCurrency();
+        $restOrderShipmentTransfer = new RestOrderShipmentTransfer();
+        $restOrderShipmentTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+        $restOrderShipmentTransfer->setShipmentMethodName($shipmentMethodTransfer->getName());
+        $restOrderShipmentTransfer->setCurrencyIsoCode($currencyIsoCode);
 
-        return (new RestOrderShipmentTransfer())
-            ->setShipmentMethodName($shipmentMethodTransfer->getName())
-            ->setCarrierName($shipmentMethodTransfer->getCarrierName())
-            ->setDeliveryTime($shipmentMethodTransfer->getDeliveryTime())
-            ->setDefaultNetPrice($moneyValueTransfer->getNetAmount())
-            ->setDefaultGrossPrice($moneyValueTransfer->getGrossAmount())
-            ->setCurrencyIsoCode($moneyValueTransfer->getCurrency()->getCode());
+        foreach ($expenseTransfers as $expenseTransfer) {
+            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
+                && $shipmentMethodTransfer->getFkSalesExpense()) {
+                $restOrderShipmentTransfer
+                    ->setDefaultNetPrice($expenseTransfer->getSumNetPrice())
+                    ->setDefaultGrossPrice($expenseTransfer->getSumGrossPrice());
+            }
+        }
+
+        return $restOrderShipmentTransfer;
     }
 }

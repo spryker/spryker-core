@@ -330,18 +330,4 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getRepository()
             ->isShipmentMethodUniqueForCarrier($shipmentMethodTransfer);
     }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function expandOrderWithShipmentPrices(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        return $this->getFactory()->createShipmentPricesOrderExpander()->expandOrderWithShipmentPrices($orderTransfer);
-    }
 }
