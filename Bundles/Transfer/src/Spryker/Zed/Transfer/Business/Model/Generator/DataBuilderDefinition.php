@@ -56,11 +56,17 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     /**
      * @param array $properties
      *
+     * @throws \RuntimeException
+     *
      * @return void
      */
     protected function getGeneratorRules(array $properties)
     {
         foreach ($properties as $property) {
+            if (!isset($property['type'])) {
+                throw new \RuntimeException('Invalid databuilder config, missing key `type` for databuilder `' . $this->name . '`');
+            }
+
             // non arrays and non-basic types are dependencies
             if (preg_match('/^[A-Z]\w+(\[\])?$/', $property['type'])) {
                 if (isset($property['singular']) && !isset($this->dependencies[$property['singular']])) {
