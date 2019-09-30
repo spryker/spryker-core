@@ -35,7 +35,7 @@ class OrderReader implements OrderReaderInterface
     /**
      * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
      */
-    protected $orderResourceMapper;
+    protected $orderMapper;
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
@@ -49,7 +49,7 @@ class OrderReader implements OrderReaderInterface
     ) {
         $this->salesClient = $salesClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->orderResourceMapper = $orderResourceMapper;
+        $this->orderMapper = $orderResourceMapper;
     }
 
     /**
@@ -86,7 +86,7 @@ class OrderReader implements OrderReaderInterface
             return null;
         }
 
-        $restOrderDetailsAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer);
+        $restOrderDetailsAttributesTransfer = $this->orderMapper->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
@@ -124,7 +124,7 @@ class OrderReader implements OrderReaderInterface
             );
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
-            $restOrdersAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
+            $restOrdersAttributesTransfer = $this->orderMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
 
             $response = $response->addResource(
                 $this->restResourceBuilder->createRestResource(

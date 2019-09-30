@@ -8,7 +8,6 @@
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -18,16 +17,16 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \ArrayObject $restShipmentMethodTransfers
+     * @param \ArrayObject $restOrderShipmentTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderShipmentTransfer[]
      */
     public function mapOrderTransferToRestOrderShipmentTransfers(
         OrderTransfer $orderTransfer,
-        ArrayObject $restShipmentMethodTransfers
+        ArrayObject $restOrderShipmentTransfers
     ): ArrayObject {
         foreach ($orderTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
-            $restShipmentMethodTransfers->append(
+            $restOrderShipmentTransfers->append(
                 $this->createRestShipmentMethodTransfer(
                     $shipmentMethodTransfer,
                     $orderTransfer->getExpenses(),
@@ -36,43 +35,7 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
             );
         }
 
-        return $restShipmentMethodTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    protected function findDefaultShipmentMethodPriceTransfer(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        OrderTransfer $orderTransfer
-    ): ?MoneyValueTransfer {
-        foreach ($shipmentMethodTransfer->getPrices() as $shipmentMethodPriceTransfer) {
-            if ($this->isDefaultShipmentMethodPrice($orderTransfer, $shipmentMethodPriceTransfer)) {
-                return $shipmentMethodPriceTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $shipmentMethodPriceTransfer
-     *
-     * @return bool
-     */
-    protected function isDefaultShipmentMethodPrice(
-        OrderTransfer $orderTransfer,
-        MoneyValueTransfer $shipmentMethodPriceTransfer
-    ): bool {
-        $shipmentMethodPriceTransfer->requireStore();
-        $shipmentMethodPriceTransfer->requireCurrency();
-
-        return $shipmentMethodPriceTransfer->getStore()->getName() === $orderTransfer->getStore()
-            && $shipmentMethodPriceTransfer->getCurrency()->getCode() === $orderTransfer->getCurrencyIsoCode();
+        return $restOrderShipmentTransfers;
     }
 
     /**

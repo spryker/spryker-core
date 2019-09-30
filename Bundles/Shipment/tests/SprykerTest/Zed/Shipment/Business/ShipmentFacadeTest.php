@@ -508,30 +508,6 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
-     * @return void
-     */
-    public function testExpandOrderWithShipmentPrices(): void
-    {
-        //Arrange
-        $idSalesOrder = $this->tester->createOrder();
-        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($idSalesOrder);
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
-        $orderTransfer->addShipmentMethod($shipmentMethodTransfer);
-
-        //Act
-        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-        $orderTransfer = $this->tester->getFacade()->expandOrderWithShipmentPrices($orderTransfer);
-
-        //Assert
-        foreach ($orderTransfer->getShipmentMethods() as $shipmentMethodTransfer) {
-            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
-            $moneyValueTransfer = current($shipmentMethodTransfer->getPrices());
-            $this->assertNotNull($moneyValueTransfer->getNetAmount());
-            $this->assertNotNull($moneyValueTransfer->getGrossAmount());
-        }
-    }
-
-    /**
      * @return array
      */
     public function multiCurrencyPrices()

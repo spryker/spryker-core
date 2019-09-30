@@ -12,9 +12,6 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
-use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
@@ -53,21 +50,5 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMethodPriceQuery()
     {
         return SpyShipmentMethodPriceQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
-     */
-    public function getCurrencyFacade(): ShipmentToCurrencyInterface
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
-     */
-    public function getStoreFacade(): ShipmentToStoreInterface
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_STORE);
     }
 }

@@ -220,18 +220,4 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         return [];
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container): Container
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addCurrencyFacade($container);
-        $container = $this->addStoreFacade($container);
-
-        return $container;
-    }
 }

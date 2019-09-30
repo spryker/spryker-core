@@ -18,11 +18,4 @@ interface ShipmentToStoreInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getAllStores();
-
-    /**
-     * @param int $idStore
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getStoreById($idStore);
 }
