@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+        - '#Parameter \#1 \$object of function get_class expects object, string given.#'
+        - '#Call to function is_object\(\) with string will always evaluate to false.#'
+        - '#Instanceof between string and .+GraphAdapterInterface will always evaluate to false.#'

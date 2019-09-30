@@ -4,27 +4,27 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
-        <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order" />
-        <property name="offerFee" type="int" />
+        <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order"/>
+        <property name="offerFee" type="int"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="unitGrossPrice" type="int" />
-        <property name="unitNetPrice" type="int" />
+        <property name="unitGrossPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
 
-        <property name="sourceUnitGrossPrice" type="int" />
-        <property name="sourceUnitNetPrice" type="int" />
+        <property name="sourceUnitGrossPrice" type="int"/>
+        <property name="sourceUnitNetPrice" type="int"/>
 
-        <property name="offerDiscount" type="int" />
-        <property name="offerFee" type="int" />
-        <property name="savingAmount" type="int" />
+        <property name="offerDiscount" type="int"/>
+        <property name="offerFee" type="int"/>
+        <property name="savingAmount" type="int"/>
     </transfer>
 
     <transfer name="OfferList">
-        <property name="customerReference" type="string" />
-        <property name="filter" type="Filter" />
-        <property name="offers" type="Offer[]" singular="offer" />
-        <property name="pagination" type="Pagination" />
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+        <property name="offers" type="Offer[]" singular="offer"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="Offer">
@@ -32,12 +32,12 @@
         <property name="quote" type="Quote"/>
         <property name="status" type="string"/>
         <property name="user" type="User"/>
-        <property name="customerReference"  type="string" />
-        <property name="customer" type="Customer" />
-        <property name="createdAt" type="string" />
-        <property name="contactPerson" type="string" />
-        <property name="contactDate" type="string" />
-        <property name="note" type="string" />
+        <property name="customerReference"  type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="createdAt" type="string"/>
+        <property name="contactPerson" type="string"/>
+        <property name="contactDate" type="string"/>
+        <property name="note" type="string"/>
     </transfer>
 
     <transfer name="ResponseMessage">
@@ -46,7 +46,7 @@
 
     <transfer name="OfferResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="ResponseMessage[]" singular="message" />
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
         <property name="offer" type="Offer"/>
     </transfer>
 </transfers>

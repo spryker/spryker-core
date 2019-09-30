@@ -132,7 +132,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     protected function calculateReservation(string $reservationQuantity): Decimal
     {
-        $reservationItems = explode(',', $reservationQuantity);
+        $reservationItems = explode(',', (string)$reservationQuantity);
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);

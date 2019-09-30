@@ -77,11 +77,11 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
      */
-    private function groupItemsBySku(iterable $items): array
+    protected function groupItemsBySku(iterable $items): array
     {
         /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];

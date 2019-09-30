@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 use Spryker\Yves\Kernel\BundleControllerAction;
 use Spryker\Yves\Kernel\ClassResolver\Controller\ControllerResolver;
 
+/**
+ * @deprecated Use `spryker/router` instead. This will be removed without direct replacement as it will not be needed with the new Router anymore.
+ */
 class YvesFragmentControllerResolver extends SilexControllerResolver
 {
     /**

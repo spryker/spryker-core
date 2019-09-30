@@ -19,7 +19,7 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginI
 class PersistentCartQuotePersistPlugin extends AbstractPlugin implements QuotePersistPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Retrieves a quote from Persistence using the provided customer and store information.
      * - Replaces the retrieved quote with the provided quote and stores it in Persistence.
      *

@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class GuestCartUpdateCustomerSessionSetPlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Executed if quote storage strategy is set to database, customer quote parameters customer and customer reference are empty.
      * - Makes zed call.
      * - Synchronizes customer session quote and customer quote from DB.

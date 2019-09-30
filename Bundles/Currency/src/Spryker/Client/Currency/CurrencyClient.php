@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CurrencyClient extends AbstractClient implements CurrencyClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class CurrencyClient extends AbstractClient implements CurrencyClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class CurrencyClient extends AbstractClient implements CurrencyClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

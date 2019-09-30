@@ -23,7 +23,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends Abstract
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Retrieves SpyProductPackagingUnitEntityTransfer collection, to the provided limit and offset.
      *
      * @api
@@ -53,7 +53,7 @@ class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends Abstract
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends Abstract
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns the name of ID column needed in the ProductPackagingUnit.product_packaging_unit.publish event.
      * - The ID is selected from the key range of ProductConcretePackagingStorageTransfer.
      *

@@ -4,49 +4,49 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductBundle">
-        <property name="idProductConcreteBundle" type="int" />
-        <property name="availability" type="decimal" />
-        <property name="isNeverOutOfStock" type="bool" />
-        <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct" />
+        <property name="idProductConcreteBundle" type="int"/>
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
         <property name="bundlesToRemove" type="array" singular="bundleToRemove"/>
     </transfer>
 
     <transfer name="ProductBundleCollection">
-        <property name="productBundles" type="ProductBundle[]" singular="productBundle" />
+        <property name="productBundles" type="ProductBundle[]" singular="productBundle"/>
     </transfer>
 
     <transfer name="ProductOption">
-        <property name="sku" type="string" />
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductForBundle">
-        <property name="idProductBundle" type="int" />
-        <property name="idProductConcrete" type="int" />
-        <property name="quantity" type="int" />
-        <property name="sku" type="string" />
-        <property name="isActive" type="bool" />
+        <property name="idProductBundle" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Item">
         <property name="sku" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
-        <property name="bundleItemIdentifier" type="string" />
-        <property name="relatedBundleItemIdentifier" type="string" />
-        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+        <property name="bundleItemIdentifier" type="string"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
 
-        <property name="unitNetPrice" type="int" />
-        <property name="sumNetPrice" type="int" />
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
 
-        <property name="unitPrice" type="int" />
-        <property name="sumPrice" type="int" />
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
 
-        <property name="unitDiscountAmountAggregation" type="int" />
-        <property name="sumDiscountAmountAggregation" type="int" />
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
 
-        <property name="unitDiscountAmountFullAggregation" type="int" />
-        <property name="sumDiscountAmountFullAggregation" type="int" />
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="sumDiscountAmountFullAggregation" type="int"/>
 
-        <property name="images" type="ProductImage[]" singular="image" />
+        <property name="images" type="ProductImage[]" singular="image"/>
 
     </transfer>
 
@@ -55,8 +55,8 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="bundleItems" type="Item[]" singular="bundleItem" />
-        <property name="store" type="Store" />
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -65,29 +65,29 @@
     </transfer>
 
     <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Order">
-        <property name="bundleItems" type="Item[]" singular="bundleItem" />
-        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup" />
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="ProductBundle" type="ProductBundle" />
+        <property name="ProductBundle" type="ProductBundle"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">
-        <property name="isBundle" type="bool" />
-        <property name="bundleItem" type="Item" />
-        <property name="groupImage" type="string" />
-        <property name="groupItems" type="Item[]" singular="item" />
-        <property name="rowCount" type="int" />
+        <property name="isBundle" type="bool"/>
+        <property name="bundleItem" type="Item"/>
+        <property name="groupImage" type="string"/>
+        <property name="groupItems" type="Item[]" singular="item"/>
+        <property name="rowCount" type="int"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="idStore" type="int" />
-        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
+        <property name="idStore" type="int"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
     </transfer>
 
     <transfer name="Message">

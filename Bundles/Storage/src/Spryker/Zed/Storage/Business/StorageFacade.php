@@ -69,7 +69,7 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

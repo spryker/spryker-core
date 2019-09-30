@@ -13,6 +13,7 @@ use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageDepend
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

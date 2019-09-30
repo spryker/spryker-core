@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idContent
      *
@@ -36,7 +36,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $contentKey
      *
@@ -56,7 +56,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $key
      *

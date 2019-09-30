@@ -183,7 +183,7 @@ class VersionPageController extends AbstractController
             ->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 
         if ($cmsTargetVersionTransfer === null) {
-            throw new NotFoundHttpException('Cms page with version "%d" not found.', [ '%d' => $version ]);
+            throw new NotFoundHttpException(sprintf('CMS page with version `%s` not found.', $version));
         }
 
         return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);

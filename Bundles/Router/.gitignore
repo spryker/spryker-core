@@ -15,5 +15,12 @@
 /vendor
 /composer.lock
 
+# OS
+.DS_Store
+
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
 /tests/_output/*
 !/tests/_output/.gitkeep
