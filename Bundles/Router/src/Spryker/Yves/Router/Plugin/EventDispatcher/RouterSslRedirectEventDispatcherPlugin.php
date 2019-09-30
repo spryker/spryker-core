@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a Listener to the EventDispatcher.
      *
      * @api

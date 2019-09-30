@@ -126,13 +126,13 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param string $reservationQuantity
+     * @param int $reservationQuantity
      *
      * @return \Spryker\DecimalObject\Decimal
      */
     protected function calculateReservation(string $reservationQuantity): Decimal
     {
-        $reservationItems = explode(',', $reservationQuantity);
+        $reservationItems = explode(',', (string)$reservationQuantity);
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);
