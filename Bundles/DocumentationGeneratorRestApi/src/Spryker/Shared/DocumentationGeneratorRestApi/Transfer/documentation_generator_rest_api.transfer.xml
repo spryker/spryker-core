@@ -78,12 +78,6 @@
         <property name="jsonSchemaRef" type="string"/>
     </transfer>
 
-    <transfer name="PathRequestComponent">
-        <property name="description" type="string"/>
-        <property name="required" type="bool"/>
-        <property name="jsonSchemaRef" type="string"/>
-    </transfer>
-
     <transfer name="PathResponseComponent">
         <property name="code" type="string"/>
         <property name="description" type="string"/>

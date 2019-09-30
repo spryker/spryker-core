@@ -18,7 +18,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomerByEmail($email)
     {
@@ -31,7 +31,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer)
     {
@@ -46,7 +46,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomerById($id)
     {
@@ -59,7 +59,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomerByReference($customerReference)
     {
@@ -72,7 +72,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomerByRegistrationKey($token)
     {
@@ -85,7 +85,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomerByRestorePasswordKey($token)
     {
@@ -98,7 +98,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryAddressForCustomer($idAddress, $email)
     {
@@ -114,7 +114,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryAddressByIdCustomer($idCustomer)
     {
@@ -127,7 +127,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryAddress($idAddress)
     {
@@ -141,7 +141,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryAddressesForCustomer($email)
     {
@@ -156,7 +156,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryAddresses()
     {
@@ -166,7 +166,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @api
      *
-     * @inheritdoc
+     * @inheritDoc
      */
     public function queryCustomers()
     {

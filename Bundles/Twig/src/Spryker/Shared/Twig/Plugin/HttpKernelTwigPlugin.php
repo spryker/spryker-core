@@ -19,7 +19,7 @@ class HttpKernelTwigPlugin implements TwigPluginInterface
     protected const SERVICE_FRAGMENT_RENDERER_HINCLUDE = 'fragment.renderer.hinclude';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

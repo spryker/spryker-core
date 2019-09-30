@@ -79,10 +79,6 @@
         <property name="taxTotal" type="TaxTotal"/>
     </transfer>
 
-    <transfer name="TaxTotal">
-        <property name="amount" type="int"/>
-    </transfer>
-
     <transfer name="Address">
         <property name="iso2Code" type="string"/>
         <property name="fkCountry" type="int"/>

@@ -37,9 +37,4 @@
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
     </transfer>
 
-    <transfer name="Currency">
-        <property name="code" type="string"/>
-    </transfer>
-
 </transfers>
-
