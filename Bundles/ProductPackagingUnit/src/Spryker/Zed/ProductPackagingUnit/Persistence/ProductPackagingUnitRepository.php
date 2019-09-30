@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTableMap;
@@ -256,30 +257,49 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @param string $sku
      * @param string[] $reservedStateNames
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array
+    public function aggregateProductPackagingUnitAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array
     {
-        $salesOrderItemAggregations = $this->getFactory()
+        $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemQuery()
-            ->filterByAmountSku($sku)
-            ->joinWithProcess()
-            ->joinWithState()
+            ->groupByAmountSku()
             ->useStateQuery()
-                ->filterByName($reservedStateNames, Criteria::IN)
+                ->filterByName_In($reservedStateNames)
             ->endUse()
             ->groupByFkOmsOrderItemState()
+            ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
-            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::SKU_COLUMN)
+            ->select([SpySalesOrderItemTableMap::COL_SKU])
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN)
-            ->select([SpySalesOrderItemTableMap::COL_SKU])
-            ->find();
+            ->withColumn(SpySalesOrderItemTableMap::COL_AMOUNT_SKU, static::SKU_COLUMN)
+            ->withColumn(
+                sprintf(
+                    'CASE WHEN %s = %s THEN SUM(%s) ELSE SUM(%s) + SUM(%s) END',
+                    SpySalesOrderItemTableMap::COL_SKU,
+                    SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
+                    SpySalesOrderItemTableMap::COL_AMOUNT,
+                    SpySalesOrderItemTableMap::COL_QUANTITY,
+                    SpySalesOrderItemTableMap::COL_AMOUNT
+                ),
+                static::SUM_COLUMN
+            )
+            ->condition('PU', 'spy_sales_order_item.amount_sku = ?', $sku)
+            ->condition('PU_SLEF_LEAD', 'sku = ? AND spy_sales_order_item.amount_sku != ?', [$sku, $sku])
+            ->having(['PU', 'PU_SLEF_LEAD'], Criteria::LOGICAL_OR);
+
+        if ($storeTransfer !== null) {
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                ->filterByStore($storeTransfer->getName())
+                ->endUse();
+        }
 
         $salesAggregationTransfers = [];
-        foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
+        foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
         }
 

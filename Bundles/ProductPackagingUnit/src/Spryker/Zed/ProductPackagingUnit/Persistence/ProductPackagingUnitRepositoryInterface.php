@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductPackagingUnitRepositoryInterface
 {
@@ -95,8 +96,9 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @param string $sku
      * @param string[] $reservedStateNames
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateLeadProductAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames): array;
+    public function aggregateProductPackagingUnitAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer): array;
 }

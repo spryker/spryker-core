@@ -77,7 +77,7 @@
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
-        <property name="sumAmount" type="int"/>
+        <property name="sumAmount" type="decimal"/>
     </transfer>
 
 </transfers>

@@ -17,6 +17,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
@@ -35,7 +36,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
 {
     public const ORDER_ITEM_SKU = 'oms-reserverd-sku-test';
     public const NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3 = 'paid';
-    public const DE_STORE_NAME = 'DE';
+    public const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Oms\OmsBusinessTester
@@ -101,7 +102,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     {
         $this->createTestOrder((string)rand(), 'Test01', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
 
-        $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
+        $storeTransfer = (new StoreTransfer())->setName(static::STORE_NAME_DE);
         $reservationQuantity = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(static::ORDER_ITEM_SKU, $storeTransfer);
 
         $this->assertTrue($reservationQuantity->equals(50));
@@ -125,7 +126,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
             $this->createSalesOrderItem($salesOrderEntity, $orderProcess, $omsStateEntity);
         }
 
-        $this->updateReservation($salesOrderEntity->getItems()->getFirst()->getSku(), 50);
+        $this->updateReservation($salesOrderEntity->getItems()->getFirst()->getSku(), new Decimal(50));
 
         return $salesOrderEntity;
     }
@@ -190,7 +191,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
         $salesOrderEntity->setOrderReference($orderReference);
-        $salesOrderEntity->setStore(static::DE_STORE_NAME);
+        $salesOrderEntity->setStore(static::STORE_NAME_DE);
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -230,17 +231,17 @@ class OmsFacadeSumReservedItemsTest extends Unit
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      *
      * @return void
      */
-    protected function updateReservation(string $sku, int $quantity): void
+    protected function updateReservation(string $sku, Decimal $quantity): void
     {
         $spyOmsReservationEntity = SpyOmsProductReservationQuery::create()
             ->filterBySku($sku)
             ->findOneOrCreate();
 
-        $storeTransfer = $this->getStoreFacade()->getStoreByName(static::DE_STORE_NAME);
+        $storeTransfer = $this->getStoreFacade()->getStoreByName(static::STORE_NAME_DE);
 
         $spyOmsReservationEntity->setFkStore($storeTransfer->getIdStore());
         $spyOmsReservationEntity->setReservationQuantity($quantity);

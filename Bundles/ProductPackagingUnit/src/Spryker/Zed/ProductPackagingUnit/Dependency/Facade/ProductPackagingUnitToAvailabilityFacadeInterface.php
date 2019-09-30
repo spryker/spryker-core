@@ -18,7 +18,7 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * @param string $sku

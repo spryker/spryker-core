@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
@@ -52,13 +51,8 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      */
     public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
     {
-        $productPackagingUnitTransfer = $this->findProductPackagingUnitBySku($sku);
-
-        if (!$productPackagingUnitTransfer || !$productPackagingUnitTransfer->getLeadProduct()) {
-            return;
-        }
-
         $productPackagingLeadProductTransfer = $this->findProductPackagingLeadProductByProductPackagingSku($sku);
+
         if (!$productPackagingLeadProductTransfer) {
             return;
         }
@@ -81,22 +75,10 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
         foreach ($stores as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $stock = $this->availabilityFacade
-                ->calculateStockForProductWithStore($leadProductSku, $storeTransfer);
+                ->calculateAvailabilityForProductWithStore($leadProductSku, $storeTransfer);
 
             $this->availabilityFacade->saveProductAvailabilityForStore($leadProductSku, $stock, $storeTransfer);
         }
-    }
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
-     */
-    protected function findProductPackagingUnitBySku(
-        string $productPackagingUnitSku
-    ): ?ProductPackagingUnitTransfer {
-        return $this->packagingUnitReader
-            ->findProductPackagingUnitByProductSku($productPackagingUnitSku);
     }
 
     /**

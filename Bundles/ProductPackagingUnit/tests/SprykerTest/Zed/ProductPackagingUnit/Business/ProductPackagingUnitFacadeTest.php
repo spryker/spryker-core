@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
@@ -32,6 +33,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
@@ -970,7 +972,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     {
         $itemSku = 'sku_1';
         $quoteTransfer = $this->tester->createQuoteTransfer();
-        $itemTransfer = $this->tester->createProductPackagingUnitItemTransfer($itemSku);
+        $itemTransfer = $this->tester->createProductPackagingUnitItemTransfer($itemSku, 1, new Decimal(1.3));
 
         // Action
         $quoteTransfer = $this->getFacade()->addItemToQuote($itemTransfer, $quoteTransfer);
@@ -990,7 +992,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         // Action
         $this->getFacade()->removeItemFromQuote(
-            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
+            $this->tester->createProductPackagingUnitItemTransfer($itemSku, 1, new Decimal(1.4)),
             $quoteTransfer
         );
 
@@ -1003,11 +1005,86 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         // Action
         $this->getFacade()->removeItemFromQuote(
-            $this->tester->createProductPackagingUnitItemTransfer($itemSku),
+            $this->tester->createProductPackagingUnitItemTransfer($itemSku, 1, new Decimal(1.7)),
             $quoteTransfer
         );
 
         //Assert
         $this->assertCount(0, $quoteTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAggregateProductPackagingUnitReservationAmount(): void
+    {
+        // Arrange
+        $quantity = 2;
+        $amount = new Decimal(2.5);
+        $itemsCount = 5;
+        [
+            $stateCollectionTransfer,
+            $packagingUnitProductConcreteTransfer,
+            $leadProductConcreteTransfer,
+        ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantity, $amount, $itemsCount);
+
+        // Action
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+            $leadProductConcreteTransfer->getSku(),
+            $stateCollectionTransfer
+        );
+
+        //Assert
+        $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
+        $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
+        // SUM(quantity) + SUM(amount)
+        $this->assertTrue(
+            $result->equals($amount->multiply($itemsCount)->add($quantity * $itemsCount))
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAggregateProductPackagingUnitReservationAmountWithSelfLeadProduct(): void
+    {
+        // Arrange
+        $quantity = 3;
+        $amount = new Decimal(1.5);
+        $itemsCount = 6;
+        [
+            $stateCollectionTransfer,
+            $packagingUnitProductConcreteTransfer,
+            $leadProductConcreteTransfer,
+        ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantity, $amount, $itemsCount, true);
+
+        // Action
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+            $leadProductConcreteTransfer->getSku(),
+            $stateCollectionTransfer
+        );
+
+        //Assert
+        $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
+        $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
+        // SUM(amount)
+        $this->assertTrue(
+            $result->equals($amount->multiply($itemsCount))
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
+    {
+        $result = new Decimal(0);
+        foreach ($salesAggregationTransfers as $salesAggregationTransfer) {
+            $result = $result->add($salesAggregationTransfer->getSumAmount());
+        }
+
+        return $result;
     }
 }
