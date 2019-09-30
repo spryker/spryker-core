@@ -48,8 +48,7 @@ class AllModuleFinder implements AllModuleFinderInterface
     {
         $modules = [];
         $modules[] = $this->loadProjectModules();
-        $modules[] = $this->loadCoreDevelopmentModules();
-        $modules[] = $this->loadOtherCoreModules();
+        $modules[] = $this->loadCoreModules();
 
         return $this->addApplication(array_merge(...$modules));
     }
@@ -71,33 +70,21 @@ class AllModuleFinder implements AllModuleFinderInterface
     /**
      * @return array
      */
-    protected function loadCoreDevelopmentModules(): array
-    {
-        $modules = [];
-        foreach (range('A', 'Z') as $letter) {
-            $path = sprintf('%s/spryker/spryker/Bundles/%s*/src/Spryker/*', APPLICATION_VENDOR_DIR, $letter);
-            $namespace = 'Spryker';
-            $modules[] = $this->findModules($path, $namespace);
-        }
-
-        return array_merge(...$modules);
-    }
-
-    /**
-     * @return array
-     */
-    protected function loadOtherCoreModules(): array
+    protected function loadCoreModules(): array
     {
         $modules = [];
         foreach ($this->developmentConfig->getCoreNamespaces() as $coreNamespace) {
-            $namespaceDir = $this->filter->filter($coreNamespace);
-            $namespaceDir = strtolower($namespaceDir);
-
-            $path = APPLICATION_VENDOR_DIR . '/' . $namespaceDir . '/*/src/*/*';
-            $modules = $this->findModules($path, $coreNamespace);
+            $pathToNamespace = $this->developmentConfig->getPathToInternalNamespace($coreNamespace);
+            foreach (range('a', 'z') as $letter) {
+                if (mb_strpos($pathToNamespace, 'Bundles') !== false) {
+                    $letter = strtoupper((string)$letter);
+                }
+                $path = $pathToNamespace . sprintf('%s*/src/*/*', $letter);
+                $modules[] = $this->findModules($path, $coreNamespace);
+            }
         }
 
-        return $modules;
+        return array_merge(...$modules);
     }
 
     /**
