@@ -206,7 +206,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -222,7 +222,7 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

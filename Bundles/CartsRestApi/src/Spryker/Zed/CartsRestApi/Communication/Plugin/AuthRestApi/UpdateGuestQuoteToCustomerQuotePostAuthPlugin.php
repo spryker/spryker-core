@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class UpdateGuestQuoteToCustomerQuotePostAuthPlugin extends AbstractPlugin implements PostAuthPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Updates non-empty guest quote to new customer quote.
      * - OauthResponseTransfer.customerReference and OauthResponseTransfer.anonymousCustomerReference must be set.
      * - Anonymous customer has to have a cart.

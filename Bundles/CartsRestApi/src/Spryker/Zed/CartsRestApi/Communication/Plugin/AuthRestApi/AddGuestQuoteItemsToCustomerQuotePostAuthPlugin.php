@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AddGuestQuoteItemsToCustomerQuotePostAuthPlugin extends AbstractPlugin implements PostAuthPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds items from guest quote to customer quote.
      * - Reads anonymous customer quote.
      * - Reads registered customer quote.

@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class AuthRestApiClient extends AbstractClient implements AuthRestApiClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
