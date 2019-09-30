@@ -19,4 +19,13 @@ interface ProductViewTransferFinderInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
     public function findProductViewTransfer(int $idProduct, string $localeName, array $selectedAttributes = []): ?ProductViewTransfer;
+
+    /**
+     * @param int[] $productIds
+     * @param string $localeName
+     * @param array $selectedAttributes
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductViewTransfers(array $productIds, string $localeName, array $selectedAttributes = []): array;
 }

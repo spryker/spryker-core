@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RequestContext;
 abstract class AbstractRouterEnhancerPlugin extends AbstractPlugin implements RouterEnhancerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $pathinfo
      * @param \Symfony\Component\Routing\RequestContext $requestContext
@@ -27,7 +27,7 @@ abstract class AbstractRouterEnhancerPlugin extends AbstractPlugin implements Ro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $parameters
      * @param \Symfony\Component\Routing\RequestContext $requestContext
@@ -40,7 +40,7 @@ abstract class AbstractRouterEnhancerPlugin extends AbstractPlugin implements Ro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $url
      * @param \Symfony\Component\Routing\RequestContext $requestContext

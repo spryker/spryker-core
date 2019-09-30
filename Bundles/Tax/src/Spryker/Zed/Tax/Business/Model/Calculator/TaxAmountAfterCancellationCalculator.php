@@ -110,8 +110,8 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
     {
         if ($priceMode === CalculationPriceMode::PRICE_MODE_NET) {
             return $this->accruedTaxCalculator->getTaxValueFromNetPrice($price, $taxRate);
-        } else {
-            return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true);
         }
+
+        return $this->accruedTaxCalculator->getTaxValueFromPrice($price, $taxRate, true);
     }
 }
