@@ -41,6 +41,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
         $container = $this->addFacetSearchConfigBuilder($container);
         $container = $this->addPaginationSearchConfigBuilder($container);
         $container = $this->addSortSearchConfigBuilder($container);
+        $container = $this->addMoneyPlugin($container);
 
         return $container;
     }

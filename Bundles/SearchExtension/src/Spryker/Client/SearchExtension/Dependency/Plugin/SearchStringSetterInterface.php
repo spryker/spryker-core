@@ -10,6 +10,9 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 interface SearchStringSetterInterface
 {
     /**
+     * Specification:
+     * - Gets a string for search.
+     *
      * @api
      *
      * @param string $searchString

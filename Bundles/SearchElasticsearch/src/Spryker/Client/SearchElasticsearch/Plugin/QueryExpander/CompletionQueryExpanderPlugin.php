@@ -66,11 +66,11 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
 
     /**
      * @param \Elastica\Query $query
-     * @param string $searchString
+     * @param string|null $searchString
      *
      * @return void
      */
-    protected function addAggregation(Query $query, string $searchString): void
+    protected function addAggregation(Query $query, ?string $searchString): void
     {
         $termsAggregation = $this->getFactory()
             ->createAggregationBuilder()
@@ -83,11 +83,11 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
     }
 
     /**
-     * @param string $searchString
+     * @param string|null $searchString
      *
      * @return string
      */
-    protected function getRegexpQueryString(string $searchString): string
+    protected function getRegexpQueryString(?string $searchString): string
     {
         $searchString = mb_strtolower($searchString);
 
