@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action;
 
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
+
 /**
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
-class CreateActionButtonTwigPlugin extends AbstractActionButtonTwig
+class CreateActionButtonTwigPlugin extends AbstractButtonTwig
 {
     /**
      * @return string
@@ -35,5 +37,13 @@ class CreateActionButtonTwigPlugin extends AbstractActionButtonTwig
     protected function getIcon(): string
     {
         return '<i class="fa fa-plus"></i> ';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getButtonDefaultClass(): string
+    {
+        return 'btn-sm btn-outline safe-submit';
     }
 }

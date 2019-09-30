@@ -22,6 +22,14 @@ class GuiConfig extends AbstractBundleConfig
 
     protected const SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH = '@Gui/Form/button/submit_button.twig';
 
+    protected const MODAL_DEFAULT_TEMPLATE_PATH = '@Gui/Modal/modal.twig';
+
+    protected const PANEL_DEFAULT_TEMPLATE_PATH = '@Gui/Panel/panel.twig';
+
+    protected const LIST_GROUP_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group.twig';
+
+    protected const LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group-multidimensional.twig';
+
     /**
      * @return string
      */
@@ -70,5 +78,37 @@ class GuiConfig extends AbstractBundleConfig
     public function getSubmitButtonDefaultTemplatePath(): string
     {
         return static::SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultModalTemplatePath(): string
+    {
+        return static::MODAL_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultPanelTemplatePath(): string
+    {
+        return static::PANEL_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultListGroupTemplatePath(): string
+    {
+        return static::LIST_GROUP_DEFAULT_TEMPLATE_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultMultiListGroupTemplatePath(): string
+    {
+        return static::LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH;
     }
 }

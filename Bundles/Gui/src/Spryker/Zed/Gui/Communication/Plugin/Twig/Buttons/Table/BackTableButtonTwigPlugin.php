@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table;
 
+use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonTwig;
+
 /**
  * @method \Spryker\Zed\Gui\GuiConfig getConfig()
  * @method \Spryker\Zed\Gui\Communication\GuiCommunicationFactory getFactory()
  */
-class BackTableButtonTwigPlugin extends AbstractTableTwig
+class BackTableButtonTwigPlugin extends AbstractButtonTwig
 {
     /**
      * @return string
@@ -35,5 +37,13 @@ class BackTableButtonTwigPlugin extends AbstractTableTwig
     protected function getIcon(): string
     {
         return '<i class="fa fa-angle-double-left"></i> ';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getButtonDefaultClass(): string
+    {
+        return 'btn-xs btn-outline';
     }
 }

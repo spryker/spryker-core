@@ -34,69 +34,34 @@ class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addFunction($this->getZedListGroupFunction());
+        $twig->addFunction($this->getZedListGroupFunction($twig));
 
         return $twig;
     }
 
     /**
+     * @param \Twig\Environment $twig
+     *
      * @return \Twig\TwigFunction
      */
-    protected function getZedListGroupFunction(): TwigFunction
+    protected function getZedListGroupFunction(Environment $twig): TwigFunction
     {
-        return new TwigFunction(static::FUNCTION_NAME_LIST_GROUP, function (array $items) {
+        return new TwigFunction(static::FUNCTION_NAME_LIST_GROUP, function (array $items) use ($twig) {
             if (is_array(array_values($items)[0])) {
-                $html = '<div class="list-group">';
-
-                foreach ($items as $item) {
-                    $class = '';
-                    $target = '';
-                    $data = '';
-                    $extras = '';
-
-                    if (array_key_exists('class', $item)) {
-                        $class = ' ' . $item['class'];
-                    }
-
-                    if (array_key_exists('target', $item) && !is_array($item['target'])) {
-                        $target = ' target="' . $target . '"';
-                    }
-
-                    if (array_key_exists('extras', $item) && is_array($item['extras'])) {
-                        foreach ($item['extras'] as $key => $value) {
-                            if (is_array($value)) {
-                                $value = json_encode($value);
-                            }
-                            $extras .= ' ' . $key . '="' . htmlentities($value) . '"';
-                        }
-                    }
-
-                    if (array_key_exists('data', $item) && is_array($item['data'])) {
-                        foreach ($item['data'] as $key => $value) {
-                            if (is_array($value)) {
-                                $value = json_encode($value);
-                            }
-                            $data .= ' data-' . $key . '="' . htmlentities($value);
-                        }
-                    }
-
-                    $html .= '<a href="' . $item['href'] . '" class="list-group-item' . $class . '"' . $target . $data . $extras . '>';
-                    $html .= $item['label'];
-                    $html .= '</a>';
-                }
-
-                $html .= '</div>';
-            } else {
-                $html = '<ul class="list-group">';
-
-                foreach ($items as $item) {
-                    $html .= '<li class="list-group-item">' . $item;
-                }
-
-                $html .= '</ul>';
+                return $twig->render(
+                    $this->getConfig()->getDefaultMultiListGroupTemplatePath(),
+                    [
+                        'items' => $items,
+                    ]
+                );
             }
 
-            return $html;
+            return $twig->render(
+                $this->getConfig()->getDefaultListGroupTemplatePath(),
+                [
+                    'items' => $items,
+                ]
+            );
         }, ['is_safe' => ['html']]);
     }
 }

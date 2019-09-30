@@ -34,17 +34,19 @@ class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addFunction($this->getZedPanelFunction());
+        $twig->addFunction($this->getZedPanelFunction($twig));
 
         return $twig;
     }
 
     /**
+     * @param \Twig\Environment $twig
+     *
      * @return \Twig\TwigFunction
      */
-    protected function getZedPanelFunction(): TwigFunction
+    protected function getZedPanelFunction(Environment $twig): TwigFunction
     {
-        return new TwigFunction(static::FUNCTION_NAME_PANEL, function (string $title, string $content, ?array $options = null, ?string $footer = null) {
+        return new TwigFunction(static::FUNCTION_NAME_PANEL, function (string $title, string $content, ?array $options = null, ?string $footer = null) use ($twig) {
             $defaultOptions = [
                 'class' => 'default',
                 'id' => false,
@@ -55,42 +57,15 @@ class PanelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 
             $options = array_merge($defaultOptions, (array)$options);
 
-            $collapsable = '';
-            $id = '';
-
-            if ($options['collapsable']) {
-                $collapsable = ' data-collapsable';
-
-                if ($options['collapsed']) {
-                    $options['class'] .= ' is:collapsed';
-                }
-            }
-
-            if ($options['id']) {
-                $id = ' id="' . $options['id'] . '"';
-            }
-
-            $html = '<section class="panel panel-' . $options['class'] . '"' . $id . $collapsable . '>';
-
-            if ($title) {
-                $html .= '<header class="panel-heading" data-collapse-trigger>';
-                $html .= '<h1 class="panel-title">' . $title . '</h1>';
-                $html .= '</header>';
-            }
-
-            if ($options['noWrap']) {
-                $html .= $content;
-            } else {
-                $html .= '<div class="panel-body">' . $content . '</div>';
-            }
-
-            if ($footer) {
-                $html .= '<footer class="panel-footer">' . $footer . '</footer>';
-            }
-
-            $html .= '</section>';
-
-            return $html;
+            return $twig->render(
+                $this->getConfig()->getDefaultPanelTemplatePath(),
+                [
+                    'title' => $title,
+                    'content' => $content,
+                    'options' => $options,
+                    'footer' => $footer,
+                ]
+            );
         }, ['is_safe' => ['html']]);
     }
 }

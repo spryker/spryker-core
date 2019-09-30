@@ -19,8 +19,6 @@ use Twig\TwigFunction;
  */
 abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginInterface
 {
-    protected const DEFAULT_CSS_CLASSES = 'undefined';
-
     /**
      * @return string
      */
@@ -35,6 +33,11 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
      * @return string
      */
     abstract protected function getIcon(): string;
+
+    /**
+     * @return string
+     */
+    abstract protected function getButtonDefaultClass(): string;
 
     /**
      * {@inheritDoc}
@@ -68,7 +71,7 @@ abstract class AbstractButtonTwig extends AbstractPlugin implements TwigPluginIn
             }
 
             if (!array_key_exists(ButtonUrlGenerator::DEFAULT_CSS_CLASSES, $options)) {
-                $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = static::DEFAULT_CSS_CLASSES;
+                $options[ButtonUrlGenerator::DEFAULT_CSS_CLASSES] = $this->getButtonDefaultClass();
             }
 
             $buttonUrlGenerator = $this->createButtonUrlGenerator($url, $title, $options);
