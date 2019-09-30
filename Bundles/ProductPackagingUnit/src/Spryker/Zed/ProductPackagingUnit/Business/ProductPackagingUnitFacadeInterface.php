@@ -286,8 +286,6 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $sku
      *
      * @return void

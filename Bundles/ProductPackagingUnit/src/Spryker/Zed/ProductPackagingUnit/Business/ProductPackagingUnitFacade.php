@@ -312,8 +312,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $sku
      *
      * @return void

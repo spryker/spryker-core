@@ -27,17 +27,6 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
-    {
-        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -50,13 +39,12 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
 
     /**
      * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return void
      */
-    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer): void
     {
-        return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
+        return $this->availabilityFacade->updateAvailabilityForStore($sku, $storeTransfer);
     }
 }

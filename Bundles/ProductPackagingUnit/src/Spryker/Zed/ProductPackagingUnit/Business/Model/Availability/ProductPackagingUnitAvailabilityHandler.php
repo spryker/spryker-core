@@ -57,28 +57,14 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
             return;
         }
 
-        $this->updateAvailabilityForLeadProduct($productPackagingLeadProductTransfer->getProduct()->getSku());
-    }
-
-    /**
-     * @param string $leadProductSku
-     *
-     * @return void
-     */
-    protected function updateAvailabilityForLeadProduct(string $leadProductSku): void
-    {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-
-        $stores = $currentStoreTransfer->getStoresWithSharedPersistence();
-        $stores[] = $currentStoreTransfer->getName();
-
-        foreach ($stores as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $stock = $this->availabilityFacade
-                ->calculateAvailabilityForProductWithStore($leadProductSku, $storeTransfer);
-
-            $this->availabilityFacade->saveProductAvailabilityForStore($leadProductSku, $stock, $storeTransfer);
+        if ($sku === $productPackagingLeadProductTransfer->getProduct()->getSku()) {
+            return;
         }
+
+        $this->availabilityFacade->updateAvailabilityForStore(
+            $productPackagingLeadProductTransfer->getProduct()->getSku(),
+            $this->storeFacade->getCurrentStore()
+        );
     }
 
     /**

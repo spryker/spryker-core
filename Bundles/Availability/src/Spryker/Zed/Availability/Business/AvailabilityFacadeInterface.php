@@ -133,7 +133,7 @@ interface AvailabilityFacadeInterface
      *
      * @return void
      */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer): void;
 
     /**
      * Specification:

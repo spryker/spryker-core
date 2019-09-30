@@ -154,7 +154,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @return void
      */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer): void
     {
         $this->getFactory()
             ->createAvailabilityHandler()
