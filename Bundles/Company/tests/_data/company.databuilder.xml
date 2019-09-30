@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
 
     <transfer name="Company">
         <property name="name" dataBuilderRule="company"/>
@@ -10,10 +12,9 @@
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idEntity"/>
+        <property name="idStores"/>
+        <property name="stores"/>
     </transfer>
 
 </transfers>
-
