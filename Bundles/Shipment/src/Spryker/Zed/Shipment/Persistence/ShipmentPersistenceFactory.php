@@ -14,8 +14,8 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
-use Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper\ShipmentMethodPricesMapper;
-use Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper\ShipmentMethodPricesMapperInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper\ShipmentMethodPriceMapper;
+use Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper\ShipmentMethodPriceMapperInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -58,11 +58,11 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper\ShipmentMethodPricesMapperInterface
+     * @return \Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper\ShipmentMethodPriceMapperInterface
      */
-    public function createShipmentMethodPricesMapper(): ShipmentMethodPricesMapperInterface
+    public function createShipmentMethodPriceMapper(): ShipmentMethodPriceMapperInterface
     {
-        return new ShipmentMethodPricesMapper($this->getCurrencyFacade(), $this->getStoreFacade());
+        return new ShipmentMethodPriceMapper($this->getCurrencyFacade(), $this->getStoreFacade());
     }
 
     /**

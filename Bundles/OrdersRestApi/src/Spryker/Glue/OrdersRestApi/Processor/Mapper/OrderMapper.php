@@ -11,17 +11,17 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 
-class OrderResourceMapper implements OrderResourceMapperInterface
+class OrderMapper implements OrderMapperInterface
 {
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapperInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface
      */
     protected $orderResourceShipmentMapper;
 
     /**
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceShipmentMapperInterface $orderResourceShipmentMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderResourceShipmentMapper
      */
-    public function __construct(OrderResourceShipmentMapperInterface $orderResourceShipmentMapper)
+    public function __construct(OrderShipmentMapperInterface $orderResourceShipmentMapper)
     {
         $this->orderResourceShipmentMapper = $orderResourceShipmentMapper;
     }

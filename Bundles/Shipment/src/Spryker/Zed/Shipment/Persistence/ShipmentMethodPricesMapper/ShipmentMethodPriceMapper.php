@@ -13,7 +13,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
 
-class ShipmentMethodPricesMapper implements ShipmentMethodPricesMapperInterface
+class ShipmentMethodPriceMapper implements ShipmentMethodPriceMapperInterface
 {
     /**
      * @var \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface

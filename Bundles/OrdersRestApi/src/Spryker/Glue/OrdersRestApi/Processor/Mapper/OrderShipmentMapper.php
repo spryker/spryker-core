@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
-class OrderResourceShipmentMapper implements OrderResourceShipmentMapperInterface
+class OrderShipmentMapper implements OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

@@ -49,7 +49,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->getData();
 
         return $this->getFactory()
-            ->createShipmentMethodPricesMapper()
+            ->createShipmentMethodPriceMapper()
             ->mapShipmentMethodPriceEntitiesToMoneyValueTransfers($shipmentMethodPriceEntities);
     }
 }

@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderReader implements OrderReaderInterface
@@ -33,19 +33,19 @@ class OrderReader implements OrderReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
      */
     protected $orderResourceMapper;
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface $orderResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderResourceMapperInterface $orderResourceMapper
+        OrderMapperInterface $orderResourceMapper
     ) {
         $this->salesClient = $salesClient;
         $this->restResourceBuilder = $restResourceBuilder;

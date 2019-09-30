@@ -13,11 +13,10 @@ interface ShipmentToMoneyInterface
 {
     /**
      * @param int $amount
-     * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null);
+    public function fromInteger($amount);
 
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer

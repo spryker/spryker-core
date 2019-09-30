@@ -10,7 +10,7 @@ namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 
-interface OrderResourceShipmentMapperInterface
+interface OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer

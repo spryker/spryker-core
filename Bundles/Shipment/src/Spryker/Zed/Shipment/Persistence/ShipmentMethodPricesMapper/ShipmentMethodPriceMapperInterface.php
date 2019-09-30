@@ -9,7 +9,7 @@ namespace Spryker\Zed\Shipment\Persistence\ShipmentMethodPricesMapper;
 
 use ArrayObject;
 
-interface ShipmentMethodPricesMapperInterface
+interface ShipmentMethodPriceMapperInterface
 {
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $shipmentMethodPriceEntities
