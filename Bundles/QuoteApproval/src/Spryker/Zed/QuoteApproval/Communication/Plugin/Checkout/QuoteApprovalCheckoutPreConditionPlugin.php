@@ -32,6 +32,6 @@ class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements 
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        return $this->getFacade()->isQuoteApprovalReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+        return $this->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 }

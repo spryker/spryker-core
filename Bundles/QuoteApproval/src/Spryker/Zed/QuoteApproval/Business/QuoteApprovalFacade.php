@@ -151,11 +151,11 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @return bool
      */
-    public function isQuoteApprovalReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteStatusChecker()
-            ->isQuoteApprovalReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+            ->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**

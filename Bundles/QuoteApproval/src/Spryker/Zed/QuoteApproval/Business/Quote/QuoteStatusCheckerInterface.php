@@ -18,5 +18,5 @@ interface QuoteStatusCheckerInterface
      *
      * @return bool
      */
-    public function isQuoteApprovalReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

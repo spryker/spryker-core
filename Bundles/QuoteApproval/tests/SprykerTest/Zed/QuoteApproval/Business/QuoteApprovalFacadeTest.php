@@ -55,7 +55,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteApprovalReadyForCheckoutResponseIsSuccessful(): void
+    public function testIsQuoteReadyForCheckoutIsSuccessful(): void
     {
         // Arrange
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
@@ -63,17 +63,17 @@ class QuoteApprovalFacadeTest extends Unit
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $isQuoteApprovalReadyForCheckout = $this->getFacade()->isQuoteApprovalReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+        $isQuoteReadyForCheckout = $this->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertTrue($isQuoteApprovalReadyForCheckout);
+        $this->assertTrue($isQuoteReadyForCheckout);
         $this->assertEmpty($checkoutResponseTransfer->getErrors());
     }
 
     /**
      * @return void
      */
-    public function testIsQuoteApprovalReadyForCheckoutIsNotSuccessful(): void
+    public function testIsQuoteReadyForCheckoutIsNotSuccessful(): void
     {
         // Arrange
         $this->tester->preparePermissionStorageDependency(new PermissionStoragePlugin());
@@ -84,10 +84,10 @@ class QuoteApprovalFacadeTest extends Unit
         ]));
 
         // Act
-        $isQuoteApprovalReadyForCheckout = $this->getFacade()->isQuoteApprovalReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+        $isQuoteReadyForCheckout = $this->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($isQuoteApprovalReadyForCheckout);
+        $this->assertFalse($isQuoteReadyForCheckout);
         $this->assertNotEmpty($checkoutResponseTransfer->getErrors());
     }
 
