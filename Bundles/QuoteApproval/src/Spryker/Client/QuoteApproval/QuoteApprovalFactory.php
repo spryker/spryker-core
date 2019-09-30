@@ -10,6 +10,7 @@ namespace Spryker\Client\QuoteApproval;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
 use Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface;
+use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
@@ -23,6 +24,12 @@ use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
+use Spryker\Client\QuoteApproval\StepAccessChecker\AddressStepAccessChecker;
+use Spryker\Client\QuoteApproval\StepAccessChecker\AddressStepAccessCheckerInterface;
+use Spryker\Client\QuoteApproval\StepAccessChecker\PaymentStepAccessChecker;
+use Spryker\Client\QuoteApproval\StepAccessChecker\PaymentStepAccessCheckerInterface;
+use Spryker\Client\QuoteApproval\StepAccessChecker\ShipmentStepAccessChecker;
+use Spryker\Client\QuoteApproval\StepAccessChecker\ShipmentStepAccessCheckerInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
@@ -106,10 +113,51 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\AddressStepAccessCheckerInterface
+     */
+    public function createAddressStepAccessChecker(): AddressStepAccessCheckerInterface
+    {
+        return new AddressStepAccessChecker(
+            $this->createQuoteStatusChecker(),
+            $this->getQuoteClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\PaymentStepAccessCheckerInterface
+     */
+    public function createPaymentStepAccessChecker(): PaymentStepAccessCheckerInterface
+    {
+        return new PaymentStepAccessChecker(
+            $this->createQuoteStatusChecker(),
+            $this->getQuoteClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\ShipmentStepAccessCheckerInterface
+     */
+    public function createShipmentStepAccessChecker(): ShipmentStepAccessCheckerInterface
+    {
+        return new ShipmentStepAccessChecker(
+            $this->createQuoteStatusChecker(),
+            $this->getQuoteClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface
      */
     public function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface
+     */
+    public function getQuoteClient(): QuoteApprovalToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_QUOTE);
     }
 }

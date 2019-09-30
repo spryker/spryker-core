@@ -243,4 +243,43 @@ interface QuoteApprovalClientInterface
      * @return bool
      */
     public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes a call to quote client to get quote lock.
+     * - Returns true if quote is locked and not in status declined, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkAddressStepAccessibility(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes a call to quote client to get quote lock.
+     * - Returns true if quote is locked and not in status declined, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkShipmentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes a call to quote client to get quote lock.
+     * - Returns true if quote is locked and not in status declined, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 }
