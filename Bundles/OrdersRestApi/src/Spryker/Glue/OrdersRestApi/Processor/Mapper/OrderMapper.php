@@ -17,14 +17,14 @@ class OrderMapper implements OrderMapperInterface
     /**
      * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface
      */
-    protected $orderResourceShipmentMapper;
+    protected $orderShipmentMapper;
 
     /**
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderResourceShipmentMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderShipmentMapperInterface $orderShipmentMapper
      */
-    public function __construct(OrderShipmentMapperInterface $orderResourceShipmentMapper)
+    public function __construct(OrderShipmentMapperInterface $orderShipmentMapper)
     {
-        $this->orderResourceShipmentMapper = $orderResourceShipmentMapper;
+        $this->orderShipmentMapper = $orderShipmentMapper;
     }
 
     /**
@@ -63,7 +63,7 @@ class OrderMapper implements OrderMapperInterface
         $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($orderTransfer->getShippingAddress()->getCountry()->getIso2Code());
 
         $restOrderDetailsAttributesTransfer->setShipments(
-            $this->orderResourceShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
+            $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
         );
 
         return $restOrderDetailsAttributesTransfer;
