@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydrator;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydratorInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
@@ -42,6 +44,17 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProfileReader(
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydratorInterface
+     */
+    public function createMerchantProfileHydrator(): MerchantProfileHydratorInterface
+    {
+        return new MerchantProfileHydrator(
+            $this->createMerchantProfileReader(),
+            $this->getLocaleFacade()
         );
     }
 

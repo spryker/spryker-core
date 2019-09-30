@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form;
 
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary\MerchantProfileLocalizedGlossaryAttributesFormType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,6 +42,8 @@ class MerchantProfileFormType extends AbstractType
     public const FIELD_LOGO_URL = 'logo_url';
     public const FIELD_PUBLIC_EMAIL = 'public_email';
     public const FIELD_PUBLIC_PHONE = 'public_phone';
+    public const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    public const FIELD_IS_ACTIVE = 'is_active';
     public const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
     public const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
     public const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
@@ -46,7 +51,6 @@ class MerchantProfileFormType extends AbstractType
     public const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
     public const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
     public const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
-    public const FIELD_IS_ACTIVE = 'is_active';
 
     public const LABEL_CONTACT_PERSON_ROLE = 'Role';
     public const LABEL_CONTACT_PERSON_TITLE = 'Title';
@@ -57,13 +61,6 @@ class MerchantProfileFormType extends AbstractType
     public const LABEL_LOGO_URL = 'Logo';
     public const LABEL_PUBLIC_EMAIL = 'Public Email';
     public const LABEL_PUBLIC_PHONE = 'Public Phone';
-    public const LABEL_DESCRIPTION_GLOSSARY_KEY = 'Description';
-    public const LABEL_BANNER_URL_GLOSSARY_KEY = 'Banner url';
-    public const LABEL_DELIVERY_TIME_GLOSSARY_KEY = 'Average Delivery Time';
-    public const LABEL_TERMS_CONDITIONS_GLOSSARY_KEY = 'Terms and Conditions';
-    public const LABEL_CANCELLATION_POLICY_GLOSSARY_KEY = 'Cancellation Policy';
-    public const LABEL_IMPRINT_GLOSSARY_KEY = 'Imprint';
-    public const LABEL_DATA_PRIVACY_GLOSSARY_KEY = 'Data Privacy';
     public const LABEL_IS_ACTIVE = 'Is Active';
 
     public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
@@ -76,6 +73,10 @@ class MerchantProfileFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => MerchantProfileTransfer::class,
+        ]);
 
         $resolver->setRequired(static::SALUTATION_CHOICES_OPTION);
     }
@@ -98,7 +99,15 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
-            ->addBannerUrlField($builder);
+            ->addBannerUrlField($builder)
+            ->addDescriptionGlossaryKeyField($builder)
+            ->addBannerUrlGlossaryKeyField($builder)
+            ->addDeliveryTimeGlossaryKeyField($builder)
+            ->addTermsConditionsGlossaryKeyField($builder)
+            ->addCancellationPolicyGlossaryKeyField($builder)
+            ->addImprintGlossaryKeyField($builder)
+            ->addDataPrivacyGlossaryKeyField($builder)
+            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder);
     }
 
     /**
@@ -131,6 +140,90 @@ class MerchantProfileFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDescriptionGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_DESCRIPTION_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addBannerUrlGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_BANNER_URL_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDeliveryTimeGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_DELIVERY_TIME_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addTermsConditionsGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_TERMS_CONDITIONS_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCancellationPolicyGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CANCELLATION_POLICY_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addImprintGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_IMPRINT_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addDataPrivacyGlossaryKeyField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_DATA_PRIVACY_GLOSSARY_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
@@ -139,6 +232,7 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_TITLE, ChoiceType::class, [
             'choices' => array_flip($choices),
+            'required' => false,
             'label' => static::LABEL_CONTACT_PERSON_TITLE,
             'constraints' => $this->getSalutationFieldConstraints($choices),
             'placeholder' => 'Select one',
@@ -158,6 +252,7 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(static::FIELD_CONTACT_PERSON_FIRST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_FIRST_NAME,
             'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
         ]);
 
         return $this;
@@ -173,6 +268,7 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(static::FIELD_CONTACT_PERSON_LAST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_LAST_NAME,
             'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
         ]);
 
         return $this;
@@ -188,6 +284,7 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(static::FIELD_CONTACT_PERSON_ROLE, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_ROLE,
             'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
         ]);
 
         return $this;
@@ -218,6 +315,7 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(static::FIELD_PUBLIC_PHONE, TextType::class, [
             'label' => static::LABEL_PUBLIC_PHONE,
             'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
         ]);
 
         return $this;
@@ -233,6 +331,7 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(static::FIELD_CONTACT_PERSON_PHONE, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_PHONE,
             'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
         ]);
 
         return $this;
@@ -271,13 +370,28 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMerchantProfileLocalizedGlossaryAttributesSubform(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES, CollectionType::class, [
+            'label' => false,
+            'entry_type' => MerchantProfileLocalizedGlossaryAttributesFormType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
     protected function getTextFieldConstraints(): array
     {
         return [
-            new Required(),
-            new NotBlank(),
             new Length(['max' => 255]),
         ];
     }

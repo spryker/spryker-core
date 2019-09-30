@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProfileGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeBridge;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeBridge;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeBridge;
 
 /**
@@ -19,6 +21,8 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
     public const FACADE_MERCHANT_PROFILE = 'FACADE_MERCHANT_PROFILE';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +35,8 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
 
         $container = $this->addTwigEnvironment($container);
         $container = $this->addMerchantProfileFacade($container);
+        $container = $this->addGlossaryFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -58,6 +64,34 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container[static::FACADE_MERCHANT_PROFILE] = function (Container $container) {
             return new MerchantProfileGuiToMerchantProfileFacadeBridge($container->getLocator()->merchantProfile()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGlossaryFacade(Container $container): Container
+    {
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+            return new MerchantProfileGuiToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new MerchantProfileGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;

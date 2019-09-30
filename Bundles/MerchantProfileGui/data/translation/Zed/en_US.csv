@@ -1,3 +1,20 @@
+Role,Role
+Title,Title
+"First Name","First Name"
+"Last Name","Last Name"
+Phone,Phone
+Banner,Banner
+Logo,Logo
+"Public Email","Public Email"
+"Public Phone","Public Phone"
+Description,Description
+"Banner url","Banner url"
+"Average Delivery Time","Average Delivery Time"
+"Terms and Conditions","Terms and Conditions"
+"Cancellation Policy","Cancellation Policy"
+Imprint,Imprint
+"Data Privacy","Data Privacy"
+"Is Active","Is Active"
 active,Active
 inactive,Inactive
 Activate,Activate

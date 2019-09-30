@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProfileGui\Communication\Plugin\MerchantGui;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -17,6 +18,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements MerchantFormExpanderPluginInterface
 {
+    public const FIELD_MERCHANT_PROFILE = 'merchantProfile';
+
     /**
      * {@inheritdoc}
      *
@@ -29,17 +32,43 @@ class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements Mercha
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        $merchantProfileFormType = $this->getFactory()
-            ->createMerchantProfileForm();
+        $this->addMerchantProfileFieldSubform($builder);
 
+        return $builder;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addMerchantProfileFieldSubform(FormBuilderInterface $builder)
+    {
+        $options = $this->getMerchantProfileFormOptions($builder);
+        $builder->add(
+            static::FIELD_MERCHANT_PROFILE,
+            MerchantProfileFormType::class,
+            $options
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return array
+     */
+    protected function getMerchantProfileFormOptions(FormBuilderInterface $builder): array
+    {
         $merchantProfileDataProvider = $this->getFactory()
             ->createMerchantProfileFormDataProvider();
 
-        $merchantProfileFormType->buildForm(
-            $builder,
-            $merchantProfileDataProvider->getOptions()
-        );
+        $options = $merchantProfileDataProvider->getOptions();
+        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
+        $merchantTransfer = $builder->getForm()->getData();
+        $options['data'] = $merchantProfileDataProvider->getData($merchantTransfer->getMerchantProfile());
 
-        return $builder;
+        return $options;
     }
 }

@@ -36,4 +36,16 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
     public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates merchant by merchant profile data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function hydrateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
 }

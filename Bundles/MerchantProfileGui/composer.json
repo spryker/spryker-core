@@ -5,7 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.30.0",
+    "spryker/locale": "^3.0.0",
     "spryker/merchant-gui-extension": "^1.0.0",
     "spryker/merchant-profile": "^1.0.0",
     "spryker/symfony": "^3.0.0",
@@ -13,10 +15,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/util-text": "*",
-    "spryker/testify": "*",
     "spryker/gui": "*",
-    "spryker/merchant": "*"
+    "spryker/merchant": "*",
+    "spryker/testify": "*",
+    "spryker/util-text": "*"
   },
   "suggest": {
     "spryker/util-text": "Required to use gui in plugins.",

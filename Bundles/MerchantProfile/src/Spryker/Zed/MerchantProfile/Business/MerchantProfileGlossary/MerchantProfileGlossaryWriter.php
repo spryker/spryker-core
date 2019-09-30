@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary;
 
 use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer;
+use Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
@@ -46,7 +46,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
      */
     public function saveMerchantProfileGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        if ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes()) {
+        if ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes() !== null) {
             $localeTransfers = $this->localeFacade->getLocaleCollection();
 
             foreach ($localeTransfers as $localeTransfer) {
@@ -74,10 +74,10 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
         foreach ($merchantProfileLocalizedGlossaryAttributesTransfers as $merchantProfileLocalizedGlossaryAttributesTransfer) {
-            if ($merchantProfileLocalizedGlossaryAttributesTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+            if ((int)$merchantProfileLocalizedGlossaryAttributesTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
                 $merchantProfileTransfer = $this->saveMerchantProfileGlossaryAttributesByProvidedLocale(
                     $localeTransfer,
-                    $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributes(),
+                    $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributeValues(),
                     $merchantProfileTransfer
                 );
             }
@@ -88,214 +88,50 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer $merchantProfileGlossaryAttributeValuesTransfer
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     protected function saveMerchantProfileGlossaryAttributesByProvidedLocale(
         LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
+        MerchantProfileGlossaryAttributeValuesTransfer $merchantProfileGlossaryAttributeValuesTransfer,
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
-        $merchantProfileTransfer = $this->saveMerchantProfileBannerUrlGlossary(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
-        $merchantProfileTransfer = $this->saveMerchantProfileCancellationPolicyGlossary(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
-        $merchantProfileTransfer = $this->saveMerchantProfileDataPrivacyGlossary(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
-        $merchantProfileTransfer = $this->saveMerchantProfileDeliveryTimeGlossary(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
-        $merchantProfileTransfer = $this->saveMerchantProfileDescriptionGlossary(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
-        $merchantProfileTransfer = $this->saveMerchantProfileImprintGlossaryKey(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
-        $merchantProfileTransfer = $this->saveMerchantProfileTermsConditionsGlossary(
-            $localeTransfer,
-            $merchantProfileGlossaryAttributesTransfer,
-            $merchantProfileTransfer
-        );
+        $merchantProfileGlossaryAttributeValuesData = $merchantProfileGlossaryAttributeValuesTransfer->toArray(true, true);
+        $merchantProfileData = $merchantProfileTransfer->toArray(true, true);
+
+        $merchantProfileGlossaryKeys = [];
+        foreach ($merchantProfileGlossaryAttributeValuesData as $merchantProfileGlossaryAttributeFieldName => $glossaryAttributeValue) {
+            $merchantProfileGlossaryKey = $this->getMerchantProfileGlossaryAttributeKey(
+                $merchantProfileData,
+                $merchantProfileGlossaryAttributeFieldName,
+                $merchantProfileTransfer->getFkMerchant()
+            );
+
+            $this->saveGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey, $glossaryAttributeValue);
+            $merchantProfileGlossaryKeys[$merchantProfileGlossaryAttributeFieldName] = $merchantProfileGlossaryKey;
+        }
+        $merchantProfileTransfer->fromArray($merchantProfileGlossaryKeys);
 
         return $merchantProfileTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param array $merchantProfileData
+     * @param string $merchantProfileGlossaryKeyFieldName
+     * @param int $fkMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     * @return string
      */
-    protected function saveMerchantProfileBannerUrlGlossary(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $bannerUrlGlossaryKey = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::BANNER_URL_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $bannerUrlGlossaryKey,
-            $merchantProfileGlossaryAttributesTransfer->getBannerUrlGlossary()
-        );
-        $merchantProfileTransfer->setBannerUrlGlossaryKey($bannerUrlGlossaryKey);
-
-        return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    protected function saveMerchantProfileCancellationPolicyGlossary(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $cancellationPolicyGlossaryKey = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::CANCELLATION_POLICY_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $cancellationPolicyGlossaryKey,
-            $merchantProfileGlossaryAttributesTransfer->getCancellationPolicyGlossary()
-        );
-        $merchantProfileTransfer->setCancellationPolicyGlossaryKey($cancellationPolicyGlossaryKey);
-
-        return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    protected function saveMerchantProfileDataPrivacyGlossary(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $dataPrivacyGlossaryKey = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::DATA_PRIVACY_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $dataPrivacyGlossaryKey,
-            $merchantProfileGlossaryAttributesTransfer->getDataPrivacyGlossary()
-        );
-        $merchantProfileTransfer->setDataPrivacyGlossaryKey($dataPrivacyGlossaryKey);
-
-        return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    protected function saveMerchantProfileDeliveryTimeGlossary(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $deliveryTimeGlossaryKey = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::DELIVERY_TIME_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $deliveryTimeGlossaryKey,
-            $merchantProfileGlossaryAttributesTransfer->getDeliveryTimeGlossary()
-        );
-        $merchantProfileTransfer->setDeliveryTimeGlossaryKey($deliveryTimeGlossaryKey);
-
-        return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    protected function saveMerchantProfileDescriptionGlossary(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $descriptionGlossaryKey = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::DESCRIPTION_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $descriptionGlossaryKey,
-            $merchantProfileGlossaryAttributesTransfer->getDescriptionGlossary()
-        );
-        $merchantProfileTransfer->setDescriptionGlossaryKey($descriptionGlossaryKey);
-
-        return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    protected function saveMerchantProfileImprintGlossaryKey(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $imprintGlossaryKey = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::IMPRINT_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $imprintGlossaryKey,
-            $merchantProfileGlossaryAttributesTransfer->getImprintGlossary()
-        );
-        $merchantProfileTransfer->setImprintGlossaryKey($imprintGlossaryKey);
-
-        return $merchantProfileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
-     */
-    protected function saveMerchantProfileTermsConditionsGlossary(
-        LocaleTransfer $localeTransfer,
-        MerchantProfileGlossaryAttributesTransfer $merchantProfileGlossaryAttributesTransfer,
-        MerchantProfileTransfer $merchantProfileTransfer
-    ): MerchantProfileTransfer {
-        $termsConditionsGlossary = $this->buildGlossaryKey($merchantProfileTransfer->getFkMerchant(), $merchantProfileTransfer::TERMS_CONDITIONS_GLOSSARY_KEY);
-        $this->saveGlossaryTranslation(
-            $localeTransfer,
-            $termsConditionsGlossary,
-            $merchantProfileGlossaryAttributesTransfer->getTermsConditionsGlossary()
-        );
-        $merchantProfileTransfer->setTermsConditionsGlossaryKey($termsConditionsGlossary);
-
-        return $merchantProfileTransfer;
+    protected function getMerchantProfileGlossaryAttributeKey(
+        array $merchantProfileData,
+        string $merchantProfileGlossaryKeyFieldName,
+        int $fkMerchant
+    ): string {
+        return !empty($merchantProfileData[$merchantProfileGlossaryKeyFieldName])
+            ? $merchantProfileData[$merchantProfileGlossaryKeyFieldName]
+            : $this->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName);
     }
 
     /**
@@ -310,7 +146,11 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         string $merchantProfileGlossaryAttributeKey,
         ?string $value
     ): TranslationTransfer {
-        if ($this->glossaryFacade->hasKey($merchantProfileGlossaryAttributeKey)) {
+        if ($value === null) {
+            $value = '';
+        }
+
+        if (!$this->glossaryFacade->hasKey($merchantProfileGlossaryAttributeKey)) {
             $this->glossaryFacade->createKey($merchantProfileGlossaryAttributeKey);
         }
 

@@ -33,17 +33,17 @@
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
         <property name="fkLocale" type="int" />
-        <property name="merchantProfileGlossaryAttributes" type="MerchantProfileGlossaryAttributes" />
+        <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues" />
     </transfer>
 
-    <transfer name="MerchantProfileGlossaryAttributes">
-        <property name="descriptionGlossary" type="string" />
-        <property name="bannerUrlGlossary" type="string" />
-        <property name="deliveryTimeGlossary" type="string" />
-        <property name="termsConditionsGlossary" type="string" />
-        <property name="cancellationPolicyGlossary" type="string" />
-        <property name="imprintGlossary" type="string" />
-        <property name="dataPrivacyGlossary" type="string" />
+    <transfer name="MerchantProfileGlossaryAttributeValues">
+        <property name="descriptionGlossaryKey" type="string" />
+        <property name="bannerUrlGlossaryKey" type="string" />
+        <property name="deliveryTimeGlossaryKey" type="string" />
+        <property name="termsConditionsGlossaryKey" type="string" />
+        <property name="cancellationPolicyGlossaryKey" type="string" />
+        <property name="imprintGlossaryKey" type="string" />
+        <property name="dataPrivacyGlossaryKey" type="string" />
     </transfer>
 
     <transfer name="MerchantProfileCriteriaFilter">
