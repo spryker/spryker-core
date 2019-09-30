@@ -14,7 +14,7 @@ use Symfony\Component\Routing\RequestContext;
 abstract class AbstractRouterEnhancerPlugin extends AbstractPlugin implements RouterEnhancerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ abstract class AbstractRouterEnhancerPlugin extends AbstractPlugin implements Ro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ abstract class AbstractRouterEnhancerPlugin extends AbstractPlugin implements Ro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
