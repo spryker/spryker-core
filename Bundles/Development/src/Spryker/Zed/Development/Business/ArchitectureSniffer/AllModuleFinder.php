@@ -10,7 +10,6 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 use InvalidArgumentException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
-use Zend\Filter\FilterInterface;
 
 class AllModuleFinder implements AllModuleFinderInterface
 {
@@ -20,24 +19,17 @@ class AllModuleFinder implements AllModuleFinderInterface
     protected $finder;
 
     /**
-     * @var \Zend\Filter\FilterInterface
-     */
-    protected $filter;
-
-    /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $developmentConfig;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
-     * @param \Zend\Filter\FilterInterface $filter
      * @param \Spryker\Zed\Development\DevelopmentConfig $developmentConfig
      */
-    public function __construct(Finder $finder, FilterInterface $filter, DevelopmentConfig $developmentConfig)
+    public function __construct(Finder $finder, DevelopmentConfig $developmentConfig)
     {
         $this->finder = $finder;
-        $this->filter = $filter;
         $this->developmentConfig = $developmentConfig;
     }
 
