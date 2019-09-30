@@ -48,3 +48,19 @@ View,Aussicht
 Edit,Bearbeiten
 Download,Herunterladen
 Delete,Löschen
+"Import n","Importieren"
+"Imported by on the","Importiert von am"
+"Scheduled prices inside import","Geplante Preise im Import"
+"Are you sure about deleting this scheduled price?","Möchten Sie diesen Preis wirklich löschen?"
+"No, I want to keep this price","Nein, ich möchte diesen Preis behalten"
+"Yes, delete this price","Ja, diesen Preis löschen"
+"The timezone used for the scheduled price will be %s as defined on the store selected","Die Zeitzone für den geplanten Preis wird %s sein wie definiert im gewähltn Store"
+"Scheduled price has been successfully saved","Geplanter Preis wurde erfolgreich gespeichert"
+"Schedule price haven not been saved","Geplanter Preis wurde nicht gespeichert"
+"Finish at must be greater than start from","Beenden am muss größer sein als starten ab"
+"An identical scheduled price already exists for this product.","Ein identischer Preis existiert bereits für dieses Produkt."
+"Yes, delete those prices","Ja, diese Preise löschen"
+"Scheduled price list was successfully removed","Liste der geplanten Preise wurde erfolgreich entfernt"
+"Are you sure about deleting the Scheduled prices %s?","Möchten Sie die geplanten Preise %s wirklich löschen?"
+"You will delete %d prices for %d products. Is this what you want?","Sie werden %d Preise für %d Produkte löschen. Ist dies, was Sie wollen?"
+"Via data import","Via Datenimport"

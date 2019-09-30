@@ -22,7 +22,7 @@ class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     public const FUNCTION_NAME_ASSETS_PATH = 'assetsPath';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Extends twig with "assetsPath" function to generate assets absolute url.
      *
      * @api

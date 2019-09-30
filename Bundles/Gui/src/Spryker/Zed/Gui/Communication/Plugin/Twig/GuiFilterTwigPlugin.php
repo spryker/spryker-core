@@ -19,7 +19,7 @@ use Twig\Environment;
 class GuiFilterTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
