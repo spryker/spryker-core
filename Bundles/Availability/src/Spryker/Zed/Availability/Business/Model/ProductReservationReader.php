@@ -126,7 +126,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param int $reservationQuantity
+     * @param string $reservationQuantity
      *
      * @return \Spryker\DecimalObject\Decimal
      */
