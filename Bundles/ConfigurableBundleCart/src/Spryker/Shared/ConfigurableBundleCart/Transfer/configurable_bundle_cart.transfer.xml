@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="UpdateConfiguredBundleRequest">
+        <property name="quote" type="Quote"/>
+        <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="quantity" type="int" />
+        <property name="configuredBundleItem" type="ConfiguredBundleItem" />
+        <property name="configuredBundle" type="ConfiguredBundle" />
+    </transfer>
+
+    <transfer name="ConfiguredBundle">
+        <property name="quantity" type="int" />
+        <property name="groupKey" type="string" />
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
+        <property name="quantityPerSlot" type="int" />
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+</transfers>
