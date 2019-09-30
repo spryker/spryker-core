@@ -8,16 +8,13 @@
 namespace SprykerTest\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
-use Generated\Shared\Transfer\SpyProductEntityTransfer;
-use Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageBusinessFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingSynchronizationDataPlugin;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataBulkPlugin;
 use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfigMock;
 
 /**
@@ -29,13 +26,12 @@ use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfi
  * @group Communication
  * @group Plugin
  * @group Synchronization
- * @group ProductPackagingUnitSynchronizationDataPluginTest
+ * @group ProductPackagingUnitSynchronizationDataBulkPluginTest
  * Add your own group annotations below this line
  */
-class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
+class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
 {
     protected const TEST_INVALID_ID = 111;
-    protected const PACKAGING_TYPE_DEFAULT = 'item';
     protected const PACKAGING_TYPE = 'box';
 
     /**
@@ -62,10 +58,12 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
      */
     public function testGetDataReturnsEmptyArrayWithInvalidIds(): void
     {
-        $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
-        $synchronizationDataTransfers = $productAbstractPackagingSynchronizationDataPlugin->getData([
-            static::TEST_INVALID_ID,
-        ]);
+        $productPackagingUnitSynchronizationDataBulkPlugin = $this->createProductPackagingUnitSynchronizationDataBulkPlugin();
+        $synchronizationDataTransfers = $productPackagingUnitSynchronizationDataBulkPlugin->getData(
+            0,
+            1,
+            [static::TEST_INVALID_ID]
+        );
 
         $this->assertEmpty($synchronizationDataTransfers);
     }
@@ -78,8 +76,8 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
         $this->tester->assertStorageDatabaseTableIsEmpty();
         $this->haveBoxProductPackagingUnit();
 
-        $productAbstractPackagingSynchronizationDataPlugin = $this->getProductAbstractPackagingSynchronizationDataPlugin();
-        $synchronizationDataTransfers = $productAbstractPackagingSynchronizationDataPlugin->getData();
+        $productConcretePackagingSynchronizationDataPlugin = $this->createProductPackagingUnitSynchronizationDataBulkPlugin();
+        $synchronizationDataTransfers = $productConcretePackagingSynchronizationDataPlugin->getData(0, 10);
 
         $this->assertNotEmpty($synchronizationDataTransfers);
     }
@@ -90,31 +88,17 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     protected function haveBoxProductPackagingUnit(): void
     {
         $itemProductConcreteTransfer = $this->tester->haveProduct();
-        $boxProductConcreteTransfer = $this->tester->haveProduct([
-            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
-        ], [
-            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
-        ]);
-
-        $this->tester->haveProductPackagingLeadProduct([
-            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
-        ]);
+        $boxProductConcreteTransfer = $this->tester->haveProduct();
 
         $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
-        $itemProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
-
-        $this->tester->haveProductPackagingUnit([
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $itemProductPackagingUnitType->getIdProductPackagingUnitType(),
-        ]);
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+            SpyProductPackagingUnitEntityTransfer::LEAD_PRODUCT_SKU => $itemProductConcreteTransfer->getSku(),
         ]);
 
-        $this->getProductPackagingUnitStorageFacade()->publishProductAbstractPackaging([$boxProductConcreteTransfer->getFkProductAbstract()]);
+        $this->getProductPackagingUnitStorageFacade()->publishProductPackagingUnit([$boxProductConcreteTransfer->getIdProductConcrete()]);
     }
 
     /**
@@ -132,10 +116,10 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductAbstractPackagingSynchronizationDataPlugin
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization\ProductPackagingUnitSynchronizationDataBulkPlugin
      */
-    protected function getProductAbstractPackagingSynchronizationDataPlugin(): ProductAbstractPackagingSynchronizationDataPlugin
+    protected function createProductPackagingUnitSynchronizationDataBulkPlugin(): ProductPackagingUnitSynchronizationDataBulkPlugin
     {
-        return new ProductAbstractPackagingSynchronizationDataPlugin();
+        return new ProductPackagingUnitSynchronizationDataBulkPlugin();
     }
 }

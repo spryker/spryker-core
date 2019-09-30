@@ -184,11 +184,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
-        return $this->getFactory()
-            ->createProductPackagingUnitTypeReader()
-            ->findProductAbstractIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
+        return $this->getRepository()
+            ->findProductIdsByProductPackagingUnitTypeIds($productPackagingUnitTypeIds);
     }
 
     /**

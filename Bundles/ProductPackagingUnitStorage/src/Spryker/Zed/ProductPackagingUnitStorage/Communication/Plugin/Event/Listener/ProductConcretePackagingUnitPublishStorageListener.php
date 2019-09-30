@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingLeadProductTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -16,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductPackagingLeadProductEntityStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductConcretePackagingUnitPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * {@inheritdoc}
@@ -30,10 +29,10 @@ class ProductPackagingLeadProductEntityStorageUnpublishListener extends Abstract
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $productAbstractIds = $this->getFactory()
+        $productConcreteIds = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys($eventTransfers, SpyProductPackagingLeadProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+            ->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
+        $this->getFacade()->publishProductPackagingUnit($productConcreteIds);
     }
 }

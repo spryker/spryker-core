@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductPackagingUnitStorage\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Client\Kernel\Container;
@@ -30,9 +29,8 @@ use SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfi
  */
 class ProductPackagingUnitStorageFacadeTest extends Unit
 {
-    protected const PRODUCT_ABSTRACT_SKU = '217';
-
     protected const PACKAGING_TYPE_DEFAULT = 'item';
+    protected const PACKAGING_TYPE = 'box';
 
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageBusinessTester
@@ -54,80 +52,39 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
     }
 
     /**
+     * @doesNotPerformAssertions
+     *
      * @return void
      */
-    public function testPublishProductAbstractPackagingDoesNotThrowException(): void
+    public function testPublishProductPackagingUnitDoesNotThrowException(): void
     {
         $this->tester->assertStorageDatabaseTableIsEmpty();
 
-        if (!$this->tester->isProductAbstractCreated(static::PRODUCT_ABSTRACT_SKU)) {
-            $this->tester->haveProductAbstract(['sku' => static::PRODUCT_ABSTRACT_SKU]);
-        }
+        $leadProductConcreteTransfer = $this->tester->haveProduct();
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
 
-        $this->getProductPackagingUnitStorageFacade()->publishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
-
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @return void
-     */
-    public function testUnpublishProductAbstractPackagingDoesNotThrowException(): void
-    {
-        $this->tester->assertStorageDatabaseTableIsEmpty();
-
-        if (!$this->tester->isProductAbstractCreated(static::PRODUCT_ABSTRACT_SKU)) {
-            $this->tester->haveProductAbstract(['sku' => static::PRODUCT_ABSTRACT_SKU]);
-        }
-
-        $this->getProductPackagingUnitStorageFacade()->unpublishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
-
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductAbstractPackagingStorageTransfersByProductAbstractIdsReturnsEmptyWithNoIds(): void
-    {
-        // Arrange
-        $productPackagingUnitStorageFacade = $this->getProductPackagingUnitStorageFacade();
-
-        // Act
-        $productAbstractPackagingStorageTransfers = $productPackagingUnitStorageFacade->getProductAbstractPackagingStorageTransfersByProductAbstractIds([]);
-
-        // Assert
-        $this->assertEmpty($productAbstractPackagingStorageTransfers);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductAbstractPackagingStorageTransfersByProductAbstractIdsReturnsDataWithIds(): void
-    {
-        // Arrange
-        $productPackagingUnitStorageFacade = $this->getProductPackagingUnitStorageFacade();
-
-        $productTransfer = $this->tester->haveProduct();
-        $productPackagingUnitTypeTransfer = $this->tester->haveProductPackagingUnitType([
-            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT,
-        ]);
         $this->tester->haveProductPackagingUnit([
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType(),
-        ]);
-        $this->tester->haveProductPackagingLeadProduct([
-            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $productTransfer->getFkProductAbstract(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+            SpyProductPackagingUnitEntityTransfer::LEAD_PRODUCT_SKU => $leadProductConcreteTransfer->getSku(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
         ]);
 
-        // Act
-        $productAbstractPackagingStorageTransfers = $productPackagingUnitStorageFacade->getProductAbstractPackagingStorageTransfersByProductAbstractIds([
-            $productTransfer->getFkProductAbstract(),
-        ]);
+        $this->getProductPackagingUnitStorageFacade()->publishProductPackagingUnit([$productConcreteTransfer->getIdProductConcrete()]);
+    }
 
-        // Assert
-        $this->assertNotEmpty($productAbstractPackagingStorageTransfers);
+    /**
+     * @doesNotPerformAssertions
+     *
+     * @return void
+     */
+    public function testUnpublishProductPackagingUnitDoesNotThrowException(): void
+    {
+        $this->tester->assertStorageDatabaseTableIsEmpty();
+
+        $productConcreteTransfer = $this->tester->haveProduct();
+
+        $this->getProductPackagingUnitStorageFacade()->unpublishProductPackagingUnit([$productConcreteTransfer->getIdProductConcrete()]);
     }
 
     /**

@@ -5,24 +5,16 @@
 
     <transfer name="ProductConcretePackagingStorage">
         <property name="idProduct" type="int"/>
-        <property name="name" type="string"/>
-        <property name="defaultAmount" type="int"/>
+        <property name="typeName" type="string"/>
+        <property name="idLeadProduct" type="int"/>
+        <property name="defaultAmount" type="decimal"/>
         <property name="isVariable" type="bool"/>
-        <property name="amountMin" type="int"/>
-        <property name="amountMax" type="int"/>
-        <property name="amountInterval" type="int"/>
-        <property name="hasLeadProduct" type="bool"/>
-    </transfer>
-
-    <transfer name="ProductAbstractPackagingStorage">
-        <property name="idProductAbstract" type="int"/>
-        <property name="leadProduct" type="int"/>
-        <property name="types" type="ProductConcretePackagingStorage[]"/>
-        <property name="key" type="string" />
+        <property name="amountMin" type="decimal"/>
+        <property name="amountMax" type="decimal"/>
+        <property name="amountInterval" type="decimal"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="idProductAbstract" type="int"/>
         <property name="productConcrete" type="ProductConcrete"/>
         <property name="quantity" type="int"/>
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
@@ -31,7 +23,7 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>

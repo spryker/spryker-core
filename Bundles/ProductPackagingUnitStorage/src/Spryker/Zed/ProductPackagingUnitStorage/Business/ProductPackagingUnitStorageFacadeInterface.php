@@ -11,33 +11,33 @@ interface ProductPackagingUnitStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Saves the provided product abstract IDs related ProductAbstractPackaging objects to storage table.
+     * - Saves the provided product concrete IDs related ProductConcretePackaging objects to storage table.
      * - Sends a copy of data to synchronization queue.
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $productAbstractIds): void;
+    public function publishProductPackagingUnit(array $productConcreteIds): void;
 
     /**
      * Specification:
-     * - Finds and deletes ProductPackaging storage entities by productAbstractIds
+     * - Finds and deletes ProductPackaging storage entities by productConcreteIds
      * - Sends delete message to synchronization queue.
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */
-    public function unpublishProductAbstractPackaging(array $productAbstractIds): void;
+    public function unpublishProductPackagingUnit(array $productConcreteIds): void;
 
     /**
      * Specification:
-     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
+     * - Retrieves the list of product concrete IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
@@ -45,17 +45,5 @@ interface ProductPackagingUnitStorageFacadeInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
-
-    /**
-     * Specification:
-     * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs.
-     *
-     * @api
-     *
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
-     */
-    public function getProductAbstractPackagingStorageTransfersByProductAbstractIds(array $productAbstractIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 }
