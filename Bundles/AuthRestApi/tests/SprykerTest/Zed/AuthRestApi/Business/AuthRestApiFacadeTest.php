@@ -44,11 +44,14 @@ class AuthRestApiFacadeTest extends Unit
      */
     public function testProcessAccessTokenWillGetValidOauthResponseTransfer(): void
     {
+        // Arrange
         $authRestApiFacade = $this->tester->getFacade();
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransfer();
 
+        // Act
         $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
 
+        // Assert
         $this->assertEquals($oauthResponseTransfer->getAnonymousCustomerReference(), $oauthRequestTransfer->getCustomerReference());
         $this->assertTrue($oauthResponseTransfer->getIsValid());
         $this->assertNotEmpty($oauthResponseTransfer->getAccessToken());
@@ -59,11 +62,14 @@ class AuthRestApiFacadeTest extends Unit
      */
     public function testProcessAccessTokenWillGetInvalidOauthResponseTransfer(): void
     {
+        // Arrange
         $authRestApiFacade = $this->tester->getFacade();
         $oauthRequestTransfer = $this->tester->prepareOauthRequestTransferWithoutCustomerData();
 
+        // Act
         $oauthResponseTransfer = $authRestApiFacade->createAccessToken($oauthRequestTransfer);
 
+        // Assert
         $this->assertFalse($oauthResponseTransfer->getIsValid());
         $this->assertEmpty($oauthResponseTransfer->getAccessToken());
         $this->assertEmpty($oauthResponseTransfer->getCustomerReference());

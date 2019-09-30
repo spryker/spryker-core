@@ -21,7 +21,7 @@ class AuthRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AuthRestApi\Business\AccessToken\AccessTokenCreatorInterface
      */
-    public function createAccessTokenProcessor(): AccessTokenCreatorInterface
+    public function createAccessTokenCreator(): AccessTokenCreatorInterface
     {
         return new AccessTokenCreator(
             $this->getOauthFacade(),
