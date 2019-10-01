@@ -48,16 +48,16 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $formOptions
-     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentCarrierFormType(array $formOptions = []): FormInterface
+    public function createShipmentCarrierFormType(): FormInterface
     {
+        $shipmentCarrierFormDataProvider = $this->createShipmentCarrierFormDataProvider();
+
         return $this->getFormFactory()->create(
             ShipmentCarrierFormType::class,
-            $this->createShipmentCarrierFormDataProvider()->getData(),
-            $formOptions
+            $shipmentCarrierFormDataProvider->getData(),
+            $shipmentCarrierFormDataProvider->getOptions()
         );
     }
 
