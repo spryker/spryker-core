@@ -703,7 +703,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindShipmentCarrierByNameAndExcludedCarrierIdsShouldReturnShipmentValidCarrier(): void
+    public function testFindShipmentCarrierByNameAndExcludedCarrierIdsShouldReturnValidShipmentCarrier(): void
     {
         // Arrange
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
