@@ -138,7 +138,7 @@ class OutgoingGraphBuilder
             $dependencies = $this->filterBundles($dependencies);
         }
 
-        $allDependencies[$moduleName] = $dependencies;
+        $allDependencies->offsetSet($moduleName, $dependencies);
         foreach ($dependencies as $dependentBundle) {
             if ($allDependencies->offsetExists($dependentBundle)) {
                 continue;

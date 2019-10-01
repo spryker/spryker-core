@@ -3,6 +3,3 @@ parameters:
     - '#Constant T_SEMICOLON not found.#'
     - '#Constant T_OPEN_PARENTHESIS not found.#'
     - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
-    -
-        message: '#If condition is always false.#'
-        path: 'vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/Phpstan/PhpstanRunner.php'

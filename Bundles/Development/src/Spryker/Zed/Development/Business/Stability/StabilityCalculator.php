@@ -172,7 +172,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
             if ($indirectOutgoingDependencies->offsetExists($dependentBundle)) {
                 continue;
             }
-            $indirectOutgoingDependencies[$dependentBundle] = $dependentBundle;
+            $indirectOutgoingDependencies->offsetSet($dependentBundle, $dependentBundle);
             $this->buildIndirectOutgoingDependencies($dependentBundle, $indirectOutgoingDependencies);
         }
     }
@@ -191,7 +191,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
             if ($indirectIncomingDependencies->offsetExists($dependentBundle)) {
                 continue;
             }
-            $indirectIncomingDependencies[$dependentBundle] = $dependentBundle;
+            $indirectIncomingDependencies->offsetSet($dependentBundle, $dependentBundle);
             $this->buildIndirectIncomingDependencies($dependentBundle, $indirectIncomingDependencies);
         }
     }
