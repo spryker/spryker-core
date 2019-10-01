@@ -28,6 +28,7 @@ use Codeception\Actor;
 class SalesMerchantConnectorBusinessTester extends Actor
 {
     use _generated\SalesMerchantConnectorBusinessTesterActions;
+
    /**
     * Define custom actions here
     */
