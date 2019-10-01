@@ -42,7 +42,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Returns the total stock amount of the concrete product for all its available stock types.
+     *  - Returns the total stock amount of the concrete product for all its available stock types.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -55,6 +56,7 @@ interface StockFacadeInterface
     /**
      * Specification:
      *  - Returns the total stock amount of the concrete product for all its available stock types and store.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -167,7 +169,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *  - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -189,7 +192,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by givent id product
+     *  - Returns stock product by given id product.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *

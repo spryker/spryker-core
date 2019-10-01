@@ -17,6 +17,7 @@ use Spryker\Zed\Stock\StockDependencyProvider;
 /**
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
  * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {
@@ -40,7 +41,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createStockProductTransferMapper(),
             $this->getConfig(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 

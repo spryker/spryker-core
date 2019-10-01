@@ -9,6 +9,7 @@
         <property name="joinImage" type="bool" />
         <property name="joinProduct" type="bool" />
         <property name="joinOption" type="bool" />
+        <property name="useOnlyActiveStock" type="bool" />
         <property name="updatedFrom" type="string" />
         <property name="updatedTo" type="string" />
         <property name="idLocale" type="int" />

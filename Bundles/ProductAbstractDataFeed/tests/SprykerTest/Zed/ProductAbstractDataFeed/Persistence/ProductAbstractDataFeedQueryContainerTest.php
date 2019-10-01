@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 
 /**
@@ -229,10 +228,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
      */
     protected function createProductDataFeedQueryContainer()
     {
-        $productQueryContainer = new ProductQueryContainer();
-        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer($productQueryContainer);
-
-        return $productDataFeedQueryContainer;
+        return new ProductAbstractDataFeedQueryContainer();
     }
 
     /**
@@ -355,6 +351,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
         return [
             'spy_product',
             'spy_product_localized_attributes',
+            'spy_stock',
             'spy_stock_product',
         ];
     }

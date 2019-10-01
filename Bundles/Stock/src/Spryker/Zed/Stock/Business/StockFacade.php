@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Stock\Business\StockBusinessFactory getFactory()
+ * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
  */
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
@@ -281,7 +282,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getStoreToWarehouseMapping()
     {
         return $this->getFactory()
-            ->getConfig()
+            ->createReaderModel()
             ->getStoreToWarehouseMapping();
     }
 }
