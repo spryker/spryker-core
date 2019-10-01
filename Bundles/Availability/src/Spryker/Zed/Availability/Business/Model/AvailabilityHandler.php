@@ -285,13 +285,13 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      *
      * @return void
      */
-    protected function updateAbstractAvailabilityQuantity($idAvailabilityAbstract, StoreTransfer $storeTransfer)
+    protected function updateAbstractAvailabilityQuantity(int $idAvailabilityAbstract, StoreTransfer $storeTransfer): void
     {
         $availabilityAbstractEntity = $this->queryContainer
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();
 
-        /** @var int|null $sumQuantity */
+        /** @var string|null $sumQuantity */
         $sumQuantity = $this->queryContainer
             ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOne();

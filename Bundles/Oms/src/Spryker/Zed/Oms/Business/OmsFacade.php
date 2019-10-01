@@ -318,7 +318,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
     public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
