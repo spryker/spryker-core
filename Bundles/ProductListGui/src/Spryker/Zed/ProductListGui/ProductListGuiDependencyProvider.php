@@ -11,6 +11,10 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductListGui\Communication\Plugin\ProductListGui\ProductListCategoryRelationProductListAggregateFormDataProviderExpanderPlugin;
+use Spryker\Zed\ProductListGui\Communication\Plugin\ProductListGui\ProductListCategoryRelationProductListAggregateFormExpanderPlugin;
+use Spryker\Zed\ProductListGui\Communication\Plugin\ProductListGui\ProductListProductConcreteRelationProductListAggregateFormDataProviderExpanderPlugin;
+use Spryker\Zed\ProductListGui\Communication\Plugin\ProductListGui\ProductListProductConcreteRelationProductListAggregateFormExpanderPlugin;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToCategoryFacadeBridge;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductFacadeBridge;
@@ -38,6 +42,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
 
+    public const PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_EXPANDER = 'PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_EXPANDER';
+    public const PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_DATA_PROVIDER_EXPANDER = 'PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_DATA_PROVIDER_EXPANDER';
+
     public const PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER = 'PLUGINS_PRODUCT_LIST_FORM_EXPANDER';
 
     /**
@@ -64,6 +71,8 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductListTableQueryCriteriaExpanderPlugins($container);
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
+        $container = $this->addProductListAggregateFormExpanderPlugins($container);
+        $container = $this->addProductListAggregateFormDataProviderExpanderPlugins($container);
         $container = $this->addProductListOwnerTypeFormExpanderPlugins($container);
 
         return $container;
@@ -244,6 +253,34 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addProductListAggregateFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_EXPANDER, function (): array {
+            return $this->getProductListAggregateFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListAggregateFormDataProviderExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_DATA_PROVIDER_EXPANDER, function (): array {
+            return $this->getProductListAggregateFormDataProviderExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductListOwnerTypeFormExpanderPlugins(Container $container): Container
     {
         $container[static::PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER] = function () {
@@ -299,5 +336,27 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getProductListTableHeaderExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormExpanderPluginInterface[]
+     */
+    protected function getProductListAggregateFormExpanderPlugins(): array
+    {
+        return [
+            new ProductListCategoryRelationProductListAggregateFormExpanderPlugin(),
+            new ProductListProductConcreteRelationProductListAggregateFormExpanderPlugin(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormDataProviderExpanderPluginInterface[]
+     */
+    protected function getProductListAggregateFormDataProviderExpanderPlugins(): array
+    {
+        return [
+            new ProductListCategoryRelationProductListAggregateFormDataProviderExpanderPlugin(),
+            new ProductListProductConcreteRelationProductListAggregateFormDataProviderExpanderPlugin(),
+        ];
     }
 }
