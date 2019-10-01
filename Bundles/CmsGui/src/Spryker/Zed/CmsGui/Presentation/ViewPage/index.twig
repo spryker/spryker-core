@@ -19,7 +19,9 @@
         {{ viewActionButton(url('/cms-gui/version-page/history', {'id-cms-page': cmsPage.fkPage , 'redirect-url' : redirectUrl }), 'Version History' | trans) }}
     {% endif %}
     {{ editActionButton(url('/cms-gui/edit-page', { 'id-cms-page': cmsPage.fkPage }), 'Edit page' | trans) }}
-    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
+        {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': cmsPage.fkPage}), 'Edit placeholders' | trans) }}
+    {% endif %}
     {{ include ('@CmsGui/_template/activate-button.twig', { 'isActive': cmsPage.isActive, 'idCmsPage': cmsPage.fkPage }) }}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}

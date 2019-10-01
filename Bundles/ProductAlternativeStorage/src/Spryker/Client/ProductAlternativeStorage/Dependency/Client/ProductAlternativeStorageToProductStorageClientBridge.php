@@ -58,4 +58,15 @@ class ProductAlternativeStorageToProductStorageClientBridge implements ProductAl
     {
         return $this->productStorageClient->findProductConcreteViewTransfer($idProductConcrete, $localeName, $selectedAttributes);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName(array $productAbstractIds, string $localeName): array
+    {
+        return $this->productStorageClient->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
 }

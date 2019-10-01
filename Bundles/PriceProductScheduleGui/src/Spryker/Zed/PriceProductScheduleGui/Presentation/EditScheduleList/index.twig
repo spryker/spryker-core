@@ -1,0 +1,67 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Scheduled Prices' | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'General information' | trans} %}
+
+        {% block widget_content %}
+            {{ form_start(form, {method: 'POST'}) }}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Import n' | trans }}</b></span><br>
+                    <span>{{ priceProductScheduleList.idPriceProductScheduleList }}</span>
+                </div>
+            </div>
+            {{ form_row(form.name) }}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Imported by on the' | trans }}</b></span><br>
+                    {% if(priceProductScheduleList.user) %}
+                        <span>{{ priceProductScheduleList.user.firstName ~ ' ' ~ priceProductScheduleList.user.lastName }}</span>
+                    {% else %}
+                        <span>{{ 'Via data import' | trans }}</span>
+                    {% endif %}
+                    <span>{{ priceProductScheduleList.createdAt }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Number of prices' | trans }}</b></span><br>
+                    <span>{{ priceProductScheduleList.metadata.numberOfPrices }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Number of products' | trans }}</b></span><br>
+                    <span>{{ priceProductScheduleList.metadata.numberOfProducts }}</span>
+                </div>
+            </div><br>
+            {{ form_row(form.submit) }}
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Scheduled prices inside import' | trans} %}
+
+        {% block widget_content %}
+            {{ priceProductScheduleTable | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

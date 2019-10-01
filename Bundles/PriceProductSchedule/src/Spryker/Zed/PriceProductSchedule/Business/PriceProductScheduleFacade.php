@@ -165,6 +165,21 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array
+    {
+        return $this->getRepository()
+            ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleResponseTransfer
@@ -234,5 +249,21 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
     {
         return $this->getRepository()->isPriceProductScheduleUnique($priceProductScheduleTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleListRemover()
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
     }
 }
