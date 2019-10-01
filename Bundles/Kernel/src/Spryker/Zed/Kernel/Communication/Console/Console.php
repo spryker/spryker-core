@@ -31,10 +31,10 @@ use Symfony\Component\Console\Terminal;
  */
 class Console extends SymfonyCommand
 {
+    use RepositoryResolverAwareTrait;
+
     public const CODE_SUCCESS = 0;
     public const CODE_ERROR = 1;
-
-    use RepositoryResolverAwareTrait;
 
     /**
      * @var \Symfony\Component\Console\Input\InputInterface
