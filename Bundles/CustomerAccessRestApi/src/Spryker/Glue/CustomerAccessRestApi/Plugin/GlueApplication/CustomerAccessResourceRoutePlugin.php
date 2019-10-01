@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CustomerAccessResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for customer-access resource.
      *
      * @api
@@ -34,7 +34,7 @@ class CustomerAccessResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,7 +46,7 @@ class CustomerAccessResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -58,7 +58,7 @@ class CustomerAccessResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

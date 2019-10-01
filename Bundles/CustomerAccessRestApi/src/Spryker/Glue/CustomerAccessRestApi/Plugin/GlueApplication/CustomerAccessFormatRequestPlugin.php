@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerAccessFormatRequestPlugin extends AbstractPlugin implements FormatRequestPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if the current accessed resource is restricted by the `spryker/customer-access` module.
      * - Uses mapping defined in the `CustomerAccessRestApiConfig::getCustomerAccessContentTypeToResourceTypeMapping()`.
      * - If the resource is protected, the request attribute `is_protected` is set to `true`.
