@@ -24,12 +24,8 @@ use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
-use Spryker\Client\QuoteApproval\StepAccessChecker\AddressStepAccessChecker;
-use Spryker\Client\QuoteApproval\StepAccessChecker\AddressStepAccessCheckerInterface;
-use Spryker\Client\QuoteApproval\StepAccessChecker\PaymentStepAccessChecker;
-use Spryker\Client\QuoteApproval\StepAccessChecker\PaymentStepAccessCheckerInterface;
-use Spryker\Client\QuoteApproval\StepAccessChecker\ShipmentStepAccessChecker;
-use Spryker\Client\QuoteApproval\StepAccessChecker\ShipmentStepAccessCheckerInterface;
+use Spryker\Client\QuoteApproval\StepAccessChecker\QuoteApprovalStepAccessChecker;
+use Spryker\Client\QuoteApproval\StepAccessChecker\QuoteApprovalStepAccessCheckerInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
@@ -113,33 +109,11 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\AddressStepAccessCheckerInterface
+     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\QuoteApprovalStepAccessCheckerInterface
      */
-    public function createAddressStepAccessChecker(): AddressStepAccessCheckerInterface
+    public function createQuoteApprovalStepAccessChecker(): QuoteApprovalStepAccessCheckerInterface
     {
-        return new AddressStepAccessChecker(
-            $this->createQuoteStatusChecker(),
-            $this->getQuoteClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\PaymentStepAccessCheckerInterface
-     */
-    public function createPaymentStepAccessChecker(): PaymentStepAccessCheckerInterface
-    {
-        return new PaymentStepAccessChecker(
-            $this->createQuoteStatusChecker(),
-            $this->getQuoteClient()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\ShipmentStepAccessCheckerInterface
-     */
-    public function createShipmentStepAccessChecker(): ShipmentStepAccessCheckerInterface
-    {
-        return new ShipmentStepAccessChecker(
+        return new QuoteApprovalStepAccessChecker(
             $this->createQuoteStatusChecker(),
             $this->getQuoteClient()
         );

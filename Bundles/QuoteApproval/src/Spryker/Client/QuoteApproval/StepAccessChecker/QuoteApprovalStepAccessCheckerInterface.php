@@ -9,12 +9,12 @@ namespace Spryker\Client\QuoteApproval\StepAccessChecker;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface PaymentStepAccessCheckerInterface
+interface QuoteApprovalStepAccessCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool;
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 }

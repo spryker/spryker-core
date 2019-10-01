@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
 
-class AddressStepAccessChecker implements AddressStepAccessCheckerInterface
+class QuoteApprovalStepAccessChecker implements QuoteApprovalStepAccessCheckerInterface
 {
     /**
      * @var \Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface
@@ -38,7 +38,7 @@ class AddressStepAccessChecker implements AddressStepAccessCheckerInterface
      *
      * @return bool
      */
-    public function checkAddressStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
     {
         return $quoteTransfer->getQuoteApprovals()->count()
             && $this->quoteClient->isQuoteLocked($quoteTransfer)

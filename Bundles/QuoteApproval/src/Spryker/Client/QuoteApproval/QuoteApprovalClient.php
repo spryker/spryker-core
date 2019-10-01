@@ -278,42 +278,10 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return bool
      */
-    public function checkAddressStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createAddressStepAccessChecker()
-            ->checkAddressStepAccessibility($quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function checkShipmentStepAccessibility(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->getFactory()
-            ->createShipmentStepAccessChecker()
-            ->checkShipmentStepAccessibility($quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function checkPaymentStepAccessibility(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->getFactory()
-            ->createPaymentStepAccessChecker()
-            ->checkPaymentStepAccessibility($quoteTransfer);
+            ->createQuoteApprovalStepAccessChecker()
+            ->checkCheckoutStepAccessibility($quoteTransfer);
     }
 }
