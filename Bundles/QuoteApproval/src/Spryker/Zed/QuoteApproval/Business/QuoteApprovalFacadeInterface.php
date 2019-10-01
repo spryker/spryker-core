@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
@@ -130,18 +131,20 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Returns false if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
-     * - Returns false if executing of PlaceOrderPermissionPlugin permission returns true.
-     * - Returns false if quote approval status is `approved`.
-     * - Returns true otherwise.
+     * - Returns response with boolean isSuccess and an array of errors
+     * - Returns isSuccess false if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
+     * - Returns isSuccess false if executing of PlaceOrderPermissionPlugin permission returns true.
+     * - Returns isSuccess false if quote approval status is `approved`.
+     * - Returns isSuccess true otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
      */
-    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 
     /**
      * Specification:

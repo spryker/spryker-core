@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -16,6 +18,9 @@ use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissi
 class QuoteStatusChecker implements QuoteStatusCheckerInterface
 {
     use PermissionAwareTrait;
+
+    protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+    protected const GLOSSARY_KEY_CART_WAITING_APPROVAL = 'quote_approval.cart.waiting_approval';
 
     /**
      * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
@@ -41,18 +46,36 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
      */
-    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
         if ($quoteStatus === QuoteApprovalConfig::STATUS_WAITING) {
-            return true;
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_WAITING_APPROVAL);
+
+            return false;
         }
 
+        if ($this->isQuoteApprovalRequired($quoteTransfer, $quoteStatus)) {
+            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL);
+        }
+
+        return $checkoutResponseTransfer->getIsSuccess();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string|null $quoteStatus
+     *
+     * @return bool
+     */
+    protected function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer, ?string $quoteStatus): bool
+    {
         $idCompanyUser = $quoteTransfer->requireCustomer()
             ->getCustomer()
             ->requireCompanyUserTransfer()
@@ -65,5 +88,20 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
         }
 
         return $quoteStatus !== QuoteApprovalConfig::STATUS_APPROVED;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function addCheckoutError(CheckoutResponseTransfer $checkoutResponseTransfer, string $message): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer->setIsSuccess(false)
+            ->addError((new CheckoutErrorTransfer())
+            ->setMessage($message));
+
+        return $checkoutResponseTransfer;
     }
 }

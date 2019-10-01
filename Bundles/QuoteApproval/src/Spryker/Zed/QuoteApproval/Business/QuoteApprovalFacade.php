@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\QuoteApproval\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
@@ -146,14 +147,15 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
      * @return bool
      */
-    public function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteStatusChecker()
-            ->isQuoteApprovalRequired($quoteTransfer);
+            ->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
     }
 
     /**
