@@ -51,7 +51,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 class ProductLabelByConcreteProductSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds product-labels resource as relationship by concreteProductSku.
      *
      * @api
@@ -36,7 +36,7 @@ class ProductLabelByConcreteProductSkuResourceRelationshipPlugin extends Abstrac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

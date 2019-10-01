@@ -34,7 +34,9 @@ class CustomersRestApiHelper extends Module
     protected $customerProvider;
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     *
+     * @return void
      */
     public function _initialize(): void
     {

@@ -34,7 +34,9 @@ class CompanyUserAuthRestApiHelper extends Module
     protected $companyUserProvider;
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
+     *
+     * @return void
      */
     public function _initialize(): void
     {
@@ -91,7 +93,7 @@ class CompanyUserAuthRestApiHelper extends Module
      *
      * @param string $idCompanyUser
      *
-     * @return array
+     * @return array|null
      */
     public function haveAuthorizationToGlueAsCompanyUser(string $idCompanyUser): ?array
     {
