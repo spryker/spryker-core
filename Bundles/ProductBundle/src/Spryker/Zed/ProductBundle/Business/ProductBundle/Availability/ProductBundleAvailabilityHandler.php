@@ -207,8 +207,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     {
         $bundleAvailabilityQuantity = new Decimal(0);
         foreach ($bundleItems as $bundleItemEntity) {
-            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
-                ->getSku();
+            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
 
             $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku(
                 $bundledItemSku,
@@ -277,7 +276,10 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return new Decimal(0);
         }
 
-        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->divide($bundleItemEntity->getQuantity(), static::DIVISION_SCALE);
+        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))
+            ->divide($bundleItemEntity->getQuantity(), static::DIVISION_SCALE)
+            ->floor();
+
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }
