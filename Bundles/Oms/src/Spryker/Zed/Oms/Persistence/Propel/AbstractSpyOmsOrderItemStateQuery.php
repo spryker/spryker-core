@@ -20,4 +20,4 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemStateQuery as BaseSpyOmsOrderIte
  */
 abstract class AbstractSpyOmsOrderItemStateQuery extends BaseSpyOmsOrderItemStateQuery
 {
-} // SpyOmsOrderItemStateQuery
+}

@@ -31,6 +31,8 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class OrderStateMachine implements OrderStateMachineInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     public const BY_ITEM = 'byItem';
     public const BY_ORDER = 'byOrder';
     public const MAX_EVENT_REPEATS = 10;
@@ -38,8 +40,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @deprecated Not in use anymore, will be removed in the next major.
      */
     public const MAX_ON_ENTER = 50;
-
-    use DatabaseTransactionHandlerTrait;
 
     /**
      * @var array
