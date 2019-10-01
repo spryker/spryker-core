@@ -162,17 +162,15 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\AddressesTransfer|null
+     * @return \Generated\Shared\Transfer\AddressesTransfer
      */
     public function addressesAction(CustomerTransfer $customerTransfer)
     {
         $addressesTransfer = $this->getFacade()
             ->getAddresses($customerTransfer);
 
-        if ($addressesTransfer === null) {
+        if ($addressesTransfer->getAddresses()->count() === 0) {
             $this->setSuccess(false);
-
-            return null;
         }
 
         return $addressesTransfer;

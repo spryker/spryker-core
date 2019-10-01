@@ -226,7 +226,7 @@ class MethodTable extends AbstractTable
     {
         $prices = [];
         foreach ($moneyTransferCollection as $moneyTransfer) {
-            $prices[] = $this->formatPrice($moneyTransfer->getAmount(), $moneyTransfer->getCurrency());
+            $prices[] = $this->formatPrice((int)$moneyTransfer->getAmount(), $moneyTransfer->getCurrency());
         }
 
         return implode(' ', $prices);
@@ -283,7 +283,7 @@ class MethodTable extends AbstractTable
                 continue;
             }
             $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
-                ->setAmount($methodPriceEntity->getDefaultNetPrice())
+                ->setAmount((string)$methodPriceEntity->getDefaultNetPrice())
                 ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
         }
 

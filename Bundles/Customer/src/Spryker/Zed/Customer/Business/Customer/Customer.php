@@ -161,12 +161,10 @@ class Customer implements CustomerInterface
     protected function attachAddresses(CustomerTransfer $customerTransfer, SpyCustomer $customerEntity)
     {
         $addresses = $customerEntity->getAddresses();
-        if ($addresses) {
-            $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
-            $customerTransfer->setAddresses($addressesTransfer);
+        $addressesTransfer = $this->entityCollectionToTransferCollection($addresses, $customerEntity);
+        $customerTransfer->setAddresses($addressesTransfer);
 
-            $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
-        }
+        $customerTransfer = $this->attachAddressesTransfer($customerTransfer, $addressesTransfer);
 
         return $customerTransfer;
     }
@@ -821,7 +819,7 @@ class Customer implements CustomerInterface
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference)
     {

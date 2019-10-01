@@ -81,7 +81,7 @@ class Dispatcher implements DispatcherInterface
     {
         $resource = $apiRequestTransfer->getResource();
         $method = $apiRequestTransfer->getResourceAction();
-        $id = $apiRequestTransfer->getResourceId();
+        $id = $apiRequestTransfer->getResourceId() ? (string)$apiRequestTransfer->getResourceId() : null;
         $params = $apiRequestTransfer->getResourceParameters();
 
         $apiResponseTransfer = new ApiResponseTransfer();

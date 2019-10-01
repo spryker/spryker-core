@@ -72,10 +72,6 @@ class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
     protected function renderCmsTwigContent(string $translation, string $identifier, array $context): string
     {
         $twigRenderedPlugin = $this->getFactory()->getCmsBlockTwigContentRendererPlugin();
-        if (!$twigRenderedPlugin) {
-            return $translation;
-        }
-
         $renderedTwigContent = $twigRenderedPlugin->render([$identifier => $translation], $context);
 
         return $renderedTwigContent[$identifier];
