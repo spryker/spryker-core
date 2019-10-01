@@ -18,6 +18,8 @@ class WebProfilerRouterDataCollectorPlugin implements WebProfilerDataCollectorPl
     protected const TEMPLATE = '@WebProfiler/Collector/router.html.twig';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -28,6 +30,8 @@ class WebProfilerRouterDataCollectorPlugin implements WebProfilerDataCollectorPl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -38,6 +42,9 @@ class WebProfilerRouterDataCollectorPlugin implements WebProfilerDataCollectorPl
     }
 
     /**
+     * {@inheritDoc}
+     * - Adds a RouterDataCollector which collects information from the router.
+     *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container

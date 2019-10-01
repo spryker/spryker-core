@@ -18,6 +18,8 @@ class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorP
     protected const TEMPLATE = '@WebProfiler/Collector/request.html.twig';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -28,6 +30,8 @@ class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -38,6 +42,9 @@ class WebProfilerRequestDataCollectorPlugin implements WebProfilerDataCollectorP
     }
 
     /**
+     * {@inheritDoc}
+     * - Adds a RequestDataCollector which collects information about the current request.
+     *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container

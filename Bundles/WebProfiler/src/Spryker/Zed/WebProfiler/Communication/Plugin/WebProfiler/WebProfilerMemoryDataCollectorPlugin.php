@@ -18,6 +18,8 @@ class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPl
     protected const TEMPLATE = '@WebProfiler/Collector/memory.html.twig';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -28,6 +30,8 @@ class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -38,6 +42,9 @@ class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPl
     }
 
     /**
+     * {@inheritDoc}
+     * - Adds a MemoryDataCollector which collects data about consumed memory.
+     *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container

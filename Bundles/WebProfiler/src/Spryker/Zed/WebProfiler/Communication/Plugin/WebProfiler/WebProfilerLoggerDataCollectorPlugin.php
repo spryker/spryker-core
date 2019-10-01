@@ -44,7 +44,7 @@ class WebProfilerLoggerDataCollectorPlugin implements WebProfilerDataCollectorPl
 
     /**
      * {@inheritDoc}
-     * - Adds a LoggerDataCollector.
+     * - Adds a LoggerDataCollector which collects information from logs.
      *
      * @api
      *

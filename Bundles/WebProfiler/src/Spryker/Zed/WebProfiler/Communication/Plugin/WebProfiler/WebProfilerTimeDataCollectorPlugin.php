@@ -44,7 +44,7 @@ class WebProfilerTimeDataCollectorPlugin implements WebProfilerDataCollectorPlug
 
     /**
      * {@inheritDoc}
-     * - Adds a TimeDataCollector.
+     * - Adds a TimeDataCollector which collects information about timings.
      *
      * @api
      *

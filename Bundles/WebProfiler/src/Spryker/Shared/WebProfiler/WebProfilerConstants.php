@@ -28,7 +28,7 @@ interface WebProfilerConstants
      *
      * @api
      */
-    public const IS_WEB_PROFILER_ENABLED = 'WEB_PROFILER_ZED:IS_WEB_PROFILER_ENABLED';
+    public const IS_WEB_PROFILER_ENABLED = 'WEB_PROFILER:IS_WEB_PROFILER_ENABLED';
 
     /**
      * Specification:
@@ -36,5 +36,5 @@ interface WebProfilerConstants
      *
      * @api
      */
-    public const PROFILER_CACHE_DIRECTORY = 'WEB_PROFILER_ZED:PROFILER_CACHE_DIRECTORY';
+    public const PROFILER_CACHE_DIRECTORY = 'WEBPROFILER:PROFILER_CACHE_DIRECTORY';
 }

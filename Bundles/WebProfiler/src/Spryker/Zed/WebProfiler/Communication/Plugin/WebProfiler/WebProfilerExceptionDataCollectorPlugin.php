@@ -18,6 +18,8 @@ class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollecto
     protected const TEMPLATE = '@WebProfiler/Collector/exception.html.twig';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -28,6 +30,8 @@ class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollecto
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -38,6 +42,9 @@ class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollecto
     }
 
     /**
+     * {@inheritDoc}
+     * - Adds an ExceptionDataCollector which collects information about exceptions.
+     *
      * @api
      *
      * @param \Spryker\Service\Container\ContainerInterface $container

@@ -11,6 +11,11 @@ use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\WebProfiler\WebProfilerDependencyProvider;
+use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage;
+use Symfony\Component\HttpKernel\Profiler\Profiler;
+use Symfony\Component\HttpKernel\Profiler\ProfilerStorageInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
+use Twig\Profiler\Profile;
 
 /**
  * @method \Spryker\Zed\WebProfiler\WebProfilerConfig getConfig()
@@ -39,5 +44,37 @@ class WebProfilerCommunicationFactory extends AbstractCommunicationFactory
     public function getDataCollectorPlugins(): array
     {
         return $this->getProvidedDependency(WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS);
+    }
+
+    /**
+     * @return \Symfony\Component\Stopwatch\Stopwatch
+     */
+    public function createStopwatch(): Stopwatch
+    {
+        return new Stopwatch();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Profiler\Profiler
+     */
+    public function createProfiler(): Profiler
+    {
+        return new Profiler($this->createProfilerStorage());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Profiler\ProfilerStorageInterface
+     */
+    public function createProfilerStorage(): ProfilerStorageInterface
+    {
+        return new FileProfilerStorage('file:' . $this->getConfig()->getProfilerCacheDirectory());
+    }
+
+    /**
+     * @return \Twig\Profiler\Profile
+     */
+    public function createProfile(): Profile
+    {
+        return new Profile();
     }
 }

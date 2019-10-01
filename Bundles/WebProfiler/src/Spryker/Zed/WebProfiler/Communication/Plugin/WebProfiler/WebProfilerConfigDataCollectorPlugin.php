@@ -43,7 +43,7 @@ class WebProfilerConfigDataCollectorPlugin implements WebProfilerDataCollectorPl
 
     /**
      * {@inheritDoc}
-     * - Adds a ConfigDataCollector.
+     * - Adds a ConfigDataCollector which collects data about the used configuration in the request.
      *
      * @api
      *

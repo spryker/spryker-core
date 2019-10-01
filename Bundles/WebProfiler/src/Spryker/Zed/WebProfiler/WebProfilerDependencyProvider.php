@@ -30,9 +30,9 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addDataCollectorPlugins($container);
 
-        $container[static::PLUGINS_WEB_PROFILER] = function () {
+        $container->set(static::PLUGINS_WEB_PROFILER, function () {
             return $this->getWebProfilerPlugins();
-        };
+        });
 
         return $container;
     }
@@ -44,9 +44,9 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataCollectorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_DATA_COLLECTORS] = function () {
+        $container->set(static::PLUGINS_DATA_COLLECTORS, function () {
             return $this->getDataCollectorPlugins();
-        };
+        });
 
         return $container;
     }

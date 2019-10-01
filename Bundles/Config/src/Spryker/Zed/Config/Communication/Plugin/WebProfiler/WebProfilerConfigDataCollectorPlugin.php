@@ -21,10 +21,10 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
  */
 class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements WebProfilerDataCollectorPluginInterface, DataCollectorInterface
 {
-    public const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
+    protected const SPRYKER_CONFIG_PROFILER = 'spryker_config_profiler';
 
     /**
-     * @var array|null
+     * @var array
      */
     protected $data;
 
@@ -54,7 +54,7 @@ class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements Web
 
     /**
      * {@inheritDoc}
-     * - Adds a ConfigDataCollector.
+     * - Adds a ConfigDataCollector which returns all used configurations during a request.
      *
      * @api
      *
@@ -96,12 +96,14 @@ class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements Web
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
      */
     public function reset(): void
     {
-        $this->data = null;
+        $this->data = [];
     }
 }

@@ -48,7 +48,7 @@ class WebProfilerAjaxDataCollectorPlugin extends AbstractPlugin implements WebPr
 
     /**
      * {@inheritDoc}
-     * - Adds an AjaxDataCollector.
+     * - Adds an AjaxDataCollector which collects information about asynchronous requests.
      *
      * @api
      *
