@@ -175,7 +175,6 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         string $localeName,
         ?string $storeName = null
     ): void {
-
         if (empty($cmsPageEntity->getSpyCmsVersions())) {
             return;
         }

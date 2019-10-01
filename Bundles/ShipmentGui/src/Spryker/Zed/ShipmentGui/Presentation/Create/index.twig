@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ backActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'Back to Order' | trans) }}
+{% endblock %}
+
+{% block section_title %}
+    {{ 'New Shipment for Order: %idSalesOrder%' | trans({'%idSalesOrder%': idSalesOrder}) }}
+{% endblock %}
+
+{% block content %}
+    {% include '@ShipmentGui/Create/_partials/shipment-form-block.twig' %}
+{% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-shipment-gui-main.js"></script>
+{% endblock %}

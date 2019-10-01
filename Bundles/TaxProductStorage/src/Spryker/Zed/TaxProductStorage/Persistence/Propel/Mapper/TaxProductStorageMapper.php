@@ -61,7 +61,6 @@ class TaxProductStorageMapper
         SpyProductAbstract $spyProductAbstract,
         TaxProductStorageTransfer $taxProductStorageTransfer
     ): TaxProductStorageTransfer {
-
         return $taxProductStorageTransfer
             ->setSku($spyProductAbstract->getSku())
             ->setIdProductAbstract($spyProductAbstract->getIdProductAbstract())

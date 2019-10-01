@@ -24,6 +24,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     public const EVENT_TRANSFERS = 'eventTransfers';
     public const EVENT_MESSAGES = 'eventMessages';
     public const RETRY_KEY = 'retry';
+
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -38,6 +39,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      * @var \Spryker\Zed\Event\EventConfig
      */
     protected $eventConfig;
+
+    /**
+     * @var int|null
+     */
+    protected $maxRetry;
 
     /**
      * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
@@ -139,7 +145,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
                 $this->logConsumerAction($errorMessage, $throwable);
                 if (!$this->eventConfig->isLoggerActivated()) {
-                    $errorMessage = '';
+                    $errorMessage = 'Please enable the event logger in the config_* files to see the error message: `$config[EventConstants::LOGGER_ACTIVE] = true;`';
                 }
                 $this->handleFailedMessages($eventItem, $errorMessage);
             }
@@ -175,7 +181,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);
 
-        if ($queueMessageBody[static::RETRY_KEY] < $this->eventConfig->getMaxRetryAmount()) {
+        if ($this->maxRetry === null) {
+            $this->maxRetry = $this->eventConfig->getMaxRetryAmount();
+        }
+
+        if ($queueMessageBody[static::RETRY_KEY] < $this->maxRetry) {
             $queueMessageBody[static::RETRY_KEY]++;
             $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
             $this->markMessageAsRetry($queueMessageTransfer, $retryMessage);

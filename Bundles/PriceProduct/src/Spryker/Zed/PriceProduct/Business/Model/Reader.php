@@ -554,12 +554,43 @@ class Reader implements ReaderInterface
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $sku => $pricesBySku) {
             $resolvedItemPrice = $this->priceProductService->resolveProductPriceByPriceProductCriteria($pricesBySku, $priceProductCriteriaTransfersBySku[$sku]);
-            if ($resolvedItemPrice) {
+
+            if ($this->isPriceProductHasValidMoneyValue($resolvedItemPrice, $priceProductFilterTransfers)) {
                 $resolvedPriceProductTransfers[] = $resolvedItemPrice;
             }
         }
 
         return $resolvedPriceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer|null $priceProductTransfer
+     * @param array $priceProductFilterTransfers
+     *
+     * @return bool
+     */
+    protected function isPriceProductHasValidMoneyValue(
+        ?PriceProductTransfer $priceProductTransfer,
+        array $priceProductFilterTransfers
+    ): bool {
+        if ($priceProductTransfer === null) {
+            return false;
+        }
+
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            if ($priceProductFilterTransfer->getPriceMode() === $this->config->getPriceModeIdentifierForNetType()) {
+                if ($priceProductTransfer->getMoneyValue()->getNetAmount() === null) {
+                    return false;
+                }
+                continue;
+            }
+
+            if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

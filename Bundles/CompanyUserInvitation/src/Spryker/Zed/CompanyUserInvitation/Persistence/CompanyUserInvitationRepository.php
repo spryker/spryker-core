@@ -146,7 +146,6 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
         SpyCompanyUserInvitationQuery $queryCompanyUserInvitation,
         CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
     ): SpyCompanyUserInvitationQuery {
-
         if ($companyUserInvitationCriteriaFilterTransfer->getFkCompany()) {
             $queryCompanyUserInvitation->useSpyCompanyUserQuery()->filterByFkCompany(
                 $companyUserInvitationCriteriaFilterTransfer->getFkCompany(),

@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine

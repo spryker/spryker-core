@@ -19,6 +19,7 @@ use Spryker\Zed\Search\SearchConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

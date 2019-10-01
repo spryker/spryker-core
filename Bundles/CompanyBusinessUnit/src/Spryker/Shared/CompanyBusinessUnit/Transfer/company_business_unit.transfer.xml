@@ -84,6 +84,6 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="idCustomer" type="int" />
+        <property name="idCustomer" type="int"/>
     </transfer>
 </transfers>

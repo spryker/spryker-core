@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductListSearch

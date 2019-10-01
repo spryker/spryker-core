@@ -18,6 +18,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternat
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DocumentationGeneratorRestApi

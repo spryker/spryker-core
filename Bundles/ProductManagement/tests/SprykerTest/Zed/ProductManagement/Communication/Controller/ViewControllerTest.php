@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement

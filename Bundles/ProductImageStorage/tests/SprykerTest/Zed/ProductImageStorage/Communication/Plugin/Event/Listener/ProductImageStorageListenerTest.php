@@ -48,6 +48,7 @@ use SprykerTest\Zed\ProductImageStorage\ProductImageStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductImageStorage

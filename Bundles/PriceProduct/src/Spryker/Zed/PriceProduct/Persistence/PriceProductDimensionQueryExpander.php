@@ -39,7 +39,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductStoreQuery {
-
         if ($priceProductCriteriaTransfer->getPriceDimension()) {
             $this->runSinglePlugin($priceProductStoreQuery, $priceProductCriteriaTransfer);
 
@@ -135,7 +134,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): void {
-
         foreach ($this->priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
             $this->runPlugin($priceProductStoreQuery, $priceProductCriteriaTransfer, $priceDimensionQueryCriteriaPlugin);
         }
@@ -151,7 +149,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): void {
-
         $priceDimensionQueryCriteriaPlugin = $this->findPriceDimensionCriteriaPluginByName(
             $priceProductCriteriaTransfer->getPriceDimension()->getType()
         );
@@ -204,7 +201,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         QueryCriteriaTransfer $queryCriteriaTransfer,
         $joinType = null
     ): void {
-
         foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
             if ($queryJoinTransfer->getRelation()) {
                 $joinDirection = $joinType ?? $queryJoinTransfer->getJoinType();

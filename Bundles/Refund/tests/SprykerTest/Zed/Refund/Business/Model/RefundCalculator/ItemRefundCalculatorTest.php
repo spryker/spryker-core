@@ -12,6 +12,7 @@ use Spryker\Zed\Refund\Business\Model\RefundCalculator\ItemRefundCalculator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund

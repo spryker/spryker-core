@@ -108,9 +108,9 @@ interface ProductAttributeFacadeInterface
      *   [66] => [key3=>value3, key5=value5]
      * ]
      *
-     * @see ProductAttributeConfig::DEFAULT_LOCALE
-     *
      * @api
+     *
+     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param int $idProduct
      * @param array $attributes
@@ -130,9 +130,9 @@ interface ProductAttributeFacadeInterface
      *   [66] => [key3=>value3, key5=value5]
      * ]
      *
-     * @see ProductAttributeConfig::DEFAULT_LOCALE
-     *
      * @api
+     *
+     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param array $attributes
      *
@@ -151,9 +151,9 @@ interface ProductAttributeFacadeInterface
      *   [66] => [key3=>value3, key5=value5]
      * ]
      *
-     * @see ProductAttributeConfig::DEFAULT_LOCALE
-     *
      * @api
+     *
+     * @see ProductAttributeConfig::DEFAULT_LOCALE
      *
      * @param array $attributes
      *

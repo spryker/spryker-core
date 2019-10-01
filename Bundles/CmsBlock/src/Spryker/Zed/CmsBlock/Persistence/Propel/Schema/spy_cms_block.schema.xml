@@ -36,7 +36,7 @@
 
     <table name="spy_cms_block" phpName="SpyCmsBlock">
         <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_template" type="INTEGER" required="false" />
+        <column name="fk_template" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>

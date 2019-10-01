@@ -13,6 +13,7 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales

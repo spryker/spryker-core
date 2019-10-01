@@ -12,6 +12,7 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchant
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProductMerchantRelationship

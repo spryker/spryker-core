@@ -197,7 +197,6 @@ class CompanyUnitAddress implements CompanyUnitAddressInterface
     protected function executeSaveCompanyUnitAddressTransaction(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
     ): CompanyUnitAddressResponseTransfer {
-
         $idCountry = $this->retrieveIdCountry($companyUnitAddressTransfer);
         $companyUnitAddressTransfer->setFkCountry($idCountry);
         $isDefaultBilling = $companyUnitAddressTransfer->getIsDefaultBilling();

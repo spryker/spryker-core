@@ -63,7 +63,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

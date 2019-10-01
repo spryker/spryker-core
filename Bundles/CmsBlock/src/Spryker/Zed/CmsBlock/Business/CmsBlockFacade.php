@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +85,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -101,7 +101,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +117,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -133,7 +133,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -152,7 +152,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -169,7 +169,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -185,7 +185,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @api
      *

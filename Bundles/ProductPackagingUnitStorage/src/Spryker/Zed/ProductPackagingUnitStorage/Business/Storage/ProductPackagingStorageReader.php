@@ -249,7 +249,6 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
         ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
         SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntityTransfer
     ): void {
-
         $productConcretePackagingStorageTransfer
             ->setDefaultAmount($productPackagingUnitAmountEntityTransfer->getDefaultAmount())
             ->setIsVariable($productPackagingUnitAmountEntityTransfer->getIsVariable());

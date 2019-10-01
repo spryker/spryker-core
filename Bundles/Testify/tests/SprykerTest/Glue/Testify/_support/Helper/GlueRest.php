@@ -32,7 +32,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     protected $lastConnection;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _initialize(): void
     {
@@ -40,7 +40,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getLastConnection(): ?Connection
     {
@@ -395,7 +395,41 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @part json
+     *
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function seeSingleResourceHasAttribute(string $attribute): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath(
+            sprintf(
+                '$.data.attributes.%s',
+                $attribute
+            )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function seeResourceCollectionHasAttribute(string $attribute): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath(
+            sprintf(
+                '$.data[*].attributes.%s',
+                $attribute
+            )
+        );
+    }
+
+    /**
+     * @inheritDoc
      */
     protected function resetVariables(): void
     {
@@ -403,7 +437,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function execute($method, $url, $parameters = [], $files = [])
     {

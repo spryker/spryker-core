@@ -18,7 +18,7 @@ use Twig\Environment;
 class TranslatorTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `TranslatorExtension`.
      *
      * @api

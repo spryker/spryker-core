@@ -11,6 +11,7 @@ use Elastica\Query\BoolQuery;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

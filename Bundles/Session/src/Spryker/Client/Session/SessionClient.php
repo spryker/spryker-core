@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class SessionClient extends AbstractClient implements SessionClientInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface|null
      */
     protected static $container = null;
 

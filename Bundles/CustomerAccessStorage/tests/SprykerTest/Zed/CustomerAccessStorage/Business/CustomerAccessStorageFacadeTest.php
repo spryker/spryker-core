@@ -17,6 +17,7 @@ use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersisten
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerAccessStorage

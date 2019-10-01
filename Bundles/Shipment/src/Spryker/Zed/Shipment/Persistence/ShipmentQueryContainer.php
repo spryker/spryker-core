@@ -57,6 +57,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @deprecated Not used anymore and obsolete.
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
      */
     public function queryActiveCarriers()
@@ -77,6 +79,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethods()
@@ -86,6 +90,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodById() instead.
      *
      * @param int $idMethod
      *
@@ -145,6 +151,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethodsWithMethodPricesAndCarrier()
@@ -171,6 +179,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findTaxSetByShipmentMethodAndCountryIso2Code() instead.
      *
      * @param int $idShipmentMethod
      * @param string $countryIso2Code
@@ -201,6 +211,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentTransfersByOrder() instead.
+     *
      * @param int $idSalesOrder
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
@@ -209,6 +221,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     {
         return $this->getFactory()
             ->createSalesShipmentQuery()
+            ->leftJoinWithSpySalesOrderItem()
             ->filterByFkSalesOrder($idSalesOrder);
     }
 
@@ -235,6 +248,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
     /**
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodByIdWithPricesAndCarrier() instead.
      *
      * @param int $idShipmentMethod
      *

@@ -20,7 +20,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class CartItemsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -66,7 +66,6 @@ class CompanyUnitAddressGuiToCompanyUnitAddressFacadeBridge implements CompanyUn
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer {
-
         return $this->companyUnitAddressFacade->getCompanyUnitAddressCollection($criteriaFilterTransfer);
     }
 

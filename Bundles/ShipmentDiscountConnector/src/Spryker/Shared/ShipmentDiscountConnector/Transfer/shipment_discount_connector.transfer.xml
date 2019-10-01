@@ -8,21 +8,25 @@
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
-        <property name="originalItem" type="Item" />
+        <property name="originalItem" type="Item"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
-        <property name="priceMode" type="string" />
+        <property name="priceMode" type="string"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
     </transfer>
 
     <transfer name="Clause">
-        <property name="field" type="string" />
-        <property name="attribute" type="string" />
-        <property name="operator" type="string" />
-        <property name="value" type="string" />
-        <property name="acceptedTypes" type="array" />
+        <property name="field" type="string"/>
+        <property name="attribute" type="string"/>
+        <property name="operator" type="string"/>
+        <property name="value" type="string"/>
+        <property name="acceptedTypes" type="array"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
 
 </transfers>

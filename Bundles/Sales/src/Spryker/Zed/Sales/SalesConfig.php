@@ -68,12 +68,11 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function isTestOrder(QuoteTransfer $quoteTransfer)
     {
-        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
-        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== self::TEST_CUSTOMER_FIRST_NAME) {
-            return false;
+        if (!$this->hasItemLevelShipment($quoteTransfer)) {
+            return $this->isTestOrderWithoutMultiShippingAddress($quoteTransfer);
         }
 
-        return true;
+        return $this->isTestOrderWithMultiShippingAddress($quoteTransfer);
     }
 
     /**
@@ -106,5 +105,59 @@ class SalesConfig extends AbstractBundleConfig
     public function getSalesDetailExternalBlocksUrls()
     {
         return [];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function hasItemLevelShipment(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isTestOrderWithoutMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
+    {
+        $shippingAddressTransfer = $quoteTransfer->getShippingAddress();
+        if ($shippingAddressTransfer === null || $shippingAddressTransfer->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isTestOrderWithMultiShippingAddress(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $shipmentTransfer = $itemTransfer->getShipment();
+
+            if ($shipmentTransfer === null
+                || $shipmentTransfer->getShippingAddress() === null
+                || $shipmentTransfer->getShippingAddress()->getFirstName() !== static::TEST_CUSTOMER_FIRST_NAME
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

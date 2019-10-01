@@ -14,6 +14,7 @@ use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax

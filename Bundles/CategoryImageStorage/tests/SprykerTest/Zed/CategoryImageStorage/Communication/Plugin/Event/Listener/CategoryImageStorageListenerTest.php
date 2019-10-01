@@ -26,6 +26,7 @@ use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Listener\Categor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryImageStorage
@@ -54,7 +55,7 @@ class CategoryImageStorageListenerTest extends Unit
     protected $categoryImageSetTransfer;
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
     public function setUp()
     {
@@ -70,8 +71,6 @@ class CategoryImageStorageListenerTest extends Unit
     }
 
     /**
-     * @void
-     *
      * @return void
      */
     public function testCategoryImagePublishStorageListenerStoreData(): void

@@ -53,6 +53,12 @@ class AddressQuoteMapper implements AddressQuoteMapperInterface
                 $restCheckoutRequestAttributesTransfer->getShippingAddress(),
                 $restCheckoutRequestAttributesTransfer->getCustomer()
             );
+
+            $quoteTransfer = $this->setItemLevelShippingAddresses($quoteTransfer, $shippingAddress);
+
+            /**
+             * @deprecated Exists for Backward Compatibility reasons only.
+             */
             $quoteTransfer->setShippingAddress($shippingAddress);
         }
 
@@ -102,5 +108,24 @@ class AddressQuoteMapper implements AddressQuoteMapperInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setItemLevelShippingAddresses(QuoteTransfer $quoteTransfer, AddressTransfer $addressTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment() === null) {
+                continue;
+            }
+
+            $itemTransfer->getShipment()->setShippingAddress($addressTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }
