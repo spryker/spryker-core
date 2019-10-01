@@ -16,6 +16,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class SearchElasticsearchClient extends AbstractClient implements SearchElasticsearchClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
@@ -30,6 +32,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string|null $indexName
@@ -43,6 +47,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string|null $indexName
@@ -56,6 +62,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $key
@@ -70,6 +78,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string|null $indexName
@@ -83,6 +93,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $searchDocumentTransfers

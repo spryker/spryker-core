@@ -21,6 +21,10 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class IsActiveQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *

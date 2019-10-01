@@ -57,6 +57,10 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()

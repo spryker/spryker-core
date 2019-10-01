@@ -27,6 +27,8 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
     public const SEARCH_WILDCARD = '.*';
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery

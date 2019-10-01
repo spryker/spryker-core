@@ -32,6 +32,11 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
     }
 
     /**
+     * {@inheritdoc}
+     * - Adds category sorting.
+     *
+     * @api
+     *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *

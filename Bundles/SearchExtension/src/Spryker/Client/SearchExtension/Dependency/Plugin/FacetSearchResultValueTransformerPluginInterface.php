@@ -10,6 +10,9 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 interface FacetSearchResultValueTransformerPluginInterface
 {
     /**
+     * Specification:
+     * - Transforms a value for display.
+     *
      * @api
      *
      * @param mixed $value
@@ -19,6 +22,9 @@ interface FacetSearchResultValueTransformerPluginInterface
     public function transformForDisplay($value);
 
     /**
+     * Specification:
+     * - Transforms a value from display.
+     *
      * @api
      *
      * @param mixed $value

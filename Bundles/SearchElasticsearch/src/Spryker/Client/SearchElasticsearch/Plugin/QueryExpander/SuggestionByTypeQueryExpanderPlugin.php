@@ -24,6 +24,8 @@ class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements Quer
     public const SIZE = 10;
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
