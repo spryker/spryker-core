@@ -57,16 +57,14 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
         $searchKey = $this->generateKey($cmsBlockOptions[static::OPTION_KEY_CATEGORY], CmsBlockCategoryStorageConstants::CMS_BLOCK_CATEGORY_RESOURCE_NAME);
 
         $blocks = $this->storageClient->get($searchKey);
-        $cmsBlockTransfers = [];
 
         foreach ($blocks[static::KEY_CMS_BLOCK_CATEGORIES] as $blockData) {
             if ($position && $blockData[static::OPTION_KEY_POSITION] === $position) {
-                $cmsBlockTransfers = $this->mapBlockKeysArrayToCmsBlockTransfers($blockData[static::KEY_BLOCK_KEYS]);
-                break;
+                return $this->mapBlockKeysArrayToCmsBlockTransfers($blockData[static::KEY_BLOCK_KEYS]);
             }
         }
 
-        return $cmsBlockTransfers;
+        return [];
     }
 
     /**
