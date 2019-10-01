@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

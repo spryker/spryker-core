@@ -17,7 +17,7 @@ use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPlugin
 class ProductAlternativeLabelUpdaterPlugin extends AbstractPlugin implements ProductLabelRelationUpdaterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

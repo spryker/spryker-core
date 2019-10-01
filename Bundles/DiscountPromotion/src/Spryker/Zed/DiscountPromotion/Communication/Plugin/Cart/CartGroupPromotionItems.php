@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

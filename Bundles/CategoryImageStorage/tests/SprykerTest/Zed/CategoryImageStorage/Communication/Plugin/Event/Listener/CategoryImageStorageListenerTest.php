@@ -55,7 +55,7 @@ class CategoryImageStorageListenerTest extends Unit
     protected $categoryImageSetTransfer;
 
     /**
-     * {@inheritdoc}
+     * @return void
      */
     public function setUp()
     {
@@ -71,8 +71,6 @@ class CategoryImageStorageListenerTest extends Unit
     }
 
     /**
-     * @void
-     *
      * @return void
      */
     public function testCategoryImagePublishStorageListenerStoreData(): void

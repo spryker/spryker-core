@@ -3,16 +3,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="Quote">
-        <property name="totals" dataBuilderRule="randomNumber(5)" />
-    </transfer>
-
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10" />
+        <property name="sku" dataBuilderRule="isbn10"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="iso2Code" dataBuilderRule="=DE" />
+        <property name="iso2Code" dataBuilderRule="=DE"/>
     </transfer>
 
 </transfers>

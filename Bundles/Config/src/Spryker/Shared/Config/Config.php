@@ -136,6 +136,10 @@ class Config
      */
     public static function hasKey($key)
     {
+        if (static::$config === null) {
+            return false;
+        }
+
         return array_key_exists($key, static::$config);
     }
 

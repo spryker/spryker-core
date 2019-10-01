@@ -17,9 +17,9 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
  */
 class BarcodeServiceHelper extends Module
 {
-    protected const GENERATED_CODE = 'generated string';
-
     use LocatorHelperTrait;
+
+    protected const GENERATED_CODE = 'generated string';
 
     /**
      * @return \Spryker\Service\Barcode\BarcodeServiceInterface

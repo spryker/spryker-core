@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Configures actions for `company-user-access-tokens` resource.
      *
      * @api
@@ -33,7 +33,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductDiscontinuedProductLabelConnectorInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

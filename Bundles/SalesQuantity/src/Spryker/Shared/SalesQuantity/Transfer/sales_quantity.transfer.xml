@@ -4,11 +4,11 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductConcrete">
-        <property name="isQuantitySplittable" type="bool" />
+        <property name="isQuantitySplittable" type="bool"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="isQuantitySplittable" type="bool" />
+        <property name="isQuantitySplittable" type="bool"/>
     </transfer>
 
 </transfers>

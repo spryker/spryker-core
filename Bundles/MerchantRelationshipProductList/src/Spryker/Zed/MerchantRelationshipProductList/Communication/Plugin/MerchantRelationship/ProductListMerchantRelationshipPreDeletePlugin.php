@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelation
 class ProductListMerchantRelationshipPreDeletePlugin extends AbstractPlugin implements MerchantRelationshipPreDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Finds product lists by merchant relationship.
      * - Does nothing if the relationships are not found.
      * - Removes found product lists.

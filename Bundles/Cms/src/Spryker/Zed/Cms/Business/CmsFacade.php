@@ -298,7 +298,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -314,7 +314,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -330,7 +330,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -348,7 +348,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -364,7 +364,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -380,7 +380,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -396,7 +396,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -412,7 +412,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -428,7 +428,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -444,7 +444,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -460,7 +460,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -479,7 +479,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -495,7 +495,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -511,7 +511,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -530,7 +530,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -547,7 +547,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -566,7 +566,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -582,7 +582,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -598,7 +598,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -614,7 +614,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
