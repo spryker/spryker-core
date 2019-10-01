@@ -34,6 +34,6 @@
     </transfer>
 
     <transfer name="CmsSlotExternalData">
-        <property name="values" type="string[]" associative="true" />
+        <property name="values" type="string[]" associative="true"/>
     </transfer>
 </transfers>
