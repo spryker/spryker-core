@@ -518,7 +518,7 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetWishlistByFilterShouldReturnWishlist(): void
+    public function testGetWishlistByFilterShouldReturnWishlistByName(): void
     {
         //Arrange
         $wishlistTransfer = $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
@@ -531,7 +531,7 @@ class WishlistFacadeTest extends Test
 
         $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setUuid($wishlistTransfer->getUuid());
+            ->setName($wishlistTransfer->getName());
 
         //Act
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByFilter($wishlistFilterTransfer);
@@ -549,12 +549,12 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetWishlistByFilterShouldReturnError(): void
+    public function testGetWishlistByFilterShouldReturnErrorInCaseWishlistIsNotFoundByName(): void
     {
         //Arrange
         $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setIdCustomer($this->customer->getIdCustomer())
-            ->setUuid('fake-uuid');
+            ->setName('fake-name');
 
         //Act
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByFilter($wishlistFilterTransfer);

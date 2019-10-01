@@ -165,7 +165,10 @@ interface WishlistClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - WishlistFilterTransfer.idCustomer is required.
      * - Retrieves wishlist by data provided in the WishlistFilterTransfer.
+     * - If WishlistFilterTransfer.name is set the wishlist will be looked up by name.
+     * - If WishlistFilterTransfer.uuid is set the wishlist will be looked up by uuid.
      *
      * @api
      *
