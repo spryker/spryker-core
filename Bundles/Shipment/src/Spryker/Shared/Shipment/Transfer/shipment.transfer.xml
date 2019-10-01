@@ -9,6 +9,12 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="ShipmentCarrierRequest">
+        <property name="idCarrier" type="int" />
+        <property name="carrierName" type="string" />
+        <property name="excludedCarrierIds" type="array" />
+    </transfer>
+
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method"/>
         <property name="shipmentHash" type="string"/>
@@ -30,6 +36,7 @@
         <property name="prices" type="MoneyValue[]" singular="price"/>
         <property name="storeCurrencyPrice" type="int"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="Order">
@@ -150,6 +157,16 @@
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]"/>
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 
 </transfers>

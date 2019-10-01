@@ -10,6 +10,8 @@ namespace Spryker\Zed\Shipment\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -342,6 +344,45 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         return $this->getFactory()
             ->createShipmentOrderMapper()
             ->mapSalesOrderEntityToOrderTransfer($salesOrderEntity, new OrderTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer
+    {
+        $shipmentCarrierQuery = $this->getFactory()->createShipmentCarrierQuery();
+
+        if ($shipmentCarrierRequestTransfer->getIdCarrier() === null) {
+            $shipmentCarrierRequestTransfer->requireCarrierName();
+        }
+
+        if ($shipmentCarrierRequestTransfer->getCarrierName() === null) {
+            $shipmentCarrierRequestTransfer->requireIdCarrier();
+        }
+
+        if ($shipmentCarrierRequestTransfer->getIdCarrier() !== null) {
+            $shipmentCarrierQuery->filterByIdShipmentCarrier($shipmentCarrierRequestTransfer->getIdCarrier());
+        }
+
+        if ($shipmentCarrierRequestTransfer->getCarrierName() !== null) {
+            $shipmentCarrierQuery->filterByName($shipmentCarrierRequestTransfer->getCarrierName());
+        }
+
+        if ($shipmentCarrierRequestTransfer->getExcludedCarrierIds() !== []) {
+            $shipmentCarrierQuery->filterByIdShipmentCarrier($shipmentCarrierRequestTransfer->getExcludedCarrierIds(), Criteria::NOT_IN);
+        }
+
+        $shipmentCarrierEntity = $shipmentCarrierQuery->findOne();
+        if ($shipmentCarrierEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentCarrierMapper()
+            ->mapShipmentCarrierEntityToShipmentCarrierTransfer($shipmentCarrierEntity, new ShipmentCarrierTransfer());
     }
 
     /**

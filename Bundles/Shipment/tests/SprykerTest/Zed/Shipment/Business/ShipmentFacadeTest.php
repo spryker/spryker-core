@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
@@ -677,5 +679,49 @@ class ShipmentFacadeTest extends Test
             ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
 
         $this->assertTrue($isShipmentMethodUniqueForCarrier);
+    }
+
+    /**
+     * @return void
+     */
+    public function testShipmentCarrierByIdShouldReturnShipmentCarrier(): void
+    {
+        // Arrange
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+        $shipmentCarrierRequestTransfer = (new ShipmentCarrierRequestTransfer())
+            ->setIdCarrier($shipmentCarrierTransfer->getIdShipmentCarrier());
+
+        // Act
+        $shipmentCarrierTransfer = $this->tester
+            ->getShipmentFacade()
+            ->findShipmentCarrier($shipmentCarrierRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($shipmentCarrierTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindShipmentCarrierByNameAndExcludedCarrierIdsShouldReturnValidShipmentCarrier(): void
+    {
+        // Arrange
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+        $shipmentCarrierTransferWithDuplicatedName = $this->tester->haveShipmentCarrier([
+            ShipmentCarrierTransfer::NAME => $shipmentCarrierTransfer->getName(),
+        ]);
+
+        $shipmentCarrierRequestTransfer = (new ShipmentCarrierRequestTransfer())
+            ->setCarrierName($shipmentCarrierTransfer->getName())
+            ->setExcludedCarrierIds([$shipmentCarrierTransferWithDuplicatedName->getIdShipmentCarrier()]);
+
+        // Act
+        $foundShipmentCarrierTransfer = $this->tester
+            ->getShipmentFacade()
+            ->findShipmentCarrier($shipmentCarrierRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($foundShipmentCarrierTransfer);
+        $this->assertSame($foundShipmentCarrierTransfer->getIdShipmentCarrier(), $shipmentCarrierTransfer->getIdShipmentCarrier());
     }
 }

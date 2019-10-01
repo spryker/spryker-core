@@ -9,6 +9,8 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -76,6 +78,13 @@ interface ShipmentRepositoryInterface
      * @return \Generated\Shared\Transfer\OrderTransfer|null
      */
     public function findSalesOrderById(int $idSalesOrder): ?OrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer;
 
     /**
      * @param string $shipmentMethodName

@@ -228,6 +228,8 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $carrierName
      * @param int|null $idCarrier
      *

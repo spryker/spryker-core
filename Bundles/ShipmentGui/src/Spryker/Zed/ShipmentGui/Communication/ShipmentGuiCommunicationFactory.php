@@ -9,9 +9,12 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
+use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
@@ -33,6 +36,28 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getSalesFacade(),
             $this->getCustomerFacade(),
             $this->getShipmentFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider
+     */
+    public function createShipmentCarrierFormDataProvider(): ShipmentCarrierFormDataProvider
+    {
+        return new ShipmentCarrierFormDataProvider($this->getShipmentFacade());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createShipmentCarrierFormType(): FormInterface
+    {
+        $shipmentCarrierFormDataProvider = $this->createShipmentCarrierFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            ShipmentCarrierFormType::class,
+            $shipmentCarrierFormDataProvider->getData(),
+            $shipmentCarrierFormDataProvider->getOptions()
         );
     }
 
@@ -68,6 +93,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createStringToNumberTransformer(): DataTransformerInterface
     {
         return new StringToNumberTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper
+     */
+    public function createShipmentCarrierMapper(): ShipmentCarrierMapper
+    {
+        return new ShipmentCarrierMapper();
     }
 
     /**
