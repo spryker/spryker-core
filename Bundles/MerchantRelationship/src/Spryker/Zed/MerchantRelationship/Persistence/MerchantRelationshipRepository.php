@@ -145,6 +145,9 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]

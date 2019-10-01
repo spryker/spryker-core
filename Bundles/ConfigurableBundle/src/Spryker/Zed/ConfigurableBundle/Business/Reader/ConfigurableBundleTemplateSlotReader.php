@@ -19,6 +19,9 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
 {
     protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Configurable Bundle Template "%template%" ("%slot%" slot).';
 
+    protected const ERROR_MESSAGE_PARAM_TEMPLATE = '%template%';
+    protected const ERROR_MESSAGE_PARAM_SLOT = '%slot%';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface
      */
@@ -155,8 +158,8 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $productListResponseTransfer->addMessage(
             (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST)
                 ->setParameters([
-                    '%template%' => $templateName,
-                    '%slot%' => $slotName,
+                    static::ERROR_MESSAGE_PARAM_TEMPLATE => $templateName,
+                    static::ERROR_MESSAGE_PARAM_SLOT => $slotName,
                 ])
         );
 

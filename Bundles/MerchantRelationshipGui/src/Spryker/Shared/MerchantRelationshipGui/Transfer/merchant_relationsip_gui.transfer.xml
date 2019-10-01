@@ -19,8 +19,8 @@
     </transfer>
 
     <transfer name="ProductListUsedByTableRow">
-        <property name="entityTitle" type="string" />
-        <property name="entityName" type="string" />
+        <property name="title" type="string" />
+        <property name="name" type="string" />
         <property name="actionButtons" type="ButtonCollection" />
     </transfer>
 

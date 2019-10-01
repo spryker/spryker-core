@@ -41,11 +41,9 @@ class ProductListUsedByTableDataMapper implements ProductListUsedByTableDataMapp
     ): ProductListUsedByTableRowTransfer {
         $merchantRelationshipTransfer->requireName()->requireIdMerchantRelationship();
 
-        $productListUsedByTableRowTransfer->setEntityTitle(static::ENTITY_TITLE);
-        $productListUsedByTableRowTransfer->setEntityName($merchantRelationshipTransfer->getName());
-        $productListUsedByTableRowTransfer->setActionButtons(
-            $this->createActionButtons($merchantRelationshipTransfer)
-        );
+        $productListUsedByTableRowTransfer->setTitle(static::ENTITY_TITLE)
+            ->setName($merchantRelationshipTransfer->getName())
+            ->setActionButtons($this->createActionButtons($merchantRelationshipTransfer));
 
         return $productListUsedByTableRowTransfer;
     }

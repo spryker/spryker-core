@@ -42,8 +42,8 @@ class ProductListUsedByTableDataMapper implements ProductListUsedByTableDataMapp
         $configurableBundleTemplateSlotTransfer->requireTranslations();
         $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->requireTranslations();
 
-        $productListUsedByTableRowTransfer->setEntityTitle(static::ENTITY_TITLE);
-        $productListUsedByTableRowTransfer->setEntityName(
+        $productListUsedByTableRowTransfer->setTitle(static::ENTITY_TITLE);
+        $productListUsedByTableRowTransfer->setName(
             $this->createComposedEntityName($configurableBundleTemplateSlotTransfer)
         );
         $productListUsedByTableRowTransfer->setActionButtons(

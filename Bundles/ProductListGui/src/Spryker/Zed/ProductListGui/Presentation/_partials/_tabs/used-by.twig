@@ -9,8 +9,8 @@
     <tbody>
         {% for productListUsedByTableRow in productListUsedByTableData.rows %}
             <tr>
-                <td>{{ productListUsedByTableRow.entityTitle }}</td>
-                <td>{{ productListUsedByTableRow.entityName }}</td>
+                <td>{{ productListUsedByTableRow.title }}</td>
+                <td>{{ productListUsedByTableRow.name }}</td>
                 <td class="actions">
                     {% include '@ProductListGui/_partials/button-collection.twig' with {
                         buttonCollection: productListUsedByTableRow.actionButtons

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Expander;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\ButtonTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
 {
@@ -41,7 +42,7 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
     {
         return (new ButtonTransfer())
             ->setTitle(static::CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_TITLE)
-            ->setUrl(static::CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_URL)
+            ->setUrl(Url::generate(static::CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_URL))
             ->setDefaultOptions(static::CONFIGURABLE_BUNDLE_TEMPLATE_LIST_BUTTON_OPTIONS);
     }
 }

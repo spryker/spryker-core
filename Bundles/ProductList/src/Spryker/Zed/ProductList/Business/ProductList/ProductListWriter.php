@@ -19,7 +19,7 @@ class ProductListWriter implements ProductListWriterInterface
 {
     use TransactionTrait;
 
-    public const MESSAGE_PRODUCT_LIST_DELETE_SUCCESS = 'Product List has been successfully removed.';
+    protected const MESSAGE_PRODUCT_LIST_DELETE_SUCCESS = 'Product List has been successfully removed.';
 
     /**
      * @var \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface
@@ -120,8 +120,18 @@ class ProductListWriter implements ProductListWriterInterface
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
-            return $this->executeDeleteProductListTransaction($productListTransfer);
+        $productListResponseTransfer = (new ProductListResponseTransfer())
+            ->setProductList($productListTransfer)
+            ->setIsSuccessful(true);
+
+        $productListResponseTransfer = $this->executeProductListDeletePreCheckPlugins($productListResponseTransfer);
+
+        if (!$productListResponseTransfer->getIsSuccessful()) {
+            return $productListResponseTransfer;
+        }
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer, $productListResponseTransfer) {
+            return $this->executeDeleteProductListTransaction($productListTransfer, $productListResponseTransfer);
         });
     }
 
@@ -196,22 +206,14 @@ class ProductListWriter implements ProductListWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
     protected function executeDeleteProductListTransaction(
-        ProductListTransfer $productListTransfer
+        ProductListTransfer $productListTransfer,
+        ProductListResponseTransfer $productListResponseTransfer
     ): ProductListResponseTransfer {
-        $productListResponseTransfer = (new ProductListResponseTransfer())
-            ->setProductList($productListTransfer)
-            ->setIsSuccessful(true);
-
-        $productListResponseTransfer = $this->executeProductListDeletePreCheckPlugins($productListResponseTransfer);
-
-        if (!$productListResponseTransfer->getIsSuccessful()) {
-            return $productListResponseTransfer;
-        }
-
         $this->productListEntityManager->deleteProductListProductRelations($productListTransfer);
         $this->productListEntityManager->deleteProductListCategoryRelations($productListTransfer);
         $this->productListEntityManager->deleteProductList($productListTransfer);

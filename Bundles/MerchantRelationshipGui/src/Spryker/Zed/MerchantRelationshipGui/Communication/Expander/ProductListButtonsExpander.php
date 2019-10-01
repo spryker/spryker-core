@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipGui\Communication\Expander;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\ButtonTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 
 class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
 {
@@ -41,7 +42,7 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
     {
         return (new ButtonTransfer())
             ->setTitle(static::MERCHANT_RELATION_LIST_BUTTON_TITLE)
-            ->setUrl(static::MERCHANT_RELATION_LIST_BUTTON_URL)
+            ->setUrl(Url::generate(static::MERCHANT_RELATION_LIST_BUTTON_URL))
             ->setDefaultOptions(static::MERCHANT_RELATION_LIST_BUTTON_OPTIONS);
     }
 }
