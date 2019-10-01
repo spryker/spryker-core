@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfiguredBundleQuantityPerSlotPreReloadItemsPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Updates configured bundle quantity per slot for quote items.
      *
      * @api

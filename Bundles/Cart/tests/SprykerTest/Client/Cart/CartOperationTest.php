@@ -20,6 +20,7 @@ use Spryker\Client\Cart\Zed\CartStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Cart

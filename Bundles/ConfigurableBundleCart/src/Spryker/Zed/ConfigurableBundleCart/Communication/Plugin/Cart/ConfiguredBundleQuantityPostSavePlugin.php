@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfiguredBundleQuantityPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Updates configured bundle quantity for quote items.
      *
      * @api

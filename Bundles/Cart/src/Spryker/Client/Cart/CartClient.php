@@ -188,7 +188,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -202,7 +202,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -216,7 +216,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -106,7 +106,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

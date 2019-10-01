@@ -88,7 +88,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

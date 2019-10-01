@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ConfigurableBundleCartClient extends AbstractClient implements ConfigurableBundleCartClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ConfigurableBundleCartClient extends AbstractClient implements Configurabl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

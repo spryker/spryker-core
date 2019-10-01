@@ -24,7 +24,7 @@ class ConfiguredBundleQuantityTerminationPlugin extends AbstractPlugin implement
     ];
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Terminates add/remove product to the cart process if configured bundle quantity is not proportional to product quantity.
      *
      * @api
