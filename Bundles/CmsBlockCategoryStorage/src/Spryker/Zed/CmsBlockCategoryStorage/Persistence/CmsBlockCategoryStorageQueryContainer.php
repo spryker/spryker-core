@@ -60,7 +60,7 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
             ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME);
 
-        if (defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY')) {
+        if ($this->isCmsBlockKeyPropertyExists()) {
             $query->withColumn(SpyCmsBlockTableMap::COL_KEY, static::KEY);
         }
 
@@ -124,5 +124,15 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
             ->queryCmsBlockCategoryConnector()
             ->filterByFkCmsBlockCategoryPosition_In($idPositions)
             ->select([SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY]);
+    }
+
+    /**
+     * This is added for BC reason to support previous versions of CmsBlock module.
+     *
+     * @return bool
+     */
+    protected function isCmsBlockKeyPropertyExists(): bool
+    {
+        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }

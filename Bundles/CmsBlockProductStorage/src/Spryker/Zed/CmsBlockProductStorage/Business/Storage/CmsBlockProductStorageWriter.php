@@ -152,7 +152,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         foreach ($cmsBlockProductEntities as $cmsBlockProductEntity) {
             $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::NAMES][] = $cmsBlockProductEntity->getName();
 
-            if (!defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY')) {
+            if (!$this->isCmsBlockKeyPropertyExists()) {
                 continue;
             }
 
@@ -176,5 +176,15 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         }
 
         return $cmsBlockProductStorageEntitiesById;
+    }
+
+    /**
+     * This is added for BC reason to support previous versions of CmsBlock module.
+     *
+     * @return bool
+     */
+    protected function isCmsBlockKeyPropertyExists(): bool
+    {
+        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }

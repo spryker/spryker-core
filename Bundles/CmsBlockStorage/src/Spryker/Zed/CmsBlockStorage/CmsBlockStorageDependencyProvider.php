@@ -19,10 +19,6 @@ use Spryker\Zed\Kernel\Container;
 class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    /**
-     * @deprecated Use FACADE_EVENT_BEHAVIOR class constant instead.
-     */
-    public const FACADE_EVENT_BEHAVIOUR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
     public const STORE = 'store';

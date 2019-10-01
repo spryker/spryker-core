@@ -159,7 +159,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
             $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] = $cmsBlockCategoryEntity->getName();
 
-            if (!defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY')) {
+            if (!$this->isCmsBlockKeyPropertyExists()) {
                 continue;
             }
 
@@ -183,5 +183,15 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         }
 
         return $cmsBlockCategoryStorageEntitiesById;
+    }
+
+    /**
+     * This is added for BC reason to support previous versions of CmsBlock module.
+     *
+     * @return bool
+     */
+    protected function isCmsBlockKeyPropertyExists(): bool
+    {
+        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }
