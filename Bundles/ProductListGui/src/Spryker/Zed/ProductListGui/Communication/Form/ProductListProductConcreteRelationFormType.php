@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Form;
 
-use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -22,12 +21,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductListProductConcreteRelationFormType extends AbstractType
 {
     public const FIELD_ID_PRODUCT_LIST = ProductListProductConcreteRelationTransfer::ID_PRODUCT_LIST;
-    public const FIELD_ASSIGNED_PRODUCT_IDS = ProductListAggregateFormTransfer::ASSIGNED_PRODUCT_IDS;
-    public const FIELD_PRODUCT_IDS_TO_BE_ASSIGNED = ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_ASSIGNED;
-    public const FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED = ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_DE_ASSIGNED;
-    public const FIELD_FILE_UPLOAD = 'products_upload';
-
     public const PRODUCT_IDS = ProductListProductConcreteRelationTransfer::PRODUCT_IDS;
+    public const FIELD_FILE_UPLOAD = 'products_upload';
     public const BLOCK_PREFIX = 'productListProductConcreteRelationTransfer';
 
     /**

@@ -17,20 +17,20 @@ class ProductListAggregateFormDataProvider
     protected $productListFormDataProvider;
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormDataProviderExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListCategoryRelationFormDataProvider
      */
-    protected $productListAggregateFormDataProviderExpanderPlugins;
+    protected $productListCategoryRelationFormDataProvider;
 
     /**
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListFormDataProvider $productListFormDataProvider
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormDataProviderExpanderPluginInterface[] $productListAggregateFormDataProviderExpanderPlugins
+     * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider
      */
     public function __construct(
         ProductListFormDataProvider $productListFormDataProvider,
-        array $productListAggregateFormDataProviderExpanderPlugins
+        ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider
     ) {
         $this->productListFormDataProvider = $productListFormDataProvider;
-        $this->productListAggregateFormDataProviderExpanderPlugins = $productListAggregateFormDataProviderExpanderPlugins;
+        $this->productListCategoryRelationFormDataProvider = $productListCategoryRelationFormDataProvider;
     }
 
     /**
@@ -41,16 +41,22 @@ class ProductListAggregateFormDataProvider
     public function getData(?int $idProductList = null): ProductListAggregateFormTransfer
     {
         $assignedProductIds = [];
-        $productListAggregateFormTransfer = new ProductListAggregateFormTransfer();
-
         $productListTransfer = $this->productListFormDataProvider->getData($idProductList);
-        $productListAggregateFormTransfer->setProductList($productListTransfer);
+        $productListCategoryRelation = $this->productListCategoryRelationFormDataProvider->getData($productListTransfer->getIdProductList());
 
-        foreach ($this->productListAggregateFormDataProviderExpanderPlugins as $productListAggregateFormDataProviderExpanderPlugin) {
-            $productListAggregateFormTransfer = $productListAggregateFormDataProviderExpanderPlugin->expandData($productListAggregateFormTransfer);
+        $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
+        if ($productListProductConcreteRelationTransfer && $productListProductConcreteRelationTransfer->getProductIds()) {
+            foreach ($productListTransfer->getProductListProductConcreteRelation()->getProductIds() as $productId) {
+                $assignedProductIds[] = $productId;
+            }
         }
 
-        return $productListAggregateFormTransfer;
+        $aggregateFormTransfer = new ProductListAggregateFormTransfer();
+        $aggregateFormTransfer->setProductList($productListTransfer);
+        $aggregateFormTransfer->setProductListCategoryRelation($productListCategoryRelation);
+        $aggregateFormTransfer = $this->setAssignedProducts($aggregateFormTransfer, $assignedProductIds);
+
+        return $aggregateFormTransfer;
     }
 
     /**
@@ -58,12 +64,21 @@ class ProductListAggregateFormDataProvider
      */
     public function getOptions(): array
     {
-        $options = [];
+        return $this->productListCategoryRelationFormDataProvider->getOptions();
+    }
 
-        foreach ($this->productListAggregateFormDataProviderExpanderPlugins as $productListAggregateFormDataProviderExpanderPlugin) {
-            $options = $productListAggregateFormDataProviderExpanderPlugin->expandOptions($options);
-        }
+    /**
+     * @param \Generated\Shared\Transfer\ProductListAggregateFormTransfer $aggregateFormTransfer
+     * @param int[] $assignedProductIds
+     *
+     * @return \Generated\Shared\Transfer\ProductListAggregateFormTransfer
+     */
+    protected function setAssignedProducts(
+        ProductListAggregateFormTransfer $aggregateFormTransfer,
+        array $assignedProductIds
+    ): ProductListAggregateFormTransfer {
+        $aggregateFormTransfer->setAssignedProductIds(implode(',', $assignedProductIds));
 
-        return $options;
+        return $aggregateFormTransfer;
     }
 }
