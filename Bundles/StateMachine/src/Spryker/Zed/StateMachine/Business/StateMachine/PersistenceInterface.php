@@ -56,8 +56,7 @@ interface PersistenceInterface
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer
-    );
+    public function getProcessedStateMachineItemTransfer(StateMachineItemTransfer $stateMachineItemTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems

@@ -20,4 +20,4 @@ use Orm\Zed\Country\Persistence\Base\SpyRegionQuery as BaseSpyRegionQuery;
  */
 abstract class AbstractSpyRegionQuery extends BaseSpyRegionQuery
 {
-} // SpyRegionQuery
+}

@@ -20,4 +20,4 @@ use Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery as BaseSpyAclUserHasGro
  */
 abstract class AbstractSpyAclUserHasGroupQuery extends BaseSpyAclUserHasGroupQuery
 {
-} // SpyAclUserHasGroupQuery
+}
