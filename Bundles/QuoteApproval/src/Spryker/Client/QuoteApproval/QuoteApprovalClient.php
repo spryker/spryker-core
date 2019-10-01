@@ -145,6 +145,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return int|null
      */
