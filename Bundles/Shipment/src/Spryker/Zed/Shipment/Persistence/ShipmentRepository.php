@@ -355,6 +355,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $shipmentCarrierQuery = $this->getFactory()->createShipmentCarrierQuery();
 
+        if ($shipmentCarrierRequestTransfer->getIdCarrier() === null) {
+            $shipmentCarrierRequestTransfer->requireCarrierName();
+        }
+
+        if ($shipmentCarrierRequestTransfer->getCarrierName() === null) {
+            $shipmentCarrierRequestTransfer->requireIdCarrier();
+        }
+
         if ($shipmentCarrierRequestTransfer->getIdCarrier() !== null) {
             $shipmentCarrierQuery->filterByIdShipmentCarrier($shipmentCarrierRequestTransfer->getIdCarrier());
         }
