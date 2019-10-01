@@ -39,9 +39,9 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new CmsBlockStorageToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CmsBlockStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsBlockStorageBlocksFinderPlugins(Container $container): Container
     {
-        $container[self::PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER] = function () {
+        $container->set(static::PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER, function () {
             return $this->getCmsBlockStorageBlocksFinderPlugins();
-        };
+        });
 
         return $container;
     }
