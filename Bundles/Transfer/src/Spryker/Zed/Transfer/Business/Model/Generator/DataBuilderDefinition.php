@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use RuntimeException;
+
 class DataBuilderDefinition implements DataBuilderDefinitionInterface
 {
     /**
@@ -64,7 +66,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     {
         foreach ($properties as $property) {
             if (!isset($property['type'])) {
-                throw new \RuntimeException('Invalid databuilder config, missing key `type` for databuilder `' . $this->name . '`');
+                throw new RuntimeException('Invalid databuilder config, missing key `type` for databuilder `' . $this->name . '`');
             }
 
             // non arrays and non-basic types are dependencies

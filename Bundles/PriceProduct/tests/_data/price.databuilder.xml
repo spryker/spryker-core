@@ -5,24 +5,8 @@
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
 
-    <transfer name="PriceProduct">
-        <property name="idPriceProduct"/>
-        <property name="isActive"/>
-        <property name="priceTypeName"/>
-        <property name="idProduct"/>
-        <property name="skuProduct"/>
-        <property name="idProductAbstract"/>
-        <property name="skuProductAbstract"/>
-        <property name="fkPriceType"/>
-        <property name="priceType"/>
-        <property name="moneyValue"/>
-        <property name="priceDimension"/>
-    </transfer>
-
     <transfer name="PriceType">
-        <property name="idPriceType"/>
-        <property name="name" type="string" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
 </transfers>
-

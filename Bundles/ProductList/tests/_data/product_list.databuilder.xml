@@ -9,8 +9,6 @@
         <property name="type" dataBuilderRule="randomElement(['blacklist', 'whitelist'])"/>
         <property name="title" dataBuilderRule="unique()->sentence(1)"/>
         <property name="key" dataBuilderRule="word"/>
-        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
-        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
     </transfer>
 
 </transfers>

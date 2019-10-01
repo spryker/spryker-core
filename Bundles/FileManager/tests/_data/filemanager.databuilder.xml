@@ -6,7 +6,7 @@
 >
 
     <transfer name="File">
-        <property name="fileName" type="string" dataBuilderRule="=fileName"/>
+        <property name="fileName" dataBuilderRule="=fileName"/>
     </transfer>
 
     <transfer name="FileInfo">
@@ -23,4 +23,3 @@
     </transfer>
 
 </transfers>
-

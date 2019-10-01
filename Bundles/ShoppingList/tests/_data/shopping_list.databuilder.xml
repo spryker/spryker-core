@@ -6,11 +6,11 @@
 >
 
     <transfer name="ShoppingList">
-        <property name="name" type="string" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
     <transfer name="ShoppingListItem">
-        <property name="sku" type="string" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="sku" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>
 
 </transfers>

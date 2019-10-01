@@ -6,8 +6,8 @@
 >
 
     <transfer name="ProductQuantity">
-        <property name="quantityMin" type="int" dataBuilderRule="=1"/>
-        <property name="quantityInterval" type="int" dataBuilderRule="=1"/>
+        <property name="quantityMin" dataBuilderRule="=1"/>
+        <property name="quantityInterval" dataBuilderRule="=1"/>
     </transfer>
 
 </transfers>

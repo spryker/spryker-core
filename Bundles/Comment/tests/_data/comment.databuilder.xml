@@ -6,21 +6,21 @@
 >
 
     <transfer name="CommentRequest">
-        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)"/>
-        <property name="ownerType" type="string" dataBuilderRule="unique()->word"/>
+        <property name="ownerId" dataBuilderRule="numberBetween(100, 9999)"/>
+        <property name="ownerType" dataBuilderRule="unique()->word"/>
     </transfer>
 
     <transfer name="CommentFilter">
-        <property name="ownerId" type="int" dataBuilderRule="numberBetween(100, 9999)"/>
-        <property name="ownerType" type="string" dataBuilderRule="unique()->word"/>
+        <property name="ownerId" dataBuilderRule="numberBetween(100, 9999)"/>
+        <property name="ownerType" dataBuilderRule="unique()->word"/>
     </transfer>
 
     <transfer name="Comment">
-        <property name="message" type="string" dataBuilderRule="sentence(5)"/>
+        <property name="message" dataBuilderRule="sentence(5)"/>
     </transfer>
 
     <transfer name="CommentTag">
-        <property name="name" type="string" dataBuilderRule="unique()->word"/>
+        <property name="name" dataBuilderRule="unique()->word"/>
     </transfer>
 
 </transfers>

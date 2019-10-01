@@ -6,8 +6,7 @@
 >
 
     <transfer name="ProductPackagingUnitType">
-        <property name="name" type="string" dataBuilderRule="=packaging_unit_type.test.name"/>
+        <property name="name" dataBuilderRule="=packaging_unit_type.test.name"/>
     </transfer>
 
 </transfers>
-

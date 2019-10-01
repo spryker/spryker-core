@@ -15,16 +15,13 @@
                                 <xsd:element name="property" maxOccurs="unbounded" minOccurs="0">
                                     <xsd:complexType mixed="true">
                                         <xsd:attribute type="xsd:string" name="name" use="required"/>
-                                        <xsd:attribute type="xsd:string" name="type" use="optional"/>
-                                        <xsd:attribute type="xsd:string" name="dataBuilderRule" use="optional"/>
-                                        <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
+                                        <xsd:attribute type="xsd:string" name="dataBuilderRule" use="required"/>
                                     </xsd:complexType>
                                 </xsd:element>
                             </xsd:choice>
                         </xsd:sequence>
 
                         <xsd:attribute type="xsd:string" name="name" use="required"/>
-                        <xsd:attribute type="xsd:string" name="deprecated" use="optional"/>
 
                     </xsd:complexType>
                 </xsd:element>

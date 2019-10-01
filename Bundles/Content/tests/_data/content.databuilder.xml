@@ -6,20 +6,15 @@
 >
 
     <transfer name="Content">
-        <property name="idContent" type="int"/>
-        <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="description" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="contentTermKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="contentTypeKey" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent"/>
+        <property name="name" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="description" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="contentTermKey" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="contentTypeKey" dataBuilderRule="unique()->sentence(5)"/>
     </transfer>
 
     <transfer name="LocalizedContent">
-        <property name="idContentLocalized" type="int"/>
-        <property name="localeName" type="string" dataBuilderRule="unique()->sentence(5)"/>
-        <property name="fkLocale" type="int" dataBuilderRule="null"/>
-        <property name="fkContent" type="int"/>
-        <property name="parameters" type="string"/>
+        <property name="localeName" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="fkLocale" dataBuilderRule="null"/>
     </transfer>
 
 </transfers>

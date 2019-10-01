@@ -6,12 +6,11 @@
 >
 
     <transfer name="Url">
-        <property name="url" type="string" dataBuilderRule="url"/>
+        <property name="url" dataBuilderRule="url"/>
     </transfer>
 
     <transfer name="UrlRedirect">
-        <property name="toUrl" type="string" dataBuilderRule="url"/>
+        <property name="toUrl" dataBuilderRule="url"/>
     </transfer>
 
 </transfers>
-
