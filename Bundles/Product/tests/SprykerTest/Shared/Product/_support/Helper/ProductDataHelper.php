@@ -27,6 +27,7 @@ use SprykerTest\Shared\Tax\Helper\TaxSetDataHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
+use SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper;
 
 class ProductDataHelper extends Module
 {
@@ -40,9 +41,14 @@ class ProductDataHelper extends Module
     protected $taxSetDataHelper;
 
     /**
-     * @var \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
+     * @var \SprykerTest\Shared\Stock\Helper\StockDataHelper
      */
     protected $stockDataHelper;
+
+    /**
+     * @var \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
+     */
+    protected $productAttributeDataHelper;
 
     /**
      * @param array $productConcreteOverride
@@ -132,6 +138,7 @@ class ProductDataHelper extends Module
         $idProductAbstract = $productFacade->createProductAbstract($productAbstractTransfer);
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
         $this->assignTaxSetToProductAbstract($productAbstractTransfer);
+        $this->assignLocalizedAttributesToProductAbstract($productAbstractTransfer);
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $idProductAbstract], $productConcreteOverride)))
@@ -183,6 +190,16 @@ class ProductDataHelper extends Module
     }
 
     /**
+     * @return \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper|null
+     */
+    protected function findProductAttributeDataHelper(): ?ProductAttributeDataHelper
+    {
+        $this->productAttributeDataHelper = $this->productAttributeDataHelper ?: $this->findModule(ProductAttributeDataHelper::class);
+
+        return $this->productAttributeDataHelper;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return void
@@ -201,6 +218,23 @@ class ProductDataHelper extends Module
             ->taxProductConnector()
             ->facade()
             ->saveTaxSetToProductAbstract($productAbstractTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function assignLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
+    {
+        $productAttributeDataHelper = $this->findProductAttributeDataHelper();
+
+        if (!$productAttributeDataHelper) {
+            return;
+        }
+
+        $localizedAttributes = $productAttributeDataHelper->generateLocalizedAttributes();
+        $this->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributes);
     }
 
     /**
