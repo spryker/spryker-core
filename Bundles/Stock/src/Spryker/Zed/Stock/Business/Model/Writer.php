@@ -194,6 +194,7 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $stockProductEntity->decrement($decrementBy);
+        $stockProductEntity->save();
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
     }
 
@@ -228,6 +229,7 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $stockProductEntity->increment($incrementBy);
+        $stockProductEntity->save();
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
     }
 
