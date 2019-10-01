@@ -27,15 +27,17 @@ class ShipmentCarrierFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer|null $shipmentCarrierRequestTransfer
+     * @param int|null $idShipmentCarrier
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    public function getData(?ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer = null): ShipmentCarrierTransfer
+    public function getData(?int $idShipmentCarrier = null): ShipmentCarrierTransfer
     {
-        if ($shipmentCarrierRequestTransfer === null) {
+        if ($idShipmentCarrier === null) {
             return new ShipmentCarrierTransfer();
         }
+
+        $shipmentCarrierRequestTransfer = (new ShipmentCarrierRequestTransfer())->setIdCarrier($idShipmentCarrier);
 
         return $this->shipmentFacade->findShipmentCarrier($shipmentCarrierRequestTransfer) ?? new ShipmentCarrierTransfer();
     }
