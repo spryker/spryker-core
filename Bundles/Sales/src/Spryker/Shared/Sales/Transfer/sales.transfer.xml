@@ -106,6 +106,7 @@
         <property name="process" type="string"/>
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
+        <property name="unitPrice" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
         <property name="taxRate" type="float"/>
