@@ -3,3 +3,4 @@ parameters:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
         - '#Call to an undefined method .+Criteria::setFormatter\(\).#'
         - '#Method .+ProductOptionStorageQueryContainer::query.+\(\) should return .+SpyProductAbstractProductOptionGroupQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria.#'
+        - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string|null, int given.#'

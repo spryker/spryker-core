@@ -23,7 +23,7 @@ class CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener extends AbstractPl
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

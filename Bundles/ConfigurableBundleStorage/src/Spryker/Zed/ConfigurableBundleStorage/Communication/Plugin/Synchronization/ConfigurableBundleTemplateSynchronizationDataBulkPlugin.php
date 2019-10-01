@@ -23,7 +23,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
 class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -77,7 +77,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -101,7 +101,7 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

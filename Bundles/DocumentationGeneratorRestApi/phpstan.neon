@@ -4,4 +4,5 @@ parameters:
         - APPLICATION_ENV
         - APPLICATION_STORE
     ignoreErrors:
-    - '#Cannot assign offset mixed to string.#'
+        - '#Cannot assign offset mixed to string.#'
+        - '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, .+ given.#'

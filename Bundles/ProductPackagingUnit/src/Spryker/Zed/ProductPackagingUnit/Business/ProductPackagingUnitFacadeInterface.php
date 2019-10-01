@@ -97,7 +97,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
+     * - Retrieves the list of product concrete IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
@@ -105,7 +105,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
      * Specification:

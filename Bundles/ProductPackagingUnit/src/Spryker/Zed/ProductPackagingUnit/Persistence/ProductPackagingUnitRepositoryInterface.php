@@ -54,7 +54,7 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return int[]
      */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
+    public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 
     /**
      * @param int $idProductPackagingUnit

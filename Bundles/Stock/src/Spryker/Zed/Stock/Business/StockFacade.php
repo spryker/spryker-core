@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,7 +79,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -93,7 +93,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,7 +107,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,7 +121,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -153,7 +153,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +168,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -184,7 +184,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -200,7 +200,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -212,7 +212,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -228,7 +228,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -245,7 +245,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -259,7 +259,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -273,7 +273,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

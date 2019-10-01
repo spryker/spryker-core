@@ -42,7 +42,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     // ------------------------------------------------------------------------
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getIterator()
     {
@@ -50,7 +50,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function count()
     {
@@ -58,7 +58,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetExists($offset)
     {
@@ -66,7 +66,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetGet($offset)
     {
@@ -74,7 +74,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetSet($offset, $value)
     {
@@ -82,7 +82,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function offsetUnset($offset)
     {

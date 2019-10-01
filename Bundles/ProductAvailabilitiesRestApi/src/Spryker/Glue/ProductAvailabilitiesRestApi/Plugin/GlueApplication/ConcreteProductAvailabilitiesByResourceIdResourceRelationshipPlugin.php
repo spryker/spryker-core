@@ -18,7 +18,7 @@ use Spryker\Glue\ProductAvailabilitiesRestApi\ProductAvailabilitiesRestApiConfig
 class ConcreteProductAvailabilitiesByResourceIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds concrete-product-availabilities resource as a relationship by the resource id.
      * - Identifier of passed resources should contain concrete product sku.
      *
@@ -37,7 +37,7 @@ class ConcreteProductAvailabilitiesByResourceIdResourceRelationshipPlugin extend
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUnitAddressRepository extends AbstractRepository implements CompanyUnitAddressRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
@@ -48,7 +48,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @deprecated Use `getCompanyBusinessUnitAddressesByCriteriaFilter()` and `getCompanyBusinessUnitAddressToBusinessUnitRelations()` instead.
      *

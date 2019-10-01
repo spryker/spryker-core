@@ -20,10 +20,10 @@
     </transfer>
 
     <transfer name="RestCatalogSearchPagination">
-        <property name="numFound" type="int" />
-        <property name="currentPage" type="int" />
-        <property name="maxPage" type="int" />
-        <property name="currentItemsPerPage" type="int" />
+        <property name="numFound" type="int"/>
+        <property name="currentPage" type="int"/>
+        <property name="maxPage" type="int"/>
+        <property name="currentItemsPerPage" type="int"/>
     </transfer>
 
     <transfer name="RestCatalogSearchAbstractProducts">
@@ -40,23 +40,23 @@
     </transfer>
 
     <transfer name="RestRangeSearchResult">
-        <property name="name" type="string" />
-        <property name="localizedName" type="string" />
-        <property name="min" type="float" />
-        <property name="max" type="float" />
-        <property name="activeMin" type="float" />
-        <property name="activeMax" type="float" />
-        <property name="docCount" type="int" />
-        <property name="config" type="RestFacetConfig" />
+        <property name="name" type="string"/>
+        <property name="localizedName" type="string"/>
+        <property name="min" type="float"/>
+        <property name="max" type="float"/>
+        <property name="activeMin" type="float"/>
+        <property name="activeMax" type="float"/>
+        <property name="docCount" type="int"/>
+        <property name="config" type="RestFacetConfig"/>
     </transfer>
 
     <transfer name="RestFacetSearchResult">
-        <property name="name" type="string" />
-        <property name="localizedName" type="string" />
-        <property name="docCount" type="int" />
-        <property name="values" type="array" singular="value" />
-        <property name="activeValue" type="string" />
-        <property name="config" type="RestFacetConfig" />
+        <property name="name" type="string"/>
+        <property name="localizedName" type="string"/>
+        <property name="docCount" type="int"/>
+        <property name="values" type="array" singular="value"/>
+        <property name="activeValue" type="string"/>
+        <property name="config" type="RestFacetConfig"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
@@ -92,14 +92,14 @@
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" type="string" />
-        <property name="name" type="string" />
-        <property name="symbol" type="string" />
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="symbol" type="string"/>
     </transfer>
 
     <transfer name="RestFacetConfig">
-        <property name="parameterName" type="string" />
-        <property name="isMultiValued" type="bool" />
+        <property name="parameterName" type="string"/>
+        <property name="isMultiValued" type="bool"/>
     </transfer>
 
 </transfers>

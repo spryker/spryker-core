@@ -44,6 +44,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyCo
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\BehaviorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\CodeceptionDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ComposerDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ComposerScriptDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderComposite;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
@@ -396,6 +397,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createPersistenceDependencyFinder(),
             $this->createBehaviorDependencyFinder(),
             $this->createTwigDependencyFinder(),
+            $this->createComposerDependencyFinder(),
             $this->createTravisDependencyFinder(),
             $this->createComposerScriptDependencyFinder(),
             $this->createCodeceptionDependencyFinder(),
@@ -500,6 +502,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new TwigDependencyFinder(
             $this->getTwigDependencyFinder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
+     */
+    public function createComposerDependencyFinder(): DependencyFinderInterface
+    {
+        return new ComposerDependencyFinder();
     }
 
     /**

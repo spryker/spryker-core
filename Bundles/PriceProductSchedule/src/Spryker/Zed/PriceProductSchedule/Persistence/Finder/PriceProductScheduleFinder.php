@@ -141,6 +141,35 @@ class PriceProductScheduleFinder implements PriceProductScheduleFinderInterface
     }
 
     /**
+     * @module Store
+     * @module Currency
+     * @module PriceProduct
+     * @module Product
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array {
+        $priceProductScheduleEntityCollection = $this->priceProductScheduleQuery
+            ->leftJoinWithStore()
+            ->leftJoinWithCurrency()
+            ->leftJoinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByFkPriceProductScheduleList($idPriceProductScheduleList)
+            ->find()
+            ->getData();
+
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
+                $priceProductScheduleEntityCollection
+            );
+    }
+
+    /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
      *

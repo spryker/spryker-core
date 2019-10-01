@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
@@ -37,49 +36,26 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer|null
-     */
-    public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
-    {
-        $key = $this->productPackagingUnitStorageKeyGenerator->generateKey(
-            ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
-            $idProductAbstract
-        );
-
-        return $this->findProductAbstractPackagingStorageTransfer($key);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idProduct
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
      */
-    public function findProductConcretePackagingById(int $idProductAbstract, int $idProduct): ?ProductConcretePackagingStorageTransfer
+    public function findProductConcretePackagingById(int $idProductConcrete): ?ProductConcretePackagingStorageTransfer
     {
-        $productAbstractPackagingStorageTransfer = $this->findProductAbstractPackagingById($idProductAbstract);
+        $key = $this->productPackagingUnitStorageKeyGenerator->generateKey(
+            ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
+            $idProductConcrete
+        );
 
-        if (!$productAbstractPackagingStorageTransfer) {
-            return null;
-        }
-
-        foreach ($productAbstractPackagingStorageTransfer->getTypes() as $concretePackagingStorageTransfer) {
-            if ($concretePackagingStorageTransfer->getIdProduct() === $idProduct) {
-                return $concretePackagingStorageTransfer;
-            }
-        }
-
-        return null;
+        return $this->findProductConcretePackagingStorageTransfer($key);
     }
 
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
      */
-    protected function findProductAbstractPackagingStorageTransfer(string $key): ?ProductAbstractPackagingStorageTransfer
+    protected function findProductConcretePackagingStorageTransfer(string $key): ?ProductConcretePackagingStorageTransfer
     {
         $data = $this->storageClient->get($key);
 
@@ -87,9 +63,9 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
             return null;
         }
 
-        $productAbstractPackagingStorageTransfer = new ProductAbstractPackagingStorageTransfer();
-        $productAbstractPackagingStorageTransfer->fromArray($data, true);
+        $productConcretePackagingStorageTransfer = new ProductConcretePackagingStorageTransfer();
+        $productConcretePackagingStorageTransfer->fromArray($data, true);
 
-        return $productAbstractPackagingStorageTransfer;
+        return $productConcretePackagingStorageTransfer;
     }
 }

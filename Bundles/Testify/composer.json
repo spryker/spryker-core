@@ -19,6 +19,8 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/console": "*",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
     "spryker/twig": "^3.0.0"

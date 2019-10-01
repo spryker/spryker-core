@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ContentBannerClient extends AbstractClient implements ContentBannerClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

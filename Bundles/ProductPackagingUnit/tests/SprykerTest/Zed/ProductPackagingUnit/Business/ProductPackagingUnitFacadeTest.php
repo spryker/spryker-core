@@ -820,7 +820,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testFindProductAbstractIdsByProductPackagingUnitTypeIds(): void
+    public function testFindProductIdsByProductPackagingUnitTypeIds(): void
     {
         // Assign
         $itemProductConcreteTransfer = $this->tester->haveProduct();
@@ -841,7 +841,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ]);
 
         //Act
-        $productAbstractIds = $this->getFacade()->findProductAbstractIdsByProductPackagingUnitTypeIds([$boxProductPackagingUnitTypeEntityTransfer->getIdProductPackagingUnitType()]);
+        $productAbstractIds = $this->getFacade()->findProductIdsByProductPackagingUnitTypeIds([$boxProductPackagingUnitTypeEntityTransfer->getIdProductPackagingUnitType()]);
 
         //Assert
         $this->assertCount(1, $productAbstractIds);

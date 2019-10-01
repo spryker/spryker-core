@@ -54,7 +54,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
     {
         $productPackagingUnitTransfer = $this->findProductPackagingUnitBySku($sku);
 
-        if (!$productPackagingUnitTransfer || !$productPackagingUnitTransfer->getHasLeadProduct()) {
+        if (!$productPackagingUnitTransfer || !$productPackagingUnitTransfer->getLeadProduct()) {
             return;
         }
 

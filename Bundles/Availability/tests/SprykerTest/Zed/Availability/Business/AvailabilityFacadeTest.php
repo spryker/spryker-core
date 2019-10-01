@@ -51,7 +51,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['is_never_out_of_stock' => true]);
 
@@ -65,7 +65,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testIsProductSellableWhenStockIsEmptyShouldReturnFailure()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
@@ -79,7 +79,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testIsProductSellableWhenStockFulfilledShouldReturnSuccess()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 5]);
 
@@ -97,7 +97,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testCalculateStockForProductShouldReturnPersistedStock(Decimal $quantity)
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => $quantity->toString()]);
 
@@ -122,7 +122,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testCheckAvailabilityPrecoditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 5]);
 
@@ -140,7 +140,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testCheckAvailabilityPrecoditionShouldWriteErrorWhenAvailabilityIsNotSatisfied()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
@@ -158,7 +158,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testUpdateAvailabilityShouldStoreNewQuantity()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $stockProductEntity = $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 5]);
 
@@ -177,7 +177,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 50]);
 
@@ -195,7 +195,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $this->createProductWithStock(static::ABSTRACT_SKU, static::CONCRETE_SKU, ['quantity' => 0]);
 
@@ -236,7 +236,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
-    protected function createAvailabilityFacade()
+    protected function getAvailabilityFacade()
     {
         return $this->tester->getFacade();
     }

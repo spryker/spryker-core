@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class StoreClient extends AbstractClient implements StoreClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,9 +30,11 @@ class StoreClient extends AbstractClient implements StoreClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */

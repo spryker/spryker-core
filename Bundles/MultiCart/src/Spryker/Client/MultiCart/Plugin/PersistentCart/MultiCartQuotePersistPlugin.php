@@ -18,7 +18,7 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuotePersistPluginI
 class MultiCartQuotePersistPlugin extends AbstractPlugin implements QuotePersistPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Plugin executed to create new active customer cart.
      *
      * @api

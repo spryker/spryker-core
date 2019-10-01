@@ -69,7 +69,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPluginCollection
+     * @param (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[] $dataImporterPluginCollection
      *
      * @return $this
      */
@@ -127,7 +127,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -171,7 +171,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return string
      */

@@ -1,6 +1,5 @@
-concrete_sku,is_lead_product,has_lead_product,packaging_unit_type_name,default_amount,is_variable,amount_min,amount_max,amount_interval
-concrete_sku_example_1,1,0,item,0,0,0,0,0
-concrete_sku_example_2,0,1,box,5,1,3,5,2
-concrete_sku_example_3,0,1,box,1,0,0,0,0
-concrete_sku_example_4,0,1,box,5,0,0,0,0
-concrete_sku_example_5,0,1,box,0,0,0,0,0
+concrete_sku,lead_product_sku,packaging_unit_type_name,default_amount,is_variable,amount_min,amount_max,amount_interval
+concrete_sku_example_2,concrete_sku_example_1,box,5,1,3,5,2
+concrete_sku_example_3,concrete_sku_example_1,box,1,0,0,0,0
+concrete_sku_example_4,concrete_sku_example_1,box,5,0,0,0,0
+concrete_sku_example_5,concrete_sku_example_1,box,0,0,0,0,0

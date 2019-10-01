@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchroni
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\Map\SpyProductAbstractPackagingStorageTableMap;
+use Orm\Zed\ProductPackagingUnitStorage\Persistence\Map\SpyProductConcretePackagingStorageTableMap;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
 class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,12 +62,13 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productAbstractPackagingUnitEntityTransfers = $this->getRepository()->findFilteredProductAbstractPackagingUnitStorages($filterTransfer, $ids);
+        $productConcretePackagingUnitEntityTransfers = $this->getRepository()
+            ->findFilteredProductConcretePackagingUnitStorages($filterTransfer, $ids);
 
-        foreach ($productAbstractPackagingUnitEntityTransfers as $productAbstractPackagingUnitEntityTransfer) {
+        foreach ($productConcretePackagingUnitEntityTransfers as $productConcretePackagingUnitEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productAbstractPackagingUnitEntityTransfer->getData());
-            $synchronizationDataTransfer->setKey($productAbstractPackagingUnitEntityTransfer->getKey());
+            $synchronizationDataTransfer->setData($productConcretePackagingUnitEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($productConcretePackagingUnitEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -75,7 +76,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +88,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -99,7 +100,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,7 +122,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
-            ->setOrderBy(SpyProductAbstractPackagingStorageTableMap::COL_ID_PRODUCT_ABSTRACT_PACKAGING_STORAGE)
+            ->setOrderBy(SpyProductConcretePackagingStorageTableMap::COL_ID_PRODUCT_CONCRETE_PACKAGING_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }
