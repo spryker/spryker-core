@@ -4,27 +4,27 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProductSchedule">
-        <property name="priceProduct" type="PriceProduct"/>
+        <property name="priceProduct"/>
     </transfer>
 
     <transfer name="PriceProductScheduleList">
-        <property name="fk_user" type="string" dataBuilderRule="=1"/>
-        <property name="isActive" type="bool" dataBuilderRule="=true"/>
-        <property name="name" type="string" dataBuilderRule="unique()->sentence(5)"/>
+        <property name="fkUser" dataBuilderRule="=1"/>
+        <property name="isActive" dataBuilderRule="=true"/>
+        <property name="name" dataBuilderRule="unique()->sentence(5)"/>
     </transfer>
 
     <transfer name="PriceProduct">
-        <property name="moneyValue" type="MoneyValue"/>
+        <property name="moneyValue" />
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="netAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
-        <property name="grossAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
+        <property name="netAmount" dataBuilderRule="numberBetween(1000, 10000)"/>
+        <property name="grossAmount" dataBuilderRule="numberBetween(1000, 10000)"/>
     </transfer>
 
     <transfer name="PriceProductScheduleImport">
-        <property name="netAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
-        <property name="grossAmount" type="int" dataBuilderRule="numberBetween(1000, 10000)"/>
+        <property name="netAmount" dataBuilderRule="numberBetween(1000, 10000)"/>
+        <property name="grossAmount" dataBuilderRule="numberBetween(1000, 10000)"/>
     </transfer>
 </transfers>
 

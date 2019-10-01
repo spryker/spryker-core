@@ -78,6 +78,7 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="SaveOrder">
