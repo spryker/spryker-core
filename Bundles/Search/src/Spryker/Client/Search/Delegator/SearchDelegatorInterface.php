@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Search\Delegator;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface SearchDelegatorInterface
 {
