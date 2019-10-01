@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomerAccessRequestFormatter implements CustomerAccessRequestFormatterInterface
 {
     /**
-     * @uses \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator::REQUEST_ATTRIBUTE_IS_PROTECTED
+     * @uses \Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED
      */
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
     protected const REQUEST_ATTRIBUTE_TYPE = 'type';
