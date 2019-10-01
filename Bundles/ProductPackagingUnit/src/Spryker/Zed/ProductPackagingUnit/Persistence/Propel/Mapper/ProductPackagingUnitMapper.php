@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
@@ -58,24 +56,6 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
         $productPackagingUnitTypeTransfer->fromArray($spyProductPackagingUnitType->toArray(), true);
 
         return $productPackagingUnitTypeTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
-     * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
-     */
-    public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingUnit $productPackagingUnitEntity,
-        ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-    ): ProductPackagingLeadProductTransfer {
-        $productConcreteTransfer = (new ProductConcreteTransfer())
-            ->fromArray($productPackagingUnitEntity->getLeadProduct()->toArray(), true);
-        $productPackagingLeadProductTransfer->setProduct($productConcreteTransfer);
-        $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingUnitEntity->getLeadProduct()->getFkProductAbstract());
-
-        return $productPackagingLeadProductTransfer;
     }
 
     /**

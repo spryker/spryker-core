@@ -9,22 +9,21 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitItemExpander implements ProductPackagingUnitItemExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $productPackagingUnitReader;
+    protected $productPackagingUnitRepository;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      */
-    public function __construct(
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
-    ) {
-        $this->productPackagingUnitReader = $productPackagingUnitReader;
+    public function __construct(ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository)
+    {
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
     }
 
     /**
@@ -65,8 +64,8 @@ class ProductPackagingUnitItemExpander implements ProductPackagingUnitItemExpand
      */
     protected function expandItemWithLeadProduct(ItemTransfer $itemTransfer)
     {
-        $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
-            ->findProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
+        $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
+            ->findProductPackagingLeadProductBySiblingProductSku($itemTransfer->getSku());
 
         if ($productPackagingLeadProductTransfer) {
             $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
@@ -82,7 +81,7 @@ class ProductPackagingUnitItemExpander implements ProductPackagingUnitItemExpand
      */
     protected function expandItemWithProductPackagingUnit(ItemTransfer $itemTransfer)
     {
-        $productPackagingUnitTransfer = $this->productPackagingUnitReader
+        $productPackagingUnitTransfer = $this->productPackagingUnitRepository
             ->findProductPackagingUnitByProductId($itemTransfer->getId());
 
         if ($productPackagingUnitTransfer) {

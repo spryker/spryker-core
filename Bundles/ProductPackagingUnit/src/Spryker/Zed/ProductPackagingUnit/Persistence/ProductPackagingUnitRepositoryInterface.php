@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -44,11 +44,11 @@ interface ProductPackagingUnitRepositoryInterface
     /**
      * @param string $siblingProductSku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function findProductPackagingLeadProductBySiblingProductSku(
         string $siblingProductSku
-    ): ?ProductPackagingLeadProductTransfer;
+    ): ?ProductConcreteTransfer;
 
     /**
      * @param int[] $productPackagingUnitTypeIds

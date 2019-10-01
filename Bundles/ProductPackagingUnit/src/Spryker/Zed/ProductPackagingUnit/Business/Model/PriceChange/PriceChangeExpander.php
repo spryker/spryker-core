@@ -11,30 +11,14 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class PriceChangeExpander implements PriceChangeExpanderInterface
 {
-    protected const DIVISION_SCALE = 10;
-
     /**
      * @uses CalculationPriceMode::PRICE_MODE_NET
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
-
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
-     */
-    protected $productPackagingUnitReader;
-
-    /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
-     */
-    public function __construct(
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
-    ) {
-        $this->productPackagingUnitReader = $productPackagingUnitReader;
-    }
+    protected const DIVISION_SCALE = 10;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

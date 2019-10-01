@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAvailabilityHandlerInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $packagingUnitReader;
+    protected $productPackagingUnitRepository;
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface
@@ -30,16 +29,16 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $packagingUnitReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ProductPackagingUnitReaderInterface $packagingUnitReader,
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
         ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
         ProductPackagingUnitToStoreFacadeInterface $storeFacade
     ) {
-        $this->packagingUnitReader = $packagingUnitReader;
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
         $this->availabilityFacade = $availabilityFacade;
         $this->storeFacade = $storeFacade;
     }
@@ -51,30 +50,20 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
      */
     public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
     {
-        $productPackagingLeadProductTransfer = $this->findProductPackagingLeadProductByProductPackagingSku($sku);
+        $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
+            ->findProductPackagingLeadProductBySiblingProductSku($sku);
 
         if (!$productPackagingLeadProductTransfer) {
             return;
         }
 
-        if ($sku === $productPackagingLeadProductTransfer->getProduct()->getSku()) {
+        if ($sku === $productPackagingLeadProductTransfer->getSku()) {
             return;
         }
 
         $this->availabilityFacade->updateAvailabilityForStore(
-            $productPackagingLeadProductTransfer->getProduct()->getSku(),
+            $productPackagingLeadProductTransfer->getSku(),
             $this->storeFacade->getCurrentStore()
         );
-    }
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    protected function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
-    {
-        return $this->packagingUnitReader
-            ->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
     }
 }

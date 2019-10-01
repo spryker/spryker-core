@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
@@ -51,7 +50,7 @@ use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 {
     protected const PACKAGING_TYPE_DEFAULT = 'item';
-    protected const PACKAGING_TYPE = 'box';
+    protected const BOX_PACKAGING_TYPE = 'box';
 
     protected const ITEM_QUANTITY = 2;
     protected const PACKAGE_AMOUNT = 4;
@@ -79,7 +78,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testInstallProductPackagingUnitTypesShouldPersistInfrastructuralPackagingUnitTypes(): void
     {
-        // Assign
+        // Arrange
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())->build();
         $config = $this->createProductPackagingUnitConfigMock();
         $config->method('getInfrastructuralPackagingUnitTypes')
@@ -159,6 +158,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testDeleteProductPackagingUnitTypeShouldDeletePackagingUnitType(string $name): void
     {
+        // Arrange
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
             ->build()
             ->setName($name);
@@ -237,7 +237,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
         ]);
 
-        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::LEAD_PRODUCT_SKU => $itemProductConcreteTransfer->getSku(),
@@ -344,7 +344,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
         ]);
 
-        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
@@ -368,7 +368,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
         ]);
 
-        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
@@ -433,7 +433,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
         ]);
 
-        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
@@ -447,10 +447,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->setId($boxProductConcreteTransfer->getIdProductConcrete())
             ->setSku($boxProductConcreteTransfer->getSku())
             ->setAmount(static::PACKAGE_AMOUNT)
-            ->setAmountLeadProduct(
-                (new ProductPackagingLeadProductTransfer())
-                    ->setProduct($boxProductConcreteTransfer)
-            );
+            ->setAmountLeadProduct($boxProductConcreteTransfer);
     }
 
     /**
@@ -466,7 +463,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testExpandCartChangeGroupKeyWithAmountSalesUnitNoSalesUnitIsDefined(): void
     {
-        // Assign
+        // Arrange
         $cartChangeTransfer = $this->tester->createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::PACKAGE_AMOUNT, static::ITEM_QUANTITY);
 
         // Act
@@ -482,7 +479,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testExpandCartChangeGroupKeyWithAmountSalesUnitIfSalesUnitIsDefined(): void
     {
-        // Assign
+        // Arrange
         $expectedGroupKey = sprintf(static::GROUP_KEY_FORMAT, static::GROUP_KEY, static::ITEM_QUANTITY, static::SALES_UNIT_ID);
         $cartChangeTransfer = $this->tester->createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(static::GROUP_KEY, static::PACKAGE_AMOUNT, static::ITEM_QUANTITY, static::SALES_UNIT_ID);
 
@@ -507,7 +504,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testCalculateAmountNormalizedSalesUnitValueCalculatesCorrectValues(int $amount, int $quantity, float $conversion, int $precision, int $expectedResult): void
     {
-        // Assign
+        // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferForValueCalculation($amount, $quantity, $conversion, $precision);
 
         // Act
@@ -560,7 +557,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ?int $intervalRestriction,
         bool $isVariable
     ): void {
-        // Assign
+        // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
         $boxProductConcreteTransfer = $this->tester->haveProduct([
             SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
@@ -569,7 +566,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ]);
 
         $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([
-            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE,
+            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE,
         ]);
 
         $this->tester->haveProductPackagingUnit([
@@ -633,7 +630,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testExpandOrderItemWithAmountSalesUnit(): void
     {
-        // Assign
+        // Arrange
         $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
@@ -677,7 +674,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testExpandOrderItemWithAmountAndAmountSku(): void
     {
-        // Assign
+        // Arrange
         $itemTransfer = $this->createTestPackagingUnitItemTransfer();
 
         //Act
@@ -688,7 +685,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         //Assert
         $this->assertSame($itemTransfer->getAmount()->toString(), $salesOrderItemEntity->getAmount()->toString());
-        $this->assertSame($itemTransfer->getAmountLeadProduct()->getProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
+        $this->assertSame($itemTransfer->getAmountLeadProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
     /**
@@ -696,7 +693,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testHydrateOrderWithAmountSalesUnit(): void
     {
-        // Assign
+        // Arrange
         $salesOrderEntity = $this->tester->create();
         $productMeasurementUnit = $this->tester->haveProductMeasurementUnit();
         foreach ($salesOrderEntity->getItems() as $salesOrderItem) {
@@ -726,7 +723,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testExpandOrderWithAmountLeadProduct(): void
     {
-        // Assign
+        // Arrange
         $testStateMachineProcessName = 'Test01';
 
         $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
@@ -754,7 +751,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testDefaultProductPackagingUnitTypeName(): void
     {
-        // Assign
+        // Arrange
         $configDefaultProductPackagingUnitTypMockName = $this->getConfigStub()->getDefaultProductPackagingUnitTypeName();
 
         //Act
@@ -781,7 +778,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testCountProductPackagingUnitsByTypeId(): void
     {
-        // Assign
+        // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
         $boxProductConcreteTransfer = $this->tester->haveProduct([
             SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
@@ -790,7 +787,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ]);
 
         $boxProductPackagingUnitTypeEntityTransfer = $this->tester->haveProductPackagingUnitType([
-            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE,
+            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE,
         ]);
 
         $this->tester->haveProductPackagingUnit([
@@ -824,7 +821,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testFindProductIdsByProductPackagingUnitTypeIds(): void
     {
-        // Assign
+        // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
         $boxProductConcreteTransfer = $this->tester->haveProduct([
             SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
@@ -833,7 +830,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ]);
 
         $boxProductPackagingUnitTypeEntityTransfer = $this->tester->haveProductPackagingUnitType([
-            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE,
+            SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE,
         ]);
 
         $this->tester->haveProductPackagingUnit([
@@ -854,14 +851,11 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testExpandCartChangeWithProductPackagingUnit(): void
     {
+        // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
-        $boxProductConcreteTransfer = $this->tester->haveProduct([
-            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
-        ], [
-            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
-        ]);
+        $boxProductConcreteTransfer = $this->tester->haveProduct();
 
-        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE]);
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
@@ -879,11 +873,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setAmount(static::PACKAGE_AMOUNT)
             );
 
+        // Action
         $this->getFacade()->expandCartChangeWithProductPackagingUnit($cartChange);
 
+        // Assert
         foreach ($cartChange->getItems() as $itemTransfer) {
-            $this->assertInstanceOf(ProductPackagingLeadProductTransfer::class, $itemTransfer->getAmountLeadProduct());
-            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getProduct()->getSku());
+            $this->assertInstanceOf(ProductConcreteTransfer::class, $itemTransfer->getAmountLeadProduct());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
         }
     }
 
@@ -892,7 +888,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testTransformSplittableItem(): void
     {
-        // Assign
+        // Arrange
         $this->setData(true);
         $itemTransfer = (new ItemTransfer())
             ->setSku(static::CONCRETE_PRODUCT_SKU)
@@ -915,7 +911,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testIsItemQuantitySplittable(): void
     {
-        // Assign
+        // Arrange
         $this->setData(true);
         $itemTransfer = (new ItemTransfer())
             ->setSku(static::CONCRETE_PRODUCT_SKU)

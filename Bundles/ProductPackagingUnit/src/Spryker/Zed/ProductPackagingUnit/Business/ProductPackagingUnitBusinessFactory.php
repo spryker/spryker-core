@@ -40,8 +40,6 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\Product
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValueInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGenerator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGeneratorInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGenerator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeKeyGeneratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReader;
@@ -145,7 +143,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitAvailabilityHandler(): ProductPackagingUnitAvailabilityHandlerInterface
     {
         return new ProductPackagingUnitAvailabilityHandler(
-            $this->createProductPackagingUnitReader(),
+            $this->getRepository(),
             $this->getAvailabilityFacade(),
             $this->getStoreFacade()
         );
@@ -157,7 +155,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitReservationHandler(): ProductPackagingUnitReservationHandlerInterface
     {
         return new ProductPackagingUnitReservationHandler(
-            $this->createProductPackagingUnitReader(),
+            $this->getRepository(),
             $this->getOmsFacade()
         );
     }
@@ -168,8 +166,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitCartPreCheck(): ProductPackagingUnitCartPreCheckInterface
     {
         return new ProductPackagingUnitCartPreCheck(
-            $this->getAvailabilityFacade(),
-            $this->createProductPackagingUnitReader()
+            $this->getRepository(),
+            $this->getAvailabilityFacade()
         );
     }
 
@@ -255,7 +253,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createAmountSalesUnitItemExpander(): AmountSalesUnitItemExpanderInterface
     {
         return new AmountSalesUnitItemExpander(
-            $this->createProductPackagingUnitReader()
+            $this->getProductMeasurementUnitFacade()
         );
     }
 
@@ -265,18 +263,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitItemExpander(): ProductPackagingUnitItemExpanderInterface
     {
         return new ProductPackagingUnitItemExpander(
-            $this->createProductPackagingUnitReader()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
-     */
-    public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
-    {
-        return new ProductPackagingUnitReader(
-            $this->getRepository(),
-            $this->getProductMeasurementUnitFacade()
+            $this->getRepository()
         );
     }
 
@@ -301,9 +288,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceChangeExpander(): PriceChangeExpanderInterface
     {
-        return new PriceChangeExpander(
-            $this->createProductPackagingUnitReader()
-        );
+        return new PriceChangeExpander();
     }
 
    /**
@@ -328,7 +313,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitAmountRestrictionValidator(): ProductPackagingUnitAmountRestrictionValidatorInterface
     {
         return new ProductPackagingUnitAmountRestrictionValidator(
-            $this->createProductPackagingUnitReader()
+            $this->getRepository(),
+            $this->getProductMeasurementUnitFacade()
         );
     }
 

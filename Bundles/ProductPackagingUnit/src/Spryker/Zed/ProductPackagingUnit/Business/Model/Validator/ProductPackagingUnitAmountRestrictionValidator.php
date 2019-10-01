@@ -12,7 +12,8 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitAmountRestrictionValidator implements ProductPackagingUnitAmountRestrictionValidatorInterface
 {
@@ -29,16 +30,25 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     ];
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $productPackagingUnitReader;
+    protected $productPackagingUnitRepository;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface
      */
-    public function __construct(ProductPackagingUnitReaderInterface $productPackagingUnitReader)
-    {
-        $this->productPackagingUnitReader = $productPackagingUnitReader;
+    protected $productMeasurementUnitFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
+     */
+    public function __construct(
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
+        ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
+    ) {
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
     }
 
     /**
@@ -271,9 +281,10 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     protected function mapProductPackagingUnitAmountTransfersBySku(array $itemTransfers): array
     {
         $productPackagingUnitAmountTransferMap = [];
-
         foreach ($itemTransfers as $itemTransfer) {
-            $productPackagingUnitTransfer = $this->productPackagingUnitReader->findProductPackagingUnitByProductSku($itemTransfer->getSku());
+            $productPackagingUnitTransfer = $this->productPackagingUnitRepository
+                ->findProductPackagingUnitByProductSku($itemTransfer->getSku());
+
             if ($productPackagingUnitTransfer) {
                 $productPackagingUnitAmountTransferMap[$itemTransfer->getSku()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
             }
