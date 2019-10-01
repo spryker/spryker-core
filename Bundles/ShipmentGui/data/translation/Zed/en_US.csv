@@ -1,2 +1,6 @@
 "Shipment n° %shipmentNumber%","Shipment n° %shipmentNumber%"
 "New address","New address"
+"Carrier was created successfully.","Carrier was created successfully."
+Name,Name
+Enabled?,Enabled?
+"Carrier with the same name already exists.","Carrier with the same name already exists."

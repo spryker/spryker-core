@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 
@@ -26,26 +27,21 @@ class ShipmentCarrierFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer|null $shipmentCarrierRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer
      */
-    public function getData(ShipmentCarrierTransfer $shipmentCarrierTransfer): ShipmentCarrierTransfer
+    public function getData(?ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer = null): ShipmentCarrierTransfer
     {
-        if ($shipmentCarrierTransfer->getIdShipmentCarrier() === null) {
-            return $shipmentCarrierTransfer;
+        if ($shipmentCarrierRequestTransfer === null) {
+            return new ShipmentCarrierTransfer();
         }
 
-        $foundShipmentCarrierTransfer = $this->shipmentFacade->findShipmentCarrierById($shipmentCarrierTransfer->getIdShipmentCarrier());
-        if ($foundShipmentCarrierTransfer === null) {
-            return $shipmentCarrierTransfer;
-        }
-
-        return $foundShipmentCarrierTransfer;
+        return $this->shipmentFacade->findShipmentCarrier($shipmentCarrierRequestTransfer) ?? new ShipmentCarrierTransfer();
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getOptions(): array
     {

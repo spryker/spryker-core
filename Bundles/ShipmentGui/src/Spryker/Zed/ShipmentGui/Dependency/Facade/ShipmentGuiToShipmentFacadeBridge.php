@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -97,23 +98,13 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     }
 
     /**
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
      */
-    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer
     {
-        return $this->shipmentFacade->findShipmentCarrierById($idCarrier);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     *
-     * @return bool
-     */
-    public function hasCarrierName(ShipmentCarrierTransfer $shipmentCarrierTransfer): bool
-    {
-        return $this->shipmentFacade->hasCarrierName($shipmentCarrierTransfer);
+        return $this->shipmentFacade->findShipmentCarrier($shipmentCarrierRequestTransfer);
     }
 
     /**

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
@@ -346,17 +347,27 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
      */
-    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer
     {
-        $shipmentCarrierEntity = $this->getFactory()
-            ->createShipmentCarrierQuery()
-            ->filterByIdShipmentCarrier($idCarrier)
-            ->findOne();
+        $shipmentCarrierQuery = $this->getFactory()->createShipmentCarrierQuery();
 
+        if ($shipmentCarrierRequestTransfer->getIdCarrier() !== null) {
+            $shipmentCarrierQuery->filterByIdShipmentCarrier($shipmentCarrierRequestTransfer->getIdCarrier());
+        }
+
+        if ($shipmentCarrierRequestTransfer->getCarrierName() !== null) {
+            $shipmentCarrierQuery->filterByName($shipmentCarrierRequestTransfer->getCarrierName());
+        }
+
+        if ($shipmentCarrierRequestTransfer->getExcludedCarrierIds() !== []) {
+            $shipmentCarrierQuery->filterByIdShipmentCarrier($shipmentCarrierRequestTransfer->getExcludedCarrierIds(), Criteria::NOT_IN);
+        }
+
+        $shipmentCarrierEntity = $shipmentCarrierQuery->findOne();
         if ($shipmentCarrierEntity === null) {
             return null;
         }
@@ -364,24 +375,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         return $this->getFactory()
             ->createShipmentCarrierMapper()
             ->mapShipmentCarrierEntityToShipmentCarrierTransfer($shipmentCarrierEntity, new ShipmentCarrierTransfer());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     *
-     * @return bool
-     */
-    public function hasCarrierName(ShipmentCarrierTransfer $shipmentCarrierTransfer): bool
-    {
-        $query = $this->getFactory()
-            ->createShipmentCarrierQuery()
-            ->filterByName($shipmentCarrierTransfer->getName());
-
-        if ($shipmentCarrierTransfer->getIdExcludedCarriers() !== []) {
-            $query->filterByIdShipmentCarrier($shipmentCarrierTransfer->getIdExcludedCarriers(), Criteria::NOT_IN);
-        }
-
-        return $query->exists();
     }
 
     /**

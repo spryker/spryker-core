@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,8 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateCarrierController extends AbstractController
 {
     protected const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
-    protected const URL_REDIRECT_SHIPMENT = '/shipment';
-    public const REQUEST_ID_CARRIER = 'idShipmentCarrier';
+    protected const ROUTE_SHIPMENT = '/shipment';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -28,24 +27,18 @@ class CreateCarrierController extends AbstractController
     public function indexAction(Request $request)
     {
         $factory = $this->getFactory();
-        $carrierFormDataProvider = $factory->createShipmentCarrierFormDataProvider();
+        $shipmentCarrierForm = $factory->createShipmentCarrierFormType()->handleRequest($request);
 
-        $idShipmentCarrier = $request->query->getInt(static::REQUEST_ID_CARRIER);
-        $companyRoleTransfer = (new ShipmentCarrierTransfer())->setIdShipmentCarrier($idShipmentCarrier);
-
-        $form = $factory->createShipmentCarrierFormType($carrierFormDataProvider->getData($companyRoleTransfer), $carrierFormDataProvider->getOptions())
-            ->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $factory->getShipmentFacade()->createCarrier($form->getData());
-
+        if ($shipmentCarrierForm->isSubmitted() && $shipmentCarrierForm->isValid()) {
+            $factory->getShipmentFacade()->createCarrier($shipmentCarrierForm->getData());
             $this->addSuccessMessage(static::MESSAGE_CARRIER_CREATE_SUCCESS);
+            $redirectUrl = Url::generate(static::ROUTE_SHIPMENT)->build();
 
-            return $this->redirectResponse(static::URL_REDIRECT_SHIPMENT);
+            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
-            'form' => $form->createView(),
+            'form' => $shipmentCarrierForm->createView(),
         ]);
     }
 }

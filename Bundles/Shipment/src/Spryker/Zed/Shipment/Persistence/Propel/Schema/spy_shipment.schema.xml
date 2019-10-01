@@ -65,7 +65,7 @@
         <id-method-parameter value="spy_shipment_method_price_pk_seq"/>
     </table>
 
-    <table name="spy_shipment_method_store">
+    <table name="spy_shipment_method_store" idMethod="native" phpName="SpyShipmentMethodStore">
         <column name="id_shipment_method_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_shipment_method" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>

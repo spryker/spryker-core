@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication;
 
-use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
@@ -50,14 +48,17 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
      * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createShipmentCarrierFormType(ShipmentCarrierTransfer $shipmentCarrierTransfer, array $formOptions = []): FormInterface
+    public function createShipmentCarrierFormType(array $formOptions = []): FormInterface
     {
-        return $this->getFormFactory()->create(ShipmentCarrierFormType::class, $shipmentCarrierTransfer, $formOptions);
+        return $this->getFormFactory()->create(
+            ShipmentCarrierFormType::class,
+            $this->createShipmentCarrierFormDataProvider()->getData(),
+            $formOptions
+        );
     }
 
     /**
@@ -100,16 +101,6 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentCarrierMapper(): ShipmentCarrierMapper
     {
         return new ShipmentCarrierMapper();
-    }
-
-    /**
-     * @param array $idExcludedCarrierFields
-     *
-     * @return \Spryker\Zed\ShipmentGui\Communication\Form\Constraint\UniqueShipmentCarrierName
-     */
-    public function createUniqueShipmentCarrierNameConstraint(array $idExcludedCarrierFields = []): UniqueShipmentCarrierName
-    {
-        return new UniqueShipmentCarrierName($this->getShipmentFacade(), $idExcludedCarrierFields);
     }
 
     /**

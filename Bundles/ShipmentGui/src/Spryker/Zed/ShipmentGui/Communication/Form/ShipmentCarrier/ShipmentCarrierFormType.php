@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier;
 
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -14,7 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -22,9 +25,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ShipmentCarrierFormType extends AbstractType
 {
-    public const FIELD_NAME_FIELD = 'name';
-    public const FIELD_IS_ACTIVE_FIELD = 'isActive';
-    public const FIELD_ID_CARRIER = 'idShipmentCarrier';
+    public const FIELD_NAME = 'name';
+    public const FIELD_IS_ACTIVE = 'isActive';
+    public const FIELD_CARRIER_ID = 'idShipmentCarrier';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_IS_ACTIVE_FIELD = 'Enabled?';
@@ -47,7 +50,7 @@ class ShipmentCarrierFormType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'carrier';
+        return 'shipment_carrier';
     }
 
     /**
@@ -70,12 +73,12 @@ class ShipmentCarrierFormType extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_NAME_FIELD, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => static::LABEL_NAME,
             'constraints' => [
                 new NotBlank(),
-                $this->getFactory()->createUniqueShipmentCarrierNameConstraint([
-                    static::FIELD_NAME_FIELD,
+                new Callback([
+                    'callback' => [$this, 'uniqueCarrierNameCheck'],
                 ]),
             ],
         ]);
@@ -90,7 +93,7 @@ class ShipmentCarrierFormType extends AbstractType
      */
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IS_ACTIVE_FIELD, CheckboxType::class, [
+        $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
             'label' => static::LABEL_IS_ACTIVE_FIELD,
             'required' => false,
         ]);
@@ -105,8 +108,39 @@ class ShipmentCarrierFormType extends AbstractType
      */
     protected function addIdShipmentCarrierField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ID_CARRIER, HiddenType::class);
+        $builder->add(static::FIELD_CARRIER_ID, HiddenType::class);
 
         return $this;
+    }
+
+    /**
+     * @param string $carrierName
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     *
+     * @return void
+     */
+    public function uniqueCarrierNameCheck(string $carrierName, ExecutionContextInterface $context): void
+    {
+        $shipmentCarrierRequestTransfer = $this->createShipmentCarrierTransfer($carrierName, $context);
+
+        if ($this->getFactory()->getShipmentFacade()->findShipmentCarrier($shipmentCarrierRequestTransfer)) {
+            $context->addViolation(static::MESSAGE_VIOLATION);
+        }
+    }
+
+    /**
+     * @param string $carrierName
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer
+     */
+    protected function createShipmentCarrierTransfer(string $carrierName, ExecutionContextInterface $context): ShipmentCarrierRequestTransfer
+    {
+        $formData = $context->getRoot()->getData();
+        $carrierId = isset($formData[static::FIELD_CARRIER_ID]) ? $formData[static::FIELD_CARRIER_ID] : null;
+
+        return (new ShipmentCarrierRequestTransfer())
+            ->setCarrierName($carrierName)
+            ->setExcludedCarrierIds([$carrierId]);
     }
 }

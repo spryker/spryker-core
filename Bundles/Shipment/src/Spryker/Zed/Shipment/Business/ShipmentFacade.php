@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -65,27 +66,13 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
      */
-    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer
     {
-        return $this->getRepository()->findShipmentCarrierById($idCarrier);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     *
-     * @return bool
-     */
-    public function hasCarrierName(ShipmentCarrierTransfer $shipmentCarrierTransfer): bool
-    {
-        return $this->getRepository()->hasCarrierName($shipmentCarrierTransfer);
+        return $this->getRepository()->findShipmentCarrier($shipmentCarrierRequestTransfer);
     }
 
     /**

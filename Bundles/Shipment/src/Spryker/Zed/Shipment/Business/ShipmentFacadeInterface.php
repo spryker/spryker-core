@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -48,27 +49,19 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves the carrier by ID from database as transfer object.
+     * - Retrieves the carrier by ShipmentCarrierRequestTransfer from database as transfer object.
+     * - If idCarrier is provided we add to filter by ID this value.
+     * - If carrierName is provided we add to filter by Name this value.
+     * - Excludes carriers which id exists in excludedCarrierIds list.
      * - Returns NULL if the carrier does not exist.
      *
      * @api
      *
-     * @param int $idCarrier
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
      */
-    public function findShipmentCarrierById(int $idCarrier): ?ShipmentCarrierTransfer;
-
-    /**
-     * - Checks if carrier valid for given name and id parameters.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer
-     *
-     * @return bool
-     */
-    public function hasCarrierName(ShipmentCarrierTransfer $shipmentCarrierTransfer): bool;
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer;
 
     /**
      * Specification:
