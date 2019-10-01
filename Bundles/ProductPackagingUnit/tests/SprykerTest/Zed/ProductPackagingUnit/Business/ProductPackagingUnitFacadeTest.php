@@ -684,7 +684,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
-        $this->assertSame($itemTransfer->getAmount()->toString(), $salesOrderItemEntity->getAmount()->toString());
+        $this->assertTrue($itemTransfer->getAmount()->equals($salesOrderItemEntity->getAmount()));
         $this->assertSame($itemTransfer->getAmountLeadProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
