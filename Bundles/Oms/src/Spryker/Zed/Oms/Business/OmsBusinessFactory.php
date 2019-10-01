@@ -245,7 +245,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getReservationAggregationPlugins()
+            $this->getReservationAggregationStrategyPlugins()
         );
     }
 
@@ -401,7 +401,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
-    public function getReservationAggregationPlugins(): array
+    public function getReservationAggregationStrategyPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_AGGREGATION);
     }
