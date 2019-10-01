@@ -216,7 +216,7 @@ class AvailabilityFacadeTest extends Unit
      */
     public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
     {
-        $availabilityFacade = $this->createAvailabilityFacade();
+        $availabilityFacade = $this->getAvailabilityFacade();
 
         $storeTransfer = (new StoreBuilder([StoreTransfer::NAME => 'DE', StoreTransfer::ID_STORE => static::ID_STORE]))->build();
 
