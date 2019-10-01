@@ -37,7 +37,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,7 +79,7 @@ class WishlistsRestApiFacade extends AbstractFacade implements WishlistsRestApiF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

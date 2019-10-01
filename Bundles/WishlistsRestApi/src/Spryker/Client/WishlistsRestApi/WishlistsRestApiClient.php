@@ -20,7 +20,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class WishlistsRestApiClient extends AbstractClient implements WishlistsRestApiC
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -17,6 +17,7 @@ use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group WishlistsRestApi
