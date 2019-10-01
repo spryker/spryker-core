@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlot\Persistence;
+namespace Spryker\Zed\CmsSlotStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 
-interface CmsSlotRepositoryInterface
+interface CmsSlotStorageToCmsSlotFacadeInterface
 {
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
-     */
-    public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *

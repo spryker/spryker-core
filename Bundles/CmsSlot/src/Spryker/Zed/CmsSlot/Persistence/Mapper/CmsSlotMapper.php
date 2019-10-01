@@ -34,4 +34,19 @@ class CmsSlotMapper implements CmsSlotMapperInterface
 
         return $cmsSlot;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyOfferEntityTransfer[] $cmsSlotEntities
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function mapCmsSlotEntityCollectionToTransferCollection(array $cmsSlotEntities): array
+    {
+        $cmsSlotTransfers = [];
+        foreach ($cmsSlotEntities as $cmsSlotEntity) {
+            $cmsSlotTransfers[] = (new CmsSlotTransfer())->fromArray($cmsSlotEntity->toArray(), true);
+        }
+
+        return $cmsSlotTransfers;
+    }
 }

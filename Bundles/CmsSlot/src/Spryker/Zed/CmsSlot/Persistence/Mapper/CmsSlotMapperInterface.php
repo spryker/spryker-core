@@ -26,4 +26,11 @@ interface CmsSlotMapperInterface
      * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlot
      */
     public function mapCmsSlotTransferToEntity(SpyCmsSlot $cmsSlot, CmsSlotTransfer $cmsSlotTransfer): SpyCmsSlot;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyOfferEntityTransfer[] $cmsSlotEntities
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function mapCmsSlotEntityCollectionToTransferCollection(array $cmsSlotEntities): array;
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlot\Business;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface CmsSlotFacadeInterface
@@ -62,4 +63,28 @@ interface CmsSlotFacadeInterface
      * @return void
      */
     public function deactivateByIdCmsSlot(int $idCmsSlot): void;
+
+    /**
+     * Specification:
+     * - Retrieves cms slot transfers according to given offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getFilteredCmsSlotTransfers(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves cms slot transfers according to given cms slot ids.
+     *
+     * @api
+     *
+     * @param int[] $cmsSlotIds
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getCmsSlotTransfersByCmsSlotIds(array $cmsSlotIds): array;
 }
