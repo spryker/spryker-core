@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Wishlist\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -504,15 +503,14 @@ class WishlistFacadeTest extends Test
      */
     public function testGetWishlistsByCustomerReturnPersistedWishlists(): void
     {
-        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
-        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
+        $customerTransfer = $this->tester->haveCustomer();
 
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($this->customer->toArray(), true);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer()]);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer()]);
 
         $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
 
-        $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
+        $this->assertCount(2, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
     /**
