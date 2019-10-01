@@ -20,4 +20,4 @@ use Orm\Zed\CategoryImageStorage\Persistence\Base\SpyCategoryImageStorageQuery;
  */
 abstract class AbstractSpyCategoryImageStorageQuery extends SpyCategoryImageStorageQuery
 {
-} // SpyCategoryImageStorageQuery
+}
