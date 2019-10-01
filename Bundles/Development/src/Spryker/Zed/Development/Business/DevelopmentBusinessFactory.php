@@ -1911,7 +1911,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new AllModuleFinder(
             $this->createFinder(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createCamelCaseToDashFilter()
         );
     }
 

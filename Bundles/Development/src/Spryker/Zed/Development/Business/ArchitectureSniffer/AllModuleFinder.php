@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 use InvalidArgumentException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
+use Zend\Filter\FilterInterface;
 
 class AllModuleFinder implements AllModuleFinderInterface
 {
@@ -24,13 +25,20 @@ class AllModuleFinder implements AllModuleFinderInterface
     protected $developmentConfig;
 
     /**
+     * @var \Zend\Filter\FilterInterface
+     */
+    protected $filter;
+
+    /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Development\DevelopmentConfig $developmentConfig
+     * @param \Zend\Filter\FilterInterface $filter
      */
-    public function __construct(Finder $finder, DevelopmentConfig $developmentConfig)
+    public function __construct(Finder $finder, DevelopmentConfig $developmentConfig, FilterInterface $filter)
     {
         $this->finder = $finder;
         $this->developmentConfig = $developmentConfig;
+        $this->filter = $filter;
     }
 
     /**
@@ -40,7 +48,8 @@ class AllModuleFinder implements AllModuleFinderInterface
     {
         $modules = [];
         $modules[] = $this->loadProjectModules();
-        $modules[] = $this->loadCoreModules();
+        $modules[] = $this->loadCoreDevelopmentModules();
+        $modules[] = $this->loadOtherCoreModules();
 
         return $this->addApplication(array_merge(...$modules));
     }
@@ -62,16 +71,34 @@ class AllModuleFinder implements AllModuleFinderInterface
     /**
      * @return array
      */
-    protected function loadCoreModules(): array
+    protected function loadCoreDevelopmentModules(): array
+    {
+        $modules = [];
+        foreach ($this->developmentConfig->getInternalNamespacesList() as $internalNamespace) {
+            foreach (range('A', 'Z') as $letter) {
+                $namespaceDir = $this->filter->filter($internalNamespace);
+                $namespaceDir = strtolower($namespaceDir);
+
+                $path = sprintf('%s/spryker/%s/Bundles/%s*/src/*/*', APPLICATION_VENDOR_DIR, $namespaceDir, $letter);
+                $modules[] = $this->findModules($path, $internalNamespace);
+            }
+        }
+
+        return array_merge(...$modules);
+    }
+
+    /**
+     * @return array
+     */
+    protected function loadOtherCoreModules(): array
     {
         $modules = [];
         foreach ($this->developmentConfig->getCoreNamespaces() as $coreNamespace) {
-            $pathToNamespace = $this->developmentConfig->getPathToInternalNamespace($coreNamespace);
             foreach (range('a', 'z') as $letter) {
-                if (mb_strpos($pathToNamespace, 'Bundles') !== false) {
-                    $letter = strtoupper((string)$letter);
-                }
-                $path = $pathToNamespace . sprintf('%s*/src/*/*', $letter);
+                $namespaceDir = $this->filter->filter($coreNamespace);
+                $namespaceDir = strtolower($namespaceDir);
+
+                $path = sprintf('%s/%s/%s*/src/*/*', APPLICATION_VENDOR_DIR, $namespaceDir, $letter);
                 $modules[] = $this->findModules($path, $coreNamespace);
             }
         }
