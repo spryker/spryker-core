@@ -505,8 +505,8 @@ class WishlistFacadeTest extends Test
     {
         $customerTransfer = $this->tester->haveCustomer();
 
-        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer()]);
-        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer()]);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(), WishlistTransfer::NAME => 'one']);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(), WishlistTransfer::NAME => 'two']);
 
         $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
 
