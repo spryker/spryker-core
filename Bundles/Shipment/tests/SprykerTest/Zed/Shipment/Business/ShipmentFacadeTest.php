@@ -684,7 +684,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindValidShipmentCarrierById(): void
+    public function testShipmentCarrierByIdShouldReturnShipmentCarrier(): void
     {
         // Arrange
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
@@ -703,63 +703,25 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testHasValidCarrierName(): void
+    public function testFindShipmentCarrierByNameAndExcludedCarrierIdsShouldReturnShipmentValidCarrier(): void
     {
         // Arrange
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
-        $shipmentCarrierRequestTransfer = (new ShipmentCarrierRequestTransfer())
-            ->setCarrierName($shipmentCarrierTransfer->getName());
-
-        // Act
-        $shipmentCarrierTransfer = $this->tester
-            ->getShipmentFacade()
-            ->findShipmentCarrier($shipmentCarrierRequestTransfer);
-
-        // Assert
-        $this->assertNotNull($shipmentCarrierTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testHasNotExcludedCarrierById(): void
-    {
-        // Arrange
-        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
-        $shipmentCarrierRequestTransfer = (new ShipmentCarrierRequestTransfer())
-            ->setExcludedCarrierIds([$shipmentCarrierTransfer->getIdShipmentCarrier()]);
-
-        // Act
-        $shipmentCarrierTransfer = $this->tester
-            ->getShipmentFacade()
-            ->findShipmentCarrier($shipmentCarrierRequestTransfer);
-
-        // Assert
-        $this->assertNotNull($shipmentCarrierTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testHasCarrierNameWithExcludedById(): void
-    {
-        // Arrange
-        $shipmentCarrierTransfer1 = $this->tester->haveShipmentCarrier();
-        $shipmentCarrierTransfer2 = $this->tester->haveShipmentCarrier([
-            ShipmentCarrierTransfer::NAME => $shipmentCarrierTransfer1->getName(),
+        $shipmentCarrierTransferWithDuplicatedName = $this->tester->haveShipmentCarrier([
+            ShipmentCarrierTransfer::NAME => $shipmentCarrierTransfer->getName(),
         ]);
 
         $shipmentCarrierRequestTransfer = (new ShipmentCarrierRequestTransfer())
-            ->setIdCarrier($shipmentCarrierTransfer1->getIdShipmentCarrier())
-            ->setCarrierName($shipmentCarrierTransfer1->getName())
-            ->setExcludedCarrierIds([$shipmentCarrierTransfer2->getIdShipmentCarrier()]);
+            ->setCarrierName($shipmentCarrierTransfer->getName())
+            ->setExcludedCarrierIds([$shipmentCarrierTransferWithDuplicatedName->getIdShipmentCarrier()]);
 
         // Act
-        $shipmentCarrierTransfer = $this->tester
+        $foundShipmentCarrierTransfer = $this->tester
             ->getShipmentFacade()
             ->findShipmentCarrier($shipmentCarrierRequestTransfer);
 
         // Assert
-        $this->assertNotNull($shipmentCarrierTransfer);
+        $this->assertNotNull($foundShipmentCarrierTransfer);
+        $this->assertSame($foundShipmentCarrierTransfer->getIdShipmentCarrier(), $shipmentCarrierTransfer->getIdShipmentCarrier());
     }
 }
