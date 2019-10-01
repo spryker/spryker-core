@@ -26,8 +26,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStore"/>
+        <property name="stores" type="Store[]" singular="store"/>
     </transfer>
 
     <transfer name="StockCriteriaFilter">

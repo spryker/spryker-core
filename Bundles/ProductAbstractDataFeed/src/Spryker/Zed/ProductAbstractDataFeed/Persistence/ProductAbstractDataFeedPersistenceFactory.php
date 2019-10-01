@@ -27,7 +27,7 @@ class ProductAbstractDataFeedPersistenceFactory extends AbstractPersistenceFacto
     /**
      * @return \Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractJoinQueryInterface
      */
-    public function createAbstractProductJoinQuery()
+    public function createAbstractProductJoinQuery(): ProductAbstractJoinQueryInterface
     {
         return new ProductAbstractJoinQuery();
     }

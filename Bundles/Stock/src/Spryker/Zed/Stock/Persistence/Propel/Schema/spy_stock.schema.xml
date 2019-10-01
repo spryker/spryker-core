@@ -39,7 +39,7 @@
         <id-method-parameter value="spy_stock_product_pk_seq"/>
     </table>
 
-    <table name="spy_stock_store">
+    <table name="spy_stock_store" phpName="SpyStockStore">
         <column name="id_stock_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>

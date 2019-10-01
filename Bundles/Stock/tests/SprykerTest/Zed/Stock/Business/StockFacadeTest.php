@@ -464,6 +464,7 @@ class StockFacadeTest extends Unit
     public function testGetStoreToWarehouseMappingWillReturnCollectionOfStoreNamesWithCollectionOfStockNamesIndexedByStockName(): void
     {
         //Arrange
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer2 */
         $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
         $this->assignStockToStore($storeTransfer2, $this->stockTransfer1);
         $this->assignStockToStore($storeTransfer2, $this->stockTransfer2);
@@ -471,6 +472,7 @@ class StockFacadeTest extends Unit
         //Act
         $storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
 
+        //Assert
         $this->assertEquals([
             $this->storeTransfer->getName() => [
                 $this->stockTransfer1->getName(),
