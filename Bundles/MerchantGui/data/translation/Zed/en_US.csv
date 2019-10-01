@@ -13,8 +13,8 @@ Save,Save
 waiting-for-approval,"Waiting for Approval"
 approved,Approved
 denied,Denied
-approved_button,Approve Access
-denied_button,Deny Access
+approved_button,"Approve Access"
+denied_button,"Deny Access"
 E-Mail,E-Mail
 City,City
 "Zip Code","Zip Code"
@@ -29,3 +29,4 @@ Name,Name
 "Contact person phone","Contact person phone"
 "Contact person title","Contact person title"
 Email,Email
+General,General

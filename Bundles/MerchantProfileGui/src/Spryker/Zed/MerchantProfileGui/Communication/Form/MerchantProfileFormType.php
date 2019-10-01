@@ -17,7 +17,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -38,7 +37,6 @@ class MerchantProfileFormType extends AbstractType
     public const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
     public const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
     public const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
-    public const FIELD_BANNER_URL = 'banner_url';
     public const FIELD_LOGO_URL = 'logo_url';
     public const FIELD_PUBLIC_EMAIL = 'public_email';
     public const FIELD_PUBLIC_PHONE = 'public_phone';
@@ -57,8 +55,7 @@ class MerchantProfileFormType extends AbstractType
     public const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
     public const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
     public const LABEL_CONTACT_PERSON_PHONE = 'Phone';
-    public const LABEL_BANNER_URL = 'Banner';
-    public const LABEL_LOGO_URL = 'Logo';
+    public const LABEL_LOGO_URL = 'Logo URL';
     public const LABEL_PUBLIC_EMAIL = 'Public Email';
     public const LABEL_PUBLIC_PHONE = 'Public Phone';
     public const LABEL_IS_ACTIVE = 'Is Active';
@@ -99,7 +96,6 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
-            ->addBannerUrlField($builder)
             ->addDescriptionGlossaryKeyField($builder)
             ->addBannerUrlGlossaryKeyField($builder)
             ->addDeliveryTimeGlossaryKeyField($builder)
@@ -121,6 +117,7 @@ class MerchantProfileFormType extends AbstractType
             ->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
                 'label' => static::LABEL_IS_ACTIVE,
                 'required' => false,
+                'disabled' => 'disabled',
             ]);
 
         return $this;
@@ -234,7 +231,6 @@ class MerchantProfileFormType extends AbstractType
             'choices' => array_flip($choices),
             'required' => false,
             'label' => static::LABEL_CONTACT_PERSON_TITLE,
-            'constraints' => $this->getSalutationFieldConstraints($choices),
             'placeholder' => 'Select one',
 
         ]);
@@ -299,7 +295,11 @@ class MerchantProfileFormType extends AbstractType
     {
         $builder->add(static::FIELD_PUBLIC_EMAIL, TextType::class, [
             'label' => static::LABEL_PUBLIC_EMAIL,
-            'constraints' => $this->getEmailFieldConstraints(),
+            'required' => false,
+            'constraints' => [
+                new Email(),
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -358,22 +358,6 @@ class MerchantProfileFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addBannerUrlField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_BANNER_URL, TextType::class, [
-            'label' => static::LABEL_BANNER_URL,
-            'required' => false,
-            'constraints' => $this->getUrlFieldConstraints(),
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addMerchantProfileLocalizedGlossaryAttributesSubform(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES, CollectionType::class, [
@@ -418,21 +402,6 @@ class MerchantProfileFormType extends AbstractType
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
-        ];
-    }
-
-    /**
-     * @param array $choices
-     *
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    protected function getSalutationFieldConstraints(array $choices = []): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 64]),
-            new Choice(['choices' => array_keys($choices)]),
         ];
     }
 

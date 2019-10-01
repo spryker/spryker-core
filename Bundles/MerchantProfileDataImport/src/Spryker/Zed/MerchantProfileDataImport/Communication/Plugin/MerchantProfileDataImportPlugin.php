@@ -20,7 +20,7 @@ use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 class MerchantProfileDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class MerchantProfileDataImportPlugin extends AbstractPlugin implements DataImpo
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

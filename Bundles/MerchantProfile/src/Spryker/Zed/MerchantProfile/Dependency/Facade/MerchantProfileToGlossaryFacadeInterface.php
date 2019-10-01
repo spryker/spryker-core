@@ -37,8 +37,6 @@ interface MerchantProfileToGlossaryFacadeInterface
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
-     * @api
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
@@ -63,4 +61,12 @@ interface MerchantProfileToGlossaryFacadeInterface
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
     public function updateTranslation($keyName, $locale, $value, $isActive = true): TranslationTransfer;
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    public function deleteTranslation($keyName, LocaleTransfer $locale);
 }

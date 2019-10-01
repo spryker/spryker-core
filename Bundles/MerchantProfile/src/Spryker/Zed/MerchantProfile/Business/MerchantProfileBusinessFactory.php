@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilder;
+use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydrator;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydratorInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
@@ -65,8 +67,17 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProfileGlossaryWriter(
             $this->getGlossaryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->createMerchantProdileGlossaryKeyBuilder()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface
+     */
+    protected function createMerchantProdileGlossaryKeyBuilder(): MerchantProfileGlossaryKeyBuilderInterface
+    {
+        return new MerchantProfileGlossaryKeyBuilder();
     }
 
     /**

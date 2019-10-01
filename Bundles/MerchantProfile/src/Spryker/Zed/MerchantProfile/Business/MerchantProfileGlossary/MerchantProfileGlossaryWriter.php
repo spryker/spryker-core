@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
+use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
 
@@ -28,15 +29,23 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface
+     */
+    protected $merchantProfileGlossaryKeyBuilder;
+
+    /**
      * @param \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface $merchantProfileGlossaryKeyBuilder
      */
     public function __construct(
         MerchantProfileToGlossaryFacadeInterface $glossaryFacade,
-        MerchantProfileToLocaleFacadeInterface $localeFacade
+        MerchantProfileToLocaleFacadeInterface $localeFacade,
+        MerchantProfileGlossaryKeyBuilderInterface $merchantProfileGlossaryKeyBuilder
     ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
+        $this->merchantProfileGlossaryKeyBuilder = $merchantProfileGlossaryKeyBuilder;
     }
 
     /**
@@ -109,8 +118,12 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
                 $merchantProfileTransfer->getFkMerchant()
             );
 
-            $this->saveGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey, $glossaryAttributeValue);
-            $merchantProfileGlossaryKeys[$merchantProfileGlossaryAttributeFieldName] = $merchantProfileGlossaryKey;
+            if (empty($glossaryAttributeValue)) {
+                $this->deleteGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey);
+            } else {
+                $this->saveGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey, $glossaryAttributeValue);
+                $merchantProfileGlossaryKeys[$merchantProfileGlossaryAttributeFieldName] = $merchantProfileGlossaryKey;
+            }
         }
         $merchantProfileTransfer->fromArray($merchantProfileGlossaryKeys);
 
@@ -131,7 +144,22 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
     ): string {
         return !empty($merchantProfileData[$merchantProfileGlossaryKeyFieldName])
             ? $merchantProfileData[$merchantProfileGlossaryKeyFieldName]
-            : $this->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName);
+            : $this->merchantProfileGlossaryKeyBuilder->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $merchantProfileGlossaryAttributeKey
+     *
+     * @return bool
+     */
+    protected function deleteGlossaryTranslation(LocaleTransfer $localeTransfer, string $merchantProfileGlossaryAttributeKey): bool
+    {
+        if ($this->glossaryFacade->hasTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer)) {
+            return $this->glossaryFacade->deleteTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer);
+        }
+
+        return false;
     }
 
     /**
@@ -159,16 +187,5 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         }
 
         return $this->glossaryFacade->createTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer, $value);
-    }
-
-    /**
-     * @param int $fkMerchant
-     * @param string $merchantProfileGlossaryAttributeName
-     *
-     * @return string
-     */
-    protected function buildGlossaryKey(int $fkMerchant, string $merchantProfileGlossaryAttributeName): string
-    {
-        return sprintf('merchantProfile.%s.fkMerchant.%s', $merchantProfileGlossaryAttributeName, $fkMerchant);
     }
 }

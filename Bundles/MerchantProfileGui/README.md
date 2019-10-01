@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-profile-gui.svg)](https://travis-ci.org/spryker/merchant-profile-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-profile-gui/badge.svg)](https://coveralls.io/github/spryker/merchant-profile-gui)
 
-{{ADD DESCRIPTION HERE}}
+MerchantProfileGuiModule provides Zed UI interface for merchant profile management.
 
 ## Installation
 

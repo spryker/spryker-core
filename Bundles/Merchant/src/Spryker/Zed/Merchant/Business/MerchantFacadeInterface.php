@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
-/**
- * @method \Spryker\Zed\Merchant\Business\MerchantBusinessFactory getFactory()
- * @method \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface getRepository()
- * @method \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface getEntityManager()
- */
 interface MerchantFacadeInterface
 {
     /**

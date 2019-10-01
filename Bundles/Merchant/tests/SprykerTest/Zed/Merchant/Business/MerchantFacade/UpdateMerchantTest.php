@@ -15,6 +15,7 @@ use Spryker\Zed\Merchant\MerchantConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Merchant

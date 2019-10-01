@@ -1,19 +1,19 @@
 Role,Rolle
 Title,Titel
-"First Name","Vorname"
-"Last Name","Nachname"
+"First Name",Vorname
+"Last Name",Nachname
 Phone,Telefonnummer
-Banner,Banner
-Logo,Logo
-"Public Email","Kontakt-E-Mail-Adresse"
-"Public Phone","Kontakt-Telefonnummer"
+"Banner URL","Banner URL"
+"Logo URL","Logo URL"
+"Public Email",Kontakt-E-Mail-Adresse
+"Public Phone",Kontakt-Telefonnummer
 Description,Beschreibung
 "Banner url","Banner url"
 "Average Delivery Time","Durchschnittliche Lieferzeit"
-"Terms and Conditions","AGB"
-"Cancellation Policy","Widerrufsbelehrung"
+"Terms and Conditions",AGB
+"Cancellation Policy",Widerrufsbelehrung
 Imprint,Impressum
-"Data Privacy","Datenschutz"
+"Data Privacy",Datenschutz
 "Is Active","Ist Aktiv"
 active,Aktiv
 inactive,Inaktiv
@@ -21,3 +21,6 @@ Deactivate,Deaktivieren
 Activate,Aktivieren
 merchant_profile.activated,"Händlerprofil erfolgreich aktiviert."
 merchant_profile.deactivated,"Händlerprofil erfolgreich deaktiviert."
+"Contact Person",Kontaktperson
+"Merchant Profile",Händler-Profil
+"Legal Information",Rechtsinformation

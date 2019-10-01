@@ -34,7 +34,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
     protected const URL_MERCHANT_PROFILE_DEACTIVATE = '/merchant-profile-gui/edit/deactivate';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +76,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

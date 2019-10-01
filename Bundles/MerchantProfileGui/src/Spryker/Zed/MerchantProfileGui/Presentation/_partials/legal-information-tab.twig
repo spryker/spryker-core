@@ -1,0 +1,21 @@
+{{ form_row(merchantForm.merchantProfile.cancellation_policy_glossary_key) }}
+{{ form_row(merchantForm.merchantProfile.terms_conditions_glossary_key) }}
+{{ form_row(merchantForm.merchantProfile.data_privacy_glossary_key) }}
+{{ form_widget(merchantForm.merchantProfile.imprint_glossary_key) }}
+
+{% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
+    {% set localeName = localizedAttributes.vars.value.localeName %}
+
+    {% embed '@Gui/Partials/localized-ibox.twig' with {
+        localeName: localeName,
+        collapsed: (loop.index == 1 ? false : true),
+        id: 'localizedAttributes-ibox-' ~ localeName
+    } %}
+        {% block content %}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.cancellationPolicyGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.termsConditionsGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.dataPrivacyGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.imprintGlossaryKey) }}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}

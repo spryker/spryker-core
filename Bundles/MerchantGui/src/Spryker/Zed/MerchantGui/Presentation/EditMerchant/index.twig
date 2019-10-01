@@ -6,14 +6,14 @@
 {% block section_title widget_title %}
 
 {% block action %}
+    {{ backActionButton(url('/merchant-gui/list-merchant'), 'Back to Merchants' | trans) }}
     {%  for applicableMerchantStatus in applicableMerchantStatuses %}
         {% if applicableMerchantStatus == 'denied' %}
-            {{ removeActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':''}) }}
+            {{ removeActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':'<i class="fa fa-key"></i> '}) }}
         {% else %}
-            {{ createActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':''}) }}
+            {{ createActionButton(url('/merchant-gui/status-merchant', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':'<i class="fa fa-key"></i> '}) }}
         {%  endif %}
     {%  endfor %}
-    {{ backActionButton(url('/merchant-gui/list-merchant'), 'Back to Merchants' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -23,7 +23,10 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
-            {{ form_widget(form) }}
+
+            {{ tabs(merchantFormTabs, {
+                'merchantForm': form
+            }) }}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}

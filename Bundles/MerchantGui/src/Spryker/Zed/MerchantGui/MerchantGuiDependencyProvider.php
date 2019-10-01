@@ -25,6 +25,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER = 'PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER = 'PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER';
     public const PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER = 'PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER';
+    public const PLUGINS_MERCHANT_FORM_TABS_EXPANDER = 'PLUGINS_MERCHANT_FORM_TABS_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,6 +44,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantTableDataExpanderPlugins($container);
         $container = $this->addMerchantTableHeaderExpanderPlugins($container);
         $container = $this->addMerchantTableConfigExpanderPlugins($container);
+        $container = $this->addMerchantFormTabsExpanderPlugins($container);
 
         return $container;
     }
@@ -160,6 +162,20 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFormTabsExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_MERCHANT_FORM_TABS_EXPANDER] = function () {
+            return $this->getMerchantFormTabsExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormExpanderPluginInterface[]
      */
     protected function getMerchantProfileFormExpanderPlugins(): array
@@ -170,7 +186,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
      */
-    protected function getMerchantTableDataExpanderPlugins()
+    protected function getMerchantTableDataExpanderPlugins(): array
     {
         return [];
     }
@@ -178,7 +194,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
      */
-    protected function getMerchantTableActionExpanderPlugins()
+    protected function getMerchantTableActionExpanderPlugins(): array
     {
         return [];
     }
@@ -186,7 +202,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
      */
-    protected function getMerchantTableHeaderExpanderPlugins()
+    protected function getMerchantTableHeaderExpanderPlugins(): array
     {
         return [];
     }
@@ -194,7 +210,15 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
      */
-    protected function getMerchantTableConfigExpanderPlugins()
+    protected function getMerchantTableConfigExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface[]
+     */
+    protected function getMerchantFormTabsExpanderPlugins(): array
     {
         return [];
     }

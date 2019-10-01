@@ -208,7 +208,6 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer
             ->requireName()
-            ->requireRegistrationNumber()
             ->requireEmail();
     }
 
