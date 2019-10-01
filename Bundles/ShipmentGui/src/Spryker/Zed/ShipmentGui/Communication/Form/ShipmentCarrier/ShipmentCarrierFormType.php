@@ -78,7 +78,7 @@ class ShipmentCarrierFormType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'callback' => function(string $carrierName, ExecutionContextInterface $context) {
+                    'callback' => function (string $carrierName, ExecutionContextInterface $context): void {
                         $shipmentCarrierRequestTransfer = $this->createShipmentCarrierRequestTransfer($carrierName, $context);
 
                         if ($this->getFactory()->getShipmentFacade()->findShipmentCarrier($shipmentCarrierRequestTransfer)) {
