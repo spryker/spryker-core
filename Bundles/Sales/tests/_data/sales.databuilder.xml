@@ -11,6 +11,7 @@
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="quantity" dataBuilderRule="=1"/>
         <property name="name" dataBuilderRule="word"/>
+        <property name="unitPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="groupKey" dataBuilderRule="sentence(2)"/>
     </transfer>
 
