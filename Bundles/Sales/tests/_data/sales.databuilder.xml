@@ -9,7 +9,6 @@
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="quantity" dataBuilderRule="=1"/>
         <property name="name" dataBuilderRule="word"/>
-        <property name="unitPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="groupKey" dataBuilderRule="sentence(2)"/>
     </transfer>
 
@@ -26,10 +25,6 @@
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="unitNetPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumNetPrice" dataBuilderRule="randomNumber(5)"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="totals" dataBuilderRule="randomNumber(5)"/>
     </transfer>
 
     <transfer name="Address">

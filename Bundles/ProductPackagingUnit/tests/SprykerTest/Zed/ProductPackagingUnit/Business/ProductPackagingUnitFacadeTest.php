@@ -102,7 +102,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(string $name, ProductPackagingUnitTypeTranslationTransfer ... $nameTranslations): void
+    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(string $name, ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations): void
     {
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
             ->build()
@@ -128,7 +128,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(string $name, ProductPackagingUnitTypeTranslationTransfer ... $nameTranslations): void
+    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(string $name, ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations): void
     {
         // Arrange
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
