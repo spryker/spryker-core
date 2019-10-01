@@ -253,4 +253,20 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
             ->createQuoteChecker()
             ->isQuoteApplicableForApprovalProcess($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteApprovalStepAccessChecker()
+            ->checkCheckoutStepAccessibility($quoteTransfer);
+    }
 }

@@ -231,4 +231,17 @@ interface QuoteApprovalClientInterface
      * @return bool
      */
     public function isQuoteApplicableForApprovalProcess(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes a call to quote client to get quote lock.
+     * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool;
 }
