@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface;
 use Spryker\Client\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToSynchronizationServiceInterface;
+use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 
 class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInterface
 {
     protected const OPTION_KEY_CATEGORY = 'category';
     protected const OPTION_KEY_POSITION = 'position';
-    protected const RESOURCE_CMS_BLOCK_CATEGORY = 'cms_block_category';
     protected const KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
@@ -54,7 +54,7 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
         }
 
         $position = $cmsBlockOptions[static::OPTION_KEY_POSITION] ?? null;
-        $searchKey = $this->generateKey($cmsBlockOptions[static::OPTION_KEY_CATEGORY], static::RESOURCE_CMS_BLOCK_CATEGORY);
+        $searchKey = $this->generateKey($cmsBlockOptions[static::OPTION_KEY_CATEGORY], CmsBlockCategoryStorageConstants::CMS_BLOCK_CATEGORY_RESOURCE_NAME);
 
         $blocks = $this->storageClient->get($searchKey);
         $cmsBlockTransfers = [];
