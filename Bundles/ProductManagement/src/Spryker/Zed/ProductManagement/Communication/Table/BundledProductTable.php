@@ -189,8 +189,8 @@ class BundledProductTable extends AbstractTable
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
                 SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
                 static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
-                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => $item->getStockQuantity(),
-                static::COL_AVAILABILITY => $this->getAvailability($item)->toString(),
+                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => (new Decimal($item->getStockQuantity()))->trim(),
+                static::COL_AVAILABILITY => $this->getAvailability($item)->trim(),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
             ];
         }

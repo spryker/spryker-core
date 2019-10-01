@@ -131,7 +131,8 @@ class ViewController extends AddController
             ->findProductConcreteById($idProduct);
 
         $stockTypes = $this->getFactory()->getStockQueryContainer()->queryAllStockTypes()->find()->getData();
-        $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
+        $productTransfer = $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
+        $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
 
         if (!$productTransfer) {
             $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', ['%s' => $idProduct]);
