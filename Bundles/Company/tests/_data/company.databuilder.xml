@@ -11,10 +11,4 @@
         <property name="status" dataBuilderRule="=pending"/>
     </transfer>
 
-    <transfer name="StoreRelation">
-        <property name="idEntity"/>
-        <property name="idStores"/>
-        <property name="stores"/>
-    </transfer>
-
 </transfers>
