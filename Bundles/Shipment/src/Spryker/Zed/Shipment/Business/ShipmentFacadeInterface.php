@@ -50,8 +50,8 @@ interface ShipmentFacadeInterface
     /**
      * Specification:
      * - Retrieves the carrier by ShipmentCarrierRequestTransfer from database as transfer object.
-     * - If idCarrier is provided we add to filter by ID this value.
-     * - If carrierName is provided we add to filter by Name this value.
+     * - Filters by idCarrier when provided.
+     * - Filters by carrierName when provided.
      * - Excludes carriers which id exists in excludedCarrierIds list.
      * - Returns NULL if the carrier does not exist.
      *
