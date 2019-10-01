@@ -78,7 +78,13 @@ class ShipmentCarrierFormType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Callback([
-                    'callback' => [$this, 'uniqueCarrierNameCheck'],
+                    'callback' => function(string $carrierName, ExecutionContextInterface $context) {
+                        $shipmentCarrierRequestTransfer = $this->createShipmentCarrierRequestTransfer($carrierName, $context);
+
+                        if ($this->getFactory()->getShipmentFacade()->findShipmentCarrier($shipmentCarrierRequestTransfer)) {
+                            $context->addViolation(static::MESSAGE_VIOLATION);
+                        }
+                    },
                 ]),
             ],
         ]);
@@ -117,24 +123,9 @@ class ShipmentCarrierFormType extends AbstractType
      * @param string $carrierName
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      *
-     * @return void
-     */
-    public function uniqueCarrierNameCheck(string $carrierName, ExecutionContextInterface $context): void
-    {
-        $shipmentCarrierRequestTransfer = $this->createShipmentCarrierTransfer($carrierName, $context);
-
-        if ($this->getFactory()->getShipmentFacade()->findShipmentCarrier($shipmentCarrierRequestTransfer)) {
-            $context->addViolation(static::MESSAGE_VIOLATION);
-        }
-    }
-
-    /**
-     * @param string $carrierName
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     *
      * @return \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer
      */
-    protected function createShipmentCarrierTransfer(string $carrierName, ExecutionContextInterface $context): ShipmentCarrierRequestTransfer
+    protected function createShipmentCarrierRequestTransfer(string $carrierName, ExecutionContextInterface $context): ShipmentCarrierRequestTransfer
     {
         $formData = $context->getRoot()->getData();
         $carrierId = isset($formData[static::FIELD_CARRIER_ID]) ? $formData[static::FIELD_CARRIER_ID] : null;
