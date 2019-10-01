@@ -20,4 +20,4 @@ use Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineItemStateHistoryQuery a
  */
 abstract class AbstractSpyStateMachineItemStateHistoryQuery extends BaseSpyStateMachineItemStateHistoryQuery
 {
-} // SpyStateMachineItemStateHistoryQuery
+}

@@ -32,4 +32,8 @@
     <transfer name="Message">
         <property name="value" type="string"/>
     </transfer>
+
+    <transfer name="CmsSlotExternalData">
+        <property name="values" type="string[]" associative="true" />
+    </transfer>
 </transfers>

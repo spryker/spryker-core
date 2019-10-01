@@ -1,11 +1,11 @@
 {% extends '@Cms/Layout/layout.twig' %}
 
-    {% set pageName = '' %}
-    {% for pageAttribute in cmsPage.pageAttributes %}
-        {% if  pageAttribute.localeName == 'en_US' %}
-            {% set pageName = pageAttribute.name  %}
-        {% endif %}
-    {% endfor %}
+{% set pageName = '' %}
+{% for pageAttribute in cmsPage.pageAttributes %}
+    {% if  pageAttribute.localeName == 'en_US' %}
+        {% set pageName = pageAttribute.name  %}
+    {% endif %}
+{% endfor %}
 
 {% set widget_title = 'Edit CMS Page:' | trans ~ ' ' ~ pageName %}
 
@@ -15,7 +15,9 @@
 {% block action %}
     {% set redirectUrl = url('/cms-gui/edit-page', {'id-cms-page' : idCmsPage}) %}
     {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
-    {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': idCmsPage}), 'Edit placeholders' | trans) }}
+    {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
+        {{ editActionButton(url('/cms-gui/create-glossary', {'id-cms-page': idCmsPage}), 'Edit placeholders' | trans) }}
+    {% endif %}
     {% if cmsVersion is not null %}
         {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
     {% endif %}

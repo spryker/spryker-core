@@ -73,15 +73,11 @@
 
     <transfer name="Address">
         <property name="iso2Code" type="string"/>
+        <property name="fkCountry" type="int"/>
     </transfer>
 
     <transfer name="Totals">
         <property name="taxTotal" type="TaxTotal"/>
-    </transfer>
-
-    <transfer name="Address">
-        <property name="iso2Code" type="string"/>
-        <property name="fkCountry" type="int"/>
     </transfer>
 
 </transfers>
