@@ -39,14 +39,4 @@ class ShipmentCarrierFormDataProvider
 
         return $this->shipmentFacade->findShipmentCarrier($shipmentCarrierRequestTransfer) ?? new ShipmentCarrierTransfer();
     }
-
-    /**
-     * @return string[]
-     */
-    public function getOptions(): array
-    {
-        return [
-            'data_class' => ShipmentCarrierTransfer::class,
-        ];
-    }
 }
