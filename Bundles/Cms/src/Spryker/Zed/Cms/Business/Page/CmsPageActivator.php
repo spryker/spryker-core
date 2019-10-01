@@ -86,7 +86,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      */
     protected function assertCanActivatePage(int $idCmsPage): bool
     {
-        $cmsPageEntity = $this->getCmsPageWithTemplatesAndUrlEntity($idCmsPage);
+        $cmsPageEntity = $this->getCmsPageEntityWithTemplatesAndUrl($idCmsPage);
 
         $pageTemplatePlaceholders = $this->templateReader->getPlaceholdersByTemplatePath(
             $cmsPageEntity->getVirtualColumn(static::COLUMN_TEMPLATE_PATH)
@@ -174,7 +174,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPage
      */
-    protected function getCmsPageWithTemplatesAndUrlEntity(int $idCmsPage): SpyCmsPage
+    protected function getCmsPageEntityWithTemplatesAndUrl(int $idCmsPage): SpyCmsPage
     {
         return $this->cmsQueryContainer
             ->queryPageWithTemplatesAndUrlByIdPage($idCmsPage)
