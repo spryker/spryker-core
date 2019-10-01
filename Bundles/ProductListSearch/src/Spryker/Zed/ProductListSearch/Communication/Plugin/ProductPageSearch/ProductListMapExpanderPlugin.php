@@ -24,7 +24,7 @@ class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductPage
     protected const KEY_PRODUCT_LIST_MAP = 'product_list_map';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

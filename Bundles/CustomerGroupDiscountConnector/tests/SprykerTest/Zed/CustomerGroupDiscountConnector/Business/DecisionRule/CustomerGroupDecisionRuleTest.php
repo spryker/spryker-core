@@ -20,6 +20,7 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerGroupDiscountConnector

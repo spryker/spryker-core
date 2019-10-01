@@ -13,6 +13,7 @@ use Spryker\Yves\Session\SessionConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Session

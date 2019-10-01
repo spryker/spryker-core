@@ -23,7 +23,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
 class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +76,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,7 +100,7 @@ class ProductConcreteMeasurementUnitSynchronizationDataBulkPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

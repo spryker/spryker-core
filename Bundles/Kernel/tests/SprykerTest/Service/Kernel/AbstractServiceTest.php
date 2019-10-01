@@ -14,6 +14,7 @@ use SprykerTest\Service\Kernel\Fixtures\Service;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel

@@ -14,6 +14,7 @@ use Spryker\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cart

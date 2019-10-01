@@ -17,6 +17,7 @@ use SprykerTest\Shared\Twig\Stub\CacheStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig

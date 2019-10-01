@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ShipmentCheckoutConnectorFacade extends AbstractFacade implements ShipmentCheckoutConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,8 @@ class ShipmentCheckoutConnectorFacade extends AbstractFacade implements Shipment
     public function checkShipment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         return $this->getFactory()
-            ->createShipmentCheckoutPreCheck()
+            ->createShipmentCheckoutPreCheckStrategyResolver()
+            ->resolve($quoteTransfer->getItems())
             ->checkShipment($quoteTransfer, $checkoutResponseTransfer);
     }
 }

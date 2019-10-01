@@ -15,6 +15,7 @@ use Spryker\Shared\Vault\VaultConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Vault

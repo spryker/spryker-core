@@ -7,14 +7,9 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
-
-interface ShipmentExpenseFilterInterface
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInterface instead.
+ */
+interface ShipmentExpenseFilterInterface extends MultiShipmentExpenseFilterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function filterObsoleteShipmentExpenses(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

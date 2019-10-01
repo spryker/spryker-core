@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Functional
  * @group Spryker
  * @group Shared

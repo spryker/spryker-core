@@ -106,6 +106,18 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
+     */
+    public function getStoreWithCurrenciesByIdStore(int $idStore): StoreWithCurrencyTransfer
+    {
+        $storeTransfer = $this->storeFacade->getStoreById($idStore);
+
+        return $this->mapStoreCurrency($storeTransfer);
+    }
+
+    /**
      * @param string $isoCode
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
@@ -124,7 +136,7 @@ class CurrencyReader implements CurrencyReaderInterface
 
         if (!$currencyEntity) {
             throw new CurrencyNotFoundException(
-                sprintf('Currency with iso code "%s" not found.', $isoCode)
+                sprintf('Currency with ISO code "%s" not found.', $isoCode)
             );
         }
 
@@ -163,7 +175,7 @@ class CurrencyReader implements CurrencyReaderInterface
             throw new CurrencyNotFoundException(
                 sprintf(
                     "There is no currency configured for current store, 
-                    make sure you have currency iso codes provided in 'currencyIsoCodes' array in current stores.php config."
+                    make sure you have currency ISO codes provided in 'currencyIsoCodes' array in current stores.php config."
                 )
             );
         }

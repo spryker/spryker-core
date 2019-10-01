@@ -15,6 +15,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

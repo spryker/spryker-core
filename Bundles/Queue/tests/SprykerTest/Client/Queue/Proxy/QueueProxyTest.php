@@ -16,6 +16,7 @@ use Spryker\Shared\Queue\QueueConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Queue

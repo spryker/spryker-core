@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class RestUserFinderByAccessTokenPlugin extends AbstractPlugin implements RestUserFinderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

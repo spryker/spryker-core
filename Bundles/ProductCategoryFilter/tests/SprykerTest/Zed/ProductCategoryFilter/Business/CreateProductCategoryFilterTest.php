@@ -14,6 +14,7 @@ use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilter

@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductCategoryFilterFacade extends AbstractFacade implements ProductCategoryFilterFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,11 +78,13 @@ class ProductCategoryFilterFacade extends AbstractFacade implements ProductCateg
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $categoryId
+     *
+     * @return void
      */
     public function deleteProductCategoryFilterByCategoryId($categoryId)
     {

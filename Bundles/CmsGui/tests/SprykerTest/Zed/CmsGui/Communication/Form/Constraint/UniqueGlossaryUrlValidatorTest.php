@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Violation\ConstraintViolationBuilderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsGui

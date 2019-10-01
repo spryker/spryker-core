@@ -4,61 +4,61 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductPageSearch">
-        <property name="idProductAbstract" type="int" />
-        <property name="idImageSet" type="int" />
-        <property name="categoryNodeIds" type="array" />
-        <property name="attributes" type="array" />
-        <property name="name" type="string" />
-        <property name="sku" type="string" />
-        <property name="url" type="string" />
-        <property name="locale" type="string" />
-        <property name="store" type="string" />
-        <property name="abstractDescription" type="string" />
-        <property name="concreteDescription" type="string" />
-        <property name="concreteSkus" type="string" />
-        <property name="concreteNames" type="string" />
-        <property name="type" type="string" />
-        <property name="isFeatured" type="bool" />
-        <property name="isActive" type="bool" />
-        <property name="prices" type="array" />
-        <property name="price" type="int" />
-        <property name="allParentCategoryIds" type="array" />
-        <property name="boostedCategoryNames" type="array" />
-        <property name="categoryNames" type="array" />
-        <property name="sortedCategories" type="array" />
-        <property name="productImages" type="array" />
+        <property name="idProductAbstract" type="int"/>
+        <property name="idImageSet" type="int"/>
+        <property name="categoryNodeIds" type="array"/>
+        <property name="attributes" type="array"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="url" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
+        <property name="abstractDescription" type="string"/>
+        <property name="concreteDescription" type="string"/>
+        <property name="concreteSkus" type="string"/>
+        <property name="concreteNames" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isFeatured" type="bool"/>
+        <property name="isActive" type="bool"/>
+        <property name="prices" type="array"/>
+        <property name="price" type="int"/>
+        <property name="allParentCategoryIds" type="array"/>
+        <property name="boostedCategoryNames" type="array"/>
+        <property name="categoryNames" type="array"/>
+        <property name="sortedCategories" type="array"/>
+        <property name="productImages" type="array"/>
     </transfer>
 
     <transfer name="ProductPageLoad">
-        <property name="productAbstractIds" type="array" />
-        <property name="payloadTransfers" type="array" />
+        <property name="productAbstractIds" type="array"/>
+        <property name="payloadTransfers" type="array"/>
     </transfer>
 
     <transfer name="ProductPayload">
-        <property name="idProductAbstract" type="int" />
-        <property name="categories" type="array" />
-        <property name="images" type="array" />
-        <property name="prices" type="array" />
+        <property name="idProductAbstract" type="int"/>
+        <property name="categories" type="array"/>
+        <property name="images" type="array"/>
+        <property name="prices" type="array"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="stores" type="Store[]" />
+        <property name="stores" type="Store[]"/>
     </transfer>
 
     <transfer name="ProductConcretePageSearch">
-        <property name="idProductConcretePageSearch" type="int" />
-        <property name="fkProduct" type="int" />
-        <property name="fkProductAbstract" type="int" />
-        <property name="abstractSku" type="int" />
-        <property name="name" type="string" />
-        <property name="sku" type="string" />
-        <property name="locale" type="string" />
-        <property name="store" type="string" />
-        <property name="type" type="string" />
-        <property name="isActive" type="bool" />
-        <property name="data" type="array" />
-        <property name="structuredData" type="string" />
-        <property name="key" type="string" />
+        <property name="idProductConcretePageSearch" type="int"/>
+        <property name="fkProduct" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="abstractSku" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="store" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="data" type="array"/>
+        <property name="structuredData" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">
@@ -68,10 +68,10 @@
     </transfer>
 
     <transfer name="PageMap">
-        <property name="type" type="string" />
-        <property name="store" type="string" />
-        <property name="locale" type="string" />
-        <property name="isActive" type="bool" />
+        <property name="type" type="string"/>
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

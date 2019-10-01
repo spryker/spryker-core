@@ -9,7 +9,7 @@
             <state name="new"/>
             <state name="process loop state"/>
             <state name="process loop state 2"/>
-            <state name="done" />
+            <state name="done"/>
         </states>
 
         <transitions>
@@ -39,7 +39,7 @@
         </transitions>
 
         <events>
-            <event name="start" onEnter="true" />
+            <event name="start" onEnter="true"/>
             <event name="enter loop action" manual="true"/>
             <event name="loopback action" onEnter="true"/>
             <event name="loop exit action" manual="true"/>

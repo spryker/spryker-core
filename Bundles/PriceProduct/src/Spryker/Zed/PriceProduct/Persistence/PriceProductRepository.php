@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -456,5 +457,41 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(PriceProductTransfer $priceProductTransfer): bool
+    {
+        $priceProductQuery = $this->getFactory()
+            ->createPriceProductQuery()
+            ->filterByFkPriceType($priceProductTransfer->getFkPriceType());
+
+        $priceProductQuery = $this->addProductIdentifierToQuery(
+            $priceProductTransfer,
+            $priceProductQuery
+        );
+
+        return $priceProductQuery->count() > 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery $priceProductQuery
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    protected function addProductIdentifierToQuery(PriceProductTransfer $priceProductTransfer, SpyPriceProductQuery $priceProductQuery): SpyPriceProductQuery
+    {
+        $idProduct = $priceProductTransfer->getIdProduct();
+
+        if ($idProduct !== null) {
+            return $priceProductQuery->filterByFkProduct($idProduct);
+        }
+
+        return $priceProductQuery->filterByFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 }

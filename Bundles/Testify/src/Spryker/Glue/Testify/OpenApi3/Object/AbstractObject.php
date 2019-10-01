@@ -19,12 +19,12 @@ abstract class AbstractObject implements ObjectInterface
     protected $propertyValues;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     abstract public function getObjectSpecification(): ObjectSpecification;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function hydrate($content): SchemaFieldInterface
     {
@@ -47,7 +47,7 @@ abstract class AbstractObject implements ObjectInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function export(): ObjectInterface
     {

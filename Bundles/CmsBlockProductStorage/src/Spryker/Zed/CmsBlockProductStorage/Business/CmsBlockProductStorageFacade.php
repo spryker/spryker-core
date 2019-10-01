@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsBlockProductStorageFacade extends AbstractFacade implements CmsBlockProductStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class CmsBlockProductStorageFacade extends AbstractFacade implements CmsBlockPro
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

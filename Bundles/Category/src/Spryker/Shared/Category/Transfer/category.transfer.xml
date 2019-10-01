@@ -4,70 +4,70 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Category">
-        <property name="idCategory" type="int" />
-        <property name="categoryKey" type="string" />
-        <property name="isActive" type="bool" />
-        <property name="isInMenu" type="bool" />
-        <property name="isClickable" type="bool" />
-        <property name="isSearchable" type="bool" />
+        <property name="idCategory" type="int"/>
+        <property name="categoryKey" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="isInMenu" type="bool"/>
+        <property name="isClickable" type="bool"/>
+        <property name="isSearchable" type="bool"/>
 
-        <property name="name" type="string" />
-        <property name="url" type="string" />
-        <property name="imageName" type="string" />
-        <property name="categoryImageName" type="string" />
-        <property name="metaTitle" type="string" />
-        <property name="metaDescription" type="string" />
-        <property name="metaKeywords" type="string" />
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="imageName" type="string"/>
+        <property name="categoryImageName" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
 
-        <property name="categoryNode" type="Node" />
-        <property name="nodeCollection" type="NodeCollection" />
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
+        <property name="categoryNode" type="Node"/>
+        <property name="nodeCollection" type="NodeCollection"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
 
-        <property name="parentCategoryNode" type="Node" />
-        <property name="extraParents" singular="extraParent" type="Node[]" />
-        <property name="fkCategoryTemplate" type="int" />
+        <property name="parentCategoryNode" type="Node"/>
+        <property name="extraParents" singular="extraParent" type="Node[]"/>
+        <property name="fkCategoryTemplate" type="int"/>
     </transfer>
 
     <transfer name="CategoryCollection">
-        <property name="categories" type="Category[]" singular="category" />
+        <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 
     <transfer name="NodeCollection">
-        <property name="nodes" type="Node[]" singular="node" />
+        <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
     <transfer name="CategoryTemplate">
-        <property name="idCategoryTemplate" type="int" />
-        <property name="name" type="string" />
-        <property name="templatePath" type="string" />
+        <property name="idCategoryTemplate" type="int"/>
+        <property name="name" type="string"/>
+        <property name="templatePath" type="string"/>
     </transfer>
 
     <transfer name="Node">
-        <property name="idCategoryNode" type="int" />
-        <property name="fkCategory" type="int" />
-        <property name="fkParentCategoryNode" type="int" />
-        <property name="isRoot" type="bool" />
-        <property name="isMain" type="bool" />
-        <property name="nodeOrder" type="int" />
-        <property name="name" type="string" />
-        <property name="path" type="string" />
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" />
+        <property name="idCategoryNode" type="int"/>
+        <property name="fkCategory" type="int"/>
+        <property name="fkParentCategoryNode" type="int"/>
+        <property name="isRoot" type="bool"/>
+        <property name="isMain" type="bool"/>
+        <property name="nodeOrder" type="int"/>
+        <property name="name" type="string"/>
+        <property name="path" type="string"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
-        <property name="locale" type="Locale" />
-        <property name="name" type="string" />
-        <property name="url" type="string" />
-        <property name="metaTitle" type="string" />
-        <property name="metaDescription" type="string" />
-        <property name="metaKeywords" type="string" />
-        <property name="image" type="Image" />
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="image" type="Image"/>
     </transfer>
 
     <transfer name="Image">
-        <property name="name" type="string" />
-        <property name="absolutePath" type="string" />
-        <property name="relativePath" type="string" />
+        <property name="name" type="string"/>
+        <property name="absolutePath" type="string"/>
+        <property name="relativePath" type="string"/>
     </transfer>
 
 </transfers>

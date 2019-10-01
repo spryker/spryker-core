@@ -1,0 +1,34 @@
+{
+  "name": "spryker/router-extension",
+  "type": "library",
+  "description": "RouterExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/router": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/router": "You need to install this module when you want to use the RouterExtension interfaces.",
+    "spryker/symfony": "You need to install this module when you want to use the Router plugin."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

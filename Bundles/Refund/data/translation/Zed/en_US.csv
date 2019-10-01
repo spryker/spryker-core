@@ -5,4 +5,5 @@ Comment,Comment
 "Refund date","Refund date"
 "Refund Id","Refund Id"
 "Sales Order Id","Sales Order Id"
-Time,time
+Time,Time
+"No returns for this order","No returns for this order"

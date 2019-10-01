@@ -280,6 +280,18 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves customer address by address details.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
+
+    /**
+     * Specification:
      * - Sets provided address as default billing address for the related customer.
      *
      * @api
@@ -370,12 +382,12 @@ interface CustomerFacadeInterface
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
      *
-     * @see CustomerFacadeInterface::registerCustomer()
-     * @see CustomerFacadeInterface::updateCustomer()
-     *
      * @api
      *
      * @deprecated Use saveOrderCustomer() instead
+     *
+     * @see CustomerFacadeInterface::registerCustomer()
+     * @see CustomerFacadeInterface::updateCustomer()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -393,11 +405,12 @@ interface CustomerFacadeInterface
      * - Registers customer if it does not exist in persistent storage.
      * - Updates customer if it exists in persistent storage.
      * - Updates customer addresses.
+     * - Processes quote level (BC) or item level shipping addresses.
+     *
+     * @api
      *
      * @see CustomerFacadeInterface::registerCustomer()
      * @see CustomerFacadeInterface::updateCustomer()
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -486,4 +499,14 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function findCustomerByReference(string $customerReference): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets all salutations available in the system.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array;
 }

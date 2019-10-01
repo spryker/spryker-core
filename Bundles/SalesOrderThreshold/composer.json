@@ -14,7 +14,7 @@
     "spryker/locale": "^3.2.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.0.0",
-    "spryker/sales": "^8.16.0 || ^10.0.0",
+    "spryker/sales": "^8.16.0 || ^10.0.0 || ^11.0.0",
     "spryker/sales-order-threshold-extension": "^1.0.0",
     "spryker/store": "^1.2.0",
     "spryker/tax": "^5.0.0"

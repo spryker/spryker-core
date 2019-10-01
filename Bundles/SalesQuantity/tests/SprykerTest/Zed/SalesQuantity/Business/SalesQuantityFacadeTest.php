@@ -23,6 +23,7 @@ use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesQuantity
@@ -200,9 +201,9 @@ class SalesQuantityFacadeTest extends Unit
     }
 
     /**
-     * @see SalesQuantityConfig::findItemQuantityThreshold()
-     *
      * @dataProvider thresholds
+     *
+     * @see SalesQuantityConfig::findItemQuantityThreshold()
      *
      * @param bool $expectedResult
      * @param int $quantity

@@ -19,7 +19,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 class ConfiguredBundleOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands sales order by configured bundles.
      * - Expands ItemTransfer by configured bundle item.
      *

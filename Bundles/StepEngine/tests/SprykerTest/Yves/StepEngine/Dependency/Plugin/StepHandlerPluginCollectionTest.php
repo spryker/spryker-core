@@ -13,6 +13,7 @@ use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine

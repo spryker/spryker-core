@@ -12,6 +12,7 @@ use Spryker\Service\UtilEncryption\UtilEncryptionServiceInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilEncryption

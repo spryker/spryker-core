@@ -24,6 +24,7 @@ use SprykerTest\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Checkout

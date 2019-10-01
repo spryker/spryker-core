@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class UserLocalePlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Replaces default Application locale with User Locale.
      *
      * @api
@@ -43,7 +43,7 @@ class UserLocalePlugin extends AbstractPlugin implements ApplicationPluginInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
