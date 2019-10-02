@@ -75,7 +75,7 @@
     <transfer name="RestCheckoutDataResponseAttributes">
         <property name="addresses" type="RestAddress[]" singular="address"/>
         <property name="paymentProviders" type="RestPaymentProvider[]" singular="paymentProvider" deprecated="Will be removed in next major release."/>
-        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod" deprecated="Will be removed in next major release."/>
+        <property name="shipmentMethods" type="RestShipmentMethod[]" singular="shipmentMethod"/>
         <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
         <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
     </transfer>

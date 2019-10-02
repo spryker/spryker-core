@@ -25,10 +25,7 @@ class PaymentsRestApiFactory extends AbstractFactory
      */
     public function createPaymentMethodByCheckoutDataExpander(): PaymentMethodByCheckoutDataExpanderInterface
     {
-        return new PaymentMethodByCheckoutDataExpander(
-            $this->createPaymentMethodRestResponseBuilder(),
-            $this->createPaymentMethodMapper()
-        );
+        return new PaymentMethodByCheckoutDataExpander($this->createPaymentMethodRestResponseBuilder());
     }
 
     /**
@@ -44,6 +41,6 @@ class PaymentsRestApiFactory extends AbstractFactory
      */
     public function createPaymentMethodRestResponseBuilder(): PaymentMethodRestResponseBuilderInterface
     {
-        return new PaymentMethodRestResponseBuilder($this->getResourceBuilder());
+        return new PaymentMethodRestResponseBuilder($this->getResourceBuilder(), $this->createPaymentMethodMapper());
     }
 }

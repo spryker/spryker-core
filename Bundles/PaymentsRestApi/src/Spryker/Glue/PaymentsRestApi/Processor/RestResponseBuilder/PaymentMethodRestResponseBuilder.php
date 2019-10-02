@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
+use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
 
 class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuilderInterface
 {
@@ -20,27 +20,45 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
+    protected $paymentMethodMapper;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface $paymentMethodMapper
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        PaymentMethodMapperInterface $paymentMethodMapper
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->paymentMethodMapper = $paymentMethodMapper;
     }
 
     /**
-     * @param int $idPaymentMethod
-     * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer $restPaymentMethodsAttributesTransfer
+     * @param \Generated\Shared\Transfer\PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createRestPaymentMethodsResource(
-        int $idPaymentMethod,
-        RestPaymentMethodsAttributesTransfer $restPaymentMethodsAttributesTransfer
-    ): RestResourceInterface {
-        return $this->restResourceBuilder->createRestResource(
-            PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS,
-            (string)$idPaymentMethod,
-            $restPaymentMethodsAttributesTransfer
-        );
+    public function createRestPaymentMethodsResources(PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer): array
+    {
+        $paymentProviderTransfers = $paymentProviderCollectionTransfer->getPaymentProviders()->getArrayCopy() ?? null;
+        if (!$paymentProviderTransfers) {
+            return [];
+        }
+
+        $restPaymentMethodsAttributesTransfers = $this->paymentMethodMapper->mapPaymentProviderTransfersToRestPaymentMethodsAttributesTransfers($paymentProviderTransfers);
+
+        $resources = [];
+        foreach ($restPaymentMethodsAttributesTransfers as $idPaymentMethod => $restPaymentMethodsAttributesTransfer) {
+            $resource[] = $this->restResourceBuilder->createRestResource(
+                PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS,
+                (string)$idPaymentMethod,
+                $restPaymentMethodsAttributesTransfer
+            );
+        }
+
+        return $resources;
     }
 }

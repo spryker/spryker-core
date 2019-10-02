@@ -7,11 +7,9 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
-use Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
 class PaymentMethodMapper implements PaymentMethodMapperInterface
@@ -75,6 +73,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         PaymentMethodTransfer $paymentMethodTransfer
     ): RestPaymentMethodsAttributesTransfer {
         $methodName = $paymentMethodTransfer->getMethodName();
+
         return (new RestPaymentMethodsAttributesTransfer())
             ->setPaymentMethodName($methodName)
             ->setPaymentProviderName($paymentProviderTransfer->getName())
