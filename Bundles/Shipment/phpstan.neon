@@ -2,4 +2,4 @@ parameters:
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
     - '#Parameter \#1 \$amount of method .+MoneyTransfer::setAmount\(\) expects string|null, int|null given.#'
-    - '#Property .+Method::$shipmentMethodFilters\(array<.+ShipmentMethodFilterPluginInterface>\) does not accept array<.+ShipmentMethodFilterPluginInterface>.#'
+    - '#Property .+Method::\$shipmentMethodFilters \(array<.+ShipmentMethodFilterPluginInterface>\) does not accept array<.+ShipmentMethodFilterPluginInterface>.#'
