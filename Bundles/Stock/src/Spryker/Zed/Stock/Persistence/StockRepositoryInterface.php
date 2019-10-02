@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 
 interface StockRepositoryInterface
 {
@@ -22,6 +23,13 @@ interface StockRepositoryInterface
      * @return string[]
      */
     public function getStockNamesForStore(string $storeName): array;
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer

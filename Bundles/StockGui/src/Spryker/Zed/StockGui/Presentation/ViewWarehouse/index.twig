@@ -1,0 +1,59 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'View Warehouse: ' ~ stock.name | trans %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Configuration' | trans} %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Name' | trans }}</b></span><br>
+                    <span>{{ stock.name }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Is this warehouse available?' | trans }}</b></span><br>
+                    <span>{{ stock.isActive ? 'Yes' : 'No' | trans }}</span>
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with {widget_title: 'Store relation' | trans} %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <span><b>{{ 'Available in the following store(s)' | trans }}</b></span>
+                </div>
+            </div>
+            {% for storeName, stockNames in storeToStockMapping %}
+                <div class="checkbox">
+                    <label for="{{ storeName }}">
+                        <input type="checkbox" id="{{ storeName }}" disabled {% if stock.name in stockNames %}checked {% endif %} />
+                        {{ storeName }}
+                    </label>
+                </div>
+            {% endfor %}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

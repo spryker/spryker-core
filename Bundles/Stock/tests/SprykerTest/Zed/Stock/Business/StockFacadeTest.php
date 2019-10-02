@@ -532,6 +532,32 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindStockByIdShouldReturnStockTransferForExistingStockId(): void
+    {
+        //Act
+        $stockTransfer = $this->stockFacade->findStockById($this->stockTransfer1->getIdStock());
+
+        //Assert
+        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock());
+        $this->assertEquals($this->stockTransfer1->getName(), $stockTransfer->getName());
+        $this->assertEquals($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByIdShouldReturnStockTransferForNonExistingStockId(): void
+    {
+        //Act
+        $result = $this->stockFacade->findStockById(-1);
+
+        //Assert
+        $this->assertNull($result);
+    }
+
+    /**
+     * @return void
+     */
     protected function setupData()
     {
         $this->cleanUpDatabase();

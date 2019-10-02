@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -284,5 +285,19 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createReaderModel()
             ->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        return $this->getRepository()->findStockById($idStock);
     }
 }
