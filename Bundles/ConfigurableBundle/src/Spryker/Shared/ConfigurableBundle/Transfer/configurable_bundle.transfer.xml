@@ -33,12 +33,39 @@
 
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int" />
-        <property name="name" type="string"/>
+        <property name="name" type="string" />
         <property name="uuid" type="string" />
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotTranslation">
+        <property name="name" type="string" />
+        <property name="locale" type="Locale" />
+    </transfer>
+
+    <transfer name="ProductListResponse">
+        <property name="productList" type="ProductList" />
+        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool" />
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int" />
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string" />
+        <property name="type" type="string" />
+        <property name="parameters" type="array" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateFilter">
         <property name="idConfigurableBundleTemplate" type="int" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotFilter">
+        <property name="idProductList" type="int" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateResponse">

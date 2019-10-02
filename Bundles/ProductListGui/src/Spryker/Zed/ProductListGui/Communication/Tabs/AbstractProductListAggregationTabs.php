@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
-class ProductListAggregationTabs extends AbstractTabs
+abstract class AbstractProductListAggregationTabs extends AbstractTabs
 {
     public const GENERAL_TAB_NAME = 'general';
     public const GENERAL_TAB_TITLE = 'General Information';

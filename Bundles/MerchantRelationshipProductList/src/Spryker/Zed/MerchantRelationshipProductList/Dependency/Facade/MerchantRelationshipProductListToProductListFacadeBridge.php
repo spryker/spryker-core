@@ -38,10 +38,10 @@ class MerchantRelationshipProductListToProductListFacadeBridge implements Mercha
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void
+    public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $this->productListFacade->deleteProductList($productListTransfer);
+        return $this->productListFacade->deleteProductList($productListTransfer);
     }
 }

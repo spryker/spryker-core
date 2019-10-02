@@ -11,8 +11,14 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpander;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpander;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapper;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateTable;
@@ -61,6 +67,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getLocaleFacade(),
             $this->getGlossaryFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface
+     */
+    public function createProductListButtonsExpander(): ProductListButtonsExpanderInterface
+    {
+        return new ProductListButtonsExpander();
     }
 
     /**
@@ -119,6 +133,25 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function createConfigurableBundleTemplateEditTabs(): ConfigurableBundleTemplateEditTabs
     {
         return new ConfigurableBundleTemplateEditTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface
+     */
+    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
+    {
+        return new ProductListUsedByTableDataExpander(
+            $this->getConfigurableBundleFacade(),
+            $this->createProductListUsedByTableDataMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
+     */
+    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
+    {
+        return new ProductListUsedByTableDataMapper();
     }
 
     /**

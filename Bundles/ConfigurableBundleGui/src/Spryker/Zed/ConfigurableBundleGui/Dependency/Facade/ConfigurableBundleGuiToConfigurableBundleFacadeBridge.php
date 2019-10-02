@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
 class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements ConfigurableBundleGuiToConfigurableBundleFacadeInterface
@@ -85,5 +86,15 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer {
         return $this->configurableBundleFacade->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     */
+    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array
+    {
+        return $this->configurableBundleFacade->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
     }
 }

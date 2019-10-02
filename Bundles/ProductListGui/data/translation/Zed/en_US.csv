@@ -5,19 +5,14 @@
 Back,Back
 "Back to Product Lists","Back to Product Lists"
 Blacklist,Blacklist
-"Business Unit Owner Name","Business Unit Owner Name"
 "Create a Product List","Create a Product List"
 "Edit List","Edit List"
 Export,Export
 ID,ID
-"ID Merchant Relation","ID Merchant Relation"
 "Import Product List","Import Product List"
 "List of Product lists","List of Product lists"
-"Merchant Name","Merchant Name"
-"Merchant relationship","Merchant relationship"
 Name,Name
 "Overview of Product lists","Overview of Product lists"
-"Owner Type","Owner Type"
 "Product label #%d successfully created.","Product label #%d successfully created."
 "Product List ""%s"" has been successfully created.","Product List ""%s"" has been successfully created."
 "Product List ""%s"" has been successfully updated.","Product List ""%s"" has been successfully updated."
@@ -31,3 +26,18 @@ Selected,Selected
 SKU,SKU
 Type,Type
 Whitelist,Whitelist
+"Unable to delete Product List since it's used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot)."
+"Unable to delete Product List since it's used by Merchant Relation ""%merchant_relation%"".","Unable to delete Product List since it used by Merchant Relation ""%merchant_relation%""."
+"Configurable Bundle Template","Configurable Bundle Template"
+"Configurable Bundle Templates","Configurable Bundle Templates"
+"Edit Slot","Edit Slot"
+"Merchant Relationship","Merchant Relationship"
+"Edit Merchant Relationship","Edit Merchant Relationship"
+"Merchant Relations","Merchant Relations"
+Сonfirm,Сonfirm
+Cancel,Cancel
+"Used By","Used By"
+Title,Title
+Actions,Actions
+"Please ensure you saved information","Please ensure you saved information"
+"Confirm action","Confirm action"

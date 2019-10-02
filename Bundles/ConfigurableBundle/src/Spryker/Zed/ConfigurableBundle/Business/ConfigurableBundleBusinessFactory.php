@@ -7,18 +7,23 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
 use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -58,11 +63,43 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
+     */
+    public function createConfigurableBundleTemplateSlotReader(): ConfigurableBundleTemplateSlotReaderInterface
+    {
+        return new ConfigurableBundleTemplateSlotReader(
+            $this->getRepository(),
+            $this->createConfigurableBundleTranslationExpander()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface
      */
     public function createConfigurableBundleTemplateNameGenerator(): ConfigurableBundleTemplateNameGeneratorInterface
     {
         return new ConfigurableBundleTemplateNameGenerator($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface
+     */
+    public function createConfigurableBundleTranslationExpander(): ConfigurableBundleTranslationExpanderInterface
+    {
+        return new ConfigurableBundleTranslationExpander(
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface
+     */
+    public function createInactiveConfiguredBundleItemFilter(): InactiveConfiguredBundleItemFilterInterface
+    {
+        return new InactiveConfiguredBundleItemFilter(
+            $this->getRepository()
+        );
     }
 
     /**
@@ -74,13 +111,11 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
      */
-    public function createInactiveConfiguredBundleItemFilter(): InactiveConfiguredBundleItemFilterInterface
+    public function getLocaleFacade(): ConfigurableBundleToLocaleFacadeInterface
     {
-        return new InactiveConfiguredBundleItemFilter(
-            $this->getRepository()
-        );
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_LOCALE);
     }
 
     /**

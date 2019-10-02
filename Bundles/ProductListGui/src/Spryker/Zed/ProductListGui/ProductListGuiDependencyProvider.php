@@ -38,7 +38,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER = 'PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER';
 
-    public const PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER = 'PLUGINS_PRODUCT_LIST_FORM_EXPANDER';
+    public const PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER = 'PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER';
+
+    public const PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,7 +66,8 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductListTableQueryCriteriaExpanderPlugins($container);
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
-        $container = $this->addProductListOwnerTypeFormExpanderPlugins($container);
+        $container = $this->addProductListTopButtonsExpanderPlugins($container);
+        $container = $this->addProductListUsedByTableDataExpanderPlugins($container);
 
         return $container;
     }
@@ -244,21 +247,27 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductListOwnerTypeFormExpanderPlugins(Container $container): Container
+    protected function addProductListTopButtonsExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_OWNER_TYPE_FORM_EXPANDER] = function () {
-            return $this->getProductListOwnerTypeFormExpanderPlugins();
-        };
+        $container->set(static::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER, function (): array {
+            return $this->getProductListTopButtonsExpanderPlugins();
+        });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[]
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getProductListOwnerTypeFormExpanderPlugins(): array
+    protected function addProductListUsedByTableDataExpanderPlugins(Container $container): Container
     {
-        return [];
+        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER, function (): array {
+            return $this->getProductListUsedByTableDataExpanderPlugins();
+        });
+
+        return $container;
     }
 
     /**
@@ -297,6 +306,22 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[]
      */
     protected function getProductListTableHeaderExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
+     */
+    protected function getProductListTopButtonsExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface[]
+     */
+    protected function getProductListUsedByTableDataExpanderPlugins(): array
     {
         return [];
     }

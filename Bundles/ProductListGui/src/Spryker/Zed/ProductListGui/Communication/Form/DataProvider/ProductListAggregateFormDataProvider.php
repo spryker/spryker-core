@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductListGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
-use Spryker\Zed\ProductListGui\Communication\Form\ProductListAggregateFormType;
 
 class ProductListAggregateFormDataProvider
 {
@@ -23,23 +22,15 @@ class ProductListAggregateFormDataProvider
     protected $productListCategoryRelationFormDataProvider;
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[]
-     */
-    protected $productListOwnerTypeFormExpanderPlugins;
-
-    /**
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListFormDataProvider $productListFormDataProvider
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFormExpanderPluginInterface[] $productListOwnerTypeFormExpanderPlugins
      */
     public function __construct(
         ProductListFormDataProvider $productListFormDataProvider,
-        ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider,
-        array $productListOwnerTypeFormExpanderPlugins = []
+        ProductListCategoryRelationFormDataProvider $productListCategoryRelationFormDataProvider
     ) {
         $this->productListFormDataProvider = $productListFormDataProvider;
         $this->productListCategoryRelationFormDataProvider = $productListCategoryRelationFormDataProvider;
-        $this->productListOwnerTypeFormExpanderPlugins = $productListOwnerTypeFormExpanderPlugins;
     }
 
     /**
@@ -73,26 +64,7 @@ class ProductListAggregateFormDataProvider
      */
     public function getOptions(): array
     {
-        return array_merge(
-            $this->productListCategoryRelationFormDataProvider->getOptions(),
-            $this->getOwnerTypeOptions()
-        );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getOwnerTypeOptions(): array
-    {
-        $options = [];
-        foreach ($this->productListOwnerTypeFormExpanderPlugins as $productListOwnerTypeFormExpanderPlugin) {
-            $ownerType = $productListOwnerTypeFormExpanderPlugin->getOwnerType();
-            $options[ProductListAggregateFormType::OPTION_OWNER_TYPE] = [
-                $ownerType => $ownerType,
-            ];
-        }
-
-        return $options;
+        return $this->productListCategoryRelationFormDataProvider->getOptions();
     }
 
     /**

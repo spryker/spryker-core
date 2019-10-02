@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
+use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
 
 /**
  * Inherited Methods
@@ -120,6 +121,24 @@ class MerchantRelationshipBusinessTester extends Actor
             ->filterByFkMerchantRelationship($idMerchantRelationship);
 
         $this->assertSame(0, $merchantRelationshipToCompanyBusinessUnitQuery->count());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function expandMecrhantRelationshipWithName(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        return (new MerchantRelationshipExpander())->expandWithName($merchantRelationshipTransfer);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMerchantRelationsCount(): int
+    {
+        return SpyMerchantRelationshipQuery::create()->count();
     }
 
     /**

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
 
 class ConfigurableBundleMapper
 {
@@ -27,6 +29,25 @@ class ConfigurableBundleMapper
         );
 
         return $configurableBundleTemplateEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function mapConfigurableBundleTemplateSlotEntityToTransfer(
+        SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity,
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleTemplateSlotTransfer {
+        $configurableBundleTemplateSlotTransfer->fromArray($configurableBundleTemplateSlotEntity->toArray(), true);
+        $configurableBundleTemplateTransfer = $this->mapConfigurableBundleTemplateEntityToTransfer(
+            $configurableBundleTemplateSlotEntity->getSpyConfigurableBundleTemplate(),
+            new ConfigurableBundleTemplateTransfer()
+        );
+
+        return $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
     }
 
     /**
