@@ -131,7 +131,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
             static::SKU_TRANSLATION_PARAMETER => $sku,
-            static::STOCK_TRANSLATION_PARAMETER => $stock->toString(),
+            static::STOCK_TRANSLATION_PARAMETER => $stock->trim()->toString(),
         ]);
 
         return $messageTransfer;

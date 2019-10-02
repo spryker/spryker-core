@@ -105,7 +105,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
-            static::STOCK_TRANSLATION_PARAMETER => $availability->toString(),
+            static::STOCK_TRANSLATION_PARAMETER => $availability->trim()->toString(),
             static::SKU_TRANSLATION_PARAMETER => $sku,
         ]);
 
