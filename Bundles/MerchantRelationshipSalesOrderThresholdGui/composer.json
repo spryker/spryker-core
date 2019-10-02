@@ -8,7 +8,7 @@
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/currency": "^3.1.0",
-    "spryker/gui": "^3.26.0",
+    "spryker/gui": "^3.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/merchant": "^1.0.0",

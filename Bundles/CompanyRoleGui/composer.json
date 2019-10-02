@@ -10,7 +10,7 @@
     "spryker/company-role": "^1.4.0",
     "spryker/company-user-gui-extension": "^1.0.0",
     "spryker/glossary": "^3.0.0",
-    "spryker/gui": "^3.26.0",
+    "spryker/gui": "^3.13.0",
     "spryker/kernel": "^3.30.0",
     "spryker/permission": "^1.2.0",
     "spryker/symfony": "^3.1.5",
