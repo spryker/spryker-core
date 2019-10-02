@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\StockDataImport\Business;
 
-use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\StockDataImport\Business\Writer\Step\NameValidatorStep;
 use Spryker\Zed\StockDataImport\Business\Writer\StockWriterStep;
-use Spryker\Zed\StockDataImport\StockDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\StockDataImport\StockDataImportConfig getConfig()
@@ -52,14 +50,6 @@ class StockDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createStockWriterStep(): DataImportStepInterface
     {
-        return new StockWriterStep($this->getStockPropelQuery());
-    }
-
-    /**
-     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
-     */
-    protected function getStockPropelQuery(): SpyStockQuery
-    {
-        return $this->getProvidedDependency(StockDataImportDependencyProvider::PROPEL_QUERY_STOCK);
+        return new StockWriterStep();
     }
 }

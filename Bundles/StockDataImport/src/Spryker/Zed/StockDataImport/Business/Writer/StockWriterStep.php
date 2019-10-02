@@ -19,19 +19,6 @@ class StockWriterStep implements DataImportStepInterface
     protected const EXCEPTION_MESSAGE = '"%s" must be in the data set. Given: "%s"';
 
     /**
-     * @var \Orm\Zed\Stock\Persistence\SpyStockQuery
-     */
-    protected $stockQuery;
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
-     */
-    public function __construct(SpyStockQuery $stockQuery)
-    {
-        $this->stockQuery = $stockQuery;
-    }
-
-    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
@@ -48,7 +35,7 @@ class StockWriterStep implements DataImportStepInterface
             ));
         }
 
-        $stockEntity = $this->stockQuery
+        $stockEntity = SpyStockQuery::create()
             ->filterByName($dataSet[StockDataSetInterface::COLUMN_NAME])
             ->findOneOrCreate();
 
