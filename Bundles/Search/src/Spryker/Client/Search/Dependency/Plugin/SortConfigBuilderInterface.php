@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 
+/**
+ * @deprecated Use `\Spryker\Client\SearchExtension\Config\SortConfigInterface` instead.
+ */
 interface SortConfigBuilderInterface
 {
     /**

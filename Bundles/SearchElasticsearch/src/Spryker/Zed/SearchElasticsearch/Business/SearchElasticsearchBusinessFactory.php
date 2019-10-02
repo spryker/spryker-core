@@ -8,7 +8,8 @@
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
 use Elastica\Client;
-use Spryker\Client\SearchElasticsearch\Provider\SearchElasticsearchClientProvider;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
+use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -51,20 +52,9 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getElasticsearchClient(): Client
     {
-        /** @var \Elastica\Client $client */
-        $client = $this
-            ->createSearchClientProvider()
-            ->getInstance();
-
-        return $client;
-    }
-
-    /**
-     * @return \Spryker\Client\SearchElasticsearch\Provider\SearchElasticsearchClientProvider
-     */
-    public function createSearchClientProvider(): SearchElasticsearchClientProvider
-    {
-        return new SearchElasticsearchClientProvider();
+        return $this->createElasticsearchClientFactory()->createClient(
+            $this->getConfig()->getClientConfig()
+        );
     }
 
     /**
@@ -252,5 +242,13 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createFilesystemLoader(): FilesystemLoader
     {
         return new FilesystemLoader($this->getConfig()->getIndexMapClassTemplateDirectory());
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface
+     */
+    public function createElasticsearchClientFactory(): ElasticaClientFactoryInterface
+    {
+        return new ElasticaClientFactory();
     }
 }

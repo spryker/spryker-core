@@ -4,7 +4,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/elastica": "^3.0.0",
     "spryker/log": "^3.0.0",

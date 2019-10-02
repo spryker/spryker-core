@@ -18,6 +18,11 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
 class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
 {
     /**
+     * {@inheritdoc}
+     * - Performs search in Elasticsearch.
+     *
+     * @api
+     *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $resultFormatters
      * @param array $requestParameters
@@ -30,6 +35,10 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string|null $indexName
      *
      * @return int
@@ -40,6 +49,10 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string|null $indexName
      *
      * @return array
@@ -50,6 +63,10 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $key
      * @param string $indexName
      *
@@ -62,6 +79,10 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string|null $indexName
      *
      * @return bool
@@ -72,6 +93,10 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $searchDocumentTransfers
      *
      * @return bool

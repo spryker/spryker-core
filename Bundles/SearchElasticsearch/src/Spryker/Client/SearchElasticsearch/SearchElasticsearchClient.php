@@ -16,6 +16,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class SearchElasticsearchClient extends AbstractClient implements SearchElasticsearchClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
@@ -30,6 +32,8 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string|null $indexName
@@ -38,10 +42,13 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function getTotalCount(?string $indexName = null): int
     {
-        return $this->getFactory()->createSearch()->getTotalCount($indexName);
+        // TODO Provide implementation
+        return 0;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string|null $indexName
@@ -50,10 +57,13 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function getMetaData(?string $indexName = null): array
     {
-        return $this->getFactory()->createSearch()->getMetaData($indexName);
+        // TODO Provide implementation
+        return [];
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $key
@@ -63,10 +73,13 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function read(string $key, string $indexName)
     {
-        return $this->getFactory()->createSearch()->read($key, $indexName);
+        // TODO Provide implementation
+        return '';
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string|null $indexName
@@ -75,10 +88,13 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function delete(?string $indexName = null): bool
     {
-        return $this->getFactory()->createSearch()->delete($indexName);
+        // TODO Provide implementation
+        return true;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param array $searchDocumentTransfers
@@ -87,6 +103,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        return $this->getFactory()->createSearch()->deleteDocuments($searchDocumentTransfers);
+        // TODO Provide implementation
+        return true;
     }
 }

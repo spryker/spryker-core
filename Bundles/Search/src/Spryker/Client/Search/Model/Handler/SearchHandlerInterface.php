@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Search\Model\Handler;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * @deprecated Will be removed without replacement.
