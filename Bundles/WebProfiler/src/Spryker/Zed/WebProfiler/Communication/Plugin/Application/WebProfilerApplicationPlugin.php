@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\WebProfiler\Communication\Plugin\Application;
 
-use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
-use Spryker\Shared\EventDispatcher\EventDispatcher;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
@@ -88,7 +87,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
             return $this->getFactory()->createStopwatch();
         });
 
-        $container->set(static::SERVICE_PROFILER, function (Container $container) {
+        $container->set(static::SERVICE_PROFILER, function (ContainerInterface $container) {
             $profiler = $this->getFactory()->createProfiler();
             $profiler = $this->addDataCollectorPlugins($profiler, $container);
 
@@ -109,7 +108,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
      */
     protected function extendEventDispatcher(ContainerInterface $container): ContainerInterface
     {
-        $container->extend(static::SERVICE_DISPATCHER, function (EventDispatcher $dispatcher, ContainerInterface $container) {
+        $container->extend(static::SERVICE_DISPATCHER, function (EventDispatcherInterface $dispatcher, ContainerInterface $container) {
             return new TraceableEventDispatcher($dispatcher, $container->get(static::SERVICE_STOPWATCH), $container->get(static::SERVICE_LOGGER));
         });
 
