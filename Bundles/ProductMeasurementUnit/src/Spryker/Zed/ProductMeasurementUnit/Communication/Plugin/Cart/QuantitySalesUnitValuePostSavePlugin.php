@@ -23,7 +23,7 @@ class QuantitySalesUnitValuePostSavePlugin extends AbstractPlugin implements Pos
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
