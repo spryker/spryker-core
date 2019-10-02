@@ -97,9 +97,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
             return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
-        };
+        });
 
         return $container;
     }
