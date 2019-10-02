@@ -110,19 +110,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
-     * @param $expected
-     * @param $actual
-     *
-     * @return void
-     */
-    public function seeValueEqualsTo($expected, $actual): void
-    {
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
-     * @part json
-     *
      * @param string $jsonPath
      *
      * @return array|mixed
