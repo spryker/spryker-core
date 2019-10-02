@@ -29,4 +29,8 @@
         <property name="shipment" type="Shipment"/>
     </transfer>
 
+    <transfer name="ShipmentCarrier">
+        <property name="idShipmentCarrier" type="int"/>
+    </transfer>
+
 </transfers>
