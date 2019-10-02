@@ -7,5 +7,4 @@ parameters:
         - '#Parameter \#1 \$grossAmount of method .+MoneyValueTransfer::setGrossAmount\(\) expects int|null, string given.#'
         - '#Parameter \#1 \$amount of method .+DiscountCalculatorTransfer::setAmount\(\) expects string|null, (float|int) given.#'
         - '#Parameter \#1 \$validFrom of method .+DiscountGeneralTransfer::setValidFrom\(\) expects string|null, DateTime given.#'
-        - '#Parameter \#1 \$validTo of method .+DiscountGeneralTransfer::setValidTo\(\) expects string|null, DateTime given.#'
         - '#Parameter \#1 \$v of method .+SpyDiscount::setAmount\(\) expects int, string|null given.#'
