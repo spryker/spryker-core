@@ -32,17 +32,17 @@ class AvailabilityDataHelper extends Module
      */
     public function haveAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer, ?Decimal $quantity = null): SpyAvailabilityAbstract
     {
+        $storeTransfer = $this->getStoreFacade()->getCurrentStore();
         $availabilityFacade = $this->getAvailabilityFacade();
-        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability(
+        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailabilityForStore(
             $productConcreteTransfer->getSku(),
-            $quantity ?? new Decimal(static::DEFAULT_QUANTITY)
+            $quantity ?? new Decimal(static::DEFAULT_QUANTITY),
+            $storeTransfer
         );
-
-        $idStore = $this->getStoreFacade()->getCurrentStore()->getIdStore();
 
         return $this
             ->getAvailabilityQueryContainer()
-            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore)
+            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOneOrCreate();
     }
 

@@ -8,12 +8,12 @@
 namespace Spryker\Zed\Availability;
 
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
-use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductBridge as AvailabilityToProductQueryContainerBridge;
+use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -98,7 +98,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProductFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new AvailabilityToProductBridge($container->getLocator()->product()->facade());
+            return new AvailabilityToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;
@@ -126,7 +126,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStockFacade(Container $container)
     {
         $container[static::FACADE_STOCK] = function (Container $container) {
-            return new AvailabilityToStockBridge($container->getLocator()->stock()->facade());
+            return new AvailabilityToStockFacadeBridge($container->getLocator()->stock()->facade());
         };
 
         return $container;
@@ -140,7 +140,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     protected function addOmsFacade(Container $container)
     {
         $container[static::FACADE_OMS] = function (Container $container) {
-            return new AvailabilityToOmsBridge($container->getLocator()->oms()->facade());
+            return new AvailabilityToOmsFacadeBridge($container->getLocator()->oms()->facade());
         };
 
         return $container;

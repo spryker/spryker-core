@@ -28,10 +28,9 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      */
     public function getProductAvailabilityByIdProductAbstract($idProductAbstract)
     {
-        $locale = $this->getFactory()->getLocaleClient()->getCurrentLocale();
-        $availabilityStorage = $this->getFactory()->createAvailabilityStorage($locale);
-
-        return $availabilityStorage->getProductAvailability($idProductAbstract);
+        return $this->getFactory()
+            ->createCurrentLocaleAvailabilityStorage()
+            ->getProductAvailability($idProductAbstract);
     }
 
     /**
@@ -54,6 +53,8 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *

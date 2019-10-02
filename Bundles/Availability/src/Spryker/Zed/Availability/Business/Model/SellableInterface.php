@@ -13,6 +13,8 @@ use Spryker\DecimalObject\Decimal;
 interface SellableInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      *

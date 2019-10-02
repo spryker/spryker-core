@@ -17,21 +17,6 @@ interface AvailabilityFacadeInterface
 {
     /**
      * Specification:
-     *  - Checks if product is never out of stock for current store.
-     *  - Checks if product has stock in stock table.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool;
-
-    /**
-     * Specification:
      *  - Checks if product is never out of stock for given store.
      *  - Checks if product has stock in stock table.
      *  - Checks if have placed orders where items have state machine state flagged as reserved.
@@ -182,26 +167,13 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAvailabilityAbstract
      *
      * @return void
      */
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
-
-    /**
-     * Specification:
-     *  - Updates availability for given sku, by quantity for current store
-     *  - Touches availability collector if data changed
-     *  - Returns id of availability abstract
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability(string $sku, Decimal $quantity): int;
 
     /**
      * Specification:

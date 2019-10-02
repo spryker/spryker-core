@@ -29,14 +29,6 @@ interface AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveCurrentAvailability(string $sku, Decimal $quantity): int;
-
-    /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int

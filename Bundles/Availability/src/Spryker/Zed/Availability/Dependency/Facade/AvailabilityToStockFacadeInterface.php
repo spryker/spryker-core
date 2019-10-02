@@ -7,19 +7,11 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-interface AvailabilityToStockInterface
+interface AvailabilityToStockFacadeInterface
 {
-    /**
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateStockForProduct(string $sku): Decimal;
-
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -30,13 +22,6 @@ interface AvailabilityToStockInterface
 
     /**
      * @param string $sku
-     *
-     * @return bool
-     */
-    public function isNeverOutOfStock($sku);
-
-    /**
-     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -44,35 +29,11 @@ interface AvailabilityToStockInterface
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
-     *
-     * @return int
-     */
-    public function createStockProduct(StockProductTransfer $transferStockProduct);
-
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @return int
-     */
-    public function updateStockProduct(StockProductTransfer $stockProductTransfer);
-
-    /**
-     * @return string[]
-     */
-    public function getAvailableStockTypes();
-
-    /**
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStockProductsByIdProduct($idProductConcrete);
-
-    /**
-     * @return array
-     */
-    public function getWarehouseToStoreMapping();
 
     /**
      * @return array

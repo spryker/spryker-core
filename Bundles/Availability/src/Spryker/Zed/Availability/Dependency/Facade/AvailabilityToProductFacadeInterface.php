@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-interface AvailabilityToProductInterface
+interface AvailabilityToProductFacadeInterface
 {
     /**
      * @param string $sku

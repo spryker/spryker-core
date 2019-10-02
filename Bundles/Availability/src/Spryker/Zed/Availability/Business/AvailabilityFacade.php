@@ -24,25 +24,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use isProductSellableForStore() instead.
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool
-    {
-        return $this->getFactory()
-            ->createSellableModel()
-            ->isProductSellable($sku, $quantity);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -174,7 +155,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function getProductAbstractAvailability($idProductAbstract, $idLocale)
     {
         return $this->getFactory()
-            ->createProductReservationReader()
+            ->createProductAvailabilityReader()
             ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
@@ -192,7 +173,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
     {
         return $this->getFactory()
-            ->createProductReservationReader()
+            ->createProductAvailabilityReader()
             ->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
     }
 
@@ -209,7 +190,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
     ) {
         return $this->getFactory()
-            ->createProductReservationReader()
+            ->createProductAvailabilityReader()
             ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
     }
 
@@ -217,6 +198,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idAvailabilityAbstract
      *
@@ -227,25 +210,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         $this->getFactory()
             ->createAvailabilityHandler()
             ->touchAvailabilityAbstract($idAvailabilityAbstract);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use saveProductAvailabilityForStore() instead.
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability(string $sku, Decimal $quantity): int
-    {
-        return $this->getFactory()
-            ->createAvailabilityHandler()
-            ->saveCurrentAvailability($sku, $quantity);
     }
 
     /**

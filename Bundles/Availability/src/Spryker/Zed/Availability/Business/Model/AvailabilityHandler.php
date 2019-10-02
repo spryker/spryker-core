@@ -17,8 +17,8 @@ use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -34,7 +34,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $sellable;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
      */
     protected $stockFacade;
 
@@ -49,7 +49,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
      */
     protected $productFacade;
 
@@ -65,19 +65,19 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
 
     /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
     public function __construct(
         SellableInterface $sellable,
-        AvailabilityToStockInterface $stockFacade,
+        AvailabilityToStockFacadeInterface $stockFacade,
         AvailabilityToTouchInterface $touchFacade,
         AvailabilityQueryContainerInterface $queryContainer,
-        AvailabilityToProductInterface $productFacade,
+        AvailabilityToProductFacadeInterface $productFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityToEventFacadeInterface $eventFacade
     ) {
@@ -120,21 +120,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $quantityWithReservedItems = $this->getQuantity($quantity);
 
         $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveCurrentAvailability(string $sku, Decimal $quantity): int
-    {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
-
-        return $spyAvailabilityEntity->getFkAvailabilityAbstract();
     }
 
     /**

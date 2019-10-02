@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
-class ProductReservationReader implements ProductReservationReaderInterface
+class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
 {
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
@@ -25,7 +25,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     protected $availabilityQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
      */
     protected $stockFacade;
 
@@ -36,12 +36,12 @@ class ProductReservationReader implements ProductReservationReaderInterface
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         AvailabilityQueryContainerInterface $availabilityQueryContainer,
-        AvailabilityToStockInterface $stockFacade,
+        AvailabilityToStockFacadeInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
@@ -57,7 +57,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer
     {
-        $storeTransfer = $this->getStoreTransfer();
+        $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $stockNames = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
@@ -82,7 +82,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     public function findProductAbstractAvailability(int $idProductAbstract, int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer
     {
-        $storeTransfer = $this->getStoreTransfer($idStore);
+        $storeTransfer = $this->storeFacade->getStoreById($idStore);
 
         $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
 
@@ -110,13 +110,15 @@ class ProductReservationReader implements ProductReservationReaderInterface
     public function findProductConcreteAvailability(
         ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
-        $productConcreteAvailabilityRequestTransfer->requireSku();
-
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $productConcreteAvailabilityRequestTransfer
+            ->requireSku()
+            ->requireStore();
 
         $availabilityEntity = $this->availabilityQueryContainer
-            ->queryAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
-            ->findOne();
+            ->queryAvailabilityBySkuAndIdStore(
+                $productConcreteAvailabilityRequestTransfer->getSku(),
+                $productConcreteAvailabilityRequestTransfer->getStore()->getIdStore()
+            )->findOne();
 
         if (!$availabilityEntity) {
             return null;
@@ -207,19 +209,5 @@ class ProductReservationReader implements ProductReservationReaderInterface
                 break;
             }
         }
-    }
-
-    /**
-     * @param int|null $idStore
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function getStoreTransfer($idStore = null)
-    {
-        if ($idStore !== null) {
-            return $this->storeFacade->getStoreById($idStore);
-        }
-
-        return $this->storeFacade->getCurrentStore();
     }
 }

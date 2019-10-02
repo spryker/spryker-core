@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-class AvailabilityToStockBridge implements AvailabilityToStockInterface
+class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
@@ -28,16 +27,6 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
 
     /**
      * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateStockForProduct(string $sku): Decimal
-    {
-        return $this->stockFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -45,16 +34,6 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function isNeverOutOfStock($sku)
-    {
-        return $this->stockFacade->isNeverOutOfStock($sku);
     }
 
     /**
@@ -69,34 +48,6 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
-     *
-     * @return int
-     */
-    public function createStockProduct(StockProductTransfer $transferStockProduct)
-    {
-        return $this->stockFacade->createStockProduct($transferStockProduct);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
-     *
-     * @return int
-     */
-    public function updateStockProduct(StockProductTransfer $stockProductTransfer)
-    {
-        return $this->stockFacade->updateStockProduct($stockProductTransfer);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAvailableStockTypes()
-    {
-        return $this->stockFacade->getAvailableStockTypes();
-    }
-
-    /**
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer[]
@@ -104,14 +55,6 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     public function getStockProductsByIdProduct($idProductConcrete)
     {
         return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
-    }
-
-    /**
-     * @return array
-     */
-    public function getWarehouseToStoreMapping()
-    {
-        return $this->stockFacade->getWarehouseToStoreMapping();
     }
 
     /**
