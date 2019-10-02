@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface OfferToCustomerClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuoteRequestCompanyUserPreDeletePlugin extends AbstractPlugin implements CompanyUserPreDeletePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Deletes all Quote Requests assigned to Company User.
      *
      * @api

@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CompanyUserAccessTokenAuthenticationHandlerPlugin extends AbstractPlugin implements AccessTokenAuthenticationHandlerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Retrieves customer by access token.
      *
      * @api

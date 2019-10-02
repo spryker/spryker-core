@@ -68,6 +68,12 @@ class CreatePageController extends AbstractController
         $redirectUrl = $this->createPage($pageForm);
         if (empty($redirectUrl)) {
             $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_DATA_PROVIDED);
+
+            return [
+                'pageTabs' => $pageTabs->createView(),
+                'pageForm' => $pageForm->createView(),
+                'availableLocales' => $availableLocales,
+            ];
         }
 
         $this->addSuccessMessage(static::MESSAGE_PAGE_CREATE_SUCCESS);
@@ -87,6 +93,13 @@ class CreatePageController extends AbstractController
                 ->getCmsFacade()
                 ->createPage($pageForm->getData());
 
+            $cmsGlossaryTransfer = $this->getFactory()
+                ->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
+
+            if ($cmsGlossaryTransfer && $cmsGlossaryTransfer->getGlossaryAttributes()->count() === 0) {
+                return Url::generate('/cms-gui/list-page');
+            }
+
             return Url::generate(
                 '/cms-gui/create-glossary/index',
                 [CreateGlossaryController::URL_PARAM_ID_CMS_PAGE => $idCmsPage]
@@ -96,6 +109,8 @@ class CreatePageController extends AbstractController
             $error = $this->createTemplateErrorForm();
             $pageForm->get(CmsPageFormType::FIELD_FK_TEMPLATE)->addError($error);
         }
+
+        return null;
     }
 
     /**

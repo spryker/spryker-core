@@ -20,7 +20,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterfac
 class CompanyUserOauthUserProviderPlugin extends AbstractPlugin implements OauthUserProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,7 +38,7 @@ class CompanyUserOauthUserProviderPlugin extends AbstractPlugin implements Oauth
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

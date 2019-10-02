@@ -218,6 +218,7 @@ abstract class AbstractTable
     {
         $tableData = [];
 
+        /** @var array|null $headers */
         $headers = $this->config->getHeader();
         $safeColumns = $this->config->getRawColumns();
         $extraColumns = $this->config->getExtraColumns();
@@ -371,7 +372,7 @@ abstract class AbstractTable
      */
     private function getTwig()
     {
-        /** @var \Twig\Environment $twig */
+        /** @var \Twig\Environment|null $twig */
         $twig = (new Pimple())
             ->getApplication()['twig'];
 
@@ -462,7 +463,7 @@ abstract class AbstractTable
 
         $availableFields = array_keys($config->getHeader());
         $index = array_search($field, $availableFields, true);
-        if ($index === null) {
+        if ($index === false) {
             return $sort;
         }
 
@@ -487,7 +488,7 @@ abstract class AbstractTable
                 continue;
             }
             $sorting[] = [
-                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, 0),
+                self::SORT_BY_COLUMN => $this->getParameter($sortingRules, self::SORT_BY_COLUMN, '0'),
                 self::SORT_BY_DIRECTION => $this->getParameter($sortingRules, self::SORT_BY_DIRECTION, 'asc'),
             ];
         }
@@ -680,7 +681,6 @@ abstract class AbstractTable
 
                 $filter = '';
                 $driverName = Propel::getConnection()->getAttribute(PDO::ATTR_DRIVER_NAME);
-                // @todo fix this in CD-412
                 if ($driverName === 'pgsql') {
                     $filter = '::TEXT';
                 }

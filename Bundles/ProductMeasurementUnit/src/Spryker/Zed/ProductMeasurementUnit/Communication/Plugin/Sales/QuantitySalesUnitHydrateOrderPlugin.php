@@ -19,7 +19,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 class QuantitySalesUnitHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

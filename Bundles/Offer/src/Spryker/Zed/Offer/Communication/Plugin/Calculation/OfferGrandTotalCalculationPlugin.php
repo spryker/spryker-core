@@ -23,7 +23,7 @@ class OfferGrandTotalCalculationPlugin extends AbstractPlugin implements Calcula
      * after the generic logic is executed.
      *
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
