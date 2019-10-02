@@ -52,7 +52,7 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
 
         $resources = [];
         foreach ($restPaymentMethodsAttributesTransfers as $idPaymentMethod => $restPaymentMethodsAttributesTransfer) {
-            $resource[] = $this->restResourceBuilder->createRestResource(
+            $resources[] = $this->restResourceBuilder->createRestResource(
                 PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS,
                 (string)$idPaymentMethod,
                 $restPaymentMethodsAttributesTransfer

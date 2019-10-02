@@ -8,6 +8,8 @@
 namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
@@ -59,7 +61,13 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutDataResponseAttributesTransfer
         );
 
-        $restCheckoutDataResponseAttributesTransfer = $this->addSelectedRestShipmentMethodTransfers(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedPaymentMethods(
+            $restCheckoutDataTransfer,
+            $restCheckoutDataResponseAttributesTransfer,
+            $restCheckoutRequestAttributesTransfer
+        );
+
+        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedRestShipmentMethodTransfers(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
@@ -219,7 +227,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function addSelectedRestShipmentMethodTransfers(
+    protected function mapSelectedRestShipmentMethodTransfers(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -234,5 +242,140 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
+     */
+    protected function mapSelectedPaymentMethods(
+        RestCheckoutDataTransfer $checkoutDataTransfer,
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestCheckoutDataResponseAttributesTransfer {
+        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($checkoutDataTransfer->getAvailablePaymentMethods());
+
+        $paymentProviders = $checkoutDataTransfer->getPaymentProviders()->getPaymentProviders();
+        foreach ($paymentProviders as $paymentProviderTransfer) {
+            $isPaymentProviderExistsInRequestedPaymentProviders =
+                $this->isPaymentProviderExistsInRequestedPaymentProviders(
+                    $restCheckoutRequestAttributesTransfer,
+                    $paymentProviderTransfer
+                );
+
+            if (!$isPaymentProviderExistsInRequestedPaymentProviders) {
+                continue;
+            }
+
+            $this->addSelectedPaymentMethodsToRestCheckoutDataResponseAttributesTransfer(
+                $restCheckoutDataResponseAttributesTransfer,
+                $paymentProviderTransfer,
+                $restCheckoutRequestAttributesTransfer,
+                $availablePaymentMethodsList
+            );
+        }
+
+        return $restCheckoutDataResponseAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     *
+     * @return bool
+     */
+    protected function isPaymentProviderExistsInRequestedPaymentProviders(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        PaymentProviderTransfer $paymentProviderTransfer
+    ): bool {
+        foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
+            if ($restPaymentTransfer->getPaymentProviderName() === $paymentProviderTransfer->getName()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param string[] $availablePaymentMethodsList
+     *
+     * @return void
+     */
+    protected function addSelectedPaymentMethodsToRestCheckoutDataResponseAttributesTransfer(
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
+        PaymentProviderTransfer $paymentProviderTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        array $availablePaymentMethodsList
+    ): void {
+        foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
+            $isPaymentMethodExistsInRequestedPaymentMethods = $this->isPaymentMethodExistsInRequestedPaymentMethods(
+                $restCheckoutRequestAttributesTransfer,
+                $paymentMethodTransfer
+            );
+            if (!$isPaymentMethodExistsInRequestedPaymentMethods) {
+                continue;
+            }
+
+            $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames(
+                $paymentProviderTransfer->getName(),
+                $paymentMethodTransfer->getMethodName()
+            );
+
+            if (in_array($paymentSelection, $availablePaymentMethodsList)) {
+                $restCheckoutDataResponseAttributesTransfer->addSelectedPaymentMethod(
+                    $this->createRestPaymentMethodTransfer(
+                        $paymentMethodTransfer,
+                        $paymentProviderTransfer,
+                        $paymentSelection
+                    )
+                );
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return bool
+     */
+    protected function isPaymentMethodExistsInRequestedPaymentMethods(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): bool {
+        foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
+            if ($paymentMethodTransfer->getMethodName() === $restPaymentTransfer->getPaymentMethodName()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     * @param string $paymentSelection
+     *
+     * @return \Generated\Shared\Transfer\RestPaymentMethodTransfer
+     */
+    protected function createRestPaymentMethodTransfer(
+        PaymentMethodTransfer $paymentMethodTransfer,
+        PaymentProviderTransfer $paymentProviderTransfer,
+        string $paymentSelection
+    ): RestPaymentMethodTransfer {
+        return (new RestPaymentMethodTransfer())
+            ->setPaymentMethodName($paymentMethodTransfer->getMethodName())
+            ->setPaymentProviderName($paymentProviderTransfer->getName())
+            ->setRequiredRequestData(
+                $this->config->getRequiredRequestDataForPaymentMethod($paymentSelection)
+            );
     }
 }
