@@ -2,7 +2,7 @@
   "name": "spryker/stock-data-import",
   "type": "library",
   "description": "StockDataImport module",
-  "license": "MIT",
+  "license": "proprietary",
   "require": {
     "php": ">=7.1",
     "spryker/data-import": "^1.4.3",
