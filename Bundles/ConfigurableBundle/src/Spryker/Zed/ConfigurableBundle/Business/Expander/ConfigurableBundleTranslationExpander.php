@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 
 class ConfigurableBundleTranslationExpander implements ConfigurableBundleTranslationExpanderInterface
 {
@@ -21,11 +22,20 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
      */
-    public function __construct(ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade,
+        ConfigurableBundleToLocaleFacadeInterface $localeFacade
+    ) {
         $this->glossaryFacade = $glossaryFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -38,7 +48,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer->requireName();
 
-        $translation = $this->glossaryFacade->translate($configurableBundleTemplateTransfer->getName());
+        $translation = $this->getTranslation($configurableBundleTemplateTransfer->getName());
         $configurableBundleTemplateTransfer->addTranslation(
             (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
         );
@@ -56,11 +66,44 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotTransfer->requireName();
 
-        $translation = $this->glossaryFacade->translate($configurableBundleTemplateSlotTransfer->getName());
+        $translation = $this->getTranslation($configurableBundleTemplateSlotTransfer->getName());
         $configurableBundleTemplateSlotTransfer->addTranslation(
             (new ConfigurableBundleTemplateSlotTranslationTransfer())->setName($translation)
         );
 
         return $configurableBundleTemplateSlotTransfer;
+    }
+
+    /**
+     * @param string $translationKey
+     *
+     * @return string
+     */
+    protected function getTranslation(string $translationKey): string
+    {
+        if ($this->glossaryFacade->hasTranslation($translationKey)) {
+            return $this->glossaryFacade->translate($translationKey);
+        }
+
+        return $this->getFallbackTranslation($translationKey);
+    }
+
+    /**
+     * @param string $translationKey
+     *
+     * @return string
+     */
+    protected function getFallbackTranslation(string $translationKey): string
+    {
+        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
+            $translationKey,
+            $this->localeFacade->getLocaleCollection()
+        );
+
+        if ($translationTransfers) {
+            return $translationTransfers[0]->getValue();
+        }
+
+        return $translationKey;
     }
 }

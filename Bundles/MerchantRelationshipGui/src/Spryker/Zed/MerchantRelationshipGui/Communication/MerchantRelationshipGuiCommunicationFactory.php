@@ -10,15 +10,9 @@ namespace Spryker\Zed\MerchantRelationshipGui\Communication;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListButtonsExpander;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListButtonsExpanderInterface;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListUsedByTableDataExpander;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DataProvider\MerchantRelationshipFormDataProvider;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipCreateForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipEditForm;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Mapper\ProductListUsedByTableDataMapper;
-use Spryker\Zed\MerchantRelationshipGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTable;
 use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToCompanyFacadeInterface;
@@ -72,33 +66,6 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     public function createMerchantRelationshipTable(?int $idCompany = null): MerchantRelationshipTable
     {
         return new MerchantRelationshipTable($this->getPropelMerchantRelationshipQuery(), $idCompany);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListButtonsExpanderInterface
-     */
-    public function createProductListButtonsExpander(): ProductListButtonsExpanderInterface
-    {
-        return new ProductListButtonsExpander();
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface
-     */
-    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
-    {
-        return new ProductListUsedByTableDataExpander(
-            $this->getMerchantRelationshipFacade(),
-            $this->createProductListUsedByTableDataMapper()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
-     */
-    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
-    {
-        return new ProductListUsedByTableDataMapper();
     }
 
     /**

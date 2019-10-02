@@ -61,4 +61,12 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      * @return string
      */
     public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array;
 }

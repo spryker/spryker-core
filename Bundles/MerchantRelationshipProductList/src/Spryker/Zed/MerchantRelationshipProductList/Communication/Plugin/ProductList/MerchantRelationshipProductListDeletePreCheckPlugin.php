@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationship\Communication\Plugin\ProductList;
+namespace Spryker\Zed\MerchantRelationshipProductList\Communication\Plugin\ProductList;
 
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -13,9 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
- * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantRelationship\Communication\MerchantRelationshipCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipProductList\Business\MerchantRelationshipProductListFacadeInterface getFacade()
  */
 class MerchantRelationshipProductListDeletePreCheckPlugin extends AbstractPlugin implements ProductListDeletePreCheckPluginInterface
 {

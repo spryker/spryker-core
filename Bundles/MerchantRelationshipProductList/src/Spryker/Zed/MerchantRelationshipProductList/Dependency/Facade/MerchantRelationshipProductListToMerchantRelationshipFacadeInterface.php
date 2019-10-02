@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
-use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
-interface MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
+interface MerchantRelationshipProductListToMerchantRelationshipFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
@@ -18,11 +17,4 @@ interface MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterfac
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
     public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
-     */
-    public function getMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer;
 }

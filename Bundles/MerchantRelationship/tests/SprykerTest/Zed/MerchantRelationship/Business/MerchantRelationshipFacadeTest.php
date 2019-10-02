@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 
 /**
  * Auto-generated group annotations
@@ -235,48 +234,13 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnEmptySuccessfulResponse(): void
-    {
-        // Arrange
-        $productListTransfer = $this->tester->createProductList();
-
-        // Act
-        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
-
-        // Assert
-        $this->assertTrue($productListResponseTransfer->getIsSuccessful());
-        $this->assertEmpty($productListResponseTransfer->getMessages());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnUsageMessage(): void
-    {
-        // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
-        $productListTransfer = $this->tester->createProductList([
-            ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
-        ]);
-
-        // Act
-        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
-
-        // Assert
-        $this->assertFalse($productListResponseTransfer->getIsSuccessful());
-        $this->assertCount(1, $productListResponseTransfer->getMessages());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetMerchantRelationshipCollectionWillReturnAllAvailableRelationships(): void
     {
         // Arrange
         $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
 
         // Act
-        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection(new MerchantRelationshipFilterTransfer());
+        $merhcantRelationTransfers = $this->tester->getFacade()->getMerchantRelationshipCollection();
 
         // Assert
         $this->assertCount($this->tester->getMerchantRelationsCount(), $merhcantRelationTransfers);
@@ -285,15 +249,12 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetMerchantRelationshipCollectionWillReturnRelationshipsUsesProductList(): void
+    public function testGetMerchantRelationshipCollectionWillReturnRelationshipsFilteredByIds(): void
     {
         //Arrange
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
-        $productListTransfer = $this->tester->createProductList([
-            ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
-        ]);
-        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setIdProductList(
-            $productListTransfer->getIdProductList()
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setMerchantRelationshipIds(
+            [$merchantRelationshipTransfer->getIdMerchantRelationship()]
         );
 
         // Act

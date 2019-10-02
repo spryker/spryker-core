@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantRelationshipGui\Communication\Plugin\ProductListGui;
+namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin\ProductListGui;
 
 use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantRelationshipGui\Communication\MerchantRelationshipGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
  */
 class MerchantRelationListProductListTopButtonsExpanderPlugin extends AbstractPlugin implements ProductListTopButtonsExpanderPluginInterface
 {

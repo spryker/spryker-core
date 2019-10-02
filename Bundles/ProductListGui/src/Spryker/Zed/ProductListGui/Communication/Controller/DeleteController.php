@@ -50,7 +50,7 @@ class DeleteController extends ProductListAbstractController
 
         $productListResponseTransfer = $this->getFactory()
             ->getProductListFacade()
-            ->deleteProductList($productListTransfer);
+            ->removeProductList($productListTransfer);
 
         $this->addMessagesFromProductListResponseTransfer($productListResponseTransfer);
 

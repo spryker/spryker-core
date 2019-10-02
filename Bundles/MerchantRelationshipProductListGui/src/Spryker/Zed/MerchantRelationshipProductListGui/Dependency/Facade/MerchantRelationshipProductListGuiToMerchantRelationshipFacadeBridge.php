@@ -26,11 +26,11 @@ class MerchantRelationshipProductListGuiToMerchantRelationshipFacadeBridge imple
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
         return $this->merchantRelationshipFacade->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
     }

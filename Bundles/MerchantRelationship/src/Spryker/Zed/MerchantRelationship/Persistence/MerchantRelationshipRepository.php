@@ -148,32 +148,31 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      * @module CompanyBusinessUnit
      * @module Merchant
      *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
         $merchantRelationshipQuery = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->leftJoinCompanyBusinessUnit()
             ->innerJoinWithMerchant();
 
-        $merchantRelationshipQuery = $this->addFiltersToMerchantRelationshipQuery(
-            $merchantRelationshipQuery,
-            $merchantRelationshipFilterTransfer
-        );
-
-        $merchantRelationEntities = $merchantRelationshipQuery->find();
-
-        $merchantRelationTransfers = [];
-        foreach ($merchantRelationEntities as $merchantRelationEntity) {
-            $merchantRelationTransfers[] = $this->getFactory()
-                ->createPropelMerchantRelationshipMapper()
-                ->mapEntityToMerchantRelationshipTransfer($merchantRelationEntity, new MerchantRelationshipTransfer());
+        if ($merchantRelationshipFilterTransfer) {
+            $merchantRelationshipQuery = $this->addFiltersToMerchantRelationshipQuery($merchantRelationshipQuery, $merchantRelationshipFilterTransfer);
         }
 
-        return $merchantRelationTransfers;
+        $merchantRelationshipEntities = $merchantRelationshipQuery->find();
+
+        $merchantRelationhipTransfers = [];
+        foreach ($merchantRelationshipEntities as $merchantRelationshipEntity) {
+            $merchantRelationhipTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationshipEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationhipTransfers;
     }
 
     /**
@@ -186,11 +185,10 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         SpyMerchantRelationshipQuery $merchantRelationshipQuery,
         MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
     ): SpyMerchantRelationshipQuery {
-        if ($merchantRelationshipFilterTransfer->getIdProductList()) {
-            $merchantRelationshipQuery
-                ->useSpyProductListQuery()
-                    ->filterByIdProductList($merchantRelationshipFilterTransfer->getIdProductList())
-                ->endUse();
+        if ($merchantRelationshipFilterTransfer->getMerchantRelationshipIds()) {
+            $merchantRelationshipQuery->filterByIdMerchantRelationship_In(
+                $merchantRelationshipFilterTransfer->getMerchantRelationshipIds()
+            );
         }
 
         return $merchantRelationshipQuery;

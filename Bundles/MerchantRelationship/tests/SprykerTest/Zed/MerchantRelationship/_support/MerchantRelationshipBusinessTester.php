@@ -11,7 +11,6 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
@@ -88,16 +87,6 @@ class MerchantRelationshipBusinessTester extends Actor
             'ownerCompanyBusinessUnit' => $companyBusinessUnitOwner,
             'assigneeCompanyBusinessUnits' => $assigneeCompanyBusinessUnitCollectionTransfer,
         ]);
-    }
-
-    /**
-     * @param array $productListData
-     *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
-     */
-    public function createProductList(array $productListData = []): ProductListTransfer
-    {
-        return $this->haveProductList($productListData);
     }
 
     /**

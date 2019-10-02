@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductMerchantRelationshipGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 
-class PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeBridge implements PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeInterface
+class MerchantRelationshipProductListToMerchantRelationshipFacadeBridge implements MerchantRelationshipProductListToMerchantRelationshipFacadeInterface
 {
     /**
      * @var \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface

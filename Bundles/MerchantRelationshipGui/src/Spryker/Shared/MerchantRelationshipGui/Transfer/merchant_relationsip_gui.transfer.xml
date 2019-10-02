@@ -28,8 +28,4 @@
         <property name="idProductList" type="int" />
     </transfer>
 
-    <transfer name="MerchantRelationshipFilter">
-        <property name="idProductList" type="int" />
-    </transfer>
-
 </transfers>

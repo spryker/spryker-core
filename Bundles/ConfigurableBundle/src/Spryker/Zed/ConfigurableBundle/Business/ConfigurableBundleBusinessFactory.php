@@ -23,6 +23,7 @@ use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWri
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -85,7 +86,10 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createConfigurableBundleTranslationExpander(): ConfigurableBundleTranslationExpanderInterface
     {
-        return new ConfigurableBundleTranslationExpander($this->getGlossaryFacade());
+        return new ConfigurableBundleTranslationExpander(
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
     }
 
     /**
@@ -104,6 +108,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ConfigurableBundleToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_LOCALE);
     }
 
     /**

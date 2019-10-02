@@ -12,7 +12,6 @@
     "spryker/merchant": "^1.1.0",
     "spryker/merchant-relationship": "^1.6.0",
     "spryker/merchant-relationship-gui-extension": "^1.1.0",
-    "spryker/product-list-gui-extension": "^1.2.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.1"

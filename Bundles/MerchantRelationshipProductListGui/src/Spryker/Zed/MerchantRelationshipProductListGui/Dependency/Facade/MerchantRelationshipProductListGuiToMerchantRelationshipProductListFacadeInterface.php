@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 
 interface MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface
 {
@@ -18,4 +19,11 @@ interface MerchantRelationshipProductListGuiToMerchantRelationshipProductListFac
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
     public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return int[]
+     */
+    public function getMerchantRelationshipIdsByProductList(ProductListTransfer $productListTransfer): array;
 }

@@ -18,24 +18,12 @@
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" />
     </transfer>
 
-    <transfer name="ProductListResponse">
-        <property name="productList" type="ProductList" />
-        <property name="messages" type="Message[]" singular="message" />
-        <property name="isSuccessful" type="bool" />
-    </transfer>
-
     <transfer name="ProductList">
         <property name="idProductList" type="int" />
     </transfer>
 
-    <transfer name="Message">
-        <property name="value" type="string" />
-        <property name="type" type="string" />
-        <property name="parameters" type="array" />
-    </transfer>
-
     <transfer name="MerchantRelationshipFilter">
-        <property name="idProductList" type="int" />
+        <property name="merchantRelationshipIds" type="int[]" />
     </transfer>
 
 </transfers>

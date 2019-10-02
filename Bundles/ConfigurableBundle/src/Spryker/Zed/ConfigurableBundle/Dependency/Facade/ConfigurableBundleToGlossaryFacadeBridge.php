@@ -92,4 +92,15 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
+
+    /**
+     * @param string $glossaryKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array
+    {
+        return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($glossaryKey, $localeTransfers);
+    }
 }

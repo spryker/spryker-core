@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantRelationshipProductList;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeBridge;
+use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeBridge;
 
 /**
@@ -17,8 +19,10 @@ use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelati
  */
 class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_PRODUCT_LIST = 'PROPEL_QUERY_PRODUCT_LIST';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+
+    public const PROPEL_QUERY_PRODUCT_LIST = 'PROPEL_QUERY_PRODUCT_LIST';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -42,6 +46,7 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addProductListFacade($container);
+        $container = $this->addMerchantRelationshipFacade($container);
 
         return $container;
     }
@@ -70,6 +75,22 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
         $container[static::FACADE_PRODUCT_LIST] = function (Container $container) {
             return new MerchantRelationshipProductListToProductListFacadeBridge(
                 $container->getLocator()->productList()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantRelationshipFacade(Container $container): Container
+    {
+        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container): MerchantRelationshipProductListToMerchantRelationshipFacadeInterface {
+            return new MerchantRelationshipProductListToMerchantRelationshipFacadeBridge(
+                $container->getLocator()->merchantRelationship()->facade()
             );
         };
 

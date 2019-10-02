@@ -78,9 +78,23 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
+     * @return void
+     */
+    public function deleteProductList(ProductListTransfer $productListTransfer): void
+    {
+        $this->removeProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
             ->createProductListWriter()

@@ -9,8 +9,6 @@ namespace Spryker\Zed\MerchantRelationship\Business;
 
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Generated\Shared\Transfer\ProductListResponseTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 
 interface MerchantRelationshipFacadeInterface
 {
@@ -90,16 +88,17 @@ interface MerchantRelationshipFacadeInterface
 
     /**
      * Specification:
-     * - Finds merchant relations by criteria from MerchantRelationshipFilterTransfer.
-     * - Returns merchant relations expanded with names, company business units and merchants.
+     * - Returns all merchant relations.
+     * - Hydrate owner company business unit and merchant.
+     * - Populates name in transfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
 
     /**
      * Specification:
@@ -113,19 +112,4 @@ interface MerchantRelationshipFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
-
-    /**
-     * Specification:
-     * - Finds merchant relationships which use given product list by ProductListTransfer::idProductList.
-     * - Returns ProductListResponseTransfer with check results.
-     * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
-     * - ProductListResponseTransfer::messages contains usage details.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
-     */
-    public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }

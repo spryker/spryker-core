@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantRelationshipProductList\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 
 /**
@@ -153,5 +154,40 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         $updatedProductListTransfer = $this->tester->findProductListById($productListTransfer->getIdProductList());
 
         $this->assertSame($updatedProductListTransfer->getFkMerchantRelationship(), $merchantRelationshipTransfer->getIdMerchantRelationship());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnEmptySuccessfulResponse(): void
+    {
+        // Arrange
+        $productListTransfer = $this->tester->createProductList();
+
+        // Act
+        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
+
+        // Assert
+        $this->assertTrue($productListResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($productListResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnUsageMessage(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
+        $productListTransfer = $this->tester->createProductList([
+            ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
+        ]);
+
+        // Act
+        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
+
+        // Assert
+        $this->assertFalse($productListResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $productListResponseTransfer->getMessages());
     }
 }

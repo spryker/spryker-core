@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -105,5 +106,21 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
             );
 
         return $productListCollectionTransfer;
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return int[]
+     */
+    public function getMerchantRelationshipIdsByProductListId(int $idProductList): array
+    {
+        return $this->getFactory()
+            ->getProductListQuery()
+            ->joinWithSpyMerchantRelationship()
+            ->filterByIdProductList($idProductList)
+            ->select(SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP)
+            ->find()
+            ->toArray();
     }
 }
