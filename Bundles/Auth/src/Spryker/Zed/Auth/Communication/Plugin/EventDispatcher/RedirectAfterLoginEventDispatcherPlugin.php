@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Auth\Communication\Plugin\ServiceProvider;
+namespace Spryker\Zed\Auth\Communication\Plugin\EventDispatcher;
 
-use Silex\Application;
-use Silex\ServiceProviderInterface;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Auth\AuthConstants;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
+use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Auth\AuthConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,73 +20,74 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use `\Spryker\Zed\Auth\Communication\Plugin\EventDispatcher\RedirectAfterLoginEventDispatcherPlugin` instead.
- *
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()
  * @method \Spryker\Zed\Auth\Persistence\AuthQueryContainerInterface getQueryContainer()
  */
-class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
+class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    public const REFERER = 'referer';
+    protected const REFERER = 'referer';
 
     /**
-     * @param \Silex\Application $app
+     * {@inheritDoc}
+     * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::RESPONSE` event to redirect the user after login.
      *
-     * @return void
+     * @api
+     *
+     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    public function register(Application $app)
+    public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-    }
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+            return $this->onKernelResponse($event);
+        });
 
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return void
-     */
-    public function boot(Application $app)
-    {
-        $app['dispatcher']->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse']);
+        return $eventDispatcher;
     }
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
-     * @return void
+     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
      */
-    public function onKernelResponse(FilterResponseEvent $event)
+    protected function onKernelResponse(FilterResponseEvent $event): FilterResponseEvent
     {
         $requestUri = $event->getRequest()->getRequestUri();
 
         if (preg_match('/_profiler/', $requestUri)) {
-            return;
+            return $event;
         }
 
-        $this->handleRedirectToLogin($event);
-        $this->handleRedirectFromLogin($event);
+        $event = $this->handleRedirectToLogin($event);
+        $event = $this->handleRedirectFromLogin($event);
+
+        return $event;
     }
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
-     * @return void
+     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
      */
-    protected function handleRedirectToLogin(FilterResponseEvent $event)
+    protected function handleRedirectToLogin(FilterResponseEvent $event): FilterResponseEvent
     {
         $response = $event->getResponse();
         if (!($response instanceof RedirectResponse)) {
-            return;
+            return $event;
         }
 
         $targetUrl = $response->getTargetUrl();
         if ($targetUrl !== AuthConfig::DEFAULT_URL_LOGIN) {
-            return;
+            return $event;
         }
 
         $redirectTo = $this->getUrlToRedirectBackTo($event);
         if ($redirectTo === AuthConfig::DEFAULT_URL_REDIRECT) {
-            return;
+            return $event;
         }
 
         $query = [];
@@ -95,6 +97,8 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
         $url = Url::generate($targetUrl, $query);
         $event->setResponse(new RedirectResponse($url->build()));
+
+        return $event;
     }
 
     /**
@@ -102,7 +106,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      *
      * @return string|null
      */
-    protected function getUrlToRedirectBackTo(FilterResponseEvent $event)
+    protected function getUrlToRedirectBackTo(FilterResponseEvent $event): ?string
     {
         $urlToRedirectBackTo = $event->getRequest()->getRequestUri();
 
@@ -117,25 +121,27 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     /**
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      *
-     * @return void
+     * @return \Symfony\Component\HttpKernel\Event\FilterResponseEvent
      */
-    protected function handleRedirectFromLogin(FilterResponseEvent $event)
+    protected function handleRedirectFromLogin(FilterResponseEvent $event): FilterResponseEvent
     {
         $request = $event->getRequest();
 
         if ($request->getPathInfo() !== AuthConfig::DEFAULT_URL_LOGIN) {
-            return;
+            return $event;
         }
         if (!$this->isAuthenticated($request)) {
-            return;
+            return $event;
         }
 
         $referer = $this->filterReferer($request->query->get(static::REFERER));
         if (!$referer) {
-            return;
+            return $event;
         }
 
         $event->setResponse(new RedirectResponse($referer));
+
+        return $event;
     }
 
     /**
@@ -145,7 +151,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      *
      * @return string|null
      */
-    protected function filterReferer($url)
+    protected function filterReferer(?string $url): ?string
     {
         if (!$url) {
             return null;
@@ -163,7 +169,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      *
      * @return bool
      */
-    protected function isAuthenticated(Request $request)
+    protected function isAuthenticated(Request $request): bool
     {
         $authFacade = $this->getFacade();
         $token = null;
