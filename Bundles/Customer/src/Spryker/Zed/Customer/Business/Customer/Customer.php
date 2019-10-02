@@ -799,7 +799,7 @@ class Customer implements CustomerInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer|null
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findById($customerTransfer)
     {
