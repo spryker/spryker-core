@@ -17,8 +17,8 @@ Imprint,Impressum
 "Is Active","Ist Aktiv"
 active,Aktiv
 inactive,Inaktiv
-Deactivate,Deaktivieren
 Activate,Aktivieren
+Deactivate,Deaktivieren
 merchant_profile.activated,"Händlerprofil erfolgreich aktiviert."
 merchant_profile.deactivated,"Händlerprofil erfolgreich deaktiviert."
 "Contact Person",Kontaktperson
