@@ -148,6 +148,16 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface
+     */
+    public function createInactiveConfiguredBundleItemFilter(): InactiveConfiguredBundleItemFilterInterface
+    {
+        return new InactiveConfiguredBundleItemFilter(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
      */
     public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
@@ -156,6 +166,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * /**
+     *
      * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ConfigurableBundleToLocaleFacadeInterface
@@ -169,16 +181,6 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getProductListFacade(): ConfigurableBundleToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_PRODUCT_LIST);
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface
-     */
-    public function createInactiveConfiguredBundleItemFilter(): InactiveConfiguredBundleItemFilterInterface
-    {
-        return new InactiveConfiguredBundleItemFilter(
-            $this->getRepository()
-        );
     }
 
     /**

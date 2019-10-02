@@ -25,6 +25,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
 
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';

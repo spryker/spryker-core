@@ -46,4 +46,29 @@
         <property name="idConfigurableBundleTemplateSlot" type="int" />
     </transfer>
 
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button" />
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string" />
+        <property name="title" type="string" />
+        <property name="defaultOptions" type="array" />
+    </transfer>
+
+    <transfer name="ProductListUsedByTableData">
+        <property name="productList" type="ProductList" />
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="title" type="string" />
+        <property name="name" type="string" />
+        <property name="actionButtons" type="ButtonCollection" />
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int" />
+    </transfer>
+
 </transfers>

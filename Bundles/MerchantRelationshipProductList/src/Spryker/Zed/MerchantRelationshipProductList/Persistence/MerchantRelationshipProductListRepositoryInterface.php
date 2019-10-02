@@ -32,4 +32,11 @@ interface MerchantRelationshipProductListRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
     public function findProductListCollectionByIdMerchantRelationship(int $idMerchantRelationship): ProductListCollectionTransfer;
+
+    /**
+     * @param int $idProductList
+     *
+     * @return int[]
+     */
+    public function getMerchantRelationshipIdsByProductListId(int $idProductList): array;
 }

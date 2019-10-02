@@ -5,19 +5,14 @@
 Back,Zurück
 "Back to Product Lists","Zurück zu Produktlisten"
 Blacklist,"Schwarze Liste"
-"Business Unit Owner Name","Name des Geschäftseinheiten-Inhabers"
 "Create a Product List","Produktliste erstellen"
 "Edit List","Liste bearbeiten"
 Export,Exportieren
 ID,ID
-"ID Merchant Relation","ID der Händlerbeziehung"
 "Import Product List","Produktliste importieren"
 "List of Product lists","Liste der Produktlisten"
-"Merchant Name",Händlername
-"Merchant relationship",Händlerbeziehung
 Name,Name
 "Overview of Product lists","Übersicht der Produktlisten"
-"Owner Type",Inhaberart
 "Product label #%d successfully created.","Produktetikett #% d wurde erfolgreich erstellt."
 "Product List ""%s"" has been successfully created.","Produktliste ""%s"" wurde erfolgreich erstellt."
 "Product List ""%s"" has been successfully updated.","Produktliste ""%s"" wurde erfolgreich aktualisiert."
@@ -31,3 +26,18 @@ Selected,Ausgewählt
 SKU,SKU
 Type,Typ
 Whitelist,Whitelist
+"Unable to delete Product List since it's used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Produktliste kann nicht gelöscht werden, da sie von dem konfigurierbaren Bündel-Vorlagen ""%template%"" (""% slot%""slot) verwendet wird."
+"Unable to delete Product List since it's used by Merchant Relation ""%merchant_relation%"".","Produktliste kann nicht gelöscht werden, da sie von den Handelsbeziehung ""%merchant_relation%"" verwendet wird."
+"Configurable Bundle Template","Konfigurierbares Bündel-Vorlage"
+"Configurable Bundle Templates","Konfigurierbare Bundle-Vorlagen"
+"Edit Slot","Slot bearbeiten"
+"Merchant Relationship",Händlerbeziehung
+"Edit Merchant Relationship","Händlerbeziehung bearbeiten"
+"Merchant Relations",Handelsbeziehungen
+Сonfirm,Bestätigen
+Cancel,Abbrechen
+"Used By","Verwendet von"
+Title,Titel
+Actions,Aktionen
+"Please ensure you saved information","Bitte stellen Sie sicher, dass Sie Informationen gespeichert haben"
+"Confirm action","Aktion bestätigen"

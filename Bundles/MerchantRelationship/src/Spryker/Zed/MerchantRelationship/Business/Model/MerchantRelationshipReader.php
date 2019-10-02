@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpanderInterface;
@@ -91,11 +92,13 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
-        $merchantRelationships = $this->repository->getMerchantRelationshipCollection();
+        $merchantRelationships = $this->repository->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         foreach ($merchantRelationships as $merchantRelationshipTransfer) {
              $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);

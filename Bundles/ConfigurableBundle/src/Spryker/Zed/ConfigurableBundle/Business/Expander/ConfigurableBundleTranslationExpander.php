@@ -49,6 +49,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer->requireName();
 
+        $translation = $this->getTranslation($configurableBundleTemplateTransfer->getName());
         $translation = $this->glossaryFacade->translate($configurableBundleTemplateTransfer->getName());
         $configurableBundleTemplateTransfer->addTranslation(
             (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
@@ -90,12 +91,45 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotTransfer->requireName();
 
-        $translation = $this->glossaryFacade->translate($configurableBundleTemplateSlotTransfer->getName());
+        $translation = $this->getTranslation($configurableBundleTemplateSlotTransfer->getName());
         $configurableBundleTemplateSlotTransfer->addTranslation(
             (new ConfigurableBundleTemplateSlotTranslationTransfer())->setName($translation)
         );
 
         return $configurableBundleTemplateSlotTransfer;
+    }
+
+    /**
+     * @param string $translationKey
+     *
+     * @return string
+     */
+    protected function getTranslation(string $translationKey): string
+    {
+        if ($this->glossaryFacade->hasTranslation($translationKey)) {
+            return $this->glossaryFacade->translate($translationKey);
+        }
+
+        return $this->getFallbackTranslation($translationKey);
+    }
+
+    /**
+     * @param string $translationKey
+     *
+     * @return string
+     */
+    protected function getFallbackTranslation(string $translationKey): string
+    {
+        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
+            $translationKey,
+            $this->localeFacade->getLocaleCollection()
+        );
+
+        if ($translationTransfers) {
+            return $translationTransfers[0]->getValue();
+        }
+
+        return $translationKey;
     }
 
     /**

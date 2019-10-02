@@ -18,4 +18,12 @@
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship" />
     </transfer>
 
+    <transfer name="ProductList">
+        <property name="idProductList" type="int" />
+    </transfer>
+
+    <transfer name="MerchantRelationshipFilter">
+        <property name="merchantRelationshipIds" type="int[]" />
+    </transfer>
+
 </transfers>

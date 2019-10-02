@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationship\Business;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -102,13 +103,15 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
         return $this->getFactory()
             ->createMerchantRelationshipReader()
-            ->getMerchantRelationshipCollection();
+            ->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
     }
 
     /**

@@ -92,6 +92,41 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     */
+    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array
+    {
+        $configurableBundleTemplateSlotQuery = $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->joinWithSpyConfigurableBundleTemplate();
+
+        $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
+            $configurableBundleTemplateSlotQuery,
+            $configurableBundleTemplateSlotFilterTransfer
+        );
+
+        $configurableBundleTemplateSlotEntityCollection = $configurableBundleTemplateSlotQuery->find();
+
+        if (!$configurableBundleTemplateSlotEntityCollection->count()) {
+            return [];
+        }
+
+        $configurableBundleTemplateSlotTransfers = [];
+        $configurableBundleMapper = $this->getFactory()->createConfigurableBundleMapper();
+
+        foreach ($configurableBundleTemplateSlotEntityCollection as $configurableBundleTemplateSlotEntity) {
+            $configurableBundleTemplateSlotTransfers[] = $configurableBundleMapper->mapConfigurableBundleTemplateSlotEntityToTransfer(
+                $configurableBundleTemplateSlotEntity,
+                new ConfigurableBundleTemplateSlotTransfer()
+            );
+        }
+
+        return $configurableBundleTemplateSlotTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
@@ -122,6 +157,12 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery,
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): SpyConfigurableBundleTemplateSlotQuery {
+        if ($configurableBundleTemplateSlotFilterTransfer->getIdProductList()) {
+            $configurableBundleTemplateSlotQuery->filterByFkProductList(
+                $configurableBundleTemplateSlotFilterTransfer->getIdProductList()
+            );
+        }
+
         if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()) {
             $configurableBundleTemplateSlotQuery->filterByIdConfigurableBundleTemplateSlot(
                 $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -143,28 +145,52 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @module CompanyBusinessUnit
      * @module Merchant
      *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
     {
-        $merchantRelationEntities = $this->getFactory()
+        $merchantRelationshipQuery = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->leftJoinCompanyBusinessUnit()
-            ->innerJoinWithMerchant()
-            ->find();
+            ->innerJoinWithMerchant();
 
-        $merchantRelationTransfers = [];
-        foreach ($merchantRelationEntities as $merchantRelationEntity) {
-            $merchantRelationTransfers[] = $this->getFactory()
-                ->createPropelMerchantRelationshipMapper()
-                ->mapEntityToMerchantRelationshipTransfer($merchantRelationEntity, new MerchantRelationshipTransfer());
+        if ($merchantRelationshipFilterTransfer) {
+            $merchantRelationshipQuery = $this->addFiltersToMerchantRelationshipQuery($merchantRelationshipQuery, $merchantRelationshipFilterTransfer);
         }
 
-        return $merchantRelationTransfers;
+        $merchantRelationshipEntities = $merchantRelationshipQuery->find();
+
+        $merchantRelationhipTransfers = [];
+        foreach ($merchantRelationshipEntities as $merchantRelationshipEntity) {
+            $merchantRelationhipTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationshipEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationhipTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery $merchantRelationshipQuery
+     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+     *
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function addFiltersToMerchantRelationshipQuery(
+        SpyMerchantRelationshipQuery $merchantRelationshipQuery,
+        MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer
+    ): SpyMerchantRelationshipQuery {
+        if ($merchantRelationshipFilterTransfer->getMerchantRelationshipIds()) {
+            $merchantRelationshipQuery->filterByIdMerchantRelationship_In(
+                $merchantRelationshipFilterTransfer->getMerchantRelationshipIds()
+            );
+        }
+
+        return $merchantRelationshipQuery;
     }
 }

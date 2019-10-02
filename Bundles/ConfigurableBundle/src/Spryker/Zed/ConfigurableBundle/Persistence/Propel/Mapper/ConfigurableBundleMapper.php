@@ -66,7 +66,6 @@ class ConfigurableBundleMapper
             $configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList()
         );
     }
-
     /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
@@ -77,15 +76,18 @@ class ConfigurableBundleMapper
         SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity,
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer {
-        $configurableBundleTemplateSlotTransfer = $configurableBundleTemplateSlotTransfer->fromArray(
-            $configurableBundleTemplateSlotEntity->toArray(),
-            true
+        $configurableBundleTemplateSlotTransfer->fromArray($configurableBundleTemplateSlotEntity->toArray(), true);
+
+        $configurableBundleTemplateTransfer = $this->mapConfigurableBundleTemplateEntityToTransfer(
+            $configurableBundleTemplateSlotEntity->getSpyConfigurableBundleTemplate(),
+            new ConfigurableBundleTemplateTransfer()
         );
 
         $productListTransfer = (new ProductListTransfer())->setIdProductList(
             $configurableBundleTemplateSlotEntity->getFkProductList()
         );
 
-        return $configurableBundleTemplateSlotTransfer->setProductList($productListTransfer);
+        return $configurableBundleTemplateSlotTransfer->setProductList($productListTransfer)
+            ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
     }
 }

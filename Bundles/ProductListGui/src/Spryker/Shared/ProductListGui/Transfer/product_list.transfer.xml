@@ -5,7 +5,6 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductListAggregateForm">
-        <property name="ownerType" type="string"/>
         <property name="productList" type="ProductList"/>
         <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
         <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
@@ -18,12 +17,34 @@
         <property name="joins" type="QueryJoin[]" singular="join" />
         <property name="withColumns" type="array" singular="withColumn"/>
     </transfer>
-    
+
     <transfer name="QueryJoin">
         <property name="left" type="array" />
         <property name="right" type="array" />
         <property name="joinType" type="string" />
         <property name="relation" type="string" />
         <property name="condition" type="string" />
-    </transfer>    
+    </transfer>
+
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button" />
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string" />
+        <property name="title" type="string" />
+        <property name="defaultOptions" type="array" />
+    </transfer>
+
+    <transfer name="ProductListUsedByTableData">
+        <property name="productList" type="ProductList" />
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="title" type="string" />
+        <property name="name" type="string" />
+        <property name="actionButtons" type="ButtonCollection" />
+    </transfer>
+
 </transfers>

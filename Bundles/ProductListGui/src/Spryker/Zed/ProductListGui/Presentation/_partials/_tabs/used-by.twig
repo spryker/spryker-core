@@ -1,0 +1,26 @@
+<table id="used-by-table" class="table table-striped table-bordered table-hover gui-table-data">
+    <thead>
+        <tr>
+            <td>{{ 'Title' | trans }}</td>
+            <td>{{ 'Name' | trans }}</td>
+            <td>{{ 'Actions' | trans }}</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for productListUsedByTableRow in productListUsedByTableData.rows %}
+            <tr>
+                <td>{{ productListUsedByTableRow.title }}</td>
+                <td>{{ productListUsedByTableRow.name }}</td>
+                <td class="actions">
+                    {% include '@ProductListGui/_partials/button-collection.twig' with {
+                        buttonCollection: productListUsedByTableRow.actionButtons
+                    } only %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include '@ProductListGui/_partials/confirmation-modal-widnow.twig' with {
+    modalMessage: 'Please ensure you saved information' | trans
+} only %}
