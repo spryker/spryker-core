@@ -12,8 +12,31 @@
         <property name="idStockProduct" type="int"/>
     </transfer>
 
-    <transfer name="Type">
+    <transfer name="Type" deprecated="Use StockTransfer instead">
         <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStore"/>
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="StockCriteriaFilter">
+        <property name="isActive" type="bool"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
         <property name="name" type="string"/>
     </transfer>
 
