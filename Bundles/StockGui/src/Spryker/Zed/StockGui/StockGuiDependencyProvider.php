@@ -10,9 +10,12 @@ namespace Spryker\Zed\StockGui;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\StockGui\Dependency\Facade\StockGuiToStockFacadeBridge;
 
 class StockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_STOCK = 'FACADE_STOCK';
+
     public const PROPEL_QUERY_STOCK = 'PROPEL_QUERY_STOCK';
 
     /**
@@ -24,6 +27,7 @@ class StockGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addStockPropelQuery($container);
+        $container = $this->addStockFacade($container);
 
         return $container;
     }
@@ -37,6 +41,20 @@ class StockGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_QUERY_STOCK, function () {
             return SpyStockQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STOCK, function (Container $container) {
+            return new StockGuiToStockFacadeBridge($container->getLocator()->stock()->facade());
         });
 
         return $container;

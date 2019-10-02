@@ -31,6 +31,11 @@ interface ReaderInterface
     public function getWarehouseToStoreMapping(): array;
 
     /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping(): array;
+
+    /**
      * @param string $sku
      *
      * @return bool

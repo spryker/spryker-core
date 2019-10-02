@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -18,6 +20,7 @@ use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
@@ -35,6 +38,14 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainer;
  */
 class StockFacadeTest extends Unit
 {
+    protected const STORE_NAME_DE = 'DE';
+    protected const STORE_NAME_AT = 'AT';
+
+    /**
+     * @var \SprykerTest\Zed\Stock\StockBusinessTester
+     */
+    protected $tester;
+
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
@@ -46,14 +57,29 @@ class StockFacadeTest extends Unit
     protected $stockQueryContainer;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $storeTransfer;
+
+    /**
      * @var \Orm\Zed\Stock\Persistence\SpyStock
      */
     protected $stockEntity1;
 
     /**
+     * @var \Generated\Shared\Transfer\StockTransfer
+     */
+    protected $stockTransfer1;
+
+    /**
      * @var \Orm\Zed\Stock\Persistence\SpyStock
      */
     protected $stockEntity2;
+
+    /**
+     * @var \Generated\Shared\Transfer\StockTransfer
+     */
+    protected $stockTransfer2;
 
     /**
      * @var \Orm\Zed\Stock\Persistence\SpyStockProduct
@@ -336,8 +362,184 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandProductConcreteWithStocksWillExpandOnlyWithActiveStocks(): void
+    {
+        //Arrange
+        $this->stockEntity2->setIsActive(false)->save();
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
+            ->setSku(self::CONCRETE_SKU);
+
+        //Act
+        $productConcreteTransfer = $this->stockFacade->expandProductConcreteWithStocks($productConcreteTransfer);
+
+        //Assert
+        $this->assertNotEmpty($productConcreteTransfer->getStocks());
+        foreach ($productConcreteTransfer->getStocks() as $stock) {
+            $this->assertNotEquals($this->stockTransfer2->getIdStock(), $stock->getFkStock());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableStockTypesWillReturnCollectionOfStockNamesIndexedByStoreNames(): void
+    {
+        //Arrange
+        $this->stockEntity2->setIsActive(false)->save();
+
+        //Act
+        $stocks = $this->stockFacade->getAvailableStockTypes();
+
+        //Assert
+        $this->assertEquals([
+            $this->stockTransfer1->getName() => $this->stockTransfer1->getName(),
+            $this->stockTransfer2->getName() => $this->stockTransfer2->getName(),
+        ], $stocks);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStockProductsByIdProductWillReturnStockProductWhereStockIsActive(): void
+    {
+        //Arrange
+        $this->stockEntity2->setIsActive(false)->save();
+
+        //Act
+        $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($this->productConcreteEntity->getIdProduct());
+
+        //Assert
+        $this->assertCount(1, $stockProductTransfers);
+        $this->assertTrue($stockProductTransfers[0]->getQuantity()->equals(static::STOCK_QUANTITY_1));
+        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockProductTransfers[0]->getFkStock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStockTypesForStoreWillReturnCollectionOfStockNamesIndexedByStockName(): void
+    {
+        //Act
+        $stockCollection = $this->stockFacade->getStockTypesForStore($this->storeTransfer);
+
+        //Assert
+        $this->assertIsArray($stockCollection);
+        $this->assertEquals([
+            $this->stockTransfer1->getName() => $this->stockTransfer1->getName(),
+            $this->stockTransfer2->getName() => $this->stockTransfer2->getName(),
+        ], $stockCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetWarehouseToStoreMappingWillReturnCollectionOfStocksWithCollectionOfStoresNamesIndexedByStoresName(): void
+    {
+        //Arrange
+        $this->tester->haveStockStoreRelation(
+            (new StockTransfer())->fromArray($this->stockEntity2->toArray(), true),
+            $this->storeTransfer
+        );
+
+        //Act
+        $stockCollection = $this->stockFacade->getWarehouseToStoreMapping();
+
+        //Assert
+        $this->assertIsArray($stockCollection);
+        $storeName = $this->storeTransfer->getName();
+        $this->assertEquals([
+            $this->stockTransfer1->getName() => [
+                $storeName => $storeName,
+            ],
+            $this->stockTransfer2->getName() => [
+                $storeName => $storeName,
+            ],
+        ], $stockCollection);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoreToWarehouseMappingWillReturnCollectionOfStoreNamesWithCollectionOfStockNamesIndexedByStockName(): void
+    {
+        //Arrange
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer2 */
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $this->assignStockToStore($storeTransfer2, $this->stockTransfer1);
+        $this->assignStockToStore($storeTransfer2, $this->stockTransfer2);
+
+        //Act
+        $storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
+
+        //Assert
+        $this->assertEquals([
+            $this->storeTransfer->getName() => [
+                $this->stockTransfer1->getName(),
+            ],
+            $storeTransfer2->getName() => [
+                $this->stockTransfer1->getName(),
+                $this->stockTransfer2->getName(),
+            ],
+        ], $storeToWarehouseMapping);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockProductsByIdProductForStoreWillReturnCollectionOfStockProducts(): void
+    {
+        //Arrange
+        $this->tester->haveStockStoreRelation($this->stockTransfer2, $this->storeTransfer);
+
+        //Act
+        $productStockCollection = $this->stockFacade->findStockProductsByIdProductForStore(
+            $this->productConcreteEntity->getIdProduct(),
+            $this->storeTransfer
+        );
+
+        //Assert
+        $this->assertIsArray($productStockCollection);
+        $this->assertCount(2, $productStockCollection);
+        foreach ($productStockCollection as $stockProductTransfer) {
+            $this->assertEquals($this->productConcreteEntity->getSku(), $stockProductTransfer->getSku());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockProductsByIdProductForStoreWillReturnCollectionOfStockProductsWithInactiveStocksIncluded(): void
+    {
+        //Arrange
+        $this->tester->haveStockStoreRelation($this->stockTransfer2, $this->storeTransfer);
+        $this->stockEntity2->setIsActive(false)->save();
+
+        //Act
+        $productStockCollection = $this->stockFacade->findStockProductsByIdProductForStore(
+            $this->productConcreteEntity->getIdProduct(),
+            $this->storeTransfer
+        );
+
+        //Assert
+        $this->assertIsArray($productStockCollection);
+        $this->assertCount(2, $productStockCollection);
+        foreach ($productStockCollection as $stockProductTransfer) {
+            $this->assertEquals($this->productConcreteEntity->getSku(), $stockProductTransfer->getSku());
+        }
+    }
+
+    /**
+     * @return void
+     */
     protected function setupData()
     {
+        $this->cleanUpDatabase();
+
+        $this->storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+
         $this->productAbstractEntity = new SpyProductAbstract();
         $this->productAbstractEntity
             ->setSku(self::ABSTRACT_SKU)
@@ -355,6 +557,8 @@ class StockFacadeTest extends Unit
         $this->stockEntity1
             ->setName('TEST')
             ->save();
+        $this->stockTransfer1 = $this->mapStockEntityToStockTransfer($this->stockEntity1, new StockTransfer());
+        $this->assignStockToStore($this->storeTransfer, $this->stockTransfer1);
 
         $this->productStockEntity1 = new SpyStockProduct();
         $this->productStockEntity1
@@ -368,6 +572,7 @@ class StockFacadeTest extends Unit
         $this->stockEntity2
             ->setName('TEST2')
             ->save();
+        $this->stockTransfer2 = $this->mapStockEntityToStockTransfer($this->stockEntity2, new StockTransfer());
 
         $this->productStockEntity2 = new SpyStockProduct();
         $this->productStockEntity2
@@ -376,5 +581,40 @@ class StockFacadeTest extends Unit
             ->setIsNeverOutOfStock(false)
             ->setFkProduct($this->productConcreteEntity->getIdProduct())
             ->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return void
+     */
+    protected function assignStockToStore(StoreTransfer $storeTransfer, StockTransfer $stockTransfer): void
+    {
+        $this->tester->haveStockStoreRelation(
+            $stockTransfer,
+            $storeTransfer
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    protected function mapStockEntityToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
+    {
+        return $stockTransfer->fromArray($stockEntity->toArray(), true);
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanUpDatabase(): void
+    {
+        SpyStockStoreQuery::create()->deleteAll();
+        SpyStockProductQuery::create()->deleteAll();
+        SpyStockQuery::create()->deleteAll();
     }
 }
