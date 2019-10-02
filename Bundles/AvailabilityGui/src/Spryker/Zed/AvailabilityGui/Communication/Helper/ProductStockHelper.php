@@ -18,13 +18,40 @@ class ProductStockHelper implements ProductStockHelperInterface
      */
     public function trimProductAbstractAvailabilityQuantities(ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer): ProductAbstractAvailabilityTransfer
     {
-        $productAbstractAvailabilityTransfer->setStockQuantity(
-            $productAbstractAvailabilityTransfer->getStockQuantity()->trim()
-        );
+        $productAbstractAvailabilityTransfer = $this->trimStockQuantityValue($productAbstractAvailabilityTransfer);
+        $productAbstractAvailabilityTransfer = $this->trimReservationQuantityValue($productAbstractAvailabilityTransfer);
 
-        $productAbstractAvailabilityTransfer->setReservationQuantity(
-            $productAbstractAvailabilityTransfer->getReservationQuantity()->trim()
-        );
+        return $productAbstractAvailabilityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    protected function trimStockQuantityValue(ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer): ProductAbstractAvailabilityTransfer
+    {
+        if ($productAbstractAvailabilityTransfer->getStockQuantity() !== null) {
+            $productAbstractAvailabilityTransfer->setStockQuantity(
+                $productAbstractAvailabilityTransfer->getStockQuantity()->trim()
+            );
+        }
+
+        return $productAbstractAvailabilityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    protected function trimReservationQuantityValue(ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer): ProductAbstractAvailabilityTransfer
+    {
+        if ($productAbstractAvailabilityTransfer->getReservationQuantity() !== null) {
+            $productAbstractAvailabilityTransfer->setReservationQuantity(
+                $productAbstractAvailabilityTransfer->getReservationQuantity()->trim()
+            );
+        }
 
         return $productAbstractAvailabilityTransfer;
     }

@@ -42,6 +42,10 @@ class ProductStockHelper implements ProductStockHelperInterface
     public function trimStockQuantities(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($productConcreteTransfer->getStocks() as $stockProductTransfer) {
+            if ($stockProductTransfer->getQuantity() === null) {
+                continue;
+            }
+
             $stockProductTransfer->setQuantity(
                 $stockProductTransfer->getQuantity()->trim()
             );
