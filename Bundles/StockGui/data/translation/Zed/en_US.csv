@@ -2,3 +2,8 @@ Warehouses,Warehouses
 Administration,Administration
 Name,Name
 "Warehouse ID","Warehouse ID"
+"Available in store","Available in store"
+Status,Status
+Actions,Actions
+Active,Active
+Inactive,Inactive
