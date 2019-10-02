@@ -70,18 +70,6 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockEntities
-     *
-     * @return int[]
-     */
-    protected function getStockIdsFromStockEntities(array $stockEntities): array
-    {
-        return array_map(function (SpyStock $stockEntity): int {
-            return $stockEntity->getIdStock();
-        }, $stockEntities);
-    }
-
-    /**
      * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
