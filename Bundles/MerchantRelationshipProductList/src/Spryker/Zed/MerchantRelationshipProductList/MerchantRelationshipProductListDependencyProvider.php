@@ -72,11 +72,11 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LIST] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new MerchantRelationshipProductListToProductListFacadeBridge(
                 $container->getLocator()->productList()->facade()
             );
-        };
+        });
 
         return $container;
     }

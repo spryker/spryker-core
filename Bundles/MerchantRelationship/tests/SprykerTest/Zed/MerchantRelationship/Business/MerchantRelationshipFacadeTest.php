@@ -251,7 +251,7 @@ class MerchantRelationshipFacadeTest extends Unit
      */
     public function testGetMerchantRelationshipCollectionWillReturnRelationshipsFilteredByIds(): void
     {
-        //Arrange
+        // Arrange
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setMerchantRelationshipIds(
             [$merchantRelationshipTransfer->getIdMerchantRelationship()]
