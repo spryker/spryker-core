@@ -51,6 +51,12 @@ class ProductStockHelper implements ProductStockHelperInterface
             );
         }
 
+        if ($productConcreteTransfer->getProductBundle() !== null && $productConcreteTransfer->getProductBundle()->getAvailability() !== null) {
+            $productConcreteTransfer->getProductBundle()->setAvailability(
+                $productConcreteTransfer->getProductBundle()->getAvailability()->trim()
+            );
+        }
+
         return $productConcreteTransfer;
     }
 
