@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::withColumn\(\).#'
         - '#Method .+CmsBlockCategoryStorageQueryContainer::query.+\(\) should return .+Spy.+Query|.+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
+        - '#Call to an undefined method Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector::#'

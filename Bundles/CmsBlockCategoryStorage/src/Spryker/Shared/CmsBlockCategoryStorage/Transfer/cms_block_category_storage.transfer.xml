@@ -11,6 +11,16 @@
     <transfer name="CmsBlockCategory">
         <property name="position" type="string"/>
         <property name="blockNames" type="array"/>
+        <property name="blockKeys" type="array"/>
     </transfer>
 
+    <transfer name="CmsBlock">
+        <property name="key" type="string" />
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
 </transfers>

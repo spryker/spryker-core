@@ -11,9 +11,11 @@ interface CmsBlockStorageClientInterface
 {
     /**
      * Specification:
-     * - Find blocks by provided array of names with a single multi request to a storage
+     * - Finds blocks by the provided array of names with a single multi request to a storage.
      *
      * @api
+     *
+     * @deprecated Use \Spryker\Client\CmsBlockStorage\CmsBlockStorageClientInterface::findBlocksByKeys() instead.
      *
      * @param string[] $blockNames
      * @param string $localeName
@@ -25,27 +27,28 @@ interface CmsBlockStorageClientInterface
 
     /**
      * Specification:
-     * - Find blocs by required options
-     * - Return only block names which fit to all provided options
+     * - Finds blocks by the provided array of keys with a single multi request to a storage.
+     *
+     * @api
+     *
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
+
+    /**
+     * Specification:
+     * - Finds blocks by required options.
+     * - Returns only block keys which fit to all provided options.
      *
      * @api
      *
      * @param array $options
-     * @param string $localName
      *
      * @return array
      */
-    public function findBlockNamesByOptions(array $options, $localName);
-
-    /**
-     * Specification:
-     * - Prepare a valid block key by provided name
-     *
-     * @api
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name);
+    public function findBlockKeysByOptions(array $options): array;
 }

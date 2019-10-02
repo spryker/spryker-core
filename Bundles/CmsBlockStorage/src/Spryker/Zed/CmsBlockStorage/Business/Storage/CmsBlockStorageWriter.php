@@ -17,17 +17,18 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
-    public const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
-    public const RELATION_STORE = 'SpyStore';
-    public const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
-    public const COLUMN_STORE_NAME = 'name';
-    public const COLUMN_CMS_BLOCK_NAME = 'name';
-    public const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
+    protected const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+    protected const RELATION_STORE = 'SpyStore';
+    protected const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+    protected const COLUMN_STORE_NAME = 'name';
+    protected const COLUMN_CMS_BLOCK_NAME = 'name';
+    protected const COLUMN_CMS_BLOCK_KEY = 'key';
+    protected const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
 
-    public const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
-    public const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
-    public const LOCALE_NAME = 'LOCALE_NAME';
-    public const STORE_NAME = 'STORE_NAME';
+    protected const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
+    protected const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
+    protected const LOCALE_NAME = 'LOCALE_NAME';
+    protected const STORE_NAME = 'STORE_NAME';
 
     /**
      * @var \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface
@@ -133,11 +134,6 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 continue;
             }
 
-            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME] !== $cmsBlockStorageEntity->getName()) {
-                $this->deleteStorageEntity($cmsBlockStorageEntity);
-                $cmsBlockStorageEntity = new SpyCmsBlockStorage();
-            }
-
             $this->updateStoreData($cmsBlockEntity, $cmsBlockStorageEntity, $pair[static::STORE_NAME], $pair[static::LOCALE_NAME]);
         }
     }
@@ -183,6 +179,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $cmsBlockStorageEntity
             ->setData($cmsBlockEntity)
             ->setFkCmsBlock($cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK])
+            ->setCmsBlockKey($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY])
             ->setLocale($localeName)
             ->setStore($storeName)
             ->setName($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME])

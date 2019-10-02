@@ -8,10 +8,8 @@
     "spryker/event": "^2.0.0",
     "spryker/glossary": "^3.1.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/storage": "^3.0.0",
     "spryker/store": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0"
@@ -20,7 +18,6 @@
     "spryker/cms-block-product-connector": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },

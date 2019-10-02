@@ -1,3 +1,4 @@
 parameters:
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
+        - '#Call to an undefined method Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnector::#'

@@ -41,10 +41,7 @@
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
-
-        <column name="type" type="VARCHAR" size="255" description="Deprecated"/>
-        <column name="fk_page" type="INTEGER" required="false" description="Deprecated"/>
-        <column name="value" type="INTEGER" description="Deprecated"/>
+        <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
 
         <foreign-key name="spy_cms_block-fk_template" foreignTable="spy_cms_block_template" phpName="CmsBlockTemplate" onDelete="CASCADE">
             <reference foreign="id_cms_block_template" local="fk_template"/>
@@ -52,6 +49,10 @@
 
         <unique name="spy_cms_block-name-uq">
             <unique-column name="name"/>
+        </unique>
+
+        <unique name="spy_cms_block-key">
+            <unique-column name="key"/>
         </unique>
 
         <id-method-parameter value="spy_cms_block_pk_seq"/>

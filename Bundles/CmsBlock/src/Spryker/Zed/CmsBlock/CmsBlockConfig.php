@@ -92,7 +92,7 @@ class CmsBlockConfig extends AbstractBundleConfig
      */
     protected function getThemeName(): string
     {
-        return $this->get(CmsBlockConstants::YVES_THEME, '');
+        return '';
     }
 
     /**

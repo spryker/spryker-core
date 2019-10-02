@@ -14,6 +14,9 @@ use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryCo
 
 class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterface
 {
+    protected const KEYS = 'keys';
+    protected const NAMES = 'names';
+
     /**
      * @var \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface
      */
@@ -123,9 +126,14 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
 
         $cmsBlockProductsTransfer = [];
         foreach ($mappedCmsBlockProducts as $productAbstractId => $cmsBlockProduct) {
-            $cmsBlockProductTransfer = new CmsBlockProductTransfer();
-            $cmsBlockProductTransfer->setIdProductAbstract($productAbstractId);
-            $cmsBlockProductTransfer->setBlockNames($cmsBlockProduct);
+            $cmsBlockProductTransfer = (new CmsBlockProductTransfer())
+                ->setIdProductAbstract($productAbstractId)
+                ->setBlockNames($cmsBlockProduct[static::NAMES]);
+
+            if (isset($cmsBlockProduct[static::KEYS])) {
+                $cmsBlockProductTransfer->setBlockKeys($cmsBlockProduct[static::KEYS]);
+            }
+
             $cmsBlockProductsTransfer[$productAbstractId] = $cmsBlockProductTransfer;
         }
 
@@ -139,10 +147,16 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      */
     protected function getCmsBlockProducts(array $productAbstractIds)
     {
-        $cmsBlockProducts = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
+        $cmsBlockProductEntities = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
         $mappedCmsBlockProducts = [];
-        foreach ($cmsBlockProducts as $cmsBlockProduct) {
-            $mappedCmsBlockProducts[$cmsBlockProduct->getFkProductAbstract()][] = $cmsBlockProduct->getName();
+        foreach ($cmsBlockProductEntities as $cmsBlockProductEntity) {
+            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::NAMES][] = $cmsBlockProductEntity->getName();
+
+            if (!$this->isCmsBlockKeyPropertyExists()) {
+                continue;
+            }
+
+            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::KEYS][] = $cmsBlockProductEntity->getKey();
         }
 
         return $mappedCmsBlockProducts;
@@ -162,5 +176,15 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         }
 
         return $cmsBlockProductStorageEntitiesById;
+    }
+
+    /**
+     * This is added for BC reason to support previous versions of CmsBlock module.
+     *
+     * @return bool
+     */
+    protected function isCmsBlockKeyPropertyExists(): bool
+    {
+        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }

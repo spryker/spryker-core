@@ -15,6 +15,9 @@ use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQuery
 
 class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInterface
 {
+    protected const KEYS = 'keys';
+    protected const NAMES = 'names';
+
     /**
      * @var \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface
      */
@@ -126,12 +129,18 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         foreach ($mappedCmsBlockCategories as $categoryId => $mappedCmsBlockCategoryPositions) {
             $cmsBlockCategoryTransfer = new CmsBlockCategoriesTransfer();
             $cmsBlockCategoryTransfer->setIdCategory($categoryId);
-            foreach ($mappedCmsBlockCategoryPositions as $position => $blockNames) {
-                $cmsBlockPositionTransfer = new CmsBlockCategoryTransfer();
-                $cmsBlockPositionTransfer->setPosition($position);
-                $cmsBlockPositionTransfer->setBlockNames($blockNames);
+            foreach ($mappedCmsBlockCategoryPositions as $position => $blockData) {
+                $cmsBlockPositionTransfer = (new CmsBlockCategoryTransfer())
+                    ->setPosition($position)
+                    ->setBlockNames($blockData[static::NAMES]);
+
+                if (isset($blockData[static::KEYS])) {
+                    $cmsBlockPositionTransfer->setBlockKeys($blockData[static::KEYS]);
+                }
+
                 $cmsBlockCategoryTransfer->addCmsBlockCategory($cmsBlockPositionTransfer);
             }
+
             $cmsBlockCategoriesTransfer[$categoryId] = $cmsBlockCategoryTransfer;
         }
 
@@ -145,10 +154,16 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      */
     protected function getCmsBlockCategories(array $categoryIds)
     {
-        $cmsBlockCategories = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
+        $cmsBlockCategoryEntities = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
-        foreach ($cmsBlockCategories as $cmsBlockCategory) {
-            $mappedCmsBlockCategories[$cmsBlockCategory->getFkCategory()][$cmsBlockCategory->getPosition()][] = $cmsBlockCategory->getName();
+        foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] = $cmsBlockCategoryEntity->getName();
+
+            if (!$this->isCmsBlockKeyPropertyExists()) {
+                continue;
+            }
+
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::KEYS][] = $cmsBlockCategoryEntity->getKey();
         }
 
         return $mappedCmsBlockCategories;
@@ -168,5 +183,15 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         }
 
         return $cmsBlockCategoryStorageEntitiesById;
+    }
+
+    /**
+     * This is added for BC reason to support previous versions of CmsBlock module.
+     *
+     * @return bool
+     */
+    protected function isCmsBlockKeyPropertyExists(): bool
+    {
+        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }
