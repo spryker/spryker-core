@@ -115,6 +115,8 @@ interface StockFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param string $stockType
      * @param int $decrementBy
@@ -129,6 +131,8 @@ interface StockFacadeInterface
      * - Touches the stock product.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      * @param string $stockType

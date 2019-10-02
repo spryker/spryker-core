@@ -124,6 +124,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param string $stockType
      * @param int $decrementBy
@@ -139,6 +141,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      * @param string $stockType
