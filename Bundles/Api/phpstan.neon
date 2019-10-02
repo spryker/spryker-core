@@ -1,6 +1,6 @@
 parameters:
     ignoreErrors:
-    - '#Strict comparison using === between '' and 'development' will always evaluate to false.#'
+    - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"
     - '#Parameter \#1 \$code of method .+ApiResponseTransfer::setCode\(\) expects string|null, int given.#'
     - '#Parameter \#1 \$resourceId of method .+ApiRequestTransfer::setResourceId\(\) expects int|null, string|null given.#'
     - '#Parameter \#3 \$id of method .+Dispatcher::callApiPlugin\(\) expects string|null, int|null given.#'
