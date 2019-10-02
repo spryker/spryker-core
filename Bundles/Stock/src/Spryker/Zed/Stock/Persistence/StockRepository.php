@@ -9,7 +9,6 @@ namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
-use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
