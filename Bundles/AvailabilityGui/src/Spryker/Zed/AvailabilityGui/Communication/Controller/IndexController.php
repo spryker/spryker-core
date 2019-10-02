@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
-use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
