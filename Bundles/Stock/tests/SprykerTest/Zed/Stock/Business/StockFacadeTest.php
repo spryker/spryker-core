@@ -391,7 +391,7 @@ class StockFacadeTest extends Unit
         //Act
         $stocks = $this->stockFacade->getAvailableStockTypes();
 
-        //Arrange
+        //Assert
         $this->assertEquals([
             $this->stockTransfer1->getName() => $this->stockTransfer1->getName(),
             $this->stockTransfer2->getName() => $this->stockTransfer2->getName(),
@@ -409,7 +409,7 @@ class StockFacadeTest extends Unit
         //Act
         $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($this->productConcreteEntity->getIdProduct());
 
-        //Arrange
+        //Assert
         $this->assertCount(1, $stockProductTransfers);
         $this->assertTrue($stockProductTransfers[0]->getQuantity()->equals(static::STOCK_QUANTITY_1));
         $this->assertEquals($this->stockTransfer1->getIdStock(), $stockProductTransfers[0]->getFkStock());
@@ -489,7 +489,7 @@ class StockFacadeTest extends Unit
      */
     public function testFindStockProductsByIdProductForStoreWillReturnCollectionOfStockProducts(): void
     {
-        //Assert
+        //Arrange
         $this->tester->haveStockStoreRelation($this->stockTransfer2, $this->storeTransfer);
 
         //Act

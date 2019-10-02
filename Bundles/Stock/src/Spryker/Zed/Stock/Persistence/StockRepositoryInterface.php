@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 interface StockRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return string[]
      */
     public function getStockNames(): array;
 

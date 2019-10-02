@@ -32,12 +32,6 @@
 
     <transfer name="StockCriteriaFilter">
         <property name="isActive" type="bool"/>
-        <property name="name" type="string"/>
-        <property name="storeNames" type="string[]" singular="storeName"/>
-    </transfer>
-
-    <transfer name="StockStoreCriteriaFilter">
-        <property name="stockIds" type="int[]" singular="stockId"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
     </transfer>
 
