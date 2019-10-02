@@ -157,4 +157,16 @@ interface QuoteApprovalFacadeInterface
      * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array;
+
+    /**
+     * Specification:
+     * - Calculates quote status.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
 }

@@ -59,7 +59,8 @@ class QuoteApprovalFactory extends AbstractFactory
     public function createQuoteChecker(): QuoteCheckerInterface
     {
         return new QuoteChecker(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getQuoteApplicableForApprovalCheckPlugins()
         );
     }
 
@@ -68,7 +69,7 @@ class QuoteApprovalFactory extends AbstractFactory
      */
     public function createPermissionContextProvider(): PermissionContextProviderInterface
     {
-        return new PermissionContextProvider();
+        return new PermissionContextProvider($this->getConfig());
     }
 
     /**
@@ -133,5 +134,13 @@ class QuoteApprovalFactory extends AbstractFactory
     public function getQuoteClient(): QuoteApprovalToQuoteClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[]
+     */
+    public function getQuoteApplicableForApprovalCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK);
     }
 }

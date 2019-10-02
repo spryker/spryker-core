@@ -26,4 +26,12 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     {
         return [];
     }
+
+    /**
+     * @return bool
+     */
+    public function getIsPermissionCalculationIncludeShipment(): bool
+    {
+        return false;
+    }
 }

@@ -173,4 +173,20 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
             ->createQuoteFieldsProvider()
             ->getQuoteFieldsAllowedForSaving($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string|null
+     */
+    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
+    {
+        return $this->getFactory()
+            ->createQuoteStatusCalculator()
+            ->calculateQuoteStatus($quoteTransfer);
+    }
 }
