@@ -8,12 +8,10 @@
 namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
-use Generated\Shared\Transfer\StockStoreCriteriaFilterTransfer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
-use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
-use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Stock\Persistence\StockPersistenceFactory getFactory()
@@ -21,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class StockRepository extends AbstractRepository implements StockRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return string[]
      */
     public function getStockNames(): array
     {
@@ -57,69 +55,17 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      */
     public function getStocksWithRelatedStoresByCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): array
     {
-        $stockQuery = $this->getFactory()->createStockQuery();
+        $stockQuery = $this->getFactory()
+            ->createStockQuery()
+            ->leftJoinWithSpyStockStore()
+            ->useSpyStockStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithStore()
+            ->endUse();
         $stockQuery = $this->applyStockQueryFilters($stockQuery, $stockCriteriaFilterTransfer);
-        /** @var \Orm\Zed\Stock\Persistence\SpyStock[] $stockEntities */
-        $stockEntities = $stockQuery->find()->getArrayCopy();
-
-        $stockStoreCriteriaFilterTransfer = (new StockStoreCriteriaFilterTransfer())
-            ->setStoreNames($stockCriteriaFilterTransfer->getStoreNames());
-        $stockEntities = $this->addRelatedStoresToStocks($stockEntities, $stockStoreCriteriaFilterTransfer);
 
         return $this->getFactory()
             ->createStockMapper()
-            ->mapStockEntitiesToStockTransfers($stockEntities);
-    }
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockEntities
-     * @param \Generated\Shared\Transfer\StockStoreCriteriaFilterTransfer|null $stockStoreCriteriaFilterTransfer
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStock[]
-     */
-    protected function addRelatedStoresToStocks(array $stockEntities, ?StockStoreCriteriaFilterTransfer $stockStoreCriteriaFilterTransfer = null): array
-    {
-        if (!$stockStoreCriteriaFilterTransfer) {
-            $stockStoreCriteriaFilterTransfer = new StockStoreCriteriaFilterTransfer();
-        }
-        $stockStoreCriteriaFilterTransfer->setStockIds($this->getStockIdsFromStockEntities($stockEntities));
-
-        $stockStoreEntities = $this->getStockStoreEntitiesByCriteriaFilter($stockStoreCriteriaFilterTransfer);
-        foreach ($stockEntities as $stockEntity) {
-            foreach ($stockStoreEntities as $stockStoreEntity) {
-                if ($stockEntity->getIdStock() === $stockStoreEntity->getFkStock()) {
-                    $stockEntity->addSpyStockStore($stockStoreEntity);
-                }
-            }
-        }
-
-        return $stockEntities;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockStoreCriteriaFilterTransfer $stockStoreCriteriaFilterTransfer
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockStore[]
-     */
-    protected function getStockStoreEntitiesByCriteriaFilter(StockStoreCriteriaFilterTransfer $stockStoreCriteriaFilterTransfer): array
-    {
-        $stockStoreQuery = $this->getFactory()->createStockStoreQuery();
-        $stockStoreQuery->joinWithStore();
-        $stockStoreQuery = $this->applyStockStoreQueryFilters($stockStoreQuery, $stockStoreCriteriaFilterTransfer);
-
-        return $stockStoreQuery->find()->getArrayCopy();
-    }
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockEntities
-     *
-     * @return int[]
-     */
-    protected function getStockIdsFromStockEntities(array $stockEntities): array
-    {
-        return array_map(function (SpyStock $stockEntity): int {
-            return $stockEntity->getIdStock();
-        }, $stockEntities);
+            ->mapStockEntitiesToStockTransfers($stockQuery->find()->getArrayCopy());
     }
 
     /**
@@ -134,27 +80,14 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
             $stockQuery->filterByIsActive(true);
         }
 
-        return $stockQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockStoreQuery $stockStoreQuery
-     * @param \Generated\Shared\Transfer\StockStoreCriteriaFilterTransfer $stockStoreCriteriaFilterTransfer
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockStoreQuery
-     */
-    protected function applyStockStoreQueryFilters(SpyStockStoreQuery $stockStoreQuery, StockStoreCriteriaFilterTransfer $stockStoreCriteriaFilterTransfer): SpyStockStoreQuery
-    {
-        if ($stockStoreCriteriaFilterTransfer->getStockIds()) {
-            $stockStoreQuery->filterByFkStock_In($stockStoreCriteriaFilterTransfer->getStockIds());
-        }
-
-        if ($stockStoreCriteriaFilterTransfer->getStoreNames()) {
-            $stockStoreQuery->useStoreQuery()
-                ->filterByName_In($stockStoreCriteriaFilterTransfer->getStoreNames())
+        if ($stockCriteriaFilterTransfer->getStoreNames()) {
+            $stockQuery->useSpyStockStoreQuery(null, Criteria::LEFT_JOIN)
+                ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByName_In($stockCriteriaFilterTransfer->getStoreNames())
+                ->endUse()
                 ->endUse();
         }
 
-        return $stockStoreQuery;
+        return $stockQuery;
     }
 }

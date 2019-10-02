@@ -14,6 +14,10 @@
         <property name="currency" type="Currency"/>
     </transfer>
 
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
     <transfer name="PriceProductScheduleCriteriaFilter">
         <property name="filter" type="Filter"/>
         <property name="skuProductAbstract" type="string"/>
@@ -94,6 +98,8 @@
 
     <transfer name="MoneyValue">
         <property name="store" type="Store"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="PriceProductScheduleCsvValidationResult">
@@ -110,4 +116,5 @@
         <property name="errors" type="PriceProductScheduleError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
+
 </transfers>

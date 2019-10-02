@@ -223,7 +223,7 @@ class Reader implements ReaderInterface
      *
      * @return string[]
      */
-    protected function getStoreWarehouses($storeName)
+    protected function getStoreWarehouses(string $storeName): array
     {
         return $this->stockRepository->getStockNamesForStore($storeName);
     }

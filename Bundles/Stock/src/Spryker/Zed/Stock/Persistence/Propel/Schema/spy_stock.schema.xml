@@ -43,10 +43,10 @@
         <column name="id_stock_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="true"/>
-        <foreign-key name="spy_stock_store-fk_stock" foreignTable="spy_stock" phpName="Stock">
+        <foreign-key name="spy_stock_store-fk_stock" foreignTable="spy_stock" phpName="Stock" refPhpName="StockStore">
             <reference local="fk_stock" foreign="id_stock"/>
         </foreign-key>
-        <foreign-key name="spy_stock_store-fk_store" foreignTable="spy_store" phpName="Store">
+        <foreign-key name="spy_stock_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="StockStore">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
         <index name="index-spy_stock_store-fk_stock">
