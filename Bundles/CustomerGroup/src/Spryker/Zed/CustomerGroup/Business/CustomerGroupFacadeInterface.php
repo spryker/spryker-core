@@ -39,7 +39,7 @@ interface CustomerGroupFacadeInterface
      *
      * @throws \Spryker\Zed\CustomerGroup\Business\Exception\CustomerGroupNotFoundException
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
      */
     public function get(CustomerGroupTransfer $customerGroupTransfer);
 

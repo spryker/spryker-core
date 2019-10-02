@@ -15,7 +15,7 @@ interface ShipmentGroupMethodFilterInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function filterShipmentMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject;
 }
