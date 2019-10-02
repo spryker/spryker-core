@@ -60,7 +60,7 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
     /**
      * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     protected function mapScopesByIdentifiers(array $oauthScopeTransfers): array
     {
