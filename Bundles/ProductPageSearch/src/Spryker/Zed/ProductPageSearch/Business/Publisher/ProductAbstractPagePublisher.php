@@ -463,19 +463,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @return string[]
-     */
-    protected function getAvailableLocaleIsoCodes(): array
-    {
-        $localeIsoCodes = [];
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
-            $localeIsoCodes[] = $storeTransfer->getAvailableLocaleIsoCodes();
-        }
-
-        return array_unique(array_merge(...$localeIsoCodes));
-    }
-
-    /**
      * @param int[] $productConcreteIds
      * @param string[] $localeIsoCodes
      *
