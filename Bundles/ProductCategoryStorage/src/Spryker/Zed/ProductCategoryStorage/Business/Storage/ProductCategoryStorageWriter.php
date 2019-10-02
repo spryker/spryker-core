@@ -306,7 +306,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         static::$categoryTree = [];
 
         $categoryNodes = $this->queryContainer->queryAllCategoryNodes()->find();
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryEntities */
+        /** @var array $categoryEntities */
         $categoryEntities = $this->queryContainer->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
         $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
 
@@ -329,7 +329,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryEntities
+     * @param array $categoryEntities
      *
      * @return array
      */

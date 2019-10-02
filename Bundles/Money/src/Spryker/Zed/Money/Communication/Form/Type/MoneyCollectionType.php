@@ -92,7 +92,7 @@ class MoneyCollectionType extends AbstractCollectionType
         /** @var \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $data */
         $data = $event->getData();
         $event->setData(
-            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($event->getData())
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
         );
     }
 

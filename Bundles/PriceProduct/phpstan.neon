@@ -8,3 +8,4 @@ parameters:
         - '#Parameter \#1 \$fkPriceProductStore of method .+SpyPriceProductDefaultEntityTransfer::setFkPriceProductStore\(\) expects string|null, int given#'
         - '#Parameter \#1 \$fkPriceProductStore of method .+MoneyValueTransfer::setIdEntity\(\) expects string|null, int given#'
         - '#Parameter \#1 \$idEntity of method .+MoneyValueTransfer::setIdEntity\(\) expects int|null, string given#'
+        - '#Parameter #\1 \$idPriceProductDefault of method .+PriceProductDimensionTransfer::setIdPriceProductDefault() expects int|null, string|null given.#'

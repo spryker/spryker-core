@@ -2,3 +2,8 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::.+#'
         - '#Parameter \#1 \$glossaryKey of method .+KeyTranslationTransfer::setGlossaryKey\(\) expects int|null, string given#'
+        - '#Parameter \#1 \$keyName of method .+KeyManagerInterface::hasKey\(\) expects string, int|null given.#'
+        - '#Parameter \#1 \$keyName of method .+KeyManagerInterface::createKey\(\) expects string, int|null given.#'
+        - '#Parameter \#1 \$keyName of method .+KeyManagerInterface::getKey\(\) expects string, int|null given.#'
+        - '#Parameter \#1 \$keyName of method .+TranslationManager::deleteTranslation\(\) expects string, int|null given.#'
+        - '#Parameter \#1 \$keyName of method .+GlossaryFacadeInterface::getKeyIdentifier\(\) expects string, int|null given.#'
