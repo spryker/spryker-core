@@ -1,5 +1,9 @@
 namespace: CmsSlotStorage
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/CmsSlotStorage
+
 paths:
     tests: tests
     log: tests/_output

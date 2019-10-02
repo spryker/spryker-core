@@ -16,7 +16,7 @@ interface CmsSlotStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
      */
-    public function getCmsStorageStorageEntitiesByCmsSlotKeys(array $cmsSlotKeys): array;
+    public function getCmsSlotStorageEntitiesByCmsSlotKeys(array $cmsSlotKeys): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

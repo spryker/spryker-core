@@ -20,7 +20,7 @@ class CmsSlotStorageRepository extends AbstractRepository implements CmsSlotStor
      *
      * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
      */
-    public function getCmsStorageStorageEntitiesByCmsSlotKeys(array $cmsSlotKeys): array
+    public function getCmsSlotStorageEntitiesByCmsSlotKeys(array $cmsSlotKeys): array
     {
         if (!$cmsSlotKeys) {
             return [];

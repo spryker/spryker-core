@@ -182,4 +182,32 @@ class CmsSlotFacadeTest extends Unit
 
         $this->assertFalse($this->tester->isActiveCmsSlotById($cmsSlotTransfer->getIdCmsSlot()));
     }
+
+    /**
+     * @return void
+     */
+    public function testGetFilteredCmsSlotTransfersReturnsCmsSlotTransfers(): void
+    {
+        $this->tester->haveCmsSlotInDb([]);
+
+        $cmsSlotTransfers = $this->tester->getFacade()->getFilteredCmsSlotTransfers($this->tester->getFilterTransfer());
+
+        foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
+            $this->assertInstanceOf(CmsSlotTransfer::class, $cmsSlotTransfer);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotTransfersByCmsSlotIdsReturnsCmsSlotTransfersWithCorrectData(): void
+    {
+        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([CmsSlotTransfer::IS_ACTIVE => true]);
+
+        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotTransfersByCmsSlotIds(
+            [$cmsSlotTransfer->getIdCmsSlot()]
+        )[0];
+
+        $this->assertEquals($cmsSlotTransferFromDb, $cmsSlotTransfer);
+    }
 }

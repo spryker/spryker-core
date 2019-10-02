@@ -53,7 +53,7 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     public function publish(array $cmsSlotIds): void
     {
         $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotTransfersByCmsSlotIds($cmsSlotIds);
-        $cmsSlotStorageEntities = $this->cmsSlotStorageRepository->getCmsStorageStorageEntitiesByCmsSlotKeys(
+        $cmsSlotStorageEntities = $this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys(
             $this->getCmsSlotKeys($cmsSlotTransfers)
         );
         $cmsSlotStorageEntities = $this->mapCmsSlotStorageEntitiesByKeys($cmsSlotStorageEntities);
