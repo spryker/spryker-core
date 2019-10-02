@@ -53,7 +53,8 @@ class AvailabilityStockFormDataProvider
             $availabilityGuiStockTransfer = $this->loadAvailabilityGuiStockTransfer($availabilityGuiStockTransfer, $stockProducts);
         }
 
-        $this->addEmptyStockType($availabilityGuiStockTransfer);
+        $availabilityGuiStockTransfer = $this->addEmptyStockType($availabilityGuiStockTransfer);
+        $availabilityGuiStockTransfer = $this->trimStockQuantities($availabilityGuiStockTransfer);
 
         return $availabilityGuiStockTransfer;
     }
@@ -86,9 +87,9 @@ class AvailabilityStockFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */
-    protected function addEmptyStockType($availabilityStockTransfer)
+    protected function addEmptyStockType(AvailabilityStockTransfer $availabilityStockTransfer): AvailabilityStockTransfer
     {
         $allStockType = $this->stockFacade->getStockTypesForStore($this->storeTransfer);
 
@@ -99,10 +100,32 @@ class AvailabilityStockFormDataProvider
 
             $stockProductTransfer = (new StockProductTransfer())
                 ->setStockType($type)
-                ->setQuantity('0.0');
+                ->setQuantity(0);
 
             $availabilityStockTransfer->addStockProduct($stockProductTransfer);
         }
+
+        return $availabilityStockTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityStockTransfer
+     *
+     * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
+     */
+    protected function trimStockQuantities(AvailabilityStockTransfer $availabilityStockTransfer): AvailabilityStockTransfer
+    {
+        foreach ($availabilityStockTransfer->getStocks() as $stockProductTransfer) {
+            if ($stockProductTransfer->getQuantity() === null) {
+                continue;
+            }
+
+            $stockProductTransfer->setQuantity(
+                $stockProductTransfer->getQuantity()->trim()
+            );
+        }
+
+        return $availabilityStockTransfer;
     }
 
     /**
