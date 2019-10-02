@@ -169,10 +169,6 @@ class GatewayController extends AbstractGatewayController
         $addressesTransfer = $this->getFacade()
             ->getAddresses($customerTransfer);
 
-        if ($addressesTransfer->getAddresses()->count() === 0) {
-            $this->setSuccess(false);
-        }
-
         return $addressesTransfer;
     }
 
