@@ -283,7 +283,7 @@ class MethodTable extends AbstractTable
                 continue;
             }
             $result[$methodPriceEntity->getFkStore()][] = (new MoneyTransfer())
-                ->setAmount((string)$methodPriceEntity->getDefaultNetPrice())
+                ->setAmount($methodPriceEntity->getDefaultNetPrice())
                 ->setCurrency((new CurrencyTransfer())->fromArray($methodPriceEntity->getCurrency()->toArray(), true));
         }
 
