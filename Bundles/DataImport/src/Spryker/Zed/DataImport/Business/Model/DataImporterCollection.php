@@ -69,7 +69,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPluginCollection
+     * @param (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[] $dataImporterPluginCollection
      *
      * @return $this
      */

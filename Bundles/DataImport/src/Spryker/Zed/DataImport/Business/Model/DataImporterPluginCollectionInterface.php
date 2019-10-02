@@ -10,7 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model;
 interface DataImporterPluginCollectionInterface
 {
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPluginCollection
+     * @param (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[] $dataImporterPluginCollection
      *
      * @return $this
      */
