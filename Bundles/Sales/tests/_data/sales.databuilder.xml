@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
 
     <transfer name="Item">
         <property name="sku" dataBuilderRule="isbn10"/>
@@ -26,10 +28,6 @@
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="unitNetPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumNetPrice" dataBuilderRule="randomNumber(5)"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="totals" dataBuilderRule="randomNumber(5)"/>
     </transfer>
 
     <transfer name="Address">

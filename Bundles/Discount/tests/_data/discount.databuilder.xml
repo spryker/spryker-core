@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
+<transfers
+    xmlns="spryker:databuilder-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
 
     <transfer name="Discount">
         <property name="displayName" dataBuilderRule="unique()->sentence"/>
         <property name="description" dataBuilderRule="sentence(10)"/>
         <property name="amount" dataBuilderRule="=1"/>
-        <property name="isActive" type="string" dataBuilderRule="=true"/>
-        <property name="validFrom" type="string" dataBuilderRule="=2016-01-01"/>
-        <property name="validTo" type="string" dataBuilderRule="time('Y-m-d', '+10 years')"/>
+        <property name="isActive" dataBuilderRule="=true"/>
+        <property name="validFrom" dataBuilderRule="=2016-01-01"/>
+        <property name="validTo" dataBuilderRule="time('Y-m-d', '+10 years')"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -32,10 +34,9 @@
     </transfer>
 
     <transfer name="DiscountCalculator">
-        <property name="amount" type="string" dataBuilderRule="=1"/>
+        <property name="amount" dataBuilderRule="=1"/>
         <property name="calculatorPlugin" dataBuilderRule="=PLUGIN_CALCULATOR_FIXED"/>
         <property name="collectorQueryString" dataBuilderRule="=item-quantity > '1'"/>
     </transfer>
 
 </transfers>
-

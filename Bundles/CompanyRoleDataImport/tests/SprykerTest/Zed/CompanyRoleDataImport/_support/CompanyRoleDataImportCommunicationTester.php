@@ -30,6 +30,8 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
  */
 class CompanyRoleDataImportCommunicationTester extends Actor
 {
+    use _generated\CompanyRoleDataImportCommunicationTesterActions;
+
     protected const COMPANY_KEY_1 = 'Test_ltd';
     protected const COMPANY_KEY_2 = 'Test2_ltd';
     protected const COMPANY_ROLE_ADMIN = 'Role_Admin';
@@ -39,8 +41,6 @@ class CompanyRoleDataImportCommunicationTester extends Actor
     protected const PERMISSION_PLUGINS = [
         MockPermissionPlugin::class,
     ];
-
-    use _generated\CompanyRoleDataImportCommunicationTesterActions;
 
     /**
      * @return void
