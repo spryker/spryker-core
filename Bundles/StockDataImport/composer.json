@@ -7,11 +7,11 @@
     "php": ">=7.1",
     "spryker/data-import": "^1.4.3",
     "spryker/kernel": "^3.33.0",
-    "spryker/stock": "^7.0.0"
+    "spryker/stock": "^8.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "^3.8.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

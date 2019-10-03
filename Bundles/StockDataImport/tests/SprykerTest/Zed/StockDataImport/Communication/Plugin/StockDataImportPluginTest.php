@@ -37,19 +37,20 @@ class StockDataImportPluginTest extends Unit
      */
     public function testImportImportsStock(): void
     {
+        // Arrange
         $this->tester->ensureStockTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/warehouse.csv');
-
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
         $stockDataImportPlugin = new StockDataImportPlugin();
+
+        // Act
         $dataImporterReportTransfer = $stockDataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->tester->assertStockTableContainsData();
-
         $this->assertSame(
             static::EXPECTED_IMPORT_COUNT,
             $dataImporterReportTransfer->getImportedDataSetCount(),

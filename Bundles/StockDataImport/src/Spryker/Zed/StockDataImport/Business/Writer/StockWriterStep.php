@@ -27,7 +27,7 @@ class StockWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (empty($dataSet[StockDataSetInterface::COLUMN_NAME])) {
+        if (!$dataSet[StockDataSetInterface::COLUMN_NAME]) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 static::EXCEPTION_MESSAGE,
                 StockDataSetInterface::COLUMN_NAME,

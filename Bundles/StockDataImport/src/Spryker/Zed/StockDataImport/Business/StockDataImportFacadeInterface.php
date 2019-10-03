@@ -14,7 +14,7 @@ interface StockDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - imports stock data.
+     * - Imports stock data.
      *
      * @api
      *

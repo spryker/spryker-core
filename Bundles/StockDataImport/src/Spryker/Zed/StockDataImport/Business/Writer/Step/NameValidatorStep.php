@@ -25,7 +25,7 @@ class NameValidatorStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $nameLength = strlen($dataSet[StockDataSetInterface::COLUMN_NAME]);
+        $nameLength = mb_strlen($dataSet[StockDataSetInterface::COLUMN_NAME]);
 
         if ($nameLength > 255 || $nameLength < 1) {
             throw new InvalidDataException(static::INVALID_NAME_EXCEPTION_MESSAGE);

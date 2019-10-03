@@ -20,6 +20,9 @@ use Spryker\Zed\StockDataImport\StockDataImportConfig;
 class StockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Executes stock data importer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -33,6 +36,9 @@ class StockDataImportPlugin extends AbstractPlugin implements DataImportPluginIn
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns name of the stock import type.
+     *
      * @api
      *
      * @return string
