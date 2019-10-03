@@ -57,8 +57,8 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     {
         $stockQuery = $this->getFactory()
             ->createStockQuery()
-            ->leftJoinWithSpyStockStore()
-            ->useSpyStockStoreQuery(null, Criteria::LEFT_JOIN)
+            ->leftJoinWithStockStore()
+            ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithStore()
             ->endUse();
         $stockQuery = $this->applyStockQueryFilters($stockQuery, $stockCriteriaFilterTransfer);
@@ -81,7 +81,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
         }
 
         if ($stockCriteriaFilterTransfer->getStoreNames()) {
-            $stockQuery->useSpyStockStoreQuery(null, Criteria::LEFT_JOIN)
+            $stockQuery->useStockStoreQuery(null, Criteria::LEFT_JOIN)
                 ->useStoreQuery(null, Criteria::LEFT_JOIN)
                     ->filterByName_In($stockCriteriaFilterTransfer->getStoreNames())
                 ->endUse()

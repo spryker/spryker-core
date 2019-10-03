@@ -42,7 +42,7 @@ class StockStoreRelationMapper
     protected function mapStoreTransfers(SpyStock $stockEntity): array
     {
         $storeTransfers = [];
-        foreach ($stockEntity->getSpyStockStores() as $stockStoreEntity) {
+        foreach ($stockEntity->getStockStores() as $stockStoreEntity) {
             $storeTransfers[] = $this->mapStoreEntityToStoreTransfer($stockStoreEntity->getStore(), new StoreTransfer());
         }
 
