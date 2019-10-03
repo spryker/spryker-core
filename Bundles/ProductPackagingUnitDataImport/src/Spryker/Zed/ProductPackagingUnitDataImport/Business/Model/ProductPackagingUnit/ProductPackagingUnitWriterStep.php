@@ -121,7 +121,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
     protected function normalizeDataSet(DataSetInterface $dataSet): DataSetInterface
     {
@@ -141,7 +141,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
