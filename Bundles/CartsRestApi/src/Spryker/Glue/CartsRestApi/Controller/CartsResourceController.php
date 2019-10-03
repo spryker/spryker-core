@@ -28,7 +28,8 @@ class CartsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Cart not found."
+     *              "404": "Cart not found.",
+     *              "403": "Missing access token."
      *          }
      *     },
      *     "getCollection": {
