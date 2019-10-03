@@ -6,12 +6,12 @@
   "require": {
     "php": ">=7.1",
     "spryker/cms-slot": "^0.4.0",
-    "spryker/event-behavior": "^1.0.0",
+    "spryker/event-behavior": "^1.8.0",
     "spryker/kernel": "^3.30.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

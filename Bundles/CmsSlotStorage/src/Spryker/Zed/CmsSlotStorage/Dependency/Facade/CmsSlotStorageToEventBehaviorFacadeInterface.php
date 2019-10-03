@@ -15,12 +15,4 @@ interface CmsSlotStorageToEventBehaviorFacadeInterface
      * @return array
      */
     public function getEventTransferIds(array $eventTransfers): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     * @param string $columnName
-     *
-     * @return array
-     */
-    public function getEventTransfersOriginalValues(array $eventTransfers, string $columnName): array;
 }
