@@ -9,14 +9,12 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures;
 
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
-    protected const SOURCE_NAME = 'page';
-
     /**
      * @var \Elastica\Query
      */

@@ -15,8 +15,6 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface
 
 class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
-    protected const SOURCE_NAME = 'page';
-
     /**
      * @var \Elastica\Query
      */

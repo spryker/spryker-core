@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -21,14 +22,15 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      * @param array $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, SearchContextTransfer $searchContextTransfer, array $resultFormatters = [], array $requestParameters = [])
     {
-        return $this->getFactory()->createSearch()->search($searchQuery, $resultFormatters, $requestParameters);
+        return $this->getFactory()->createSearch()->search($searchQuery, $searchContextTransfer, $resultFormatters, $requestParameters);
     }
 
     /**

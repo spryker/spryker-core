@@ -48,4 +48,12 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     {
         return static::FACET_NAME_AGGREGATION_SIZE;
     }
+
+    /**
+     * @return string[]
+     */
+    public function getSupportedSourceNames(): array
+    {
+        return $this->getSharedConfig()->getSupportedSourceNames();
+    }
 }

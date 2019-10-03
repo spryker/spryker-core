@@ -15,13 +15,14 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInter
 use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreBridge;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  */
 class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
 {
-    public const STORE = 'STORE';
+    public const STORE = 'STORE_CLIENT';
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'SEARCH_CONFIG_EXPANDER_PLUGINS';
     public const SEARCH_FACET_CONFIG_BUILDER_PLUGIN = 'SEARCH_FACET_CONFIG_BUILDER_PLUGIN';
     public const SEARCH_PAGINATION_CONFIG_BUILDER_PLUGIN = 'SEARCH_PAGINATION_CONFIG_BUILDER_PLUGIN';
@@ -125,8 +126,10 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::STORE, function (Container $container) {
+            return new SearchElasticsearchToStoreBridge(
+                Store::getInstance()
+            );
         });
 
         return $container;

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
 use Elastica\Client;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
@@ -111,7 +112,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createIndexNameResolver(): IndexNameResolverInterface
     {
         return new IndexNameResolver(
-            $this->getConfig()->getIndexNameMap()
+            $this->getStore()
         );
     }
 
@@ -250,5 +251,13 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createElasticsearchClientFactory(): ElasticaClientFactoryInterface
     {
         return new ElasticaClientFactory();
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface
+     */
+    public function getStore(): SearchElasticsearchToStoreInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::STORE);
     }
 }

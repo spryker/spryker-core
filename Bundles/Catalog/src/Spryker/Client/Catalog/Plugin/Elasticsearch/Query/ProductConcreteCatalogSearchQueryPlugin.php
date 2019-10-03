@@ -14,7 +14,6 @@ use Elastica\Query\Match;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
@@ -27,7 +26,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
  */
 class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface
 {
-    protected const SOURCE_NAME = 'page';
+    protected const SOURCE_IDENTIFIER = 'page';
 
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME
@@ -93,7 +92,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     public function getSearchContext(): SearchContextTransfer
     {
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer = $this->expandWithVendorContext($searchContextTransfer);
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
 
         return $searchContextTransfer;
     }
@@ -185,19 +184,5 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
         return $this->getFactory()
             ->getCatalogConfig()
             ->getFullTextBoostedBoostingValue();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    protected function expandWithVendorContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
-    {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
-
-        return $searchContextTransfer;
     }
 }

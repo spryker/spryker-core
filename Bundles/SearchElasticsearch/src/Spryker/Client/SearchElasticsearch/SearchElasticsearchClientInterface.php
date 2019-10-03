@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 interface SearchElasticsearchClientInterface
@@ -20,12 +21,13 @@ interface SearchElasticsearchClientInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet @TODO implement ResultSet
+     * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
+    public function search(QueryInterface $searchQuery, SearchContextTransfer $searchContextTransfer, array $resultFormatters = [], array $requestParameters = []);
 
     /**
      * Specification:

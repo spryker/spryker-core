@@ -13,7 +13,6 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\Match;
 use Elastica\Query\Type;
 use Generated\Shared\Search\ProductReviewIndexMap;
-use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -26,7 +25,7 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
  */
 class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
-    protected const SOURCE_NAME = 'product-review';
+    protected const SOURCE_IDENTIFIER = 'product-review';
 
     /**
      * @var \Elastica\Query
@@ -71,7 +70,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     public function getSearchContext(): SearchContextTransfer
     {
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer = $this->expandWithVendorContext($searchContextTransfer);
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
 
         return $searchContextTransfer;
     }
@@ -131,19 +130,5 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
 
         return $productReviewTypeFilter;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    protected function expandWithVendorContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
-    {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
-
-        return $searchContextTransfer;
     }
 }

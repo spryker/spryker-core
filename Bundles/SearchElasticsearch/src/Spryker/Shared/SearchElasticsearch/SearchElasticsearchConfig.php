@@ -52,4 +52,12 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
 
         return $config;
     }
+
+    /**
+     * @return string[]
+     */
+    public function getSupportedSourceNames(): array
+    {
+        return [];
+    }
 }

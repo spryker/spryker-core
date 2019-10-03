@@ -11,9 +11,9 @@ use Elastica\Client;
 use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Elastica\ResultSet;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchElasticsearch\Exception\SearchResponseException;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 
 class Search implements SearchInterface
 {
@@ -23,30 +23,24 @@ class Search implements SearchInterface
     protected $client;
 
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
-     */
-    protected $indexNameResolver;
-
-    /**
      * @param \Elastica\Client $client
-     * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      */
-    public function __construct(Client $client, IndexNameResolverInterface $indexNameResolver)
+    public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->indexNameResolver = $indexNameResolver;
     }
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, SearchContextTransfer $searchContextTransfer, array $resultFormatters = [], array $requestParameters = [])
     {
-        $rawSearchResult = $this->executeQuery($searchQuery);
+        $rawSearchResult = $this->executeQuery($searchQuery, $searchContextTransfer);
 
         if (!$resultFormatters) {
             return $rawSearchResult;
@@ -75,20 +69,20 @@ class Search implements SearchInterface
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @throws \Spryker\Client\SearchElasticsearch\Exception\SearchResponseException
      *
      * @return \Elastica\ResultSet
      */
-    protected function executeQuery(QueryInterface $query): ResultSet
+    protected function executeQuery(QueryInterface $query, SearchContextTransfer $searchContextTransfer): ResultSet
     {
         try {
-            $index = $this->getIndexForQuery($query);
-            $rawSearchResult = $index->search(
-                $query->getSearchQuery()
-            );
+            $searchQuery = $query->getSearchQuery();
+            $index = $this->getIndexForQuery($searchContextTransfer);
+            $rawSearchResult = $index->search($searchQuery);
         } catch (ResponseException $e) {
-            $rawQuery = json_encode($query->toArray());
+            $rawQuery = json_encode($searchQuery->toArray());
 
             throw new SearchResponseException(
                 sprintf('Search failed with the following reason: %s. Query: %s', $e->getMessage(), $rawQuery),
@@ -101,31 +95,27 @@ class Search implements SearchInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return \Elastica\Index
      */
-    protected function getIndexForQuery(QueryInterface $query): Index
+    protected function getIndexForQuery(SearchContextTransfer $searchContextTransfer): Index
     {
-        $indexName = $this->getIndexName($query);
+        $indexName = $this->getIndexName($searchContextTransfer);
 
         return $this->client->getIndex($indexName);
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $query
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
-     * @return string|null
+     * @return string
      */
-    protected function getIndexName(QueryInterface $query): ?string
+    protected function getIndexName(SearchContextTransfer $searchContextTransfer): string
     {
-        $sourceName = '';
-        $searchContextTransfer = $query->getSearchContext();
-
-        if (method_exists($searchContextTransfer, 'getElasticsearchContext')) {
-            $sourceName = $searchContextTransfer->getElasticsearchContext()->getSourceName();
-        }
-
-        return $this->indexNameResolver->resolve($sourceName);
+        return $searchContextTransfer->requireElasticsearchContext()
+            ->getElasticsearchContext()
+            ->requireSourceName()
+            ->getSourceName();
     }
 }

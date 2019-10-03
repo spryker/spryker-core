@@ -14,6 +14,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchClientInterface getClient()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()()
  */
 class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
 {
@@ -24,14 +25,15 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      * @param array $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, SearchContextTransfer $searchContextTransfer, array $resultFormatters = [], array $requestParameters = [])
     {
-        return $this->getClient()->search($searchQuery, $resultFormatters, $requestParameters);
+        return $this->getClient()->search($searchQuery, $searchContextTransfer, $resultFormatters, $requestParameters);
     }
 
     /**
@@ -118,6 +120,6 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      */
     public function isApplicable(SearchContextTransfer $searchContextTransfer): bool
     {
-        return true;
+        return $this->getFactory()->createSourceIdentifierChecker()->isSupported($searchContextTransfer);
     }
 }

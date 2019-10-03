@@ -12,7 +12,6 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -20,7 +19,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
 
 class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface
 {
-    protected const SOURCE_NAME = 'page';
+    protected const SOURCE_IDENTIFIER = 'page';
 
     /**
      * @var string
@@ -94,7 +93,7 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
     public function getSearchContext(): SearchContextTransfer
     {
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer = $this->expandWithVendorContext($searchContextTransfer);
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
 
         return $searchContextTransfer;
     }
@@ -144,19 +143,5 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
         if ($this->offset !== null) {
             $baseQuery->setFrom($this->offset);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    protected function expandWithVendorContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
-    {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
-
-        return $searchContextTransfer;
     }
 }

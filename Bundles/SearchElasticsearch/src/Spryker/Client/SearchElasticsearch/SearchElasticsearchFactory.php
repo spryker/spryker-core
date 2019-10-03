@@ -21,6 +21,8 @@ use Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetValueTransforme
 use Spryker\Client\SearchElasticsearch\Config\FacetConfig;
 use Spryker\Client\SearchElasticsearch\Config\PaginationConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
+use Spryker\Client\SearchElasticsearch\Index\SourceIdentifierChecker;
+use Spryker\Client\SearchElasticsearch\Index\SourceIdentifierCheckerInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
@@ -29,6 +31,8 @@ use Spryker\Client\SearchElasticsearch\Query\QueryFactory;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
+use Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapper;
+use Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
 use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
@@ -38,8 +42,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
@@ -77,8 +81,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearch(): SearchInterface
     {
         return new Search(
-            $this->getElasticaClient(),
-            $this->createIndexNameResolver()
+            $this->getElasticaClient()
         );
     }
 
@@ -88,7 +91,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createIndexNameResolver(): IndexNameResolverInterface
     {
         return new IndexNameResolver(
-            $this->getConfig()->getIndexNameMap()
+            $this->getStore()
         );
     }
 
@@ -271,9 +274,9 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface
      */
-    public function getStore(): Store
+    public function getStore(): SearchElasticsearchToStoreInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::STORE);
     }
@@ -286,6 +289,24 @@ class SearchElasticsearchFactory extends AbstractFactory
         return new QueryFactory(
             $this->createQueryBuilder(),
             $this->getMoneyPlugin()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Index\SourceIdentifierChecker
+     */
+    public function createSourceIdentifierChecker(): SourceIdentifierCheckerInterface
+    {
+        return new SourceIdentifierChecker($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapperInterface
+     */
+    public function createSearchContextMapper(): SourceIdentifierMapperInterface
+    {
+        return new SourceIdentifierMapper(
+            $this->createIndexNameResolver()
         );
     }
 

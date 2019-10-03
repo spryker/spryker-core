@@ -5,14 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SearchElasticsearch\Index;
+namespace Spryker\Shared\SearchElasticsearch\Dependency\Client;
 
-interface IndexNameResolverInterface
+interface SearchElasticsearchToStoreInterface
 {
     /**
-     * @param string $sourceIdentifier
-     *
      * @return string
      */
-    public function resolve(string $sourceIdentifier): string;
+    public function getStoreName();
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocale();
 }
