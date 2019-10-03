@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Shipment;
+namespace SprykerTest\Zed\ShipmentGui;
 
 use Codeception\Actor;
 use Codeception\Scenario;
@@ -26,9 +26,9 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ShipmentPresentationTester extends Actor
+class ShipmentGuiPresentationTester extends Actor
 {
-    use _generated\ShipmentPresentationTesterActions;
+    use _generated\ShipmentGuiPresentationTesterActions;
 
     /**
      * @param \Codeception\Scenario $scenario

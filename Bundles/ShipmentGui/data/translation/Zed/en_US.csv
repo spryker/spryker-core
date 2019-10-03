@@ -4,3 +4,13 @@
 Name,Name
 Enabled?,Enabled?
 "Carrier with the same name already exists.","Carrier with the same name already exists."
+View,View
+Edit,Edit
+Delete,Delete
+"Delivery Method Key","Delivery Method Key"
+"Carrier Company","Carrier Company"
+Status,Status
+"Method Name",Name
+"Available in Store","Available in Store"
+"Actions","Actions"
+"Delivery Methods","Delivery Methods"

@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\Shipment
+namespace: SprykerTest\Zed\ShipmentGui
 
 paths:
     tests: .
@@ -12,29 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: ShipmentBusinessTester
-        modules:
-            enabled:
-                - Asserts
-                - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper
-                - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
-                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
-                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
-                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
-                - \SprykerTest\Shared\Sales\Helper\SalesHelper
-                - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
-
     Communication:
         path: Communication
-        class_name: ShipmentCommunicationTester
+        class_name: ShipmentGuiCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -58,4 +38,22 @@ suites:
                       - Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider
                       - Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider
                       - Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider
-                      - Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider
+    Presentation:
+      path: Presentation
+      class_name: ShipmentGuiPresentationTester
+      modules:
+        enabled:
+          - Asserts
+          - \SprykerTest\Shared\Testify\Helper\Environment
+          - \SprykerTest\Shared\Config\Helper\ConfigInit
+          - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+          - WebDriver:
+              url: ''
+              browser: chrome
+              window_size: 1920x1080
+              host: 0.0.0.0
+              restart: false
+          - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+          - \SprykerTest\Shared\Application\Helper\ZedHelper
+          - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
+          - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper

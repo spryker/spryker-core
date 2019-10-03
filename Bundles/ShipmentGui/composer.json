@@ -6,15 +6,21 @@
   "require": {
     "php": ">=7.1",
     "spryker/customer": "^7.23.0",
+    "spryker/gui": "^3.9.0",
     "spryker/kernel": "^3.33.0",
     "spryker/sales": "^11.0.0",
     "spryker/shipment": "^7.0.0",
+    "spryker/store": "^1.9.1",
     "spryker/symfony": "^3.2.2",
     "spryker/util-text": "^1.2.3"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/config": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {

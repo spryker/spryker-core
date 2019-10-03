@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Shipment\PageObject;
+namespace SprykerTest\Zed\ShipmentGui\PageObject;
 
-class ShipmentCarrierAddPage
+class CreateShipmentCarrierPage
 {
-    public const URL = '/shipment/carrier/add';
+    public const URL = '/shipment-gui/create-carrier/index';
 }

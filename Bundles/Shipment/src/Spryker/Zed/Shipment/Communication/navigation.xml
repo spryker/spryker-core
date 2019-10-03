@@ -8,26 +8,6 @@
         <action>index</action>
         <icon>fa-truck</icon>
         <pages>
-            <shipment-carrier>
-                <label>Shipment Carrier</label>
-                <title>Shipment Carrier</title>
-                <bundle>shipment</bundle>
-                <controller>carrier</controller>
-                <action>index</action>
-                <uri>#</uri>
-                <visible>0</visible>
-                <pages>
-                    <shipment-carrier-create>
-                        <label>Create new Shipment Carrier</label>
-                        <title>Create new Shipment Carrier</title>
-                        <bundle>shipment</bundle>
-                        <controller>carrier</controller>
-                        <action>add</action>
-                        <visible>0</visible>
-                    </shipment-carrier-create>
-                </pages>
-            </shipment-carrier>
-
             <shipment-method>
                 <label>Shipment Methods</label>
                 <title>Shipment Methods</title>
