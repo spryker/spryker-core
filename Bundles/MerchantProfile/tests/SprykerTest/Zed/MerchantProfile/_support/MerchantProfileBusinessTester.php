@@ -1,11 +1,11 @@
 <?php
 
 /**
- * MIT License
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantProfileDataImport;
+namespace SprykerTest\Zed\MerchantProfile;
 
 use Codeception\Actor;
 
@@ -25,9 +25,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class MerchantProfileDataImportCommunicationTester extends Actor
+class MerchantProfileBusinessTester extends Actor
 {
-    use _generated\MerchantProfileDataImportCommunicationTesterActions;
+    use _generated\MerchantProfileBusinessTesterActions;
 
    /**
     * Define custom actions here

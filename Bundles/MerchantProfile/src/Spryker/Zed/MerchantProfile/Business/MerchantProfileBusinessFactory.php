@@ -25,6 +25,7 @@ use Spryker\Zed\MerchantProfile\MerchantProfileDependencyProvider;
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
 class MerchantProfileBusinessFactory extends AbstractBusinessFactory
 {

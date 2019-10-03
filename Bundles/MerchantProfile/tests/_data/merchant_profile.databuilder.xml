@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="MerchantProfile">
+        <property name="merchantKey" dataBuilderRule="word" />
+        <property name="contactPersonRole" dataBuilderRule="word" />
+        <property name="contactPersonTitle" dataBuilderRule="=Mr" />
+        <property name="contactPersonFirstName" dataBuilderRule="firstName" />
+        <property name="contactPersonLastName" dataBuilderRule="lastName" />
+        <property name="contactPersonPhone" dataBuilderRule="word" />
+        <property name="logoUrl" dataBuilderRule="word" />
+        <property name="publicEmail" dataBuilderRule="email" />
+        <property name="publicPhone" dataBuilderRule="word" />
+        <property name="descriptionGlossaryKey" dataBuilderRule="word" />
+        <property name="bannerUrlGlossaryKey" dataBuilderRule="word" />
+        <property name="deliveryTimeGlossaryKey" dataBuilderRule="word" />
+        <property name="termsConditionsGlossaryKey" dataBuilderRule="word" />
+        <property name="cancellationPolicyGlossaryKey" dataBuilderRule="word" />
+        <property name="imprintGlossaryKey" dataBuilderRule="word" />
+        <property name="dataPrivacyGlossaryKey" dataBuilderRule="word" />
+        <property name="fkMerchant" dataBuilderRule="randomNumber(5)" />
+        <property name="isActive" dataBuilderRule="boolean(100)" />
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" />
+    </transfer>
+
+</transfers>

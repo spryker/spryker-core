@@ -72,16 +72,6 @@ class CreateMerchantTest extends Unit
         $merchantWithEmptyNameTransfer = clone $merchantTransfer;
         $merchantWithEmptyNameTransfer->setName(null);
 
-        $merchantWithEmptyRegistrationNumberTransfer = clone $merchantTransfer;
-        $merchantWithEmptyRegistrationNumberTransfer->setRegistrationNumber(null);
-        $merchantWithEmptyContactPersonTitleTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonTitleTransfer->setContactPersonTitle(null);
-        $merchantWithEmptyContactPersonFirstNameTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonFirstNameTransfer->setContactPersonFirstName(null);
-        $merchantWithEmptyContactPersonLastNameTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonLastNameTransfer->setContactPersonLastName(null);
-        $merchantWithEmptyContactPersonPhoneTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonPhoneTransfer->setContactPersonPhone(null);
         $merchantWithEmptyEmailTransfer = clone $merchantTransfer;
         $merchantWithEmptyEmailTransfer->setEmail(null);
 
@@ -90,11 +80,6 @@ class CreateMerchantTest extends Unit
 
         // Act
         $this->tester->getFacade()->createMerchant($merchantWithEmptyNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyRegistrationNumberTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonTitleTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonLastNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonPhoneTransfer);
         $this->tester->getFacade()->createMerchant($merchantWithEmptyEmailTransfer);
     }
 }
