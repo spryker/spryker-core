@@ -20,7 +20,7 @@ use Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterfa
 class PhpScheduleReaderPlugin extends AbstractPlugin implements ScheduleReaderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

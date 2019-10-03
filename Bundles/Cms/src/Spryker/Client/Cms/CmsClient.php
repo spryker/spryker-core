@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CmsClient extends AbstractClient implements CmsClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

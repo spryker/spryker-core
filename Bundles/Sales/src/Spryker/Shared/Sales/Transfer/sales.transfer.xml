@@ -35,6 +35,11 @@
 
     <transfer name="Quote">
         <property name="currency" type="Currency"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="refundTotal" type="int"/>
     </transfer>
 
     <transfer name="OrderList">
@@ -42,6 +47,14 @@
         <property name="filter" type="Filter"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
     </transfer>
 
     <transfer name="Address">
@@ -106,9 +119,12 @@
         <property name="process" type="string"/>
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
+        <property name="unitPrice" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
         <property name="taxRate" type="float"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
         <property name="quantity" type="int"/>
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="variety" type="string"/>
@@ -223,8 +239,9 @@
         <property name="shippingAddress" type="Address"/>
     </transfer>
 
-    <transfer name="Address">
-        <property name="firstName" type="string"/>
+    <transfer name="ProductOption">
+        <property name="idProductOptionValue" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
 </transfers>

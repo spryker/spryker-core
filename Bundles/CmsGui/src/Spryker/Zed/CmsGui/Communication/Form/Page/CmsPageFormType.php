@@ -27,6 +27,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CmsPageFormType extends AbstractType
 {
+    use ArrayObjectTransformerTrait;
+
     public const FIELD_SEARCHABLE = 'isSearchable';
     public const FIELD_PAGE_ATTRIBUTES = 'pageAttributes';
     public const FIELD_PAGE_META_ATTRIBUTES = 'metaAttributes';
@@ -39,8 +41,6 @@ class CmsPageFormType extends AbstractType
     public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_attributes';
     public const OPTION_DATA_CLASS_META_ATTRIBUTES = 'data_class_meta_attributes';
     public const FIELD_STORE_RELATION = 'storeRelation';
-
-    use ArrayObjectTransformerTrait;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

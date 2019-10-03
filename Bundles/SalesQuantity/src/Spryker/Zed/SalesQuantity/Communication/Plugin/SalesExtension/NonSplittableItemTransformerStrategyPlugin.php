@@ -19,7 +19,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
 class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
