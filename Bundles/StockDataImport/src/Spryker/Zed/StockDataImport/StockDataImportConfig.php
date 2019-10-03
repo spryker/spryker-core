@@ -13,6 +13,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 class StockDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_STOCK = 'stock';
+    public const IMPORT_TYPE_STOCK_STORE = 'stock_store';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -24,6 +25,19 @@ class StockDataImportConfig extends DataImportConfig
         return $this->buildImporterConfiguration(
             $moduleDataImportDirectory . 'warehouse.csv',
             static::IMPORT_TYPE_STOCK
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getStockStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration(
+            $moduleDataImportDirectory . 'warehouse_store.csv',
+            static::IMPORT_TYPE_STOCK_STORE
         );
     }
 

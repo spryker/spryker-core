@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\StockDataImport;
 use Codeception\Actor;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 
 /**
  * Inherited Methods
@@ -37,7 +38,16 @@ class StockDataImportCommunicationTester extends Actor
     public function ensureStockTableIsEmpty(): void
     {
         $this->createStockProductQuery()->deleteAll();
+        $this->createStockStoreQuery()->deleteAll();
         $this->createStockQuery()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureStockStoreTableIsEmpty(): void
+    {
+        $this->createStockStoreQuery()->deleteAll();
     }
 
     /**
@@ -49,6 +59,19 @@ class StockDataImportCommunicationTester extends Actor
 
         $this->assertTrue(
             $stockCount > 0,
+            'Expected at least one entry in the database table but database table is empty.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function assertStockStoreTableContainsData(): void
+    {
+        $stockStoreCount = $this->createStockStoreQuery()->count();
+
+        $this->assertTrue(
+            $stockStoreCount > 0,
             'Expected at least one entry in the database table but database table is empty.'
         );
     }
@@ -67,5 +90,13 @@ class StockDataImportCommunicationTester extends Actor
     protected function createStockProductQuery(): SpyStockProductQuery
     {
         return SpyStockProductQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Stock\Persistence\SpyStockStoreQuery
+     */
+    protected function createStockStoreQuery(): SpyStockStoreQuery
+    {
+        return SpyStockStoreQuery::create();
     }
 }

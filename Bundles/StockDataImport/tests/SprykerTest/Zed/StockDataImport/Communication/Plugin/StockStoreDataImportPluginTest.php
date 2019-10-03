@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\StockDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Spryker\Zed\StockDataImport\Communication\Plugin\StockDataImportPlugin;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -20,12 +22,12 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockDataImportPlugin;
  * @group StockDataImport
  * @group Communication
  * @group Plugin
- * @group StockDataImportPluginTest
+ * @group StockStoreDataImportPluginTest
  * Add your own group annotations below this line
  */
-class StockDataImportPluginTest extends Unit
+class StockStoreDataImportPluginTest extends Unit
 {
-    public const EXPECTED_IMPORT_COUNT = 3;
+    public const EXPECTED_IMPORT_COUNT = 4;
 
     /**
      * @var \SprykerTest\Zed\StockDataImport\StockDataImportCommunicationTester
@@ -38,24 +40,39 @@ class StockDataImportPluginTest extends Unit
     public function testImportImportsStock(): void
     {
         // Arrange
-        $this->tester->ensureStockTableIsEmpty();
+        $this->tester->ensureStockStoreTableIsEmpty();
+        $this->tester->haveStock([
+            StockTransfer::NAME => 'Warehouse1',
+        ]);
+        $this->tester->haveStock([
+            StockTransfer::NAME => 'Warehouse2',
+        ]);
+        $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $this->tester->haveStore([
+            StoreTransfer::NAME => 'AT',
+        ]);
+        $this->tester->haveStore([
+            StoreTransfer::NAME => 'US',
+        ]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/warehouse.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/warehouse_store.csv');
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-        $stockDataImportPlugin = new StockDataImportPlugin();
+        $stockDataImportPlugin = new StockStoreDataImportPlugin();
 
         // Act
         $dataImporterReportTransfer = $stockDataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
-        $this->tester->assertStockTableContainsData();
+        $this->tester->assertStockStoreTableContainsData();
         $this->assertSame(
             static::EXPECTED_IMPORT_COUNT,
             $dataImporterReportTransfer->getImportedDataSetCount(),
             sprintf(
-                'Imported number of stocks is %s expected %s.',
+                'Imported number of stock stores is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
                 static::EXPECTED_IMPORT_COUNT
             )

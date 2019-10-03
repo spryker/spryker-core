@@ -32,4 +32,21 @@ class StockDataImportFacade extends AbstractFacade implements StockDataImportFac
             ->getStockDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importStockStore(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
+        return $this->getFactory()
+            ->getStockStoreDataImporter()
+            ->import($dataImporterConfigurationTransfer);
+    }
 }
