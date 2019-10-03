@@ -41,4 +41,5 @@
         <property name="identifier" type="string"/>
         <property name="name" type="string"/>
     </transfer>
+
 </transfers>
