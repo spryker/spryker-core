@@ -36,7 +36,7 @@ class StockStoreDataImportPlugin extends AbstractPlugin implements DataImportPlu
 
     /**
      * {@inheritDoc}
-     * Returns type of stock store data importer.
+     * - Returns type of stock store data importer.
      *
      * @api
      *
