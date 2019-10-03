@@ -86,7 +86,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      * @param \Generated\Shared\Transfer\ApiResponseTransfer $responseTransfer
      * @param \Symfony\Component\HttpFoundation\Response $responseObject
      *
-     * @return \Symfony\Component\HttpFoundation\Response $responseObject
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     protected function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject)
     {

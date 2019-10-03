@@ -113,7 +113,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
-     * @return \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
     protected function setActiveTabName(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {

@@ -110,7 +110,7 @@ interface PersistenceInterface
     /**
      * @param string $stateMachineName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $expiredStateMachineItemsTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithExpiredTimeouts($stateMachineName);
 }
