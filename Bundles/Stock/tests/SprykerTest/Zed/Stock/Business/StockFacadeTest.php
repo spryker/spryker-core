@@ -473,15 +473,20 @@ class StockFacadeTest extends Unit
         $storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
 
         //Assert
-        $this->assertEquals([
-            $this->storeTransfer->getName() => [
-                $this->stockTransfer1->getName(),
-            ],
-            $storeTransfer2->getName() => [
+        $this->assertArrayHasKey($this->storeTransfer->getName(), $storeToWarehouseMapping);
+        $this->assertEquals(
+            [$this->stockTransfer1->getName()],
+            $storeToWarehouseMapping[$this->storeTransfer->getName()]
+        );
+
+        $this->assertArrayHasKey($storeTransfer2->getName(), $storeToWarehouseMapping);
+        $this->assertEquals(
+            [
                 $this->stockTransfer1->getName(),
                 $this->stockTransfer2->getName(),
             ],
-        ], $storeToWarehouseMapping);
+            $storeToWarehouseMapping[$storeTransfer2->getName()]
+        );
     }
 
     /**
