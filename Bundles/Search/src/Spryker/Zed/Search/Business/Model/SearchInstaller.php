@@ -42,7 +42,7 @@ class SearchInstaller implements SearchInstallerInterface
                 continue;
             }
 
-            $installer->installIndices($this->logger);
+            $installer->install($this->logger);
             $installer->installMapper($this->logger);
         }
     }

@@ -24,7 +24,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $logger): void
+    public function install(LoggerInterface $logger): void
     {
         $this->getFactory()->createIndexInstallBroker()->install($logger);
     }

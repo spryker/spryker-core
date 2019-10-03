@@ -27,9 +27,9 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $logger): void
+    public function install(LoggerInterface $logger): void
     {
-        $this->getFacade()->installIndices($logger);
+        $this->getFacade()->install($logger);
     }
 
     /**

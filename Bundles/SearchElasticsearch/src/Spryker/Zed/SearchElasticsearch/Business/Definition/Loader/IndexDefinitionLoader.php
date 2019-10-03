@@ -8,14 +8,14 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Loader;
 
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
-use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\IndexDefinitionFinderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\IndexDefinitionFinderInterface
+     * @var \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface
      */
     protected $indexDefinitionFinder;
 
@@ -30,11 +30,11 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $indexNameResolver;
 
     /**
-     * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\IndexDefinitionFinderInterface $indexDefinitionFinder
+     * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface $indexDefinitionFinder
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface $indexDefinitionReader
      * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      */
-    public function __construct(IndexDefinitionFinderInterface $indexDefinitionFinder, IndexDefinitionReaderInterface $indexDefinitionReader, IndexNameResolverInterface $indexNameResolver)
+    public function __construct(SchemaDefinitionFinderInterface $indexDefinitionFinder, IndexDefinitionReaderInterface $indexDefinitionReader, IndexNameResolverInterface $indexNameResolver)
     {
         $this->indexDefinitionFinder = $indexDefinitionFinder;
         $this->indexDefinitionReader = $indexDefinitionReader;

@@ -44,6 +44,7 @@ use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Shared\SearchExtension\SourceInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig getConfig()
@@ -200,9 +201,9 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Generated\Shared\Search\PageIndexMap
+     * @return \Spryker\Shared\SearchExtension\SourceInterface
      */
-    protected function createPageIndexMap(): PageIndexMap
+    protected function createSource(): SourceInterface
     {
         return new PageIndexMap();
     }
@@ -213,7 +214,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createFacetAggregationFactory(): FacetAggregationFactoryInterface
     {
         return new FacetAggregationFactory(
-            $this->createPageIndexMap(),
+            $this->createSource(),
             $this->createAggregationBuilder(),
             $this->getConfig()
         );

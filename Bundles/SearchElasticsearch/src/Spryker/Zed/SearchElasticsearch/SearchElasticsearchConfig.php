@@ -71,16 +71,16 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getJsonIndexDefinitionDirectories(): array
+    public function getJsonSchemaDefinitionDirectories(): array
     {
         $directories = [];
 
-        $directory = sprintf('%s/vendor/spryker/*/src/*/Shared/*/IndexMap/', APPLICATION_ROOT_DIR);
+        $directory = sprintf('%s/vendor/spryker/*/src/*/Shared/*/Schema/', APPLICATION_ROOT_DIR);
         if (glob($directory, GLOB_NOSORT | GLOB_ONLYDIR)) {
             $directories[] = $directory;
         }
 
-        $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/IndexMap/';
+        $applicationTransferGlobPattern = APPLICATION_SOURCE_DIR . '/*/Shared/*/Schema/';
         if (glob($applicationTransferGlobPattern, GLOB_NOSORT | GLOB_ONLYDIR)) {
             $directories[] = $applicationTransferGlobPattern;
         }
@@ -93,7 +93,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
      */
     public function getClassTargetDirectory(): string
     {
-        return APPLICATION_SOURCE_DIR . '/Generated/Shared/Search/';
+        return APPLICATION_SOURCE_DIR . '/Generated/Shared/SearchElasticsearch/';
     }
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Finder;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Symfony\Component\Finder\Finder;
 
-class IndexDefinitionFinder implements IndexDefinitionFinderInterface
+class SchemaDefinitionFinder implements SchemaDefinitionFinderInterface
 {
     /**
      * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
@@ -31,7 +31,7 @@ class IndexDefinitionFinder implements IndexDefinitionFinderInterface
     public function find(): Finder
     {
         $finder = new Finder();
-        $finder->files()->in($this->config->getJsonIndexDefinitionDirectories())->notName('search.json');
+        $finder->files()->in($this->config->getJsonSchemaDefinitionDirectories());
 
         return $finder;
     }

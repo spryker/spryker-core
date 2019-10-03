@@ -13,8 +13,8 @@ interface InstallPluginInterface
 {
     /**
      * Specification:
-     * - Finds index definition files in modules.
-     * - Installs or update indices by found index definition files.
+     * - Finds schema definition files in modules.
+     * - Installs or update schemas by found schema definition files.
      *
      * @api
      *
@@ -22,7 +22,7 @@ interface InstallPluginInterface
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $logger): void;
+    public function install(LoggerInterface $logger): void;
 
     /**
      * Specification:
