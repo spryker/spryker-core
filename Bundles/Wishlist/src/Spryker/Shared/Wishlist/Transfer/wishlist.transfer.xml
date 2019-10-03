@@ -61,8 +61,8 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
-        <property name="sku" type="string" />
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -88,9 +88,9 @@
     </transfer>
 
     <transfer name="WishlistFilter">
-        <property name="idCustomer" type="int" />
-        <property name="name" type="string" />
-        <property name="uuid" type="string" />
+        <property name="idCustomer" type="int"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="WishlistOverviewMeta">
@@ -110,7 +110,7 @@
     </transfer>
 
     <transfer name="WishlistPreAddItemCheckResponse">
-        <property name="isSuccess" type="bool" />
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
 </transfers>
