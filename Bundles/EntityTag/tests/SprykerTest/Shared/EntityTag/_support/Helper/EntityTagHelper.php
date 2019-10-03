@@ -17,11 +17,15 @@ class EntityTagHelper extends Module
     /**
      * @param string $resourceName
      * @param string $resourceId
+     * @param array $attributes
      *
      * @return string|null
      */
-    public function findResourceEntityTag(string $resourceName, string $resourceId): ?string
+    public function haveEntityTag(string $resourceName, string $resourceId, array $attributes): ?string
     {
-        return $this->getLocator()->entityTag()->client()->read($resourceName, $resourceId);
+        $entityTagClient = $this->getLocator()->entityTag()->client();
+        $entityTagClient->write($resourceName, $resourceId, $attributes);
+
+        return $entityTagClient->read($resourceName, $resourceId);
     }
 }
