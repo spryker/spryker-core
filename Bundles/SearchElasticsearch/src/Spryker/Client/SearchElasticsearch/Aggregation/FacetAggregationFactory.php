@@ -10,13 +10,13 @@ namespace Spryker\Client\SearchElasticsearch\Aggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\SearchElasticsearch\Exception\MissingFacetAggregationException;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
-use Spryker\Shared\Search\IndexMapInterface;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig as SharedSearchElasticsearchConfig;
+use Spryker\Shared\SearchExtension\SourceInterface;
 
 class FacetAggregationFactory implements FacetAggregationFactoryInterface
 {
     /**
-     * @var \Spryker\Shared\Search\IndexMapInterface
+     * @var \Spryker\Shared\SearchExtension\SourceInterface
      */
     protected $indexMap;
 
@@ -31,11 +31,11 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     protected $searchConfig;
 
     /**
-     * @param \Spryker\Shared\Search\IndexMapInterface $indexMap
+     * @param \Spryker\Shared\SearchExtension\SourceInterface $indexMap
      * @param \Spryker\Client\SearchElasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
      * @param \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig $searchConfig
      */
-    public function __construct(IndexMapInterface $indexMap, AggregationBuilderInterface $aggregationBuilder, SearchElasticsearchConfig $searchConfig)
+    public function __construct(SourceInterface $indexMap, AggregationBuilderInterface $aggregationBuilder, SearchElasticsearchConfig $searchConfig)
     {
         $this->indexMap = $indexMap;
         $this->aggregationBuilder = $aggregationBuilder;

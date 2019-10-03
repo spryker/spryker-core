@@ -93,7 +93,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
      */
     public function getClassTargetDirectory(): string
     {
-        return APPLICATION_SOURCE_DIR . '/Generated/Shared/SearchElasticsearch/';
+        return APPLICATION_SOURCE_DIR . '/Generated/Shared/Search/';
     }
 
     /**
