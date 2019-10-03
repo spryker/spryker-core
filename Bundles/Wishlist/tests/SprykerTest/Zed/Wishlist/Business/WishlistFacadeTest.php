@@ -503,14 +503,12 @@ class WishlistFacadeTest extends Test
      */
     public function testGetWishlistsByCustomerReturnPersistedWishlists(): void
     {
-        $customerTransfer = $this->tester->haveCustomer();
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
 
-        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(), WishlistTransfer::NAME => 'one']);
-        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(), WishlistTransfer::NAME => 'two']);
+        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($this->customer);
 
-        $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
-
-        $this->assertCount(2, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
+        $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
     /**
