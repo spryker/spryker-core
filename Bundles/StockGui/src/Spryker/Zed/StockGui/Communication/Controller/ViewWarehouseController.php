@@ -17,17 +17,24 @@ class ViewWarehouseController extends AbstractController
 {
     public const PARAM_ID_STOCK = 'id-stock';
 
+    protected const REDIRECT_URL = '/stock-gui/warehouse/list';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request): array
+    public function indexAction(Request $request)
     {
         $idStock = $this->castId($request->query->get(static::PARAM_ID_STOCK));
         $stockTransfer = $this->getFactory()
             ->getStockFacade()
             ->findStockById($idStock);
+
+        if ($stockTransfer === null) {
+            return $this->redirectResponse(static::REDIRECT_URL);
+        }
+
         $storeToStockMapping = $this->getFactory()->getStockFacade()->getStoreToWarehouseMapping();
 
         return $this->viewResponse([

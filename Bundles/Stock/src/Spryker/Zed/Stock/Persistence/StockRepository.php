@@ -61,7 +61,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
             ->filterByIdStock($idStock)
             ->findOne();
 
-        if (!$stockEntity) {
+        if ($stockEntity === null) {
             return null;
         }
 

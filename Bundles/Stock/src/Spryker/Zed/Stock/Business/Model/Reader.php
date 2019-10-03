@@ -133,9 +133,7 @@ class Reader implements ReaderInterface
         $storeTransfers = $this->storeFacade->getAllStores();
         $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
 
-        $mapping = array_fill_keys(array_map(function (StoreTransfer $storeTransfer): string {
-            return $storeTransfer->getName();
-        }, $storeTransfers), []);
+        $mapping = array_fill_keys($this->getStoreNamesFromStoreTransferCollection($storeTransfers), []);
         foreach ($stockTransfers as $stockTransfer) {
             $mapping = $this->mapStockToStores($stockTransfer, $storeTransfers, $mapping);
         }
@@ -466,6 +464,18 @@ class Reader implements ReaderInterface
         }
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     *
+     * @return string[]
+     */
+    protected function getStoreNamesFromStoreTransferCollection(array $storeTransfers): array
+    {
+        return array_map(function (StoreTransfer $storeTransfer): string {
+            return $storeTransfer->getName();
+        }, $storeTransfers);
     }
 
     /**
