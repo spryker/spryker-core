@@ -26,7 +26,8 @@ use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
 class ShoppingListShareDeleter implements ShoppingListShareDeleterInterface
 {
-    use PermissionAwareTrait, TransactionTrait;
+    use PermissionAwareTrait;
+    use TransactionTrait;
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface

@@ -20,7 +20,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdDataImport\MerchantRelati
 class MerchantRelationshipSalesOrderThresholdDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

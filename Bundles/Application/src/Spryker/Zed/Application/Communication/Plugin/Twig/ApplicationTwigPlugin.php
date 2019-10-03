@@ -20,7 +20,7 @@ use Twig\Environment;
 class ApplicationTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds application global variables.
      * - Extends Twig with application global functions.
      *

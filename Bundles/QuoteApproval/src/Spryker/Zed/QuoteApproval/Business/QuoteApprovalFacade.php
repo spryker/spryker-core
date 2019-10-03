@@ -22,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -112,7 +112,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -126,7 +126,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

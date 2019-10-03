@@ -18,7 +18,7 @@ use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInt
 class ProductViewDiscontinuedOptionsExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

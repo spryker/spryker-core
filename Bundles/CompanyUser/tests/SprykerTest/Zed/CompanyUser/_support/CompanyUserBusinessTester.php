@@ -31,9 +31,9 @@ use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
  */
 class CompanyUserBusinessTester extends Actor
 {
-    protected const STATUS_APPROVED = 'approved';
-
     use _generated\CompanyUserBusinessTesterActions;
+
+    protected const STATUS_APPROVED = 'approved';
 
    /**
     * Define custom actions here

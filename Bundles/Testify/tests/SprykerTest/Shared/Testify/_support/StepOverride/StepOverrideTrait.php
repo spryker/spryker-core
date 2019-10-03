@@ -59,7 +59,7 @@ trait StepOverrideTrait
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function getScenario()
     {

@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ShoppingListSessionClient extends AbstractClient implements ShoppingListSessionClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

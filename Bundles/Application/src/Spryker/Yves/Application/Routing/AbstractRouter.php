@@ -19,6 +19,11 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ *
+ * @see Router Module.
+ */
 abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
 {
     /**
@@ -32,7 +37,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     protected $sslEnabled = false;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Symfony\Component\Routing\RequestContext $context
      *
@@ -44,7 +49,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getContext()
     {
@@ -52,7 +57,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRouteCollection()
     {
