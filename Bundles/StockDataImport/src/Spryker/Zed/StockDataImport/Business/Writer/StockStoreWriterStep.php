@@ -17,9 +17,6 @@ use Spryker\Zed\StockDataImport\Business\Writer\DataSet\StockStoreDataSetInterfa
 
 class StockStoreWriterStep implements DataImportStepInterface
 {
-    protected const EXCEPTION_MESSAGE = '"%s" and %s must be in the data set. Given: "%s"';
-    protected const NOT_FOUND_EXCEPTION_MESSAGE = 'Stock Entity not found';
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -34,7 +31,7 @@ class StockStoreWriterStep implements DataImportStepInterface
             ->findOne();
 
         if ($stockEntity === null) {
-            throw new EntityNotFoundException(static::NOT_FOUND_EXCEPTION_MESSAGE);
+            throw new EntityNotFoundException('Stock Entity not found');
         }
 
         $stockStoreEntity = SpyStockStoreQuery::create()
