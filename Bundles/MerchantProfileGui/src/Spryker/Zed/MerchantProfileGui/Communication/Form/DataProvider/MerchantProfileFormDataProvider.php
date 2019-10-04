@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer;
 use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileFormType;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeInterface;
@@ -72,8 +73,71 @@ class MerchantProfileFormDataProvider
             $merchantProfileTransfer = new MerchantProfileTransfer();
         }
         $merchantProfileTransfer = $this->addLocalizedGlossaryAttributes($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->addInitialUrlCollection($merchantProfileTransfer);
 
         return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    protected function addInitialUrlCollection(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
+        $merchantProfileUrlCollection = $merchantProfileTransfer->getUrlCollection();
+        $urlCollection = new ArrayObject();
+        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
+
+        foreach ($availableLocaleTransfers as $localeTransfer) {
+            $urlCollection->append(
+                $this->addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, $localeTransfer)
+            );
+        }
+        $merchantProfileTransfer->setUrlCollection($urlCollection);
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $merchantProfileUrlCollection
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, LocaleTransfer $localeTransfer): UrlTransfer
+    {
+        $urlTransfer = new UrlTransfer();
+        foreach ($merchantProfileUrlCollection as $urlTransfer) {
+            if ($urlTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+                $urlTransfer->fromArray($urlTransfer->toArray(), true);
+                break;
+            }
+        }
+        $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
+        $urlTransfer->setUrlPrefix(
+            $this->getLocalizedUrlPrefix($localeTransfer)
+        );
+
+        return $urlTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getLocalizedUrlPrefix(LocaleTransfer $localeTransfer): string
+    {
+        $localeNameParts = explode('_', $localeTransfer->getLocaleName());
+        $languageCode = $localeNameParts[0];
+        $merchantUrlPrefix = $this->config->getMerchantUrlPrefix();
+
+        if (empty($merchantUrlPrefix)) {
+            return '/' . $languageCode . '/';
+        }
+
+        return '/' . $languageCode . '/' . $merchantUrlPrefix . '/';
     }
 
     /**

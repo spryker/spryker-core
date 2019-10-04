@@ -29,6 +29,11 @@
         <property name="fkMerchant" type="int" />
         <property name="isActive" type="bool" />
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" />
+        <property name="urlCollection" type="Url[]" />
+    </transfer>
+
+    <transfer name="MerchantProfileCollection">
+        <property name="merchantProfiles" type="MerchantProfile[]"  singular="merchantProfile" />
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
@@ -48,5 +53,19 @@
 
     <transfer name="MerchantProfileCriteriaFilter">
         <property name="idMerchant" type="int" />
+        <property name="idMerchantProfile" type="int" />
+        <property name="merchantIds" type="int[]" />
+        <property name="merchantProfileIds" type="int[]" />
+        <property name="isActive" type="bool" />
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int" />
+        <property name="fkResourceMerchantProfile" type="int" />
+        <property name="urlPrefix" type="string" />
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int" />
     </transfer>
 </transfers>

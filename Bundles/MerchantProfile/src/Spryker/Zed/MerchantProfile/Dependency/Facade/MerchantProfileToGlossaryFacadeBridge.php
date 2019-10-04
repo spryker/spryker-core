@@ -30,7 +30,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return int
      */
-    public function createKey($keyName)
+    public function createKey($keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -40,7 +40,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey($keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -53,7 +53,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
     }
@@ -66,7 +66,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
@@ -77,7 +77,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $locale);
     }

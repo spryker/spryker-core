@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
+use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
@@ -24,16 +25,38 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
      */
     public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
     {
-        $merchantQuery = $this->getFactory()->createMerchantProfileQuery();
-        $merchantEntity = $this->applyFilters($merchantQuery, $merchantProfileCriteriaFilterTransfer)->findOne();
+        $merchantProfileQuery = $this->getFactory()->createMerchantProfileQuery()->leftJoinSpyUrl();
+        $merchantProfileEntity = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer)->findOne();
 
-        if (!$merchantEntity) {
+        if (!$merchantProfileEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createPropelMerchantProfileMapper()
-            ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantEntity, new MerchantProfileTransfer());
+            ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, new MerchantProfileTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer|null $merchantProfileCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
+     */
+    public function find(?MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer = null): MerchantProfileCollectionTransfer
+    {
+        $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
+        $merchantProfileQuery = $this->getFactory()->createMerchantProfileQuery();
+        $merchantProfileEntityCollection = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer)->find();
+
+        foreach ($merchantProfileEntityCollection as $merchantProfileEntity) {
+            $merchantProfileTransfer = $this->getFactory()
+                ->createPropelMerchantProfileMapper()
+                ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, new MerchantProfileTransfer());
+
+            $merchantProfileCollectionTransfer->addMerchantProfile($merchantProfileTransfer);
+        }
+
+        return $merchantProfileCollectionTransfer;
     }
 
     /**
@@ -48,6 +71,22 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     ): SpyMerchantProfileQuery {
         if ($merchantProfileCriteriaFilterTransfer->getIdMerchant() !== null) {
             $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getIdMerchant());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getMerchantIds()) {
+            $merchantProfileQuery->filterByFkMerchant_In($merchantProfileCriteriaFilterTransfer->getMerchantIds());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getMerchantProfileIds()) {
+            $merchantProfileQuery->filterByIdMerchantProfile_In($merchantProfileCriteriaFilterTransfer->getMerchantProfileIds());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile() !== null) {
+            $merchantProfileQuery->filterByIdMerchantProfile($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getIsActive() !== null) {
+            $merchantProfileQuery->filterByIsActive($merchantProfileCriteriaFilterTransfer->getIsActive());
         }
 
         return $merchantProfileQuery;

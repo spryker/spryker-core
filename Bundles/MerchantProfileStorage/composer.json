@@ -1,0 +1,48 @@
+{
+  "name": "spryker/merchant-profile-storage",
+  "type": "library",
+  "description": "MerchantProfileStorage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/merchant-profile": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/event": "*",
+    "spryker/testify": "*",
+    "spryker/url-storage": "*"
+  },
+  "suggest": {
+    "spryker/event": "To use event behavior.",
+    "spryker/url-storage": "To use shop route plugin."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

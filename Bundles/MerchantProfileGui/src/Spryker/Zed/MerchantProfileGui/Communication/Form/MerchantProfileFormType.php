@@ -8,8 +8,11 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary\MerchantProfileLocalizedGlossaryAttributesFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\Transformer\MerchantProfileUrlCollectionDataTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -32,36 +35,37 @@ class MerchantProfileFormType extends AbstractType
 {
     public const SALUTATION_CHOICES_OPTION = 'salutation_choices';
 
-    public const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
-    public const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
-    public const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
-    public const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
-    public const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
-    public const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
-    public const FIELD_BANNER_URL = 'banner_url';
-    public const FIELD_LOGO_URL = 'logo_url';
-    public const FIELD_PUBLIC_EMAIL = 'public_email';
-    public const FIELD_PUBLIC_PHONE = 'public_phone';
-    public const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
-    public const FIELD_IS_ACTIVE = 'is_active';
-    public const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
-    public const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
-    public const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
-    public const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
-    public const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
-    public const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
-    public const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
+    protected const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
+    protected const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
+    protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
+    protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
+    protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
+    protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
+    protected const FIELD_BANNER_URL = 'banner_url';
+    protected const FIELD_LOGO_URL = 'logo_url';
+    protected const FIELD_PUBLIC_EMAIL = 'public_email';
+    protected const FIELD_PUBLIC_PHONE = 'public_phone';
+    protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    protected const FIELD_IS_ACTIVE = 'is_active';
+    protected const FIELD_URL_COLLECTION = 'urlCollection';
+    protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
+    protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
+    protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
+    protected const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
+    protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
+    protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
+    protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
 
-    public const LABEL_CONTACT_PERSON_ROLE = 'Role';
-    public const LABEL_CONTACT_PERSON_TITLE = 'Title';
-    public const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
-    public const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
-    public const LABEL_CONTACT_PERSON_PHONE = 'Phone';
-    public const LABEL_BANNER_URL = 'Banner';
-    public const LABEL_LOGO_URL = 'Logo';
-    public const LABEL_PUBLIC_EMAIL = 'Public Email';
-    public const LABEL_PUBLIC_PHONE = 'Public Phone';
-    public const LABEL_IS_ACTIVE = 'Is Active';
+    protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
+    protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
+    protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
+    protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
+    protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
+    protected const LABEL_BANNER_URL = 'Banner';
+    protected const LABEL_LOGO_URL = 'Logo';
+    protected const LABEL_PUBLIC_EMAIL = 'Public Email';
+    protected const LABEL_PUBLIC_PHONE = 'Public Phone';
+    protected const LABEL_IS_ACTIVE = 'Is Active';
 
     public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
@@ -100,6 +104,7 @@ class MerchantProfileFormType extends AbstractType
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
             ->addBannerUrlField($builder)
+            ->addUrlCollectionField($builder)
             ->addDescriptionGlossaryKeyField($builder)
             ->addBannerUrlGlossaryKeyField($builder)
             ->addDeliveryTimeGlossaryKeyField($builder)
@@ -108,6 +113,29 @@ class MerchantProfileFormType extends AbstractType
             ->addImprintGlossaryKeyField($builder)
             ->addDataPrivacyGlossaryKeyField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUrlCollectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
+            'entry_type' => MerchantProfileUrlCollectionFormType::class,
+            'allow_add' => true,
+            'label' => false,
+            'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+                'data_class' => UrlTransfer::class,
+            ],
+        ]);
+        $builder->get(static::FIELD_URL_COLLECTION)
+            ->addModelTransformer(new MerchantProfileUrlCollectionDataTransformer());
+
+        return $this;
     }
 
     /**

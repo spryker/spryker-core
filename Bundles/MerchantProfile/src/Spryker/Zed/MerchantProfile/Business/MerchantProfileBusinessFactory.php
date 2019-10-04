@@ -18,6 +18,7 @@ use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfile
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
+use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface;
 use Spryker\Zed\MerchantProfile\MerchantProfileDependencyProvider;
 
 /**
@@ -33,7 +34,8 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProfileWriter(
             $this->getEntityManager(),
-            $this->createMerchantProfileGlossaryWriter()
+            $this->createMerchantProfileGlossaryWriter(),
+            $this->getUrlFacade()
         );
     }
 
@@ -83,5 +85,13 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     protected function getLocaleFacade(): MerchantProfileToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface
+     */
+    public function getUrlFacade(): MerchantProfileToUrlFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_URL);
     }
 }

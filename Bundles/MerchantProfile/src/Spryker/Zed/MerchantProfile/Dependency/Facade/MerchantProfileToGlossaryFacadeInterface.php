@@ -17,14 +17,14 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey($keyName);
+    public function createKey($keyName): int;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($keyName);
+    public function hasKey($keyName): bool;
 
     /**
      * @param string $keyName
@@ -34,7 +34,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true): TranslationTransfer;
 
     /**
      * @api
@@ -44,7 +44,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool;
 
     /**
      * @param string $keyName
@@ -52,7 +52,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer;
 
     /**
      * @param string $keyName

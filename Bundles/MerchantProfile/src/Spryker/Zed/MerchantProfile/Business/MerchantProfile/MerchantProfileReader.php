@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
+use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface;
@@ -34,5 +35,15 @@ class MerchantProfileReader implements MerchantProfileReaderInterface
     public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
     {
         return $this->merchantProfileRepository->findOne($merchantProfileCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer|null $merchantProfileCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
+     */
+    public function find(?MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer = null): MerchantProfileCollectionTransfer
+    {
+        return $this->merchantProfileRepository->find($merchantProfileCriteriaFilterTransfer);
     }
 }

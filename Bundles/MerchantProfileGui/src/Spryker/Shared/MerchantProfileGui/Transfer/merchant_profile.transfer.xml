@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Merchant">
+        <property name="merchantProfile" type="MerchantProfile" />
+    </transfer>
+
+    <transfer name="MerchantProfile">
+        <property name="idMerchantProfile" type="int" />
+        <property name="merchantKey" type="string" />
+        <property name="contactPersonRole" type="string" />
+        <property name="contactPersonTitle" type="string" />
+        <property name="contactPersonFirstName" type="string" />
+        <property name="contactPersonLastName" type="string" />
+        <property name="contactPersonPhone" type="string" />
+        <property name="bannerUrl" type="string" />
+        <property name="logoUrl" type="string" />
+        <property name="publicEmail" type="string" />
+        <property name="publicPhone" type="string" />
+        <property name="descriptionGlossaryKey" type="string" />
+        <property name="bannerUrlGlossaryKey" type="string" />
+        <property name="deliveryTimeGlossaryKey" type="string" />
+        <property name="termsConditionsGlossaryKey" type="string" />
+        <property name="cancellationPolicyGlossaryKey" type="string" />
+        <property name="imprintGlossaryKey" type="string" />
+        <property name="dataPrivacyGlossaryKey" type="string" />
+        <property name="fkMerchant" type="int" />
+        <property name="isActive" type="bool" />
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" />
+        <property name="urlCollection" type="Url[]" />
+    </transfer>
+
+    <transfer name="MerchantProfileLocalizedGlossaryAttributes">
+        <property name="fkLocale" type="int" />
+        <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues" />
+    </transfer>
+
+    <transfer name="MerchantProfileGlossaryAttributeValues">
+        <property name="descriptionGlossaryKey" type="string" />
+        <property name="bannerUrlGlossaryKey" type="string" />
+        <property name="deliveryTimeGlossaryKey" type="string" />
+        <property name="termsConditionsGlossaryKey" type="string" />
+        <property name="cancellationPolicyGlossaryKey" type="string" />
+        <property name="imprintGlossaryKey" type="string" />
+        <property name="dataPrivacyGlossaryKey" type="string" />
+    </transfer>
+
+    <transfer name="MerchantProfileCriteriaFilter">
+        <property name="idMerchant" type="int" />
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int" />
+        <property name="fkResourceMerchantProfile" type="int" />
+        <property name="urlPrefix" type="string" />
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int" />
+    </transfer>
+</transfers>

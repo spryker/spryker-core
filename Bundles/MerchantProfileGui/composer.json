@@ -11,7 +11,8 @@
     "spryker/merchant-gui-extension": "^1.0.0",
     "spryker/merchant-profile": "^1.0.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/twig": "^3.0.0"
+    "spryker/twig": "^3.0.0",
+    "spryker/url": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
