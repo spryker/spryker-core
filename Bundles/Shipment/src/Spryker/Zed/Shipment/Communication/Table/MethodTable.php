@@ -226,7 +226,8 @@ class MethodTable extends AbstractTable
     {
         $prices = [];
         foreach ($moneyTransferCollection as $moneyTransfer) {
-            $prices[] = $this->formatPrice($moneyTransfer->getAmount(), $moneyTransfer->getCurrency());
+            $amount = $moneyTransfer->getAmount() !== null ? (int)$moneyTransfer->getAmount() : null;
+            $prices[] = $this->formatPrice($amount, $moneyTransfer->getCurrency());
         }
 
         return implode(' ', $prices);
