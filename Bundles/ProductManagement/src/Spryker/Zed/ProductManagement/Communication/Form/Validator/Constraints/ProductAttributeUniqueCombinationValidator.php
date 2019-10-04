@@ -18,7 +18,7 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique|\Symfony\Component\Validator\Constraint $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination|\Symfony\Component\Validator\Constraint $constraint
      *
      * @return void
      */
@@ -28,6 +28,7 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
             return;
         }
 
+        /** @var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination $constraint */
         $this->validateAttributeUniqueCombination($value, $constraint);
     }
 

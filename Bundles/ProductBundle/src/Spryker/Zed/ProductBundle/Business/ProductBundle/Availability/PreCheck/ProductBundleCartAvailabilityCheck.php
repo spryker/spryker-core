@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -82,15 +81,15 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedItemQuantityForBundledProductsByGivenSku(iterable $items, string $sku): Decimal
+    protected function getAccumulatedItemQuantityForBundledProductsByGivenSku(ArrayObject $itemTransfers, string $sku): Decimal
     {
         $quantity = new Decimal(0);
-        foreach ($items as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
@@ -131,7 +130,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
             static::SKU_TRANSLATION_PARAMETER => $sku,
-            static::STOCK_TRANSLATION_PARAMETER => $stock->toString(),
+            static::STOCK_TRANSLATION_PARAMETER => $stock->trim()->toString(),
         ]);
 
         return $messageTransfer;
@@ -179,14 +178,14 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
     protected function calculateRegularItemAvailability(
         ItemTransfer $itemTransfer,
-        iterable $itemsInCart,
+        ArrayObject $itemsInCart,
         StoreTransfer $storeTransfer
     ): Decimal {
         $itemAvailability = $this->availabilityFacade->calculateAvailabilityForProductWithStore(
@@ -205,14 +204,14 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     protected function checkItemAvailability(
-        iterable $itemsInCart,
+        ArrayObject $itemsInCart,
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
@@ -232,16 +231,16 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     protected function getUnavailableBundleItemsInCart(
-        iterable $itemsInCart,
-        iterable $bundledProducts,
+        ArrayObject $itemsInCart,
+        array $bundledProducts,
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
@@ -277,11 +276,11 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param array $unavailableBundleItems
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
      *
      * @return bool
      */
-    protected function isAllBundleItemsUnavailable(array $unavailableBundleItems, ObjectCollection $bundledProducts): bool
+    protected function isAllBundleItemsUnavailable(array $unavailableBundleItems, array $bundledProducts): bool
     {
         return count($unavailableBundleItems) === count($bundledProducts);
     }
@@ -305,13 +304,13 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function checkRegularItemAvailability(iterable $itemsInCart, ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): ?MessageTransfer
+    protected function checkRegularItemAvailability(ArrayObject $itemsInCart, ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): ?MessageTransfer
     {
         if ($this->checkIfItemIsSellable($itemsInCart, $itemTransfer->getSku(), $storeTransfer, new Decimal($itemTransfer->getQuantity()))) {
             return null;

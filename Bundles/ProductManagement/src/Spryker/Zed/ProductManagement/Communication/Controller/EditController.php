@@ -142,6 +142,8 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
+        $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
+
         $type = ProductManagementConfig::PRODUCT_TYPE_REGULAR;
         if ($productTransfer->getProductBundle() !== null) {
             $type = ProductManagementConfig::PRODUCT_TYPE_BUNDLE;

@@ -19,7 +19,7 @@ interface ShipmentMethodFilterInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function filterShipmentMethods(ArrayObject $shipmentMethods, QuoteTransfer $quoteTransfer);
 }

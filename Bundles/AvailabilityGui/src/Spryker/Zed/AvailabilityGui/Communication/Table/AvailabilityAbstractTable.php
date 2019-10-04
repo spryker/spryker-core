@@ -128,8 +128,8 @@ class AvailabilityAbstractTable extends AbstractTable
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
-                AvailabilityQueryContainer::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim()->toString(),
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity->getReservationQuantity())->trim()->toString(),
+                AvailabilityQueryContainer::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
                 static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($isNeverOutOfStock) ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
@@ -226,13 +226,13 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param string $reservationQuantity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateReservation($reservationQuantity): Decimal
+    protected function calculateReservation(SpyProductAbstract $productAbstractEntity): Decimal
     {
-        $reservationItems = explode(',', $reservationQuantity);
+        $reservationItems = explode(',', $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY));
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);
@@ -243,7 +243,7 @@ class AvailabilityAbstractTable extends AbstractTable
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getReservationUniqueValue($reservationItems): Decimal
+    protected function getReservationUniqueValue(array $reservationItems): Decimal
     {
         $reservation = new Decimal(0);
         foreach ($reservationItems as $item) {
