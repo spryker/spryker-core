@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Newsletter\Persistence;
 
-interface NewsletterQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface NewsletterQueryContainerInterface extends QueryContainerInterface
 {
     /**
      * @api

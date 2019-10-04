@@ -201,7 +201,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         $customerTransfer = $this->getCustomerById($customerTransfer->getIdCustomer());
 
-        if ($customerTransfer && $customerTransfer->getIdCustomer()) {
+        if ($customerTransfer->getIdCustomer()) {
             return $customerTransfer;
         }
 
