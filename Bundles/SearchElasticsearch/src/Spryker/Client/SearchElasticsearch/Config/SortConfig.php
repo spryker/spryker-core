@@ -88,9 +88,7 @@ class SortConfig implements SortConfigInterface
      */
     public function getActiveParamName(array $requestParameters): ?string
     {
-        $sortParamName = array_key_exists($this->sortParamKey, $requestParameters) ? $requestParameters[$this->sortParamKey] : null;
-
-        return $sortParamName;
+        return $requestParameters[$this->sortParamKey] ?? null;
     }
 
     /**

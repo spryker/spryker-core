@@ -15,7 +15,7 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpan
  */
 class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'completion';
+    protected const NAME = 'completion';
 
     /**
      * @return string
@@ -46,7 +46,7 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
     protected function getCompletionFromSuggests(ResultSet $searchResult): array
     {
         $result = [];
-        $aggregation = $searchResult->getAggregation(CompletionQueryExpanderPlugin::AGGREGATION_NAME);
+        $aggregation = $searchResult->getAggregation(static::NAME);
 
         foreach ($aggregation['buckets'] as $agg) {
             $result[] = $agg['key'];

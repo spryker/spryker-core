@@ -25,6 +25,9 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpan
  */
 class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
+    protected const SIZE = 10;
+    protected const AGGREGATION_NAME = 'completion';
+
     /**
      * @dataProvider CompletionQueryExpanderDataProvider
      *
@@ -66,9 +69,9 @@ class CompletionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             ->createBaseQueryPlugin()
             ->getSearchQuery();
 
-        $expectedAggregation = new Terms(CompletionQueryExpanderPlugin::AGGREGATION_NAME);
+        $expectedAggregation = new Terms(static::AGGREGATION_NAME);
         $expectedAggregation->setField(PageIndexMap::COMPLETION_TERMS);
-        $expectedAggregation->setSize(CompletionQueryExpanderPlugin::SIZE);
+        $expectedAggregation->setSize(static::SIZE);
         $expectedAggregation->setInclude('');
 
         $expectedQuery->addAggregation($expectedAggregation);

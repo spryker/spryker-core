@@ -48,9 +48,9 @@ class FacetConfig implements FacetConfigInterface
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($facetName): ?FacetConfigTransfer
+    public function get(string $facetName): ?FacetConfigTransfer
     {
-        return isset($this->facetConfigTransfers[$facetName]) ? $this->facetConfigTransfers[$facetName] : null;
+        return $this->facetConfigTransfers[$facetName] ?? null;
     }
 
     /**

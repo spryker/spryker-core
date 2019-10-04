@@ -26,7 +26,7 @@ class SortConfigPlugin extends AbstractPlugin implements SortConfigPluginInterfa
      *
      * @return void
      */
-    public function buildSortConfig(SortConfigInterface $sortConfigBuilder)
+    public function buildSortConfig(SortConfigInterface $sortConfigBuilder): void
     {
         $sortConfigBuilderPlugins = $this->getFactory()->getSortConfigTransferBuilderPlugins();
 

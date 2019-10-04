@@ -15,7 +15,8 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
-    public const DOC_COUNT = 'doc_count';
+    protected const DOC_COUNT = 'doc_count';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */

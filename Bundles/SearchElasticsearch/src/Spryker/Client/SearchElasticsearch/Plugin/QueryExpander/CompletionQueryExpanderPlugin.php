@@ -20,11 +20,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface
  */
 class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    public const AGGREGATION_NAME = 'completion';
-
-    public const SIZE = 10;
-
-    public const SEARCH_WILDCARD = '.*';
+    protected const AGGREGATION_NAME = 'completion';
+    protected const SIZE = 10;
+    protected const SEARCH_WILDCARD = '.*';
 
     /**
      * {@inheritdoc}

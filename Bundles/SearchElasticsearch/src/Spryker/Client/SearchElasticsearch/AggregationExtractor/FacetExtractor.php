@@ -78,7 +78,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \ArrayObject
      */
-    protected function extractFacetData(array $aggregation, $name, $fieldName)
+    protected function extractFacetData(array $aggregation, string $name, string $fieldName): ArrayObject
     {
         if ($this->facetConfigTransfer->getAggregationParams()) {
             return $this->extractStandaloneFacetDataBuckets($aggregation, $fieldName);
@@ -94,7 +94,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \ArrayObject
      */
-    protected function extractFacetDataBuckets(array $aggregation, $name, $fieldName)
+    protected function extractFacetDataBuckets(array $aggregation, string $name, string $fieldName): ArrayObject
     {
         $facetResultValues = new ArrayObject();
         $nameFieldName = $this->getFieldNameWithNameSuffix($fieldName);
@@ -120,7 +120,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \ArrayObject
      */
-    protected function extractStandaloneFacetDataBuckets(array $aggregation, $fieldName)
+    protected function extractStandaloneFacetDataBuckets(array $aggregation, string $fieldName): ArrayObject
     {
         $facetResultValues = new ArrayObject();
         $nestedFieldName = $this->addNestedFieldPrefix($fieldName, $this->facetConfigTransfer->getName());
@@ -141,7 +141,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \ArrayObject
      */
-    protected function addBucketValueToFacetResult(array $valueBucket, ArrayObject $facetResultValues)
+    protected function addBucketValueToFacetResult(array $valueBucket, ArrayObject $facetResultValues): ArrayObject
     {
         $facetResultValueTransfer = new FacetSearchResultValueTransfer();
         $value = $this->getFacetValue($valueBucket);
@@ -160,7 +160,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return string
      */
-    protected function getFieldNameWithNameSuffix($fieldName)
+    protected function getFieldNameWithNameSuffix(string $fieldName): string
     {
         return $fieldName . StringFacetAggregation::NAME_SUFFIX;
     }
@@ -170,7 +170,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return string
      */
-    protected function getFieldNameWithValueSuffix($fieldName)
+    protected function getFieldNameWithValueSuffix(string $fieldName): string
     {
         return $fieldName . StringFacetAggregation::VALUE_SUFFIX;
     }

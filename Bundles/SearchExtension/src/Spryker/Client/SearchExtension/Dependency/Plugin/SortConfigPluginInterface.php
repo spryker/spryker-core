@@ -21,5 +21,5 @@ interface SortConfigPluginInterface
      *
      * @return void
      */
-    public function buildSortConfig(SortConfigInterface $sortConfigBuilder);
+    public function buildSortConfig(SortConfigInterface $sortConfigBuilder): void;
 }

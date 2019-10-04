@@ -35,7 +35,7 @@ class PriceRangeExtractor extends RangeExtractor
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters)
     {
         /** @var \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeResultTransfer */
         $rangeResultTransfer = parent::extractDataFromAggregations($aggregations, $requestParameters);
@@ -48,18 +48,37 @@ class PriceRangeExtractor extends RangeExtractor
      * @param float $min
      * @param float $max
      *
-     * @return int[]
+     * @return array
      */
     protected function getActiveRangeData(array $requestParameters, $min, $max)
     {
-        $parameterName = $this->facetConfigTransfer->getParameterName();
-
-        $activeMin = (isset($requestParameters[$parameterName]['min']) ? (float)$requestParameters[$parameterName]['min'] : null);
-        $activeMax = (isset($requestParameters[$parameterName]['max']) ? (float)$requestParameters[$parameterName]['max'] : null);
+        [$activeMin, $activeMax] = $this->getActiveRangeParameters($requestParameters);
 
         return [
             $activeMin !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMin) : $min,
             $activeMax !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMax) : $max,
         ];
+    }
+
+    /**
+     * @param array $requestParameters
+     *
+     * @return array
+     */
+    protected function getActiveRangeParameters(array $requestParameters): array
+    {
+        $parameterName = $this->facetConfigTransfer->getParameterName();
+
+        $activeMin = null;
+        if (!empty($requestParameters[$parameterName]['min'])) {
+            $activeMin = (float)$requestParameters[$parameterName]['min'];
+        }
+
+        $activeMax = null;
+        if (!empty($requestParameters[$parameterName]['max'])) {
+            $activeMax = (float)$requestParameters[$parameterName]['max'];
+        }
+
+        return [$activeMin, $activeMax];
     }
 }

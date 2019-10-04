@@ -51,11 +51,11 @@ class PaginationConfig implements PaginationConfigInterface
      */
     public function getCurrentPage(array $requestParameters): int
     {
-        $paramName = $this->paginationConfigTransfer
+        $parameterName = $this->paginationConfigTransfer
             ->requireParameterName()
             ->getParameterName();
 
-        return isset($requestParameters[$paramName]) ? max((int)$requestParameters[$paramName], 1) : 1;
+        return isset($requestParameters[$parameterName]) ? max((int)$requestParameters[$parameterName], 1) : 1;
     }
 
     /**
@@ -65,27 +65,26 @@ class PaginationConfig implements PaginationConfigInterface
      */
     public function getCurrentItemsPerPage(array $requestParameters): int
     {
-        $paramName = $this->paginationConfigTransfer->getItemsPerPageParameterName();
+        $itemsPerPageParameterName = $this->paginationConfigTransfer->getItemsPerPageParameterName();
 
-        if ($this->isValidItemsPerPage($paramName, $requestParameters)) {
-            return (int)$requestParameters[$paramName];
+        if ($this->isValidItemsPerPage($itemsPerPageParameterName, $requestParameters)) {
+            return (int)$requestParameters[$itemsPerPageParameterName];
         }
 
         return $this->paginationConfigTransfer->getDefaultItemsPerPage();
     }
 
     /**
-     * @param string $paramName
+     * @param string $itemsPerPageParameterName
      * @param array $requestParameters
      *
      * @return bool
      */
-    protected function isValidItemsPerPage(string $paramName, array $requestParameters): bool
+    protected function isValidItemsPerPage(string $itemsPerPageParameterName, array $requestParameters): bool
     {
-        return (
-            !empty($requestParameters[$paramName]) &&
-            in_array((int)$requestParameters[$paramName], (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions())
-        );
+        $itemsPerPage = $requestParameters[$itemsPerPageParameterName] ?? 0;
+
+        return ($itemsPerPage && in_array((int)$itemsPerPage, (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions()));
     }
 
     /**
