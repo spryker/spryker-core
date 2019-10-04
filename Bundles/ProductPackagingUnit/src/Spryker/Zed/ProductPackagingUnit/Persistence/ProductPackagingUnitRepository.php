@@ -118,7 +118,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         return $this->getFactory()
             ->createProductPackagingUnitMapper()
-            ->mapProductConcreteEntityTransfer(
+            ->mapProductEntityToProductConcreteTransfer(
                 $productPackagingUnitEntity->getLeadProduct(),
                 new ProductConcreteTransfer()
             );

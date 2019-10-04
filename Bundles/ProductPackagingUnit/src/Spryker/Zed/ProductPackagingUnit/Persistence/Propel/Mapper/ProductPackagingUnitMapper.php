@@ -81,7 +81,7 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function mapProductConcreteEntityTransfer(
+    public function mapProductEntityToProductConcreteTransfer(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
