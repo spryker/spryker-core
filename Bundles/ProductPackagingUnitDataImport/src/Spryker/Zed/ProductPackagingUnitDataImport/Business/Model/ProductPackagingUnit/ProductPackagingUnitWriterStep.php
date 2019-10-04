@@ -70,13 +70,14 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitTypeId = $this->getIdProductPackagingUnitTypeByName($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_TYPE_NAME]);
         $productConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_CONCRETE_SKU]);
+        $leadProductConcreteId = $this->getIdProductBySku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_LEAD_PRODUCT_SKU]);
 
         $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->filterByFkProduct($productConcreteId)
             ->findOneOrCreate();
 
         $productPackagingUnitEntity
-            ->setLeadProductSku($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_LEAD_PRODUCT_SKU])
+            ->setFkLeadProduct($leadProductConcreteId)
             ->setIsVariable($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE])
             ->setDefaultAmount($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT])
             ->setAmountMin($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN])

@@ -95,7 +95,7 @@ class ProductPackagingUnitSynchronizationDataBulkPluginTest extends Unit
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
-            SpyProductPackagingUnitEntityTransfer::LEAD_PRODUCT_SKU => $itemProductConcreteTransfer->getSku(),
+            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
         ]);
 
         $this->getProductPackagingUnitStorageFacade()->publishProductPackagingUnit([$boxProductConcreteTransfer->getIdProductConcrete()]);

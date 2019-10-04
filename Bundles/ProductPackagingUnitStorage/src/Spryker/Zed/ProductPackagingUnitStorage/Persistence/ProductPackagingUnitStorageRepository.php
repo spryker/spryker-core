@@ -53,7 +53,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
             ->getProductPackagingUnitQuery()
             ->filterByFkProduct_In($productConcreteIds)
             ->innerJoin('SpyProductPackagingUnit.Product Product')
-            ->innerJoinWith('SpyProductPackagingUnit.LeadProduct LeadProduct')
+            ->innerJoinWithLeadProduct()
             ->innerJoinWithProductPackagingUnitType()
             ->where('Product.is_active = ?', true);
 

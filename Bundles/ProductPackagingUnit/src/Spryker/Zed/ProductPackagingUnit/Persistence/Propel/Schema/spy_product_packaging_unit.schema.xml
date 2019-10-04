@@ -4,8 +4,8 @@
     <table name="spy_product_packaging_unit" phpName="SpyProductPackagingUnit">
         <column name="id_product_packaging_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
+        <column name="fk_lead_product" type="INTEGER" required="true"/>
         <column name="fk_product_packaging_unit_type" type="INTEGER" required="true"/>
-        <column name="lead_product_sku" type="VARCHAR" size="255" required="true"/>
         <column name="default_amount" type="DECIMAL" size="20" scale="10" default="1" required="false"/>
         <column name="is_variable" type="BOOLEAN" default="false" required="false"/>
         <column name="amount_min" type="DECIMAL" size="20" scale="10" required="false"/>
@@ -18,8 +18,8 @@
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
-        <foreign-key name="spy_product_packaging_unit-fk_lead_product_sku" foreignTable="spy_product" phpName="LeadProduct" skipSql="true">
-            <reference local="lead_product_sku" foreign="sku"/>
+        <foreign-key name="spy_product_packaging_unit-fk_lead_product" foreignTable="spy_product" phpName="LeadProduct">
+            <reference local="fk_lead_product" foreign="id_product"/>
         </foreign-key>
 
         <foreign-key name="spy_product_packaging_unit-fk_product_packaging_unit_type" foreignTable="spy_product_packaging_unit_type" phpName="ProductPackagingUnitType">
@@ -32,10 +32,6 @@
 
         <index name="spy_product_packaging_unit-fk_product_packaging_unit_type">
             <index-column name="fk_product_packaging_unit_type"/>
-        </index>
-
-        <index name="spy_product_packaging_unit-lead_product_sku">
-            <index-column name="lead_product_sku"/>
         </index>
 
         <id-method-parameter value="spy_product_packaging_unit_pk_seq"/>

@@ -108,7 +108,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         $productPackagingUnitEntity = $this->getFactory()
             ->createProductPackagingUnitQuery()
             ->innerJoin('SpyProductPackagingUnit.Product Product')
-            ->innerJoinWith('SpyProductPackagingUnit.LeadProduct LeadProduct')
+            ->innerJoinWithLeadProduct()
             ->where('Product.sku = ?', $siblingProductSku)
             ->findOne();
 
