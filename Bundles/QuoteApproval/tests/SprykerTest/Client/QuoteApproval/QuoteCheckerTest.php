@@ -102,6 +102,7 @@ class QuoteCheckerTest extends Unit
         return $this->getMockBuilder(QuoteChecker::class)
             ->setConstructorArgs([
                 $this->createQuoteApprovalConfigMock(),
+                [],
             ])
             ->setMethods(null)
             ->getMock();

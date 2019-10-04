@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\QuoteApproval\Business;
+namespace SprykerTest\Client\QuoteApproval\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
@@ -13,15 +13,15 @@ use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
-use Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider\PermissionContextProvider;
-use Spryker\Zed\QuoteApproval\QuoteApprovalConfig as QuoteApprovalZedConfig;
+use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProvider;
+use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig as SharedQuoteApprovalConfig;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
- * @group Zed
+ * @group Client
  * @group QuoteApproval
  * @group Business
  * @group PermissionContextProviderTest
@@ -48,8 +48,8 @@ class PermissionContextProviderTest extends Unit
         $context = $permissionContextProvider->provideContext($quoteTransfer);
 
         // Assert
-        $this->assertArrayHasKey(QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
-        $this->assertEquals(static::QUOTE_GRAND_TOTAL, $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
+        $this->assertArrayHasKey(SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
+        $this->assertEquals(static::QUOTE_GRAND_TOTAL, $context[SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
     }
 
     /**
@@ -68,19 +68,19 @@ class PermissionContextProviderTest extends Unit
         $context = $permissionContextProvider->provideContext($quoteTransfer);
 
         // Assert
-        $this->assertArrayHasKey(QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
-        $this->assertEquals(static::QUOTE_GRAND_TOTAL - static::QUOTE_SHIPMENT_PRICE, $context[QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
+        $this->assertArrayHasKey(SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT, $context);
+        $this->assertEquals(static::QUOTE_GRAND_TOTAL - static::QUOTE_SHIPMENT_PRICE, $context[SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT]);
     }
 
     /**
      * @param bool $isPermissionCalculationIncludeShipment
      *
-     * @return \Spryker\Zed\QuoteApproval\QuoteApprovalConfig
+     * @return \Spryker\Client\QuoteApproval\QuoteApprovalConfig
      */
-    protected function getMockedZedConfig(bool $isPermissionCalculationIncludeShipment): QuoteApprovalZedConfig
+    protected function getMockedZedConfig(bool $isPermissionCalculationIncludeShipment): QuoteApprovalConfig
     {
-        /** @var \Spryker\Zed\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfigMock */
-        $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalZedConfig::class)
+        /** @var \Spryker\Client\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfigMock */
+        $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
             ->setMethods(['isPermissionCalculationIncludeShipment'])
             ->disableOriginalConstructor()
             ->getMock();
