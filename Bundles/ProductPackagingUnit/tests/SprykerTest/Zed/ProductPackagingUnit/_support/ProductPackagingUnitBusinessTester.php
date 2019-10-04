@@ -205,7 +205,6 @@ class ProductPackagingUnitBusinessTester extends Actor
      */
     public function haveProductPackagingUnitWithSalesOrderItems(int $quantity, Decimal $amount, int $itemsCount, bool $selfLead = false): array
     {
-        $stateCollectionTransfer = new OmsStateCollectionTransfer();
         [$leadProductConcreteTransfer, $packagingUnitProductConcreteTransfer] = $this->havePackagingUnitAndLead($selfLead);
 
         $packagingUnitProductPackagingUnitType = $this->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => 'packagingUnit']);
@@ -217,19 +216,44 @@ class ProductPackagingUnitBusinessTester extends Actor
             SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => 1,
         ]);
 
+        $stateCollectionTransfer = $this->haveSalesOrderWithItems(
+            $itemsCount,
+            $quantity,
+            $packagingUnitProductConcreteTransfer->getSku(),
+            $amount,
+            $leadProductConcreteTransfer->getSku()
+        );
+
+        return [
+            $stateCollectionTransfer,
+            $leadProductConcreteTransfer,
+        ];
+    }
+
+    /**
+     * @param int $itemsCount
+     * @param int $quantity
+     * @param string $sku
+     * @param \Spryker\DecimalObject\Decimal|null $amount
+     * @param string|null $amountSku
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function haveSalesOrderWithItems(int $itemsCount, int $quantity, string $sku, ?Decimal $amount = null, ?string $amountSku = null): OmsStateCollectionTransfer
+    {
         $itemTransfer = (new ItemBuilder([
-            ItemTransfer::SKU => $packagingUnitProductConcreteTransfer->getSku(),
+            ItemTransfer::SKU => $sku,
             ItemTransfer::QUANTITY => $quantity,
             ItemTransfer::AMOUNT => $amount,
         ]))->build();
-
+        $stateCollectionTransfer = new OmsStateCollectionTransfer();
         $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
 
         foreach ($salesOrderEntity->getItems() as $orderItemEntity) {
             $orderItemEntity
-                ->setSku($packagingUnitProductConcreteTransfer->getSku())
+                ->setSku($sku)
                 ->setQuantity($quantity)
-                ->setAmountSku($leadProductConcreteTransfer->getSku())
+                ->setAmountSku($amountSku)
                 ->setAmount($amount)
                 ->save();
 
@@ -243,11 +267,7 @@ class ProductPackagingUnitBusinessTester extends Actor
             );
         }
 
-        return [
-            $stateCollectionTransfer,
-            $packagingUnitProductConcreteTransfer,
-            $leadProductConcreteTransfer,
-        ];
+        return $stateCollectionTransfer;
     }
 
     /**

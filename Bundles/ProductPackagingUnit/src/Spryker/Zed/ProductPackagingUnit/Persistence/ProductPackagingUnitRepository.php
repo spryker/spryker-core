@@ -276,18 +276,21 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->withColumn(SpySalesOrderItemTableMap::COL_AMOUNT_SKU, static::SKU_COLUMN)
             ->withColumn(
                 sprintf(
-                    'CASE WHEN %s = %s THEN SUM(%s) ELSE SUM(%s) + SUM(%s) END',
+                    'CASE WHEN %s = %s THEN SUM(%s) WHEN %s IS NULL THEN SUM(%s) ELSE SUM(%s) + SUM(%s) END',
                     SpySalesOrderItemTableMap::COL_SKU,
                     SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
                     SpySalesOrderItemTableMap::COL_AMOUNT,
+                    SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
+                    SpySalesOrderItemTableMap::COL_QUANTITY,
                     SpySalesOrderItemTableMap::COL_QUANTITY,
                     SpySalesOrderItemTableMap::COL_AMOUNT
                 ),
                 static::SUM_COLUMN
             )
+            ->condition('NO_PU', 'spy_sales_order_item.sku = ?', $sku)
             ->condition('PU', 'spy_sales_order_item.amount_sku = ?', $sku)
-            ->condition('PU_SLEF_LEAD', 'sku = ? AND spy_sales_order_item.amount_sku != ?', [$sku, $sku])
-            ->having(['PU', 'PU_SLEF_LEAD'], Criteria::LOGICAL_OR);
+            ->condition('PU_SELF_LEAD', 'sku = ? AND spy_sales_order_item.amount_sku != ?', [$sku, $sku])
+            ->having(['NO_PU', 'PU', 'PU_SELF_LEAD'], Criteria::LOGICAL_OR);
 
         if ($storeTransfer !== null) {
             $salesOrderItemQuery

@@ -684,7 +684,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
-        $this->assertTrue($itemTransfer->getAmount()->equals($salesOrderItemEntity->getAmount()));
+        $this->assertSame($itemTransfer->getAmount()->toString(), $salesOrderItemEntity->getAmount()->toString());
         $this->assertSame($itemTransfer->getAmountLeadProduct()->getSku(), $salesOrderItemEntity->getAmountSku());
     }
 
@@ -1020,7 +1020,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $itemsCount = 5;
         [
             $stateCollectionTransfer,
-            $packagingUnitProductConcreteTransfer,
             $leadProductConcreteTransfer,
         ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantity, $amount, $itemsCount);
 
@@ -1031,11 +1030,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
+        $this->assertGreaterThan(1, $salesAggregationTransfers);
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(quantity) + SUM(amount)
-        $this->assertTrue(
-            $result->equals($amount->multiply($itemsCount)->add($quantity * $itemsCount))
+        $this->assertSame(
+            $result->toString(),
+            $amount->multiply($itemsCount)->add($quantity * $itemsCount)->toString()
         );
     }
 
@@ -1050,7 +1051,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $itemsCount = 6;
         [
             $stateCollectionTransfer,
-            $packagingUnitProductConcreteTransfer,
             $leadProductConcreteTransfer,
         ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantity, $amount, $itemsCount, true);
 
@@ -1061,11 +1061,74 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         //Assert
+        $this->assertCount(1, $salesAggregationTransfers);
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
         // SUM(amount)
-        $this->assertTrue(
-            $result->equals($amount->multiply($itemsCount))
+        $this->assertEquals(
+            $result->toString(),
+            $amount->multiply($itemsCount)->trim()->toString()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAggregateProductPackagingUnitReservationAmountWithNoPackagingUnit(): void
+    {
+        // Arrange
+        $quantity = 3;
+        $itemsCount = 7;
+        $sku = 'NOT_PU_PRODUCT';
+        $stateCollectionTransfer = $this->tester->haveSalesOrderWithItems($itemsCount, $quantity, $sku);
+
+        // Action
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+            $sku,
+            $stateCollectionTransfer
+        );
+
+        //Assert
+        $this->assertCount(1, $salesAggregationTransfers);
+        $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
+        $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
+        $this->assertSame(
+            $result->toInt(),
+            $quantity * $itemsCount
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAggregateProductPackagingUnitReservationAmountWithNoPackagingUnitButAlsoPackagingUnit(): void
+    {
+        // Arrange
+        $quantity = 4;
+        $itemsCount = 9;
+        $quantityInPackagingUnit = 6;
+        $amountForPackagingUnit = new Decimal(1.2);
+        $itemsCountInPackagingUnit = 3;
+        [
+            $stateCollectionTransfer,
+            $leadProductConcreteTransfer,
+        ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantityInPackagingUnit, $amountForPackagingUnit, $itemsCountInPackagingUnit);
+        $this->tester->haveSalesOrderWithItems($itemsCount, $quantity, $leadProductConcreteTransfer->getSku());
+
+        // Action
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+            $leadProductConcreteTransfer->getSku(),
+            $stateCollectionTransfer
+        );
+
+        //Assert
+        $this->assertCount(2, $salesAggregationTransfers);
+        $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
+        $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
+        // SUM(quantity in PU) + SUM(quantity) + SUM(amount of PU)
+        $this->assertSame(
+            $result->toString(),
+            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->add($quantityInPackagingUnit * $itemsCountInPackagingUnit)->toString()
         );
     }
 
@@ -1076,11 +1139,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     protected function sumSalesAggregationTransfers(array $salesAggregationTransfers): Decimal
     {
-        $result = new Decimal(0);
-        foreach ($salesAggregationTransfers as $salesAggregationTransfer) {
-            $result = $result->add($salesAggregationTransfer->getSumAmount());
-        }
-
-        return $result;
+        return array_reduce($salesAggregationTransfers, function (Decimal $result, SalesOrderItemStateAggregationTransfer $salesAggregationTransfer) {
+            return $result->add($salesAggregationTransfer->getSumAmount())->trim();
+        }, new Decimal(0));
     }
 }

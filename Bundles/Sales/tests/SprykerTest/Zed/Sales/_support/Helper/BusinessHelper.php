@@ -11,18 +11,17 @@ use Codeception\Module;
 use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
-
-// here you can define custom actions
-// all public methods declared in helper class will be available in $I
 
 class BusinessHelper extends Module
 {
@@ -212,7 +211,7 @@ class BusinessHelper extends Module
         $salesOrderEntity->setCustomer($customerEntity);
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);
-        $salesOrderEntity->setOrderReference('123');
+        $salesOrderEntity->setOrderReference(md5(time() + rand()));
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -243,13 +242,15 @@ class BusinessHelper extends Module
      */
     protected function createCustomer()
     {
-        $customerEntity = new SpyCustomer();
-        $customerEntity->setFirstName('First');
-        $customerEntity->setLastName('Last');
-        $customerEntity->setCompany('Company');
-        $customerEntity->setEmail('email@email.tld');
-        $customerEntity->setCustomerReference('testing-customer');
-        $customerEntity->save();
+        $customerEntity = (new SpyCustomerQuery())
+            ->filterByEmail('email@email.tld')
+            ->filterByCustomerReference('testing-customer')
+            ->findOneOrCreate();
+
+        $customerEntity->setFirstName('First')
+            ->setLastName('Last')
+            ->setCompany('Company')
+            ->save();
 
         return $customerEntity;
     }
@@ -259,8 +260,10 @@ class BusinessHelper extends Module
      */
     protected function createOmsState()
     {
-        $omsStateEntity = new SpyOmsOrderItemState();
-        $omsStateEntity->setName(self::DEFAULT_ITEM_STATE);
+        $omsStateEntity = (new SpyOmsOrderItemStateQuery())
+            ->filterByName(static::DEFAULT_ITEM_STATE)
+            ->findOneOrCreate();
+
         $omsStateEntity->save();
 
         return $omsStateEntity;
@@ -271,8 +274,10 @@ class BusinessHelper extends Module
      */
     protected function createOmsProcess()
     {
-        $omsProcessEntity = new SpyOmsOrderProcess();
-        $omsProcessEntity->setName(self::DEFAULT_OMS_PROCESS_NAME);
+        $omsProcessEntity = (new SpyOmsOrderProcessQuery())
+            ->filterByName(static::DEFAULT_OMS_PROCESS_NAME)
+            ->findOneOrCreate();
+
         $omsProcessEntity->save();
 
         return $omsProcessEntity;
