@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Spryker\Zed\Oauth\OauthConfig;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class OauthHelper extends Module
@@ -31,7 +32,7 @@ class OauthHelper extends Module
     public function haveAuth(CustomerTransfer $customerTransfer): OauthResponseTransfer
     {
         $oauthRequestTransfer = (new OauthRequestTransfer())
-            ->setGrantType('password')
+            ->setGrantType(OauthConfig::GRANT_TYPE_PASSWORD)
             ->setUsername($customerTransfer->getEmail())
             ->setPassword($customerTransfer->getNewPassword());
 

@@ -33,5 +33,5 @@ interface ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function findLabelByConcreteProductSkuList(array $concreteSkuList, string $localeName): array;
+    public function getLabelByConcreteProductSkuList(array $concreteSkuList, string $localeName): array;
 }

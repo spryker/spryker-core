@@ -24,7 +24,7 @@ interface ProductLabelStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves product labels by abstract product IDs
+     * - Retrieves product labels by abstract product IDs.
      *
      * @api
      *

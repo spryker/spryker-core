@@ -117,13 +117,13 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
         }
 
         $storageKey = $this->getProductLabelStorageKeyByIdAbstractProduct($idProductAbstract);
-        $storageData = $this->storageClient->get($storageKey);
+        $storageDataItem = $this->storageClient->get($storageKey);
 
-        if (!$storageData) {
+        if (!$storageDataItem) {
             return [];
         }
 
-        return $this->mapStorageDataToProductLabelIds($storageData);
+        return $this->mapProductLabelStorageDataItemToProductLabelIds($storageDataItem);
     }
 
     /**
@@ -133,25 +133,54 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     protected function getProductLabelIdsByAbstractProductIds(array $abstractProductIds): array
     {
+        $storageKeys = $this->mapAbstractProductIdsToProductLabelStorageKeys($abstractProductIds);
+        $storageDataItems = $this->getProductLabelStorageDataItemsByProductLabelStorageKeys($storageKeys);
+
+        return $this->mapProductLabelStorageDataItemsToProductLabelIds($storageDataItems);
+    }
+
+    /**
+     * @param int[] $abstractProductIds
+     *
+     * @return string[]
+     */
+    protected function mapAbstractProductIdsToProductLabelStorageKeys(array $abstractProductIds): array
+    {
         $storageKeys = [];
 
         foreach ($abstractProductIds as $idProductAbstract) {
             $storageKeys[$idProductAbstract] = $this->getProductLabelStorageKeyByIdAbstractProduct($idProductAbstract);
         }
 
-        $storageData = array_map(function ($storageData) {
-            if (empty($storageData)) {
-                return null;
-            }
+        return $storageKeys;
+    }
 
+    /**
+     * @param string[] $storageKeys
+     *
+     * @return array
+     */
+    protected function getProductLabelStorageDataItemsByProductLabelStorageKeys(array $storageKeys): array
+    {
+        $storageData = array_filter($this->storageClient->getMulti($storageKeys));
+
+        return array_map(function ($storageData) {
             return $this->utilEncodingService->decodeJson($storageData, true);
-        }, $this->storageClient->getMulti($storageKeys));
-        $storageData = array_filter($storageData);
+        }, $storageData);
+    }
+
+    /**
+     * @param array $storageDataItems
+     *
+     * @return int[][]
+     */
+    protected function mapProductLabelStorageDataItemsToProductLabelIds(array $storageDataItems): array
+    {
         $productLabelIds = [];
 
-        foreach ($storageData as $storageDataItem) {
+        foreach ($storageDataItems as $storageDataItem) {
             $productLabelIds[$storageDataItem[static::KEY_ID_PRODUCT_ABSTRACT]] =
-                $this->mapStorageDataToProductLabelIds($storageDataItem);
+                $this->mapProductLabelStorageDataItemToProductLabelIds($storageDataItem);
         }
 
         return array_filter($productLabelIds);
@@ -173,14 +202,14 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param array $storageData
+     * @param array $storageDataItem
      *
      * @return array
      */
-    protected function mapStorageDataToProductLabelIds(array $storageData): array
+    protected function mapProductLabelStorageDataItemToProductLabelIds(array $storageDataItem): array
     {
         return (new ProductAbstractLabelStorageTransfer())
-            ->fromArray($storageData, true)
+            ->fromArray($storageDataItem, true)
             ->getProductLabelIds();
     }
 

@@ -26,6 +26,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
     protected const KEY_PRICES = 'prices';
     protected const KEY_IMAGE_SETS = 'imageSets';
+    protected const KEY_ID = 'id';
 
     /**
      * @var \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
@@ -267,7 +268,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return null;
         }
 
-        return $this->findProductConcreteStorageData($mappingData['id'], $localeName);
+        return $this->findProductConcreteStorageData($mappingData[static::KEY_ID], $localeName);
     }
 
     /**
@@ -286,12 +287,12 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return $this->utilEncodingService->decodeJson($storageData, true);
         }, $this->storageClient->getMulti($mappingKeys));
 
-        if (empty($mappingData)) {
+        if (!$mappingData) {
             return [];
         }
 
         $concreteProductIds = array_map(function ($mappingData) {
-            return $mappingData['id'];
+            return $mappingData[static::KEY_ID];
         }, $mappingData);
 
         return $this->getProductConcreteStorageDataByIds($concreteProductIds, $localeName);

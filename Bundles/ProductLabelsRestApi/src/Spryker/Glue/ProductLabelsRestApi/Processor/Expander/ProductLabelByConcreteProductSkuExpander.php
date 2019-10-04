@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductLabelsRestApi\Processor\Expander;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface;
 
@@ -33,11 +34,11 @@ class ProductLabelByConcreteProductSkuExpander implements ProductLabelByConcrete
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
     {
-        $concreteSkuList = array_map(function ($resource) {
+        $concreteSkuList = array_map(function (RestResourceInterface $resource) {
             return $resource->getId();
         }, $resources);
 
-        $productLabels = $this->productLabelReader->findLabelByConcreteProductSkuList(
+        $productLabels = $this->productLabelReader->getLabelByConcreteProductSkuList(
             $concreteSkuList,
             $restRequest->getMetadata()->getLocale()
         );
@@ -53,7 +54,7 @@ class ProductLabelByConcreteProductSkuExpander implements ProductLabelByConcrete
      */
     protected function addProductLabelsToResources(array $resources, array $productLabels): array
     {
-        return array_map(function ($resource) use ($productLabels) {
+        return array_map(function (RestResourceInterface $resource) use ($productLabels) {
             foreach ($productLabels[$resource->getId()] as $productLabel) {
                 $resource->addRelationship($productLabel);
             }

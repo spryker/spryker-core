@@ -47,7 +47,7 @@ class WishlistDataHelper extends Module
     /**
      * @return \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface
      */
-    public function getWishlistFacade(): WishlistFacadeInterface
+    protected function getWishlistFacade(): WishlistFacadeInterface
     {
         return $this->getLocator()->wishlist()->facade();
     }

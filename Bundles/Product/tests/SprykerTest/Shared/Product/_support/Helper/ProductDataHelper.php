@@ -36,21 +36,6 @@ class ProductDataHelper extends Module
     use ModuleLocatorTrait;
 
     /**
-     * @var \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
-     */
-    protected $taxSetDataHelper;
-
-    /**
-     * @var \SprykerTest\Shared\Stock\Helper\StockDataHelper
-     */
-    protected $stockDataHelper;
-
-    /**
-     * @var \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
-     */
-    protected $productAttributeDataHelper;
-
-    /**
      * @param array $productConcreteOverride
      * @param array $productAbstractOverride
      *
@@ -137,8 +122,8 @@ class ProductDataHelper extends Module
 
         $idProductAbstract = $productFacade->createProductAbstract($productAbstractTransfer);
         $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-        $this->assignTaxSetToProductAbstract($productAbstractTransfer);
-        $this->assignLocalizedAttributesToProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer = $this->assignTaxSetToProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer = $this->assignLocalizedAttributesToProductAbstract($productAbstractTransfer);
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $idProductAbstract], $productConcreteOverride)))
@@ -170,46 +155,16 @@ class ProductDataHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper|null
-     */
-    protected function findTaxSetDataHelper(): ?TaxSetDataHelper
-    {
-        $this->taxSetDataHelper = $this->taxSetDataHelper ?: $this->findModule(TaxSetDataHelper::class);
-
-        return $this->taxSetDataHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Stock\Helper\StockDataHelper|null
-     */
-    protected function findStockDataHelper(): ?StockDataHelper
-    {
-        $this->stockDataHelper = $this->stockDataHelper ?: $this->findModule(StockDataHelper::class);
-
-        return $this->stockDataHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper|null
-     */
-    protected function findProductAttributeDataHelper(): ?ProductAttributeDataHelper
-    {
-        $this->productAttributeDataHelper = $this->productAttributeDataHelper ?: $this->findModule(ProductAttributeDataHelper::class);
-
-        return $this->productAttributeDataHelper;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function assignTaxSetToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
+    protected function assignTaxSetToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        $taxSetDataHelper = $this->findTaxSetDataHelper();
+        $taxSetDataHelper = $this->findModule(TaxSetDataHelper::class);
 
         if (!$taxSetDataHelper) {
-            return;
+            return $productAbstractTransfer;
         }
 
         $taxSetTransfer = $taxSetDataHelper->haveTaxSet();
@@ -218,23 +173,27 @@ class ProductDataHelper extends Module
             ->taxProductConnector()
             ->facade()
             ->saveTaxSetToProductAbstract($productAbstractTransfer);
+
+        return $productAbstractTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function assignLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
+    protected function assignLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        $productAttributeDataHelper = $this->findProductAttributeDataHelper();
+        $productAttributeDataHelper = $this->findModule(ProductAttributeDataHelper::class);
 
         if (!$productAttributeDataHelper) {
-            return;
+            return $productAbstractTransfer;
         }
 
         $localizedAttributes = $productAttributeDataHelper->generateLocalizedAttributes();
         $this->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributes);
+
+        return $productAbstractTransfer;
     }
 
     /**
@@ -244,7 +203,7 @@ class ProductDataHelper extends Module
      */
     protected function assignProductConcreteToStock(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        $stockDataHelper = $this->findStockDataHelper();
+        $stockDataHelper = $this->findModule(StockDataHelper::class);
 
         if (!$stockDataHelper) {
             return;
@@ -263,13 +222,10 @@ class ProductDataHelper extends Module
             return $storeTransfer->getIdStore();
         }, $stores);
 
-        /** @var \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer */
-        $storeRelationTransfer = (new StoreRelationBuilder([
+        return (new StoreRelationBuilder([
             StoreRelationTransfer::ID_STORES => $idStores,
             StoreRelationTransfer::STORES => new ArrayObject($stores),
         ]))->build();
-
-        return $storeRelationTransfer;
     }
 
     /**
