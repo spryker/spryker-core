@@ -128,30 +128,32 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
-        {% block widget_content %}
+    {%  if isPageTemplateWithPlaceholders is not defined or isPageTemplateWithPlaceholders %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Placeholders' } %}
+            {% block widget_content %}
 
-            {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
+                {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
 
-                <h3>{{ glossaryAttribute.placeholder }}</h3>
+                    <h3>{{ glossaryAttribute.placeholder }}</h3>
 
-                <p>
-                    <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryAttribute.translationKey }}
-                </p>
+                    <p>
+                        <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryAttribute.translationKey }}
+                    </p>
 
-                {% for translation in glossaryAttribute.translations %}
-                   {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': translation.localeName, 'collapsed': true , 'hasError': false} %}
-                       {% block content %}
-                           {{ translation.translation | raw }}
-                       {% endblock %}
-                   {% endembed %}
+                    {% for translation in glossaryAttribute.translations %}
+                       {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': translation.localeName, 'collapsed': true , 'hasError': false} %}
+                           {% block content %}
+                               {{ translation.translation | raw }}
+                           {% endblock %}
+                       {% endembed %}
+                    {% endfor %}
+
+                    <br>
                 {% endfor %}
 
-                <br>
-            {% endfor %}
-
-        {% endblock %}
-    {% endembed %}
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 
 
 {% endblock %}
