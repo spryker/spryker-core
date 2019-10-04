@@ -454,18 +454,15 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
-     *
-     * @return \SprykerTest\Glue\Testify\Helper\OpenApi3
+     * @return \SprykerTest\Glue\Testify\Helper\OpenApi3|null
      */
-    protected function getOpenApi3Module(): OpenApi3
+    protected function findOpenApi3Module(): ?OpenApi3
     {
         $this->openApi3Module = $this->openApi3Module ?: $this->findModule(OpenApi3::class);
-        if ($this->openApi3Module === null) {
-            throw new ModuleException('GlueRest', 'The module requires OpenApi3');
-        }
+
         return $this->openApi3Module;
     }
+
     /**
      * @part json
      * @part openApi3
@@ -478,7 +475,10 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     {
         $this->seeResponseCodeIs($responseCode);
         $this->seeResponseIsJson();
-        $this->getOpenApi3Module()->seeResponseMatchesOpenApiSchema();
+
+        if ($this->openApi3Module) {
+            $this->openApi3Module->seeResponseMatchesOpenApiSchema();
+        }
     }
 
     /**
