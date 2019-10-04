@@ -250,7 +250,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $itemTransfer->requireSku();
 
-        return $this->buildGroupKey($itemTransfer) . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
+        return $this->buildGroupKey($itemTransfer) . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid('1');
     }
 
     /**

@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-use Traversable;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
@@ -145,7 +145,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param array $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundleItems
      * @param string $bundleProductSku
      *
      * @return void
@@ -195,12 +195,12 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    protected function calculateBundleQuantity(Traversable $bundleItems, StoreTransfer $storeTransfer)
+    protected function calculateBundleQuantity(ObjectCollection $bundleItems, StoreTransfer $storeTransfer)
     {
         $bundleAvailabilityQuantity = 0;
         foreach ($bundleItems as $bundleItemEntity) {

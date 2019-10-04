@@ -7,5 +7,15 @@
         <property name="identifier" type="string"/>
         <property name="name" type="string"/>
     </transfer>
+
+    <transfer name="LocalizedContent">
+        <property name="fkLocale" type="int"/>
+        <property name="parameters" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="parameters" type="array"/>
+    </transfer>
+
 </transfers>
 

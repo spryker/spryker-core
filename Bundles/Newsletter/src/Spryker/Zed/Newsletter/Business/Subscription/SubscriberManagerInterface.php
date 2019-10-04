@@ -14,7 +14,7 @@ interface SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer
+     * @return \Generated\Shared\Transfer\NewsletterSubscriberTransfer|null
      */
     public function loadSubscriberByEmail($email);
 
