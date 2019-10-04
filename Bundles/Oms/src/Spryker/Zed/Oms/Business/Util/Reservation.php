@@ -233,10 +233,7 @@ class Reservation implements ReservationInterface
         $sumQuantity = new Decimal(0);
         foreach ($salesAggregationTransfers as $salesAggregationTransfer) {
             $this->assertAggregationTransfer($salesAggregationTransfer);
-
-            $stateName = $salesAggregationTransfer->getStateName();
-            $processName = $salesAggregationTransfer->getProcessName();
-            if (!$reservedStates->getStates()->offsetExists($stateName) || !$reservedStates->getStates()[$stateName]->getProcesses()->offsetExists($processName)) {
+            if (!$this->assertStateAndProcessExists($reservedStates, $salesAggregationTransfer->getStateName(), $salesAggregationTransfer->getProcessName())) {
                 continue;
             }
 
@@ -245,6 +242,19 @@ class Reservation implements ReservationInterface
         }
 
         return $sumQuantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $statesCollection
+     * @param string $stateName
+     * @param string $processName
+     *
+     * @return bool
+     */
+    protected function assertStateAndProcessExists(OmsStateCollectionTransfer $statesCollection, string $stateName, string $processName): bool
+    {
+        return $statesCollection->getStates()->offsetExists($stateName) &&
+            $statesCollection->getStates()[$stateName]->getProcesses()->offsetExists($processName);
     }
 
     /**

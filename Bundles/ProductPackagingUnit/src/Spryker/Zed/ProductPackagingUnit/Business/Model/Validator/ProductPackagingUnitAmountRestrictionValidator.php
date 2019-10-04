@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitAmountRestrictionValidator implements ProductPackagingUnitAmountRestrictionValidatorInterface
@@ -35,20 +34,11 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     protected $productPackagingUnitRepository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface
-     */
-    protected $productMeasurementUnitFacade;
-
-    /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      */
-    public function __construct(
-        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
-        ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
-    ) {
+    public function __construct(ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository)
+    {
         $this->productPackagingUnitRepository = $productPackagingUnitRepository;
-        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
     }
 
     /**

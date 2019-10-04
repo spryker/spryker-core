@@ -116,10 +116,12 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             return null;
         }
 
-        return (new ProductConcreteTransfer())->fromArray(
-            $productPackagingUnitEntity->getLeadProduct()->toArray(),
-            true
-        );
+        return $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductConcreteEntityTransfer(
+                $productPackagingUnitEntity->getLeadProduct(),
+                new ProductConcreteTransfer()
+            );
     }
 
     /**
