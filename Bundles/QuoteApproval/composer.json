@@ -13,7 +13,7 @@
     "spryker/kernel": "^3.30.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/quote": "^2.8.0",
-    "spryker/quote-approval-extension": "^1.0.0",
+    "spryker/quote-approval-extension": "^1.1.0",
     "spryker/quote-extension": "^1.6.0",
     "spryker/quote-request-extension": "^1.0.0",
     "spryker/shared-cart": "^1.7.0",

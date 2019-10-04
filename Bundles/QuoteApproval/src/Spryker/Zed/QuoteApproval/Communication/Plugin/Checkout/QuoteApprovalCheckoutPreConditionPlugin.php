@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
      * - Returns response with boolean isSuccess and an array of errors.
      *

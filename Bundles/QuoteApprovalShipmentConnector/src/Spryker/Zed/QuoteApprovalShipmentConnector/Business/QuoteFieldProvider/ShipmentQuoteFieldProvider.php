@@ -13,7 +13,7 @@ use Spryker\Zed\QuoteApprovalShipmentConnector\Dependency\Facade\QuoteApprovalSh
 class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
 {
     /**
-     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 

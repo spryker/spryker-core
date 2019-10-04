@@ -1,7 +1,7 @@
 # QuoteApprovalShipmentConnector Module
 [![Build Status](https://travis-ci.org/spryker/quote-approval-shipment-connector.svg)](https://travis-ci.org/spryker/quote-approval-shipment-connector)
 
-{{ADD DESCRIPTION HERE}}
+QuoteApprovalShipmentConnector provides shipment support for quote approval process.
 
 ## Installation
 
