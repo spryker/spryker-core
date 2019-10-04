@@ -9,22 +9,22 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 
 class AmountSalesUnitItemExpander implements AmountSalesUnitItemExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface
      */
-    protected $productPackagingUnitReader;
+    protected $productMeasurementUnitFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      */
     public function __construct(
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
+        ProductPackagingUnitToProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
     ) {
-        $this->productPackagingUnitReader = $productPackagingUnitReader;
+        $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
     }
 
     /**
@@ -56,7 +56,7 @@ class AmountSalesUnitItemExpander implements AmountSalesUnitItemExpanderInterfac
 
         $idProductMeasurementSalesUnit = $itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit();
 
-        $productMeasurementUnitTransfer = $this->productPackagingUnitReader
+        $productMeasurementUnitTransfer = $this->productMeasurementUnitFacade
             ->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 
         $itemTransfer->setAmountSalesUnit($productMeasurementUnitTransfer);

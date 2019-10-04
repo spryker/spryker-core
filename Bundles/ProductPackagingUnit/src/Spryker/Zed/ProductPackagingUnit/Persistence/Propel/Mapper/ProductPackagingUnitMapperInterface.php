@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -40,17 +41,6 @@ interface ProductPackagingUnitMapperInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
-     * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
-     */
-    public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingUnit $productPackagingUnitEntity,
-        ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-    ): ProductPackagingLeadProductTransfer;
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
      *
@@ -60,4 +50,15 @@ interface ProductPackagingUnitMapperInterface
         SpySalesOrderItem $salesOrderItemEntity,
         SpySalesOrderItemEntityTransfer $spySalesOrderItemEntityTransfer
     ): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mapProductEntityToProductConcreteTransfer(
+        SpyProduct $productEntity,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer;
 }

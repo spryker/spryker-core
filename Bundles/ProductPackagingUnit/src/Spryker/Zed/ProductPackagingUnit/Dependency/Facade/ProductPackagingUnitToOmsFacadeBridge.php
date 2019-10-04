@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
-use Generated\Shared\Transfer\OmsStateCollectionTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\DecimalObject\Decimal;
-
 class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOmsFacadeInterface
 {
     /**
@@ -28,32 +24,11 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
-    {
-        return $this->omsFacade->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
+    public function updateReservationQuantity(string $sku): void
     {
-        $this->omsFacade->saveReservation($sku, $storeTransfer, $reservationQuantity);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
-     */
-    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
-    {
-        return $this->omsFacade->getOmsReservedStateCollection();
+        $this->omsFacade->updateReservationQuantity($sku);
     }
 }
