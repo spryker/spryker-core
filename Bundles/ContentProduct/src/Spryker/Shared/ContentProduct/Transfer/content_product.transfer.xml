@@ -24,7 +24,7 @@
 
     <transfer name="ContentParameterMessage">
         <property name="parameter" type="string"/>
-        <property name="messages" type="Message[]"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">

@@ -1,0 +1,5 @@
+parameters:
+    ignoreErrors:
+    - "#Strict comparison using === between '' and 'GLUE' will always evaluate to false.#"
+    - "#Strict comparison using === between '' and 'YVES' will always evaluate to false.#"
+    - "#Strict comparison using === between '' and 'ZED' will always evaluate to false.#"
