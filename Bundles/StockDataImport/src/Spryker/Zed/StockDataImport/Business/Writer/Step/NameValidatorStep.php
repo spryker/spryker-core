@@ -14,7 +14,8 @@ use Spryker\Zed\StockDataImport\Business\Writer\DataSet\StockDataSetInterface;
 
 class NameValidatorStep implements DataImportStepInterface
 {
-    protected const INVALID_NAME_EXCEPTION_MESSAGE = 'Length of name field is invalid';
+    protected const MAX_LENGTH = 255;
+    protected const MIN_LENGTH = 1;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -27,8 +28,8 @@ class NameValidatorStep implements DataImportStepInterface
     {
         $nameLength = mb_strlen($dataSet[StockDataSetInterface::COLUMN_NAME]);
 
-        if ($nameLength > 255 || $nameLength < 1) {
-            throw new InvalidDataException(static::INVALID_NAME_EXCEPTION_MESSAGE);
+        if ($nameLength > static::MAX_LENGTH || $nameLength < static::MIN_LENGTH) {
+            throw new InvalidDataException('Length of name field is invalid');
         }
     }
 }
