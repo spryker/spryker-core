@@ -17,11 +17,7 @@ class LoggerConfigLoaderGlue implements LoggerConfigLoaderInterface
      */
     public function accept()
     {
-        if (APPLICATION === 'GLUE' && Config::hasKey(LogConstants::LOGGER_CONFIG_GLUE)) {
-            return true;
-        }
-
-        return false;
+        return $this->isGlueApplication() && Config::hasKey(LogConstants::LOGGER_CONFIG_GLUE);
     }
 
     /**
@@ -32,5 +28,13 @@ class LoggerConfigLoaderGlue implements LoggerConfigLoaderInterface
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_GLUE);
 
         return new $loggerClassName();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isGlueApplication(): bool
+    {
+        return APPLICATION === 'GLUE';
     }
 }

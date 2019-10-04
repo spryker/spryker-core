@@ -7,15 +7,23 @@
 
 namespace Spryker\Client\ProductStorage\Finder;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 
 class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinder
 {
+    protected const KEY_ID_PRODUCT = 'id_product_concrete';
+
     /**
      * @var \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface
      */
     protected $productConcreteStorage;
+
+    /**
+     * @var array
+     */
+    protected static $productViewTransfersCache = [];
 
     /**
      * @param \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface $productConcreteStorage
@@ -36,5 +44,38 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
     protected function findProductStorageData(int $idProductConcrete, string $localeName): ?array
     {
         return $this->productConcreteStorage->findProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getBulkProductStorageData(array $productIds, string $localeName): array
+    {
+        return $this
+            ->productConcreteStorage
+            ->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productIds, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return int
+     */
+    protected function getProductId(ProductViewTransfer $productViewTransfer): int
+    {
+        return $productViewTransfer->getIdProductConcrete();
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return int
+     */
+    protected function getProductDataProductId(array $productData): int
+    {
+        return $productData[static::KEY_ID_PRODUCT];
     }
 }
