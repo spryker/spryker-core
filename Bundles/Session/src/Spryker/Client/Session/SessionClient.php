@@ -31,7 +31,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface|null
      */
     protected function getContainer()
     {

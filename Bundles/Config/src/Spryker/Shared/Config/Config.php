@@ -140,7 +140,7 @@ class Config
             return false;
         }
 
-        return array_key_exists($key, static::$config);
+        return static::$config->offsetExists($key);
     }
 
     /**
