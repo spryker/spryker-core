@@ -239,3 +239,5 @@ $(document).ready(function() {
         '#productListAggregate_productIdsToBeDeAssigned'
     );
 });
+
+module.exports = SelectTableAPI;

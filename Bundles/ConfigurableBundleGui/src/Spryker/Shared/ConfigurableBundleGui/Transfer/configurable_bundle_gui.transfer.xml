@@ -71,4 +71,19 @@
         <property name="idProductList" type="int" />
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateSlotEditForm">
+        <property name="productList" type="ProductList"/>
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="productListAggregateForm" type="ProductListAggregateForm"/>
+    </transfer>
+
+    <transfer name="ProductListAggregateForm">
+        <property name="productList" type="ProductList"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+        <property name="assignedProductIds" type="string"/>
+        <property name="productIdsToBeAssigned" type="string"/>
+        <property name="productIdsToBeDeAssigned" type="string"/>
+    </transfer>
+
 </transfers>

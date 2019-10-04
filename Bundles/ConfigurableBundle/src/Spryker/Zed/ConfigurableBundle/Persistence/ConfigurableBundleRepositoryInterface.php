@@ -45,4 +45,11 @@ interface ConfigurableBundleRepositoryInterface
     public function findConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): ?ConfigurableBundleTemplateSlotTransfer;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int;
 }

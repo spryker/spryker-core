@@ -7,6 +7,46 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Tabs;
 
+use Generated\Shared\Transfer\TabsViewTransfer;
+
 class ConfigurableBundleTemplateSlotEditTabs extends AbstractConfigurableBundleTemplateTabs
 {
+    /**
+     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface[]
+     */
+    protected $configurableBundleTemplateSlotEditTabsExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface[] $configurableBundleTemplateSlotEditTabsExpanderPlugins
+     */
+    public function __construct(array $configurableBundleTemplateSlotEditTabsExpanderPlugins)
+    {
+        $this->configurableBundleTemplateSlotEditTabsExpanderPlugins = $configurableBundleTemplateSlotEditTabsExpanderPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    {
+        $tabsViewTransfer = parent::build($tabsViewTransfer);
+
+        return $this->expandWithConfigurableBundleTemplateSlotEditTabsExpanderPlugins($tabsViewTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
+     */
+    protected function expandWithConfigurableBundleTemplateSlotEditTabsExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    {
+        foreach ($this->configurableBundleTemplateSlotEditTabsExpanderPlugins as $configurableBundleTemplateSlotEditTabsExpanderPlugin) {
+            $tabsViewTransfer = $configurableBundleTemplateSlotEditTabsExpanderPlugin->expand($tabsViewTransfer);
+        }
+
+        return $tabsViewTransfer;
+    }
 }

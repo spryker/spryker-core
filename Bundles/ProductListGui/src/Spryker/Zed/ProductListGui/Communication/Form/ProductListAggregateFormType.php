@@ -58,9 +58,8 @@ class ProductListAggregateFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addProductListSubForm($builder);
-
-        $this->executeProductListAggregateFormExpanderPlugins($builder, $options);
+        $this->addProductListSubForm($builder)
+            ->expandWithProductListAssignmentForms($builder, $options);
     }
 
     /**
@@ -84,11 +83,11 @@ class ProductListAggregateFormType extends AbstractType
      *
      * @return $this
      */
-    protected function executeProductListAggregateFormExpanderPlugins(FormBuilderInterface $builder, array $options)
+    protected function expandWithProductListAssignmentForms(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->getFactory()->getProductListAggregateFormExpanderPlugins() as $productListAggregateFormExpanderPlugin) {
-            $builder = $productListAggregateFormExpanderPlugin->expand($builder, $options);
-        }
+        $this->getFactory()
+            ->createProductListAggregateFormExpander()
+            ->expandWithProductListAssignmentForms($builder, $options);
 
         return $this;
     }

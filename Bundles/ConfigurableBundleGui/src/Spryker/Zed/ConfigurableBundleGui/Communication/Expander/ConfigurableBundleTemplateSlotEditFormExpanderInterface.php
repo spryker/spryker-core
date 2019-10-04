@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListGui\Communication\Expander;
+namespace Spryker\Zed\ConfigurableBundleGui\Communication\Expander;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface ProductListAggregateFormExpanderInterface
+interface ConfigurableBundleTemplateSlotEditFormExpanderInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -17,5 +17,5 @@ interface ProductListAggregateFormExpanderInterface
      *
      * @return void
      */
-    public function expandWithProductListAssignmentForms(FormBuilderInterface $builder, array $options): void;
+    public function expandWithPlugins(FormBuilderInterface $builder, array $options): void;
 }

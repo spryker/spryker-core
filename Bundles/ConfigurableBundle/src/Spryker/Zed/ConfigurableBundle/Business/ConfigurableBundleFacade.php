@@ -221,4 +221,18 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
             ->createConfigurableBundleTemplateSlotReader()
             ->findConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    {
+        return $this->getRepository()->getProductListIdByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+    }
 }

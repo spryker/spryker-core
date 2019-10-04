@@ -5,6 +5,7 @@
 
 'use strict';
 
+require('./slot-edit');
 var slotProductsTable = require('./slot-products-table');
 
 $(document).ready(function () {

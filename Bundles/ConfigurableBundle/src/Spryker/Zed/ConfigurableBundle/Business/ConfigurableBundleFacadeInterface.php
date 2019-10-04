@@ -189,4 +189,17 @@ interface ConfigurableBundleFacadeInterface
     public function findConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): ?ConfigurableBundleTemplateSlotTransfer;
+
+    /**
+     * Specification:
+     * - Filters configurable bundle template slot records by ID.
+     * - Returns ID of a product list assigned to a slot.
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int;
 }

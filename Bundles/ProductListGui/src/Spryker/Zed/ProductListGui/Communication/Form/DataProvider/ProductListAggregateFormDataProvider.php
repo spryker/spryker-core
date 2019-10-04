@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface;
 
 class ProductListAggregateFormDataProvider
 {
@@ -17,20 +18,20 @@ class ProductListAggregateFormDataProvider
     protected $productListFormDataProvider;
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormDataProviderExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface
      */
-    protected $productListAggregateFormDataProviderExpanderPlugins;
+    protected $productListAggregateFormDataProviderExpander;
 
     /**
      * @param \Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListFormDataProvider $productListFormDataProvider
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormDataProviderExpanderPluginInterface[] $productListAggregateFormDataProviderExpanderPlugins
+     * @param \Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface $productListAggregateFormDataProviderExpander
      */
     public function __construct(
         ProductListFormDataProvider $productListFormDataProvider,
-        array $productListAggregateFormDataProviderExpanderPlugins
+        ProductListAggregateFormDataProviderExpanderInterface $productListAggregateFormDataProviderExpander
     ) {
         $this->productListFormDataProvider = $productListFormDataProvider;
-        $this->productListAggregateFormDataProviderExpanderPlugins = $productListAggregateFormDataProviderExpanderPlugins;
+        $this->productListAggregateFormDataProviderExpander = $productListAggregateFormDataProviderExpander;
     }
 
     /**
@@ -40,15 +41,11 @@ class ProductListAggregateFormDataProvider
      */
     public function getData(?int $idProductList = null): ProductListAggregateFormTransfer
     {
-        $assignedProductIds = [];
-        $productListAggregateFormTransfer = new ProductListAggregateFormTransfer();
-
         $productListTransfer = $this->productListFormDataProvider->getData($idProductList);
-        $productListAggregateFormTransfer->setProductList($productListTransfer);
 
-        foreach ($this->productListAggregateFormDataProviderExpanderPlugins as $productListAggregateFormDataProviderExpanderPlugin) {
-            $productListAggregateFormTransfer = $productListAggregateFormDataProviderExpanderPlugin->expandData($productListAggregateFormTransfer);
-        }
+        $productListAggregateFormTransfer = (new ProductListAggregateFormTransfer())->setProductList($productListTransfer);
+        $productListAggregateFormTransfer = $this->productListAggregateFormDataProviderExpander
+            ->expandProductListAggregateFormData($productListAggregateFormTransfer);
 
         return $productListAggregateFormTransfer;
     }
@@ -60,10 +57,6 @@ class ProductListAggregateFormDataProvider
     {
         $options = [];
 
-        foreach ($this->productListAggregateFormDataProviderExpanderPlugins as $productListAggregateFormDataProviderExpanderPlugin) {
-            $options = $productListAggregateFormDataProviderExpanderPlugin->expandOptions($options);
-        }
-
-        return $options;
+        return $this->productListAggregateFormDataProviderExpander->expandOptions($options);
     }
 }

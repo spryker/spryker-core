@@ -15,8 +15,12 @@ use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProvider;
 use Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProviderInterface;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpander;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface;
 use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormExpander;
 use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormExpanderInterface;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpander;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpanderInterface;
 use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporter;
 use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterface;
 use Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListAggregateFormDataProvider;
@@ -95,7 +99,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductListCreateAggregationTabs(): TabsInterface
     {
-        return new ProductListCreateAggregationTabs();
+        return new ProductListCreateAggregationTabs($this->createProductListCreateAggregationTabsExpander());
     }
 
     /**
@@ -103,7 +107,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductListEditAggregationTabs(): TabsInterface
     {
-        return new ProductListEditAggregationTabs();
+        return new ProductListEditAggregationTabs($this->createProductListCreateAggregationTabsExpander());
     }
 
     /**
@@ -120,6 +124,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createAssignedProductConcreteRelationTabs(): TabsInterface
     {
         return new AssignedProductConcreteRelationTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpanderInterface
+     */
+    public function createProductListCreateAggregationTabsExpander(): ProductListCreateAggregationTabsExpanderInterface
+    {
+        return new ProductListCreateAggregationTabsExpander();
     }
 
     /**
@@ -168,7 +180,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListAggregateFormDataProvider(
             $this->createProductListFormDataProvider(),
-            $this->getProductListAggregateFormDataProviderExpanderPlugins()
+            $this->createProductListAggregateFormDataProviderExpander()
         );
     }
 
@@ -186,6 +198,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductListAggregateFormExpander(): ProductListAggregateFormExpanderInterface
     {
         return new ProductListAggregateFormExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface
+     */
+    public function createProductListAggregateFormDataProviderExpander(): ProductListAggregateFormDataProviderExpanderInterface
+    {
+        return new ProductListAggregateFormDataProviderExpander($this->createProductListCategoryRelationFormDataProvider());
     }
 
     /**
@@ -320,22 +340,6 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListUsedByTableDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormExpanderPluginInterface[]
-     */
-    public function getProductListAggregateFormExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListAggregateFormDataProviderExpanderPluginInterface[]
-     */
-    public function getProductListAggregateFormDataProviderExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_AGGREGATE_FORM_DATA_PROVIDER_EXPANDER);
     }
 
     /**

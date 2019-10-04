@@ -131,4 +131,14 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
     ): ?ConfigurableBundleTemplateSlotTransfer {
         return $this->configurableBundleFacade->findConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
     }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    {
+        return $this->configurableBundleFacade->getProductListIdByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+    }
 }

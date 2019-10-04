@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlotTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
@@ -124,6 +125,20 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         }
 
         return $configurableBundleTemplateSlotTransfers;
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->filterByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplate)
+            ->select([SpyConfigurableBundleTemplateSlotTableMap::COL_FK_PRODUCT_LIST])
+            ->findOne();
     }
 
     /**

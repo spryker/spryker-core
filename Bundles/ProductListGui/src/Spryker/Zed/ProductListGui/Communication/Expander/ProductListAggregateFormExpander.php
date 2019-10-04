@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListGui\Communication\Expander;
 
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListAggregateFormType;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListCategoryRelationFormType;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationFormType;
@@ -22,34 +23,12 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return void
      */
-    public function expandWithProductListCategoryRelationForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    public function expandWithProductListAssignmentForms(FormBuilderInterface $builder, array $options): void
     {
-        return $builder->add(
-            ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION,
-            ProductListCategoryRelationFormType::class,
-            [ProductListAggregateFormType::OPTION_CATEGORY_IDS => $options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]]
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    public function expandWithProductListProductConcreteRelationForm(FormBuilderInterface $builder, array $options): FormBuilderInterface
-    {
-        $builder->add(
-            ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION,
-            ProductListProductConcreteRelationFormType::class
-        );
-
-        $this->addProductListProductConcreteRelationFormHelperFields($builder);
-        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'postSubmitEventHandler']);
-
-        return $builder;
+        $this->addProductListCategoryRelationForm($builder, $options)
+            ->addProductListProductConcreteRelationForm($builder);
     }
 
     /**
@@ -61,21 +40,66 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
     {
         $data = $formEvent->getData();
 
-        $assignedProductIds = $data[ProductListProductConcreteRelationFormType::FIELD_ASSIGNED_PRODUCT_IDS]
-            ? preg_split('/,/', $data[ProductListProductConcreteRelationFormType::FIELD_ASSIGNED_PRODUCT_IDS], null, PREG_SPLIT_NO_EMPTY)
+        $assignedProductIdsData = $this->getFieldValue(ProductListProductConcreteRelationFormType::FIELD_ASSIGNED_PRODUCT_IDS, $formEvent);
+        $productIdsToBeAssignedData = $this->getFieldValue(ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_ASSIGNED, $formEvent);
+        $productIdsToBeDeassignedData = $this->getFieldValue(ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED, $formEvent);
+
+        $assignedProductIds = $assignedProductIdsData
+            ? preg_split('/,/', $assignedProductIdsData, null, PREG_SPLIT_NO_EMPTY)
             : [];
-        $productIdsToBeAssigned = $data[ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_ASSIGNED]
-            ? preg_split('/,/', $data[ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_ASSIGNED], null, PREG_SPLIT_NO_EMPTY)
+
+        $productIdsToBeAssigned = $productIdsToBeAssignedData
+            ? preg_split('/,/', $productIdsToBeAssignedData, null, PREG_SPLIT_NO_EMPTY)
             : [];
-        $productIdsToBeDeassigned = $data[ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED]
-            ? preg_split('/,/', $data[ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED], null, PREG_SPLIT_NO_EMPTY)
+        $productIdsToBeDeassigned = $productIdsToBeDeassignedData
+            ? preg_split('/,/', $productIdsToBeDeassignedData, null, PREG_SPLIT_NO_EMPTY)
             : [];
 
         $assignedProductIds = array_unique(array_merge($assignedProductIds, $productIdsToBeAssigned));
         $assignedProductIds = array_diff($assignedProductIds, $productIdsToBeDeassigned);
-        $data[ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION][ProductListProductConcreteRelationFormType::PRODUCT_IDS] = $assignedProductIds;
+
+        /**
+         * @var \Generated\Shared\Transfer\ProductListAggregateFormTransfer $productListProductConcreteRelationTransfer
+         */
+        $productListProductConcreteRelationTransfer = $this->getFieldValue(ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION, $formEvent);
+        $productListProductConcreteRelationTransfer->offsetSet(ProductListProductConcreteRelationFormType::PRODUCT_IDS, $assignedProductIds);
 
         $formEvent->setData($data);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addProductListCategoryRelationForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            ProductListAggregateFormTransfer::PRODUCT_LIST_CATEGORY_RELATION,
+            ProductListCategoryRelationFormType::class,
+            [ProductListAggregateFormType::OPTION_CATEGORY_IDS => $options[ProductListAggregateFormType::OPTION_CATEGORY_IDS]]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductListProductConcreteRelationForm(FormBuilderInterface $builder)
+    {
+        $builder->add(
+            ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION,
+            ProductListProductConcreteRelationFormType::class
+        );
+
+        $this->addProductListProductConcreteRelationFormHelperFields($builder);
+        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'postSubmitEventHandler']);
+
+        return $this;
     }
 
     /**
@@ -99,5 +123,50 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
             ProductListProductConcreteRelationFormType::FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED,
             HiddenType::class
         );
+    }
+
+    /**
+     * @param string $fieldName
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
+     * @return mixed
+     */
+    protected function getFieldValue(string $fieldName, FormEvent $formEvent)
+    {
+        return $this->getFieldValueByPropertyPath(
+            $formEvent->getData(),
+            $this->getFieldPropertyPath($fieldName, $formEvent)
+        );
+    }
+
+    /**
+     * @param string $fieldName
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
+     * @return string
+     */
+    protected function getFieldPropertyPath(string $fieldName, FormEvent $formEvent): string
+    {
+        return $formEvent->getForm()
+            ->get($fieldName)
+            ->getPropertyPath()
+            ->__toString();
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
+     * @param string $propertyPath
+     *
+     * @return mixed
+     */
+    protected function getFieldValueByPropertyPath(AbstractTransfer $abstractTransfer, string $propertyPath)
+    {
+        $current = $abstractTransfer;
+
+        foreach (explode('.', $propertyPath) as $key) {
+            $current = $current->offsetGet($key);
+        }
+
+        return $current;
     }
 }

@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
+use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 
-class ConfigurableBundleTemplateSlotFormDataProvider
+class ConfigurableBundleTemplateSlotEditFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface
@@ -33,31 +35,36 @@ class ConfigurableBundleTemplateSlotFormDataProvider
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface[]
+     */
+    protected $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface[] $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins
      */
     public function __construct(
         ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade,
         ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade,
-        ConfigurableBundleGuiToGlossaryFacadeInterface $glossaryFacade
+        ConfigurableBundleGuiToGlossaryFacadeInterface $glossaryFacade,
+        array $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins
     ) {
         $this->configurableBundleFacade = $configurableBundleFacade;
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;
+        $this->configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins = $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins;
     }
 
     /**
-     * @param int|null $idConfigurableBundleTemplate
-     * @param int|null $idConfigurableBundleTemplateSlot
+     * @param int $idConfigurableBundleTemplateSlot
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
      */
-    public function getData(?int $idConfigurableBundleTemplate, ?int $idConfigurableBundleTemplateSlot = null): ConfigurableBundleTemplateSlotTransfer
+    public function getData(int $idConfigurableBundleTemplateSlot): ConfigurableBundleTemplateSlotEditFormTransfer
     {
-        if (!$idConfigurableBundleTemplateSlot) {
-            return $this->createEmptyConfigurableBundleTemplateSlotTransfer($idConfigurableBundleTemplate);
-        }
+        $configurableBundleTemplateSlotEditFormTransfer = new ConfigurableBundleTemplateSlotEditFormTransfer();
 
         $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())
             ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot);
@@ -66,10 +73,23 @@ class ConfigurableBundleTemplateSlotFormDataProvider
             ->findConfigurableBundleTemplateSlot($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateSlotTransfer) {
-            return $this->createEmptyConfigurableBundleTemplateSlotTransfer($idConfigurableBundleTemplate);
+            $configurableBundleTemplateSlotEditFormTransfer;
         }
 
-        return $this->expandConfigurableBundleTemplateSlotTransferWithExistingTranslations($configurableBundleTemplateSlotTransfer);
+        $productListAggregateFormTransfer = (new ProductListAggregateFormTransfer())->setProductList(
+            $configurableBundleTemplateSlotTransfer->getProductList()
+        );
+
+        $configurableBundleTemplateSlotEditFormTransfer->setProductListAggregateForm($productListAggregateFormTransfer)
+            ->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+
+        $configurableBundleTemplateSlotEditFormTransfer = $this->expandDataWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins($configurableBundleTemplateSlotEditFormTransfer);
+
+        $configurableBundleTemplateSlotTransfer = $this->expandConfigurableBundleTemplateSlotTransferWithExistingTranslations(
+            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()
+        );
+
+        return $configurableBundleTemplateSlotEditFormTransfer->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
     }
 
     /**
@@ -77,29 +97,11 @@ class ConfigurableBundleTemplateSlotFormDataProvider
      */
     public function getOptions(): array
     {
-        return [
+        $options = [
             ConfigurableBundleTemplateForm::OPTION_AVAILABLE_LOCALES => $this->localeFacade->getLocaleCollection(),
         ];
-    }
 
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
-     */
-    protected function createEmptyConfigurableBundleTemplateSlotTransfer(int $idConfigurableBundleTemplate): ConfigurableBundleTemplateSlotTransfer
-    {
-        $configurableBundleTemplateSlotTransfer = (new ConfigurableBundleTemplateSlotTransfer())
-            ->setFkConfigurableBundleTemplate($idConfigurableBundleTemplate);
-
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $configurableBundleTemplateSlotTranslationTransfer = new ConfigurableBundleTemplateSlotTranslationTransfer();
-            $configurableBundleTemplateSlotTranslationTransfer->setLocale($localeTransfer);
-
-            $configurableBundleTemplateSlotTransfer->addTranslation($configurableBundleTemplateSlotTranslationTransfer);
-        }
-
-        return $configurableBundleTemplateSlotTransfer;
+        return $this->expandOptionsWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins($options);
     }
 
     /**
@@ -148,5 +150,34 @@ class ConfigurableBundleTemplateSlotFormDataProvider
         }
 
         return $translationsByLocales;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function expandOptionsWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(array $options): array
+    {
+        foreach ($this->configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins as $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin) {
+            $options = $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin->expandOptions($options);
+        }
+
+        return $options;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
+     */
+    protected function expandDataWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+    ): ConfigurableBundleTemplateSlotEditFormTransfer {
+        foreach ($this->configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins as $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin) {
+            $configurableBundleTemplateSlotEditFormTransfer = $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin->expandData($configurableBundleTemplateSlotEditFormTransfer);
+        }
+
+        return $configurableBundleTemplateSlotEditFormTransfer;
     }
 }

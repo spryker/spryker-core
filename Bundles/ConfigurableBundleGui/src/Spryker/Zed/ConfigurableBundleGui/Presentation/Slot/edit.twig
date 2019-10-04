@@ -3,7 +3,7 @@
 {% set widget_title = 'Slot details' %}
 
 {% block section_title %}
-    {{ 'Edit Configurable Bundle Template Slot' | trans ~ ': ' ~ form.vars.data.idConfigurableBundleTemplateSlot }}
+    {{ 'Edit Configurable Bundle Template Slot' | trans ~ ': ' ~ form.vars.data.configurableBundleTemplateSlot.idConfigurableBundleTemplateSlot }}
 {% endblock %}
 
 {% block head_title %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : form.vars.data.fkConfigurableBundleTemplate }),'Back to Configurable Bundle Template Edit page' | trans) }}
+    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : form.vars.data.configurableBundleTemplateSlot.fkConfigurableBundleTemplate }),'Back to Configurable Bundle Template Edit page' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -23,11 +23,26 @@
 
             {{ tabs(tabs, {
                 form: form,
+                productListCategoryRelationForm: form.productListCategoryRelation,
+                productListProductConcreteRelationForm: form.productListProductConcreteRelation,
+                availableProductConcreteRelationTabs: availableProductConcreteRelationTabs,
+                assignedProductConcreteRelationTabs: assignedProductConcreteRelationTabs,
+                availableProductConcreteTable: availableProductConcreteTable,
+                assignedProductConcreteTable: assignedProductConcreteTable,
                 currentLocale: currentLocale,
                 tips: tips
             }) }}
 
+            {{ form_row(form.assignedProductIds, { 'id': 'productListAggregate_assignedProductIds'}) }}
+            {{ form_row(form.productIdsToBeAssigned, { 'id': 'productListAggregate_productIdsToBeAssigned'}) }}
+            {{ form_row(form.productIdsToBeDeAssigned, { 'id': 'productListAggregate_productIdsToBeDeAssigned'}) }}
+
             {{ form_end(form) }}
         {% endblock %}
     {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-configurable-bundle-template-slot.js"></script>
 {% endblock %}

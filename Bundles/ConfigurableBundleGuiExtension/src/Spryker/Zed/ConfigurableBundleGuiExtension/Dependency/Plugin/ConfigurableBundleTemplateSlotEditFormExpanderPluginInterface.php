@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListGuiExtension\Dependency\Plugin;
+namespace Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface ProductListAggregateFormExpanderPluginInterface
+interface ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands ProductListAggregateFormType with new form fields or subforms.
+     * - Expands ConfigurableBundleTemplateSlotEditForm with new form fields or subforms.
      *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return void
      */
-    public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface;
+    public function expand(FormBuilderInterface $builder, array $options): void;
 }

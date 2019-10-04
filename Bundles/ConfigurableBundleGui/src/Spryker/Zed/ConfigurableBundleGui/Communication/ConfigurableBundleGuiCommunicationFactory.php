@@ -7,21 +7,30 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ConfigurableBundleTemplateSlotEditFormExpander;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ConfigurableBundleTemplateSlotEditFormExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpander;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpander;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotCreateForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotEditForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotCreateFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotEditFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapper;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationSubTabsProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationSubTabsProviderInterface;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationTablesProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationTablesProviderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotProductsTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateSlotTable;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Table\ConfigurableBundleTemplateTable;
@@ -68,13 +77,30 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getConfigurableBundleTemplateSlotForm(
+    public function getConfigurableBundleTemplateSlotCreateForm(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
         array $options = []
     ): FormInterface {
         return $this->getFormFactory()->create(
-            ConfigurableBundleTemplateSlotForm::class,
+            ConfigurableBundleTemplateSlotCreateForm::class,
             $configurableBundleTemplateSlotTransfer,
+            $options
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getConfigurableBundleTemplateSlotEditForm(
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer,
+        array $options = []
+    ): FormInterface {
+        return $this->getFormFactory()->create(
+            ConfigurableBundleTemplateSlotEditForm::class,
+            $configurableBundleTemplateSlotEditFormTransfer,
             $options
         );
     }
@@ -92,15 +118,32 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotFormDataProvider
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotCreateFormDataProvider
      */
-    public function createConfigurableBundleTemplateSlotFormDataProvider(): ConfigurableBundleTemplateSlotFormDataProvider
+    public function createConfigurableBundleTemplateSlotCreateFormDataProvider(): ConfigurableBundleTemplateSlotCreateFormDataProvider
     {
-        return new ConfigurableBundleTemplateSlotFormDataProvider(
+        return new ConfigurableBundleTemplateSlotCreateFormDataProvider($this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotEditFormDataProvider
+     */
+    public function createConfigurableBundleTemplateSlotEditFormDataProvider(): ConfigurableBundleTemplateSlotEditFormDataProvider
+    {
+        return new ConfigurableBundleTemplateSlotEditFormDataProvider(
             $this->getConfigurableBundleFacade(),
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->getConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ConfigurableBundleTemplateSlotEditFormExpanderInterface
+     */
+    public function createConfigurableBundleTemplateSlotEditFormExpander(): ConfigurableBundleTemplateSlotEditFormExpanderInterface
+    {
+        return new ConfigurableBundleTemplateSlotEditFormExpander($this->getConfigurableBundleTemplateSlotEditFormExpanderPlugins());
     }
 
     /**
@@ -201,7 +244,23 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createConfigurableBundleTemplateSlotEditTabs(): ConfigurableBundleTemplateSlotEditTabs
     {
-        return new ConfigurableBundleTemplateSlotEditTabs();
+        return new ConfigurableBundleTemplateSlotEditTabs($this->getConfigurableBundleTemplateSlotEditTabsExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationSubTabsProviderInterface
+     */
+    public function createProductConcreteRelationSubTabsProvider(): ProductConcreteRelationSubTabsProviderInterface
+    {
+        return new ProductConcreteRelationSubTabsProvider($this->getConfigurableBundleTemplateSlotEditSubTabsProviderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationTablesProviderInterface
+     */
+    public function createProductConcreteRelationTablesProvider(): ProductConcreteRelationTablesProviderInterface
+    {
+        return new ProductConcreteRelationTablesProvider($this->getConfigurableBundleTemplateSlotEditTablesProviderPlugins());
     }
 
     /**
@@ -258,5 +317,45 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function getProductListFacade(): ConfigurableBundleGuiToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_PRODUCT_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateSlotEditTabsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_TABS_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateSlotEditFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_DATA_PROVIDER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateSlotEditSubTabsProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_SUB_TABS_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTablesProviderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateSlotEditTablesProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_TABLES_PROVIDER);
     }
 }
