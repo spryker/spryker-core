@@ -44,7 +44,9 @@ class PersistenceManager implements PersistenceManagerInterface
                 ->filterByName($stateName)
                 ->findOneOrCreate();
 
-            $stateEntity->save();
+            if ($stateEntity->isNew()) {
+                $stateEntity->save();
+            }
 
             return $stateEntity;
         });
@@ -71,7 +73,9 @@ class PersistenceManager implements PersistenceManagerInterface
                 ->filterByName($processName)
                 ->findOneOrCreate();
 
-            $processEntity->save();
+            if ($processEntity->isNew()) {
+                $processEntity->save();
+            }
 
             return $processEntity;
         });
