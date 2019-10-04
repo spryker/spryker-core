@@ -15,8 +15,6 @@ use Spryker\Zed\StockDataImport\Business\Writer\DataSet\StockStoreDataSetInterfa
 
 class StockNameToIdStockStep implements DataImportStepInterface
 {
-    protected const EXCEPTION_MESSAGE_ENTITY_NOT_FOUND = 'Stock not found';
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -29,7 +27,7 @@ class StockNameToIdStockStep implements DataImportStepInterface
         $stockName = $dataSet[StockStoreDataSetInterface::COLUMN_WAREHOUSE_NAME];
 
         if (!$stockName) {
-            throw new EntityNotFoundException(sprintf(static::EXCEPTION_MESSAGE_ENTITY_NOT_FOUND));
+            throw new EntityNotFoundException(sprintf('Invalid warehouse name'));
         }
 
         $stockEntity = SpyStockQuery::create()
@@ -37,7 +35,7 @@ class StockNameToIdStockStep implements DataImportStepInterface
             ->findOne();
 
         if ($stockEntity === null) {
-            throw new EntityNotFoundException(sprintf(static::EXCEPTION_MESSAGE_ENTITY_NOT_FOUND));
+            throw new EntityNotFoundException(sprintf('Warehouse not found'));
         }
 
         $dataSet[StockStoreDataSetInterface::COLUMN_ID_STOCK] = $stockEntity->getIdStock();
