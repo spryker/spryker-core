@@ -51,7 +51,7 @@ class PermissionContextProvider implements PermissionContextProviderInterface
             return 0;
         }
 
-        if ($this->config->getIsPermissionCalculationIncludeShipment()) {
+        if ($this->config->isPermissionCalculationIncludeShipment()) {
             return $quoteTransfer->getTotals()->getGrandTotal();
         }
 
