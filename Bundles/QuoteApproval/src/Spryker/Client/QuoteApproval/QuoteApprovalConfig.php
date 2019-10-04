@@ -21,4 +21,12 @@ class QuoteApprovalConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getRequiredQuoteFields();
     }
+
+    /**
+     * @return bool
+     */
+    public function isPermissionCalculationIncludeShipment(): bool
+    {
+        return $this->getSharedConfig()->isPermissionCalculationIncludeShipment();
+    }
 }

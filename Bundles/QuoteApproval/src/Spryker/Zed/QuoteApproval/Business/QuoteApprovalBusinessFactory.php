@@ -91,7 +91,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
      */
     public function createPermissionContextProvider(): PermissionContextProviderInterface
     {
-        return new PermissionContextProvider();
+        return new PermissionContextProvider($this->getConfig());
     }
 
     /**

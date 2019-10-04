@@ -8,10 +8,24 @@
 namespace Spryker\Zed\QuoteApproval\Business\Permission\ContextProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
+use Spryker\Shared\QuoteApproval\QuoteApprovalConfig as SharedQuoteApprovalConfig;
+use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 class PermissionContextProvider implements PermissionContextProviderInterface
 {
+    /**
+     * @var \Spryker\Zed\QuoteApproval\QuoteApprovalConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\QuoteApproval\QuoteApprovalConfig $config
+     */
+    public function __construct(QuoteApprovalConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -20,9 +34,9 @@ class PermissionContextProvider implements PermissionContextProviderInterface
     public function provideContext(QuoteTransfer $quoteTransfer): array
     {
         return [
-            QuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => $this->getQuoteSum($quoteTransfer),
-            QuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => $quoteTransfer->getStore()->getName(),
-            QuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => $quoteTransfer->getCurrency()->getCode(),
+            SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CENT_AMOUNT => $this->getQuoteSum($quoteTransfer),
+            SharedQuoteApprovalConfig::PERMISSION_CONTEXT_STORE_NAME => $quoteTransfer->getStore()->getName(),
+            SharedQuoteApprovalConfig::PERMISSION_CONTEXT_CURRENCY_CODE => $quoteTransfer->getCurrency()->getCode(),
         ];
     }
 
@@ -35,6 +49,10 @@ class PermissionContextProvider implements PermissionContextProviderInterface
     {
         if ($quoteTransfer->getTotals() === null) {
             return 0;
+        }
+
+        if ($this->config->isPermissionCalculationIncludeShipment()) {
+            return $quoteTransfer->getTotals()->getGrandTotal();
         }
 
         return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);

@@ -36,7 +36,7 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,11 +18,18 @@ class QuoteChecker implements QuoteCheckerInterface
     protected $quoteApprovalConfig;
 
     /**
-     * @param \Spryker\Client\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfig
+     * @var \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[]
      */
-    public function __construct(QuoteApprovalConfig $quoteApprovalConfig)
+    protected $quoteApplicableForApprovalCheckPlugins;
+
+    /**
+     * @param \Spryker\Client\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfig
+     * @param \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[] $quoteApplicableForApprovalCheckPlugins
+     */
+    public function __construct(QuoteApprovalConfig $quoteApprovalConfig, array $quoteApplicableForApprovalCheckPlugins)
     {
         $this->quoteApprovalConfig = $quoteApprovalConfig;
+        $this->quoteApplicableForApprovalCheckPlugins = $quoteApplicableForApprovalCheckPlugins;
     }
 
     /**
@@ -36,6 +43,22 @@ class QuoteChecker implements QuoteCheckerInterface
 
         foreach ($this->quoteApprovalConfig->getRequiredQuoteFields() as $requiredQuoteField) {
             if ($quoteData[$requiredQuoteField] === null) {
+                return false;
+            }
+        }
+
+        return $this->executeQuoteApplicableForApprovalCheckPlugins($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function executeQuoteApplicableForApprovalCheckPlugins(QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($this->quoteApplicableForApprovalCheckPlugins as $quoteApplicableForApprovalCheckPlugin) {
+            if (!$quoteApplicableForApprovalCheckPlugin->check($quoteTransfer)) {
                 return false;
             }
         }

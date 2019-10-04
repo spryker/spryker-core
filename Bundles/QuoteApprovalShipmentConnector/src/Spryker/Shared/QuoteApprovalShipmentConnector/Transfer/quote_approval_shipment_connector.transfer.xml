@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Quote">
+        <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="priceMode" type="string"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="storeCurrencyPrice" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="storeCurrencyPrice" type="int"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="storeCurrencyPrice" type="int"/>
+        <property name="type" type="string"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+</transfers>

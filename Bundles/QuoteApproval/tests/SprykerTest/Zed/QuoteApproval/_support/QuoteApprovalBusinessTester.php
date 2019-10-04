@@ -28,6 +28,7 @@ use Generated\Shared\Transfer\StoreTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -72,5 +73,19 @@ class QuoteApprovalBusinessTester extends Actor
             );
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function createCompanyUser(): CompanyUserTransfer
+    {
+        $customerTransfer = $this->haveCustomer();
+        $companyTransfer = $this->haveCompany();
+
+        return $this->haveCompanyUser([
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
     }
 }

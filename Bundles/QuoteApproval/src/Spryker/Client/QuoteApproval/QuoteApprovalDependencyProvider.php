@@ -19,6 +19,7 @@ class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK = 'PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,6 +31,7 @@ class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addQuoteClient($container);
+        $container = $this->addQuoteApplicableForApprovalCheckPlugins($container);
 
         return $container;
     }
@@ -60,5 +62,27 @@ class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteApplicableForApprovalCheckPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK, function () {
+            return $this->getQuoteApplicableForApprovalCheckPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[]
+     */
+    protected function getQuoteApplicableForApprovalCheckPlugins(): array
+    {
+        return [];
     }
 }

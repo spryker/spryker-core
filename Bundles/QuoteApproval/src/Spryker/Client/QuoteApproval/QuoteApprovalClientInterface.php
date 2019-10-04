@@ -222,7 +222,9 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns false if one of the required field does not exist in QuoteTransfer - true otherwise.
+     * - Returns false if one of the required field does not exist in QuoteTransfer.
+     * - Executes plugin stack QuoteApplicableForApprovalCheckPluginInterface, returns false if at least one plugin returned false.
+     * - Returns true otherwise
      *
      * @api
      *
@@ -234,7 +236,6 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Makes a call to quote client to get quote lock.
      * - Returns true if quote is locked and has at least one quote approval not in status declined, false otherwise.
      *
      * @api
