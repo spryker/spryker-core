@@ -95,7 +95,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
         $facetConfig = $this->getFactory()->getFacetConfig();
         $activeFacetParamNames = $facetConfig->getActiveParamNames($requestParameters);
 
-        return in_array($this->categoryParamName, $activeFacetParamNames);
+        return in_array($this->categoryParamName, $activeFacetParamNames, true);
     }
 
     /**

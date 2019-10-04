@@ -62,7 +62,7 @@ class FacetConfig implements FacetConfigInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getParamNames(): array
     {

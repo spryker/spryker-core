@@ -48,7 +48,7 @@ class PriceRangeExtractor extends RangeExtractor
      * @param float $min
      * @param float $max
      *
-     * @return array
+     * @return int[]
      */
     protected function getActiveRangeData(array $requestParameters, $min, $max)
     {

@@ -97,7 +97,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
      * @param float $min
      * @param float $max
      *
-     * @return array
+     * @return int[]
      */
     protected function getActiveRangeData(array $requestParameters, $min, $max)
     {
