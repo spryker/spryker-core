@@ -15,7 +15,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     public const CHUNK_SIZE = 20000;
 
     /**
-     * @var \Spryker\Zed\Event\Business\EventFacadeInterface
+     * @var \Spryker\Zed\Event\Business\EventFacadeInterface|null
      */
     protected static $eventFacade;
 

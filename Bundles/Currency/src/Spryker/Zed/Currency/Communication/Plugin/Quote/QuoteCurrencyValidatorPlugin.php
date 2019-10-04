@@ -20,7 +20,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 class QuoteCurrencyValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Validates if provided currency in quote is available.
      *
      * @api

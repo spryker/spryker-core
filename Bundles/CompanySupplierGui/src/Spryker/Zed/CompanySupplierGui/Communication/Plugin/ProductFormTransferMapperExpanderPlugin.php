@@ -17,7 +17,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransfer
 class ProductFormTransferMapperExpanderPlugin extends AbstractPlugin implements ProductFormTransferMapperExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

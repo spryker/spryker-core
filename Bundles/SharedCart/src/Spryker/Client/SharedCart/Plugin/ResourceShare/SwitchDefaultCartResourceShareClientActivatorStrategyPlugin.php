@@ -33,7 +33,7 @@ class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends Abstra
     protected const PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Switches default cart for provided Quote and company user.
      * - Returns 'isSuccessful=true' with ResourceShareTransfer if cart was switched successfully.
      * - Returns 'isSuccessful=false' with error messages otherwise.
@@ -50,7 +50,7 @@ class SwitchDefaultCartResourceShareClientActivatorStrategyPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns 'true', when resource type is Quote and share option is either Read-only or Full access.
      * - Returns 'false' otherwise.
      *

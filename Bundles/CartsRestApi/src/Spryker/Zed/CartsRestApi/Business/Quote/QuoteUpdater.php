@@ -9,7 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business\Quote;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -112,7 +112,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
             $this->quoteMapper->mapQuoteTransferToOriginalQuoteTransfer($quoteTransfer, $originalQuoteTransfer)
         );
 
-        return $this->performUpdatingQuote($quoteTransfer);
+        return $this->performQuoteUpdate($quoteTransfer);
     }
 
     /**
@@ -131,30 +131,62 @@ class QuoteUpdater implements QuoteUpdaterInterface
                 ->setCustomerReference($assignGuestQuoteRequestTransfer->getAnonymousCustomerReference())
         );
 
-        if (!$quoteCollectionTransfer->getQuotes()->count()) {
+        $guestQuotesTransfers = $quoteCollectionTransfer->getQuotes();
+        if (!$guestQuotesTransfers->count()) {
             return (new QuoteResponseTransfer())
                 ->setIsSuccessful(false);
         }
 
-        $registeredCustomerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
-        $quoteTransfer = $this->createQuoteTransfer($registeredCustomerReference, $quoteCollectionTransfer);
+        $customerReference = $assignGuestQuoteRequestTransfer->getCustomerReference();
+        $quoteTransfer = $this->updateQuoteTransferWithCustomerReference($customerReference, $guestQuotesTransfers[0]);
 
-        return $this->performUpdatingQuote($quoteTransfer);
+        return $this->performQuoteUpdate($quoteTransfer);
     }
 
     /**
-     * @param string $registeredCustomerReference
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function convertGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void
+    {
+        $customerReference = $oauthResponseTransfer->getCustomerReference();
+        $anonymousCustomerReference = $oauthResponseTransfer->getAnonymousCustomerReference();
+
+        if (!$customerReference || !$anonymousCustomerReference) {
+            return;
+        }
+
+        $guestQuoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
+            (new QuoteCriteriaFilterTransfer())
+                ->setCustomerReference($anonymousCustomerReference)
+        );
+
+        $guestQuoteTransfers = $guestQuoteCollectionTransfer->getQuotes();
+        if (!$guestQuoteTransfers->count()) {
+            return;
+        }
+
+        $guestQuoteTransfer = $guestQuoteTransfers[0];
+        if (!$guestQuoteTransfer->getItems()->count()) {
+            return;
+        }
+
+        $this->performQuoteUpdate($this->updateQuoteTransferWithCustomerReference($customerReference, $guestQuoteTransfer));
+    }
+
+    /**
+     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer(
-        string $registeredCustomerReference,
-        QuoteCollectionTransfer $quoteCollectionTransfer
+    protected function updateQuoteTransferWithCustomerReference(
+        string $customerReference,
+        QuoteTransfer $quoteTransfer
     ): QuoteTransfer {
-        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($registeredCustomerReference);
-        $quoteTransfer = $quoteCollectionTransfer->getQuotes()[0];
-        $quoteTransfer->setCustomerReference($registeredCustomerReference);
+        $registeredCustomer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $quoteTransfer->setCustomerReference($customerReference);
 
         return $quoteTransfer->setCustomer($registeredCustomer);
     }
@@ -188,7 +220,7 @@ class QuoteUpdater implements QuoteUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function performUpdatingQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    protected function performQuoteUpdate(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->persistentCartFacade
             ->updateQuote($this->quoteMapper->mapQuoteTransferToQuoteUpdateRequestTransfer($quoteTransfer, new QuoteUpdateRequestTransfer()));

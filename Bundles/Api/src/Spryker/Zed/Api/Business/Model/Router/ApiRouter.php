@@ -68,7 +68,7 @@ class ApiRouter implements RouterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $name
      * @param array $parameters
@@ -84,7 +84,7 @@ class ApiRouter implements RouterInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function match($pathinfo)
     {

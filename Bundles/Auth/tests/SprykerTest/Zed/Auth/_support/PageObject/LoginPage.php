@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Auth\PageObject;
 
 class LoginPage
 {
-    public const URL = '/auth/login/';
+    public const URL = '/auth/login';
 
     public const ADMIN_USERNAME = 'admin@spryker.com';
     public const ADMIN_PASSWORD = 'change123';
