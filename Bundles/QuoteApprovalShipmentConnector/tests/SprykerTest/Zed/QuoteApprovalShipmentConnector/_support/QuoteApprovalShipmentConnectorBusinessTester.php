@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\QuoteApproval;
+namespace SprykerTest\Zed\QuoteApprovalShipmentConnector;
 
 use Codeception\Actor;
 
@@ -22,14 +22,11 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\QuoteApprovalShipmentConnector\Business\QuoteApprovalShipmentConnectorFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
-class QuoteApprovalClientTester extends Actor
+class QuoteApprovalShipmentConnectorBusinessTester extends Actor
 {
-    use _generated\QuoteApprovalClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
+    use _generated\QuoteApprovalShipmentConnectorBusinessTesterActions;
 }

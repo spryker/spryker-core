@@ -16,6 +16,7 @@ use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group QuoteApproval
