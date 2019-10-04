@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInter
 /**
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileBusinessFactory getFactory()()
+ * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
 class MerchantProfileHydratePlugin extends AbstractPlugin implements MerchantHydrationPluginInterface
 {

@@ -15,7 +15,6 @@
         <property name="contactPersonFirstName" type="string" />
         <property name="contactPersonLastName" type="string" />
         <property name="contactPersonPhone" type="string" />
-        <property name="bannerUrl" type="string" />
         <property name="logoUrl" type="string" />
         <property name="publicEmail" type="string" />
         <property name="publicPhone" type="string" />
@@ -38,6 +37,7 @@
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
         <property name="fkLocale" type="int" />
+        <property name="localeName" type="string" />
         <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues" />
     </transfer>
 

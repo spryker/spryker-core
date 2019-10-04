@@ -43,6 +43,7 @@ class CreateMerchantController extends AbstractController
 
         return $this->viewResponse([
             'form' => $merchantForm->createView(),
+            'merchantFormTabs' => $this->getFactory()->createMerchantFormTabs()->createView(),
         ]);
     }
 
@@ -70,6 +71,7 @@ class CreateMerchantController extends AbstractController
 
         return $this->viewResponse([
             'form' => $merchantForm->createView(),
+            'merchantFormTabs' => $this->getFactory()->createMerchantFormTabs()->createView(),
         ]);
     }
 }

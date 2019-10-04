@@ -13,6 +13,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterf
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
 class MerchantProfilePostSavePlugin extends AbstractPlugin implements MerchantPostSavePluginInterface
 {

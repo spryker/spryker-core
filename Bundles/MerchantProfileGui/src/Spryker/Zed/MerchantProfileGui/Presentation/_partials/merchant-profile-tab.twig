@@ -1,0 +1,24 @@
+{{ form_row(merchantForm.merchantProfile.is_active) }}
+{{ form_row(merchantForm.merchantProfile.description_glossary_key) }}
+{{ form_row(merchantForm.merchantProfile.delivery_time_glossary_key) }}
+{{ form_row(merchantForm.merchantProfile.public_phone) }}
+{{ form_row(merchantForm.merchantProfile.public_email) }}
+{{ form_row(merchantForm.merchantProfile.logo_url) }}
+
+{% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
+    {% set localeName = localizedAttributes.vars.value.localeName %}
+
+    {% embed '@Gui/Partials/localized-ibox.twig' with {
+        localeName: localeName,
+        collapsed: (loop.index == 1 ? false : true),
+        id: 'localizedAttributes-ibox-' ~ localeName
+    } %}
+        {% block content %}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.descriptionGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.deliveryTimeGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.bannerUrlGlossaryKey) }}
+            {{ form_row(localizedAttributes.fkLocale) }}
+            {{ form_row(localizedAttributes.localeName) }}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}

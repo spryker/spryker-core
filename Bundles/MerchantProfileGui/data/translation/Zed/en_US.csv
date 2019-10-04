@@ -3,8 +3,8 @@ Title,Title
 "First Name","First Name"
 "Last Name","Last Name"
 Phone,Phone
-Banner,Banner
-Logo,Logo
+"Banner URL","Banner URL"
+"Logo URL","Logo URL"
 "Public Email","Public Email"
 "Public Phone","Public Phone"
 Description,Description
@@ -21,3 +21,6 @@ Activate,Activate
 Deactivate,Deactivate
 merchant_profile.activated,"Merchant Profile successfully activated."
 merchant_profile.deactivated,"Merchant Profile successfully deactivated."
+"Contact Person","Contact Person"
+"Merchant Profile","Merchant Profile"
+"Legal Information","Legal Information"

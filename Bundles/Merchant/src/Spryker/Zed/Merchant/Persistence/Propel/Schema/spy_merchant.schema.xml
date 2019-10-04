@@ -9,7 +9,7 @@
 
         <behavior name="timestampable"/>
 
-        <column name="registration_number" required="true" type="VARCHAR" size="255"/>
+        <column name="registration_number" type="VARCHAR" size="255"/>
         <column name="email" required="true" type="VARCHAR" size="255"/>
         <column name="status" required="true" size="64" type="VARCHAR"/>
 

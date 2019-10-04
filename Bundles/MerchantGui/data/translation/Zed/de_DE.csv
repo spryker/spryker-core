@@ -13,8 +13,8 @@ Save,Speichern
 waiting-for-approval,"Warten auf die Bestätigung"
 approved,Genehmigt
 denied,Verweigert
-approved_button,Zugang gewähren
-denied_button,Zugang verweigern
+approved_button,"Zugang gewähren"
+denied_button,"Zugang verweigern"
 E-Mail,E-Mail
 City,Stadt
 "Zip Code",Postleitzahl
@@ -29,3 +29,4 @@ Name,Name
 "Contact person phone","Ansprechpartner Telefon"
 "Contact person title","Titel der Kontaktperson"
 Email,Email
+General,Allgemein

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -26,7 +27,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     public const FIELD_DATA_PRIVACY_GLOSSARY = 'dataPrivacyGlossaryKey';
 
     public const LABEL_DESCRIPTION_GLOSSARY = 'Description';
-    public const LABEL_BANNER_URL_GLOSSARY = 'Banner url';
+    public const LABEL_BANNER_URL_GLOSSARY = 'Banner URL';
     public const LABEL_DELIVERY_TIME_GLOSSARY = 'Average Delivery Time';
     public const LABEL_TERMS_CONDITIONS_GLOSSARY = 'Terms and Conditions';
     public const LABEL_CANCELLATION_POLICY_GLOSSARY = 'Cancellation Policy';
@@ -102,9 +103,12 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      */
     protected function addTermsConditionsGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_TERMS_CONDITIONS_GLOSSARY, TextType::class, [
+        $builder->add(static::FIELD_TERMS_CONDITIONS_GLOSSARY, TextareaType::class, [
             'label' => static::LABEL_TERMS_CONDITIONS_GLOSSARY,
             'required' => false,
+            'attr' => [
+                'class' => 'html-editor',
+            ],
         ]);
 
         return $this;
@@ -117,9 +121,12 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      */
     protected function addCancellationPolicyGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_CANCELLATION_POLICY_GLOSSARY, TextType::class, [
+        $builder->add(static::FIELD_CANCELLATION_POLICY_GLOSSARY, TextareaType::class, [
             'label' => static::LABEL_CANCELLATION_POLICY_GLOSSARY,
             'required' => false,
+            'attr' => [
+                'class' => 'html-editor',
+            ],
         ]);
 
         return $this;
@@ -132,9 +139,12 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      */
     protected function addImprintGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_IMPRINT_GLOSSARY, TextType::class, [
+        $builder->add(static::FIELD_IMPRINT_GLOSSARY, TextareaType::class, [
             'label' => static::LABEL_IMPRINT_GLOSSARY,
             'required' => false,
+            'attr' => [
+                'class' => 'html-editor',
+            ],
         ]);
 
         return $this;
@@ -147,9 +157,12 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      */
     protected function addDataPrivacyGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DATA_PRIVACY_GLOSSARY, TextType::class, [
+        $builder->add(static::FIELD_DATA_PRIVACY_GLOSSARY, TextareaType::class, [
             'label' => static::LABEL_DATA_PRIVACY_GLOSSARY,
             'required' => false,
+            'attr' => [
+                'class' => 'html-editor',
+            ],
         ]);
 
         return $this;

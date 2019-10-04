@@ -18,6 +18,7 @@ use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutor;
 use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface;
+use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
@@ -107,6 +108,16 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs
+     */
+    public function createMerchantFormTabs(): MerchantFormTabs
+    {
+        return new MerchantFormTabs(
+            $this->getMerchantFormTabsExpanderPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface
      */
     public function getCountryFacade(): MerchantGuiToCountryFacadeInterface
@@ -168,5 +179,13 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantTableConfigExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantFormTabExpanderPluginInterface[]
+     */
+    public function getMerchantFormTabsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGINS_MERCHANT_FORM_TABS_EXPANDER);
     }
 }

@@ -171,6 +171,7 @@ class MerchantProfileFormDataProvider
     ): MerchantProfileLocalizedGlossaryAttributesTransfer {
         $merchantProfileLocalizedGlossaryAttributesTransfer = new MerchantProfileLocalizedGlossaryAttributesTransfer();
         $merchantProfileLocalizedGlossaryAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
+        $merchantProfileLocalizedGlossaryAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
         $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues(
             $this->addGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer)
         );
@@ -215,7 +216,8 @@ class MerchantProfileFormDataProvider
         if ($this->glossaryFacade->hasTranslation($key, $localeTransfer)) {
             $translationTransfer = $this->glossaryFacade->getTranslation($key, $localeTransfer);
 
-            return $translationTransfer->getValue();
+            return $translationTransfer->getIsActive()
+                ? $translationTransfer->getValue() : null;
         }
 
         return null;

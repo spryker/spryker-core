@@ -176,7 +176,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -252,7 +252,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

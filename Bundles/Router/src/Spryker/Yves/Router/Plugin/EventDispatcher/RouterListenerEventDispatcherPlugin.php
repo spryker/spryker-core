@@ -24,7 +24,7 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
 class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a RouteListener to the EventDispatcher.
      *
      * @api

@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-profile.svg)](https://travis-ci.org/spryker/merchant-profile)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-profile/badge.svg)](https://coveralls.io/github/spryker/merchant-profile)
 
-{{ADD DESCRIPTION HERE}}
+MerchantProfile module provides data structure, facade methods and plugins for extending merchant by merchant profile data.
 
 ## Installation
 

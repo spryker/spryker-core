@@ -16,7 +16,10 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
-            {{ form_widget(form) }}
+
+            {{ tabs(merchantFormTabs, {
+                'merchantForm': form
+            }) }}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}

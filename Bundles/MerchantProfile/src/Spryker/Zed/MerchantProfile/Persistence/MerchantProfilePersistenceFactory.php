@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper\MerchantProfileMapperI
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
 class MerchantProfilePersistenceFactory extends AbstractPersistenceFactory
 {

@@ -13,6 +13,9 @@ use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacad
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeBridge;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
+ */
 class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';

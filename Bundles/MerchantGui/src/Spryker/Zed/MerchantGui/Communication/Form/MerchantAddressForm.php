@@ -61,10 +61,10 @@ class MerchantAddressForm extends AbstractType
     {
         $this->addIdMerchantAddressField($builder)
             ->addCountryField($builder, $options[static::OPTION_COUNTRY_CHOICES])
-            ->addCityField($builder)
-            ->addZipCodeField($builder)
             ->addAddress1Field($builder)
             ->addAddress2Field($builder)
+            ->addZipCodeField($builder)
+            ->addCityField($builder)
             ->addAddress3Field($builder);
 
         $builder->addModelTransformer(new MerchantAddressCollectionTransferToMerchantAddressTransferTransformer());

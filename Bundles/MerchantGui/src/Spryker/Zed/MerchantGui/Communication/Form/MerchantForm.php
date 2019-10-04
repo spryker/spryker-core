@@ -99,7 +99,10 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_REGISTRATION_NUMBER, TextType::class, [
             'label' => static::LABEL_REGISTRATION_NUMBER,
-            'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;

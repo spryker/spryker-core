@@ -21,7 +21,7 @@ class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements Mercha
     public const FIELD_MERCHANT_PROFILE = 'merchantProfile';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

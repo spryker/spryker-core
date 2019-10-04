@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
 {
     public const FIELD_FK_LOCALE = 'fkLocale';
+    public const FIELD_LOCALE_NAME = 'localeName';
     public const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES = 'merchantProfileGlossaryAttributeValues';
 
     /**
@@ -28,7 +29,8 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addFkLocale($builder)
+        $this->addFkLocaleField($builder)
+            ->addLocaleNameField($builder)
             ->addMerchantProfileGlossaryAttributeValuesSubform($builder);
     }
 
@@ -37,9 +39,23 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addFkLocale(FormBuilderInterface $builder)
+    protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_LOCALE, HiddenType::class, [
+            'label' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLocaleNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LOCALE_NAME, HiddenType::class, [
             'label' => false,
         ]);
 

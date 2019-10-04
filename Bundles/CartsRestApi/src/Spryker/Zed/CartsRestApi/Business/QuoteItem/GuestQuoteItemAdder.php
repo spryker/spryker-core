@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
-use Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 
 class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
@@ -42,29 +41,21 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface
-     */
-    protected $quoteItemMapper;
-
-    /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemAdderInterface $quoteItemAdder
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface $quoteCreator
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
         QuoteItemAdderInterface $quoteItemAdder,
         QuoteCreatorInterface $quoteCreator,
-        CartsRestApiToStoreFacadeInterface $storeFacade,
-        QuoteItemMapperInterface $quoteItemMapper
+        CartsRestApiToStoreFacadeInterface $storeFacade
     ) {
         $this->quoteReader = $quoteReader;
         $this->quoteItemAdder = $quoteItemAdder;
         $this->quoteCreator = $quoteCreator;
         $this->storeFacade = $storeFacade;
-        $this->quoteItemMapper = $quoteItemMapper;
     }
 
     /**

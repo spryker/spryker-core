@@ -94,4 +94,15 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
     {
         return $this->glossaryFacade->updateTranslation($keyName, $locale, $value, $isActive);
     }
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return bool
+     */
+    public function deleteTranslation($keyName, LocaleTransfer $locale)
+    {
+        return $this->glossaryFacade->deleteTranslation($keyName, $locale);
+    }
 }
