@@ -111,7 +111,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
-        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0, $storeTransfer);
+        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, new Decimal(0), $storeTransfer);
     }
 
     /**
