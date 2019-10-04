@@ -62,13 +62,14 @@ class BasePreCheck
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function findBundledProducts($sku)
+    protected function findBundledProducts(string $sku): array
     {
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($sku)
-            ->find();
+            ->find()
+            ->getData();
     }
 
     /**

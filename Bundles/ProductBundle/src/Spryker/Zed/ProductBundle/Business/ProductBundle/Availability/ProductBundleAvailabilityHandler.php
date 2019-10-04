@@ -198,12 +198,12 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param iterable $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateBundleQuantity(iterable $bundleItems, StoreTransfer $storeTransfer): Decimal
+    protected function calculateBundleQuantity(array $bundleItems, StoreTransfer $storeTransfer): Decimal
     {
         $bundleAvailabilityQuantity = new Decimal(0);
         foreach ($bundleItems as $bundleItemEntity) {
