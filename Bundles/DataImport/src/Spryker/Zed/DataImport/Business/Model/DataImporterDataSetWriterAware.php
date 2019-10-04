@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 class DataImporterDataSetWriterAware extends DataImporter implements DataImporterDataSetWriterAwareInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface|null
      */
     protected $dataSetWriter;
 
@@ -30,7 +30,7 @@ class DataImporterDataSetWriterAware extends DataImporter implements DataImporte
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *

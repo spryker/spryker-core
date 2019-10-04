@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilPriceService extends AbstractService implements UtilPriceServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -133,4 +133,9 @@
         <property name="idCompanyUser" type="int"/>
     </transfer>
 
+    <transfer name="OauthResponse">
+        <property name="anonymousCustomerReference" type="string" />
+        <property name="customerReference" type="string" />
+    </transfer>
+
 </transfers>

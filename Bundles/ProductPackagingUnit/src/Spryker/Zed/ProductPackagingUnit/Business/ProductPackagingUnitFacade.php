@@ -27,7 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackagingUnitFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,7 +55,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +122,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -141,7 +141,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,7 +160,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -179,7 +179,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -196,7 +196,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -212,7 +212,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -228,7 +228,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -244,7 +244,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -260,7 +260,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -276,7 +276,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -292,7 +292,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -308,7 +308,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -327,7 +327,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -343,7 +343,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -359,7 +359,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -375,7 +375,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -392,7 +392,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -409,7 +409,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -425,7 +425,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -441,7 +441,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -457,7 +457,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -473,7 +473,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -490,7 +490,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

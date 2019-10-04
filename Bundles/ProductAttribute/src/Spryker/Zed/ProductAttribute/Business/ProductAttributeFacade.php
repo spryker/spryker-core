@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductAttributeFacade extends AbstractFacade implements ProductAttributeFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,7 +100,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +117,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -150,7 +150,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -166,7 +166,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -182,7 +182,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -198,7 +198,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -214,7 +214,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -230,7 +230,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -248,7 +248,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -268,7 +268,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -282,7 +282,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -299,7 +299,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -316,7 +316,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -330,7 +330,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

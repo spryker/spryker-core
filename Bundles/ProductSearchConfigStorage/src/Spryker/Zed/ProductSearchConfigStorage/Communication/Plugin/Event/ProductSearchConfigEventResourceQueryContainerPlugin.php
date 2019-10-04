@@ -22,7 +22,7 @@ use Spryker\Zed\ProductSearch\Dependency\ProductSearchEvents;
 class ProductSearchConfigEventResourceQueryContainerPlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductSearchConfigEventResourceQueryContainerPlugin extends AbstractPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class ProductSearchConfigEventResourceQueryContainerPlugin extends AbstractPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class ProductSearchConfigEventResourceQueryContainerPlugin extends AbstractPlugi
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
