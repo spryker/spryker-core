@@ -5,4 +5,8 @@
 
 'use strict';
 
-require('./modules/configurable-bundle-template-slot/slot-edit');
+var slotProductsTable = require('./slot-products-table');
+
+$(document).ready(function () {
+    slotProductsTable.init();
+});
