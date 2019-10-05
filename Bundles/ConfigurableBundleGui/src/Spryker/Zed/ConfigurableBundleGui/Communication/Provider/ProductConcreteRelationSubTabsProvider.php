@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Provider;
 
-use Exception;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTabsException;
 
 class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationSubTabsProviderInterface
 {
@@ -48,7 +48,7 @@ class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationS
     /**
      * @param \Spryker\Zed\Gui\Communication\Tabs\TabsInterface[] $configurableBundleTemplateSlotEditSubTabs
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTabsException
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationS
     {
         foreach (static::REQUIRED_SUB_TABS as $requiredSubTab) {
             if (!array_key_exists($requiredSubTab, $configurableBundleTemplateSlotEditSubTabs)) {
-                throw new Exception('Required Product Concrete Relation subtabs are missing.');
+                throw new MissingTabsException('Required Product Concrete Relation subtabs are missing.');
             }
         }
     }

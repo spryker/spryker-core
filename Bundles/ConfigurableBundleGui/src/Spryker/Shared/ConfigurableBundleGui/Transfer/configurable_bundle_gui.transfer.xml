@@ -72,7 +72,6 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotEditForm">
-        <property name="productList" type="ProductList"/>
         <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
         <property name="productListAggregateForm" type="ProductListAggregateForm"/>
     </transfer>

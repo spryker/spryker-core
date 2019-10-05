@@ -19,7 +19,7 @@ class ProductListManagementConfigurableBundleTemplateSlotEditTabsExpanderPlugin 
 {
     /**
      * {@inheritdoc}
-     * - Expands ConfigurableBundleTemplateSlotEditTabs with Producc List assignment tabs.
+     * - Expands ConfigurableBundleTemplateSlotEditTabs with Product List assignment tabs.
      *
      * @api
      *

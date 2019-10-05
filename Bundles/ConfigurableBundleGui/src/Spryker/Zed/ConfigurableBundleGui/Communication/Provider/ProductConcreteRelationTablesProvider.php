@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Provider;
 
-use Exception;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTablesException;
 
 class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTablesProviderInterface
 {
@@ -51,7 +51,7 @@ class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTa
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\AbstractTable[] $configurableBundleTemplateSlotEditTables
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTablesException
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTa
     {
         foreach (static::REQUIRED_TABLES as $requiredTable) {
             if (!array_key_exists($requiredTable, $configurableBundleTemplateSlotEditTables)) {
-                throw new Exception('Required Product Concrete Relation tables are missing.');
+                throw new MissingTablesException('Required Product Concrete Relation tables are missing.');
             }
         }
     }
