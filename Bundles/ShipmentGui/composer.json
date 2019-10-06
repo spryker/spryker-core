@@ -15,12 +15,8 @@
     "spryker/util-text": "^1.2.3"
   },
   "require-dev": {
-    "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
