@@ -358,7 +358,7 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
-     * @dataProvider multiCurrencyPrices
+     * @dataProvider multiCurrencyPricesDataProvider
      *
      * @param string $currencyCode
      * @param int $expectedPriceResult
@@ -387,7 +387,7 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
-     * @dataProvider multiCurrencyPrices
+     * @dataProvider multiCurrencyPricesDataProvider
      *
      * @param string $currencyCode
      * @param string $expectedPriceResult
@@ -397,7 +397,7 @@ class ShipmentFacadeTest extends Test
     public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getDefaultStoreTransfer();
+        $storeTransfer = $this->tester->getCurrentStoreTransfer();
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
@@ -519,7 +519,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return array
      */
-    public function multiCurrencyPrices()
+    public function multiCurrencyPricesDataProvider(): array
     {
         return [
             ['EUR', 3100],

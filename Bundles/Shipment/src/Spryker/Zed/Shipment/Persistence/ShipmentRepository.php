@@ -190,7 +190,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->useShipmentMethodPriceQuery(null, Criteria::LEFT_JOIN)
                 ->filterByFkStore($idStore)
             ->endUse()
-            ->limit(1)
             ->findOne();
 
         if ($salesShipmentMethodEntity === null) {

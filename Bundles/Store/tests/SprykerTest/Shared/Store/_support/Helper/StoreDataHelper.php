@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\Store\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
@@ -32,5 +33,13 @@ class StoreDataHelper extends Module
         $storeTransfer->fromArray($storeEntity->toArray());
 
         return $storeTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStoreTransfer(): StoreTransfer
+    {
+        return $this->getLocator()->store()->facade()->getCurrentStore();
     }
 }

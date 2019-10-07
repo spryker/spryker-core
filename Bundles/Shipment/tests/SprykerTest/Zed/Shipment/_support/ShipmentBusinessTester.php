@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
@@ -154,14 +153,6 @@ class ShipmentBusinessTester extends Actor
     public function getDefaultStoreName()
     {
         return $this->getLocator()->store()->facade()->getCurrentStore()->getName();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getDefaultStoreTransfer(): StoreTransfer
-    {
-        return $this->getLocator()->store()->facade()->getCurrentStore();
     }
 
     /**
