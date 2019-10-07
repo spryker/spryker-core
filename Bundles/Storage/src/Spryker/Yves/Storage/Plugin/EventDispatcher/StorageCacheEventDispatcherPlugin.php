@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class StorageCacheEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::TERMINATE` event.
      * - Persists a request cache based on the `\Spryker\Shared\Storage\StorageConstants::STORAGE_CACHE_STRATEGY`.
      * - Caches all used `Redis::get()`s for a given request to perform `Redis::mget()` for all upcoming requests.
