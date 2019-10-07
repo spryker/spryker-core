@@ -17,7 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
-use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrderReader implements OrderReaderInterface
@@ -33,23 +33,23 @@ class OrderReader implements OrderReaderInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface
      */
-    protected $orderResourceMapper;
+    protected $orderMapper;
 
     /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderResourceMapperInterface $orderResourceMapper
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Mapper\OrderMapperInterface $orderResourceMapper
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
         RestResourceBuilderInterface $restResourceBuilder,
-        OrderResourceMapperInterface $orderResourceMapper
+        OrderMapperInterface $orderResourceMapper
     ) {
         $this->salesClient = $salesClient;
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->orderResourceMapper = $orderResourceMapper;
+        $this->orderMapper = $orderResourceMapper;
     }
 
     /**
@@ -62,7 +62,7 @@ class OrderReader implements OrderReaderInterface
         if ($restRequest->getResource()->getId()) {
             return $this->getOrderDetailsResourceAttributes(
                 $restRequest->getResource()->getId(),
-                $restRequest->getUser()->getNaturalIdentifier()
+                $restRequest->getRestUser()->getNaturalIdentifier()
             );
         }
 
@@ -86,7 +86,7 @@ class OrderReader implements OrderReaderInterface
             return null;
         }
 
-        $restOrderDetailsAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer);
+        $restOrderDetailsAttributesTransfer = $this->orderMapper->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer);
 
         $restResource = $this->restResourceBuilder->createRestResource(
             OrdersRestApiConfig::RESOURCE_ORDERS,
@@ -124,7 +124,7 @@ class OrderReader implements OrderReaderInterface
             );
 
         foreach ($orderListTransfer->getOrders() as $orderTransfer) {
-            $restOrdersAttributesTransfer = $this->orderResourceMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
+            $restOrdersAttributesTransfer = $this->orderMapper->mapOrderTransferToRestOrdersAttributesTransfer($orderTransfer);
 
             $response = $response->addResource(
                 $this->restResourceBuilder->createRestResource(
