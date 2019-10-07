@@ -186,7 +186,7 @@ class ShipmentMethodTable extends AbstractTable
     protected function configure(TableConfiguration $tableConfiguration): TableConfiguration
     {
         $tableConfiguration = $this->configureHeader($tableConfiguration);
-        $tableConfiguration = $this->configureSortable($tableConfiguration);
+        $tableConfiguration = $this->configureSortableColumns($tableConfiguration);
         $tableConfiguration = $this->configureSearchableColumns($tableConfiguration);
         $tableConfiguration = $this->setRawColumns($tableConfiguration);
 
@@ -217,7 +217,7 @@ class ShipmentMethodTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configureSortable(TableConfiguration $tableConfiguration): TableConfiguration
+    protected function configureSortableColumns(TableConfiguration $tableConfiguration): TableConfiguration
     {
         $tableConfiguration->setSortable([
             SpyShipmentMethodTableMap::COL_SHIPMENT_METHOD_KEY,
