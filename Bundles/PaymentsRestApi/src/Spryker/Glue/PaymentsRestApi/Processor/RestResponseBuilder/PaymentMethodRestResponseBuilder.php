@@ -7,8 +7,9 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
 
@@ -37,20 +38,22 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $checkoutDataRestResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createRestPaymentMethodsResources(PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer): array
+    public function createRestPaymentMethodsResources(RestResourceInterface $checkoutDataRestResource): array
     {
-        $paymentProviderTransfers = $paymentProviderCollectionTransfer->getPaymentProviders()->getArrayCopy() ?? null;
-        if (!$paymentProviderTransfers) {
-            return [];
+        $resources = [];
+
+        $restCheckoutDataTransfer = $checkoutDataRestResource->getPayload();
+        if (!$restCheckoutDataTransfer instanceof RestCheckoutDataTransfer) {
+            return $resources;
         }
 
-        $restPaymentMethodsAttributesTransfers = $this->paymentMethodMapper->mapPaymentProviderTransfersToRestPaymentMethodsAttributesTransfers($paymentProviderTransfers);
+        $restPaymentMethodsAttributesTransfers = $this->paymentMethodMapper
+            ->mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers($restCheckoutDataTransfer);
 
-        $resources = [];
         foreach ($restPaymentMethodsAttributesTransfers as $idPaymentMethod => $restPaymentMethodsAttributesTransfer) {
             $resources[] = $this->restResourceBuilder->createRestResource(
                 PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS,

@@ -7,16 +7,18 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
+
 interface PaymentMethodMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
-    public function mapPaymentProviderTransfersToRestPaymentMethodsAttributesTransfers(
-        array $paymentProviderTransfers,
+    public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
         array $restPaymentMethodsAttributesTransfers = []
     ): array;
 }

@@ -32,6 +32,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

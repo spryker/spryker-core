@@ -145,10 +145,10 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
+     * @deprecated Will be removed in next major release.
+     *
      * @param string $paymentProviderName
      * @param string $paymentMethodName
-     *
-     * @deprecated Will be removed in next major release.
      *
      * @throws \Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException
      *

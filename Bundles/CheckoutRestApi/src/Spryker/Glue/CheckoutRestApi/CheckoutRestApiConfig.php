@@ -83,8 +83,6 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     /**
      * @param string $paymentMethodName
      *
-     * @deprecated Will be removed in next major release.
-     *
      * @return array
      */
     public function getRequiredRequestDataForPaymentMethod(string $paymentMethodName): array

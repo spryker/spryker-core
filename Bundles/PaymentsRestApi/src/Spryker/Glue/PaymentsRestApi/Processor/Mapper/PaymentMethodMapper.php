@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
+use Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 
 class PaymentMethodMapper implements PaymentMethodMapperInterface
@@ -28,17 +31,26 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[] $restPaymentMethodsAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
      */
-    public function mapPaymentProviderTransfersToRestPaymentMethodsAttributesTransfers(
-        array $paymentProviderTransfers,
+    public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
+        RestCheckoutDataTransfer $restCheckoutDataTransfer,
         array $restPaymentMethodsAttributesTransfers = []
     ): array {
+        /** @var \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers */
+        $paymentProviderTransfers = $restCheckoutDataTransfer->getPaymentProviders()->getPaymentProviders()->getArrayCopy() ?? [];
+        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($restCheckoutDataTransfer->getAvailablePaymentMethods());
+
         foreach ($paymentProviderTransfers as $paymentProviderTransfer) {
-            $restPaymentMethodsAttributesTransfers += $this->mapPaymentProviderTransferToRestPaymentMethodAttributesTransfers($paymentProviderTransfer);
+            foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
+                $paymentSelection = $this->getPaymentSelectionByPaymentProviderAndMethodNames($paymentProviderTransfer->getName(), $paymentMethodTransfer->getMethodName());
+                if (in_array($paymentSelection, $availablePaymentMethodsList)) {
+                    $restPaymentMethodsAttributesTransfers += $this->mapPaymentProviderTransferToRestPaymentMethodAttributesTransfers($paymentProviderTransfer);
+                }
+            }
         }
 
         return $restPaymentMethodsAttributesTransfers;
@@ -80,5 +92,43 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
             ->setPaymentProviderName($paymentProviderName)
             ->setPriority($this->config->getPaymentMethodPriority()[$paymentMethodName] ?? null)
             ->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentProviderName, $paymentMethodName));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
+     *
+     * @return array
+     */
+    protected function getAvailablePaymentMethodsList(PaymentMethodsTransfer $availablePaymentMethods): array
+    {
+        $availablePaymentMethodsList = [];
+        foreach ($availablePaymentMethods->getMethods() as $paymentMethodTransfer) {
+            $availablePaymentMethodsList[] = $paymentMethodTransfer->getMethodName();
+        }
+
+        return $availablePaymentMethodsList;
+    }
+
+    /**
+     * @param string $paymentProviderName
+     * @param string $paymentMethodName
+     *
+     * @throws \Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException
+     *
+     * @return string
+     */
+    protected function getPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): string
+    {
+        $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
+
+        if (!isset($paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName])) {
+            throw new PaymentMethodNotConfiguredException(sprintf(
+                'Payment method "%s" for payment provider "%s" is not configured in PaymentsRestApiConfig::getPaymentProviderMethodToStateMachineMapping()',
+                $paymentMethodName,
+                $paymentProviderName
+            ));
+        }
+
+        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName];
     }
 }
