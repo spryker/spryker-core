@@ -12,7 +12,8 @@ var config = {
     }
 };
 
-var selectedIdSlot = 0,
+var isInitialDraw = true,
+    selectedIdSlot = 0,
     $slotTableWrapper = $('#slot-table-wrapper'),
     $slotProductsTableWrapper = $('#slot-products-table-wrapper'),
     $slotProductsTableName = $('#slot-products-table-name');
@@ -54,21 +55,10 @@ function addSlotTableDrawHandler() {
     $slotTable.on('draw', function () {
         var $rows = $(this).find('tbody > tr[role="row"]');
 
-        selectedIdSlot = getInitialSelectedIdSlot($rows);
-
-        // initial draw
-        if (selectedIdSlot === 0) {
-            var $row = $rows.first();
-
-            if ($row) {
-                $row.trigger('click');
-                $slotProductsTableWrapper.removeClass('hidden');
-            }
-
-            return;
+        if (isInitialDraw) {
+            performInitialDraw($slotTable, $rows);
         }
 
-        //redraw
         $.each($rows, function (index, row) {
             if ($slotTable.row(row).data()[config.slotTableColumnsMapping.idSlot] === selectedIdSlot) {
                 markSelectedRow($(row));
@@ -96,6 +86,9 @@ function markSelectedRow($row) {
     $row.addClass('selected');
 }
 
+/**
+ * @return {int}
+ */
 function getInitialSelectedIdSlot() {
     var selectedIdSlot = $('#selected-id-configurable-bundle-template-slot').val();
 
@@ -105,6 +98,35 @@ function getInitialSelectedIdSlot() {
 
     return 0;
 }
+
+/**
+ * @return {void}
+ */
+function performInitialDraw($slotTable, $rows) {
+    isInitialDraw = false;
+    $slotProductsTableWrapper.removeClass('hidden');
+
+    if (!$rows.length) {
+        return;
+    }
+
+    var initialSelectedIdSlot = getInitialSelectedIdSlot();
+
+    if (initialSelectedIdSlot === 0) {
+        $rows.first().click();
+
+        return;
+    }
+
+    $.each($rows, function (index, row) {
+        if ($slotTable.row(row).data()[config.slotTableColumnsMapping.idSlot] === initialSelectedIdSlot) {
+            $(row).click();
+
+            return;
+        }
+    });
+}
+
 
 /**
  * Open public methods
