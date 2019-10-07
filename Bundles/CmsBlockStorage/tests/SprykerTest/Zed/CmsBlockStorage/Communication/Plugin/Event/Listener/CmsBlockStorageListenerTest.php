@@ -181,7 +181,6 @@ class CmsBlockStorageListenerTest extends Unit
     protected function assertCmsBlockCategoryStorage(int $beforeCount): void
     {
         $count = SpyCmsBlockStorageQuery::create()->count();
-        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $count);
 
         $cmsBlockStorage = SpyCmsBlockStorageQuery::create()
             ->filterByLocale('en_US')
