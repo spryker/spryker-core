@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer

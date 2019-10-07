@@ -16,6 +16,7 @@ use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerAccess

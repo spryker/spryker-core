@@ -13,6 +13,7 @@ use Spryker\Glue\Kernel\BundleConfigResolverAwareTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel

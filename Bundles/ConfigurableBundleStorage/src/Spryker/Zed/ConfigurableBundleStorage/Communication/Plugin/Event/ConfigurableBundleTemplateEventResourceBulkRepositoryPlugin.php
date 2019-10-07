@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfigurableBundleTemplateEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ConfigurableBundleTemplateEventResourceBulkRepositoryPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class ConfigurableBundleTemplateEventResourceBulkRepositoryPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ConfigurableBundleTemplateEventResourceBulkRepositoryPlugin extends Abstra
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

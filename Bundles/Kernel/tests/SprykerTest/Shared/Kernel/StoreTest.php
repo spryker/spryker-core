@@ -12,6 +12,7 @@ use Spryker\Shared\Kernel\Store;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Kernel

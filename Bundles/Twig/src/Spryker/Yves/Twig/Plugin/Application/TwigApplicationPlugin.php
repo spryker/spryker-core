@@ -19,14 +19,14 @@ use Twig\Environment;
  */
 class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    protected const SERVICE_TWIG = 'twig';
+    public const SERVICE_TWIG = 'twig';
 
-    protected const SERVICE_DEBUG = 'debug';
+    public const SERVICE_DEBUG = 'debug';
 
-    protected const SERVICE_CHARSET = 'charset';
+    public const SERVICE_CHARSET = 'charset';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,8 +49,9 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected function addTwigService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_TWIG, function (ContainerInterface $container) {
-            $twigOptions = $this->getTwigOptions($container);
+            /** @var \Twig\Loader\LoaderInterface $twigLoader */
             $twigLoader = $this->getTwigChainLoader();
+            $twigOptions = $this->getTwigOptions($container);
             $twig = new Environment($twigLoader, $twigOptions);
             $twig->addGlobal('app', $container);
 

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
@@ -86,6 +87,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
+        $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
+
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
             ->setPaymentProviders($this->getPaymentProviders())
@@ -104,7 +107,16 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      */
     protected function getShipmentMethodsTransfer(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
     {
-        return $this->shipmentFacade->getAvailableMethods($quoteTransfer);
+        $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer|false $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = current($shipmentMethodsCollectionTransfer->getShipmentMethods());
+
+        if ($shipmentMethodsTransfer === false) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        return $shipmentMethodsTransfer;
     }
 
     /**
@@ -136,5 +148,23 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function addItemLevelShipmentTransfer(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment()) {
+                continue;
+            }
+
+            $itemTransfer->setShipment($quoteTransfer->getShipment() ?? new ShipmentTransfer());
+        }
+
+        return $quoteTransfer;
     }
 }

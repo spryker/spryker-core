@@ -67,6 +67,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
 
             $priceProductScheduleConcreteTable = $this->viewExpanderTableFactory->createPriceProductScheduleConcreteTable(
                 $viewData['idProduct'],
+                $viewData['idProductAbstract'],
                 $priceTypeTransfer->getIdPriceType()
             );
 
@@ -112,7 +113,7 @@ class ConcreteProductViewExpander implements ConcreteProductViewExpanderInterfac
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
      *
-     * @return \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
     protected function setActiveTabName(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {

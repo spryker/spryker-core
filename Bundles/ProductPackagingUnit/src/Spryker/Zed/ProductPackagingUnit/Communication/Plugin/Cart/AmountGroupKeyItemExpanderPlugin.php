@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AmountGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales

@@ -13,6 +13,7 @@ use Spryker\Yves\Twig\TwigDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig

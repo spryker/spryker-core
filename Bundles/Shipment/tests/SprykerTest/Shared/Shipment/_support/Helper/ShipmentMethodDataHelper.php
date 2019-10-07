@@ -65,7 +65,8 @@ class ShipmentMethodDataHelper extends Module
         }
         $shipmentMethodTransfer->setPrices($moneyValueTransferCollection);
 
-        $this->getShipmentFacade()->createMethod($shipmentMethodTransfer);
+        $idShipmentMethod = $this->getShipmentFacade()->createMethod($shipmentMethodTransfer);
+        $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
 
         return $shipmentMethodTransfer;
     }

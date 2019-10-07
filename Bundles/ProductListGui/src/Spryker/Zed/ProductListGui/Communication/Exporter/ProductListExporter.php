@@ -82,7 +82,7 @@ class ProductListExporter implements ProductListExporterInterface
     /**
      * @param array $productsSku
      *
-     * @return array $skus
+     * @return array
      */
     protected function prepareDataForExport(array $productsSku): array
     {

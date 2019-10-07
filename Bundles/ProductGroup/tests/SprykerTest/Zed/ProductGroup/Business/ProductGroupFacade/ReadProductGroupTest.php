@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroup

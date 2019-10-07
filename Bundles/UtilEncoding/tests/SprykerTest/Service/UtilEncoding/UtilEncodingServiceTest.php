@@ -13,6 +13,7 @@ use Spryker\Service\UtilEncoding\UtilEncodingService;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilEncoding

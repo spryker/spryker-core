@@ -12,6 +12,7 @@ use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement

@@ -16,6 +16,7 @@ use SprykerTest\Yves\Kernel\Fixtures\ConcreteFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Kernel

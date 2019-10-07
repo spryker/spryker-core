@@ -23,6 +23,7 @@ use Spryker\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Newsletter

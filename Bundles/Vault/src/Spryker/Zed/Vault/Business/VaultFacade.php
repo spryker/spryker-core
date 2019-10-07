@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class VaultFacade extends AbstractFacade implements VaultFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class VaultFacade extends AbstractFacade implements VaultFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

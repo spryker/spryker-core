@@ -13,6 +13,7 @@ use Spryker\Glue\Testify\OpenApi3\Reader\YamlFileReader;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Testify

@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AvailabilityStorageFacade extends AbstractFacade implements AvailabilityStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,7 +29,7 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

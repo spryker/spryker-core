@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfigurableBundleTemplateDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Imports Configurable Bundle Templates data.
      *
      * @api
@@ -37,7 +37,7 @@ class ConfigurableBundleTemplateDataImportPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

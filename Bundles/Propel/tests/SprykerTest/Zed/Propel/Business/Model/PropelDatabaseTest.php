@@ -15,6 +15,7 @@ use Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel

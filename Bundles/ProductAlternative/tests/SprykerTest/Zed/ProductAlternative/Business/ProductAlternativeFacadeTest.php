@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAlternative

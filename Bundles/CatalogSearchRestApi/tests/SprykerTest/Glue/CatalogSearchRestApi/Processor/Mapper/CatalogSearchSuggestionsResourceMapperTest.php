@@ -17,6 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group CatalogSearchRestApi
@@ -29,7 +30,9 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
 {
     protected const REQUESTED_CURRENCY = 'CHF';
 
-    /** @deprecated Will be removed in next major release. */
+    /**
+     * @deprecated Will be removed in next major release.
+     */
     protected const KEY_PRODUCTS = 'products';
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 

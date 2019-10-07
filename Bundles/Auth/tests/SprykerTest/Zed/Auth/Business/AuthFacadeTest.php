@@ -16,6 +16,7 @@ use Spryker\Zed\Auth\Business\AuthFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Functional
  * @group Spryker
  * @group Zed

@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyRoleFormExpanderPlugin extends AbstractPlugin implements CompanyUserFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

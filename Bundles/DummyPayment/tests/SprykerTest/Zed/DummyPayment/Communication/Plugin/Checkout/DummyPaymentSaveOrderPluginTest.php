@@ -14,6 +14,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentSaveOrder
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment

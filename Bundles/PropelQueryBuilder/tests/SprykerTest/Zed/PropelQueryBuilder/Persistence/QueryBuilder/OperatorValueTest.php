@@ -26,6 +26,7 @@ use Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\NotIn;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PropelQueryBuilder

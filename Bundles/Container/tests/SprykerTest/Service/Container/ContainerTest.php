@@ -12,9 +12,12 @@ use Spryker\Service\Container\Container;
 use Spryker\Service\Container\Exception\ContainerException;
 use Spryker\Service\Container\Exception\FrozenServiceException;
 use Spryker\Service\Container\Exception\NotFoundException;
+use stdClass;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Container
@@ -121,6 +124,34 @@ class ContainerTest extends Unit
     /**
      * @return void
      */
+    public function testGetReturnsSameServiceInstanceOnConsecutiveCallsWithInvokableClass(): void
+    {
+        //Arrange
+        $container = new Container();
+        $container->set(static::SERVICE, function () {
+            return new class {
+                /**
+                 * @param \Symfony\Component\HttpKernel\Event\RequestEvent $requestEvent
+                 *
+                 * @return void
+                 */
+                public function __invoke(RequestEvent $requestEvent): void
+                {
+                }
+            };
+        });
+
+        //Act
+        $service = $container->get(static::SERVICE);
+        $service2 = $container->get(static::SERVICE);
+
+        //Assert
+        $this->assertSame($service, $service2);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetReturnsAlwaysANewServiceInstanceWhenServiceMarkedAsFactory(): void
     {
         //Arrange
@@ -206,7 +237,7 @@ class ContainerTest extends Unit
         $this->expectException(ContainerException::class);
 
         $container = new Container();
-        $container->factory('');
+        $container->factory(new stdClass());
     }
 
     /**
@@ -217,7 +248,7 @@ class ContainerTest extends Unit
         $this->expectException(ContainerException::class);
 
         $container = new Container();
-        $container->protect('');
+        $container->protect(new stdClass());
     }
 
     /**

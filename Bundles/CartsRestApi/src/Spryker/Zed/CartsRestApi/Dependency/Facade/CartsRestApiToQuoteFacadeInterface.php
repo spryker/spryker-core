@@ -27,4 +27,11 @@ interface CartsRestApiToQuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
     public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

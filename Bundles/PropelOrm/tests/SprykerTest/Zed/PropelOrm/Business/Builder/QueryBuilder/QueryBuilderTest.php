@@ -22,6 +22,7 @@ use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PropelOrm

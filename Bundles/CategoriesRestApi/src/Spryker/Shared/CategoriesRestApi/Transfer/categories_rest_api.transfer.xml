@@ -33,18 +33,18 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int" />
-        <property name="code" type="string" />
-        <property name="detail" type="string" />
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
     </transfer>
 
     <transfer name="UrlStorage">
-        <property name="fkResourceCategorynode" type="int" />
+        <property name="fkResourceCategorynode" type="int"/>
     </transfer>
 
     <transfer name="RestUrlResolverAttributes">
-        <property name="entityType" type="string" />
-        <property name="entityId" type="string" />
+        <property name="entityType" type="string"/>
+        <property name="entityId" type="string"/>
     </transfer>
 
 </transfers>
