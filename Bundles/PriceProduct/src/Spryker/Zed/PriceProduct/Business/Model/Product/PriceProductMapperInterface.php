@@ -31,7 +31,7 @@ interface PriceProductMapperInterface
     public function getNetPriceModeIdentifier();
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
