@@ -124,15 +124,13 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param \Spryker\DecimalObject\Decimal $decrementBy
      *
      * @return void
      */
-    public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
+    public function decrementStockProduct($sku, $stockType, Decimal $decrementBy): void
     {
         $this->getFactory()->createWriterModel()->decrementStock($sku, $stockType, $decrementBy);
     }
@@ -142,15 +140,13 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param \Spryker\DecimalObject\Decimal $incrementBy
      *
      * @return void
      */
-    public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
+    public function incrementStockProduct($sku, $stockType, Decimal $incrementBy): void
     {
         $this->getFactory()->createWriterModel()->incrementStock($sku, $stockType, $incrementBy);
     }
