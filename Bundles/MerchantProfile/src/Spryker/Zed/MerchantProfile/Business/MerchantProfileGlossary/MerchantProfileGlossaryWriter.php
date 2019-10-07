@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary;
 
-use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantProfileGlossaryAttributeValuesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
@@ -55,16 +54,16 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
      */
     public function saveMerchantProfileGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        if ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes() !== null) {
-            $localeTransfers = $this->localeFacade->getLocaleCollection();
+        if (empty($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes())) {
+            return $merchantProfileTransfer;
+        }
 
-            foreach ($localeTransfers as $localeTransfer) {
-                $this->saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
-                    $localeTransfer,
-                    $merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes(),
-                    $merchantProfileTransfer
-                );
-            }
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+        foreach ($localeTransfers as $localeTransfer) {
+            $this->saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
+                $localeTransfer,
+                $merchantProfileTransfer
+            );
         }
 
         return $merchantProfileTransfer;
@@ -72,17 +71,15 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer[] $merchantProfileLocalizedGlossaryAttributesTransfers
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     protected function saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
         LocaleTransfer $localeTransfer,
-        ArrayObject $merchantProfileLocalizedGlossaryAttributesTransfers,
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
-        foreach ($merchantProfileLocalizedGlossaryAttributesTransfers as $merchantProfileLocalizedGlossaryAttributesTransfer) {
+        foreach ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes() as $merchantProfileLocalizedGlossaryAttributesTransfer) {
             if ((int)$merchantProfileLocalizedGlossaryAttributesTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
                 $merchantProfileTransfer = $this->saveMerchantProfileGlossaryAttributesByProvidedLocale(
                     $localeTransfer,
@@ -120,10 +117,11 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
 
             if (empty($glossaryAttributeValue)) {
                 $this->deleteGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey);
-            } else {
-                $this->saveGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey, $glossaryAttributeValue);
-                $merchantProfileGlossaryKeys[$merchantProfileGlossaryAttributeFieldName] = $merchantProfileGlossaryKey;
+                continue;
             }
+
+            $this->saveGlossaryTranslation($localeTransfer, $merchantProfileGlossaryKey, $glossaryAttributeValue);
+            $merchantProfileGlossaryKeys[$merchantProfileGlossaryAttributeFieldName] = $merchantProfileGlossaryKey;
         }
         $merchantProfileTransfer->fromArray($merchantProfileGlossaryKeys);
 
@@ -142,24 +140,22 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         string $merchantProfileGlossaryKeyFieldName,
         int $fkMerchant
     ): string {
-        return !empty($merchantProfileData[$merchantProfileGlossaryKeyFieldName])
-            ? $merchantProfileData[$merchantProfileGlossaryKeyFieldName]
-            : $this->merchantProfileGlossaryKeyBuilder->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName);
+        return empty($merchantProfileData[$merchantProfileGlossaryKeyFieldName])
+            ? $this->merchantProfileGlossaryKeyBuilder->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName)
+            : $merchantProfileData[$merchantProfileGlossaryKeyFieldName];
     }
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $merchantProfileGlossaryAttributeKey
      *
-     * @return bool
+     * @return void
      */
-    protected function deleteGlossaryTranslation(LocaleTransfer $localeTransfer, string $merchantProfileGlossaryAttributeKey): bool
+    protected function deleteGlossaryTranslation(LocaleTransfer $localeTransfer, string $merchantProfileGlossaryAttributeKey): void
     {
         if ($this->glossaryFacade->hasTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer)) {
-            return $this->glossaryFacade->deleteTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer);
+            $this->glossaryFacade->deleteTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer);
         }
-
-        return false;
     }
 
     /**

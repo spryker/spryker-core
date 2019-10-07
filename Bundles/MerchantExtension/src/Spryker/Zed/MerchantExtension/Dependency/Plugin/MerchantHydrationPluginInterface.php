@@ -13,7 +13,7 @@ interface MerchantHydrationPluginInterface
 {
     /**
      * Specification:
-     * - Hydrates a merchant fields
+     * - Hydrates a merchant data.
      *
      * @api
      *

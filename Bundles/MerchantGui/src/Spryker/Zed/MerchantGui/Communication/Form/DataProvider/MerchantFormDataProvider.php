@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantFormDataProvider
@@ -40,6 +41,7 @@ class MerchantFormDataProvider
     {
         return [
             'data_class' => MerchantTransfer::class,
+            MerchantForm::OPTION_CURRENT_ID => null,
         ];
     }
 }

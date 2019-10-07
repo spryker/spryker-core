@@ -152,8 +152,7 @@ class MerchantProfileFormDataProvider
         if ($this->glossaryFacade->hasTranslation($key, $localeTransfer)) {
             $translationTransfer = $this->glossaryFacade->getTranslation($key, $localeTransfer);
 
-            return $translationTransfer->getIsActive()
-                ? $translationTransfer->getValue() : null;
+            return $translationTransfer->getIsActive() ? $translationTransfer->getValue() : null;
         }
 
         return null;

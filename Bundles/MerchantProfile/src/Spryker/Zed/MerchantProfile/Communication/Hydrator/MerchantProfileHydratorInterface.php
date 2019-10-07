@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
+namespace Spryker\Zed\MerchantProfile\Communication\Hydrator;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 

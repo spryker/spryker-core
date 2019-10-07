@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,12 +21,32 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
+        $merchantProfileEntity = $this->getFactory()
+            ->createPropelMerchantProfileMapper()
+            ->mapMerchantProfileTransferToMerchantProfileEntity($merchantProfileTransfer, new SpyMerchantProfile());
+
+        $merchantProfileEntity->save();
+
+        $merchantProfileTransfer = $this->getFactory()
+            ->createPropelMerchantProfileMapper()
+            ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, $merchantProfileTransfer);
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         $merchantProfileEntity = $this->getFactory()
             ->createMerchantProfileQuery()
             ->filterByIdMerchantProfile($merchantProfileTransfer->getIdMerchantProfile())
-            ->findOneOrCreate();
+            ->findOne();
 
         $merchantProfileEntity = $this->getFactory()
             ->createPropelMerchantProfileMapper()

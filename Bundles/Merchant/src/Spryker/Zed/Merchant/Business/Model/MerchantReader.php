@@ -21,20 +21,20 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantRepository;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface
+     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[]
      */
-    protected $merchantPluginExecutor;
+    protected $merchantHydrationPlugins;
 
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
-     * @param \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface $merchantPluginExecutor
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[] $merchantHydrationPlugins
      */
     public function __construct(
         MerchantRepositoryInterface $merchantRepository,
-        MerchantPluginExecutorInterface $merchantPluginExecutor
+        array $merchantHydrationPlugins
     ) {
         $this->merchantRepository = $merchantRepository;
-        $this->merchantPluginExecutor = $merchantPluginExecutor;
+        $this->merchantHydrationPlugins = $merchantHydrationPlugins;
     }
 
     /**
@@ -62,7 +62,7 @@ class MerchantReader implements MerchantReaderInterface
             return null;
         }
 
-        return $this->merchantPluginExecutor->executeMerchantHydratePlugins($merchantTransfer);
+        return $this->executeMerchantHydrationPlugins($merchantTransfer);
     }
 
     /**
@@ -74,11 +74,25 @@ class MerchantReader implements MerchantReaderInterface
     {
         $merchantTransfers = new ArrayObject();
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $merchantTransfer = $this->merchantPluginExecutor->executeMerchantHydratePlugins($merchantTransfer);
+            $merchantTransfer = $this->executeMerchantHydrationPlugins($merchantTransfer);
             $merchantTransfers->append($merchantTransfer);
         }
         $merchantCollectionTransfer->setMerchants($merchantTransfers);
 
         return $merchantCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function executeMerchantHydrationPlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
+        foreach ($this->merchantHydrationPlugins as $merchantHydratePlugin) {
+            $merchantTransfer = $merchantHydratePlugin->hydrate($merchantTransfer);
+        }
+
+        return $merchantTransfer;
     }
 }

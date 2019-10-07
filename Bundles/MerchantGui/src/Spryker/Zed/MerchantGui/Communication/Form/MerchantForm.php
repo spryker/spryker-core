@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
@@ -28,6 +29,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class MerchantForm extends AbstractType
 {
+    public const OPTION_CURRENT_ID = 'current_id';
+
     protected const FIELD_ID_MERCHANT = 'id_merchant';
     protected const FIELD_NAME = 'name';
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
@@ -36,6 +39,18 @@ class MerchantForm extends AbstractType
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setRequired(static::OPTION_CURRENT_ID);
+    }
 
     /**
      * @return string
@@ -56,7 +71,7 @@ class MerchantForm extends AbstractType
         $this
             ->addIdMerchantField($builder)
             ->addNameField($builder)
-            ->addEmailField($builder)
+            ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
             ->addAddressCollectionSubform($builder);
 
@@ -209,11 +224,11 @@ class MerchantForm extends AbstractType
      */
     protected function getExistingEmailValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
     {
-        return function ($email, ExecutionContextInterface $context) use ($merchantFacade) {
+        return function ($email, ExecutionContextInterface $context) use ($merchantFacade, $currentId) {
             $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
             $merchantCriteriaFilterTransfer->setEmail($email);
             $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
-            if ($merchantTransfer !== null) {
+            if ($merchantTransfer !== null && ($currentId === null || $merchantTransfer->getIdMerchant() !== $currentId)) {
                 $context->addViolation('Email is already used.');
             }
         };

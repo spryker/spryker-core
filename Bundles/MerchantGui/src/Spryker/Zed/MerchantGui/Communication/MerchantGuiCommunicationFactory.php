@@ -14,10 +14,7 @@ use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantAddressFormD
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantForm;
-use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
-use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutor;
-use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
@@ -37,7 +34,10 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
         return new MerchantTable(
             $this->getPropelMerchantQuery(),
             $this->getMerchantFacade(),
-            $this->createMerchantTablePluginExecutor()
+            $this->getMerchantTableActionExpanderPlugins(),
+            $this->getMerchantTableHeaderExpanderPlugins(),
+            $this->getMerchantTableDataExpanderPlugins(),
+            $this->getMerchantTableConfigExpanderPlugins()
         );
     }
 
@@ -50,17 +50,6 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMerchantForm(?MerchantTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(MerchantForm::class, $data, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function getMerchantUpdateForm(?MerchantTransfer $merchantTransfer = null, array $options = []): FormInterface
-    {
-        return $this->getFormFactory()->create(MerchantUpdateForm::class, $merchantTransfer, $options);
     }
 
     /**
@@ -91,19 +80,6 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new MerchantAddressFormDataProvider(
             $this->getCountryFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface
-     */
-    public function createMerchantTablePluginExecutor(): MerchantTablePluginExecutorInterface
-    {
-        return new MerchantTablePluginExecutor(
-            $this->getMerchantTableActionExpanderPlugins(),
-            $this->getMerchantTableHeaderExpanderPlugins(),
-            $this->getMerchantTableDataExpanderPlugins(),
-            $this->getMerchantTableConfigExpanderPlugins()
         );
     }
 

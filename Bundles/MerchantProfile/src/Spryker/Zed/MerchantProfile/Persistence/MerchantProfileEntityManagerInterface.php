@@ -16,5 +16,12 @@ interface MerchantProfileEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+    public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
 }

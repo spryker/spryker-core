@@ -12,9 +12,16 @@ use Generated\Shared\Transfer\MerchantProfileTransfer;
 interface MerchantProfileWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantTransfer): MerchantProfileTransfer;
+    public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
 }

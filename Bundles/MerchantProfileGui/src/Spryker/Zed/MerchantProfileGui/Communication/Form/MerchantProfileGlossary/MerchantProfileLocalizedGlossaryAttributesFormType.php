@@ -67,7 +67,7 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addMerchantProfileGlossaryAttributeVAluesSubform(FormBuilderInterface $builder)
+    protected function addMerchantProfileGlossaryAttributeValuesSubform(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES, MerchantProfileGlossaryAttributeValuesFormType::class, [
             'label' => false,

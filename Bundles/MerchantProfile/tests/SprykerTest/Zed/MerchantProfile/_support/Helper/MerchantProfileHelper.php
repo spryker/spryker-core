@@ -22,24 +22,23 @@ class MerchantProfileHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function haveMerchantProfile(?MerchantTransfer $merchantTransfer = null): MerchantProfileTransfer
+    public function haveMerchantProfile(MerchantTransfer $merchantTransfer, array $seedData = []): MerchantProfileTransfer
     {
-        $merchantProfileTransfer = (new MerchantProfileBuilder())->build();
+        $merchantProfileTransfer = (new MerchantProfileBuilder($seedData))->build();
         $merchantProfileTransfer->setIdMerchantProfile(null);
-        if ($merchantTransfer !== null) {
-            $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        }
+        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
 
         return $this->getLocator()
             ->merchantProfile()
             ->facade()
-            ->saveMerchantProfile($merchantProfileTransfer);
+            ->createMerchantProfile($merchantProfileTransfer);
     }
 
     /**

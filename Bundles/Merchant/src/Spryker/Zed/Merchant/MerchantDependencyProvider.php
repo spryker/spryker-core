@@ -18,7 +18,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
     public const PLUGINS_MERCHANT_POST_SAVE = 'PLUGINS_MERCHANT_POST_SAVE';
-    public const PLUGINS_MERCHANT_HYDRATE = 'PLUGINS_MERCHANT_HYDRATE';
+    public const PLUGINS_MERCHANT_HYDRATION = 'PLUGINS_MERCHANT_HYDRATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,7 +29,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUtilTextService($container);
         $container = $this->addMerchantPostSavePlugins($container);
-        $container = $this->addMerchantHydratePlugins($container);
+        $container = $this->addMerchantHydrationPlugins($container);
 
         return $container;
     }
@@ -41,9 +41,9 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new MerchantToUtilTextServiceBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_POST_SAVE] = function () {
+        $container->set(static::PLUGINS_MERCHANT_POST_SAVE, function () {
             return $this->getMerchantPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -67,11 +67,11 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantHydratePlugins(Container $container): Container
+    protected function addMerchantHydrationPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_HYDRATE] = function () {
-            return $this->getMerchantHydratePlugins();
-        };
+        $container->set(static::PLUGINS_MERCHANT_HYDRATION, function () {
+            return $this->getMerchantHydrationPlugins();
+        });
 
         return $container;
     }
@@ -87,7 +87,7 @@ class MerchantDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[]
      */
-    protected function getMerchantHydratePlugins(): array
+    protected function getMerchantHydrationPlugins(): array
     {
         return [];
     }
