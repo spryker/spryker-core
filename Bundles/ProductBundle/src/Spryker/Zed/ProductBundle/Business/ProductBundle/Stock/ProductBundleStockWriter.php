@@ -312,7 +312,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     protected function removeBundleStock(ProductConcreteTransfer $productConcreteTransfer)
     {
         foreach ($this->findProductStocks($productConcreteTransfer->getIdProductConcrete()) as $stockProductEntity) {
-            $stockProductEntity->setQuantity(0);
+            $stockProductEntity->setQuantity(new Decimal(0));
             $stockProductEntity->setIsNeverOutOfStock(false);
             $stockProductEntity->save();
 
@@ -343,7 +343,8 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             if (isset($bundleTotalStockPerWarehouse[$productStockEntity->getFkStock()])) {
                 continue;
             }
-            $productStockEntity->setQuantity(0);
+
+            $productStockEntity->setQuantity(new Decimal(0));
             $productStockEntity->setIsNeverOutOfStock(false);
             $productStockEntity->save();
         }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -73,16 +74,16 @@ class BasePreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
     protected function getUnavailableBundleItems(
-        iterable $itemTransfers,
-        iterable $bundledProducts,
+        ArrayObject $itemTransfers,
+        array $bundledProducts,
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
