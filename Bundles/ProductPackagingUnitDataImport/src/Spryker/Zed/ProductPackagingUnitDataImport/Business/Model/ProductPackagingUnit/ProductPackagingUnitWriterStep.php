@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -21,6 +22,7 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    protected const AMOUNT_INTERVAL_DEFAULT = 1;
     protected const HEAP_LIMIT = 500;
     protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
 
@@ -114,16 +116,11 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         $isVariable = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
         $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = $isVariable;
 
-        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT];
-        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN];
-        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX];
-        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = (int)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL];
-
-        if ($isVariable && $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] === 0) {
-            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = 1;
+        if ($isVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL]))->isZero()) {
+            $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = static::AMOUNT_INTERVAL_DEFAULT;
         }
 
-        if ($isVariable && $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] === 0) {
+        if ($isVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN]))->isZero()) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL];
         }
 
