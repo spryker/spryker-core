@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
@@ -15,6 +16,7 @@ use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
 use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
+use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
@@ -101,6 +103,22 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentCarrierMapper(): ShipmentCarrierMapper
     {
         return new ShipmentCarrierMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable
+     */
+    public function createShipmentMethodTable(): ShipmentMethodTable
+    {
+        return new ShipmentMethodTable($this->getShipmentMethodQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    public function getShipmentMethodQuery(): SpyShipmentMethodQuery
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::PROPEL_QUERY_SHIPMENT_METHOD);
     }
 
     /**

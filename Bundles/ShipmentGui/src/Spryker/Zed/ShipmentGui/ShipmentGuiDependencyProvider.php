@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui;
 
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeBridge;
@@ -25,6 +26,8 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
+    public const PROPEL_QUERY_SHIPMENT_METHOD = 'PROPEL_QUERY_SHIPMENT_METHOD';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -36,6 +39,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addShipmentService($container);
+        $container = $this->addShipmentMethodQuery($container);
 
         return $container;
     }
@@ -91,6 +95,20 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new ShipmentGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentMethodQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SHIPMENT_METHOD, function () {
+            return SpyShipmentMethodQuery::create();
         });
 
         return $container;

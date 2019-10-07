@@ -12,7 +12,6 @@ use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
 use Spryker\Zed\Shipment\Communication\Form\MethodForm;
-use Spryker\Zed\Shipment\Communication\Table\MethodTable;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -24,16 +23,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\Shipment\Communication\Table\MethodTable
-     */
-    public function createMethodTable()
-    {
-        $methodQuery = $this->getQueryContainer()->queryMethods();
-
-        return new MethodTable($methodQuery, $this->getMoneyFacade(), $this->getStoreFacade());
-    }
-
     /**
      * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
      */
@@ -81,14 +70,6 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade()
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface
-     */
-    public function getStoreFacade()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_STORE);
     }
 
     /**

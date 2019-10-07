@@ -25,4 +25,35 @@
             </order-list>
         </pages>
     </sales>
+
+    <administration>
+        <label>Administration</label>
+        <title>Administration</title>
+        <icon>fa-angle-double-right</icon>
+        <pages>
+            <shipments>
+                <label>Shipments</label>
+                <title>Shipments</title>
+                <pages>
+                    <shipment-carrier-create>
+                        <label>Create new Shipment Carrier</label>
+                        <title>Create new Shipment Carrier</title>
+                        <bundle>shipment-gui</bundle>
+                        <controller>create-carrier</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </shipment-carrier-create>
+
+                    <shipment-method>
+                        <label>Delivery Methods</label>
+                        <title>Delivery Methods</title>
+                        <bundle>shipment-gui</bundle>
+                        <controller>shipment-method</controller>
+                        <action>index</action>
+                        <icon>fa fa-angle-right</icon>
+                    </shipment-method>
+                </pages>
+            </shipments>
+        </pages>
+    </administration>
 </config>

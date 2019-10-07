@@ -24,6 +24,8 @@ use SprykerTest\Zed\Shipment\ShipmentCommunicationTester;
 class ShipmentMethodEditCest
 {
     /**
+     * @skip todo: refactor it in the next story
+     *
      * @param \SprykerTest\Zed\Shipment\ShipmentCommunicationTester $i
      *
      * @return void

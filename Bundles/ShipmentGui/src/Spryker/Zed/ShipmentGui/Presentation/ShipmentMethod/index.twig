@@ -1,0 +1,17 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Delivery Methods' %}
+{% block section_title %}{{ widget_title | trans }}{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: widget_title | trans } %}
+        {% block widget_header_content %}
+            {{ createActionButton('/shipment-gui/create-carrier/index', 'Add new Carrier Company' | trans) }}
+            {{ createActionButton('/shipment/method/add', 'Add new Shipment Method' | trans) }}
+        {% endblock %}
+
+        {% block widget_content %}
+            {{ methodTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
