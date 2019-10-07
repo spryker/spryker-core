@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\CmsSlot\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 
 /**
  * Auto-generated group annotations
@@ -186,11 +188,15 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetFilteredCmsSlotTransfersReturnsCmsSlotTransfers(): void
+    public function testGetFilteredCmsSlotsReturnsCmsSlotTransfers(): void
     {
-        $this->tester->haveCmsSlotInDb([]);
+        $this->tester->haveCmsSlotInDb();
 
-        $cmsSlotTransfers = $this->tester->getFacade()->getFilteredCmsSlotTransfers($this->tester->getFilterTransfer());
+        $cmsSlotTransfers = $this->tester->getFacade()->getFilteredCmsSlots($this->tester->getFilterTransfer([
+            FilterTransfer::LIMIT => 10,
+            FilterTransfer::OFFSET => 0,
+            FilterTransfer::ORDER_BY => SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
+        ]));
 
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
             $this->assertInstanceOf(CmsSlotTransfer::class, $cmsSlotTransfer);
@@ -200,11 +206,11 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsSlotTransfersByCmsSlotIdsReturnsCmsSlotTransfersWithCorrectData(): void
+    public function testGetCmsSlotsByCmsSlotIdsReturnsCmsSlotTransfersWithCorrectData(): void
     {
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([CmsSlotTransfer::IS_ACTIVE => true]);
 
-        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotTransfersByCmsSlotIds(
+        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCmsSlotIds(
             [$cmsSlotTransfer->getIdCmsSlot()]
         )[0];
 

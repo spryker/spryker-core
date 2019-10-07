@@ -19,9 +19,9 @@ interface CmsSlotStorageEntityManagerInterface
     public function saveCmsSlotStorage(CmsSlotStorageTransfer $cmsSlotStorageTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer $cmsSlotStorageTransfer
+     * @param int $idCmsSlotStorage
      *
      * @return void
      */
-    public function deleteCmsSlotStorage(CmsSlotStorageTransfer $cmsSlotStorageTransfer): void;
+    public function deleteCmsSlotStorageById(int $idCmsSlotStorage): void;
 }

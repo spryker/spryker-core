@@ -24,12 +24,12 @@ interface CmsSlotRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlotTransfers(FilterTransfer $filterTransfer): array;
+    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array;
 
     /**
      * @param int[] $cmsSlotIds
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotTransfersByCmsSlotIds(array $cmsSlotIds): array;
+    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array;
 }

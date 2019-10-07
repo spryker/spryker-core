@@ -1,7 +1,7 @@
 # CmsSlotStorage Module
 [![Build Status](https://travis-ci.org/spryker/cms-slot-storage.svg)](https://travis-ci.org/spryker/cms-slot-storage)
 
-{{ADD DESCRIPTION HERE}}
+Manages storage for CMS slot entities.
 
 ## Installation
 

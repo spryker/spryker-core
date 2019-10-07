@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotStorage\Persistence\Mapper;
+namespace Spryker\Zed\CmsSlotStorage\Business\Mapper;
 
 use Generated\Shared\Transfer\CmsSlotStorageTransfer;
-use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage;
+use Generated\Shared\Transfer\CmsSlotTransfer;
 
 interface CmsSlotStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer $cmsSlotStorageTransfer
-     * @param \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage $cmsSlotStorageEntity
+     * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
-     * @return \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage
+     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
      */
-    public function mapCmsSlotStorageTransferToEntity(
+    public function mapCmsSlotTransferToCmsSlotStorageTransfer(
         CmsSlotStorageTransfer $cmsSlotStorageTransfer,
-        SpyCmsSlotStorage $cmsSlotStorageEntity
-    ): SpyCmsSlotStorage;
+        CmsSlotTransfer $cmsSlotTransfer
+    ): CmsSlotStorageTransfer;
 }

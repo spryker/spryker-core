@@ -29,9 +29,9 @@ class CmsSlotStorageToCmsSlotFacadeBridge implements CmsSlotStorageToCmsSlotFaca
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlotTransfers(FilterTransfer $filterTransfer): array
+    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array
     {
-        return $this->cmsSlotFacade->getFilteredCmsSlotTransfers($filterTransfer);
+        return $this->cmsSlotFacade->getFilteredCmsSlots($filterTransfer);
     }
 
     /**
@@ -39,8 +39,8 @@ class CmsSlotStorageToCmsSlotFacadeBridge implements CmsSlotStorageToCmsSlotFaca
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotTransfersByCmsSlotIds(array $cmsSlotIds): array
+    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array
     {
-        return $this->cmsSlotFacade->getCmsSlotTransfersByCmsSlotIds($cmsSlotIds);
+        return $this->cmsSlotFacade->getCmsSlotsByCmsSlotIds($cmsSlotIds);
     }
 }

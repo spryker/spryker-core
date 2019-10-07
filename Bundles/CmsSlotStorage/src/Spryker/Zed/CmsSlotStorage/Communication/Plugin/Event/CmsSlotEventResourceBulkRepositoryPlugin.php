@@ -47,7 +47,7 @@ class CmsSlotEventResourceBulkRepositoryPlugin extends AbstractPlugin implements
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFactory()->getCmsSlotFacade()->getFilteredCmsSlotTransfers($filterTransfer);
+        return $this->getFactory()->getCmsSlotFacade()->getFilteredCmsSlots($filterTransfer);
     }
 
     /**

@@ -16,7 +16,7 @@ interface CmsSlotFacadeInterface
 {
     /**
      * Specification:
-     * - Validates cms slot transfer.
+     * - Validates CMS slot transfer.
      * - Returns ValidationResponseTransfer with status and messages in case of fail.
      *
      * @api
@@ -29,7 +29,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Validates cms slot template transfer.
+     * - Validates CMS slot template transfer.
      * - Returns ValidationResponseTransfer with status and messages in case of fail.
      *
      * @api
@@ -42,7 +42,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Activates cms slot by id.
+     * - Activates CMS slot by id.
      *
      * @api
      *
@@ -54,7 +54,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Deactivates cms slot by id.
+     * - Deactivates CMS slot by id.
      *
      * @api
      *
@@ -66,7 +66,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves cms slot transfers according to given offset and limit.
+     * - Retrieves CMS slots according to given offset and limit.
      *
      * @api
      *
@@ -74,11 +74,11 @@ interface CmsSlotFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlotTransfers(FilterTransfer $filterTransfer): array;
+    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array;
 
     /**
      * Specification:
-     * - Retrieves cms slot transfers according to given cms slot ids.
+     * - Retrieves CMS slots according to given CMS slot ids.
      *
      * @api
      *
@@ -86,5 +86,5 @@ interface CmsSlotFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotTransfersByCmsSlotIds(array $cmsSlotIds): array;
+    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array;
 }

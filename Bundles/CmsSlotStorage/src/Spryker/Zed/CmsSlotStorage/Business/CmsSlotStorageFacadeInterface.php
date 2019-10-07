@@ -11,7 +11,7 @@ interface CmsSlotStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries cms slots with the given cms slot ids.
+     * - Queries CMS slots with the given CMS slot ids.
      * - Stores data as json encoded to storage table.
      * - Sends a copy of data to queue based on module config.
      *

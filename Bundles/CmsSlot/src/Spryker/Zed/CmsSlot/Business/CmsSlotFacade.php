@@ -85,9 +85,9 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlotTransfers(FilterTransfer $filterTransfer): array
+    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->getFilteredCmsSlotTransfers($filterTransfer);
+        return $this->getRepository()->getFilteredCmsSlots($filterTransfer);
     }
 
     /**
@@ -99,8 +99,8 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotTransfersByCmsSlotIds(array $cmsSlotIds): array
+    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array
     {
-        return $this->getRepository()->getCmsSlotTransfersByCmsSlotIds($cmsSlotIds);
+        return $this->getRepository()->getCmsSlotsByCmsSlotIds($cmsSlotIds);
     }
 }

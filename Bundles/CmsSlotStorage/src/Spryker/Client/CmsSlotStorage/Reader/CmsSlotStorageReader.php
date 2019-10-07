@@ -42,7 +42,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
      */
-    public function findSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer
     {
         $cmsSlotStorageData = $this->storageClient->get(
             $this->generateKey($cmsSlotKey)
@@ -52,7 +52,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
             return null;
         }
 
-        return $this->mapToCmsSlotStorage($cmsSlotStorageData);
+        return $this->mapToCmsSlotStorageTransfer($cmsSlotStorageData);
     }
 
     /**
@@ -60,7 +60,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
      */
-    protected function mapToCmsSlotStorage(array $cmsSlotStorageData): CmsSlotStorageTransfer
+    protected function mapToCmsSlotStorageTransfer(array $cmsSlotStorageData): CmsSlotStorageTransfer
     {
         return (new CmsSlotStorageTransfer())
             ->fromArray($cmsSlotStorageData, true);

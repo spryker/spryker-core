@@ -14,7 +14,7 @@ class CmsSlotStorageConstants
 {
     /**
      * Specification:
-     * - Queue name as used for processing cms slot messages.
+     * - Queue name as used for processing CMS slot messages.
      *
      * @api
      */
@@ -22,7 +22,7 @@ class CmsSlotStorageConstants
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating.
+     * - Resource name, it will be used for key generating.
      *
      * @api
      */

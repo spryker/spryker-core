@@ -13,7 +13,8 @@ interface CmsSlotStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves cms slot storage transfers according to given key.
+     * - Retrieves CmsSlotStorageTransfer by the given key.
+     * - Returns null if CMS slot is not present in the storage.
      *
      * @api
      *
@@ -21,5 +22,5 @@ interface CmsSlotStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
      */
-    public function findSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
 }

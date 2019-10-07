@@ -37,7 +37,7 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlotTransfers(FilterTransfer $filterTransfer): array
+    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array
     {
         $cmsSlotEntities = $this->buildQueryFromCriteria(
             $this->getFactory()->createCmsSlotQuery(),
@@ -54,7 +54,7 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotTransfersByCmsSlotIds(array $cmsSlotIds): array
+    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array
     {
         if (!$cmsSlotIds) {
             return [];

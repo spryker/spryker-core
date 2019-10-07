@@ -18,7 +18,7 @@ class CmsSlotStorageMapper implements CmsSlotStorageMapperInterface
      *
      * @return \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage
      */
-    public function mapCmsSlotStorageTransferToCmsSlotStorageEntity(
+    public function mapCmsSlotStorageTransferToEntity(
         CmsSlotStorageTransfer $cmsSlotStorageTransfer,
         SpyCmsSlotStorage $cmsSlotStorageEntity
     ): SpyCmsSlotStorage {

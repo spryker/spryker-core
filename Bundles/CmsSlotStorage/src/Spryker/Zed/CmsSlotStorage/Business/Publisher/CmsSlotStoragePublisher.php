@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlotStorage\Business\Publisher;
 
 use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface;
 use Spryker\Zed\CmsSlotStorage\Dependency\Facade\CmsSlotStorageToCmsSlotFacadeInterface;
 use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManagerInterface;
 use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageRepositoryInterface;
@@ -31,18 +32,26 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     protected $cmsSlotStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface
+     */
+    protected $cmsSlotStorageMapper;
+
+    /**
      * @param \Spryker\Zed\CmsSlotStorage\Dependency\Facade\CmsSlotStorageToCmsSlotFacadeInterface $cmsSlotFacade
      * @param \Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageRepositoryInterface $cmsSlotStorageRepository
      * @param \Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManagerInterface $cmsSlotStorageEntityManager
+     * @param \Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface $cmsSlotStorageMapper
      */
     public function __construct(
         CmsSlotStorageToCmsSlotFacadeInterface $cmsSlotFacade,
         CmsSlotStorageRepositoryInterface $cmsSlotStorageRepository,
-        CmsSlotStorageEntityManagerInterface $cmsSlotStorageEntityManager
+        CmsSlotStorageEntityManagerInterface $cmsSlotStorageEntityManager,
+        CmsSlotStorageMapperInterface $cmsSlotStorageMapper
     ) {
         $this->cmsSlotFacade = $cmsSlotFacade;
         $this->cmsSlotStorageRepository = $cmsSlotStorageRepository;
         $this->cmsSlotStorageEntityManager = $cmsSlotStorageEntityManager;
+        $this->cmsSlotStorageMapper = $cmsSlotStorageMapper;
     }
 
     /**
@@ -52,26 +61,26 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
      */
     public function publish(array $cmsSlotIds): void
     {
-        $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotTransfersByCmsSlotIds($cmsSlotIds);
+        $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotsByCmsSlotIds($cmsSlotIds);
         $cmsSlotStorageEntities = $this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys(
             $this->getCmsSlotKeys($cmsSlotTransfers)
         );
-        $cmsSlotStorageEntities = $this->mapCmsSlotStorageEntitiesByKeys($cmsSlotStorageEntities);
+        $cmsSlotStorageEntities = $this->getMappedCmsSlotStorageEntitiesByKeys($cmsSlotStorageEntities);
 
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
-            if ($cmsSlotTransfer->getIsActive()) {
-                $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
-                    $this->getCmsSlotStorageTransfer($cmsSlotTransfer)
-                );
+            if (!$cmsSlotTransfer->getIsActive() && isset($cmsSlotStorageEntities[$cmsSlotTransfer->getKey()])) {
+                $idCmsSlotStorage = $cmsSlotStorageEntities[$cmsSlotTransfer->getKey()]->getIdCmsSlotStorage();
+                $this->cmsSlotStorageEntityManager->deleteCmsSlotStorageById($idCmsSlotStorage);
 
                 continue;
             }
 
-            if (isset($cmsSlotStorageEntities[$cmsSlotTransfer->getKey()])) {
-                $this->cmsSlotStorageEntityManager->deleteCmsSlotStorage(
-                    $this->getCmsSlotStorageTransfer($cmsSlotTransfer)
-                );
-            }
+            $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
+                $this->cmsSlotStorageMapper->mapCmsSlotTransferToCmsSlotStorageTransfer(
+                    new CmsSlotStorageTransfer(),
+                    $cmsSlotTransfer
+                )
+            );
         }
     }
 
@@ -92,7 +101,7 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
      *
      * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
      */
-    protected function mapCmsSlotStorageEntitiesByKeys(array $cmsSlotStorageEntities): array
+    protected function getMappedCmsSlotStorageEntitiesByKeys(array $cmsSlotStorageEntities): array
     {
         $mappedCmsSlotStorageEntities = [];
         foreach ($cmsSlotStorageEntities as $cmsSlotStorageEntity) {
@@ -100,18 +109,5 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
         }
 
         return $mappedCmsSlotStorageEntities;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
-     */
-    protected function getCmsSlotStorageTransfer(CmsSlotTransfer $cmsSlotTransfer): CmsSlotStorageTransfer
-    {
-        $cmsSlotStorageTransfer = new CmsSlotStorageTransfer();
-        $cmsSlotStorageTransfer->fromArray($cmsSlotTransfer->toArray(), true);
-
-        return $cmsSlotStorageTransfer;
     }
 }

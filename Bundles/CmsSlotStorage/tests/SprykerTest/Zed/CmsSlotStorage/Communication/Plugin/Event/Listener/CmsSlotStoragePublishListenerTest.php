@@ -65,8 +65,6 @@ class CmsSlotStoragePublishListenerTest extends Unit
 
         $this->cmsSlotStorageRepository = new CmsSlotStorageRepository();
         $this->cmsSlotStorageEntityManager = new CmsSlotStorageEntityManager();
-
-        $this->clenupCmsSlotStorage();
     }
 
     /**
@@ -141,15 +139,5 @@ class CmsSlotStoragePublishListenerTest extends Unit
         $this->assertEquals($cmsSlotStorageData['name'], $cmsSlotTransfer->getName());
         $this->assertEquals($cmsSlotStorageData['description'], $cmsSlotTransfer->getDescription());
         $this->assertEquals($cmsSlotStorageData['content_provider_type'], $cmsSlotTransfer->getContentProviderType());
-    }
-
-    /**
-     * @return void
-     */
-    protected function clenupCmsSlotStorage(): void
-    {
-        $this->cmsSlotStorageEntityManager->deleteCmsSlotStorage(
-            (new CmsSlotStorageTransfer())->setKey(static::CMS_SLOT_KEY)
-        );
     }
 }

@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\CmsSlot;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\FilterBuilder;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 /**
  * Inherited Methods
@@ -35,10 +35,13 @@ class CmsSlotBusinessTester extends Actor
     /**
      * @param array $seedData
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\FilterTransfer
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    public function getFilterTransfer(array $seedData = []): AbstractTransfer
+    public function getFilterTransfer(array $seedData = []): FilterTransfer
     {
-        return (new FilterBuilder($seedData))->build();
+        /** @var \Generated\Shared\Transfer\FilterTransfer $filterTransfer */
+        $filterTransfer = (new FilterBuilder($seedData))->build();
+
+        return $filterTransfer;
     }
 }
