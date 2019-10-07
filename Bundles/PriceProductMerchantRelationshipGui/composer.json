@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-relationship": "^1.4.0",
     "spryker/product-management-extension": "^1.2.0",
@@ -13,9 +14,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/gui": "If you want to use TwigPlugin"
   },
   "autoload": {
     "psr-4": {

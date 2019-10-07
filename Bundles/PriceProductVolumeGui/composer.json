@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/currency": "^3.0.0",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/price-product": "^2.4.0 || ^4.0.0",
     "spryker/store": "^1.9.0",
@@ -16,9 +17,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/gui": "If you want to use TwigPlugin"
   },
   "autoload": {
     "psr-4": {
