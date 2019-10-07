@@ -174,13 +174,23 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param int $idShipmentMethod
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer
+    public function findShipmentMethodByIdAndIdStore(int $idShipmentMethod, int $idStore): ?ShipmentMethodTransfer
     {
         $salesShipmentMethodEntity = $this->queryMethods()
+            ->useShipmentMethodStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
             ->filterByIdShipmentMethod($idShipmentMethod)
+            ->filterByPricePlugin(null, Criteria::ISNOTNULL)
+            ->_or()
+            ->useShipmentMethodPriceQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->limit(1)
             ->findOne();
 
         if ($salesShipmentMethodEntity === null) {
@@ -246,12 +256,14 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
+     * @param int $idStore
+     *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getActiveShipmentMethods(): array
+    public function getActiveShipmentMethods(int $idStore): array
     {
         $shipmentMethodList = [];
-        $shipmentMethodEntities = $this->queryActiveMethodsWithMethodPricesAndCarrier()->find();
+        $shipmentMethodEntities = $this->queryActiveMethodsWithMethodPricesAndCarrier($idStore)->find();
 
         if ($shipmentMethodEntities->count() === 0) {
             return $shipmentMethodList;
@@ -483,12 +495,23 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
+     * @param int $idStore
+     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
-    protected function queryActiveMethodsWithMethodPricesAndCarrier(): SpyShipmentMethodQuery
+    protected function queryActiveMethodsWithMethodPricesAndCarrier(int $idStore): SpyShipmentMethodQuery
     {
         return $this->queryMethodsWithMethodPricesAndCarrier()
-            ->filterByIsActive(true);
+            ->filterByIsActive(true)
+            ->useShipmentMethodStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->filterByPricePlugin(null, Criteria::ISNOTNULL)
+            ->_or()
+            ->useShipmentMethodPriceQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->groupByIdShipmentMethod();
     }
 
     /**

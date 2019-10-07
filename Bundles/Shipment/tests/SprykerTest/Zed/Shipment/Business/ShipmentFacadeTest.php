@@ -394,18 +394,23 @@ class ShipmentFacadeTest extends Test
      *
      * @return void
      */
-    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult)
+    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult): void
     {
+        // Arrange
+        $storeTransfer = $this->tester->getDefaultStoreTransfer();
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
+            ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+            ->setStore($storeTransfer);
 
         $priceList = $this->createDefaultPriceList();
 
         $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
 
+        // Act
         $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
 
+        // Assert
         $this->assertSame($shipmentMethodsTransfer->getStoreCurrencyPrice(), $expectedPriceResult);
     }
 
