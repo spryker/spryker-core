@@ -49,10 +49,12 @@ function addSlotTableRowClickHandler() {
  * @return {void}
  */
 function addSlotTableDrawHandler() {
-    var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first();
+    var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first().DataTable();
 
-    $slotTable.DataTable().on('draw', function () {
+    $slotTable.on('draw', function () {
         var $rows = $(this).find('tbody > tr[role="row"]');
+
+        selectedIdSlot = getInitialSelectedIdSlot($rows);
 
         // initial draw
         if (selectedIdSlot === 0) {
@@ -68,7 +70,7 @@ function addSlotTableDrawHandler() {
 
         //redraw
         $.each($rows, function (index, row) {
-            if ($slotTable.DataTable().row(row).data()[config.slotTableColumnsMapping.idSlot] === selectedIdSlot) {
+            if ($slotTable.row(row).data()[config.slotTableColumnsMapping.idSlot] === selectedIdSlot) {
                 markSelectedRow($(row));
             }
         });
@@ -92,6 +94,16 @@ function loadSlotProductsTable() {
 function markSelectedRow($row) {
     $row.siblings('tr').removeClass('selected');
     $row.addClass('selected');
+}
+
+function getInitialSelectedIdSlot() {
+    var selectedIdSlot = $('#selected-id-configurable-bundle-template-slot').val();
+
+    if (selectedIdSlot.length) {
+        return parseInt(selectedIdSlot);
+    }
+
+    return 0;
 }
 
 /**

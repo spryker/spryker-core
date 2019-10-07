@@ -11,7 +11,12 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : form.vars.data.configurableBundleTemplateSlot.fkConfigurableBundleTemplate }),'Back to Configurable Bundle Template Edit page' | trans) }}
+    {{ backActionButton(
+        url('/configurable-bundle-gui/template/edit', {
+            'id-configurable-bundle-template' : form.vars.data.configurableBundleTemplateSlot.fkConfigurableBundleTemplate,
+            'id-configurable-bundle-template-slot': form.vars.data.configurableBundleTemplateSlot.idConfigurableBundleTemplateSlot
+        }) ~ '#tab-content-slots',
+        'Back to Configurable Bundle Template Edit page' | trans) }}
 {% endblock %}
 
 {% block content %}

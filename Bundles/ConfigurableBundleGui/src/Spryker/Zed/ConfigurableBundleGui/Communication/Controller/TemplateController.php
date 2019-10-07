@@ -366,6 +366,7 @@ class TemplateController extends AbstractController
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
             'slotTable' => $configurableBundleTemplateSlotTable->render(),
             'slotProductsTable' => $configurableBundleTemplateSlotProductsTable->render(),
+            'idConfigurableBundleTemplateSlot' => $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT),
         ];
     }
 }
