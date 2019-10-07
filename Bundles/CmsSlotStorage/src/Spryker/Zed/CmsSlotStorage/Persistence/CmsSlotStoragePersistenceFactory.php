@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CmsSlotStorage\Persistence;
 
 use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorageQuery;
-use Spryker\Zed\CmsSlotStorage\Persistence\Mapper\CmsSlotStorageMapper;
-use Spryker\Zed\CmsSlotStorage\Persistence\Mapper\CmsSlotStorageMapperInterface;
+use Spryker\Zed\CmsSlotStorage\Persistence\Propel\Mapper\CmsSlotStorageMapper;
+use Spryker\Zed\CmsSlotStorage\Persistence\Propel\Mapper\CmsSlotStorageMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -28,7 +28,7 @@ class CmsSlotStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotStorage\Persistence\Mapper\CmsSlotStorageMapperInterface
+     * @return \Spryker\Zed\CmsSlotStorage\Persistence\Propel\Mapper\CmsSlotStorageMapperInterface
      */
     public function createCmsSlotStorageMapper(): CmsSlotStorageMapperInterface
     {

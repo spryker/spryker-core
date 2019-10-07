@@ -22,6 +22,8 @@ class CmsSlotStorageEntityManager extends AbstractEntityManager implements CmsSl
      */
     public function saveCmsSlotStorage(CmsSlotStorageTransfer $cmsSlotStorageTransfer): void
     {
+        $cmsSlotStorageTransfer->requireKey();
+
         $cmsSlotStorageEntity = $this->getFactory()
             ->getCmsSlotStorageQuery()
             ->filterByCmsSlotKey($cmsSlotStorageTransfer->getKey())
