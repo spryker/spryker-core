@@ -101,7 +101,6 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
-            ->addBannerUrlField($builder)
             ->addUrlCollectionField($builder)
             ->addDescriptionGlossaryKeyField($builder)
             ->addBannerUrlGlossaryKeyField($builder)

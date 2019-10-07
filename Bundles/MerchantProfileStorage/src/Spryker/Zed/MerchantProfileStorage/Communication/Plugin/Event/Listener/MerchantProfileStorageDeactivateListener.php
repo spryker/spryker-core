@@ -21,7 +21,7 @@ class MerchantProfileStorageDeactivateListener extends AbstractPlugin implements
     use TransactionTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles merchant update and delete events.
      *
      * @api

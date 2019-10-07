@@ -12,6 +12,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantProfileBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileGlossaryAttributeValuesBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileLocalizedGlossaryAttributesBuilder;
+use Generated\Shared\DataBuilder\UrlBuilder;
 use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -35,6 +36,7 @@ class MerchantProfileHelper extends Module
         }
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
+        $merchantProfileTransfer->setUrlCollection($this->createMerchantUrlCollection());
 
         return $this->getLocator()
             ->merchantProfile()
@@ -87,6 +89,18 @@ class MerchantProfileHelper extends Module
         $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues($merchantProfileGlossaryAttributeValuesTransfer);
 
         return $merchantProfileLocalizedGlossaryAttributesTransfer;
+    }
+
+    /**
+     * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function createMerchantUrlCollection(): ArrayObject
+    {
+        $urlTransfer = (new UrlBuilder())->build();
+        $urlCollection = new ArrayObject();
+        $urlCollection->append($urlTransfer);
+
+        return $urlCollection;
     }
 
     /**

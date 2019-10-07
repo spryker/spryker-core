@@ -15,7 +15,7 @@ class MerchantProfileEvents
      *
      * @api
      */
-    public const ENTITY_SPY_MERCHANT_CREATE = 'Entity.spy_merchant_profile.create';
+    public const ENTITY_SPY_MERCHANT_PROFILE_CREATE = 'Entity.spy_merchant_profile.create';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ class MerchantProfileEvents
      *
      * @api
      */
-    public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant_profile.update';
+    public const ENTITY_SPY_MERCHANT_PROFILE_UPDATE = 'Entity.spy_merchant_profile.update';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ class MerchantProfileEvents
      *
      * @api
      */
-    public const ENTITY_SPY_MERCHANT_DELETE = 'Entity.spy_merchant_profile.delete';
+    public const ENTITY_SPY_MERCHANT_PROFILE_DELETE = 'Entity.spy_merchant_profile.delete';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ class MerchantProfileEvents
      *
      * @api
      */
-    public const ENTITY_SPY_MERCHANT_PUBLISH = 'Entity.spy_merchant_profile.publish';
+    public const ENTITY_SPY_MERCHANT_PROFILE_PUBLISH = 'Entity.spy_merchant_profile.publish';
 
     /**
      * Specification
@@ -47,5 +47,5 @@ class MerchantProfileEvents
      *
      * @api
      */
-    public const ENTITY_SPY_MERCHANT_UNPUBLISH = 'Entity.spy_merchant_profile.unpublish';
+    public const ENTITY_SPY_MERCHANT_PROFILE_UNPUBLISH = 'Entity.spy_merchant_profile.unpublish';
 }

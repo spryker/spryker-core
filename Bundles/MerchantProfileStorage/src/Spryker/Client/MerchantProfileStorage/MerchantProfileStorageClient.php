@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class MerchantProfileStorageClient extends AbstractClient implements MerchantProfileStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
