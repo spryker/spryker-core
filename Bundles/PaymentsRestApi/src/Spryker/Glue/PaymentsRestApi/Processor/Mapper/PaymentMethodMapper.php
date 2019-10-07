@@ -72,12 +72,13 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         PaymentProviderTransfer $paymentProviderTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): RestPaymentMethodsAttributesTransfer {
-        $methodName = $paymentMethodTransfer->getMethodName();
+        $paymentMethodName = $paymentMethodTransfer->getMethodName();
+        $paymentProviderName = $paymentProviderTransfer->getName();
 
         return (new RestPaymentMethodsAttributesTransfer())
-            ->setPaymentMethodName($methodName)
-            ->setPaymentProviderName($paymentProviderTransfer->getName())
-            ->setPriority($this->config->getPaymentMethodPriority()[$methodName] ?? null)
-            ->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($methodName));
+            ->setPaymentMethodName($paymentMethodName)
+            ->setPaymentProviderName($paymentProviderName)
+            ->setPriority($this->config->getPaymentMethodPriority()[$paymentMethodName] ?? null)
+            ->setRequiredRequestData($this->config->getRequiredRequestDataForPaymentMethod($paymentProviderName, $paymentMethodName));
     }
 }
