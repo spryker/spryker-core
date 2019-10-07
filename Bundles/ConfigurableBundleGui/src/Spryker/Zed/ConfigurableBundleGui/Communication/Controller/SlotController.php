@@ -144,6 +144,9 @@ class SlotController extends AbstractController
              * @var \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
              */
             $configurableBundleTemplateSlotEditFormTransfer = $form->getData();
+            $configurableBundleTemplateSlotEditFormTransfer = $form = $this->getFactory()
+                ->createConfigurableBundleTemplateSlotEditFormFileUploadHandler()
+                ->handleFileUploads($form, $configurableBundleTemplateSlotEditFormTransfer);
 
             $configurableBundleTemplateSlotTransfer = $this->mapFormTransferToRegularTransfer($configurableBundleTemplateSlotEditFormTransfer);
 
@@ -249,11 +252,11 @@ class SlotController extends AbstractController
     protected function mapFormTransferToRegularTransfer(ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotTransfer
     {
         $configurableBundleTemplateSlotTransfer = $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot();
-        $ProductListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
+        $productListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
 
         $productListTransfer = $configurableBundleTemplateSlotTransfer->getProductList();
-        $productListTransfer->setProductListCategoryRelation($ProductListAggregateFormTransfer->getProductListCategoryRelation());
-        $productListTransfer->setProductListProductConcreteRelation($ProductListAggregateFormTransfer->getProductListProductConcreteRelation());
+        $productListTransfer->setProductListCategoryRelation($productListAggregateFormTransfer->getProductListCategoryRelation());
+        $productListTransfer->setProductListProductConcreteRelation($productListAggregateFormTransfer->getProductListProductConcreteRelation());
 
         return $configurableBundleTemplateSlotTransfer->setProductList($productListTransfer);
     }

@@ -25,6 +25,8 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTempl
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotCreateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotEditFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandler;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapper;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationSubTabsProvider;
@@ -240,6 +242,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface
+     */
+    public function createConfigurableBundleTemplateSlotEditFormFileUploadHandler(): ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface
+    {
+        return new ConfigurableBundleTemplateSlotEditFormFileUploadHandler($this->getConfigurableBundleTemplateSlotEditFormFileUploadHandlerPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotEditTabs
      */
     public function createConfigurableBundleTemplateSlotEditTabs(): ConfigurableBundleTemplateSlotEditTabs
@@ -341,6 +351,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function getConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_DATA_PROVIDER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateSlotEditFormFileUploadHandlerPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_EDIT_FORM_FILE_UPLOAD_HANDLER);
     }
 
     /**
