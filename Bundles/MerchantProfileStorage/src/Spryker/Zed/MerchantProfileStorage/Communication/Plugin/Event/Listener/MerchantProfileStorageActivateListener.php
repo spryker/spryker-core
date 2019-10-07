@@ -21,7 +21,7 @@ class MerchantProfileStorageActivateListener extends AbstractPlugin implements E
     use TransactionTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles merchant create amd update events.
      *
      * @api
@@ -34,6 +34,7 @@ class MerchantProfileStorageActivateListener extends AbstractPlugin implements E
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $merchantProfileIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+
         $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileIds): void {
             $this->getFacade()->publish($merchantProfileIds);
         });

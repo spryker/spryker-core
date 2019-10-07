@@ -4,4 +4,22 @@
 {{ form_row(merchantForm.merchantProfile.contact_person_first_name) }}
 {{ form_row(merchantForm.merchantProfile.contact_person_last_name) }}
 {{ form_row(merchantForm.merchantProfile.contact_person_phone) }}
+{% for localizedUrl in merchantForm.merchantProfile.urlCollection %}
+        <div class="form-group {% if localizedUrl.url.vars.errors|length > 0 %}has-error{% endif %}" >
+            {{ form_label(localizedUrl.url) }}
+            {% if localizedUrl.vars.data.urlPrefix %}
+                <div class="input-group m-b">
+                    <span class="input-group-addon">
+                        {{ localizedUrl.vars.data.urlPrefix }}
+                    </span>
+                    {{ form_widget(localizedUrl.url) }}
+                </div>
+            {% else %}
+                {{ form_widget(localizedUrl.url) }}
+            {% endif %}
+            {{ form_errors(localizedUrl.url) }}
+        </div>
+        {{ form_row(localizedUrl.url) }}
+        {{ form_row(localizedUrl.fkLocale) }}
+{% endfor %}
 {% do merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes.setRendered %}

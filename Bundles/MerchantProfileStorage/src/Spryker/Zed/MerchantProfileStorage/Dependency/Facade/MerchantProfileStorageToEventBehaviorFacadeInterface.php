@@ -22,5 +22,5 @@ interface MerchantProfileStorageToEventBehaviorFacadeInterface
      *
      * @return int[]
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array;
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
 }

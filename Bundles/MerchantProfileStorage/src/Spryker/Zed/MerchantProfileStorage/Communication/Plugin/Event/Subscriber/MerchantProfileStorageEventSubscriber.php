@@ -22,7 +22,7 @@ use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\Merch
 class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,9 +45,9 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addMerchantActivateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_CREATE, new MerchantProfileStorageActivateListener());
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantProfileStorageActivateListener());
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PUBLISH, new MerchantProfileStorageActivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_CREATE, new MerchantProfileStorageActivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStorageActivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, new MerchantProfileStorageActivateListener());
 
         return $eventCollection;
     }
@@ -59,8 +59,8 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addMerchantDeactivateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantProfileStorageDeactivateListener());
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_UNPUBLISH, new MerchantProfileStorageDeactivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStorageDeactivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UNPUBLISH, new MerchantProfileStorageDeactivateListener());
 
         return $eventCollection;
     }
