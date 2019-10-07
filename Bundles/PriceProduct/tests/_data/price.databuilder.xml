@@ -6,7 +6,7 @@
 >
 
     <transfer name="PriceType">
-        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="name" dataBuilderRule="unique()->word()"/>
     </transfer>
 
 </transfers>
