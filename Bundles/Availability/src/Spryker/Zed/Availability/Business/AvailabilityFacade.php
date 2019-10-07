@@ -58,7 +58,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use calculateStockForProductWithStore() instead.
+     * @deprecated Use calculateAvailabilityForProductWithStore() instead.
      *
      * @param string $sku
      *

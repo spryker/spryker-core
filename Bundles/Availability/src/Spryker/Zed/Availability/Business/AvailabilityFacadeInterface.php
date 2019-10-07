@@ -51,6 +51,8 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
+     * @deprecated Use calculateAvailabilityForProductWithStore() instead.
+     *
      * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal

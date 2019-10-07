@@ -16,6 +16,11 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
     <transfer name="CartPreCheckResponse">
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>

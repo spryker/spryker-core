@@ -24,6 +24,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
      */
     public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array
     {
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities */
         $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()
                 ->filterByKey($glossaryKey)

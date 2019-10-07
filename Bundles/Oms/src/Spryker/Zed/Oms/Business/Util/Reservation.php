@@ -245,7 +245,7 @@ class Reservation implements ReservationInterface
             ->queryProductReservationBySkuAndStore($sku, $storeTransfer->getIdStore())
             ->findOneOrCreate();
 
-        $reservationEntity->setReservationQuantity($reservationQuantity->toString());
+        $reservationEntity->setReservationQuantity($reservationQuantity);
         $reservationEntity->save();
     }
 

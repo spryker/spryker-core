@@ -95,7 +95,7 @@ class SellableTest extends Unit
     {
         return [
             'int stock' => [new Decimal(5), new Decimal(10)],
-            'float stcok' => [new Decimal(5.5), new Decimal(9.8)],
+            'float stock' => [new Decimal(5.5), new Decimal(9.8)],
             'float stock high precision' => [new Decimal(1.4444444444444), new Decimal(2.5)],
             'mixed type stock' => [new Decimal(5), new Decimal(9.8)],
         ];

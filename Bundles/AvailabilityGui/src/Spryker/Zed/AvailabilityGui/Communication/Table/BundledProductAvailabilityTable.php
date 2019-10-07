@@ -179,7 +179,7 @@ class BundledProductAvailabilityTable extends AbstractTable
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ? $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] : 0,
+                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $this->getConcreteAvailability($productItem)->trim(),
                 AvailabilityQueryContainer::STOCK_QUANTITY => $this->getStock($productItem)->trim(),
                 AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->trim(),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
@@ -231,6 +231,17 @@ class BundledProductAvailabilityTable extends AbstractTable
     {
         return $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ?
             (new Decimal($productItem[AvailabilityQueryContainer::STOCK_QUANTITY])) : new Decimal(0);
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getConcreteAvailability(array $productItem): Decimal
+    {
+        return $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ?
+            (new Decimal($productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY])) : new Decimal(0);
     }
 
     /**
