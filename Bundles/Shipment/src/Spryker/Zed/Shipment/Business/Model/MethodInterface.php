@@ -10,6 +10,9 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 
+/**
+ * @deprecated Use classes from \Spryker\Zed\Shipment\Business\ShipmentMethod namespace instead.
+ */
 interface MethodInterface
 {
     /**

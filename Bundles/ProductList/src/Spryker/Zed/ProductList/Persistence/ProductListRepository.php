@@ -216,6 +216,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
 
         $productConcreteSkusInListAndCategory = $this->getFactory()
             ->createProductListCategoryQuery()
+            ->filterByFkProductList_In($productListIds)
             ->useSpyProductListQuery()
                 ->filterByType($listType)
             ->endUse()

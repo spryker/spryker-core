@@ -18,42 +18,55 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
-        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode" />
-        <property name="payments" type="Payment[]" singular="payment" />
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
     </transfer>
 
     <transfer name="Payment">
         <property name="giftCard" type="GiftCard"/>
-        <property name="isLimitedAmount" type="bool" />
-        <property name="availableAmount" type="int" />
+        <property name="isLimitedAmount" type="bool"/>
+        <property name="availableAmount" type="int"/>
     </transfer>
 
     <transfer name="CalculableObject">
-        <property name="giftCards" type="GiftCard[]" singular="giftCard" />
-        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode" />
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="payments" type="Payment[]" singular="payment"/>
-        <property name="payment" type="Payment" />
+        <property name="payment" type="Payment"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="giftCardMetadata" type="GiftCardMetadata" />
+        <property name="giftCardMetadata" type="GiftCardMetadata"/>
     </transfer>
 
     <transfer name="GiftCardAbstractProductConfiguration">
-        <property name="idGiftCardAbstractProductConfiguration" type="int" />
-        <property name="codePattern" type="string" />
+        <property name="idGiftCardAbstractProductConfiguration" type="int"/>
+        <property name="codePattern" type="string"/>
     </transfer>
 
     <transfer name="GiftCardProductConfiguration">
-        <property name="idGiftCardProductConfiguration" type="int" />
-        <property name="value" type="int" />
+        <property name="idGiftCardProductConfiguration" type="int"/>
+        <property name="value" type="int"/>
     </transfer>
 
     <transfer name="GiftCardMetadata">
-        <property name="isGiftCard" type="bool" />
-        <property name="abstractConfiguration" type="GiftCardAbstractProductConfiguration" />
-        <property name="concreteConfiguration" type="GiftCardProductConfiguration" />
+        <property name="isGiftCard" type="bool"/>
+        <property name="abstractConfiguration" type="GiftCardAbstractProductConfiguration"/>
+        <property name="concreteConfiguration" type="GiftCardProductConfiguration"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="availableShipmentMethods" type="ShipmentMethods"/>
+    </transfer>
+
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

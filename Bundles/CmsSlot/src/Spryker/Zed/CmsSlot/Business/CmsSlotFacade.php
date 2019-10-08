@@ -14,11 +14,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CmsSlot\Business\CmsSlotBusinessFactory getFactory()
+ * @method \Spryker\Zed\CmsSlot\Persistence\CmsSlotRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CmsSlot\Persistence\CmsSlotEntityManagerInterface getEntityManager()
  */
 class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +34,7 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,5 +45,33 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
     public function validateCmsSlotTemplate(CmsSlotTemplateTransfer $cmsSlotTemplateTransfer): ValidationResponseTransfer
     {
         return $this->getFactory()->createCmsSlotTemplateValidator()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return void
+     */
+    public function activateByIdCmsSlot(int $idCmsSlot): void
+    {
+        $this->getFactory()->createCmsSlotActivator()->activateByIdCmsSlot($idCmsSlot);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return void
+     */
+    public function deactivateByIdCmsSlot(int $idCmsSlot): void
+    {
+        $this->getFactory()->createCmsSlotActivator()->deactivateByIdCmsSlot($idCmsSlot);
     }
 }

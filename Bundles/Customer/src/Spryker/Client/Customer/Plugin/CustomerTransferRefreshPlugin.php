@@ -19,7 +19,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CustomerTransferRefreshPlugin extends AbstractPlugin implements CustomerSessionGetPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Retrieves customer by provided id.
      * - Retrieves the fresh customer data from persistence and invalidates the already existing data in session.
      *
@@ -29,7 +29,7 @@ class CustomerTransferRefreshPlugin extends AbstractPlugin implements CustomerSe
      */
     public function execute(CustomerTransfer $customerTransfer)
     {
-        if ($customerTransfer && $customerTransfer->getIsDirty()) {
+        if ($customerTransfer->getIsDirty()) {
             $customerTransfer = $this->getClient()->getCustomerById($customerTransfer->getIdCustomer());
             $this->getClient()->setCustomer($customerTransfer);
         }

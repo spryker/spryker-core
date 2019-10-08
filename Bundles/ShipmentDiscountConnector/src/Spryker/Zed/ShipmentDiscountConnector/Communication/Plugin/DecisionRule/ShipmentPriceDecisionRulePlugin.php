@@ -23,7 +23,7 @@ class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements Decision
     public const DECISION_RULE_FIELD_NAME = 'shipment-price';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements Decision
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +54,7 @@ class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements Decision
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

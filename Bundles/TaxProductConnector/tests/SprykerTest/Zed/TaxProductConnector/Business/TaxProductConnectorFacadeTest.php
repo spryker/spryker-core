@@ -16,15 +16,18 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Product\Business\ProductFacade;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Tax\Business\TaxFacade;
 use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\TaxProductConnector\Business\Exception\ProductAbstractNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\Exception\TaxSetNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface;
+use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractReadPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group TaxProductConnector
@@ -40,6 +43,10 @@ class TaxProductConnectorFacadeTest extends Unit
      */
     public function testSaveTaxSetToProductAbstractShouldPersistTaxSetId(): void
     {
+        $this->tester->setDependency(
+            ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_READ,
+            $this->getProductAbstractReadPlugins()
+        );
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
 
         $taxSetTransfer = $this->createTaxSet();
@@ -225,5 +232,15 @@ class TaxProductConnectorFacadeTest extends Unit
         $productAbstractTransfer->setIdProductAbstract($idProductAbstractTransfer);
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
+     */
+    protected function getProductAbstractReadPlugins()
+    {
+        return [
+            new TaxSetProductAbstractReadPlugin(),
+        ];
     }
 }

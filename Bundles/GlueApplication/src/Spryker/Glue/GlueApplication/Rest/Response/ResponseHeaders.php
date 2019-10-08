@@ -57,7 +57,6 @@ class ResponseHeaders implements ResponseHeadersInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): Response {
-
         $this->contentTypeResolver->addResponseHeaders($restRequest, $httpResponse);
 
         $httpResponse->headers->set(
@@ -89,7 +88,6 @@ class ResponseHeaders implements ResponseHeadersInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): Response {
-
         foreach ($this->formatResponseHeadersPlugins as $formatResponseHeadersPlugin) {
             $httpResponse = $formatResponseHeadersPlugin->format($httpResponse, $restResponse, $restRequest);
         }

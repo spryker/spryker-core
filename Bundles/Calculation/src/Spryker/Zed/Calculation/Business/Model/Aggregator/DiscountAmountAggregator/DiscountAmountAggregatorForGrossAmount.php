@@ -179,7 +179,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
      * @param int $maxAmount
      * @param string $priceMode
-     * @param int $taxRate
+     * @param float $taxRate
      *
      * @return int
      */
@@ -216,7 +216,7 @@ class DiscountAmountAggregatorForGrossAmount implements CalculatorInterface
     }
 
     /**
-     * @param int $taxRate
+     * @param float $taxRate
      * @param int $discountAmount
      *
      * @return int

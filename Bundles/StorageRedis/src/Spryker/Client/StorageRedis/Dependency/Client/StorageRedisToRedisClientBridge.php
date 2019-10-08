@@ -163,6 +163,38 @@ class StorageRedisToRedisClientBridge implements StorageRedisToRedisClientInterf
 
     /**
      * @param string $connectionKey
+     * @param int $cursor
+     * @param array $options
+     *
+     * @return array [string, string[]]
+     */
+    public function scan(string $connectionKey, int $cursor, array $options): array
+    {
+        return $this->redisClient->scan($connectionKey, $cursor, $options);
+    }
+
+    /**
+     * @param string $connectionKey
+     *
+     * @return int
+     */
+    public function dbSize(string $connectionKey): int
+    {
+        return $this->redisClient->dbSize($connectionKey);
+    }
+
+    /**
+     * @param string $connectionKey
+     *
+     * @return void
+     */
+    public function flushDb(string $connectionKey): void
+    {
+        $this->redisClient->flushDb($connectionKey);
+    }
+
+    /**
+     * @param string $connectionKey
      * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $configurationTransfer
      *
      * @return void

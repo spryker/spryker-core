@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Storage\Business\Model;
 
+use Spryker\Zed\Storage\StorageConfig;
 use Symfony\Component\Process\Process;
 
 /**
@@ -15,16 +16,16 @@ use Symfony\Component\Process\Process;
 class StorageExporter implements StorageExporterInterface
 {
     /**
-     * @var int
+     * @var \Spryker\Zed\Storage\StorageConfig
      */
-    protected $redisPort;
+    protected $config;
 
     /**
-     * @param int $redisPort
+     * @param \Spryker\Zed\Storage\StorageConfig $config
      */
-    public function __construct($redisPort)
+    public function __construct(StorageConfig $config)
     {
-        $this->redisPort = $redisPort;
+        $this->config = $config;
     }
 
     /**
@@ -34,8 +35,9 @@ class StorageExporter implements StorageExporterInterface
      */
     public function export($destination)
     {
-        $command = sprintf('redis-cli -p %s --rdb %s', $this->redisPort, $destination);
+        $command = sprintf('redis-cli -p %s --rdb %s', $this->config->getRedisPort(), $destination);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         if ($process->isSuccessful()) {

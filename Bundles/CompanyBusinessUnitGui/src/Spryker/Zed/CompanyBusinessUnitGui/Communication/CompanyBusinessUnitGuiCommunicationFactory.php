@@ -38,7 +38,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -49,7 +49,7 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @param array|null $data
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $data
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface

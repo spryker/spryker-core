@@ -23,6 +23,9 @@ class EditController extends AbstractController
 {
     public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
     public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+    protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id `%s` does not exist';
+
+    protected const URL_CUSTOMER_LIST_PAGE = '/customer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -34,9 +37,17 @@ class EditController extends AbstractController
         $idCustomer = $this->castId($request->query->get(CustomerConstants::PARAM_ID_CUSTOMER));
 
         $dataProvider = $this->getFactory()->createCustomerUpdateFormDataProvider();
+        $formData = $dataProvider->getData($idCustomer);
+
+        if ($formData === []) {
+            $this->addErrorMessage(static::MESSAGE_ERROR_CUSTOMER_NOT_EXIST, ['%s' => $idCustomer]);
+
+            return $this->redirectResponse(static::URL_CUSTOMER_LIST_PAGE);
+        }
+
         $form = $this->getFactory()
             ->createCustomerUpdateForm(
-                $dataProvider->getData($idCustomer),
+                $formData,
                 $dataProvider->getOptions($idCustomer)
             )
             ->handleRequest($request);
@@ -93,14 +104,14 @@ class EditController extends AbstractController
      */
     protected function updateCustomerAddresses(CustomerTransfer $customerTransfer)
     {
-        $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
+        $defaultBilling = $customerTransfer->getDefaultBillingAddress() ?: null;
         if (!$defaultBilling) {
-            $this->updateBillingAddress($customerTransfer->getIdCustomer(), $defaultBilling);
+            $this->updateBillingAddress($customerTransfer->getIdCustomer(), (int)$defaultBilling);
         }
 
-        $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
+        $defaultShipping = $customerTransfer->getDefaultShippingAddress() ?: null;
         if (!$defaultShipping) {
-            $this->updateShippingAddress($customerTransfer->getIdCustomer(), $defaultShipping);
+            $this->updateShippingAddress($customerTransfer->getIdCustomer(), (int)$defaultShipping);
         }
     }
 

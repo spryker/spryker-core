@@ -8,12 +8,13 @@
 namespace SprykerTest\Client\StorageRedis\Redis;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\RedisConfigurationTransfer;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
 use Spryker\Client\StorageRedis\Redis\StorageRedisWrapper;
+use Spryker\Client\StorageRedis\StorageRedisConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group StorageRedis
@@ -56,10 +57,12 @@ class StorageRedisWrapperTest extends Unit
 
         $this->setupDummyStorage();
         $this->redisClientMock = $this->createMock(StorageRedisToRedisClientInterface::class);
+        $storageRedisConfigMock = $this->createMock(StorageRedisConfig::class);
+        $storageRedisConfigMock->method('getRedisConnectionKey')->willReturn(static::CONNECTION_KEY);
+
         $this->storageRedisWrapper = new StorageRedisWrapper(
             $this->redisClientMock,
-            static::CONNECTION_KEY,
-            new RedisConfigurationTransfer()
+            $storageRedisConfigMock
         );
     }
 

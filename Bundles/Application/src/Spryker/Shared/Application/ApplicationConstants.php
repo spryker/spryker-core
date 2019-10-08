@@ -30,7 +30,7 @@ interface ApplicationConstants
     public const YVES_THEME = 'YVES_THEME';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_SSL_ENABLED` instead.
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_IS_SSL_ENABLED` instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -42,6 +42,8 @@ interface ApplicationConstants
     public const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
 
     /**
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     *
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_SSL_EXCLUDED` instead.
      *
      * Specification:
@@ -87,6 +89,7 @@ interface ApplicationConstants
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED` instead.
      */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
     /**
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG` instead.
      */
@@ -160,6 +163,8 @@ interface ApplicationConstants
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
+     *
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_SSL_ENABLED` instead.
      *
      * Specification:
@@ -172,6 +177,8 @@ interface ApplicationConstants
     public const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
 
     /**
+     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     *
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_SSL_EXCLUDED` instead.
      *
      * Specification:
@@ -207,6 +214,7 @@ interface ApplicationConstants
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED` instead.
      */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
     /**
      * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG` instead.
      */
@@ -217,15 +225,29 @@ interface ApplicationConstants
      *
      * @deprecated Use RabbitMQ module constants instead.
      */
-    /** @deprecated Use queue-adapter specific configuration constants */
+    /**
+     * @deprecated Use queue-adapter specific configuration constants
+     */
     public const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
-    /** @deprecated Use queue-adapter specific configuration constants */
+
+    /**
+     * @deprecated Use queue-adapter specific configuration constants
+     */
     public const ZED_RABBITMQ_PASSWORD = 'ZED_RABBITMQ_PASSWORD';
-    /** @deprecated Use queue-adapter specific configuration constants */
+
+    /**
+     * @deprecated Use queue-adapter specific configuration constants
+     */
     public const ZED_RABBITMQ_HOST = 'ZED_RABBITMQ_HOST';
-    /** @deprecated Use queue-adapter specific configuration constants */
+
+    /**
+     * @deprecated Use queue-adapter specific configuration constants
+     */
     public const ZED_RABBITMQ_PORT = 'ZED_RABBITMQ_PORT';
-    /** @deprecated Use queue-adapter specific configuration constants */
+
+    /**
+     * @deprecated Use queue-adapter specific configuration constants
+     */
     public const ZED_RABBITMQ_VHOST = 'ZED_RABBITMQ_VHOST';
 
     /**
@@ -241,19 +263,39 @@ interface ApplicationConstants
     /**
      * Cloud
      */
-    /** @deprecated Unused, will be removed with next major release. */
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const CLOUD_ENABLED = 'CLOUD_ENABLED';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const CLOUD_OBJECT_STORAGE_ENABLED = 'CLOUD_OBJECT_STORAGE_ENABLED';
-    /** @deprecated Unused, will be removed with next major release */
+
+    /**
+     * @deprecated Unused, will be removed with next major release
+     */
     public const CLOUD_CDN_ENABLED = 'CLOUD_CDN_ENABLED';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const CLOUD_CDN_STATIC_MEDIA_PREFIX = 'CLOUD_CDN_STATIC_MEDIA_PREFIX';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const CLOUD_CDN_STATIC_MEDIA_HTTP = 'CLOUD_CDN_STATIC_MEDIA_HTTP';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const CLOUD_CDN_STATIC_MEDIA_HTTPS = 'CLOUD_CDN_STATIC_MEDIA_HTTPS';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME = 'CLOUD_CDN_PRODUCT_IMAGES';
 
     /**
@@ -354,24 +396,49 @@ interface ApplicationConstants
      */
     public const BASE_URL_SSL_STATIC_MEDIA = 'APPLICATION:BASE_URL_SSL_STATIC_MEDIA';
 
-    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead. */
+    /**
+     * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     */
     public const HOST_ZED_GUI = 'HOST_ZED_GUI';
-    /** @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead. */
+
+    /**
+     * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     */
     public const HOST_ZED_API = 'HOST_ZED_API';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead. */
+
+    /**
+     * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
+     */
     public const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead. */
+
+    /**
+     * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
+     */
     public const HOST_STATIC_MEDIA = 'HOST_STATIC_MEDIA';
 
-    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead. */
+    /**
+     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead.
+     */
     public const HOST_SSL_YVES = 'HOST_SSL_YVES';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const HOST_SSL_ZED_GUI = 'HOST_SSL_ZED_GUI';
-    /** @deprecated Unused, will be removed with next major release. */
+
+    /**
+     * @deprecated Unused, will be removed with next major release.
+     */
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead. */
+
+    /**
+     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
+     */
     public const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
-    /** @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead. */
+
+    /**
+     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
+     */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     public const FORM_FACTORY = 'FORM_FACTORY';

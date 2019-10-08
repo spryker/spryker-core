@@ -46,7 +46,6 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
     ): SchedulerScheduleTransfer {
-
         $filterTransfer->requireStore();
 
         $storeName = $filterTransfer->getStore();

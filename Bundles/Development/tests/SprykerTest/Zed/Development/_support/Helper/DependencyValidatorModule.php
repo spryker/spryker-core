@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Development\Helper;
 
 use Codeception\Module;
 use Codeception\Stub;
+use Generated\Shared\Transfer\DependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
@@ -18,6 +19,8 @@ use Spryker\Zed\Development\Business\DependencyTree\ComposerDependencyParserInte
 use Spryker\Zed\Development\Business\DevelopmentBusinessFactory;
 use Spryker\Zed\Development\Business\DevelopmentFacade;
 use Spryker\Zed\Development\Business\DevelopmentFacadeInterface;
+use Spryker\Zed\Development\DevelopmentDependencyProvider;
+use Spryker\Zed\Kernel\Container;
 
 class DependencyValidatorModule extends Module
 {
@@ -28,10 +31,30 @@ class DependencyValidatorModule extends Module
      */
     public function getFacadeForDependencyTests(array $composerDependency): DevelopmentFacadeInterface
     {
+        /** @var \Spryker\Zed\Development\Business\DevelopmentBusinessFactory $developmentFactory */
+        $developmentFactory = $this->getDevelopmentFactory($composerDependency);
+        $developmentFactory->setContainer($this->getContainerWithProvidedDependencies());
+
         $developmentFacade = new DevelopmentFacade();
+        $developmentFacade->setFactory($developmentFactory);
+
+        return $developmentFacade;
+    }
+
+    /**
+     * @param array $composerDependency
+     *
+     * @return \Spryker\Zed\Development\Business\DevelopmentBusinessFactory|object
+     */
+    protected function getDevelopmentFactory(array $composerDependency)
+    {
         $developmentFactory = Stub::make(DevelopmentBusinessFactory::class, [
             'createModuleDependencyParser' => function () {
-                return Stub::makeEmpty(ModuleDependencyParserInterface::class);
+                return Stub::makeEmpty(ModuleDependencyParserInterface::class, [
+                    'parseOutgoingDependencies' => function () {
+                        return new DependencyCollectionTransfer();
+                    },
+                ]);
             },
             'createComposerDependencyParser' => function () use ($composerDependency) {
                 return Stub::makeEmpty(ComposerDependencyParserInterface::class, [
@@ -42,9 +65,19 @@ class DependencyValidatorModule extends Module
             },
         ]);
 
-        $developmentFacade->setFactory($developmentFactory);
+        return $developmentFactory;
+    }
 
-        return $developmentFacade;
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function getContainerWithProvidedDependencies(): Container
+    {
+        $container = new Container();
+        $developmentDependencyProvider = new DevelopmentDependencyProvider();
+        $container = $developmentDependencyProvider->provideBusinessLayerDependencies($container);
+
+        return $container;
     }
 
     /**
@@ -57,11 +90,13 @@ class DependencyValidatorModule extends Module
     {
         $organizationTransfer = new OrganizationTransfer();
         $organizationTransfer
-            ->setName('Spryker');
+            ->setName('Spryker')
+            ->setNameDashed('spryker');
 
         $moduleTransfer = new ModuleTransfer();
         $moduleTransfer
             ->setName($moduleName)
+            ->setNameDashed(strtolower($moduleName))
             ->setOrganization($organizationTransfer);
 
         $dependencyValidationRequestTransfer = new DependencyValidationRequestTransfer();
@@ -78,13 +113,14 @@ class DependencyValidatorModule extends Module
     public function getDevOnlyComposerDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => [],
             'isOptional' => true,
             'src' => '',
             'tests' => '',
             'composerRequire' => '',
-            'composerRequireDev' => 'Foo',
+            'composerRequireDev' => 'bar/foo',
             'suggested' => '',
             'isOwnExtensionModule' => false,
         ];
@@ -98,10 +134,11 @@ class DependencyValidatorModule extends Module
     public function getInvalidSourceDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
-            'src' => 'Foo',
+            'src' => 'bar/foo',
             'tests' => '',
             'composerRequire' => '',
             'composerRequireDev' => '',
@@ -118,12 +155,13 @@ class DependencyValidatorModule extends Module
     public function getInvalidRequireDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
             'src' => '',
             'tests' => '',
-            'composerRequire' => 'Foo',
+            'composerRequire' => 'bar/foo',
             'composerRequireDev' => '',
             'suggested' => '',
             'isOwnExtensionModule' => false,
@@ -138,12 +176,13 @@ class DependencyValidatorModule extends Module
     public function getValidSourceDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
-            'src' => 'Foo',
+            'src' => 'bar/foo',
             'tests' => '',
-            'composerRequire' => 'Foo',
+            'composerRequire' => 'bar/foo',
             'composerRequireDev' => '',
             'suggested' => '',
             'isOwnExtensionModule' => false,
@@ -158,11 +197,12 @@ class DependencyValidatorModule extends Module
     public function getInvalidTestDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
             'src' => '',
-            'tests' => 'Foo',
+            'tests' => 'bar/foo',
             'composerRequire' => '',
             'composerRequireDev' => '',
             'suggested' => '',
@@ -178,13 +218,14 @@ class DependencyValidatorModule extends Module
     public function getInvalidRequireDevDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
             'src' => '',
             'tests' => '',
             'composerRequire' => '',
-            'composerRequireDev' => 'Foo',
+            'composerRequireDev' => 'bar/foo',
             'suggested' => '',
             'isOwnExtensionModule' => false,
         ];
@@ -198,13 +239,14 @@ class DependencyValidatorModule extends Module
     public function getValidTestDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
             'src' => '',
-            'tests' => 'Foo',
+            'tests' => 'bar/foo',
             'composerRequire' => '',
-            'composerRequireDev' => 'Foo',
+            'composerRequireDev' => 'bar/foo',
             'suggested' => '',
             'isOwnExtensionModule' => false,
         ];
@@ -218,12 +260,13 @@ class DependencyValidatorModule extends Module
     public function getInvalidOptionalRequiredDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => true,
             'src' => '',
             'tests' => '',
-            'composerRequire' => 'Foo',
+            'composerRequire' => 'bar/foo',
             'composerRequireDev' => '',
             'suggested' => '',
             'isOwnExtensionModule' => false,
@@ -238,27 +281,29 @@ class DependencyValidatorModule extends Module
     public function getValidOptionalRequiredDevDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => true,
             'src' => '',
             'tests' => '',
             'composerRequire' => '',
-            'composerRequireDev' => 'Foo',
+            'composerRequireDev' => 'bar/foo',
             'suggested' => '',
             'isOwnExtensionModule' => false,
         ];
     }
 
     /**
-     * Invalid dependency marked as optional not found in require-de
+     * Invalid dependency marked as optional not found in require-dev
      *
      * @return array
      */
     public function getInvalidOptionalNotRequiredDevDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => true,
             'src' => '',
@@ -278,13 +323,14 @@ class DependencyValidatorModule extends Module
     public function getInvalidOptionalNotSuggestedDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => true,
-            'src' => 'Foo',
+            'src' => 'bar/foo',
             'tests' => '',
             'composerRequire' => '',
-            'composerRequireDev' => 'Foo',
+            'composerRequireDev' => 'bar/foo',
             'suggested' => '',
             'isOwnExtensionModule' => false,
         ];
@@ -298,13 +344,14 @@ class DependencyValidatorModule extends Module
     public function getInvalidRequireAndRequireDevDependency(): array
     {
         return [
-            'dependencyModule' => 'Foo',
+            'moduleName' => 'Foo',
+            'composerName' => 'bar/foo',
             'types' => ['foo'],
             'isOptional' => false,
-            'src' => 'Foo',
-            'tests' => 'Foo',
-            'composerRequire' => 'Foo',
-            'composerRequireDev' => 'Foo',
+            'src' => 'bar/foo',
+            'tests' => 'bar/foo',
+            'composerRequire' => 'bar/foo',
+            'composerRequireDev' => 'bar/foo',
             'suggested' => '',
             'isOwnExtensionModule' => false,
         ];
@@ -318,7 +365,7 @@ class DependencyValidatorModule extends Module
     public function assertValidDependencies(DependencyValidationResponseTransfer $dependencyValidationResponseTransfer): void
     {
         foreach ($dependencyValidationResponseTransfer->getModuleDependencies() as $moduleDependency) {
-            $this->assertTrue($moduleDependency->getIsValid(), sprintf('Expected valid dependency but "%s" is marked as invalid', $moduleDependency->getModule()));
+            $this->assertTrue($moduleDependency->getIsValid(), sprintf('Expected valid dependency but "%s" is marked as invalid', $moduleDependency->getModuleName()));
         }
     }
 
@@ -330,7 +377,7 @@ class DependencyValidatorModule extends Module
     public function assertInvalidDependencies(DependencyValidationResponseTransfer $dependencyValidationResponseTransfer): void
     {
         foreach ($dependencyValidationResponseTransfer->getModuleDependencies() as $moduleDependency) {
-            $this->assertFalse($moduleDependency->getIsValid(), sprintf('Expected invalid dependency but "%s" is marked as valid', $moduleDependency->getModule()));
+            $this->assertFalse($moduleDependency->getIsValid(), sprintf('Expected invalid dependency but "%s" is marked as valid', $moduleDependency->getModuleName()));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Spryker\Zed\CategoryImageStorage\Business;
 interface CategoryImageStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -24,7 +24,7 @@ interface CategoryImageStorageFacadeInterface
     public function publishCategoryImages(array $categoryIds);
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

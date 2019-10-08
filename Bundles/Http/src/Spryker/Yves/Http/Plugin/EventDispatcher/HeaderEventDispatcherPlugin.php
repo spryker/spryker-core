@@ -36,34 +36,26 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, [$this, 'onKernelResponse'], static::HEADER_HANDLER_PRIORITY);
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
+            if (!$event->isMasterRequest()) {
+                return;
+            }
+
+            $response = $event->getResponse();
+
+            $localeClient = $this->getFactory()->getLocaleClient();
+
+            $response->headers->set('X-Store', APPLICATION_STORE);
+            $response->headers->set('X-Env', APPLICATION_ENV);
+            $response->headers->set('X-Locale', $localeClient->getCurrentLocale());
+
+            $response->setPrivate()->setMaxAge(0);
+
+            $response->headers->addCacheControlDirective('no-cache', true);
+            $response->headers->addCacheControlDirective('no-store', true);
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+        }, static::HEADER_HANDLER_PRIORITY);
 
         return $eventDispatcher;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event A FilterResponseEvent instance
-     *
-     * @return void
-     */
-    public function onKernelResponse(FilterResponseEvent $event): void
-    {
-        if (!$event->isMasterRequest()) {
-            return;
-        }
-
-        $response = $event->getResponse();
-
-        $localeClient = $this->getFactory()->getLocaleClient();
-
-        $response->headers->set('X-Store', APPLICATION_STORE);
-        $response->headers->set('X-Env', APPLICATION_ENV);
-        $response->headers->set('X-Locale', $localeClient->getCurrentLocale());
-
-        $response->setPrivate()->setMaxAge(0);
-
-        $response->headers->addCacheControlDirective('no-cache', true);
-        $response->headers->addCacheControlDirective('no-store', true);
-        $response->headers->addCacheControlDirective('must-revalidate', true);
     }
 }

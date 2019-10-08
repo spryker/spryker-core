@@ -13,6 +13,7 @@ use Spryker\Client\ShoppingListProductOptionConnector\ShoppingList\ShoppingListI
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ShoppingListProductOptionConnector

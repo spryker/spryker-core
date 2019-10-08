@@ -17,7 +17,7 @@ interface CmsStorageToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionDataTransfer
      */
-    public function extractCmsVersionDataTransfer($cmsPageData);
+    public function extractCmsVersionDataTransfer(string $cmsPageData): CmsVersionDataTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsVersionDataTransfer $cmsVersionDataTransfer

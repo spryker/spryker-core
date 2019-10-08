@@ -34,7 +34,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -48,7 +48,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -134,7 +134,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +148,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -177,7 +177,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -193,7 +193,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -209,7 +209,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -225,7 +225,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -241,7 +241,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -260,7 +260,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -276,7 +276,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -294,7 +294,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -310,7 +310,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -326,7 +326,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -342,7 +342,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -358,7 +358,7 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

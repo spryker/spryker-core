@@ -4,23 +4,23 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductQuantity">
-        <property name="idProductQuantity" type="int" />
-        <property name="fkProduct" type="int" />
-        <property name="quantityMin" type="int" />
-        <property name="quantityMax" type="int" />
-        <property name="quantityInterval" type="int" />
-        <property name="product" type="ProductConcrete" />
+        <property name="idProductQuantity" type="int"/>
+        <property name="fkProduct" type="int"/>
+        <property name="quantityMin" type="int"/>
+        <property name="quantityMax" type="int"/>
+        <property name="quantityInterval" type="int"/>
+        <property name="product" type="ProductConcrete"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" type="string" />
-        <property name="quantity" type="int" />
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Quote">

@@ -12,6 +12,7 @@ use SprykerTest\Client\ZedRequest\Client\Fixture\CommunicationObject;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ZedRequest

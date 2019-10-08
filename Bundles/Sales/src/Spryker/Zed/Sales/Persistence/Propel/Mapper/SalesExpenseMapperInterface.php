@@ -14,8 +14,9 @@ interface SalesExpenseMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesExpense $salesExpenseEntity
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpense
      */
-    public function mapExpenseTransferToSalesExpenseEntity(ExpenseTransfer $expenseTransfer): SpySalesExpense;
+    public function mapExpenseTransferToSalesExpenseEntity(ExpenseTransfer $expenseTransfer, SpySalesExpense $salesExpenseEntity): SpySalesExpense;
 }

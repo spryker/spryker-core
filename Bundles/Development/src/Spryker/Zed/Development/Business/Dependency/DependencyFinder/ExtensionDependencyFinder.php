@@ -26,6 +26,11 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
     protected $moduleFinderFacade;
 
     /**
+     * @var \Zend\Filter\FilterChain|null
+     */
+    protected $filter;
+
+    /**
      * @param \Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade
      */
     public function __construct(DevelopmentToModuleFinderFacadeInterface $moduleFinderFacade)
@@ -67,7 +72,8 @@ class ExtensionDependencyFinder extends AbstractFileDependencyFinder
         $moduleExtensionKey = sprintf('%s.%sExtension', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
 
         if ($this->hasExtensionModule($moduleExtensionKey)) {
-            $dependencyContainer->addDependency(sprintf('%sExtension', $moduleTransfer->getName()), $this->getType());
+            $composerName = $this->buildComposerName($moduleTransfer->getOrganization()->getName(), sprintf('%sExtension', $moduleTransfer->getName()));
+            $dependencyContainer->addDependency($composerName, $this->getType());
         }
 
         $this->executedModules[spl_object_hash($moduleTransfer)] = true;

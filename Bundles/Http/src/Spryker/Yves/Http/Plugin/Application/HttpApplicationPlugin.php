@@ -47,9 +47,9 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         $this->setTrustedProxies();
         $this->setTrustedHosts();
 
-        $container = $this->addKernelService($container);
-        $container = $this->addRequestStackService($container);
-        $container = $this->addRequestContextService($container);
+        $container = $this->addHttpKernel($container);
+        $container = $this->addRequestStack($container);
+        $container = $this->addRequestContext($container);
         $container = $this->addCookie($container);
 
         return $container;
@@ -90,13 +90,13 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function addKernelService(ContainerInterface $container): ContainerInterface
+    protected function addHttpKernel(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_KERNEL, function (ContainerInterface $container) {
             return new HttpKernel(
-                $this->getEventDispatcherService($container),
-                $this->getResolverService($container),
-                $this->getRequestStackService($container)
+                $this->getEventDispatcher($container),
+                $this->getResolver($container),
+                $this->getRequestStack($container)
             );
         });
 
@@ -108,7 +108,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function addRequestStackService(ContainerInterface $container): ContainerInterface
+    protected function addRequestStack(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_REQUEST_STACK, function () {
             return new RequestStack();
@@ -122,7 +122,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function addRequestContextService(ContainerInterface $container): ContainerInterface
+    protected function addRequestContext(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_REQUEST_CONTEXT, function () {
             $context = new RequestContext();
@@ -141,7 +141,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function getEventDispatcherService(ContainerInterface $container): EventDispatcherInterface
+    protected function getEventDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
         return $container->get(static::SERVICE_EVENT_DISPATCHER);
     }
@@ -151,7 +151,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface
      */
-    protected function getResolverService(ContainerInterface $container): ControllerResolverInterface
+    protected function getResolver(ContainerInterface $container): ControllerResolverInterface
     {
         return $container->get(static::SERVICE_CONTROLLER_RESOLVER);
     }
@@ -161,7 +161,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Symfony\Component\HttpFoundation\RequestStack
      */
-    protected function getRequestStackService(ContainerInterface $container): RequestStack
+    protected function getRequestStack(ContainerInterface $container): RequestStack
     {
         return $container->get(static::SERVICE_REQUEST_STACK);
     }

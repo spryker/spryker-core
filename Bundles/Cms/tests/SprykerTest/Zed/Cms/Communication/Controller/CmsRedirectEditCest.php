@@ -12,6 +12,7 @@ use SprykerTest\Zed\Cms\PageObject\CmsRedirectListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms

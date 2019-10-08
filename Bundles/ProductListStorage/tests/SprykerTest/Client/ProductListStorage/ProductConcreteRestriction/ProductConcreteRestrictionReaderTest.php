@@ -17,6 +17,7 @@ use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductL
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ProductListStorage
@@ -160,7 +161,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
      * @param int[] $whiteListIds
      * @param int[] $blackListIds
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader;
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface;
      */
     protected function createProductListProductConcreteStorageReader(array $whiteListIds, array $blackListIds)
     {

@@ -13,6 +13,7 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ZedRequest

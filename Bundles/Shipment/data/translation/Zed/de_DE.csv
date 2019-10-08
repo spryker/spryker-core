@@ -20,3 +20,4 @@ Save,Speichern
 "Shipment method ""%s"" was created successfully.","Versandart ""%s"" wurde erfolgreich erstellt."
 "Shipment method ""%s"" was updated successfully.","Versandart ""%s"" wurde erfolgreich aktualisiert."
 "Shipment Methods",Versandarten
+"Shipment method with such name already exists for selected shipment provider.","Die Lieferart mit diesem Namen ist für den ausgewählten Lieferanbieter bereits vorhanden."

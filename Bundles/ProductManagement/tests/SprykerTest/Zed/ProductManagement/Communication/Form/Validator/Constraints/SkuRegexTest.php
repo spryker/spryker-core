@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Validation;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductManagement

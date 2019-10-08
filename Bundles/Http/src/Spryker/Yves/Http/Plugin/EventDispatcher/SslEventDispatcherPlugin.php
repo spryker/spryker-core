@@ -22,6 +22,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class SslEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    protected const EVENT_PRIORITY_ON_KERNEL_REQUEST = 255;
+
     /**
      * {@inheritdoc}
      * - Adds a listener to force SSL if enabled.
@@ -36,28 +38,20 @@ class SslEventDispatcherPlugin extends AbstractPlugin implements EventDispatcher
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         if ($this->getConfig()->isSslEnabled()) {
-            $eventDispatcher->addListener(KernelEvents::REQUEST, [$this, 'onKernelRequest'], 255);
+            $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) {
+                $request = $event->getRequest();
+                if ($this->shouldBeSsl($request)) {
+                    $fakeRequest = clone $request;
+                    $fakeRequest->server->set('HTTPS', true);
+
+                    return new RedirectResponse($fakeRequest->getUri(), 301);
+                }
+
+                return null;
+            }, static::EVENT_PRIORITY_ON_KERNEL_REQUEST);
         }
 
         return $eventDispatcher;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|null
-     */
-    public function onKernelRequest(GetResponseEvent $event): ?RedirectResponse
-    {
-        $request = $event->getRequest();
-        if ($this->shouldBeSsl($request)) {
-            $fakeRequest = clone $request;
-            $fakeRequest->server->set('HTTPS', true);
-
-            return new RedirectResponse($fakeRequest->getUri(), 301);
-        }
-
-        return null;
     }
 
     /**

@@ -13,6 +13,7 @@ use Spryker\Shared\Log\Sanitizer\Sanitizer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Application

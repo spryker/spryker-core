@@ -18,7 +18,7 @@ class AvailabilityConfig extends AbstractBundleConfig
     protected const PARAMETER_PRODUCT_SKU_AVAILABILITY = '%sku%';
 
     /**
-     * @return string
+     * @return int
      */
     public function getProductUnavailableErrorCode()
     {

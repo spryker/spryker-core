@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CountryClient extends AbstractClient implements CountryClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

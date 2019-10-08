@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\UrlStorage;
 
+use Generated\Shared\Transfer\UrlRedirectStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,12 +16,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class UrlStorageClient extends AbstractClient implements UrlStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $url
-     * @param string $localeName
+     * @param string|null $localeName
      *
      * @return array
      */
@@ -33,7 +34,7 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,5 +48,21 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
             ->getFactory()
             ->createUrlStorageReader()
             ->findUrlStorageTransferByUrl($url);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idRedirectUrl
+     *
+     * @return \Generated\Shared\Transfer\UrlRedirectStorageTransfer|null
+     */
+    public function findUrlRedirectStorageById(int $idRedirectUrl): ?UrlRedirectStorageTransfer
+    {
+        return $this->getFactory()
+            ->createUrlRedirectStorageReader()
+            ->findUrlRedirectStorageById($idRedirectUrl);
     }
 }

@@ -22,7 +22,7 @@ class PriceProductConcreteStorageUnpublishListener extends AbstractPlugin implem
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

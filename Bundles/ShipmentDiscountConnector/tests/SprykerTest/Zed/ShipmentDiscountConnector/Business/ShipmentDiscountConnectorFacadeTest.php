@@ -16,12 +16,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
+use Spryker\Shared\ShipmentDiscountConnector\ShipmentDiscountConnectorConfig;
 use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\ShipmentCarrierDecisionRulePlugin;
 use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\ShipmentMethodDecisionRulePlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentDiscountConnector
@@ -50,7 +51,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
         ]);
 
         $itemTransfer = new ItemTransfer();
@@ -86,7 +87,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
-                'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             ]);
 
         $itemTransfer = new ItemTransfer();
@@ -117,7 +118,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
             'taxRate' => 19,
             'quantity' => 1,
@@ -154,7 +155,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
         ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -190,7 +191,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
-                'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -220,7 +221,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
         ]);
 
@@ -255,7 +256,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
         ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -291,7 +292,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
 
         $expenseTransfer = (new ExpenseTransfer())
             ->fromArray([
-                'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+                'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             ]);
 
         $quoteTransfer = (new QuoteTransfer())
@@ -321,7 +322,7 @@ class ShipmentDiscountConnectorFacadeTest extends Test
         $itemTransfer = new ItemTransfer();
         $expenseTransfer = new ExpenseTransfer();
         $expenseTransfer->fromArray([
-            'type' => ShipmentConstants::SHIPMENT_EXPENSE_TYPE,
+            'type' => ShipmentDiscountConnectorConfig::SHIPMENT_EXPENSE_TYPE,
             'unitGrossPrice' => 2500,
         ]);
 

@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProduct
