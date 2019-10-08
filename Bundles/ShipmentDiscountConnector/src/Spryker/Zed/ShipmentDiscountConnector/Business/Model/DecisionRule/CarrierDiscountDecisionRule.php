@@ -76,7 +76,7 @@ class CarrierDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfa
     {
         $idShipmentCarrier = $this->getIdShipmentCarrierByQuote($quoteTransfer);
 
-        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
+        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, (string)$idShipmentCarrier)) {
             return true;
         }
 
