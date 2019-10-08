@@ -14,10 +14,14 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterf
 /**
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
+ * @method \Spryker\Zed\MerchantProfile\Communication\MerchantProfileCommunicationFactory getFactory()
  */
 class MerchantProfilePostSavePlugin extends AbstractPlugin implements MerchantPostSavePluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Saves merchant profile after the merchant is saved.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
@@ -28,10 +32,11 @@ class MerchantProfilePostSavePlugin extends AbstractPlugin implements MerchantPo
     {
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-
-        $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
-        $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
-        $merchantProfileTransfer = $this->getFacade()->saveMerchantProfile($merchantProfileTransfer);
+        if ($merchantProfileTransfer->getIdMerchantProfile() === null) {
+            $merchantProfileTransfer = $this->getFacade()->createMerchantProfile($merchantProfileTransfer);
+        } else {
+            $merchantProfileTransfer = $this->getFacade()->updateMerchantProfile($merchantProfileTransfer);
+        }
         $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
 
         return $merchantTransfer;

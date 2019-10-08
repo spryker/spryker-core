@@ -38,6 +38,7 @@ class MerchantProfileDataImportPluginTest extends Unit
      */
     public function testMerchantProfileDataImportFacade(): void
     {
+        // Arrange
         $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
         if ($merchantEntity === null) {
             $this->tester->haveMerchant([
@@ -53,9 +54,11 @@ class MerchantProfileDataImportPluginTest extends Unit
 
         $dataImportPlugin = new MerchantProfileDataImportPlugin();
 
+        // Act
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
         $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->assertNotEmpty($merchantEntity);
@@ -67,7 +70,13 @@ class MerchantProfileDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
+        // Arrange
         $dataImportPlugin = new MerchantProfileDataImportPlugin();
-        $this->assertSame(MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE, $dataImportPlugin->getImportType());
+
+        // Act
+        $importType = $dataImportPlugin->getImportType();
+
+        // Assert
+        $this->assertSame(MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE, $importType);
     }
 }

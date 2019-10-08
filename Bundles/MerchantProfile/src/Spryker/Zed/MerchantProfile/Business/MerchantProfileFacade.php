@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -29,11 +28,27 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    public function createMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileWriter()
-            ->saveMerchantProfile($merchantProfileTransfer);
+            ->create($merchantProfileTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function updateMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantProfileWriter()
+            ->update($merchantProfileTransfer);
     }
 
     /**
@@ -66,21 +81,5 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
         return $this->getFactory()
             ->createMerchantProfileReader()
             ->find($merchantProfileCriteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function hydrateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantProfileHydrator()
-            ->hydrate($merchantTransfer);
     }
 }

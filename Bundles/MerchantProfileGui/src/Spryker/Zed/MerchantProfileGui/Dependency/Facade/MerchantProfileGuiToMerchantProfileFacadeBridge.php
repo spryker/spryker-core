@@ -30,9 +30,9 @@ class MerchantProfileGuiToMerchantProfileFacadeBridge implements MerchantProfile
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    public function updateMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        return $this->merchantProfileFacade->saveMerchantProfile($merchantProfileTransfer);
+        return $this->merchantProfileFacade->updateMerchantProfile($merchantProfileTransfer);
     }
 
     /**

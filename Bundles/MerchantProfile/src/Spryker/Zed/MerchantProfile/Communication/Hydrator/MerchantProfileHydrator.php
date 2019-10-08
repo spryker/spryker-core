@@ -5,34 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
+namespace Spryker\Zed\MerchantProfile\Communication\Hydrator;
 
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
+use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface;
 
 class MerchantProfileHydrator implements MerchantProfileHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface
+     * @var \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface
      */
-    protected $merchantProfileReader;
+    protected $merchantProfileRepository;
 
     /**
-     * @var \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @param \Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface $merchantProfileReader
-     * @param \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface $merchantProfileRepository
      */
     public function __construct(
-        MerchantProfileReaderInterface $merchantProfileReader,
-        MerchantProfileToLocaleFacadeInterface $localeFacade
+        MerchantProfileRepositoryInterface $merchantProfileRepository
     ) {
-        $this->merchantProfileReader = $merchantProfileReader;
-        $this->localeFacade = $localeFacade;
+        $this->merchantProfileRepository = $merchantProfileRepository;
     }
 
     /**
@@ -43,7 +35,7 @@ class MerchantProfileHydrator implements MerchantProfileHydratorInterface
     public function hydrate(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantProfileCriteriaFilterTransfer = $this->createMerchantProfileCriteriaFilterTransfer($merchantTransfer);
-        $merchantProfileTransfer = $this->merchantProfileReader->findOne($merchantProfileCriteriaFilterTransfer);
+        $merchantProfileTransfer = $this->merchantProfileRepository->findOne($merchantProfileCriteriaFilterTransfer);
 
         if ($merchantProfileTransfer !== null) {
             $merchantTransfer->setMerchantProfile($merchantProfileTransfer);

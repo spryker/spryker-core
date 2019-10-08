@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilder;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
-use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydrator;
-use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydratorInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
@@ -53,32 +51,21 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileHydratorInterface
-     */
-    public function createMerchantProfileHydrator(): MerchantProfileHydratorInterface
-    {
-        return new MerchantProfileHydrator(
-            $this->createMerchantProfileReader(),
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface
      */
-    protected function createMerchantProfileGlossaryWriter(): MerchantProfileGlossaryWriterInterface
+    public function createMerchantProfileGlossaryWriter(): MerchantProfileGlossaryWriterInterface
     {
         return new MerchantProfileGlossaryWriter(
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
-            $this->createMerchantProdileGlossaryKeyBuilder()
+            $this->createMerchantProfileGlossaryKeyBuilder()
         );
     }
 
     /**
      * @return \Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface
      */
-    protected function createMerchantProdileGlossaryKeyBuilder(): MerchantProfileGlossaryKeyBuilderInterface
+    public function createMerchantProfileGlossaryKeyBuilder(): MerchantProfileGlossaryKeyBuilderInterface
     {
         return new MerchantProfileGlossaryKeyBuilder();
     }
@@ -86,7 +73,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade(): MerchantProfileToGlossaryFacadeInterface
+    public function getGlossaryFacade(): MerchantProfileToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_GLOSSARY);
     }
@@ -94,7 +81,7 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): MerchantProfileToLocaleFacadeInterface
+    public function getLocaleFacade(): MerchantProfileToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_LOCALE);
     }

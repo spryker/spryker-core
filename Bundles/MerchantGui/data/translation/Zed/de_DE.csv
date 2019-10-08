@@ -30,3 +30,4 @@ Name,Name
 "Contact person title","Titel der Kontaktperson"
 Email,Email
 General,Allgemein
+merchant_gui.error_wrong_params,"Status kann nicht aktualisiert werden."

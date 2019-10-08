@@ -51,10 +51,24 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->merchantProfileEntityManager->saveMerchantProfile($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->merchantProfileEntityManager->create($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer);
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
+        $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
         $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer);
 
         return $merchantProfileTransfer;

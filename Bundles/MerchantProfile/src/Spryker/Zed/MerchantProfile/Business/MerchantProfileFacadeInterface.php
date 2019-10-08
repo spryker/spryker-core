@@ -10,13 +10,15 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileFacadeInterface
 {
     /**
      * Specification:
-     * - Saves merchant profile data provided by MerchantTransfer.
+     * - Saves MerchantProfile glossary attributes.
+     * - Generates MerchantProfile glossary keys.
+     * - Creates merchant profile data provided by MerchantTransfer.
+     * - Returns created MerchantProfileTransfer.
      *
      * @api
      *
@@ -24,7 +26,22 @@ interface MerchantProfileFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    public function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+    public function createMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+
+    /**
+     * Specification:
+     * - Saves MerchantProfile glossary attributes.
+     * - Generates MerchantProfile glossary keys if doesn't exist.
+     * - Updates merchant profile data provided by MerchantTransfer.
+     * - Returns updated MerchantProfileTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    public function updateMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
 
     /**
      * Specification:
@@ -49,16 +66,4 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
     public function find(?MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer = null): MerchantProfileCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Hydrates merchant by merchant profile data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function hydrateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
 }

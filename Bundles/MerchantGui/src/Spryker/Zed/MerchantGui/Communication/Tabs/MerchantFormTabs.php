@@ -31,9 +31,10 @@ class MerchantFormTabs extends AbstractTabs
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function build(TabsViewTransfer $tabsViewTransfer)
+    protected function build(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
-        $this->addGeneralTab($tabsViewTransfer);
+        $this->addGeneralTab($tabsViewTransfer)
+            ->setFooter($tabsViewTransfer);
 
         return $this->executeMerchantFormTabExpanderPlugins($tabsViewTransfer);
     }
@@ -67,5 +68,18 @@ class MerchantFormTabs extends AbstractTabs
         }
 
         return $tabsViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function setFooter(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabsViewTransfer->setFooterTemplate('@MerchantGui/_partials/_form-submit.twig')
+            ->setIsNavigable(true);
+
+        return $this;
     }
 }
