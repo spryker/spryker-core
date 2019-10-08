@@ -57,6 +57,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\Pric
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Resolver\PriceProductScheduleApplierByProductTypeResolverInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Updater\PriceProductScheduleUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Updater\PriceProductScheduleUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpander;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreator;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListCreatorInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListFinder;
@@ -65,6 +67,8 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProd
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListImporterInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdater;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\PriceProductScheduleListUpdaterInterface;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Remover\PriceProductScheduleListRemover;
+use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Remover\PriceProductScheduleListRemoverInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinder;
 use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface;
 use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinder;
@@ -75,6 +79,7 @@ use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToCur
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToProductFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToStoreFacadeInterface;
+use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Service\PriceProductScheduleToUtilCsvServiceInterface;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleDependencyProvider;
 
@@ -200,7 +205,18 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductScheduleListCreator(
             $this->getEntityManager(),
+            $this->createPriceProductScheduleListExpander(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Expander\PriceProductScheduleListUserExpanderInterface
+     */
+    public function createPriceProductScheduleListExpander(): PriceProductScheduleListUserExpanderInterface
+    {
+        return new PriceProductScheduleListUserExpander(
+            $this->getUserFacade()
         );
     }
 
@@ -440,6 +456,14 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToUserFacadeInterface
+     */
+    public function getUserFacade(): PriceProductScheduleToUserFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleDependencyProvider::FACADE_USER);
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Remover\PriceProductScheduleRemoverInterface
      */
     public function createPriceProductScheduleRemover(): PriceProductScheduleRemoverInterface
@@ -473,6 +497,19 @@ class PriceProductScheduleBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductScheduleApplierByProductTypeResolver(),
             $this->createPriceProductScheduleListFinder(),
             $this->createPriceProductScheduleListCreator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleList\Remover\PriceProductScheduleListRemoverInterface
+     */
+    public function createPriceProductScheduleListRemover(): PriceProductScheduleListRemoverInterface
+    {
+        return new PriceProductScheduleListRemover(
+            $this->createPriceProductScheduleRemover(),
+            $this->createPriceProductScheduleListFinder(),
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

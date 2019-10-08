@@ -4,8 +4,8 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CartCodeOperationResult">
-        <property name="quote" type="Quote" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="quote" type="Quote"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

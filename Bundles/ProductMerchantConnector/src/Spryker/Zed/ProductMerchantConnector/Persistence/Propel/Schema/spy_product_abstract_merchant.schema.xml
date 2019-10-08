@@ -5,7 +5,7 @@
           package="src.Orm.Zed.ProductMerchantConnector.Persistence">
 
     <table name="spy_product_abstract_merchant">
-        <column name="id_product_abstract_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_product_abstract_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_merchant" required="true" type="INTEGER"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
 

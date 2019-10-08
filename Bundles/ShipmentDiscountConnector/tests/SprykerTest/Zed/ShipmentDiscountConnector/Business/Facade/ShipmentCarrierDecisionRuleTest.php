@@ -21,6 +21,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentDiscountConnector

@@ -19,6 +19,7 @@
     "spryker/sales-extension": "^1.2.0",
     "spryker/sales-quantity": "^1.0.0 || ^3.0.0",
     "spryker/store": "^1.4.0",
+    "spryker/transfer": "^3.8.0",
     "spryker/util-text": "^1.0.0"
   },
   "require-dev": {

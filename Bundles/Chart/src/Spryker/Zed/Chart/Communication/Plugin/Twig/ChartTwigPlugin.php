@@ -20,7 +20,7 @@ use Twig\Environment;
 class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

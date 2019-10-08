@@ -20,4 +20,4 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryTemplateQuery;
  */
 abstract class AbstractSpyCategoryTemplateQuery extends SpyCategoryTemplateQuery
 {
-} // SpyCategoryTemplateQuery
+}

@@ -46,6 +46,7 @@ use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales

@@ -121,7 +121,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,7 +138,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,11 +154,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @deprecated Please use `getModules()` instead.
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Please use `getModules()` instead.
      *
      * @return array
      */
@@ -168,7 +168,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -361,7 +361,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -376,7 +376,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -384,7 +384,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function listAllModules()
     {
-        return $this->getFactory()->createArchitectureBundleFinder()->find();
+        return $this->getFactory()->createAllModuleFinder()->find();
     }
 
     /**
@@ -400,7 +400,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -412,7 +412,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -427,7 +427,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -442,7 +442,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -456,7 +456,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -470,7 +470,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -484,7 +484,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -498,7 +498,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -512,7 +512,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -526,7 +526,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -538,7 +538,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

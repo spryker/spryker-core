@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductAbstractPackagingStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

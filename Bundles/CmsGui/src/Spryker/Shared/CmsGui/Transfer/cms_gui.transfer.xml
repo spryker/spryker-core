@@ -4,68 +4,72 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CmsPage">
-        <property name="isActive" type="string" />
-        <property name="isSearchable" type="bool" />
-        <property name="fkTemplate" type="int" />
-        <property name="templateName" type="string" />
-        <property name="fkPage" type="int" />
-        <property name="validFrom" type="string" />
-        <property name="validTo" type="string" />
-        <property name="pageAttributes" type="CmsPageAttributes[]" singular="pageAttribute" />
-        <property name="metaAttributes" type="CmsPageMetaAttributes[]" singular="metaAttribute" />
+        <property name="isActive" type="string"/>
+        <property name="isSearchable" type="bool"/>
+        <property name="fkTemplate" type="int"/>
+        <property name="templateName" type="string"/>
+        <property name="fkPage" type="int"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="pageAttributes" type="CmsPageAttributes[]" singular="pageAttribute"/>
+        <property name="metaAttributes" type="CmsPageMetaAttributes[]" singular="metaAttribute"/>
     </transfer>
 
     <transfer name="CmsPageAttributes">
-        <property name="idCmsPageLocalizedAttributes" type="int" />
-        <property name="localeName" type="string" />
-        <property name="idCmsPage" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="name" type="string" />
-        <property name="url" type="string" />
-        <property name="urlPrefix" type="string" />
+        <property name="idCmsPageLocalizedAttributes" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="idCmsPage" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+        <property name="urlPrefix" type="string"/>
     </transfer>
 
     <transfer name="CmsPageMetaAttributes">
-        <property name="idCmsPageLocalizedAttributes" type="int" />
-        <property name="localeName" type="string" />
-        <property name="fkLocale" type="int" />
-        <property name="metaTitle" type="string" />
-        <property name="metaKeywords" type="string" />
-        <property name="metaDescription" type="string" />
+        <property name="idCmsPageLocalizedAttributes" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="fkLocale" type="int"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
     </transfer>
 
     <transfer name="CmsGlossary">
-        <property name="glossaryAttributes" type="CmsGlossaryAttributes[]" singular="glossaryAttribute" />
+        <property name="glossaryAttributes" type="CmsGlossaryAttributes[]" singular="glossaryAttribute"/>
     </transfer>
 
     <transfer name="CmsGlossaryAttributes">
-        <property name="templateName" type="string" />
-        <property name="placeholder" type="string" />
-        <property name="searchOption" type="string" />
-        <property name="fkPage" type="int" />
-        <property name="fkCmsGlossaryMapping" type="int" />
-        <property name="translations" type="CmsPlaceholderTranslation[]" singular="translation" />
-        <property name="translationKey" type="string" />
-        <property name="fkGlossaryKey" type="int" />
+        <property name="templateName" type="string"/>
+        <property name="placeholder" type="string"/>
+        <property name="searchOption" type="string"/>
+        <property name="fkPage" type="int"/>
+        <property name="fkCmsGlossaryMapping" type="int"/>
+        <property name="translations" type="CmsPlaceholderTranslation[]" singular="translation"/>
+        <property name="translationKey" type="string"/>
+        <property name="fkGlossaryKey" type="int"/>
     </transfer>
 
     <transfer name="CmsPlaceholderTranslation">
-        <property name="localeName" type="string" />
-        <property name="translation" type="string" />
-        <property name="fkLocale" type="int" />
+        <property name="localeName" type="string"/>
+        <property name="translation" type="string"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="CmsVersion">
-        <property name="idCmsVersion" type="int" />
-        <property name="fkCmsPage" type="int" />
-        <property name="version" type="int" />
-        <property name="versionName" type="string" />
-        <property name="data" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
-        <property name="fkUser" type="int" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string" />
+        <property name="idCmsVersion" type="int"/>
+        <property name="fkCmsPage" type="int"/>
+        <property name="version" type="int"/>
+        <property name="versionName" type="string"/>
+        <property name="data" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="fkUser" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

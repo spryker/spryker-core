@@ -13,10 +13,14 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchSuggestionsProductsResourceRelationshipExpander implements CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
 {
-    /** @deprecated Will be removed in next major release. */
+    /**
+     * @deprecated Will be removed in next major release.
+     */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
     protected const KEY_ABSTRACT_SKU_CAMEL_CASE = 'abstractSku';
-    /** @deprecated Will be removed in next major release. */
+    /**
+     * @deprecated Will be removed in next major release.
+     */
     protected const KEY_PRODUCTS = 'products';
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 

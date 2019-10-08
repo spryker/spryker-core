@@ -17,6 +17,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedQueryExpander
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

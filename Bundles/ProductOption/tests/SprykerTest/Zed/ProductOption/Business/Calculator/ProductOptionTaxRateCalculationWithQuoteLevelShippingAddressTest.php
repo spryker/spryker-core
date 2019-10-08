@@ -24,6 +24,7 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterfac
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption

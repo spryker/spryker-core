@@ -20,6 +20,7 @@ use SprykerTest\Service\Flysystem\Stub\FlysystemConfigStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Flysystem

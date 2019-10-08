@@ -13,6 +13,7 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductQuantityStorage

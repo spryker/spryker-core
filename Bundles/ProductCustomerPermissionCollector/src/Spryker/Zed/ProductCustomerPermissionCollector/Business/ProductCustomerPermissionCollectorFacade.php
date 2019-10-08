@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements ProductCustomerPermissionCollectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class ProductCustomerPermissionCollectorFacade extends AbstractFacade implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

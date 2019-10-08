@@ -33,7 +33,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     protected const COL_COMPANY_BUSINESS_UNIT_NAME = MerchantRelationshipProductListGuiRepositoryInterface::COL_COMPANY_BUSINESS_UNIT_NAME;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +66,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

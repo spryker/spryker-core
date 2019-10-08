@@ -22,7 +22,6 @@ use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 class ShoppingListWriter implements ShoppingListWriterInterface
 {
     use TransactionTrait;
-
     use PermissionAwareTrait;
 
     protected const DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';

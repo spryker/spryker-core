@@ -29,6 +29,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

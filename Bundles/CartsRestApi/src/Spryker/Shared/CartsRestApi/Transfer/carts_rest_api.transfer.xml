@@ -4,96 +4,96 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCartsAttributes">
-        <property name="priceMode" type="string" restRequestParameter="required" />
-        <property name="currency" type="string" restRequestParameter="required" />
-        <property name="store" type="string" restRequestParameter="required" />
-        <property name="discounts" type="RestCartsDiscounts[]" singular="discount" />
-        <property name="totals" type="RestCartsTotals" />
+        <property name="priceMode" type="string" restRequestParameter="required"/>
+        <property name="currency" type="string" restRequestParameter="required"/>
+        <property name="store" type="string" restRequestParameter="required"/>
+        <property name="discounts" type="RestCartsDiscounts[]" singular="discount"/>
+        <property name="totals" type="RestCartsTotals"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
-        <property name="sku" type="string" restRequestParameter="required" />
-        <property name="quantity" type="int" restRequestParameter="required" />
-        <property name="groupKey" type="string" />
-        <property name="abstractSku" type="string" />
-        <property name="amount" type="int" />
-        <property name="calculations" type="RestCartItemCalculations" />
-        <property name="quoteUuid" type="string" deprecated="Will be removed with next major" />
-        <property name="customerReference" type="string" deprecated="Will be removed with next major" />
-        <property name="customer" type="Customer" deprecated="Will be removed with next major" />
+        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="quantity" type="int" restRequestParameter="required"/>
+        <property name="groupKey" type="string"/>
+        <property name="abstractSku" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="calculations" type="RestCartItemCalculations"/>
+        <property name="quoteUuid" type="string" deprecated="Will be removed with next major"/>
+        <property name="customerReference" type="string" deprecated="Will be removed with next major"/>
+        <property name="customer" type="Customer" deprecated="Will be removed with next major"/>
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="sku" type="string" restRequestParameter="required" />
-        <property name="quantity" type="int" restRequestParameter="required" />
-        <property name="groupKey" type="string" />
-        <property name="abstractSku" type="string" />
-        <property name="amount" type="int" />
-        <property name="calculations" type="RestCartItemCalculations" />
+        <property name="sku" type="string" restRequestParameter="required"/>
+        <property name="quantity" type="int" restRequestParameter="required"/>
+        <property name="groupKey" type="string"/>
+        <property name="abstractSku" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="calculations" type="RestCartItemCalculations"/>
     </transfer>
 
     <transfer name="RestCartVouchersAttributes">
-        <property name="code" type="string" />
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
-        <property name="customerReference" type="string" />
+        <property name="customerReference" type="string"/>
     </transfer>
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="RestCartsDiscounts">
-        <property name="displayName" type="string" />
-        <property name="amount" type="int" />
-        <property name="code" type="string" />
+        <property name="displayName" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="RestCartsTotals">
-        <property name="expenseTotal" type="int" />
-        <property name="discountTotal" type="int" />
-        <property name="taxTotal" type="int" />
-        <property name="subtotal" type="int" />
-        <property name="grandTotal" type="int" />
+        <property name="expenseTotal" type="int"/>
+        <property name="discountTotal" type="int"/>
+        <property name="taxTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+        <property name="grandTotal" type="int"/>
     </transfer>
 
     <transfer name="RestCartItemCalculations">
-        <property name="unitPrice" type="int" />
-        <property name="sumPrice" type="int" />
+        <property name="unitPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
 
-        <property name="taxRate" type="int" />
+        <property name="taxRate" type="int"/>
 
-        <property name="unitNetPrice" type="int" />
-        <property name="sumNetPrice" type="int" />
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
 
-        <property name="unitGrossPrice" type="int" />
-        <property name="sumGrossPrice" type="int" />
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
 
-        <property name="unitTaxAmountFullAggregation" type="int" />
-        <property name="sumTaxAmountFullAggregation" type="int" />
+        <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
 
-        <property name="sumSubtotalAggregation" type="int" />
-        <property name="unitSubtotalAggregation" type="int" />
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
 
-        <property name="unitProductOptionPriceAggregation" type="int" />
-        <property name="sumProductOptionPriceAggregation" type="int" />
+        <property name="unitProductOptionPriceAggregation" type="int"/>
+        <property name="sumProductOptionPriceAggregation" type="int"/>
 
-        <property name="unitDiscountAmountAggregation" type="int" />
-        <property name="sumDiscountAmountAggregation" type="int" />
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
 
-        <property name="unitDiscountAmountFullAggregation" type="int" />
-        <property name="sumDiscountAmountFullAggregation" type="int" />
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="sumDiscountAmountFullAggregation" type="int"/>
 
-        <property name="unitPriceToPayAggregation" type="int" />
-        <property name="sumPriceToPayAggregation" type="int" />
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="uuid" type="string" />
-        <property name="customerReference" type="string" />
-        <property name="companyUserId" type="int" />
-        <property name="name" type="string" />
+        <property name="uuid" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="companyUserId" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -101,15 +101,15 @@
     </transfer>
 
     <transfer name="AssignGuestQuoteRequest">
-        <property name="anonymousCustomerReference" type="string" />
-        <property name="customerReference" type="string" />
+        <property name="anonymousCustomerReference" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="sku" type="string" />
-        <property name="quantity" type="int" />
-        <property name="quoteUuid" type="string" />
-        <property name="customer" type="Customer" />
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="quoteUuid" type="string"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -124,13 +124,18 @@
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
         <property name="idCompanyUser" type="int"/>
-        <property name="surrogateIdentifier" type="int" />
+        <property name="surrogateIdentifier" type="int"/>
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
         <property name="idStore" type="int"/>
         <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="OauthResponse">
+        <property name="anonymousCustomerReference" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>

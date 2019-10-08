@@ -15,6 +15,7 @@ use Spryker\Zed\Locale\Business\LocaleFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary

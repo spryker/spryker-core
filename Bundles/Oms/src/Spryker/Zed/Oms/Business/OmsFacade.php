@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -21,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +38,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -54,7 +55,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -71,7 +72,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +88,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +106,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +123,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +141,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -154,7 +155,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -168,7 +169,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -184,7 +185,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -203,7 +204,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -224,7 +225,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -240,7 +241,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -257,7 +258,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -274,7 +275,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -291,9 +292,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      *
@@ -307,7 +310,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -324,7 +327,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -341,9 +344,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $stateName
      *
@@ -357,7 +362,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -373,7 +378,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -387,7 +392,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -403,7 +408,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -424,7 +429,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -444,7 +449,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -465,7 +470,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -477,7 +482,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -493,7 +498,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -509,7 +514,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -525,7 +530,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -561,7 +566,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -575,7 +580,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -590,7 +595,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -602,7 +607,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -617,7 +622,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -629,7 +634,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -644,7 +649,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -662,14 +667,28 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getOmsReservedStateCollection()` instead.
      *
      * @return string[]
      */
     public function getReservedStateNames(): array
     {
         return $this->getFactory()->createUtilReservation()->getReservedStateNames();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
+     */
+    public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
+    {
+        return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
     }
 }

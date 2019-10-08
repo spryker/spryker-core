@@ -4,26 +4,26 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Attribute">
-        <property name="idCatalogAttribute" type="int" />
-        <property name="name" type="string" />
+        <property name="idCatalogAttribute" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="AttributeSet">
-        <property name="idCatalogAttributeSet" type="int" />
-        <property name="name" type="string" />
+        <property name="idCatalogAttributeSet" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="AttributeSetGroup">
-        <property name="idCatalogAttributeSetGroup" type="int" />
-        <property name="fkCatalogGroup" type="int" />
-        <property name="fkCatalogValueType" type="int" />
+        <property name="idCatalogAttributeSetGroup" type="int"/>
+        <property name="fkCatalogGroup" type="int"/>
+        <property name="fkCatalogValueType" type="int"/>
     </transfer>
 
     <transfer name="ValueType">
-        <property name="idCatalogValueType" type="int" />
-        <property name="variety" type="string" />
-        <property name="fkCatalogAttribute" type="int" />
-        <property name="fkCatalogAttributeSet" type="int" />
+        <property name="idCatalogValueType" type="int"/>
+        <property name="variety" type="string"/>
+        <property name="fkCatalogAttribute" type="int"/>
+        <property name="fkCatalogAttributeSet" type="int"/>
     </transfer>
 
 </transfers>

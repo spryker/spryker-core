@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

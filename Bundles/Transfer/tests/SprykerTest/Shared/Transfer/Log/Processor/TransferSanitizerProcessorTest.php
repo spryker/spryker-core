@@ -14,6 +14,7 @@ use SprykerTest\Shared\Transfer\Log\Processor\Fixtures\ComplexTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Transfer

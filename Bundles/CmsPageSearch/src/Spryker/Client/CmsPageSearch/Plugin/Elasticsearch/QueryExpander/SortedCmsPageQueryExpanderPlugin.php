@@ -18,7 +18,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class SortedCmsPageQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds possibility to sort cms pages search result. Options are provided by cms page sort config builder.
      *
      * @api

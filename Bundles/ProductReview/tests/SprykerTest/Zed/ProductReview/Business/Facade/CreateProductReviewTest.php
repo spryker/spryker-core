@@ -16,6 +16,7 @@ use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReview

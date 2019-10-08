@@ -11,6 +11,7 @@ use SprykerTest\Zed\Glossary\GlossaryCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary

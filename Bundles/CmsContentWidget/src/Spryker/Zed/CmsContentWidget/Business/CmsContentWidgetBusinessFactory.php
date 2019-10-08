@@ -65,7 +65,7 @@ class CmsContentWidgetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface[]
+     * @return \Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
      */
     protected function getCmsContentWidgetParameterMapperPlugins()
     {

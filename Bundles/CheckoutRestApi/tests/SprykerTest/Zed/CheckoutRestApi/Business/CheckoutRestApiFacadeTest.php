@@ -36,6 +36,7 @@ use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CheckoutRestApi

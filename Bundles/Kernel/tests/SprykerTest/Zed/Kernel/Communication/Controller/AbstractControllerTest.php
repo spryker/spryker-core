@@ -13,6 +13,7 @@ use SprykerTest\Zed\Kernel\Communication\Controller\Fixtures\MockController;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

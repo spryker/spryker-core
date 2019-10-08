@@ -11,6 +11,7 @@ use SprykerTest\Zed\Category\CategoryCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category

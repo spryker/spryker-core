@@ -17,7 +17,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class ExternalDocumentation extends AbstractObject
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {

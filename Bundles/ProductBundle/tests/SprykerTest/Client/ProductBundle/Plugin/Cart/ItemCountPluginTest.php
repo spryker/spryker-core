@@ -14,6 +14,7 @@ use Spryker\Client\ProductBundle\Plugin\Cart\ItemCountPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ProductBundle

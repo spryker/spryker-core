@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class AgentClient extends AbstractClient implements AgentClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class AgentClient extends AbstractClient implements AgentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class AgentClient extends AbstractClient implements AgentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -63,7 +63,7 @@ class AgentClient extends AbstractClient implements AgentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -79,7 +79,7 @@ class AgentClient extends AbstractClient implements AgentClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -21,6 +21,7 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product

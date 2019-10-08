@@ -24,7 +24,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class ProductMeasurementUnitEventResourceRepositoryPlugin extends AbstractPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

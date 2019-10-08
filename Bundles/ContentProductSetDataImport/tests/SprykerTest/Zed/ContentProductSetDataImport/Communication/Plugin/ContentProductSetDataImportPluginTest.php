@@ -20,6 +20,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentProductSetDataImport

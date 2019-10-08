@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AvailabilityNotificationFacade extends AbstractFacade implements AvailabilityNotificationFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,7 +107,7 @@ class AvailabilityNotificationFacade extends AbstractFacade implements Availabil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FormatAuthenticationErrorResponseHeadersPlugin extends AbstractPlugin implements FormatResponseHeadersPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

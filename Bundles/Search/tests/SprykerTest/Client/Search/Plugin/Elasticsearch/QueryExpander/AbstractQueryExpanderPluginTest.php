@@ -29,6 +29,7 @@ use SprykerTest\Client\Search\Plugin\Elasticsearch\Fixtures\BaseQueryPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

@@ -18,6 +18,7 @@ use Spryker\Shared\Money\Parser\Parser;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money

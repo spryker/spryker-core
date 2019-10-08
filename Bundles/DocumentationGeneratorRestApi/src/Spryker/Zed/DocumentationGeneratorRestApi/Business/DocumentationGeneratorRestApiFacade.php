@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class DocumentationGeneratorRestApiFacade extends AbstractFacade implements DocumentationGeneratorRestApiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
