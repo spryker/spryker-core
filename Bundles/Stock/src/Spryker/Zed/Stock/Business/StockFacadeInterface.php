@@ -9,6 +9,8 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -68,12 +70,14 @@ interface StockFacadeInterface
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
+     * @api
+     *
+     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacadeInterface::createStock() instead.
+     *
      * Specification:
      * - Persists a new stock type entity to database.
      * - Touches the newly created stock type.
      * - Returns the ID of the new stock type entity.
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -257,4 +261,30 @@ interface StockFacadeInterface
      * @return array
      */
     public function getStoreToWarehouseMapping();
+
+    /**
+     * Specification:
+     *  - Finds stock by given stock name.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer;
+
+    /**
+     * Specification:
+     *  - Persists a new stock entity to database.
+     *  - Touches the newly created stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer;
 }

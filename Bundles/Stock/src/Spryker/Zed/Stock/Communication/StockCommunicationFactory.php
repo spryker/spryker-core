@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
  * @method \Spryker\Zed\Stock\Business\StockFacadeInterface getFacade()
  * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface getEntityManager()
  */
 class StockCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -17,6 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Stock\Business\StockBusinessFactory getFactory()
  * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface getEntityManager()
  */
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
@@ -82,6 +85,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacade::createStock() instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -284,5 +289,33 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createReaderModel()
             ->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer
+    {
+        return $this->getRepository()->findStockByName($stockName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStockCreator()
+            ->createStock($stockTransfer);
     }
 }

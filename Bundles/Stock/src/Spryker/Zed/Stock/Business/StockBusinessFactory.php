@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Stock\Business\Model\Reader;
 use Spryker\Zed\Stock\Business\Model\Writer;
+use Spryker\Zed\Stock\Business\Stock\StockCreator;
+use Spryker\Zed\Stock\Business\Stock\StockCreatorInterface;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapper;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
@@ -18,6 +20,7 @@ use Spryker\Zed\Stock\StockDependencyProvider;
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
  * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface getEntityManager()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {
@@ -56,6 +59,17 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->createReaderModel(),
             $this->getTouchFacade(),
             $this->getStockUpdateHandlerPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\Stock\StockCreatorInterface
+     */
+    public function createStockCreator(): StockCreatorInterface
+    {
+        return new StockCreator(
+            $this->getEntityManager(),
+            $this->getTouchFacade()
         );
     }
 

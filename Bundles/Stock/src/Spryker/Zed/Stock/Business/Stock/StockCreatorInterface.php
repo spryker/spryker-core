@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\StockGui\Dependency\Facade;
+namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 
-interface StockGuiToStockFacadeInterface
+interface StockCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
@@ -18,16 +18,4 @@ interface StockGuiToStockFacadeInterface
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function createStock(StockTransfer $stockTransfer): StockResponseTransfer;
-
-    /**
-     * @return array
-     */
-    public function getWarehouseToStoreMapping(): array;
-
-    /**
-     * @param string $stockName
-     *
-     * @return \Generated\Shared\Transfer\StockTransfer|null
-     */
-    public function findStockByName(string $stockName): ?StockTransfer;
 }

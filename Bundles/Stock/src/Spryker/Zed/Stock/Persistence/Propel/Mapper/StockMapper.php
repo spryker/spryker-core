@@ -56,4 +56,17 @@ class StockMapper
 
         return $stockTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStock
+     */
+    public function mapStockTransferToStockEntity(StockTransfer $stockTransfer, SpyStock $stockEntity): SpyStock
+    {
+        $stockEntity->fromArray($stockTransfer->modifiedToArray());
+
+        return $stockEntity;
+    }
 }

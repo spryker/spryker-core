@@ -12,6 +12,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -40,6 +41,7 @@ class StockFacadeTest extends Unit
 {
     protected const STORE_NAME_DE = 'DE';
     protected const STORE_NAME_AT = 'AT';
+    protected const STOCK_NAME = 'Test Warehouse';
 
     /**
      * @var \SprykerTest\Zed\Stock\StockBusinessTester
@@ -527,6 +529,81 @@ class StockFacadeTest extends Unit
         foreach ($productStockCollection as $stockProductTransfer) {
             $this->assertEquals($this->productConcreteEntity->getSku(), $stockProductTransfer->getSku());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByNameWillFindExistingStock(): void
+    {
+        //Act
+        $stockTransfer = $this->stockFacade->findStockByName($this->stockTransfer1->getName());
+
+        //Assert
+        $this->assertEquals($stockTransfer->getIdStock(), $this->stockTransfer1->getIdStock());
+        $this->assertEquals($stockTransfer->getName(), $this->stockTransfer1->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByNameWillReturnNullForNonExistedStockName(): void
+    {
+        //Act
+        $stockTransfer = $this->stockFacade->findStockByName($this->stockTransfer1->getName());
+
+        //Assert
+        $this->assertEquals($stockTransfer->getIdStock(), $this->stockTransfer1->getIdStock());
+        $this->assertEquals($stockTransfer->getName(), $this->stockTransfer1->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateStockWillCreateStock(): void
+    {
+        //Arrange
+        $originStockTransfer = (new StockTransfer())
+            ->setName(static::STOCK_NAME)
+            ->setIsActive(false);
+
+        //Act
+        $stockResponseTransfer = $this->stockFacade->createStock($originStockTransfer);
+
+        //Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful());
+        $stockTransfer = $stockResponseTransfer->getStock();
+        $this->assertIsInt($stockTransfer->getIdStock());
+        $this->assertEquals($originStockTransfer->getName(), $stockTransfer->getName());
+        $this->assertEquals($originStockTransfer->getIsActive(), $stockTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateStockWithRelationToStoreWillCreateStockWithRelations(): void
+    {
+        //Arrange
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->setIdStores([$this->storeTransfer->getIdStore()]);
+        $originStockTransfer = (new StockTransfer())
+            ->setName(static::STOCK_NAME)
+            ->setIsActive(false)
+            ->setStoreRelation($storeRelationTransfer);
+
+        //Act
+        $stockResponseTransfer = $this->stockFacade->createStock($originStockTransfer);
+        $storeStockRelation = $this->stockFacade->getStockTypesForStore($this->storeTransfer);
+
+        //Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful());
+        $stockTransfer = $stockResponseTransfer->getStock();
+        $this->assertIsInt($stockTransfer->getIdStock());
+        $this->assertEquals($originStockTransfer->getName(), $stockTransfer->getName());
+        $this->assertEquals($originStockTransfer->getIsActive(), $stockTransfer->getIsActive());
+        $this->assertNotNull($stockTransfer->getStoreRelation());
+        $this->assertEquals($storeRelationTransfer->getIdStores(), $stockTransfer->getStoreRelation()->getIdStores());
+        $this->assertContains($stockTransfer->getName(), $storeStockRelation);
     }
 
     /**

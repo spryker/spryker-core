@@ -64,6 +64,8 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Stock\Business\Stock\StockCreator::createStock() instead.
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int
