@@ -14,10 +14,13 @@ use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
+use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\Profile\DataSet\MerchantProfileDataSetInterface;
 
-class MerchantProfileWriterStep implements DataImportStepInterface
+class MerchantProfileWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [];
 
@@ -40,6 +43,8 @@ class MerchantProfileWriterStep implements DataImportStepInterface
         $merchantProfileEntity = $this->saveGlossaryKeyAttributes($merchantProfileEntity, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
 
         $merchantProfileEntity->save();
+
+        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantProfileEntity->getIdMerchantProfile());
     }
 
     /**
@@ -78,6 +83,7 @@ class MerchantProfileWriterStep implements DataImportStepInterface
                 if ($glossaryTranslationEntity->isNew() || $glossaryTranslationEntity->isModified()) {
                     $glossaryTranslationEntity->save();
                 }
+                $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryKeyEntity->getIdGlossaryKey());
             }
         }
 

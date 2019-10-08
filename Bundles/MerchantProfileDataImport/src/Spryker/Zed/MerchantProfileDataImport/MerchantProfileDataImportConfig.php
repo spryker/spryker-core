@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class MerchantProfileDataImportConfig extends DataImportConfig
 {
-    public const IMPORT_TYPE_MERCHANT_PROFILE = 'merchant_profile';
+    public const IMPORT_TYPE_MERCHANT_PROFILE = 'merchant-profile';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
