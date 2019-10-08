@@ -21,7 +21,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds locale filter to query.
      *
      * @api

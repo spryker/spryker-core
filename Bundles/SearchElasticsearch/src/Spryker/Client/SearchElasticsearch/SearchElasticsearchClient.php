@@ -16,7 +16,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class SearchElasticsearchClient extends AbstractClient implements SearchElasticsearchClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -93,7 +93,7 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

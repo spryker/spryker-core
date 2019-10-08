@@ -14,11 +14,11 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig as SharedSearchElasticsearchConfig;
 
 /**
@@ -37,7 +37,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
     /**
      * @dataProvider resultFormatterDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param array $aggregationResult
      * @param array $expectedResult
      * @param array $requestParameters
@@ -45,7 +45,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      * @return void
      */
     public function testFormatResultShouldReturnCorrectFormat(
-        FacetConfigInterface $facetConfig,
+        SearchConfigInterface $searchConfigMock,
         array $aggregationResult,
         array $expectedResult,
         array $requestParameters = []
@@ -53,11 +53,11 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getFacetConfig'])
+            ->setMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
-            ->method('getFacetConfig')
-            ->willReturn($facetConfig);
+            ->method('getSearchConfig')
+            ->willReturn($searchConfigMock);
 
         $container = new Container();
         $searchElasticsearchDependencyProvider = new SearchElasticsearchDependencyProvider();
@@ -118,7 +118,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getStringFacetResultTestData(): array
     {
-        $facetConfig = $this->createStringSearchConfig();
+        $searchConfigMock = $this->createStringSearchConfig();
 
         $aggregationResult = [
             PageIndexMap::STRING_FACET => [
@@ -151,10 +151,10 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
                     ->setDocCount(3))
-                ->setConfig($facetConfig->get('foo')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('foo')),
         ];
 
-        return [$facetConfig, $aggregationResult, $expectedResult];
+        return [$searchConfigMock, $aggregationResult, $expectedResult];
     }
 
     /**
@@ -162,7 +162,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getMultiStringFacetResultTestData(): array
     {
-        $facetConfig = $this->createMultiStringSearchConfig();
+        $searchConfigMock = $this->createMultiStringSearchConfig();
 
         $aggregationResult = [
             PageIndexMap::STRING_FACET => [
@@ -215,7 +215,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
                     ->setDocCount(3))
-                ->setConfig($facetConfig->get('foo')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
                 ->addValue((new FacetSearchResultValueTransfer())
@@ -227,7 +227,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('f')
                     ->setDocCount(30))
-                ->setConfig($facetConfig->get('bar')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('bar')),
             'baz' => (new FacetSearchResultTransfer())
                 ->setName('baz')
                 ->addValue((new FacetSearchResultValueTransfer())
@@ -239,10 +239,10 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('i')
                     ->setDocCount(300))
-                ->setConfig($facetConfig->get('baz')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('baz')),
         ];
 
-        return [$facetConfig, $aggregationResult, $expectedResult];
+        return [$searchConfigMock, $aggregationResult, $expectedResult];
     }
 
     /**
@@ -250,7 +250,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getIntegerFacetResultTestData(): array
     {
-        $facetConfig = $this->createIntegerSearchConfig();
+        $searchConfigMock = $this->createIntegerSearchConfig();
 
         $aggregationResult = [
             PageIndexMap::INTEGER_FACET => [
@@ -283,10 +283,10 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue(3)
                     ->setDocCount(30))
-                ->setConfig($facetConfig->get('foo')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('foo')),
         ];
 
-        return [$facetConfig, $aggregationResult, $expectedResult];
+        return [$searchConfigMock, $aggregationResult, $expectedResult];
     }
 
     /**
@@ -294,7 +294,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getMultiIntegerFacetResultTestData(): array
     {
-        $facetConfig = $this->createMultiIntegerSearchConfig();
+        $searchConfigMock = $this->createMultiIntegerSearchConfig();
 
         $aggregationResult = [
             PageIndexMap::INTEGER_FACET => [
@@ -345,7 +345,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
                     ->setDocCount(3))
-                ->setConfig($facetConfig->get('foo')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())
                 ->setName('bar')
                 ->addValue((new FacetSearchResultValueTransfer())
@@ -357,17 +357,17 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('f')
                     ->setDocCount(30))
-                ->setConfig($facetConfig->get('bar')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('bar')),
             'baz' => (new RangeSearchResultTransfer())
                 ->setName('baz')
-                ->setConfig($facetConfig->get('baz'))
+                ->setConfig($searchConfigMock->getFacetConfig()->get('baz'))
                 ->setMin(10)
                 ->setMax(20)
                 ->setActiveMin(10)
                 ->setActiveMax(20),
         ];
 
-        return [$facetConfig, $aggregationResult, $expectedResult];
+        return [$searchConfigMock, $aggregationResult, $expectedResult];
     }
 
     /**
@@ -379,7 +379,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 
         $expectedResult['baz'] = (new RangeSearchResultTransfer())
             ->setName('baz')
-            ->setConfig($searchConfig->get('baz'))
+            ->setConfig($searchConfig->getFacetConfig()->get('baz'))
             ->setMin(10)
             ->setMax(20)
             ->setActiveMin(5)
@@ -398,7 +398,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getCategoryResultTestData(): array
     {
-        $facetConfig = $this->createCategorySearchConfig();
+        $searchConfigMock = $this->createCategorySearchConfig();
 
         $aggregationResult = [
             PageIndexMap::CATEGORY_ALL_PARENTS => [
@@ -422,10 +422,10 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c3')
                     ->setDocCount(30))
-                ->setConfig($facetConfig->get('foo')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('foo')),
         ];
 
-        return [$facetConfig, $aggregationResult, $expectedResult];
+        return [$searchConfigMock, $aggregationResult, $expectedResult];
     }
 
     /**
@@ -433,15 +433,16 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getFilteredResultTestData(): array
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SharedSearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
                     ->setIsMultiValued(true)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -530,7 +531,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('c')
                     ->setDocCount(30))
-                ->setConfig($facetConfig->get('foo')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('foo')),
             'bar' => (new FacetSearchResultTransfer())->setName('bar')
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('d')
@@ -541,9 +542,9 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
                 ->addValue((new FacetSearchResultValueTransfer())
                     ->setValue('f')
                     ->setDocCount(60))
-                ->setConfig($facetConfig->get('bar')),
+                ->setConfig($searchConfigMock->getFacetConfig()->get('bar')),
         ];
 
-        return [$facetConfig, $aggregationResult, $expectedResult];
+        return [$searchConfigMock, $aggregationResult, $expectedResult];
     }
 }

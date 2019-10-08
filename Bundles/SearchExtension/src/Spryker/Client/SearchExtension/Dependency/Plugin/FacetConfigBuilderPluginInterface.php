@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 
-interface FacetConfigPluginInterface
+interface FacetConfigBuilderPluginInterface extends SearchConfigBuilderPluginInterface
 {
     /**
      * Specification:

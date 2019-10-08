@@ -12,6 +12,7 @@ use Spryker\Zed\Search\Business\Definition\Merger\IndexDefinitionMerger;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

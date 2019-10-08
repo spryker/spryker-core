@@ -25,7 +25,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
     protected const SEARCH_WILDCARD = '.*';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface
      */
-    protected function assertSearchStringGetterQuery(QueryInterface $searchQuery)
+    protected function assertSearchStringGetterQuery(QueryInterface $searchQuery): QueryInterface
     {
         if (!$searchQuery instanceof SearchStringGetterInterface) {
             throw new InvalidSearchQueryException(sprintf(
@@ -90,11 +90,6 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
     protected function getRegexpQueryString(?string $searchString): string
     {
         $searchString = mb_strtolower($searchString);
-
-        /*
-         * Split the text by whitespace and add double-quotes around them to interpret them literally.
-         * Double quotes inside the search string has to be outside of the literally interpreted search string.
-         */
         $searchString = str_replace('"', '"\\""', $searchString);
         $searchString = preg_replace('/\s+/', sprintf('"%s"', static::SEARCH_WILDCARD), $searchString);
 

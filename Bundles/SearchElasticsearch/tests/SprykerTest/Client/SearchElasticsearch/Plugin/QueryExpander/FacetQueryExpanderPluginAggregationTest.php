@@ -101,13 +101,13 @@ class FacetQueryExpanderPluginAggregationTest extends AbstractFacetQueryExpander
      */
     protected function createCategoryFacetData(): array
     {
-        $facetConfig = $this->createCategorySearchConfig();
+        $searchConfigMock = $this->createCategorySearchConfig();
 
         $expectedAggregations = [
             $this->getExpectedCategoryFacetAggregation(),
         ];
 
-        return [$facetConfig, $expectedAggregations];
+        return [$searchConfigMock, $expectedAggregations];
     }
 
     /**

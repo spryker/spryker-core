@@ -8,9 +8,7 @@
 namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface;
 
 class FacetConfig implements FacetConfigInterface
 {
@@ -18,16 +16,6 @@ class FacetConfig implements FacetConfigInterface
      * @var \Generated\Shared\Transfer\FacetConfigTransfer[]
      */
     protected $facetConfigTransfers = [];
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface|null $facetSearchConfigBuilderPlugin
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
-     */
-    public function __construct(?FacetConfigPluginInterface $facetSearchConfigBuilderPlugin = null, array $searchConfigExpanderPlugins = [])
-    {
-        $this->buildFacetConfig($facetSearchConfigBuilderPlugin);
-        $this->expandFacetConfig($searchConfigExpanderPlugins);
-    }
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
@@ -109,44 +97,5 @@ class FacetConfig implements FacetConfigInterface
             ->requireFieldName()
             ->requireParameterName()
             ->requireType();
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface|null $facetSearchConfigBuilderPlugin
-     *
-     * @return void
-     */
-    protected function buildFacetConfig(?FacetConfigPluginInterface $facetSearchConfigBuilderPlugin = null): void
-    {
-        if (!$facetSearchConfigBuilderPlugin) {
-            return;
-        }
-
-        $facetSearchConfigBuilderPlugin->buildFacetConfig($this);
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
-     *
-     * @return void
-     */
-    protected function expandFacetConfig(array $searchConfigExpanderPlugins): void
-    {
-        foreach ($searchConfigExpanderPlugins as $searchConfigExpanderPlugin) {
-            $searchConfigExtensionTransfer = $searchConfigExpanderPlugin->getSearchConfigExtension();
-            $this->addFacetConfigToFacetConfigBuilder($searchConfigExtensionTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchConfigExtensionTransfer $searchConfigExtensionTransfer
-     *
-     * @return void
-     */
-    protected function addFacetConfigToFacetConfigBuilder(SearchConfigExtensionTransfer $searchConfigExtensionTransfer): void
-    {
-        foreach ($searchConfigExtensionTransfer->getFacetConfigs() as $facetConfigTransfer) {
-            $this->addFacet($facetConfigTransfer);
-        }
     }
 }

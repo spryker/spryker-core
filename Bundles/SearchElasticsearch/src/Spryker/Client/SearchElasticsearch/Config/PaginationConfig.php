@@ -9,7 +9,6 @@ namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface;
 
 class PaginationConfig implements PaginationConfigInterface
 {
@@ -17,14 +16,6 @@ class PaginationConfig implements PaginationConfigInterface
      * @var \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     protected $paginationConfigTransfer;
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface|null $paginationConfigBuilderPlugin
-     */
-    public function __construct(?PaginationConfigPluginInterface $paginationConfigBuilderPlugin = null)
-    {
-        $this->buildPaginationConfig($paginationConfigBuilderPlugin);
-    }
 
     /**
      * @param \Generated\Shared\Transfer\PaginationConfigTransfer $paginationConfigTransfer
@@ -85,19 +76,5 @@ class PaginationConfig implements PaginationConfigInterface
         $itemsPerPage = $requestParameters[$itemsPerPageParameterName] ?? 0;
 
         return ($itemsPerPage && in_array((int)$itemsPerPage, (array)$this->paginationConfigTransfer->getValidItemsPerPageOptions()));
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface|null $paginationConfigBuilderPlugin
-     *
-     * @return void
-     */
-    protected function buildPaginationConfig(?PaginationConfigPluginInterface $paginationConfigBuilderPlugin = null): void
-    {
-        if (!$paginationConfigBuilderPlugin) {
-            return;
-        }
-
-        $paginationConfigBuilderPlugin->buildPaginationConfig($this);
     }
 }

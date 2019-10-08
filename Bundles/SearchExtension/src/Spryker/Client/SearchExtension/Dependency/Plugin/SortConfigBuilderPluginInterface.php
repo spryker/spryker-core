@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Spryker\Client\SearchExtension\Config\SortConfigInterface;
 
-interface SortConfigPluginInterface
+interface SortConfigBuilderPluginInterface extends SearchConfigBuilderPluginInterface
 {
     /**
      * Specification:

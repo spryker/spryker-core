@@ -19,13 +19,12 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\SearchElasticsearch\Config\FacetConfig;
 use Spryker\Client\SearchElasticsearch\Config\PaginationConfig;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfig;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig as ClientSearchElasticsearchConfig;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 use SprykerTest\Client\SearchElasticsearch\Plugin\Fixtures\BaseQueryPlugin;
@@ -63,64 +62,54 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFacetConfig(): FacetConfigInterface
+    protected function createSearchConfigMock()
     {
-        return new FacetConfig();
+        $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getFacetConfig', 'getSortConfig', 'getPaginationConfig'])
+            ->getMock();
+
+        $searchConfigMock
+            ->method('getFacetConfig')
+            ->willReturn(new FacetConfig());
+
+        $searchConfigMock
+            ->method('getSortConfig')
+            ->willReturn(new SortConfig());
+
+        $searchConfigMock
+            ->method('getPaginationConfig')
+            ->willReturn(new PaginationConfig());
+
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
-     */
-    protected function createSortConfig(): SortConfigInterface
-    {
-        return new SortConfig();
-    }
-
-    /**
-     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
-     */
-    protected function createPaginationConfig(): PaginationConfigInterface
-    {
-        return new PaginationConfig();
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\SearchFactory
      */
-    protected function createSearchElasticsearchFactoryMockWithFacetConfig(FacetConfigInterface $facetConfig)
+    protected function createSearchFactoryMockedWithSearchConfig(SearchConfigInterface $searchConfig)
     {
-        $searchElasticsearchFactoryMock = $this->createSearchElasticsearchFactoryMock(['getFacetConfig']);
-        $searchElasticsearchFactoryMock->method('getFacetConfig')->willReturn($facetConfig);
+        /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchElasticsearchFactoryMock */
+        $searchElasticsearchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
+            ->setMethods(['getSearchConfig', 'getConfig'])
+            ->getMock();
 
-        return $searchElasticsearchFactoryMock;
-    }
+        $searchElasticsearchFactoryMock
+            ->method('getSearchConfig')
+            ->willReturn($searchConfig);
 
-    /**
-     * @param \Spryker\Client\SearchExtension\Config\SortConfigInterface $sortConfig
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory
-     */
-    protected function createSearchElasticsearchFactoryMockWithSortConfig(SortConfigInterface $sortConfig)
-    {
-        $searchElasticsearchFactoryMock = $this->createSearchElasticsearchFactoryMock(['getSortConfig']);
-        $searchElasticsearchFactoryMock->method('getSortConfig')->willReturn($sortConfig);
+        $searchElasticsearchFactoryMock
+            ->method('getConfig')
+            ->willReturn(new ClientSearchElasticsearchConfig());
 
-        return $searchElasticsearchFactoryMock;
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfig
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory
-     */
-    protected function createSearchElasticsearchFactoryMockWithPaginationConfig(PaginationConfigInterface $paginationConfig)
-    {
-        $searchElasticsearchFactoryMock = $this->createSearchElasticsearchFactoryMock(['getPaginationConfig']);
-        $searchElasticsearchFactoryMock->method('getPaginationConfig')->willReturn($paginationConfig);
+        $container = new Container();
+        $searchDependencyProvider = new SearchElasticsearchDependencyProvider();
+        $searchDependencyProvider->provideServiceLayerDependencies($container);
+        $searchElasticsearchFactoryMock->setContainer($container);
 
         return $searchElasticsearchFactoryMock;
     }
@@ -187,35 +176,37 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createStringSearchConfig(): FacetConfigInterface
+    protected function createStringSearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
-        );
+            );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createMultiStringSearchConfig(): FacetConfigInterface
+    protected function createMultiStringSearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -231,39 +222,41 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
             );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createIntegerSearchConfig(): FacetConfigInterface
+    protected function createIntegerSearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
-        );
+            );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createMultiIntegerSearchConfig(): FacetConfigInterface
+    protected function createMultiIntegerSearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -279,39 +272,41 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_RANGE)
             );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createCategorySearchConfig(): FacetConfigInterface
+    protected function createCategorySearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
-        );
+            );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createMultiCategorySearchConfig(): FacetConfigInterface
+    protected function createMultiCategorySearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::CATEGORY_ALL_PARENTS)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -327,22 +322,23 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
             );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createMixedSearchConfig(): FacetConfigInterface
+    protected function createMixedSearchConfig(): SearchConfigInterface
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_FACET)
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_ENUMERATION)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -358,7 +354,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
                     ->setType(SearchElasticsearchConfig::FACET_TYPE_CATEGORY)
             );
 
-        return $facetConfig;
+        return $searchConfigMock;
     }
 
     /**

@@ -229,7 +229,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -243,7 +243,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -257,7 +257,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

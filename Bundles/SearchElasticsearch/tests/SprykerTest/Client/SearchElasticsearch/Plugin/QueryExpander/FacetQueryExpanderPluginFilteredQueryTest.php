@@ -58,7 +58,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredStringFacetData(): array
     {
-        $facetConfig = $this->createStringSearchConfig();
+        $searchConfigMock = $this->createStringSearchConfig();
 
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
@@ -73,7 +73,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'foo-param' => 'asdf',
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -81,7 +81,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createMultiFilteredStringFacetData(): array
     {
-        $facetConfig = $this->createMultiStringSearchConfig();
+        $searchConfigMock = $this->createMultiStringSearchConfig();
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
@@ -111,7 +111,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'baz-param' => 'yxcv',
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -119,7 +119,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredStringFacetDataWithMultipleValues(): array
     {
-        $facetConfig = $this->createStringSearchConfig();
+        $searchConfigMock = $this->createStringSearchConfig();
 
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
@@ -136,7 +136,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ],
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -144,8 +144,10 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createMultiValuedFilteredStringFacetData(): array
     {
-        $facetConfig = $this->createStringSearchConfig();
-        $facetConfig->get('foo')->setIsMultiValued(true);
+        $searchConfigMock = $this->createStringSearchConfig();
+        $searchConfigMock->getFacetConfig()
+            ->get('foo')
+            ->setIsMultiValued(true);
 
         $expectedQuery = (new BoolQuery())
             ->addFilter((new BoolQuery())
@@ -179,7 +181,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ],
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -187,7 +189,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredIntegerFacetData(): array
     {
-        $facetConfig = $this->createIntegerSearchConfig();
+        $searchConfigMock = $this->createIntegerSearchConfig();
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
@@ -201,7 +203,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'foo-param' => 123,
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -209,14 +211,15 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredPriceRangeFacetData(): array
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -272,7 +275,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     ], // range value as array
                 ];
 
-                return [$facetConfig, $expectedQuery, $parameters];
+                return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -280,14 +283,15 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredOpenPriceRangeFacetData(): array
     {
-        $facetConfig = $this->createFacetConfig();
-        $facetConfig->addFacet(
-            (new FacetConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getFacetConfig()
+            ->addFacet(
+                (new FacetConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::INTEGER_FACET)
                 ->setType(SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE)
-        )
+            )
             ->addFacet(
                 (new FacetConfigTransfer())
                     ->setName('bar')
@@ -340,7 +344,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     'baz-param' => '-', // empty range
                 ];
 
-                return [$facetConfig, $expectedQuery, $parameters];
+                return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -348,7 +352,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createMultiFilteredIntegerFacetData(): array
     {
-        $facetConfig = $this->createMultiIntegerSearchConfig();
+        $searchConfigMock = $this->createMultiIntegerSearchConfig();
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::INTEGER_FACET)
@@ -381,7 +385,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                     'baz-param' => 789,
                 ];
 
-                return [$facetConfig, $expectedQuery, $parameters];
+                return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -389,8 +393,9 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createMultiValuedFilteredIntegerFacetData(): array
     {
-        $facetConfig = $this->createIntegerSearchConfig();
-        $facetConfig->get('foo')
+        $searchConfigMock = $this->createIntegerSearchConfig();
+        $searchConfigMock->getFacetConfig()
+            ->get('foo')
             ->setIsMultiValued(true);
 
         $expectedQuery = (new BoolQuery())
@@ -425,7 +430,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ],
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -433,7 +438,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredCategoryFacetData(): array
     {
-        $facetConfig = $this->createCategorySearchConfig();
+        $searchConfigMock = $this->createCategorySearchConfig();
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Term())
                 ->setTerm(PageIndexMap::CATEGORY_ALL_PARENTS, 'c1'));
@@ -442,7 +447,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'foo-param' => 'c1',
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -450,7 +455,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredMixedFacetData(): array
     {
-        $facetConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
@@ -475,7 +480,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'baz-param' => 'c1',
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -483,14 +488,14 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredIncorrectStringFacetData(): array
     {
-        $searchConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedQuery = new BoolQuery();
 
         $parameters = [
             'baz-param' => '',
         ];
 
-        return [$searchConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -498,7 +503,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createMultiFilteredIncorrectValuesFacetData(): array
     {
-        $facetConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedQuery = (new BoolQuery());
 
         $parameters = [
@@ -507,7 +512,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'baz-param' => '',
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -515,7 +520,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredStringFacetDataWithMultipleIncorrectValues(): array
     {
-        $facetConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedQuery = new BoolQuery();
 
         $parameters = [
@@ -526,7 +531,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             ],
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 
     /**
@@ -534,7 +539,7 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
      */
     protected function createFilteredZeroValuesFacetData(): array
     {
-        $facetConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedQuery = (new BoolQuery())
             ->addFilter((new Nested())
                 ->setPath(PageIndexMap::STRING_FACET)
@@ -556,6 +561,6 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
             'bar-param' => 0,
         ];
 
-        return [$facetConfig, $expectedQuery, $parameters];
+        return [$searchConfigMock, $expectedQuery, $parameters];
     }
 }

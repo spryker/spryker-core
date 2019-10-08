@@ -21,7 +21,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands query with suggestions.
      *
      * @api

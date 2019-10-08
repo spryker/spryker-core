@@ -12,6 +12,7 @@ use Psr\Log\NullLogger;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

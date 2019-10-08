@@ -1,25 +1,28 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Client\Catalog\Plugin\Config;
+namespace Spryker\Catalog\src\Spryker\Client\Catalog\Plugin\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
-use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
+use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
+use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
+use Spryker\Client\SearchExtension\Config\SortConfigInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigBuilderPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Catalog\src\Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilderPlugin` instead.
- *
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */
-class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigBuilderInterface
+class CatalogSearchConfigBuilderPlugin extends AbstractPlugin implements
+    FacetConfigBuilderPluginInterface,
+    SortConfigBuilderPluginInterface,
+    PaginationConfigBuilderPluginInterface
 {
     public const DEFAULT_ITEMS_PER_PAGE = 12;
     public const VALID_ITEMS_PER_PAGE_OPTIONS = [12, 24, 36];
@@ -27,11 +30,11 @@ class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigB
     public const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfigBuilder
      *
      * @return void
      */
-    public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder)
+    public function buildFacetConfig(FacetConfigInterface $facetConfigBuilder): void
     {
         $facetConfigBuilderPlugins = $this->getFactory()->getFacetConfigTransferBuilderPlugins();
 
@@ -41,11 +44,11 @@ class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigB
     }
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\SortConfigInterface $sortConfigBuilder
      *
      * @return void
      */
-    public function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder)
+    public function buildSortConfig(SortConfigInterface $sortConfigBuilder): void
     {
         $sortConfigBuilderPlugins = $this->getFactory()->getSortConfigTransferBuilderPlugins();
 
@@ -55,11 +58,11 @@ class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigB
     }
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfigBuilder
+     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfigBuilder
      *
      * @return void
      */
-    public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder)
+    public function buildPaginationConfig(PaginationConfigInterface $paginationConfigBuilder): void
     {
         $paginationConfigTransfer = (new PaginationConfigTransfer())
             ->setParameterName(static::PARAMETER_NAME_PAGE)

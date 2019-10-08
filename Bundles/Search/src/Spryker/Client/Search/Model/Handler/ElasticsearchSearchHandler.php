@@ -9,9 +9,9 @@ namespace Spryker\Client\Search\Model\Handler;
 
 use Elastica\Exception\ResponseException;
 use Elastica\ResultSet;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Exception\SearchResponseException;
 use Spryker\Client\Search\Provider\IndexClientProvider;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * @deprecated Will be removed without replacement.

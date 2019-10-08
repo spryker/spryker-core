@@ -33,12 +33,8 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): SortSearchResultTransfer
     {
-        $sortConfig = $this
-            ->getFactory()
-            ->getSortConfig();
-
+        $sortConfig = $this->getFactory()->getSearchConfig()->getSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
-
         $sortSearchResultTransfer = new SortSearchResultTransfer();
         $sortSearchResultTransfer
             ->setSortParamNames(array_keys($sortConfig->getAll()))

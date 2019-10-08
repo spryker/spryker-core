@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()

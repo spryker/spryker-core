@@ -7,15 +7,6 @@
 
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
-interface SearchStringGetterInterface
+interface SearchConfigBuilderPluginInterface
 {
-    /**
-     * Specification:
-     * - Gets a string for search.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getSearchString();
 }

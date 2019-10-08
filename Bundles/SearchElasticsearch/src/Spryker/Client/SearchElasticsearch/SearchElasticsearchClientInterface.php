@@ -54,7 +54,7 @@ interface SearchElasticsearchClientInterface
     public function getMetaData(?string $indexName = null): array;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

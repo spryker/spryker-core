@@ -18,7 +18,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
      */
     protected function addSortingToQuery(Query $query, array $requestParameters): void
     {
-        $sortConfig = $this->getFactory()->getSortConfig();
+        $sortConfig = $this->getFactory()->getSearchConfig()->getSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
         $sortConfigTransfer = $sortConfig->get($sortParamName);
 

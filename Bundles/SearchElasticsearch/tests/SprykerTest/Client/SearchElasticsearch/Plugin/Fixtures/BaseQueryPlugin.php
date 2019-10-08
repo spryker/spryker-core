@@ -34,7 +34,7 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns a query object for base search.
      *
      * @api

@@ -9,8 +9,8 @@ namespace Spryker\Client\Search\Delegator;
 
 use Exception;
 use Generated\Shared\Transfer\SearchContextTransfer;
-use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
 class SearchDelegator implements SearchDelegatorInterface

@@ -6,7 +6,7 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/elastica": "'",
+    "spryker/elastica": "*",
     "spryker/code-sniffer": "*",
     "spryker/log": "*",
     "spryker/testify": "*"
