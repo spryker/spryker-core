@@ -13,7 +13,7 @@ interface MerchantFormExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Expands MerchantForm and MerchantUpdateForm for merchant with new form fields or sub-forms.
+     *  - Expands MerchantForm for merchant with new form fields or sub-forms.
      *
      * @api
      *

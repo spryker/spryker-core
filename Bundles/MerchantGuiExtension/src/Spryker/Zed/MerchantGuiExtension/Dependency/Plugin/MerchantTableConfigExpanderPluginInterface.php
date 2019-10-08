@@ -13,7 +13,7 @@ interface MerchantTableConfigExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands config options of company user table in Zed.
+     * - Expands config options of merchant table in Zed.
      *
      * @api
      *

@@ -48,9 +48,9 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addTwigEnvironment(Container $container): Container
     {
-        $container[static::TWIG_ENVIRONMENT] = function () {
+        $container->set(static::TWIG_ENVIRONMENT, function () {
             return (new Pimple())->getApplication()['twig'];
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addMerchantProfileFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_PROFILE] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_PROFILE, function (Container $container) {
             return new MerchantProfileGuiToMerchantProfileFacadeBridge($container->getLocator()->merchantProfile()->facade());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new MerchantProfileGuiToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new MerchantProfileGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

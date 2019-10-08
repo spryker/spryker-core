@@ -56,9 +56,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCountryFacade(Container $container): Container
     {
-        $container[static::FACADE_COUNTRY] = function (Container $container) {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new MerchantGuiToCountryFacadeBridge($container->getLocator()->country()->facade());
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantGuiToMerchantFacadeBridge($container->getLocator()->merchant()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelMerchantQuery(Container $container): Container
     {
-        $container[static::PROPEL_MERCHANT_QUERY] = function () {
+        $container->set(static::PROPEL_MERCHANT_QUERY, function () {
             return SpyMerchantQuery::create();
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantProfileFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER] = function () {
+        $container->set(static::PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER, function () {
             return $this->getMerchantProfileFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantTableActionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER] = function () {
+        $container->set(static::PLUGINS_MERCHANT_TABLE_ACTION_EXPANDER, function () {
             return $this->getMerchantTableActionExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantTableDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_TABLE_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_MERCHANT_TABLE_DATA_EXPANDER, function () {
             return $this->getMerchantTableDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -140,9 +140,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantTableHeaderExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_MERCHANT_TABLE_HEADER_EXPANDER, function () {
             return $this->getMerchantTableHeaderExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -154,9 +154,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER] = function () {
+        $container->set(static::PLUGINS_MERCHANT_TABLE_CONFIG_EXPANDER, function () {
             return $this->getMerchantTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -168,9 +168,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMerchantFormTabsExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_FORM_TABS_EXPANDER] = function () {
+        $container->set(static::PLUGINS_MERCHANT_FORM_TABS_EXPANDER, function () {
             return $this->getMerchantFormTabsExpanderPlugins();
-        };
+        });
 
         return $container;
     }

@@ -17,13 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StatusMerchantController extends AbstractController
 {
-    public const PARAM_ID_MERCHANT = 'id-merchant';
-    public const PARAM_MERCHANT_STATUS = 'status';
+    protected const PARAM_ID_MERCHANT = 'id-merchant';
+    protected const PARAM_MERCHANT_STATUS = 'status';
 
-    public const URL_REDIRECT_MERCHANT_LIST = '/merchant-gui/list-merchant';
-
-    public const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'Status can\'t be updated.';
-    public const MESSAGE_SUCCESS_MERCHANT = 'Status has been updated.';
+    protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'merchant_gui.error_wrong_params';
+    protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'Status has been updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -36,35 +34,37 @@ class StatusMerchantController extends AbstractController
         $merchantStatus = $request->query->get(static::PARAM_MERCHANT_STATUS);
 
         if (!$idMerchant || !$merchantStatus) {
-            return $this->returnErrorRedirect();
+            return $this->returnErrorRedirect($request);
         }
 
         $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
         $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
         if (!$merchantTransfer) {
-            return $this->returnErrorRedirect();
+            return $this->returnErrorRedirect($request);
         }
         $merchantTransfer->setStatus($merchantStatus);
 
         $merchantResponseTransfer = $this->getFactory()->getMerchantFacade()->updateMerchant($merchantTransfer);
 
         if (!$merchantResponseTransfer->getIsSuccess()) {
-            return $this->returnErrorRedirect();
+            return $this->returnErrorRedirect($request);
         }
 
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT);
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponse(static::URL_REDIRECT_MERCHANT_LIST);
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function returnErrorRedirect(): RedirectResponse
+    protected function returnErrorRedirect(Request $request): RedirectResponse
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 
-        return $this->redirectResponse(static::URL_REDIRECT_MERCHANT_LIST);
+        return $this->redirectResponseExternal($request->headers->get('referer'));
     }
 }

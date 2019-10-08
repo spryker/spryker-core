@@ -13,7 +13,7 @@ interface MerchantPostSavePluginInterface
 {
     /**
      * Specification:
-     * - Executes plugins after merchant is saved
+     * - Executes after the merchant is saved.
      *
      * @api
      *

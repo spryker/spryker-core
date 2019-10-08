@@ -11,7 +11,7 @@ interface MerchantTableHeaderExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands array of header columns
+     * - Expands array of header columns.
      *
      * @api
      *

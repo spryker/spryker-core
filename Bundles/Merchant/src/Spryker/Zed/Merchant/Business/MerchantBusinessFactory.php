@@ -12,8 +12,6 @@ use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriter;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutor;
-use Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
 use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantWriter;
@@ -44,7 +42,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->createMerchantAddressWriter(),
             $this->createMerchantStatusValidator(),
             $this->getConfig(),
-            $this->createMerchantPluginExecutor()
+            $this->getMerchantPostSavePlugins()
         );
     }
 
@@ -55,7 +53,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantReader(
             $this->getRepository(),
-            $this->createMerchantPluginExecutor()
+            $this->getMerchantHydrationPlugins()
         );
     }
 
@@ -101,17 +99,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface
-     */
-    public function createMerchantPluginExecutor(): MerchantPluginExecutorInterface
-    {
-        return new MerchantPluginExecutor(
-            $this->getMerchantPostSavePlugins(),
-            $this->getMerchantHydratePlugins()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface
      */
     public function getUtilTextService(): MerchantToUtilTextServiceInterface
@@ -130,8 +117,8 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[]
      */
-    public function getMerchantHydratePlugins(): array
+    public function getMerchantHydrationPlugins(): array
     {
-        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_HYDRATE);
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_HYDRATION);
     }
 }

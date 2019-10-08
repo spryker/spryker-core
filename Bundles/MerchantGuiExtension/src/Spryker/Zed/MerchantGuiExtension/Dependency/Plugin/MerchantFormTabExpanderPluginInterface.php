@@ -13,7 +13,7 @@ interface MerchantFormTabExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands form tabs for Merchant.
+     * - Expands tabs for Merchant form.
      *
      * @api
      *

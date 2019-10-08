@@ -13,10 +13,10 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInter
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileBusinessFactory getFactory()()
+ * @method \Spryker\Zed\MerchantProfile\Communication\MerchantProfileCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
-class MerchantProfileHydratePlugin extends AbstractPlugin implements MerchantHydrationPluginInterface
+class MerchantProfileHydrationPlugin extends AbstractPlugin implements MerchantHydrationPluginInterface
 {
     /**
      * @api
@@ -27,6 +27,8 @@ class MerchantProfileHydratePlugin extends AbstractPlugin implements MerchantHyd
      */
     public function hydrate(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        return $this->getFacade()->hydrateMerchant($merchantTransfer);
+        return $this->getFactory()
+            ->createMerchantProfileHydrator()
+            ->hydrate($merchantTransfer);
     }
 }

@@ -36,7 +36,7 @@ class EditController extends AbstractController
         $merchantProfileTransfer->setIdMerchantProfile($idMerchant);
         $merchantProfileTransfer->setIsActive(true);
 
-        $this->getFactory()->getMerchantProfileFacade()->saveMerchantProfile($merchantProfileTransfer);
+        $this->getFactory()->getMerchantProfileFacade()->updateMerchantProfile($merchantProfileTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_ACTIVATE);
 
@@ -56,7 +56,7 @@ class EditController extends AbstractController
         $merchantProfileTransfer->setIdMerchantProfile($idMerchant);
         $merchantProfileTransfer->setIsActive(false);
 
-        $this->getFactory()->getMerchantProfileFacade()->saveMerchantProfile($merchantProfileTransfer);
+        $this->getFactory()->getMerchantProfileFacade()->updateMerchantProfile($merchantProfileTransfer);
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_DEACTIVATE);
 

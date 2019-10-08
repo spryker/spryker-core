@@ -57,9 +57,9 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantConfig;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface
+     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
      */
-    protected $merchantPluginExecutor;
+    protected $merchantPostSavePlugins;
 
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
@@ -68,7 +68,7 @@ class MerchantWriter implements MerchantWriterInterface
      * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
-     * @param \Spryker\Zed\Merchant\Business\Model\MerchantPluginExecutorInterface $merchantPluginExecutor
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
@@ -77,7 +77,7 @@ class MerchantWriter implements MerchantWriterInterface
         MerchantAddressWriterInterface $merchantAddressWriter,
         MerchantStatusValidatorInterface $merchantStatusValidator,
         MerchantConfig $merchantConfig,
-        MerchantPluginExecutorInterface $merchantPluginExecutor
+        array $merchantPostSavePlugins
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
@@ -85,7 +85,7 @@ class MerchantWriter implements MerchantWriterInterface
         $this->merchantAddressWriter = $merchantAddressWriter;
         $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantConfig = $merchantConfig;
-        $this->merchantPluginExecutor = $merchantPluginExecutor;
+        $this->merchantPostSavePlugins = $merchantPostSavePlugins;
     }
 
     /**
@@ -176,7 +176,7 @@ class MerchantWriter implements MerchantWriterInterface
             $merchantTransfer->getIdMerchant()
         );
         $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
-        $merchantTransfer = $this->merchantPluginExecutor->executeMerchantPostSavePlugins($merchantTransfer);
+        $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -194,7 +194,21 @@ class MerchantWriter implements MerchantWriterInterface
         );
         $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantTransfer = $this->merchantPluginExecutor->executeMerchantPostSavePlugins($merchantTransfer);
+        $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function executeMerchantPostSavePlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
+        foreach ($this->merchantPostSavePlugins as $merchantPostSavePlugin) {
+            $merchantTransfer = $merchantPostSavePlugin->postSave($merchantTransfer);
+        }
 
         return $merchantTransfer;
     }

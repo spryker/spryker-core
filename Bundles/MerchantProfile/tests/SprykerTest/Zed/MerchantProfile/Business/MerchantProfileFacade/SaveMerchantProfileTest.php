@@ -30,7 +30,7 @@ class SaveMerchantProfileTest extends Unit
     /**
      * @return void
      */
-    public function testSaveMerchantProfiler(): void
+    public function testSaveMerchantProfile(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();

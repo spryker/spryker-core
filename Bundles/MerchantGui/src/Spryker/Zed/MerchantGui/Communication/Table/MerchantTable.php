@@ -12,7 +12,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 
 class MerchantTable extends AbstractTable
@@ -39,23 +38,47 @@ class MerchantTable extends AbstractTable
     protected $merchantFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface
+     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
      */
-    protected $merchantTablePluginExecutor;
+    protected $merchantTableActionExpanderPlugins;
+
+    /**
+     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
+     */
+    protected $merchantTableHeaderExpanderPlugins;
+
+    /**
+     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
+     */
+    protected $merchantTableDataExpanderPlugins;
+
+    /**
+     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
+     */
+    protected $merchantTableConfigExpanderPlugins;
 
     /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery
      * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
-     * @param \Spryker\Zed\MerchantGui\Communication\Table\PluginExecutor\MerchantTablePluginExecutorInterface $merchantTablePluginExecutor
+     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[] $merchantTableActionExpanderPlugins
+     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[] $merchantTableHeaderExpanderPlugins
+     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[] $merchantTableDataExpanderPlugins
+     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[] $merchantTableConfigExpanderPlugins
      */
     public function __construct(
         SpyMerchantQuery $merchantQuery,
         MerchantGuiToMerchantFacadeInterface $merchantFacade,
-        MerchantTablePluginExecutorInterface $merchantTablePluginExecutor
+        array $merchantTableActionExpanderPlugins,
+        array $merchantTableHeaderExpanderPlugins,
+        array $merchantTableDataExpanderPlugins,
+        array $merchantTableConfigExpanderPlugins
     ) {
         $this->merchantQuery = $merchantQuery;
         $this->merchantFacade = $merchantFacade;
-        $this->merchantTablePluginExecutor = $merchantTablePluginExecutor;
+        $this->merchantTableActionExpanderPlugins = $merchantTableActionExpanderPlugins;
+        $this->merchantTableHeaderExpanderPlugins = $merchantTableHeaderExpanderPlugins;
+        $this->merchantTableDataExpanderPlugins = $merchantTableDataExpanderPlugins;
+        $this->merchantTableConfigExpanderPlugins = $merchantTableConfigExpanderPlugins;
     }
 
     /**
@@ -97,7 +120,11 @@ class MerchantTable extends AbstractTable
      */
     protected function executeConfigExpanderPlugins(TableConfiguration $tableConfiguration): TableConfiguration
     {
-        return $this->merchantTablePluginExecutor->executeConfigExpanderPlugins($tableConfiguration);
+        foreach ($this->merchantTableConfigExpanderPlugins as $merchantTableConfigExpanderPlugin) {
+            $tableConfiguration = $merchantTableConfigExpanderPlugin->expandConfig($tableConfiguration);
+        }
+
+        return $tableConfiguration;
     }
 
     /**
@@ -107,7 +134,12 @@ class MerchantTable extends AbstractTable
      */
     protected function executeDataExpanderPlugins(array $item): array
     {
-        return $this->merchantTablePluginExecutor->executeDataExpanderPlugins($item);
+        $data = [];
+        foreach ($this->merchantTableDataExpanderPlugins as $merchantTableDataExpanderPlugin) {
+            $data = array_merge($data, $merchantTableDataExpanderPlugin->expandData($item));
+        }
+
+        return $data;
     }
 
     /**
@@ -122,13 +154,26 @@ class MerchantTable extends AbstractTable
             MerchantTableConstants::COL_NAME => 'Name',
             MerchantTableConstants::COL_STATUS => 'Status',
         ];
-        $externalData = $this->merchantTablePluginExecutor->executeTableHeaderExpanderPlugins();
+        $externalData = $this->executeTableHeaderExpanderPlugins();
 
         $actions = [MerchantTableConstants::COL_ACTIONS => 'Actions'];
 
-        $config->setHeader($baseData + $externalData + $actions);
+        $config->setHeader(array_merge($baseData, $externalData, $actions));
 
         return $config;
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeTableHeaderExpanderPlugins()
+    {
+        $expandedData = [];
+        foreach ($this->merchantTableHeaderExpanderPlugins as $plugin) {
+            $expandedData = array_merge($expandedData, $plugin->expandHeader());
+        }
+
+        return $expandedData;
     }
 
     /**
@@ -207,7 +252,7 @@ class MerchantTable extends AbstractTable
      */
     protected function generateMerchantTableExpanderPluginsActionButtons(array $item): array
     {
-        $buttonTransfers = $this->merchantTablePluginExecutor->executeActionButtonExpanderPlugins($item);
+        $buttonTransfers = $this->executeActionButtonExpanderPlugins($item);
 
         $actionButtons = [];
         foreach ($buttonTransfers as $buttonTransfer) {
@@ -220,6 +265,21 @@ class MerchantTable extends AbstractTable
         }
 
         return $actionButtons;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function executeActionButtonExpanderPlugins(array $item)
+    {
+        $buttonTransfers = [];
+        foreach ($this->merchantTableActionExpanderPlugins as $merchantsTableExpanderPlugin) {
+            $buttonTransfers = array_merge($buttonTransfers, $merchantsTableExpanderPlugin->getActionButtonDefinitions($item));
+        }
+
+        return $buttonTransfers;
     }
 
     /**
