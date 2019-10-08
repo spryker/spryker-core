@@ -38,22 +38,22 @@ class MerchantTable extends AbstractTable
     protected $merchantFacade;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
      */
     protected $merchantTableActionExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
      */
     protected $merchantTableHeaderExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
      */
     protected $merchantTableDataExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
      */
     protected $merchantTableConfigExpanderPlugins;
 
