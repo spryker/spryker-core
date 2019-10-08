@@ -35,9 +35,7 @@ class UrlStorageMerchantProfileMapperPlugin extends AbstractPlugin implements Ur
         if ($idMerchantProfile) {
             $merchantProfileMap = $this->getFactory()
                 ->getStorageClient()
-                ->get(
-                    $this->generateKey(static::KEY_ID_MERCHANT_PROFILE . ':' . $idMerchantProfile)
-                );
+                ->get($this->generateKey(static::KEY_ID_MERCHANT_PROFILE . ':' . $idMerchantProfile));
             if (isset($merchantProfileMap[static::KEY_ID_MERCHANT])) {
                 $resourceKey = $this->generateKey($merchantProfileMap[static::KEY_ID_MERCHANT]);
                 $urlStorageResourceMapTransfer->setResourceKey($resourceKey);

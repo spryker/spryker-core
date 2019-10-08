@@ -11,6 +11,7 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
@@ -19,6 +20,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\Profile\DataSet\MerchantProfileDataSetInterface;
+use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class MerchantProfileWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
@@ -40,6 +42,8 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
 
         $merchantProfileData = array_filter($dataSet->getArrayCopy());
         $merchantProfileEntity->fromArray($merchantProfileData);
+        $merchantProfileEntity->save();
+
         $merchantProfileEntity = $this->saveGlossaryKeyAttributes($merchantProfileEntity, $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES]);
 
         $merchantProfileEntity->save();
@@ -56,9 +60,14 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
     protected function saveGlossaryKeyAttributes(SpyMerchantProfile $merchantProfileEntity, array $glossaryKeyAttributes): SpyMerchantProfile
     {
         $idMerchant = $merchantProfileEntity->getFkMerchant();
+
         foreach ($glossaryKeyAttributes as $idLocale => $attributes) {
             foreach ($attributes as $attributeName => $attributeValue) {
                 if (!$attributeValue) {
+                    continue;
+                }
+                if ($attributeName === MerchantProfileDataSetInterface::URL) {
+                    $this->addMerchantProfileUrl($merchantProfileEntity->getIdMerchantProfile(), $idLocale, $attributeValue);
                     continue;
                 }
                 $merchantProfileEntity->fromArray([
@@ -88,6 +97,29 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
         }
 
         return $merchantProfileEntity;
+    }
+
+    /**
+     * @param int $idMerchantProfile
+     * @param int $idLocale
+     * @param string $url
+     *
+     * @return void
+     */
+    protected function addMerchantProfileUrl(int $idMerchantProfile, int $idLocale, string $url): void
+    {
+        $urlEntity = SpyUrlQuery::create()
+            ->filterByFkResourceMerchantProfile($idMerchantProfile)
+            ->filterByFkLocale($idLocale)
+            ->findOneOrCreate();
+
+        $urlEntity->setUrl($url);
+
+        if ($urlEntity->isNew() || $urlEntity->isModified()) {
+            $urlEntity->save();
+        }
+
+        $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
     }
 
     /**

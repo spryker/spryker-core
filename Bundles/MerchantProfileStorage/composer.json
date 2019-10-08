@@ -19,7 +19,10 @@
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/testify": "*",
-    "spryker/url-storage": "*"
+    "spryker/url-storage": "*",
+    "spryker/merchant": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*"
   },
   "suggest": {
     "spryker/event": "To use event behavior.",
