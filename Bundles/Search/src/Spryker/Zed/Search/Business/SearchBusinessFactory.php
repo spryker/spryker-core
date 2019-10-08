@@ -33,13 +33,13 @@ use Spryker\Zed\Search\SearchDependencyProvider;
 class SearchBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @param \Psr\Log\LoggerInterface|null $messenger (deprecated Use `\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface::install()` instead)
+     * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    public function createSearchInstaller(?LoggerInterface $messenger)
+    public function createSearchInstaller(LoggerInterface $messenger)
     {
-        return new SearchInstaller($this->getSearchInstallerStack($messenger));
+        return new SearchInstaller($messenger, $this->getSearchInstallerStack($messenger));
     }
 
     /**
