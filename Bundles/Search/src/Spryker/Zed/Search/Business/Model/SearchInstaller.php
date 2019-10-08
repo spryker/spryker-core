@@ -7,40 +7,43 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
+use Psr\Log\LoggerInterface;
+
 class SearchInstaller implements SearchInstallerInterface
 {
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
     /**
      * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[] (deprecated Use `Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface` instead)
      */
     protected $installer = [];
 
     /**
+     * @param \Psr\Log\LoggerInterface $logger
      * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[] $installer (deprecated Use `Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface` instead)
      */
-    public function __construct(array $installer)
+    public function __construct(LoggerInterface $logger, array $installer)
     {
+        $this->logger = $logger;
         $this->installer = $installer;
     }
 
     /**
      * @return void
      */
-    public function install(/* LoggerInterface $logger */)
+    public function install()
     {
-        $arguments = func_get_args();
-        $logger = null;
-        if (count($arguments) === 1) {
-            $logger = current($arguments);
-        }
-
         foreach ($this->installer as $installer) {
             if ($installer instanceof SearchInstallerInterface) {
                 $installer->install();
                 continue;
             }
 
-            $installer->installIndices($logger);
-            $installer->installMapper($logger);
+            $installer->installIndices($this->logger);
+            $installer->installMapper($this->logger);
         }
     }
 }
