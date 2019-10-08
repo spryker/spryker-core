@@ -17,7 +17,7 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique|\Symfony\Component\Validator\Constraint $constraint
+     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank|\Symfony\Component\Validator\Constraint $constraint
      *
      * @return void
      */
@@ -27,6 +27,7 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
             return;
         }
 
+        /** @var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductPriceNotBlank $constraint */
         $this->validateProductPriceNotBlank($value, $constraint);
     }
 

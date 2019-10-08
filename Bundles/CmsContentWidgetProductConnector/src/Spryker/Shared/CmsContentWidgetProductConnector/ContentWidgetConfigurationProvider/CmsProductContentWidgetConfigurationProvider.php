@@ -9,6 +9,9 @@ namespace Spryker\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigura
 
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 
+/**
+ * @deprecated Use `SprykerShop\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider` instead.
+ */
 class CmsProductContentWidgetConfigurationProvider implements CmsContentWidgetConfigurationProviderInterface
 {
     public const FUNCTION_NAME = 'product';

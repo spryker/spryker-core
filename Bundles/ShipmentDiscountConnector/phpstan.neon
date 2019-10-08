@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+    - '#Parameter \#1 \$carrierDiscountDecisionRule of method .+ShipmentDiscountCollector::__construct\(\) expects .+Model\\ShipmentDiscountDecisionRuleInterface, .+DecisionRule\\ShipmentDiscountDecisionRuleInterface given.#'

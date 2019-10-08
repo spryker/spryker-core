@@ -306,6 +306,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
         static::$categoryTree = [];
 
         $categoryNodes = $this->queryContainer->queryAllCategoryNodes()->find();
+        /** @var array $categoryEntities */
         $categoryEntities = $this->queryContainer->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
         $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
 
