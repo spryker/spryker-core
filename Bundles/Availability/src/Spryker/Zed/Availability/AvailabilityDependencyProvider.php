@@ -67,9 +67,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new AvailabilityToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -81,11 +81,11 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new AvailabilityToEventFacadeBridge(
                 $container->getLocator()->event()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new AvailabilityToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new AvailabilityToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStockFacade(Container $container)
     {
-        $container[static::FACADE_STOCK] = function (Container $container) {
+        $container->set(static::FACADE_STOCK, function (Container $container) {
             return new AvailabilityToStockFacadeBridge($container->getLocator()->stock()->facade());
-        };
+        });
 
         return $container;
     }
@@ -139,9 +139,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container)
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new AvailabilityToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }
@@ -153,9 +153,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new AvailabilityToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
