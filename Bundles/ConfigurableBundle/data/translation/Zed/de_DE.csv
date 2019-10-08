@@ -1,0 +1,2 @@
+"Unable to delete Product List since it's used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Produktliste kann nicht gelöscht werden, da sie von dem konfigurierbaren Bündel-Vorlagen ""%template%"" (""% slot%""slot) verwendet wird."
+"Configurable bundle template slot with id ""%id%"" was not found.","Vorlagenslot des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."

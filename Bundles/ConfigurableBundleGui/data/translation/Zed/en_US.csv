@@ -35,4 +35,14 @@ SKU,SKU
 "At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them."
 "You can change name and define locals on this page.","You can change name and define locals on this page."
 "You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories."
-"Configurable bundle template with id '%id%' was not found.","Configurable bundle template with id '%id%' was not found."
+"Configurable bundle template with id ""%id%"" was not found.","Configurable bundle template with id '%id%' was not found."
+"Configurable bundle template slot with id ""%id%"" was not found.","Configurable bundle template slot with id ""%id%"" was not found."
+"Configurable bundle template slot was successfully deleted.","Configurable bundle template slot was successfully deleted."
+"Create Configurable Bundle Template Slot","Create Configurable Bundle Template Slot"
+"Back to Configurable Bundle Template Edit page","Back to Configurable Bundle Template Edit page"
+"Slot details","Slot details"
+"Edit Configurable Bundle Template Slot","Edit Configurable Bundle Template Slot"
+"Are you sure you want to delete this slot?","Are you sure you want to delete this slot?"
+"Confirm action","Confirm action"
+Confirm,Confirm
+Cancel,Cancel

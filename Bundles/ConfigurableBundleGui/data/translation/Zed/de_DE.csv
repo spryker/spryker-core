@@ -35,4 +35,14 @@ SKU,SKU
 "At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","Erstellen Sie zunächst ein konfigurierbares Bündel-Vorlage. Anschließend werden Sie zu der Seite weitergeleitet, auf der Sie Slots erstellen und Produkte für jedes einzelne definieren können."
 "You can change name and define locals on this page.","Auf dieser Seite können Sie den Namen ändern und Einheimische definieren."
 "You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","Sie können Slots auf dieser Seite hinzufügen. Während der Slot-Erstellung können Sie diesem Slot nacheinander Produkte aus einem Katalog zuweisen, eine CSV-Datei importieren oder mehrere Kategorien zuweisen."
-"Configurable bundle template with id '%id%' was not found.","Vorlage des konfigurierbaren Bündels mit ID '%id%' wurde nicht gefunden."
+"Configurable bundle template with id ""%id%"" was not found.","Vorlage des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
+"Configurable bundle template slot with id ""%id%"" was not found.","Vorlagenslot des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
+"Configurable bundle template slot was successfully deleted.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich gelöscht."
+"Create Configurable Bundle Template Slot","Erstellen Sie ein Vorlagenslot des konfigurierbaren Bündels."
+"Back to Configurable Bundle Template Edit page","Zurück zur Seite Vorlagenslot des konfigurierbaren Bündels bearbeiten."
+"Slot details",Slotdetaile
+"Edit Configurable Bundle Template Slot",
+"Are you sure you want to delete this slot?",
+"Confirm action","Aktion bestätigen"
+Confirm,Bestätigen
+Cancel,Stornieren
