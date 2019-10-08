@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantProfile\Business\MerchantProfileFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 
 /**
  * Auto-generated group annotations
@@ -20,7 +21,7 @@ use Codeception\Test\Unit;
  * @group SaveMerchantProfileTest
  * Add your own group annotations below this line
  */
-class SaveMerchantProfileTest extends Unit
+class MerchantProfileFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantProfile\MerchantProfileBusinessTester
@@ -78,5 +79,24 @@ class SaveMerchantProfileTest extends Unit
         $this->assertTrue($hasImprintGlossaryKey);
         $this->assertTrue($hasTermsConditionsGlossaryKey);
         $this->assertTrue($hasGlossaryKey);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOneMerchantProfile(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $expectedMerchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
+
+        // Act
+        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
+        $merchantProfileCriteriaFilterTransfer->setIdMerchant($expectedMerchantProfileTransfer->getFkMerchant());
+        $merchantProfileTransfer = $this->tester->getFacade()->findOne($merchantProfileCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotNull($merchantProfileTransfer);
+        $this->assertEquals($merchantProfileTransfer->getIdMerchantProfile(), $expectedMerchantProfileTransfer->getIdMerchantProfile());
     }
 }
