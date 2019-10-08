@@ -31,6 +31,25 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFind(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
+
+        // Act
+        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
+        $merchantProfileCriteriaFilterTransfer->setMerchantProfileIds([$merchantProfileTransfer->getIdMerchantProfile()]);
+        $merchantProfileTransferCollection = $this->tester->getFacade()->find($merchantProfileCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotEmpty($merchantProfileTransferCollection->getMerchantProfiles());
+        $this->assertCount(1, $merchantProfileTransferCollection->getMerchantProfiles());
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveMerchantProfile(): void
     {
         // Arrange
