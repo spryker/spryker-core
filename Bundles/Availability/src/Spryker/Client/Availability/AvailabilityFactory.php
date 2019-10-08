@@ -32,6 +32,8 @@ class AvailabilityFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Availability\Zed\AvailabilityStubInterface
      */
     public function createAvailabilityStub(): AvailabilityStubInterface

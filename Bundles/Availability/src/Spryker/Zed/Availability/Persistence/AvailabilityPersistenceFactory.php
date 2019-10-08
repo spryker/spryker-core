@@ -11,11 +11,14 @@ use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductQueryContainerInterface;
+use Spryker\Zed\Availability\Persistence\Mapper\AvailabilityMapper;
+use Spryker\Zed\Availability\Persistence\Mapper\AvailabilityMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface getRepository()
  */
 class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -33,6 +36,14 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyAvailabilityAbstractQuery()
     {
         return SpyAvailabilityAbstractQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Persistence\Mapper\AvailabilityMapperInterface
+     */
+    public function createAvailabilityMapper(): AvailabilityMapperInterface
+    {
+        return new AvailabilityMapper();
     }
 
     /**

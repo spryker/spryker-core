@@ -302,6 +302,34 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testIsProductConcreteAvailable(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productConcreteTransfer2 = $this->tester->haveProduct();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+
+        $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
+            $productConcreteTransfer->getSku(),
+            new Decimal('1.1'),
+            $storeTransfer
+        );
+
+        // Act
+        $productAvailable = $this->getAvailabilityFacade()
+            ->isProductConcreteAvailable($productConcreteTransfer->getIdProductConcrete());
+
+        $productAvailable2 = $this->getAvailabilityFacade()
+            ->isProductConcreteAvailable($productConcreteTransfer2->getIdProductConcrete());
+
+        // Assert
+        $this->assertTrue($productAvailable);
+        $this->assertFalse($productAvailable2);
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
     protected function getAvailabilityFacade()

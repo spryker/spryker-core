@@ -30,7 +30,6 @@
 
     <transfer name="ProductConcreteAvailabilityRequest">
         <property name="sku" type="string"/>
-        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Quote">

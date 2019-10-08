@@ -110,15 +110,13 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     public function findProductConcreteAvailability(
         ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
-        $productConcreteAvailabilityRequestTransfer
-            ->requireSku()
-            ->requireStore();
+        $productConcreteAvailabilityRequestTransfer->requireSku();
+
+        $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $availabilityEntity = $this->availabilityQueryContainer
-            ->queryAvailabilityBySkuAndIdStore(
-                $productConcreteAvailabilityRequestTransfer->getSku(),
-                $productConcreteAvailabilityRequestTransfer->getStore()->getIdStore()
-            )->findOne();
+            ->queryAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
+            ->findOne();
 
         if (!$availabilityEntity) {
             return null;

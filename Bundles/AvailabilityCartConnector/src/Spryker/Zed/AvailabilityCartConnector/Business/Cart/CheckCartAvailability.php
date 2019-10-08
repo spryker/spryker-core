@@ -57,7 +57,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             );
             $currentItemQuantity += $itemTransfer->getQuantity();
 
-            $isSellable = $this->isProductSellable($itemTransfer, new Decimal($currentItemQuantity), $storeTransfer);
+            $isSellable = $this->isProductSellableForStore($itemTransfer, new Decimal($currentItemQuantity), $storeTransfer);
 
             if (!$isSellable) {
                 $availability = $this->calculateAvailabilityForProductWithStore($itemTransfer, $storeTransfer);
@@ -148,7 +148,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      *
      * @return bool
      */
-    protected function isProductSellable(
+    protected function isProductSellableForStore(
         ItemTransfer $itemTransfer,
         Decimal $currentItemQuantity,
         StoreTransfer $storeTransfer

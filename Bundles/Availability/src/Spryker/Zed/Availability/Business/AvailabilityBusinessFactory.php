@@ -27,6 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface getRepository()
  */
 class AvailabilityBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,7 +40,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getStockFacade(),
             $this->getStoreFacade(),
-            $this->createProductAvailabilityReader()
+            $this->getRepository()
         );
     }
 

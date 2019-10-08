@@ -29,13 +29,6 @@ interface AvailabilityToStockFacadeInterface
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
-     */
-    public function getStockProductsByIdProduct($idProductConcrete);
-
-    /**
      * @return array
      */
     public function getStoreToWarehouseMapping();

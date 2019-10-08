@@ -48,16 +48,6 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     }
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
-     */
-    public function getStockProductsByIdProduct($idProductConcrete)
-    {
-        return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
-    }
-
-    /**
      * @return array
      */
     public function getStoreToWarehouseMapping()
