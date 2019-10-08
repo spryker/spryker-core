@@ -32,12 +32,12 @@
     </transfer>
 
     <transfer name="OauthRequest">
-        <property name="customerReference" type="string" />
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="OauthResponse">
-        <property name="anonymousCustomerReference" type="string" />
-        <property name="customerReference" type="string" />
+        <property name="anonymousCustomerReference" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -45,9 +45,9 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int" />
-        <property name="code" type="string" />
-        <property name="detail" type="string" />
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
     </transfer>
 
     <transfer name="RestErrorCollection">
@@ -55,14 +55,14 @@
     </transfer>
 
     <transfer name="OauthAccessTokenValidationRequest">
-        <property name="accessToken" type="string" />
-        <property name="type" type="string" />
+        <property name="accessToken" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="OauthAccessTokenValidationResponse">
-        <property name="isValid" type="bool" />
-        <property name="oauthScopes" type="array" />
-        <property name="oauthUserId" type="string" />
+        <property name="isValid" type="bool"/>
+        <property name="oauthScopes" type="array"/>
+        <property name="oauthUserId" type="string"/>
     </transfer>
 
 </transfers>
