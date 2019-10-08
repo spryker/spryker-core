@@ -177,6 +177,18 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
+     * - Removes configurable bundle template slot with given ID from Persistence.
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void;
+
+    /**
+     * Specification:
      * - Finds configurable bundle template slot by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
      * - Returns corresponding transfer object for the first matching record if found, null otherwise.
      *

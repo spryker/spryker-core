@@ -210,6 +210,20 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @api
      *
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void
+    {
+        $this->getEntityManager()->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null

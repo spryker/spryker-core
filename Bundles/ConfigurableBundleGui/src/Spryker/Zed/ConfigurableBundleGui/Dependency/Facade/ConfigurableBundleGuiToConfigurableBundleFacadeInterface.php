@@ -76,15 +76,6 @@ interface ConfigurableBundleGuiToConfigurableBundleFacadeInterface
     ): ConfigurableBundleResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
-     */
-    public function findConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-    ): ?ConfigurableBundleTemplateSlotTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
@@ -92,6 +83,22 @@ interface ConfigurableBundleGuiToConfigurableBundleFacadeInterface
     public function updateConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleResponseTransfer;
+
+    /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
+     */
+    public function findConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ?ConfigurableBundleTemplateSlotTransfer;
 
     /**
      * @param int $idConfigurableBundleTemplate

@@ -176,4 +176,17 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
 
         return true;
     }
+
+    /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->filterByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+            ->delete();
+    }
 }

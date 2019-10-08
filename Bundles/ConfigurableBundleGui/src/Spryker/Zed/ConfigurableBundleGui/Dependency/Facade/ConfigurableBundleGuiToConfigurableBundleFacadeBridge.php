@@ -122,6 +122,16 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
     }
 
     /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void
+    {
+        $this->configurableBundleFacade->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null

@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin;
 use Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,7 +33,15 @@ class SlotController extends AbstractController
      */
     protected const ROUTE_EDIT_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/edit';
 
-    protected const ERROR_MESSAGE_TEMPLATE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     */
+    protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
+
+    protected const ERROR_MESSAGE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+    protected const SUCCESS_MESSAGE_SLOT_DELETED = 'Configurable bundle template slot was successfully deleted.';
+
+    protected const SLOTS_TAB_ANCHOR = '#tab-content-slots';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -114,6 +124,72 @@ class SlotController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request): RedirectResponse
+    {
+        $idConfigurableBundleTemplateSlot = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+        );
+
+        $configurableBundleTemplateSlotTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplateSlot(
+                (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+            );
+
+        if (!$configurableBundleTemplateSlotTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplateSlot,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
+
+        $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
+
+        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
+            static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
+        ]);
+
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_DELETED);
+
+        return $this->redirectResponse($redirectUrl . static::SLOTS_TAB_ANCHOR);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function availableProductConcreteTableAction(): JsonResponse
+    {
+        $availableProductConcreteTable = $productConcreteRelationTables = $this->getFactory()
+            ->createProductConcreteRelationTablesProvider()
+            ->getTables()['availableProductConcreteTable'];
+
+        return $this->jsonResponse(
+            $availableProductConcreteTable->fetchData()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function assignedProductConcreteTableAction(): JsonResponse
+    {
+        $assignedProductConcreteTable = $productConcreteRelationTables = $this->getFactory()
+            ->createProductConcreteRelationTablesProvider()
+            ->getTables()['assignedProductConcreteTable'];
+
+        return $this->jsonResponse(
+            $assignedProductConcreteTable->fetchData()
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function executeEditAction(Request $request)
@@ -126,7 +202,7 @@ class SlotController extends AbstractController
         $configurableBundleTemplateSlotEditFormTransfer = $formDataProvider->getData($idConfigurableBundleTemplateSlot);
 
         if (!$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getIdConfigurableBundleTemplateSlot()) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_SLOT_NOT_FOUND, [
+            $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_NOT_FOUND, [
                 static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplateSlot,
             ]);
 
@@ -174,34 +250,6 @@ class SlotController extends AbstractController
         $viewData = array_merge($viewData, $this->getProductListManagementTabsAndTables());
 
         return $viewData;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function availableProductConcreteTableAction(): JsonResponse
-    {
-        $availableProductConcreteTable = $productConcreteRelationTables = $this->getFactory()
-            ->createProductConcreteRelationTablesProvider()
-            ->getTables()['availableProductConcreteTable'];
-
-        return $this->jsonResponse(
-            $availableProductConcreteTable->fetchData()
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    public function assignedProductConcreteTableAction(): JsonResponse
-    {
-        $assignedProductConcreteTable = $productConcreteRelationTables = $this->getFactory()
-            ->createProductConcreteRelationTablesProvider()
-            ->getTables()['assignedProductConcreteTable'];
-
-        return $this->jsonResponse(
-            $assignedProductConcreteTable->fetchData()
-        );
     }
 
     /**

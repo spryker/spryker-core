@@ -5,4 +5,4 @@
 
 'use strict';
 
-require('./modules/configurable-bundle-template-slot/template-edit');
+require('./modules/configurable-bundle-template/template-edit');
