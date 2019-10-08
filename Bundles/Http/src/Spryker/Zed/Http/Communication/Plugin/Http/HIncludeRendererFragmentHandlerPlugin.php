@@ -21,6 +21,10 @@ use Symfony\Component\HttpKernel\Fragment\HIncludeFragmentRenderer;
 class HIncludeRendererFragmentHandlerPlugin extends AbstractPlugin implements FragmentHandlerPluginInterface
 {
     protected const SERVICE_CHARSET = 'charset';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
     protected const SERVICE_TWIG = 'twig';
 
     /**

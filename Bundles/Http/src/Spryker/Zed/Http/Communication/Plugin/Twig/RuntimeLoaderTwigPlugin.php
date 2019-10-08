@@ -23,10 +23,14 @@ use Twig\RuntimeLoader\RuntimeLoaderInterface;
  */
 class RuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     * - Adds `FactoryRuntimeLoader` as a runtime loader for twig.
      *
      * @api
      *
@@ -37,22 +41,7 @@ class RuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig = $this->addRuntimeLoader($twig, $container);
-
-        return $twig;
-    }
-
-    /**
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\Environment
-     */
-    protected function addRuntimeLoader(Environment $twig, ContainerInterface $container): Environment
-    {
-        $runtimeComponentsCollection = $this->createRuntimeComponentsCollection($container);
-        $factoryRuntimeLoader = $this->createFactoryRuntimeLoader($runtimeComponentsCollection);
-        $twig->addRuntimeLoader($factoryRuntimeLoader);
+        $twig->addRuntimeLoader($this->createFactoryRuntimeLoader($container));
 
         return $twig;
     }
@@ -73,13 +62,13 @@ class RuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     }
 
     /**
-     * @param array $runtimeComponents
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\RuntimeLoader\RuntimeLoaderInterface
      */
-    protected function createFactoryRuntimeLoader(array $runtimeComponents): RuntimeLoaderInterface
+    protected function createFactoryRuntimeLoader(ContainerInterface $container): RuntimeLoaderInterface
     {
-        return new FactoryRuntimeLoader($runtimeComponents);
+        return new FactoryRuntimeLoader($this->createRuntimeComponentsCollection($container));
     }
 
     /**

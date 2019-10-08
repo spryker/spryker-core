@@ -32,9 +32,12 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_CONTROLLER_RESOLVER = 'resolver';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets trusted proxies and host.
      * - Sets `cookies` service identifier.
+     * - Adds `HttpKernel` as a `kernel` service to the container.
+     * - Adds `RequestStack` as a `request_stack` service to the container.
+     * - Adds `RequestContext` as a `request_context` service to the container.
      *
      * @api
      *

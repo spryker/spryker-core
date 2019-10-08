@@ -22,7 +22,14 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  */
 class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements FragmentHandlerPluginInterface
 {
+    /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     */
     protected const SERVICE_KERNEL = 'kernel';
+
+    /**
+     * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
 
     /**
@@ -51,8 +58,8 @@ class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements Frag
     protected function createInlineFragmentRenderer(ContainerInterface $container): FragmentRendererInterface
     {
         $inlineFragmentRenderer = new InlineFragmentRenderer(
-            $this->getHttpKernelService($container),
-            $this->getEventDispatcherService($container)
+            $this->getHttpKernel($container),
+            $this->getEventDispatcher($container)
         );
         $inlineFragmentRenderer->setFragmentPath($this->getConfig()->getHttpFragmentPath());
 
@@ -64,7 +71,7 @@ class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements Frag
      *
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
-    protected function getHttpKernelService(ContainerInterface $container): HttpKernelInterface
+    protected function getHttpKernel(ContainerInterface $container): HttpKernelInterface
     {
         return $container->get(static::SERVICE_KERNEL);
     }
@@ -74,7 +81,7 @@ class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements Frag
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function getEventDispatcherService(ContainerInterface $container): EventDispatcherInterface
+    protected function getEventDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
         return $container->get(static::SERVICE_EVENT_DISPATCHER);
     }

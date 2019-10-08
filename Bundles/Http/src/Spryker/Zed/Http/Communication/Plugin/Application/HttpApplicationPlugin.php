@@ -28,13 +28,20 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_KERNEL = 'kernel';
     protected const SERVICE_REQUEST_STACK = 'request_stack';
     protected const SERVICE_REQUEST_CONTEXT = 'request_context';
-    protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
     protected const SERVICE_CONTROLLER_RESOLVER = 'resolver';
 
     /**
-     * {@inheritdoc}
+     * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     */
+    protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
+
+    /**
+     * {@inheritDoc}
      * - Sets trusted proxies and host.
      * - Sets `cookies` service identifier.
+     * - Adds `HttpKernel` as a `kernel` service to the container.
+     * - Adds `RequestStack` as a `request_stack` service to the container.
+     * - Adds `RequestContext` as a `request_context` service to the container.
      *
      * @api
      *
@@ -64,9 +71,9 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     {
         $container->set(static::SERVICE_KERNEL, function (ContainerInterface $container) {
             return new HttpKernel(
-                $this->getEventDispatcherService($container),
-                $this->getResolverService($container),
-                $this->getRequestStackService($container)
+                $this->getEventDispatcher($container),
+                $this->getResolver($container),
+                $this->getRequestStack($container)
             );
         });
 
@@ -141,7 +148,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
-    protected function getEventDispatcherService(ContainerInterface $container): EventDispatcherInterface
+    protected function getEventDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
         return $container->get(static::SERVICE_EVENT_DISPATCHER);
     }
@@ -151,7 +158,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface
      */
-    protected function getResolverService(ContainerInterface $container): ControllerResolverInterface
+    protected function getResolver(ContainerInterface $container): ControllerResolverInterface
     {
         return $container->get(static::SERVICE_CONTROLLER_RESOLVER);
     }
@@ -161,7 +168,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      *
      * @return \Symfony\Component\HttpFoundation\RequestStack
      */
-    protected function getRequestStackService(ContainerInterface $container): RequestStack
+    protected function getRequestStack(ContainerInterface $container): RequestStack
     {
         return $container->get(static::SERVICE_REQUEST_STACK);
     }

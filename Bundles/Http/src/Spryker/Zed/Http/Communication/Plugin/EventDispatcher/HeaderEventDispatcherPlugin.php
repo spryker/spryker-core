@@ -20,10 +20,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    protected const HEADER_HANDLER_PRIORITY = 0;
+    protected const EVENT_PRIORITY = 0;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Sets store main information in headers.
      * - Sets cache control.
      *
@@ -38,7 +38,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
             $this->onKernelResponse($event);
-        }, static::HEADER_HANDLER_PRIORITY);
+        }, static::EVENT_PRIORITY);
 
         return $eventDispatcher;
     }

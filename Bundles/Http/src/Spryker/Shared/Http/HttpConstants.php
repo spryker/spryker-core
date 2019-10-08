@@ -14,22 +14,19 @@ interface HttpConstants
 {
     /**
      * Specification:
-     * - If option set to true, the application will check if the request is secure and not excluded from https.
-     * - If request is not secure and not excluded from https, the application will return a redirect response.
-     * - If request is secure and page is excluded from https, the application will allow http.
+     *  - HTTP port for Yves.
      *
      * @api
      */
-    public const YVES_SSL_ENABLED = 'HTTP:YVES_SSL_ENABLED';
+    public const YVES_HTTP_PORT = 80;
 
     /**
      * Specification:
-     * - An array of HTTPS Excluded resources when ssl is enabled.
-     * - Example: `['route-name-a' => '/url-a', 'route-name-b' => '/url-b']`
+     * - HTTPS port for Yves.
      *
      * @api
      */
-    public const YVES_SSL_EXCLUDED = 'HTTP:YVES_SSL_EXCLUDED';
+    public const YVES_HTTPS_PORT = 443;
 
     /**
      * Specification:
@@ -74,22 +71,19 @@ interface HttpConstants
 
     /**
      * Specification:
-     * - If option set to true, the application will check if the request is secure and not excluded from https.
-     * - If request is not secure and not excluded from https, the application will return a redirect response.
-     * - If request is secure and page is excluded from https, the application will allow http.
+     *  - HTTP port for Zed.
      *
      * @api
      */
-    public const ZED_SSL_ENABLED = 'HTTP:ZED_SSL_ENABLED';
+    public const ZED_HTTP_PORT = 80;
 
     /**
      * Specification:
-     * - An array of HTTPS Excluded module/controller pairs when ssl is enabled.
-     * - Example: `['module-a/controller-a', 'module-b/controller-b']`
+     * - HTTPS port for Zed.
      *
      * @api
      */
-    public const ZED_SSL_EXCLUDED = 'HTTP:ZED_SSL_EXCLUDED';
+    public const ZED_HTTPS_PORT = 443;
 
     /**
      * Specification:

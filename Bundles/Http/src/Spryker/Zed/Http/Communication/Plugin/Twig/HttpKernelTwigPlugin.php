@@ -19,7 +19,7 @@ use Twig\Environment;
 class HttpKernelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `HttpKernelExtension`.
      *
      * @api
@@ -31,7 +31,7 @@ class HttpKernelTwigPlugin extends AbstractPlugin implements TwigPluginInterface
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
-        $twig->addExtension($this->getFactory()->createHttpKernelException());
+        $twig->addExtension($this->getFactory()->createHttpKernelExtension());
 
         return $twig;
     }

@@ -39,7 +39,7 @@ class HttpFactory extends AbstractFactory
     /**
      * @return \Twig\Extension\AbstractExtension
      */
-    public function createHttpKernelException(): AbstractExtension
+    public function createHttpKernelExtension(): AbstractExtension
     {
         return new HttpKernelExtension();
     }

@@ -44,8 +44,6 @@ interface ApplicationConstants
     /**
      * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES` instead.
      *
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_SSL_EXCLUDED` instead.
-     *
      * Specification:
      * - An array of HTTPS Excluded resources when ssl is enabled.
      * - Example: `['route-name-a' => '/url-a', 'route-name-b' => '/url-b']`
@@ -165,8 +163,6 @@ interface ApplicationConstants
     /**
      * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
      *
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_SSL_ENABLED` instead.
-     *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
      * - If request is not secure and not excluded from https, the application will return a redirect response.
@@ -178,8 +174,6 @@ interface ApplicationConstants
 
     /**
      * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
-     *
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_SSL_EXCLUDED` instead.
      *
      * Specification:
      * - An array of HTTPS Excluded module/controller pairs when ssl is enabled.

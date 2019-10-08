@@ -21,11 +21,14 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_COOKIES
+     */
     protected const SERVICE_COOKIES = 'cookies';
-    protected const COOKIES_HANDLER_PRIORITY = -255;
+    protected const EVENT_PRIORITY = -255;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a listener to handle transparent cookie insertion.
      *
      * @api
@@ -37,12 +40,12 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) use ($container): void {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) use ($container) {
             $cookies = $this->getCookies($container);
             foreach ($cookies as $cookie) {
                 $event->getResponse()->headers->setCookie($cookie);
             }
-        }, static::COOKIES_HANDLER_PRIORITY);
+        }, static::EVENT_PRIORITY);
 
         return $eventDispatcher;
     }

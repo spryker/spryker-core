@@ -9,24 +9,21 @@ namespace Spryker\Zed\Http;
 
 use Spryker\Shared\Http\HttpConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Shared\Http\HttpConfig getSharedConfig()
  */
 class HttpConfig extends AbstractBundleConfig
 {
-    protected const REQUEST_HTTP_PORT = 80;
-    protected const REQUEST_HTTPS_PORT = 443;
-    protected const REQUEST_TRUSTED_HEADER_SET = Request::HEADER_X_FORWARDED_ALL;
-    protected const HTTP_FRAGMENT_PATH = '/_fragment';
+    protected const DEFAULT_REQUEST_HTTP_PORT = 80;
+    protected const DEFAULT_REQUEST_HTTPS_PORT = 443;
 
     /**
      * @return int
      */
     public function getHttpPort(): int
     {
-        return static::REQUEST_HTTP_PORT;
+        return $this->get(HttpConstants::ZED_HTTP_PORT, static::DEFAULT_REQUEST_HTTP_PORT);
     }
 
     /**
@@ -34,7 +31,7 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getHttpsPort(): int
     {
-        return static::REQUEST_HTTPS_PORT;
+        return $this->get(HttpConstants::ZED_HTTPS_PORT, static::DEFAULT_REQUEST_HTTPS_PORT);
     }
 
     /**
@@ -42,23 +39,7 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getTrustedHeaderSet(): int
     {
-        return static::REQUEST_TRUSTED_HEADER_SET;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSslEnabled(): bool
-    {
-        return $this->get(HttpConstants::ZED_SSL_ENABLED, true);
-    }
-
-    /**
-     * @return array
-     */
-    public function getSslExcludedResources(): array
-    {
-        return $this->get(HttpConstants::ZED_SSL_EXCLUDED, []);
+        return $this->getSharedConfig()->getTrustedHeaderSet();
     }
 
     /**
@@ -98,7 +79,7 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getHttpFragmentPath(): string
     {
-        return static::HTTP_FRAGMENT_PATH;
+        return $this->getSharedConfig()->getHttpFragmentPath();
     }
 
     /**
@@ -114,6 +95,6 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getHIncludeRendererGlobalTemplate(): ?string
     {
-        return null;
+        return $this->getSharedConfig()->getHIncludeRendererGlobalTemplate();
     }
 }
