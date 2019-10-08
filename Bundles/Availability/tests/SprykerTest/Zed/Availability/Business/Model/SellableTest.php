@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -93,16 +93,16 @@ class SellableTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface|null $omsFacadeMock
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface|null $stockFacadeMock
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface|null $omsFacadeMock
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacadeMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $storeFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface|null $availabilityRepositoryMock
      *
      * @return \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     protected function createSellable(
-        ?AvailabilityToOmsFacadeInterface $omsFacadeMock = null,
-        ?AvailabilityToStockFacadeInterface $stockFacadeMock = null,
+        ?AvailabilityToOmsInterface $omsFacadeMock = null,
+        ?AvailabilityToStockInterface $stockFacadeMock = null,
         ?AvailabilityToStoreFacadeInterface $storeFacade = null,
         ?AvailabilityRepositoryInterface $availabilityRepositoryMock = null
     ): SellableInterface {
@@ -136,19 +136,19 @@ class SellableTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function createStockFacadeMock()
     {
-        return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)->getMock();
+        return $this->getMockBuilder(AvailabilityToStockInterface::class)->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function createOmsFacadeMock()
     {
-        return $this->getMockBuilder(AvailabilityToOmsFacadeInterface::class)->getMock();
+        return $this->getMockBuilder(AvailabilityToOmsInterface::class)->getMock();
     }
 
     /**

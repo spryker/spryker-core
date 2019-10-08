@@ -10,20 +10,20 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class Sellable implements SellableInterface
 {
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected $stockFacade;
 
@@ -38,14 +38,14 @@ class Sellable implements SellableInterface
     protected $availabilityRepository;
 
     /**
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface $omsFacade
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      */
     public function __construct(
-        AvailabilityToOmsFacadeInterface $omsFacade,
-        AvailabilityToStockFacadeInterface $stockFacade,
+        AvailabilityToOmsInterface $omsFacade,
+        AvailabilityToStockInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityRepositoryInterface $availabilityRepository
     ) {

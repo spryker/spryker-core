@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-class AvailabilityToProductFacadeBridge implements AvailabilityToProductFacadeInterface
+class AvailabilityToProductFacadeBridge implements AvailabilityToProductInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

@@ -23,7 +23,7 @@ use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -339,7 +339,7 @@ class AvailabilityFacadeTest extends Unit
 
         $container = new Container();
         $container->set(AvailabilityDependencyProvider::FACADE_STOCK, function () {
-            return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
+            return $this->getMockBuilder(AvailabilityToStockInterface::class)
                 ->getMock()
                 ->method('getStoreToWarehouseMapping')
                 ->willReturn([

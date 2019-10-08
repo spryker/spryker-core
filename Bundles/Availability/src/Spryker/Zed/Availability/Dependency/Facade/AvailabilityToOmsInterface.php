@@ -10,7 +10,7 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-interface AvailabilityToOmsFacadeInterface
+interface AvailabilityToOmsInterface
 {
     /**
      * @param string $sku

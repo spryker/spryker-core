@@ -17,9 +17,9 @@ use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditio
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -73,17 +73,17 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
-    public function getStockFacade(): AvailabilityToStockFacadeInterface
+    public function getStockFacade(): AvailabilityToStockInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STOCK);
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
-    public function getOmsFacade(): AvailabilityToOmsFacadeInterface
+    public function getOmsFacade(): AvailabilityToOmsInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_OMS);
     }
@@ -97,9 +97,9 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
      */
-    public function getProductFacade(): AvailabilityToProductFacadeInterface
+    public function getProductFacade(): AvailabilityToProductInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODUCT);
     }

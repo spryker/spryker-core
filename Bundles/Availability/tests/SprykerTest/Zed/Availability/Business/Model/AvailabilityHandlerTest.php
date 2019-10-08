@@ -17,9 +17,9 @@ use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -87,10 +87,10 @@ class AvailabilityHandlerTest extends Unit
 
     /**
      * @param \Spryker\Zed\Availability\Business\Model\SellableInterface|null $sellable
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface|null $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface|null $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface|null $availabilityQueryContainer
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface|null $AvailabilityToProductFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface|null $AvailabilityToProductFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $availabilityToStoreFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface|null $availabilityToEventFacade
      *
@@ -98,10 +98,10 @@ class AvailabilityHandlerTest extends Unit
      */
     protected function createAvailabilityHandler(
         ?SellableInterface $sellable = null,
-        ?AvailabilityToStockFacadeInterface $stockFacade = null,
+        ?AvailabilityToStockInterface $stockFacade = null,
         ?AvailabilityToTouchInterface $touchFacade = null,
         ?AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
-        ?AvailabilityToProductFacadeInterface $AvailabilityToProductFacade = null,
+        ?AvailabilityToProductInterface $AvailabilityToProductFacade = null,
         ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
     ) {
@@ -148,20 +148,20 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
      */
     protected function createStockFacadeMock()
     {
-        return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
+        return $this->getMockBuilder(AvailabilityToStockInterface::class)
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
      */
     protected function createOmsFacadeMock()
     {
-        return $this->getMockBuilder(AvailabilityToOmsFacadeInterface::class)
+        return $this->getMockBuilder(AvailabilityToOmsInterface::class)
             ->getMock();
     }
 
@@ -246,11 +246,11 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
      */
     protected function createAvailabilityToProductFacade()
     {
-        return $this->getMockBuilder(AvailabilityToProductFacadeInterface::class)->getMock();
+        return $this->getMockBuilder(AvailabilityToProductInterface::class)->getMock();
     }
 
     /**
