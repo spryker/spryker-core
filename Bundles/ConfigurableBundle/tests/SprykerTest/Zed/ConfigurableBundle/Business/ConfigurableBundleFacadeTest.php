@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 
 /**
  * Auto-generated group annotations
@@ -254,5 +256,46 @@ class ConfigurableBundleFacadeTest extends Unit
             );
 
         $this->assertSame($updatedConfigurableBundleTemplateTransfer->getIsActive(), false);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckProductListUsageAmongSlotsWillReturnNotSuccessfullResponseWhenProductListIsUsed(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        // Act
+        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongSlots(
+            $configurableBundleTemplateSlotTransfer->getProductList()
+        );
+
+        // Assert
+        $this->assertFalse($productListResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $productListResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckProductListUsageAmongSlotsWillReturnSuccessfullResponseWhenProductListIsNotUsed(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+        $productListTransfer = (new ProductListTransfer())->setIdProductList(-1);
+
+        // Act
+        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongSlots($productListTransfer);
+
+        // Assert
+        $this->assertTrue($productListResponseTransfer->getIsSuccessful());
+        $this->assertCount(0, $productListResponseTransfer->getMessages());
     }
 }

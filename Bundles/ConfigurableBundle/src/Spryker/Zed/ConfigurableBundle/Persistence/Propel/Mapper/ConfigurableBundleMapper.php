@@ -66,6 +66,7 @@ class ConfigurableBundleMapper
             $configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList()
         );
     }
+
     /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer

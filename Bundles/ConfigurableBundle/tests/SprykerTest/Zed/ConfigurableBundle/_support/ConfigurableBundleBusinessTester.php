@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ConfigurableBundle;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
@@ -42,13 +44,29 @@ class ConfigurableBundleBusinessTester extends Actor
     public function createActiveConfigurableBundleTemplate(array $data = []): ConfigurableBundleTemplateTransfer
     {
         $defaultData = [
-            ConfigurableBundleTemplateTransfer::NAME => 'configurable_bundle.template.test-name',
+            ConfigurableBundleTemplateTransfer::NAME => 'configurable_bundle.templates.test-name',
             ConfigurableBundleTemplateTransfer::UUID => uniqid(),
             ConfigurableBundleTemplateTransfer::IS_ACTIVE => true,
-            ConfigurableBundleTemplateTransfer::TRANSLATIONS => $this->createTranslationsForAvailableLocales(),
+            ConfigurableBundleTemplateTransfer::TRANSLATIONS => $this->createTemplateTranslationsForAvailableLocales(),
         ];
 
         return $this->haveConfigurableBundleTemplate(array_merge($data, $defaultData));
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function createConfigurableBundleTemplateSlot(array $data = []): ConfigurableBundleTemplateSlotTransfer
+    {
+        $defaultData = [
+            ConfigurableBundleTemplateSlotTransfer::NAME => 'configurable_bundle.template_slots.test-name',
+            ConfigurableBundleTemplateSlotTransfer::UUID => uniqid(),
+            ConfigurableBundleTemplateSlotTransfer::TRANSLATIONS => $this->createSlotTranslationsForAvailableLocales(),
+        ];
+
+        return $this->haveConfigurableBundleTemplateSlot(array_merge($data, $defaultData));
     }
 
     /**
@@ -60,7 +78,7 @@ class ConfigurableBundleBusinessTester extends Actor
             ConfigurableBundleTemplateTransfer::NAME => 'template.test-name',
             ConfigurableBundleTemplateTransfer::IS_ACTIVE => false,
             ConfigurableBundleTemplateTransfer::UUID => uniqid(),
-            ConfigurableBundleTemplateTransfer::TRANSLATIONS => $this->createTranslationsForAvailableLocales(),
+            ConfigurableBundleTemplateTransfer::TRANSLATIONS => $this->createTemplateTranslationsForAvailableLocales(),
         ]);
     }
 
@@ -69,7 +87,7 @@ class ConfigurableBundleBusinessTester extends Actor
      *
      * @return array
      */
-    public function createTranslationsForAvailableLocales(array $data = []): array
+    public function createTemplateTranslationsForAvailableLocales(array $data = []): array
     {
         $availableLocaleTransfers = $this->getLocator()
             ->locale()
@@ -88,6 +106,32 @@ class ConfigurableBundleBusinessTester extends Actor
         }
 
         return $configurableBundleTemplateTranslationTransfers;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function createSlotTranslationsForAvailableLocales(array $data = []): array
+    {
+        $availableLocaleTransfers = $this->getLocator()
+            ->locale()
+            ->facade()
+            ->getLocaleCollection();
+
+        $configurableBundleTemplateSlotTranslationTransfers = [];
+
+        foreach ($availableLocaleTransfers as $localeTransfer) {
+            $defaultData = [
+                ConfigurableBundleTemplateSlotTranslationTransfer::NAME => 'test-name',
+                ConfigurableBundleTemplateSlotTranslationTransfer::LOCALE => $localeTransfer,
+            ];
+
+            $configurableBundleTemplateSlotTranslationTransfers[] = array_merge($defaultData, $data);
+        }
+
+        return $configurableBundleTemplateSlotTranslationTransfers;
     }
 
     /**
@@ -125,7 +169,7 @@ class ConfigurableBundleBusinessTester extends Actor
     public function createTranslationTransfersForAvailableLocales(array $data = []): ArrayObject
     {
         $configurableBundleTemplateTranslationTransfers = new ArrayObject();
-        $configurableBundleTemplateTranslations = $this->createTranslationsForAvailableLocales($data);
+        $configurableBundleTemplateTranslations = $this->createTemplateTranslationsForAvailableLocales($data);
 
         foreach ($configurableBundleTemplateTranslations as $configurableBundleTemplateTranslation) {
             $configurableBundleTemplateTranslationTransfers->append(
