@@ -110,8 +110,6 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
-     *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
     public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
@@ -122,15 +120,6 @@ class CmsBlockWriter implements CmsBlockWriterInterface
 
         if ($spyCmsBlock->getFkTemplate() != $cmsBlockTransfer->getFkTemplate()) {
             $this->checkTemplateFileExists($cmsBlockTransfer->getFkTemplate());
-        }
-
-        if ($spyCmsBlock === null) {
-            throw new CmsBlockNotFoundException(
-                sprintf(
-                    'CMS Block with id "%d" was not found',
-                    $cmsBlockTransfer->getIdCmsBlock()
-                )
-            );
         }
 
         $this->handleDatabaseTransaction(function () use ($cmsBlockTransfer, $spyCmsBlock) {
@@ -172,7 +161,9 @@ class CmsBlockWriter implements CmsBlockWriterInterface
             ->findOne();
 
         if (!$spyCmsBlock) {
-            throw new CmsBlockNotFoundException();
+            throw new CmsBlockNotFoundException(
+                sprintf('CMS Block with id "%d" was not found', $idCmsBlock)
+            );
         }
 
         return $spyCmsBlock;

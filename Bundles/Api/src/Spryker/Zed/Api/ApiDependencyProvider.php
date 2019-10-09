@@ -101,7 +101,7 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[]
      */
     protected function getApiValidatorPluginCollection()
     {

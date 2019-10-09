@@ -359,6 +359,7 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryAllProductImageSetsByProductAbstractIds(array $productAbstractIds)
     {
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery */
         $productImageSetQuery = $this->getFactory()
             ->getProductImageQueryContainer()
             ->queryProductImageSet()
