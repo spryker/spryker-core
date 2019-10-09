@@ -3,7 +3,7 @@
 {% set widget_title = 'Slot details' %}
 
 {% block section_title %}
-    {{ 'Create Configurable Bundle Template Slot' | trans }}
+    {{ 'Create Slot' | trans }}
 {% endblock %}
 
 {% block head_title %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : idConfigurableBundleTemplate }),'Back to Configurable Bundle Template Edit page' | trans) }}
+    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : idConfigurableBundleTemplate }),'Back' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -19,7 +19,9 @@
         {% block widget_content %}
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-            {% set tips = 'General tab tip' %}
+            {% set tips %}
+                {% include '@ConfigurableBundleGui/Slot/_partials/slot-tips.twig' %}
+            {% endset %}
 
             {{ tabs(tabs, {
                 form: form,

@@ -11,9 +11,12 @@ use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
-class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
+class AbstractConfigurableBundleTabs extends AbstractTabs
 {
     protected const GENERAL_TAB_NAME = 'General';
+    protected const GENERAL_TAB_TEMPLATE = '@ConfigurableBundleGui/Template/tabs/general-tab.twig';
+
+    protected const FOOTER_TEMPLATE = '@ConfigurableBundleGui/Template/_partials/submit-button.twig';
 
     /**
      * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
@@ -40,7 +43,7 @@ class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
         $tabItemTransfer = (new TabItemTransfer())
             ->setName(strtolower(static::GENERAL_TAB_NAME))
             ->setTitle(static::GENERAL_TAB_NAME)
-            ->setTemplate('@ConfigurableBundleGui/Template/tabs/general-tab.twig');
+            ->setTemplate(static::GENERAL_TAB_TEMPLATE);
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
@@ -54,7 +57,7 @@ class AbstractConfigurableBundleTemplateTabs extends AbstractTabs
      */
     protected function setFooterTemplate(TabsViewTransfer $tabsViewTransfer)
     {
-        $tabsViewTransfer->setFooterTemplate('@ConfigurableBundleGui/Template/_partials/submit-button.twig');
+        $tabsViewTransfer->setFooterTemplate(static::FOOTER_TEMPLATE);
 
         return $this;
     }

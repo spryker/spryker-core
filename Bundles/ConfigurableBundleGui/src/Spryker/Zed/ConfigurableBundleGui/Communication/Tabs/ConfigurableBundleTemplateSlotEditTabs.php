@@ -9,8 +9,10 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Tabs;
 
 use Generated\Shared\Transfer\TabsViewTransfer;
 
-class ConfigurableBundleTemplateSlotEditTabs extends AbstractConfigurableBundleTemplateTabs
+class ConfigurableBundleTemplateSlotEditTabs extends AbstractConfigurableBundleTabs
 {
+    protected const GENERAL_TAB_TEMPLATE = '@ConfigurableBundleGui/Slot/tabs/general-tab.twig';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface[]
      */

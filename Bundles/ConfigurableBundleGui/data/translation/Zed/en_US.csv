@@ -38,11 +38,14 @@ SKU,SKU
 "Configurable bundle template with id ""%id%"" was not found.","Configurable bundle template with id '%id%' was not found."
 "Configurable bundle template slot with id ""%id%"" was not found.","Configurable bundle template slot with id ""%id%"" was not found."
 "Configurable bundle template slot was successfully deleted.","Configurable bundle template slot was successfully deleted."
-"Create Configurable Bundle Template Slot","Create Configurable Bundle Template Slot"
-"Back to Configurable Bundle Template Edit page","Back to Configurable Bundle Template Edit page"
+"Create Slot","Create Slot"
+"Edit Slot","Edit Slot"
+Back,Back
 "Slot details","Slot details"
-"Edit Configurable Bundle Template Slot","Edit Configurable Bundle Template Slot"
 "Are you sure you want to delete this slot?","Are you sure you want to delete this slot?"
 "Confirm action","Confirm action"
 Confirm,Confirm
 Cancel,Cancel
+"Add General Information","Add General Information"
+"Below you can edit the name of your slot for different locales (in different languages).","Below you can edit the name of your slot for different locales (in different languages)."
+"Note: you can assign products and categories for a slot in the respective tabs.","Note: you can assign products and categories for a slot in the respective tabs."

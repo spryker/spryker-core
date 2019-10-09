@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Tabs;
 use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 
-class ConfigurableBundleTemplateEditTabs extends AbstractConfigurableBundleTemplateTabs
+class ConfigurableBundleTemplateEditTabs extends AbstractConfigurableBundleTabs
 {
     protected const SLOTS_TAB_NAME = 'Slots';
 

@@ -36,6 +36,24 @@
                         <action>confirm-delete</action>
                         <visible>0</visible>
                     </configurable-bundle-confirm-delete>
+
+                    <configurable-bundle-template-slot-create>
+                        <label>Create Slot</label>
+                        <title>Create Slot</title>
+                        <bundle>configurable-bundle-gui</bundle>
+                        <controller>slot</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </configurable-bundle-template-slot-create>
+
+                    <configurable-bundle-template-slot-edit>
+                        <label>Edit Slot</label>
+                        <title>Edit Slot</title>
+                        <bundle>configurable-bundle-gui</bundle>
+                        <controller>slot</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </configurable-bundle-template-slot-edit>
                 </pages>
             </configurable-bundle-templates>
         </pages>
