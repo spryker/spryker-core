@@ -1,13 +1,12 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Catalog\src\Spryker\Client\Catalog\Plugin\Config;
+namespace Spryker\Client\Catalog\Plugin\Config;
 
-use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
@@ -64,12 +63,8 @@ class CatalogSearchConfigBuilderPlugin extends AbstractPlugin implements
      */
     public function buildPaginationConfig(PaginationConfigInterface $paginationConfigBuilder): void
     {
-        $paginationConfigTransfer = (new PaginationConfigTransfer())
-            ->setParameterName(static::PARAMETER_NAME_PAGE)
-            ->setItemsPerPageParameterName(static::PARAMETER_NAME_ITEMS_PER_PAGE)
-            ->setDefaultItemsPerPage(static::DEFAULT_ITEMS_PER_PAGE)
-            ->setValidItemsPerPageOptions(static::VALID_ITEMS_PER_PAGE_OPTIONS);
-
-        $paginationConfigBuilder->setPagination($paginationConfigTransfer);
+        $paginationConfigBuilder->setPagination(
+            $this->getFactory()->getConfig()->getCatalogSearchPaginationConfigTransfer()
+        );
     }
 }

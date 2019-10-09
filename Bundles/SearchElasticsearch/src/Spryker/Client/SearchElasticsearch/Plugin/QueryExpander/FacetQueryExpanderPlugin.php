@@ -64,7 +64,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $activeFacetConfigTransfers = $facetConfig->getActive($requestParameters);
 
         foreach ($activeFacetConfigTransfers as $facetConfigTransfer) {
-            $filterValue = isset($requestParameters[$facetConfigTransfer->getParameterName()]) ? $requestParameters[$facetConfigTransfer->getParameterName()] : null;
+            $filterValue = $requestParameters[$facetConfigTransfer->getParameterName()] ?? null;
 
             if ($facetConfigTransfer->getIsMultiValued() === true) {
                 $query = $this->createMultiValuedFacetFilterQuery($facetConfigTransfer, $filterValue);

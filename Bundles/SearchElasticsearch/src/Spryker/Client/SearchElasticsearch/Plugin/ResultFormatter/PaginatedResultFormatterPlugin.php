@@ -18,6 +18,10 @@ class PaginatedResultFormatterPlugin extends AbstractElasticsearchResultFormatte
     public const NAME = 'pagination';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()

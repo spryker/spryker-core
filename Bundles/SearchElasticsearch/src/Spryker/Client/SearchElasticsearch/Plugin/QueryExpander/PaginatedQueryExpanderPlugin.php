@@ -18,6 +18,10 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *

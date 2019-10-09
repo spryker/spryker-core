@@ -18,6 +18,10 @@ class SortedResultFormatterPlugin extends AbstractElasticsearchResultFormatterPl
     public const NAME = 'sort';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()

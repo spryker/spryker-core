@@ -20,6 +20,10 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
     public const PATH_SEPARATOR = '.';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()

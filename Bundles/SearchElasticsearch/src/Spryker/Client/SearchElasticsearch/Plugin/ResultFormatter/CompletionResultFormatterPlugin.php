@@ -15,8 +15,14 @@ use Elastica\ResultSet;
 class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     protected const NAME = 'completion';
+    protected const KEY_BUCKETS = 'buckets';
+    protected const KEY_KEY = 'key';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -47,8 +53,8 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
         $result = [];
         $aggregation = $searchResult->getAggregation(static::NAME);
 
-        foreach ($aggregation['buckets'] as $agg) {
-            $result[] = $agg['key'];
+        foreach ($aggregation[static::KEY_BUCKETS] as $agg) {
+            $result[] = $agg[static::KEY_KEY];
         }
 
         return $result;

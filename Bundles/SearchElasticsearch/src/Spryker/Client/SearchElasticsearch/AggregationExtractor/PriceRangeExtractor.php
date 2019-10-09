@@ -8,6 +8,7 @@
 namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class PriceRangeExtractor extends RangeExtractor
@@ -34,7 +35,7 @@ class PriceRangeExtractor extends RangeExtractor
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters)
+    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         /** @var \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeResultTransfer */
         $rangeResultTransfer = parent::extractDataFromAggregations($aggregations, $requestParameters);
@@ -44,12 +45,12 @@ class PriceRangeExtractor extends RangeExtractor
 
     /**
      * @param array $requestParameters
-     * @param float $min
-     * @param float $max
+     * @param float|null $min
+     * @param float|null $max
      *
-     * @return array
+     * @return (int|float|null)[]
      */
-    protected function getActiveRangeData(array $requestParameters, $min, $max)
+    protected function getActiveRangeData(array $requestParameters, ?float $min, ?float $max): array
     {
         [$activeMin, $activeMax] = $this->getActiveRangeParameters($requestParameters);
 

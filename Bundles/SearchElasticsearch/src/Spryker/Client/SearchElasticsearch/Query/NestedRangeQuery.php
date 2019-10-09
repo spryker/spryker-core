@@ -81,8 +81,8 @@ class NestedRangeQuery extends AbstractNestedQuery
      */
     protected function setMinMaxValuesFromArray(array $rangeValues): void
     {
-        $this->minValue = isset($rangeValues[static::RANGE_MIN]) ? $rangeValues[static::RANGE_MIN] : null;
-        $this->maxValue = isset($rangeValues[static::RANGE_MAX]) ? $rangeValues[static::RANGE_MAX] : null;
+        $this->minValue = $rangeValues[static::RANGE_MIN] ?? null;
+        $this->maxValue = $rangeValues[static::RANGE_MAX] ?? null;
 
         $this->convertMinMaxValues();
     }

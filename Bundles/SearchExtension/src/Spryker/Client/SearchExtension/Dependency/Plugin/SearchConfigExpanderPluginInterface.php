@@ -10,6 +10,9 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 interface SearchConfigExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Expands facet and sort configuration with additional parameters.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\SearchConfigExtensionTransfer

@@ -94,12 +94,12 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
 
     /**
      * @param array $requestParameters
-     * @param float $min
-     * @param float $max
+     * @param float|null $min
+     * @param float|null $max
      *
-     * @return int[]
+     * @return (int|float|null)[]
      */
-    protected function getActiveRangeData(array $requestParameters, $min, $max)
+    protected function getActiveRangeData(array $requestParameters, ?float $min, ?float $max): array
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
