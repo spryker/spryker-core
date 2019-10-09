@@ -27,13 +27,14 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
 
     /**
      * @param string $sku
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal
+     * @return int
      */
-    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
+    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
     {
-        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
+        return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
     }
 
     /**
@@ -49,43 +50,13 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return void
-     */
-    public function touchAvailabilityAbstract($idAvailabilityAbstract)
-    {
-        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
-    }
-
-    /**
-     * @deprecated Use saveProductAvailabilityForStore() instead.
-     *
      * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability(string $sku, Decimal $quantity): int
-    {
-        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
-    }
-
-    /**
-     * The method check for "method_exists" is for BC for modules without multi store availability support.
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        if (method_exists($this->availabilityFacade, 'saveProductAvailabilityForStore')) {
-            return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
-        }
-
-        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
+        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
     }
 }
