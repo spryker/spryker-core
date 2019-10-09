@@ -20,6 +20,8 @@ interface AvailabilityClientInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException

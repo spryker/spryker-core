@@ -20,6 +20,8 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException
