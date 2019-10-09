@@ -6,6 +6,7 @@
     <transfer name="Translation">
         <property name="idGlossaryTranslation" type="int"/>
         <property name="fkGlossaryKey" type="int"/>
+        <property name="glossaryKey" type="string" />
         <property name="fkLocale" type="int"/>
         <property name="value" type="string"/>
         <property name="isActive" type="bool"/>

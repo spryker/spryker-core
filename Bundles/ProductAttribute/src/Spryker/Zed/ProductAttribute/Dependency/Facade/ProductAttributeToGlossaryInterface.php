@@ -52,6 +52,14 @@ interface ProductAttributeToGlossaryInterface
     public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
+     * @param array $keyNames
+     * @param array $localeNames
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslations(array $keyNames, array $localeNames);
+
+    /**
      * @param string $keyName
      *
      * @return bool

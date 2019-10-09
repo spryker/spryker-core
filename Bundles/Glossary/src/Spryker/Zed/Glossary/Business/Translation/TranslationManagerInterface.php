@@ -157,6 +157,14 @@ interface TranslationManagerInterface
     public function getTranslationByKeyName($keyName, LocaleTransfer $locale);
 
     /**
+     * @param array $keyNames
+     * @param array $localeNames
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByKeyNames(array $keyNames, array $localeNames);
+
+    /**
      * @param int $idKey
      *
      * @return void

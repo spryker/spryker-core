@@ -188,6 +188,21 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     /**
      * @api
      *
+     * @param array $keyNames
+     * @param array $localeNames
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslations(array $keyNames, array $localeNames)
+    {
+        $translationManager = $this->getFactory()->createTranslationManager();
+
+        return $translationManager->getTranslationsByKeyNames($keyNames, $localeNames);
+    }
+
+    /**
+     * @api
+     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value

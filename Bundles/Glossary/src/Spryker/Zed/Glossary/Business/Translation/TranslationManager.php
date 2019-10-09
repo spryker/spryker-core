@@ -306,6 +306,34 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
+     * @TODO: throw MissingTranslationException
+     *
+     * @param array $keyNames
+     * @param array $localeNames
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByKeyNames(array $keyNames, array $localeNames)
+    {
+        $translationTransfers = [];
+        $translations = $this->glossaryQueryContainer->queryTranslations()
+            ->useGlossaryKeyQuery()
+                ->filterByKey_In($keyNames)
+                ->withColumn('key', 'glossaryKey')
+            ->endUse()
+            ->useLocaleQuery()
+                ->filterByLocaleName_In($localeNames)
+            ->endUse()
+            ->find();
+
+        foreach ($translations as $translation) {
+            $translationTransfers[] = $this->convertEntityToTranslationTransfer($translation);
+        }
+
+        return $translationTransfers;
+    }
+
+    /**
      * @param int $idItem
      *
      * @return void
