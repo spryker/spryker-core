@@ -96,7 +96,7 @@ class ProductListWriter implements ProductListWriterInterface
             ->setIdConfigurableBundleTemplate($configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate());
 
         $configurableBundleTemplateTransfer = $this->configurableBundleTemplateReader
-            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+            ->findConfigurableBundleTemplateWithDefaultLocaleTranslation($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateTransfer) {
             throw new ConfigurableBundleTemplateNotFoundException(

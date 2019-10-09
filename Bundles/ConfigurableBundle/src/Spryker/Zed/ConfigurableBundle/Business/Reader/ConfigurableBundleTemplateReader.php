@@ -44,14 +44,31 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateFilterTransfer = $this->configurableBundleRepository
-            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
-        if (!$configurableBundleTemplateFilterTransfer) {
+        if (!$configurableBundleTemplateTransfer) {
             return null;
         }
 
         return $this->configurableBundleTranslationExpander
-            ->expandConfigurableBundleTemplateWithDefaultLocaleTranslation($configurableBundleTemplateFilterTransfer);
+            ->expandConfigurableBundleTemplateWithTranslationForCurrentLocale($configurableBundleTemplateTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    public function findConfigurableBundleTemplateWithDefaultLocaleTranslation(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateTransfer = $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        if (!$configurableBundleTemplateTransfer) {
+            return null;
+        }
+
+        return $this->configurableBundleTranslationExpander
+            ->expandConfigurableBundleTemplateWithDefaultLocaleTranslation($configurableBundleTemplateTransfer);
     }
 }
