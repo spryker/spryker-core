@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 class StockDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_STOCK = 'stock';
-    public const IMPORT_TYPE_STOCK_STORE = 'stock_store';
+    public const IMPORT_TYPE_STOCK_STORE = 'stock-store';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
