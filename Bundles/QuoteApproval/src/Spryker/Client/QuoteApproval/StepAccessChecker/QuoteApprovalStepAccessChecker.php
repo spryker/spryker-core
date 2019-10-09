@@ -40,8 +40,8 @@ class QuoteApprovalStepAccessChecker implements QuoteApprovalStepAccessCheckerIn
      */
     public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
     {
-        return $quoteTransfer->getQuoteApprovals()->count()
+        return !($quoteTransfer->getQuoteApprovals()->count()
             && $this->quoteClient->isQuoteLocked($quoteTransfer)
-            && !$this->quoteStatusChecker->isQuoteDeclined($quoteTransfer);
+            && !$this->quoteStatusChecker->isQuoteDeclined($quoteTransfer));
     }
 }
