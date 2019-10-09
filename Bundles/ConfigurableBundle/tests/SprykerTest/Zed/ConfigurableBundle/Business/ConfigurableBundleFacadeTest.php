@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
@@ -50,6 +52,33 @@ class ConfigurableBundleFacadeTest extends Unit
             );
 
         $this->assertNull($removedConfigurableBundleTemplateTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindConfigurableBundleTemplateWillReturnTransfer(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Act
+        $foundConfigurableBundleTemplateTransfer = $this->tester
+            ->getFacade()
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        // Assert
+        $this->assertNotNull($foundConfigurableBundleTemplateTransfer);
+        $this->assertSame(
+            $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            $foundConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()
+        );
+        $this->assertSame(
+            $configurableBundleTemplateTransfer->getName(),
+            $foundConfigurableBundleTemplateTransfer->getName()
+        );
     }
 
     /**
@@ -122,40 +151,13 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConfigurableBundleTemplateWillReturnTransfer(): void
-    {
-        // Arrange
-        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
-        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
-            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
-
-        // Act
-        $foundConfigurableBundleTemplateTransfer = $this->tester
-            ->getFacade()
-            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
-
-        // Assert
-        $this->assertNotNull($foundConfigurableBundleTemplateTransfer);
-        $this->assertSame(
-            $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
-            $foundConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()
-        );
-        $this->assertSame(
-            $configurableBundleTemplateTransfer->getName(),
-            $foundConfigurableBundleTemplateTransfer->getName()
-        );
-    }
-
-    /**
-     * @return void
-     */
     public function testUpdateConfigurableBundleTemplateWillReturnSuccessfulResponse(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
         $updatedConfigurableBundleTemplateTransfer = clone $configurableBundleTemplateTransfer;
         $updatedConfigurableBundleTemplateTransfer->setTranslations(
-            $this->tester->createTranslationTransfersForAvailableLocales([
+            $this->tester->createTemplateTranslationTransfersForAvailableLocales([
                 ConfigurableBundleTemplateTranslationTransfer::NAME => 'brand new name',
             ])
         );
@@ -297,5 +299,171 @@ class ConfigurableBundleFacadeTest extends Unit
         // Assert
         $this->assertTrue($productListResponseTransfer->getIsSuccessful());
         $this->assertCount(0, $productListResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateConfigurableBundleTemplateSlotTransfer(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlotTransfer();
+        $configurableBundleTemplateSlotTransfer->setFkConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Act
+        $configurableBundleResponseTransfer = $this->tester
+            ->getFacade()
+            ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+
+        // Assert
+        $this->assertTrue($configurableBundleResponseTransfer->getIsSuccessful());
+        $configurableBundleTemplateSlotTransfer = $configurableBundleResponseTransfer->getConfigurableBundleTemplateSlot();
+        $this->assertNotNull($configurableBundleTemplateSlotTransfer);
+        $this->assertGreaterThan(0, $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateConfigurableBundleTemplatSloteWillReturnSuccessfulResponse(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+        $updatedConfigurableBundleTemplateSlotTransfer = clone $configurableBundleTemplateSlotTransfer;
+        $updatedConfigurableBundleTemplateSlotTransfer->setTranslations(
+            $this->tester->createSlotTranslationTransfersForAvailableLocales([
+                ConfigurableBundleTemplateSlotTranslationTransfer::NAME => 'brand new name',
+            ])
+        );
+
+        // Act
+        $configurableBundleResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateConfigurableBundleTemplateSlot($updatedConfigurableBundleTemplateSlotTransfer);
+
+        // Assert
+        $this->assertTrue($configurableBundleResponseTransfer->getIsSuccessful());
+        $updatedConfigurableBundleTemplateSlotTransfer = $configurableBundleResponseTransfer->getConfigurableBundleTemplateSlot();
+        $this->assertNotNull($updatedConfigurableBundleTemplateSlotTransfer);
+        $this->assertNotSame($configurableBundleTemplateSlotTransfer->getName(), $updatedConfigurableBundleTemplateSlotTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateConfigurableBundleTemplateSlotWillReturnNotSuccessfulResponseIfSlotNotFound(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+        $configurableBundleTemplateSlotTransfer->setIdConfigurableBundleTemplateSlot(0);
+
+        // Act
+        $configurableBundleResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+
+        // Assert
+        $this->assertFalse($configurableBundleResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteConfigurableBundleTemplateSlotByIdDeletesSlot(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->deleteConfigurableBundleTemplateSlotById(
+            $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
+        );
+
+        // Assert
+        $configurableBundleTemplateSlotTransfer = $this->tester->getFacade()
+            ->findConfigurableBundleTemplateSlot(
+                (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdConfigurableBundleTemplateSlot(
+                    $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
+                )
+            );
+
+        $this->assertNull($configurableBundleTemplateSlotTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindConfigurableBundleTemplateSlotWillReturnTransfer(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdConfigurableBundleTemplateSlot(
+            $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
+        );
+
+        // Act
+        $foundConfigurableBundleTemplateSlotTransfer = $this->tester->getFacade()
+            ->findConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
+
+        // Assert
+        $this->assertNotNull($foundConfigurableBundleTemplateSlotTransfer);
+        $this->assertSame(
+            $foundConfigurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot(),
+            $foundConfigurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
+        );
+        $this->assertSame(
+            $foundConfigurableBundleTemplateSlotTransfer->getName(),
+            $foundConfigurableBundleTemplateSlotTransfer->getName()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindConfigurableBundleTemplateSlotWillReturnNullIfSlotNotFound(): void
+    {
+        // Arrange
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdConfigurableBundleTemplateSlot(-1);
+
+        // Act
+        $configurableBundleTemplateSlotTransfer = $this->tester->getFacade()
+            ->findConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
+
+        // Assert
+        $this->assertNull($configurableBundleTemplateSlotTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductListIdByIdConfigurableBundleTemplateWillReturnId(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        // Act
+        $idProductList = $this->tester->getFacade()->getProductListIdByIdConfigurableBundleTemplate(
+            $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
+        );
+
+        // Assert
+        $this->assertSame($configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList(), $idProductList);
     }
 }

@@ -156,9 +156,19 @@ class ConfigurableBundleBusinessTester extends Actor
      */
     public function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
     {
-        $configurableBundleTemplateTranslationTransfers = $this->createTranslationTransfersForAvailableLocales();
+        $configurableBundleTemplateTranslationTransfers = $this->createTemplateTranslationTransfersForAvailableLocales();
 
         return (new ConfigurableBundleTemplateTransfer())->setTranslations($configurableBundleTemplateTranslationTransfers);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function createConfigurableBundleTemplateSlotTransfer(): ConfigurableBundleTemplateSlotTransfer
+    {
+        $configurableBundleTemplateSlotTranslationTransfers = $this->createSlotTranslationTransfersForAvailableLocales();
+
+        return (new ConfigurableBundleTemplateSlotTransfer())->setTranslations($configurableBundleTemplateSlotTranslationTransfers);
     }
 
     /**
@@ -166,7 +176,7 @@ class ConfigurableBundleBusinessTester extends Actor
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer[]
      */
-    public function createTranslationTransfersForAvailableLocales(array $data = []): ArrayObject
+    public function createTemplateTranslationTransfersForAvailableLocales(array $data = []): ArrayObject
     {
         $configurableBundleTemplateTranslationTransfers = new ArrayObject();
         $configurableBundleTemplateTranslations = $this->createTemplateTranslationsForAvailableLocales($data);
@@ -178,6 +188,25 @@ class ConfigurableBundleBusinessTester extends Actor
         }
 
         return $configurableBundleTemplateTranslationTransfers;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer[]
+     */
+    public function createSlotTranslationTransfersForAvailableLocales(array $data = []): ArrayObject
+    {
+        $configurableBundleTemplateSlotTranslationTransfers = new ArrayObject();
+        $configurableBundleTemplateSlotTranslations = $this->createSlotTranslationsForAvailableLocales($data);
+
+        foreach ($configurableBundleTemplateSlotTranslations as $configurableBundleTemplateSlotTranslation) {
+            $configurableBundleTemplateSlotTranslationTransfers->append(
+                (new ConfigurableBundleTemplateSlotTranslationTransfer())->fromArray($configurableBundleTemplateSlotTranslation)
+            );
+        }
+
+        return $configurableBundleTemplateSlotTranslationTransfers;
     }
 
     /**
