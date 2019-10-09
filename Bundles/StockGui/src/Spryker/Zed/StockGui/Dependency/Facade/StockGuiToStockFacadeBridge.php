@@ -26,21 +26,29 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     * @return array
      */
-    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer
+    public function getWarehouseToStoreMapping()
     {
-        return $this->stockFacade->createStock($stockTransfer);
+        return $this->stockFacade->getWarehouseToStoreMapping();
     }
 
     /**
      * @return array
      */
-    public function getWarehouseToStoreMapping(): array
+    public function getStoreToWarehouseMapping()
     {
-        return $this->stockFacade->getWarehouseToStoreMapping();
+        return $this->stockFacade->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        return $this->stockFacade->findStockById($idStock);
     }
 
     /**
@@ -51,5 +59,15 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     public function findStockByName(string $stockName): ?StockTransfer
     {
         return $this->stockFacade->findStockByName($stockName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->stockFacade->createStock($stockTransfer);
     }
 }

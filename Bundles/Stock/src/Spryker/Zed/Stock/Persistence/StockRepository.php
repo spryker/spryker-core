@@ -50,6 +50,27 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     }
 
     /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        $stockEntity = $this->getFactory()
+            ->createStockQuery()
+            ->filterByIdStock($idStock)
+            ->findOne();
+
+        if ($stockEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createStockMapper()
+            ->mapStockEntityToStockTransfer($stockEntity, new StockTransfer());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StockTransfer[]

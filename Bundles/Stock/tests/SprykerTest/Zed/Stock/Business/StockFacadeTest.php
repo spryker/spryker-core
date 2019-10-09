@@ -482,15 +482,21 @@ class StockFacadeTest extends Unit
         $storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
 
         //Assert
-        $this->assertEquals([
-            $this->storeTransfer->getName() => [
-                $this->stockTransfer1->getName(),
-            ],
-            $storeTransfer2->getName() => [
+        $this->assertArrayHasKey($this->storeTransfer->getName(), $storeToWarehouseMapping);
+        $this->assertEquals(
+            [$this->stockTransfer1->getName()],
+            $storeToWarehouseMapping[$this->storeTransfer->getName()]
+        );
+
+        $this->assertArrayHasKey($storeTransfer2->getName(), $storeToWarehouseMapping);
+        $this->assertEquals(
+            [
                 $this->stockTransfer1->getName(),
                 $this->stockTransfer2->getName(),
             ],
-        ], $storeToWarehouseMapping, 'Store to warehouse mapping collection does not match expected value.');
+            $storeToWarehouseMapping[$storeTransfer2->getName()],
+            'Store to warehouse mapping collection does not match expected value.'
+        );
     }
 
     /**
@@ -623,6 +629,32 @@ class StockFacadeTest extends Unit
             'IDs of related stores does not match expected value.'
         );
         $this->assertContains($stockTransfer->getName(), $storeStockRelation, 'Store relation does not contain expected store name.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByIdShouldReturnStockTransferForExistingStockId(): void
+    {
+        //Act
+        $stockTransfer = $this->stockFacade->findStockById($this->stockTransfer1->getIdStock());
+
+        //Assert
+        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock());
+        $this->assertEquals($this->stockTransfer1->getName(), $stockTransfer->getName());
+        $this->assertEquals($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByIdShouldReturnStockTransferForNonExistingStockId(): void
+    {
+        //Act
+        $result = $this->stockFacade->findStockById(-1);
+
+        //Assert
+        $this->assertNull($result);
     }
 
     /**

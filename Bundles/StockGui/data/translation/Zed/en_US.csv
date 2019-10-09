@@ -7,3 +7,11 @@ Status,Status
 Actions,Actions
 Active,Active
 Inactive,Inactive
+"View Warehouse: ","View Warehouse: "
+Configuration,Configuration
+"Is this warehouse available?","Is this warehouse available?"
+Yes,Yes
+No,No
+"Store relation","Store relation"
+"Available in the following store(s)","Available in the following store(s)"
+View,View

@@ -264,6 +264,19 @@ interface StockFacadeInterface
 
     /**
      * Specification:
+     *  - Finds stock by given id.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
+
+    /**
+     * Specification:
      *  - Finds stock by given stock name.
      *  - Returns StockTransfer or null if there are no records in database.
      *

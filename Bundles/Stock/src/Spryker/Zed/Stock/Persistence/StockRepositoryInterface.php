@@ -25,6 +25,13 @@ interface StockRepositoryInterface
     public function getStockNamesForStore(string $storeName): array;
 
     /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StockTransfer[]

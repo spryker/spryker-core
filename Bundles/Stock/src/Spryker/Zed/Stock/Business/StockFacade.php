@@ -296,6 +296,20 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        return $this->getRepository()->findStockById($idStock);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $stockName
      *
      * @return \Generated\Shared\Transfer\StockTransfer|null
