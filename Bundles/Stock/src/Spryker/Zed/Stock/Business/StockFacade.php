@@ -292,6 +292,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $stockName

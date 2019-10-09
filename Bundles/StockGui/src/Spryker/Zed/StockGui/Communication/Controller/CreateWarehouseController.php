@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\StockGui\Communication\Controller;
 
-use Spryker\Service\UtilText\Model\Url\Url;
+use Generated\Shared\Transfer\StockResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -62,13 +62,23 @@ class CreateWarehouseController extends AbstractController
         if ($stockResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 
-            return $this->redirectResponse(Url::generate(static::REDIRECT_URL));
+            return $this->redirectResponse(static::REDIRECT_URL);
         }
 
+        $this->setErrors($stockResponseTransfer);
+
+        return $this->redirectResponse(static::REDIRECT_URL);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockResponseTransfer $stockResponseTransfer
+     *
+     * @return void
+     */
+    protected function setErrors(StockResponseTransfer $stockResponseTransfer): void
+    {
         foreach ($stockResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
-
-        return $this->redirectResponse(Url::generate(static::REDIRECT_URL));
     }
 }
