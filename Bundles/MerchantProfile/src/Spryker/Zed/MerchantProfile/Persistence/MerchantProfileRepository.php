@@ -24,8 +24,10 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
      */
     public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
     {
-        $merchantQuery = $this->getFactory()->createMerchantProfileQuery();
-        $merchantEntity = $this->applyFilters($merchantQuery, $merchantProfileCriteriaFilterTransfer)->findOne();
+        $merchantEntity = $this->applyFilters(
+            $this->getFactory()->createMerchantProfileQuery(),
+            $merchantProfileCriteriaFilterTransfer
+        )->findOne();
 
         if (!$merchantEntity) {
             return null;

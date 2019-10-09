@@ -9,26 +9,29 @@ namespace Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface;
+use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Business\MerchantProfileFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfile\Communication\MerchantProfileCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  */
-class MerchantProfileHydrationPlugin extends AbstractPlugin implements MerchantHydrationPluginInterface
+class MerchantProfileExpanderPlugin extends AbstractPlugin implements MerchantExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Expands merchant by merchant profile data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function hydrate(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         return $this->getFactory()
-            ->createMerchantProfileHydrator()
-            ->hydrate($merchantTransfer);
+            ->createMerchantProfileExpander()
+            ->expand($merchantTransfer);
     }
 }

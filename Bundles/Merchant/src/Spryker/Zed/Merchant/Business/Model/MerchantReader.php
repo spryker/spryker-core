@@ -21,20 +21,20 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantRepository;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[]
+     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[]
      */
-    protected $merchantHydrationPlugins;
+    protected $merchantExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[] $merchantHydrationPlugins
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[] $merchantExpanderPlugins
      */
     public function __construct(
         MerchantRepositoryInterface $merchantRepository,
-        array $merchantHydrationPlugins
+        array $merchantExpanderPlugins
     ) {
         $this->merchantRepository = $merchantRepository;
-        $this->merchantHydrationPlugins = $merchantHydrationPlugins;
+        $this->merchantExpanderPlugins = $merchantExpanderPlugins;
     }
 
     /**
@@ -45,7 +45,7 @@ class MerchantReader implements MerchantReaderInterface
     public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
     {
         $merchantCollectionTransfer = $this->merchantRepository->find($merchantCriteriaFilterTransfer);
-        $merchantCollectionTransfer = $this->hydrateMerchantCollection($merchantCollectionTransfer);
+        $merchantCollectionTransfer = $this->expandMerchantCollection($merchantCollectionTransfer);
 
         return $merchantCollectionTransfer;
     }
@@ -62,7 +62,7 @@ class MerchantReader implements MerchantReaderInterface
             return null;
         }
 
-        return $this->executeMerchantHydrationPlugins($merchantTransfer);
+        return $this->executeMerchantExpanderPlugins($merchantTransfer);
     }
 
     /**
@@ -70,11 +70,11 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    protected function hydrateMerchantCollection(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer
+    protected function expandMerchantCollection(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer
     {
         $merchantTransfers = new ArrayObject();
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $merchantTransfer = $this->executeMerchantHydrationPlugins($merchantTransfer);
+            $merchantTransfer = $this->executeMerchantExpanderPlugins($merchantTransfer);
             $merchantTransfers->append($merchantTransfer);
         }
         $merchantCollectionTransfer->setMerchants($merchantTransfers);
@@ -87,10 +87,10 @@ class MerchantReader implements MerchantReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeMerchantHydrationPlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function executeMerchantExpanderPlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        foreach ($this->merchantHydrationPlugins as $merchantHydratePlugin) {
-            $merchantTransfer = $merchantHydratePlugin->hydrate($merchantTransfer);
+        foreach ($this->merchantExpanderPlugins as $merchantExpanderPlugin) {
+            $merchantTransfer = $merchantExpanderPlugin->expand($merchantTransfer);
         }
 
         return $merchantTransfer;

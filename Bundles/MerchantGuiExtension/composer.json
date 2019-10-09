@@ -9,7 +9,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "*",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "*",
     "spryker/testify": "*"
   },
   "suggest": {

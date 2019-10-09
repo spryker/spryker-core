@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -45,6 +46,8 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
             'label' => false,
         ]);
 
+        $builder->get(static::FIELD_FK_LOCALE)->addModelTransformer($this->createStringToNumberTransformer());
+
         return $this;
     }
 
@@ -74,5 +77,20 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createStringToNumberTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                return $value;
+            },
+            function ($value) {
+                return (int)$value;
+            }
+        );
     }
 }

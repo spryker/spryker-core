@@ -72,7 +72,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
      */
     public function expandData(array $item): array
     {
-        return [static::COL_IS_ACTIVE => $this->getIsActive($item)];
+        return [static::COL_IS_ACTIVE => $this->getIsActiveLabel($item)];
     }
 
     /**
@@ -87,7 +87,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
     public function getActionButtonDefinitions(array $item): array
     {
         $buttons = [];
-        $activeButton = $this->getAtiveButton($item);
+        $activeButton = $this->getChangeStatusButton($item);
 
         if ($activeButton) {
             $buttons[] = $activeButton;
@@ -101,7 +101,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
      *
      * @return string
      */
-    protected function getIsActive(array $item): string
+    protected function getIsActiveLabel(array $item): string
     {
         $merchantProfileTransfer = $this->getMerchantProfileByIdMerchant($item[static::ID_MERCHANT]);
 
@@ -131,7 +131,7 @@ class MerchantTableProfilePlugin extends AbstractPlugin implements MerchantTable
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer|null
      */
-    protected function getAtiveButton(array $item): ?ButtonTransfer
+    protected function getChangeStatusButton(array $item): ?ButtonTransfer
     {
         $merchantProfileTransfer = $this->getMerchantProfileByIdMerchant($item[static::ID_MERCHANT]);
         if ($merchantProfileTransfer === null) {

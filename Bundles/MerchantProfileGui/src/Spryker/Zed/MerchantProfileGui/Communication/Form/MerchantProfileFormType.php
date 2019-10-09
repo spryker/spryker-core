@@ -19,9 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
@@ -114,7 +112,7 @@ class MerchantProfileFormType extends AbstractType
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_IS_ACTIVE, CheckboxType::class, [
+            ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
                 'label' => static::LABEL_IS_ACTIVE,
                 'required' => false,
                 'disabled' => 'disabled',
@@ -376,31 +374,6 @@ class MerchantProfileFormType extends AbstractType
     protected function getTextFieldConstraints(): array
     {
         return [
-            new Length(['max' => 255]),
-        ];
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    protected function getPhoneFieldConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 255]),
-        ];
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    protected function getEmailFieldConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-            new Email(),
             new Length(['max' => 255]),
         ];
     }

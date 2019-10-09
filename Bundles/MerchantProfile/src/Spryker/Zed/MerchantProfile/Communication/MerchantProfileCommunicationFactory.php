@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantProfile\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantProfile\Communication\Hydrator\MerchantProfileHydrator;
-use Spryker\Zed\MerchantProfile\Communication\Hydrator\MerchantProfileHydratorInterface;
+use Spryker\Zed\MerchantProfile\Communication\Expander\MerchantProfileExpander;
+use Spryker\Zed\MerchantProfile\Communication\Expander\MerchantProfileExpanderInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileRepositoryInterface getRepository()
@@ -20,11 +20,11 @@ use Spryker\Zed\MerchantProfile\Communication\Hydrator\MerchantProfileHydratorIn
 class MerchantProfileCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantProfile\Communication\Hydrator\MerchantProfileHydratorInterface
+     * @return \Spryker\Zed\MerchantProfile\Communication\Expander\MerchantProfileExpanderInterface
      */
-    public function createMerchantProfileHydrator(): MerchantProfileHydratorInterface
+    public function createMerchantProfileExpander(): MerchantProfileExpanderInterface
     {
-        return new MerchantProfileHydrator(
+        return new MerchantProfileExpander(
             $this->getRepository()
         );
     }

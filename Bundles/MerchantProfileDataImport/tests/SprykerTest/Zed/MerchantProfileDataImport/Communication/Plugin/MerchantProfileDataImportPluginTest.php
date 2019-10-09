@@ -28,6 +28,7 @@ use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 class MerchantProfileDataImportPluginTest extends Unit
 {
     public const MERCHANT_KEY = 'roan-gmbh-und-co-k-g';
+
     /**
      * @var \SprykerTest\Zed\MerchantProfileDataImport\MerchantProfileDataImportCommunicationTester
      */

@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder;
 
 class MerchantProfileGlossaryKeyBuilder implements MerchantProfileGlossaryKeyBuilderInterface
 {
-    public const MERCHANT_PROFILE_GLOSSARY_KEY_PATTERN = 'merchantProfile.%s.fkMerchant.%s';
+    protected const MERCHANT_PROFILE_GLOSSARY_KEY_PATTERN = 'merchantProfile.%s.fkMerchant.%s';
 
     /**
      * @param int $fkMerchant

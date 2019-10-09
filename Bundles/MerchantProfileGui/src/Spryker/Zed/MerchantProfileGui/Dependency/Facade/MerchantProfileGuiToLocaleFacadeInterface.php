@@ -12,5 +12,5 @@ interface MerchantProfileGuiToLocaleFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection(): array;
+    public function getLocaleCollection();
 }

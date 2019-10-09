@@ -34,7 +34,7 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
         $merchantKey = $dataSet[MerchantProfileDataSetInterface::MERCHANT_KEY];
 
         if (!$merchantKey) {
-            throw new InvalidDataException('"' . MerchantProfileDataSetInterface::MERCHANT_KEY . '" is required.');
+            throw new InvalidDataException(sprintf('"%s" is required.', MerchantProfileDataSetInterface::MERCHANT_KEY));
         }
 
         if (!isset($this->idMerchantCache[$merchantKey])) {
