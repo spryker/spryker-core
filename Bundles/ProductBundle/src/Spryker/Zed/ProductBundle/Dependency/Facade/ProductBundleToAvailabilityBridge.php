@@ -26,19 +26,6 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @deprecated Use isProductSellableForStore() instead.
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool
-    {
-        return $this->availabilityFacade->isProductSellable($sku, $quantity);
-    }
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

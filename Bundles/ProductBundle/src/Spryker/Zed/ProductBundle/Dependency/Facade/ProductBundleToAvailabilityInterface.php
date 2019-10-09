@@ -13,14 +13,6 @@ use Spryker\DecimalObject\Decimal;
 interface ProductBundleToAvailabilityInterface
 {
     /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool;
-
-    /**
      * @param int $idAvailabilityAbstract
      *
      * @return void

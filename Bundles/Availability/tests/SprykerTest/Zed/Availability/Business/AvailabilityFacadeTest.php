@@ -295,7 +295,6 @@ class AvailabilityFacadeTest extends Unit
             ->findProductConcreteAvailability(
                 (new ProductConcreteAvailabilityRequestTransfer())
                     ->setSku(static::CONCRETE_SKU)
-                    ->setStore($storeTransfer)
             );
 
         $this->assertTrue($productConcreteAvailabilityTransfer->getAvailability()->equals(2));

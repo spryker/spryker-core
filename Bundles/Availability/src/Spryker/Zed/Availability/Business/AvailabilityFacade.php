@@ -59,24 +59,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use calculateAvailabilityForProductWithStore() instead.
-     *
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProduct(string $sku): Decimal
-    {
-        return $this->getFactory()
-            ->createSellableModel()
-            ->calculateAvailabilityForProduct($sku);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

@@ -51,22 +51,6 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use calculateAvailabilityForProductWithStore() instead.
-     *
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProduct(string $sku): Decimal;
-
-    /**
-     * Specification:
-     *  - Checks if product has stock in stock table for current store.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
-     *  - Returns integer value which is Product stock - reserved state machine items.
-     *
-     * @api
-     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

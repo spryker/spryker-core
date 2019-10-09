@@ -14,13 +14,6 @@ interface SellableInterface
 {
     /**
      * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProduct(string $sku): Decimal;
-
-    /**
-     * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

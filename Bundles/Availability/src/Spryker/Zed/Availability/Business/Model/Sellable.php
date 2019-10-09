@@ -57,18 +57,6 @@ class Sellable implements SellableInterface
 
     /**
      * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProduct(string $sku): Decimal
-    {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        return $this->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
