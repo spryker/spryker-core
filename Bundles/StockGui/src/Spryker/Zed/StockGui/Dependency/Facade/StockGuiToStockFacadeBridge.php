@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\StockGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StockTransfer;
+
 class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
 {
     /**
@@ -28,5 +30,23 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     public function getWarehouseToStoreMapping()
     {
         return $this->stockFacade->getWarehouseToStoreMapping();
+    }
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping()
+    {
+        return $this->stockFacade->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        return $this->stockFacade->findStockById($idStock);
     }
 }

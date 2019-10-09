@@ -168,7 +168,7 @@ class StockTable extends AbstractTable
     protected function generateStockViewButton(int $idStock): string
     {
         return $this->generateViewButton(
-            Url::generate('/stock-gui/view-stock', [
+            Url::generate('/stock-gui/view-warehouse', [
                 'id-stock' => $idStock,
             ]),
             'View'

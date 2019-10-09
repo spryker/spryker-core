@@ -473,15 +473,20 @@ class StockFacadeTest extends Unit
         $storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
 
         //Assert
-        $this->assertEquals([
-            $this->storeTransfer->getName() => [
-                $this->stockTransfer1->getName(),
-            ],
-            $storeTransfer2->getName() => [
+        $this->assertArrayHasKey($this->storeTransfer->getName(), $storeToWarehouseMapping);
+        $this->assertEquals(
+            [$this->stockTransfer1->getName()],
+            $storeToWarehouseMapping[$this->storeTransfer->getName()]
+        );
+
+        $this->assertArrayHasKey($storeTransfer2->getName(), $storeToWarehouseMapping);
+        $this->assertEquals(
+            [
                 $this->stockTransfer1->getName(),
                 $this->stockTransfer2->getName(),
             ],
-        ], $storeToWarehouseMapping);
+            $storeToWarehouseMapping[$storeTransfer2->getName()]
+        );
     }
 
     /**
@@ -527,6 +532,32 @@ class StockFacadeTest extends Unit
         foreach ($productStockCollection as $stockProductTransfer) {
             $this->assertEquals($this->productConcreteEntity->getSku(), $stockProductTransfer->getSku());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByIdShouldReturnStockTransferForExistingStockId(): void
+    {
+        //Act
+        $stockTransfer = $this->stockFacade->findStockById($this->stockTransfer1->getIdStock());
+
+        //Assert
+        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock());
+        $this->assertEquals($this->stockTransfer1->getName(), $stockTransfer->getName());
+        $this->assertEquals($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStockByIdShouldReturnStockTransferForNonExistingStockId(): void
+    {
+        //Act
+        $result = $this->stockFacade->findStockById(-1);
+
+        //Assert
+        $this->assertNull($result);
     }
 
     /**

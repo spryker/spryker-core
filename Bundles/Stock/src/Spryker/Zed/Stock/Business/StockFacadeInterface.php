@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -257,4 +258,17 @@ interface StockFacadeInterface
      * @return array
      */
     public function getStoreToWarehouseMapping();
+
+    /**
+     * Specification:
+     *  - Finds stock by given id.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
 }

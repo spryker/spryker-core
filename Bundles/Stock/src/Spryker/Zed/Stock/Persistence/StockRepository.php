@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -46,6 +47,27 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
             ->select([SpyStockTableMap::COL_NAME]);
 
         return $stockStoreQuery->find()->getData();
+    }
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        $stockEntity = $this->getFactory()
+            ->createStockQuery()
+            ->filterByIdStock($idStock)
+            ->findOne();
+
+        if ($stockEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createStockMapper()
+            ->mapStockEntityToStockTransfer($stockEntity, new StockTransfer());
     }
 
     /**

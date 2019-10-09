@@ -7,10 +7,24 @@
 
 namespace Spryker\Zed\StockGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StockTransfer;
+
 interface StockGuiToStockFacadeInterface
 {
     /**
      * @return array
      */
     public function getWarehouseToStoreMapping();
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping();
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
 }
