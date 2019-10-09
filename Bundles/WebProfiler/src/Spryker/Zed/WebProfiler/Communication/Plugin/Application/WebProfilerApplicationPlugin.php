@@ -43,17 +43,17 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     public const SERVICE_TWIG_PROFILE = 'profile';
 
     /**
-     * @see \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
-     * @see \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_CHARSET
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_CHARSET
      */
     public const SERVICE_CHARSET = 'charset';
 
     /**
-     * @see \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
      */
     public const SERVICE_DISPATCHER = 'dispatcher';
 
