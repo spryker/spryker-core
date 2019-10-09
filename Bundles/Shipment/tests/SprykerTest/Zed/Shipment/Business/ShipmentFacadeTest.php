@@ -17,11 +17,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
@@ -150,203 +149,6 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
-     * @return void
-     */
-    public function testGetAvailableMethodsRetrievesActiveShipmentMethods()
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $shipmentMethodTransferCollection = $this->tester->haveActiveShipmentMethods(3);
-        $this->tester->updateShipmentMethod(['is_active' => false], [$shipmentMethodTransferCollection[1]->getIdShipmentMethod()]);
-
-        $expectedResult = [
-            $shipmentMethodTransferCollection[0]->getIdShipmentMethod(),
-            $shipmentMethodTransferCollection[2]->getIdShipmentMethod(),
-        ];
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-
-        // Assert
-        $this->assertEquals($expectedResult, $this->tester->getIdShipmentMethodCollection($shipmentMethodsTransfer));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAvailableMethodsSetsDeliveryTimeUsingDeliveryTimePlugin()
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
-
-        $idShipmentMethod = $this->tester
-            ->haveShipmentMethod(['delivery_time_plugin' => static::DELIVERY_TIME_PLUGIN])
-            ->getIdShipmentMethod();
-        $expectedDeliveryTimeResult = 'example time';
-
-        $this->mockShipmentMethodPluginsResult($expectedDeliveryTimeResult, static::AVAILABLE, static::DEFAULT_PLUGIN_PRICE);
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-        $actualDeliveryTimeResult = $this->tester->findShipmentMethod($shipmentMethodsTransfer, $idShipmentMethod)->getDeliveryTime();
-
-        // Assert
-        $this->assertEquals($expectedDeliveryTimeResult, $actualDeliveryTimeResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAvailableMethodsExcludesShipmentMethodsUsingAvailabilityPlugin()
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
-
-        $shipmentMethodTransferCollection = $this->tester->haveActiveShipmentMethods(3);
-        $this->tester->updateShipmentMethod(
-            ['availability_plugin' => static::AVAILABILITY_PLUGIN],
-            [$shipmentMethodTransferCollection[1]->getIdShipmentMethod()]
-        );
-        $expectedResult = [
-            $shipmentMethodTransferCollection[0]->getIdShipmentMethod(),
-            $shipmentMethodTransferCollection[2]->getIdShipmentMethod(),
-        ];
-
-        $this->mockShipmentMethodPluginsResult(static::DEFAULT_DELIVERY_TIME, static::NOT_AVAILABLE, static::DEFAULT_PLUGIN_PRICE);
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-
-        // Assert
-        $this->assertEquals($expectedResult, $this->tester->getIdShipmentMethodCollection($shipmentMethodsTransfer));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAvailableMethodsAppliesPricePlugin()
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
-
-        $priceList = [
-            $this->tester->getDefaultStoreName() => [
-                'EUR' => [
-                    'netAmount' => 1000,
-                    'grossAmount' => 1000,
-                ],
-            ],
-        ];
-
-        $idShipmentMethod = $this->tester
-            ->haveShipmentMethod(
-                ['price_plugin' => static::PRICE_PLUGIN],
-                [],
-                $priceList
-            )
-            ->getIdShipmentMethod();
-
-        $expectedStoreCurrencyPriceResult = 1234;
-        $this->mockShipmentMethodPluginsResult(static::DEFAULT_DELIVERY_TIME, static::AVAILABLE, $expectedStoreCurrencyPriceResult);
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-        $actualStoreCurrencyPriceResult = $this->tester->findShipmentMethod($shipmentMethodsTransfer, $idShipmentMethod)->getStoreCurrencyPrice();
-
-        // Assert
-        $this->assertEquals($expectedStoreCurrencyPriceResult, $actualStoreCurrencyPriceResult);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetAvailableMethodsExcludesShipmentMethodsWithoutPrice()
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
-
-        $shipmentMethodTransferCollection = $this->tester->haveActiveShipmentMethods(4);
-        $excludeIdShipmentCollection = [
-            $shipmentMethodTransferCollection[1]->getIdShipmentMethod(),
-            $shipmentMethodTransferCollection[3]->getIdShipmentMethod(),
-        ];
-        $expectedResult = [
-            $shipmentMethodTransferCollection[0]->getIdShipmentMethod(),
-            $shipmentMethodTransferCollection[2]->getIdShipmentMethod(),
-        ];
-
-        SpyShipmentMethodPriceQuery::create()
-            ->filterByFkShipmentMethod($excludeIdShipmentCollection, Criteria::IN)
-            ->find()
-            ->delete();
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-
-        // Assert
-        $this->assertEquals($expectedResult, $this->tester->getIdShipmentMethodCollection($shipmentMethodsTransfer));
-    }
-
-    /**
-     * @dataProvider priceModes
-     *
-     * @param string $priceMode
-     *
-     * @return void
-     */
-    public function testGetAvailableMethodsRetrievesModeSpecificPrice($priceMode)
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode($priceMode)
-            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
-
-        $grossPrice = 5500;
-        $netPrice = 6500;
-        $priceList = [
-            $this->tester->getDefaultStoreName() => [
-                'EUR' => [
-                    'netAmount' => $netPrice,
-                    'grossAmount' => $grossPrice,
-                ],
-            ],
-        ];
-        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
-
-        $expectedResult = $priceMode === ShipmentConstants::PRICE_MODE_GROSS ? $grossPrice : $netPrice;
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-        $actualResult = $this->tester->findShipmentMethod($shipmentMethodsTransfer, $idShipmentMethod)->getStoreCurrencyPrice();
-
-        // Assert
-        $this->assertEquals($expectedResult, $actualResult);
-    }
-
-    /**
      * @return array
      */
     public function priceModes()
@@ -361,35 +163,6 @@ class ShipmentFacadeTest extends Test
      * @dataProvider multiCurrencyPricesDataProvider
      *
      * @param string $currencyCode
-     * @param int $expectedPriceResult
-     *
-     * @return void
-     */
-    public function testGetAvailableMethodsRetrievesStoreAndCurrencySpecificPrice($currencyCode, $expectedPriceResult)
-    {
-        // Arrange
-        $this->tester->disableAllShipmentMethods();
-
-        $quoteTransfer = (new QuoteTransfer())
-            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
-            ->setCurrency((new CurrencyTransfer())->setCode($currencyCode));
-
-        $priceList = $this->createDefaultPriceList();
-
-        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
-
-        // Act
-        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->getAvailableMethods($quoteTransfer);
-        $actualPriceResult = $this->tester->findShipmentMethod($shipmentMethodsTransfer, $idShipmentMethod)->getStoreCurrencyPrice();
-
-        // Assert
-        $this->assertSame($expectedPriceResult, $actualPriceResult);
-    }
-
-    /**
-     * @dataProvider multiCurrencyPricesDataProvider
-     *
-     * @param string $currencyCode
      * @param string $expectedPriceResult
      *
      * @return void
@@ -397,7 +170,10 @@ class ShipmentFacadeTest extends Test
     public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult): void
     {
         // Arrange
-        $storeTransfer = $this->tester->getCurrentStoreTransfer();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => $this->tester->getDefaultStoreName(),
+        ]);
+
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
             ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
@@ -405,7 +181,7 @@ class ShipmentFacadeTest extends Test
 
         $priceList = $this->createDefaultPriceList();
 
-        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList)->getIdShipmentMethod();
+        $idShipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList, [$storeTransfer->getIdStore()])->getIdShipmentMethod();
 
         // Act
         $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->findAvailableMethodById($idShipmentMethod, $quoteTransfer);

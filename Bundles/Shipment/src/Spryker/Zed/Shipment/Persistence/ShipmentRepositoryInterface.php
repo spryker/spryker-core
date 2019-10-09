@@ -116,11 +116,16 @@ interface ShipmentRepositoryInterface
     public function findShipmentById(string $idShipmentMethod): ?ShipmentTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getActiveShipmentMethods(): array;
+
+    /**
      * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
-    public function getActiveShipmentMethods(int $idStore): array;
+    public function getActiveShipmentMethodsForStore(int $idStore): array;
 
     /**
      * @param int $idShipmentMethod

@@ -80,16 +80,12 @@ class ShipmentMethodDataHelper extends Module
 
     /**
      * @param int $idShipmentMethod
-     * @param array $idStoreList
+     * @param int[] $idStoreList
      *
      * @return void
      */
     protected function setShipmentMethodToStoreList(int $idShipmentMethod, array $idStoreList): void
     {
-        if ($idStoreList === []) {
-            $idStoreList[] = $this->getStoreFacade()->getCurrentStore()->getIdStore();
-        }
-
         foreach ($idStoreList as $idStore) {
             (new SpyShipmentMethodStore())
                 ->setFkStore($idStore)

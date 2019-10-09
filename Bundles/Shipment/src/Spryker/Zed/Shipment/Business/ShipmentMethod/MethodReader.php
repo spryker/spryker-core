@@ -120,7 +120,7 @@ class MethodReader implements MethodReaderInterface
     {
         $shipmentMethodsCollection = new ShipmentMethodsCollectionTransfer();
         $idStore = $this->getIdStoreFromQuote($quoteTransfer);
-        $activeShipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods($idStore);
+        $activeShipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethodsForStore($idStore);
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer(

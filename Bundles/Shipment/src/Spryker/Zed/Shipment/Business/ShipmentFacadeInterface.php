@@ -102,30 +102,10 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves active shipment methods.
-     * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency and current store.
-     * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
-     * - Excludes shipment methods which do not have a valid price as a result.
-     * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin
-     * requirements.
-     *
-     * @api
-     *
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
      * - Retrieves active shipment methods for every shipment group in QuoteTransfer.
      * - Filters by idStore from Quote.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency.
+     * - Selects shipment method price for the provided currency and store from quote level.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price or ShipmentMethodPricePluginInterface as a result.
      * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugin.
@@ -143,7 +123,7 @@ interface ShipmentFacadeInterface
      * Specification:
      * - Retrieves active shipment method by id shipment method and id store.
      * - Calculates shipment method delivery time using its assigned ShipmentMethodDeliveryTimePluginInterface plugin.
-     * - Selects shipment method price for the provided currency.
+     * - Selects shipment method price for the provided currency and store from quote level.
      * - Overrides shipment method price using its assigned ShipmentMethodPricePluginInterface plugin if there is any.
      * - Excludes shipment methods which do not have a valid price or ShipmentMethodPricePluginInterface as a result.
      * - Excludes shipment methods which do not fulfill their assigned ShipmentMethodAvailabilityPluginInterface plugins.
@@ -157,20 +137,6 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findAvailableMethodById($idShipmentMethod, QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
-     * - Retrieves a shipment method from database by ID.
-     *
-     * @api
-     *
-     * @deprecated Use findMethodById() instead.
-     *
-     * @param int $idMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    public function getShipmentMethodTransferById($idMethod);
 
     /**
      * Specification:

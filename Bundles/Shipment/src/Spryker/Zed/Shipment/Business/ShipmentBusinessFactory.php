@@ -23,7 +23,6 @@ use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpanderInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
-use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
 use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
@@ -102,24 +101,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentCarrierReader(
             $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @deprecated Use createShipmentMethod() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Model\MethodInterface
-     */
-    public function createMethod()
-    {
-        return new Method(
-            $this->getQueryContainer(),
-            $this->createMethodPrice(),
-            $this->createShipmentMethodTransformer(),
-            $this->getCurrencyFacade(),
-            $this->getStoreFacade(),
-            $this->getPlugins(),
-            $this->getMethodFilterPlugins()
         );
     }
 
@@ -218,14 +199,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new MethodPrice(
             $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPlugins()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
     }
 
     /**

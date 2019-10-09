@@ -8,7 +8,12 @@
 namespace SprykerTest\Shared\Shipment\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\AddressBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
@@ -79,5 +84,32 @@ class ShipmentDataHelper extends Module
         $this->debug(sprintf('Deleting Sales shipment: %d', $idSalesShipment));
 
         SpySalesShipmentQuery::create()->filterByIdSalesShipment($idSalesShipment)->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $iso2Code
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addNewItemIntoQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
+        string $iso2Code,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): QuoteTransfer {
+        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => $iso2Code]));
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withShippingAddress($addressBuilder)
+            ->build();
+
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $itemTransfer = (new ItemBuilder())->build();
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return $quoteTransfer;
     }
 }
