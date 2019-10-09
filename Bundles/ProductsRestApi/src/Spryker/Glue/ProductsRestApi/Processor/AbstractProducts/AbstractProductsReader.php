@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\AbstractProducts;
 
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -23,6 +24,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -55,12 +57,18 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     protected $abstractProductAttributeTranslationExpander;
 
     /**
+     * @var \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface[]
+     */
+    protected $abstractProductsResourceExpanderPlugins;
+
+    /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface $abstractProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface $concreteProductsReader
      * @param \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig $productsRestApiConfig
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
+     * @param \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface[] $abstractProductsResourceExpanderPlugins
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
@@ -68,7 +76,8 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         AbstractProductsResourceMapperInterface $abstractProductsResourceMapper,
         ConcreteProductsReaderInterface $concreteProductsReader,
         ProductsRestApiConfig $productsRestApiConfig,
-        AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
+        AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander,
+        array $abstractProductsResourceExpanderPlugins
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->restResourceBuilder = $restResourceBuilder;
@@ -76,6 +85,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         $this->concreteProductsReader = $concreteProductsReader;
         $this->productsRestApiConfig = $productsRestApiConfig;
         $this->abstractProductAttributeTranslationExpander = $abstractProductAttributeTranslationExpander;
+        $this->abstractProductsResourceExpanderPlugins = $abstractProductsResourceExpanderPlugins;
     }
 
     /**
@@ -154,6 +164,11 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     {
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
             ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+        $restAbstractProductsAttributesTransfer = $this->expandRestAbstractProductsAttributesTransfer(
+            $restAbstractProductsAttributesTransfer,
+            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
+            $restRequest
+        );
         $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
             ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
 
@@ -162,6 +177,32 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             $restAbstractProductsAttributesTransfer->getSku(),
             $restAbstractProductsAttributesTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+     * @param int $idProductAbstract
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
+     */
+    protected function expandRestAbstractProductsAttributesTransfer(
+        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
+        int $idProductAbstract,
+        RestRequestInterface $restRequest
+    ): AbstractProductsRestAttributesTransfer {
+        $concreteProductsRestAttributesTransfer = $this->abstractProductAttributeTranslationExpander
+            ->addProductAttributeTranslation($abstractProductsRestAttributesTransfer, $restRequest->getMetadata()->getLocale());
+
+        foreach ($this->abstractProductsResourceExpanderPlugins as $abstractProductsResourceExpanderPlugin) {
+            $concreteProductsRestAttributesTransfer = $abstractProductsResourceExpanderPlugin->expand(
+                $concreteProductsRestAttributesTransfer,
+                $idProductAbstract,
+                $restRequest
+            );
+        }
+
+        return $concreteProductsRestAttributesTransfer;
     }
 
     /**

@@ -21,6 +21,7 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     public const PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER = 'PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER';
+    public const PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER = 'PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -34,6 +35,7 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlossaryStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addConcreteProductsResourceExpanderPlugins($container);
+        $container = $this->addAbstractProductsResourceExpanderPlugins($container);
 
         return $container;
     }
@@ -81,9 +83,31 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addAbstractProductsResourceExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER] = function () {
+            return $this->getAbstractProductsResourceExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[]
      */
     protected function getConcreteProductsResourceExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface[]
+     */
+    protected function getAbstractProductsResourceExpanderPlugins(): array
     {
         return [];
     }
