@@ -21,6 +21,7 @@ use Spryker\Zed\PersistentCart\PersistentCartConfig;
 class QuoteResolver implements QuoteResolverInterface
 {
     use PermissionAwareTrait;
+
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**

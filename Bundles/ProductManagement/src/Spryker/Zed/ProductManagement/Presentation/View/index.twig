@@ -20,7 +20,7 @@
 
 {% block action %}
     {{ backActionButton(url('/product-management'), 'List Products' | trans) }}
-    {{ editActionButton('/product-attribute-gui/view/productAbstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
+    {{ editActionButton('/product-attribute-gui/view/product-abstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
     {{ editActionButton(url('/product-management/edit', {'id-product-abstract': idProductAbstract}), 'Edit' | trans) }}
 {% endblock %}
 

@@ -14,7 +14,7 @@ use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresho
 abstract class AbstractSalesOrderThresholdStrategyPlugin extends AbstractPlugin implements SalesOrderThresholdStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
 

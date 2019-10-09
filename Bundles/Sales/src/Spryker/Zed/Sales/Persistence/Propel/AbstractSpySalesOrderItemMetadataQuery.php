@@ -20,4 +20,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemMetadataQuery as BaseSpySale
  */
 abstract class AbstractSpySalesOrderItemMetadataQuery extends BaseSpySalesOrderItemMetadataQuery
 {
-} // SpySalesOrderItemMetadataQuery
+}

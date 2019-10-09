@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgentFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +84,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,7 +100,7 @@ class QuoteRequestAgentFacade extends AbstractFacade implements QuoteRequestAgen
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

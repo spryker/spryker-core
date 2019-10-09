@@ -18,7 +18,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 class CommentThreadOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Executes when idSalesOrder provided.
      * - Expands OrderTransfer with CommentThread.
      *

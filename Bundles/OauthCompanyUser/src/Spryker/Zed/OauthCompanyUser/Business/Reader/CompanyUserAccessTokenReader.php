@@ -114,7 +114,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\CompanyUserIdentifierTransfer $companyUserIdentifierTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function executeCustomerExpanderPlugins(
         CustomerTransfer $customerTransfer,

@@ -27,7 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -43,7 +43,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -75,7 +75,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -91,7 +91,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,7 +107,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -123,7 +123,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -139,7 +139,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -158,7 +158,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -174,7 +174,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +190,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +206,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -222,7 +222,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -241,7 +241,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,7 +258,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -274,7 +274,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -290,7 +290,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -305,7 +305,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -321,7 +321,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -337,7 +337,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -353,7 +353,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -369,7 +369,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -385,7 +385,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -403,7 +403,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -420,7 +420,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -438,7 +438,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

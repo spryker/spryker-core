@@ -19,6 +19,11 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="Shipment">

@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantRepository extends AbstractRepository implements MerchantRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idMerchant
      *
@@ -40,7 +40,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
@@ -65,7 +65,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $key
      *
