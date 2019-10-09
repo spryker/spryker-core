@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @deprecated Use `\Spryker\Yves\Router\Plugin\EventDispatcher\RouterSslRedirectEventDispatcherPlugin` instead.
  *
- * @deprecated Use `Spryker\Yves\Http\Plugin\EventDispatcher\SslEventDispatcherPlugin` instead.
- *
  * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
  */
 class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
