@@ -10,8 +10,8 @@ namespace Spryker\Yves\Http\Plugin\Application;
 use ArrayObject;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
@@ -142,7 +142,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected function getEventDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
