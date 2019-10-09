@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProfileStorage\Business\Storage;
 
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
+use Generated\Shared\Transfer\MerchantProfileViewTransfer;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig;
@@ -76,10 +77,13 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
         $merchantProfileTransfers = $merchantProfileCollectionTransfer->getMerchantProfiles();
 
         foreach ($merchantProfileTransfers as $merchantProfileTransfer) {
+            $merchantProfileViewTransfer = new MerchantProfileViewTransfer();
+            $merchantProfileViewTransfer->fromArray($merchantProfileTransfer->toArray(), true);
+
             $merchantProfileStorageTransfer = new MerchantProfileStorageTransfer();
             $merchantProfileStorageTransfer->setFkMerchant($merchantProfileTransfer->getFkMerchant());
             $merchantProfileStorageTransfer->setFkMerchantProfile($merchantProfileTransfer->getIdMerchantProfile());
-            $merchantProfileStorageTransfer->setData($merchantProfileTransfer->toArray());
+            $merchantProfileStorageTransfer->setData($merchantProfileViewTransfer);
             $merchantProfileStorageTransfer->setIsSendingToQueue($this->config->isSendingToQueue());
 
             $this->entityManager->saveMerchantProfileStorageEntity($merchantProfileStorageTransfer);

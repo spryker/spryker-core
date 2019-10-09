@@ -9,9 +9,30 @@
         <property name="fkMerchant" type="int" />
         <property name="fkMerchantProfile" type="int" />
         <property name="key" type="string" />
-        <property name="data" type="array" />
+        <property name="data" type="MerchantProfileView" />
         <property name="locale" type="string" />
         <property name="isSendingToQueue" type="bool" />
+    </transfer>
+
+    <transfer name="MerchantProfileView">
+        <property name="merchantName" type="string"/>
+        <property name="contactPersonRole" type="string"/>
+        <property name="contactPersonTitle" type="string"/>
+        <property name="contactPersonFirstName" type="string"/>
+        <property name="contactPersonLastName" type="string"/>
+        <property name="contactPersonPhone" type="string"/>
+        <property name="logoUrl" type="string"/>
+        <property name="publicEmail" type="string"/>
+        <property name="publicPhone" type="string"/>
+        <property name="descriptionGlossaryKey" type="string"/>
+        <property name="bannerUrlGlossaryKey" type="string"/>
+        <property name="deliveryTimeGlossaryKey" type="string"/>
+        <property name="termsConditionsGlossaryKey" type="string"/>
+        <property name="cancellationPolicyGlossaryKey" type="string"/>
+        <property name="imprintGlossaryKey" type="string"/>
+        <property name="dataPrivacyGlossaryKey" type="string"/>
+        <property name="idMerchantProfile" type="int"/>
+        <property name="fkMerchant" type="int"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">

@@ -29,6 +29,8 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
             true
         );
 
+        $merchantProfileTransfer->setMerchantName($merchantProfileEntity->getSpyMerchant()->getName());
+
         $urlEntities = $merchantProfileEntity->getSpyUrls();
         if (count($urlEntities)) {
             $urlTransfers = new ArrayObject();

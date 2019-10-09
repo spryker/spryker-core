@@ -29,6 +29,7 @@
         <property name="isActive" type="bool"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]"/>
         <property name="urlCollection" type="Url[]"/>
+        <property name="merchantName" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">
