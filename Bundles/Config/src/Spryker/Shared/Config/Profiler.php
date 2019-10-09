@@ -41,7 +41,17 @@ class Profiler
      */
     public function getProfileData()
     {
-        return $this->profileData;
+        $formatted = [];
+
+        foreach ($this->profileData as $key => $profileData) {
+            $formatted[$key] = [
+                static::PROFILE_VALUE => $this->formatValue($this->profileData[$key][static::PROFILE_VALUE]),
+                static::PROFILE_DEFAULT => $this->formatValue($this->profileData[$key][static::PROFILE_DEFAULT]),
+                static::PROFILE_COUNT => $this->profileData[$key][static::PROFILE_COUNT],
+            ];
+        }
+
+        return $formatted;
     }
 
     /**
@@ -54,8 +64,8 @@ class Profiler
     protected function createProfileEntry($key, $default, $value)
     {
         $this->profileData[$key] = [
-            static::PROFILE_VALUE => $this->formatValue($value),
-            static::PROFILE_DEFAULT => $this->formatValue($default),
+            static::PROFILE_VALUE => $value,
+            static::PROFILE_DEFAULT => $default,
             static::PROFILE_COUNT => 1,
         ];
     }
