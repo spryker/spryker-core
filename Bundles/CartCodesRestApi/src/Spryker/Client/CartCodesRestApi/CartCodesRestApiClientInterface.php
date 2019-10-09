@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartCodesRestApi\Business;
+namespace Spryker\Client\CartCodesRestApi;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartCodesRestApiFacadeInterface
+interface CartCodesRestApiClientInterface
 {
     /**
      * Specification:
-     * - Extends QuoteTransfer with $code and its relevant data when the $code is applicable.
+     * - TODO
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param QuoteTransfer $quoteTransfer
      * @param string $voucherCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer;
 }

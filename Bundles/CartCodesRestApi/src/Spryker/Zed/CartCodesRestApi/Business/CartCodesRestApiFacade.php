@@ -7,13 +7,12 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Business;
 
+use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory getFactory()
- * @method \Spryker\Zed\CartCodesRestApi\Persistence\CartCodesRestApiRepositoryInterface getRepository()
- * @method \Spryker\Zed\CartCodesRestApi\Persistence\CartCodesRestApiEntityManagerInterface getEntityManager()
  */
 class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiFacadeInterface
 {
@@ -23,12 +22,14 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
-        // TODO: Implement addCandidate() method.
+        return $this->getFactory()
+            ->createCartCodeAdder()
+            ->addCandidate($quoteTransfer, $voucherCode);
     }
 }

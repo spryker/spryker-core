@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Spryker\Zed\Discount\Communication\AmountFormatter\DiscountAmountFormatter;
+use Spryker\Zed\Discount\Communication\CartCode\VoucherCartCode;
+use Spryker\Zed\Discount\Communication\CartCode\VoucherCartCodeInterface;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\CalculatorFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\DiscountFormDataProvider;
 use Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider;
@@ -162,6 +164,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         ?DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
         return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
+    }
+
+    /**
+     * @return VoucherCartCodeInterface
+     */
+    public function createVoucherCartCode(): VoucherCartCodeInterface
+    {
+        return new VoucherCartCode();
     }
 
     /**
