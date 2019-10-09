@@ -27,19 +27,25 @@
     </transfer>
 
     <transfer name="NewsletterSubscriptionResult">
-        <property name="isSuccess" type="bool" default="true"/>
+        <property name="isSuccess" type="bool"/>
         <property name="newsletterType" type="NewsletterType"/>
         <property name="errorMessage" type="string"/>
     </transfer>
 
     <transfer name="NewsletterSubscriptionApprovalResult">
-        <property name="isSuccess" type="bool" default="true"/>
+        <property name="isSuccess" type="bool"/>
         <property name="errorMessage" type="string"/>
     </transfer>
 
     <transfer name="Mail">
         <property name="newsletterSubscriber" type="NewsletterSubscriber"/>
         <property name="newsletterType" type="NewsletterType"/>
+        <property name="templateName" type="string"/>
+        <property name="fromName" type="string"/>
+        <property name="fromEmail" type="string"/>
+        <property name="merge" type="bool"/>
+        <property name="mergeLanguage" type="string"/>
+        <property name="globalMergeVars" type="string[]" associative="true"/>
     </transfer>
 
 </transfers>

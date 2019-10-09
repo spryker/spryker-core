@@ -9,7 +9,7 @@
         <property name="sku" type="string"/>
         <property name="activeUntil" type="string"/>
         <property name="discontinuedOn" type="string"/>
-        <property name="ProductDiscontinuedNotes" type="ProductDiscontinuedNote[]" singular="ProductDiscontinuedNote"/>
+        <property name="productDiscontinuedNotes" type="ProductDiscontinuedNote[]" singular="ProductDiscontinuedNote"/>
     </transfer>
 
     <transfer name="ProductDiscontinuedNote">
@@ -25,7 +25,7 @@
     </transfer>
 
     <transfer name="ProductDiscontinuedCollection">
-        <property name="DiscontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
+        <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
     </transfer>
 
     <transfer name="ProductDiscontinueRequest">
@@ -89,6 +89,11 @@
     <transfer name="ShoppingListPreAddItemCheckResponse">
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
 </transfers>

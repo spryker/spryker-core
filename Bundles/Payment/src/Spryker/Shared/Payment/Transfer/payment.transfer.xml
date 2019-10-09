@@ -58,11 +58,17 @@
 
     <transfer name="Totals">
         <property name="priceToPay" type="int"/>
+        <property name="grandTotal" type="int"/>
     </transfer>
 
     <transfer name="CalculableObject">
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="payment" type="Payment"/>
+        <property name="totals" type="Totals"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
 </transfers>

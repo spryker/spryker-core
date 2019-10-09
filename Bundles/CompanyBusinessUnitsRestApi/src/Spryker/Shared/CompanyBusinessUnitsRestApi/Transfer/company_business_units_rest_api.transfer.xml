@@ -36,6 +36,7 @@
     <transfer name="RestUser">
         <property name="idCompany" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

@@ -67,6 +67,7 @@
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
+        <property name="idSalesShipment" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -150,6 +151,10 @@
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
 </transfers>

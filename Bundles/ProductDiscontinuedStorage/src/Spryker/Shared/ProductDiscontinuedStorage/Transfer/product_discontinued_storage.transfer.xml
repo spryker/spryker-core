@@ -24,4 +24,18 @@
         <property name="type" type="string"/>
         <property name="value" type="string"/>
     </transfer>
+
+    <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="available" type="bool"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
+        <property name="superAttributes" type="array"/>
+        <property name="attributeVariants" type="array"/>
+        <property name="productConcreteIds" type="array"/>
+    </transfer>
 </transfers>

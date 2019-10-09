@@ -18,6 +18,8 @@
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
         <property name="currentProductPrice" type="CurrentProductPrice"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="MoneyValue">

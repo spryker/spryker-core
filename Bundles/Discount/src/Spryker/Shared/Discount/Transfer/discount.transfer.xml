@@ -168,6 +168,7 @@
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
     </transfer>
 
     <transfer name="DiscountMoneyAmount">
@@ -178,6 +179,28 @@
         <property name="grossAmount" type="int"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="currencySymbol" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="idSalesOrderItemOption" type="int"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+        <property name="errorCode" type="int"/>
     </transfer>
 
 </transfers>

@@ -38,6 +38,9 @@
 
     <transfer name="UrlStorage">
         <property name="fkResourceProductAbstract" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="localeUrls" type="UrlStorage[]" singular="UrlStorage"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="RestUrlResolverAttributes">
