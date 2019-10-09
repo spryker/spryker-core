@@ -28,7 +28,7 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        // TODO: Implement addCandidate() method.
+        return $this->getFactory()->createCodeAdder()->addCandidate($quoteTransfer, $code);
     }
 
     /**
