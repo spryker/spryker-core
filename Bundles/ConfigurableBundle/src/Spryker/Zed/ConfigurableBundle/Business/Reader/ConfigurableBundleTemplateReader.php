@@ -44,18 +44,8 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer {
-        return $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
-     */
-    public function findConfigurableBundleTemplateWithDefaultLocaleTranslation(
-        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-    ): ?ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateFilterTransfer = $this->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+        $configurableBundleTemplateFilterTransfer = $this->configurableBundleRepository
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateFilterTransfer) {
             return null;

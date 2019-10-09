@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
@@ -73,52 +74,6 @@ class SlotController extends AbstractController
         }
 
         return $this->viewResponse($response);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
-     */
-    protected function executeCreateAction(Request $request)
-    {
-        $idConfigurableBundleTemplate = $this->castId(
-            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
-        );
-        $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotCreateFormDataProvider();
-
-        $form = $this->getFactory()
-            ->getConfigurableBundleTemplateSlotCreateForm(
-                $formDataProvider->getData($idConfigurableBundleTemplate),
-                $formDataProvider->getOptions()
-            )->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $configurableBundleResponseTransfer = $this->getFactory()
-                ->getConfigurableBundleFacade()
-                ->createConfigurableBundleTemplateSlot($form->getData());
-
-            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
-                $idConfigurableBundleTemplateSlot = $configurableBundleResponseTransfer
-                    ->getConfigurableBundleTemplateSlot()
-                    ->getIdConfigurableBundleTemplateSlot();
-
-                $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE_SLOT, [
-                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $idConfigurableBundleTemplateSlot,
-                ]);
-
-                return $this->redirectResponse($redirectUrl);
-            }
-
-            $this->handleErrors($configurableBundleResponseTransfer->getMessages());
-        }
-
-        return [
-            'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotCreateTabs()->createView(),
-            'form' => $form->createView(),
-            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
-            'idConfigurableBundleTemplate' => $idConfigurableBundleTemplate,
-        ];
     }
 
     /**
@@ -192,6 +147,58 @@ class SlotController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
+    protected function executeCreateAction(Request $request)
+    {
+        $idConfigurableBundleTemplate = $this->castId(
+            $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
+        );
+        $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotCreateFormDataProvider();
+
+        $form = $this->getFactory()
+            ->getConfigurableBundleTemplateSlotCreateForm(
+                $formDataProvider->getData($idConfigurableBundleTemplate),
+                $formDataProvider->getOptions()
+            )->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $configurableBundleResponseTransfer = $this->getFactory()
+                ->getConfigurableBundleFacade()
+                ->createConfigurableBundleTemplateSlot($form->getData());
+
+            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
+                $idConfigurableBundleTemplateSlot = $configurableBundleResponseTransfer
+                    ->getConfigurableBundleTemplateSlot()
+                    ->getIdConfigurableBundleTemplateSlot();
+
+                $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE_SLOT, [
+                    static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $idConfigurableBundleTemplateSlot,
+                ]);
+
+                return $this->redirectResponse($redirectUrl);
+            }
+
+            $this->handleErrors($configurableBundleResponseTransfer->getMessages());
+        }
+
+        $configurableBundleTemplateTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            );
+
+        return [
+            'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotCreateTabs()->createView(),
+            'form' => $form->createView(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+            'configurableBundleTemplate' => $configurableBundleTemplateTransfer,
+        ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     */
     protected function executeEditAction(Request $request)
     {
         $idConfigurableBundleTemplateSlot = $this->castId(
@@ -239,12 +246,20 @@ class SlotController extends AbstractController
             }
         }
 
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate(
+            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()
+        );
+
         $this->setIdProductListParamToRequest($request);
+        $configurableBundleTemplateTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         $viewData = [
             'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotEditTabs()->createView(),
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+            'configurableBundleTemplate' => $configurableBundleTemplateTransfer,
         ];
 
         $viewData = array_merge($viewData, $this->getProductListManagementTabsAndTables());

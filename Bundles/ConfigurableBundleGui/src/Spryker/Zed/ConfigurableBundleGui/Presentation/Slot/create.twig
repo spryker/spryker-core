@@ -3,7 +3,7 @@
 {% set widget_title = 'Slot details' %}
 
 {% block section_title %}
-    {{ 'Create Slot' | trans }}
+    {{ 'Create Slot for' | trans ~ ' ' ~ configurableBundleTemplate.translations[0].name }}
 {% endblock %}
 
 {% block head_title %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : idConfigurableBundleTemplate }),'Back' | trans) }}
+    {{ backActionButton(url('/configurable-bundle-gui/template/edit', {'id-configurable-bundle-template' : configurableBundleTemplate.idConfigurableBundleTemplate }),'Back' | trans) }}
 {% endblock %}
 
 {% block content %}
