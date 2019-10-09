@@ -115,7 +115,6 @@ class MerchantProfileFormType extends AbstractType
             ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
                 'label' => static::LABEL_IS_ACTIVE,
                 'required' => false,
-                'disabled' => 'disabled',
             ]);
 
         return $this;
