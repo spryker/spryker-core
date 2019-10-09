@@ -18,7 +18,7 @@ interface HttpConstants
      *
      * @api
      */
-    public const YVES_HTTP_PORT = 80;
+    public const YVES_HTTP_PORT = 'HTTP:YVES_HTTP_PORT';
 
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface HttpConstants
      *
      * @api
      */
-    public const YVES_HTTPS_PORT = 443;
+    public const YVES_HTTPS_PORT = 'HTTP:YVES_HTTPS_PORT';
 
     /**
      * Specification:
@@ -75,7 +75,7 @@ interface HttpConstants
      *
      * @api
      */
-    public const ZED_HTTP_PORT = 80;
+    public const ZED_HTTP_PORT = 'HTTP:ZED_HTTP_PORT';
 
     /**
      * Specification:
@@ -83,7 +83,7 @@ interface HttpConstants
      *
      * @api
      */
-    public const ZED_HTTPS_PORT = 443;
+    public const ZED_HTTPS_PORT = 'HTTP:ZED_HTTPS_PORT';
 
     /**
      * Specification:

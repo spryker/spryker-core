@@ -21,8 +21,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    protected const EVENT_PRIORITY = 0;
-
     protected const HEADER_HSTS = 'Strict-Transport-Security';
     protected const HSTS_CONFIG_MAX_AGE = 'max_age';
     protected const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
@@ -47,7 +45,7 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
             }
 
             $event->setResponse($this->setHSTSHeader($event->getResponse()));
-        }, static::EVENT_PRIORITY);
+        });
 
         return $eventDispatcher;
     }

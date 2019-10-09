@@ -25,7 +25,7 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     protected const COOKIES_HANDLER_PRIORITY = -255;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a listener to handle transparent cookie insertion.
      *
      * @api
