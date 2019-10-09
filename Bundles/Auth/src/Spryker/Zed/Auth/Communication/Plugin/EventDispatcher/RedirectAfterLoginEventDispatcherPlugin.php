@@ -182,10 +182,6 @@ class RedirectAfterLoginEventDispatcherPlugin extends AbstractPlugin implements 
             $token = $request->headers->get(AuthConstants::AUTH_TOKEN);
         }
 
-        if (!$authFacade->isAuthenticated($token)) {
-            return false;
-        }
-
-        return true;
+        return $authFacade->isAuthenticated($token);
     }
 }

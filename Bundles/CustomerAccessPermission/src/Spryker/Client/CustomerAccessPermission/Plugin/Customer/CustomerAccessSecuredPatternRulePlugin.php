@@ -27,11 +27,9 @@ class CustomerAccessSecuredPatternRulePlugin extends AbstractPlugin implements C
      */
     public function isApplicable(): bool
     {
-        $isApplicable = !$this->getFactory()
+        return !$this->getFactory()
             ->getCustomerClient()
             ->isLoggedIn();
-
-        return $isApplicable;
     }
 
     /**
