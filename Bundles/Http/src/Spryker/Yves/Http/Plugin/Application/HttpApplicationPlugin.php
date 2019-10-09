@@ -28,8 +28,17 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_KERNEL = 'kernel';
     protected const SERVICE_REQUEST_STACK = 'request_stack';
     protected const SERVICE_REQUEST_CONTEXT = 'request_context';
+    protected const SERVICE_RESOLVER = 'resolver';
+
+    /**
+     * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
-    protected const SERVICE_CONTROLLER_RESOLVER = 'resolver';
+
+    /**
+     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
+     */
+    protected const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
 
     /**
      * {@inheritDoc}
@@ -156,7 +165,11 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function getResolver(ContainerInterface $container): ControllerResolverInterface
     {
-        return $container->get(static::SERVICE_CONTROLLER_RESOLVER);
+        if ($container->has(static::SERVICE_CONTROLLER_RESOLVER)) {
+            return $container->get(static::SERVICE_CONTROLLER_RESOLVER);
+        }
+
+        return $container->get(static::SERVICE_RESOLVER);
     }
 
     /**
