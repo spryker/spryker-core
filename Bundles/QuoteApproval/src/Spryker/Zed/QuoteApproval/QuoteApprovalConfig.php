@@ -23,6 +23,8 @@ class QuoteApprovalConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @return bool
      */
     public function isShipmentPriceIncludedInQuoteApprovalPermissionCheck(): bool

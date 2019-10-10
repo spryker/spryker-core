@@ -28,6 +28,8 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     }
 
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @return bool
      */
     public function isShipmentPriceIncludedInQuoteApprovalPermissionCheck(): bool
