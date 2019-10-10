@@ -164,14 +164,6 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToAvailabilityInterface
-     */
-    public function getAvailabilityFacade()
-    {
-        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_AVAILABILITY);
-    }
-
-    /**
      * @return \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface
      */
     public function getAvailabilityQueryContainer()

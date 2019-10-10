@@ -8,7 +8,9 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
@@ -58,12 +60,9 @@ class IndexController extends AbstractController
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
         $localeTransfer = $this->getCurrentLocaleTransfer();
+        $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailabilityTransfer($localeTransfer->getIdLocale(), $idStore);
 
-        $productAbstractAvailabilityTransfer = $this->getFactory()
-            ->getAvailabilityFacade()
-            ->findProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
-
-        if ($productAbstractAvailabilityTransfer) {
+        if ($productAbstractAvailabilityTransfer != null) {
             $productAbstractAvailabilityTransfer = $this->getFactory()
                 ->createProductStockHelper()
                 ->trimProductAbstractAvailabilityQuantities($productAbstractAvailabilityTransfer);
@@ -282,5 +281,42 @@ class IndexController extends AbstractController
         }
 
         return $this->castId($idStore);
+    }
+
+    /**
+     * @param int $idLocale
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    protected function getProductAbstractAvailabilityTransfer(int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer
+    {
+        $storeTransfer = $this->getFactory()
+            ->getStoreFacade()
+            ->getStoreById($idStore);
+
+        $stockTypes = $this->getFactory()
+            ->getStockFacade()
+            ->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+
+        $productAbstractAvailabilityEntity = $this->getFactory()
+            ->getAvailabilityQueryContainer()
+            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockTypes)
+            ->withColumn(
+                "SUM(" . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . ")",
+                ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY
+            )->findOne();
+
+        if ($productAbstractAvailabilityEntity === null) {
+            return $productAbstractAvailabilityEntity;
+        }
+
+        return (new ProductAbstractAvailabilityTransfer())
+            ->setProductName($productAbstractAvailabilityEntity->getVirtualColumn('productName'))
+            ->setSku($productAbstractAvailabilityEntity->getSku())
+            ->setAvailability($productAbstractAvailabilityEntity->getVirtualColumn('availabilityQuantity') ?? 0)
+            ->setStockQuantity($productAbstractAvailabilityEntity->getVirtualColumn('stockQuantity') ?? 0)
+            ->setReservationQuantity($productAbstractAvailabilityEntity->getVirtualColumn('reservationQuantity') ?? 0)
+            ->setIsNeverOutOfStock($productAbstractAvailabilityEntity->getVirtualColumn('concreteNeverOutOfStockSet'));
     }
 }
