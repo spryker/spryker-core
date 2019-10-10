@@ -537,10 +537,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         return $this->queryMethods()
             ->filterByIsActive(true)
-
             ->leftJoinWithShipmentMethodPrice()
             ->leftJoinWithShipmentCarrier()
-
             ->useShipmentMethodStoreQuery()
                 ->filterByFkStore($idStore)
             ->endUse()
