@@ -118,7 +118,8 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
                 SpyProductTableMap::COL_SKU,
                 SpyOmsProductReservationTableMap::COL_SKU,
                 Criteria::LEFT_JOIN
-            )->groupByAbstractSku()
+            )->where(sprintf('(%s = %d OR %s IS NULL)', SpyOmsProductReservationTableMap::COL_FK_STORE, $storeTransfer->getIdStore(), SpyOmsProductReservationTableMap::COL_FK_STORE))
+            ->groupByAbstractSku()
             ->select([SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU])
             ->findOne();
 
