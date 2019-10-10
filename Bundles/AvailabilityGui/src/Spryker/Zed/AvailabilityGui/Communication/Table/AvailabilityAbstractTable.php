@@ -127,9 +127,9 @@ class AvailabilityAbstractTable extends AbstractTable
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
-                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity->getAvailabilityQuantity(), $isNeverOutOfStock),
-                AvailabilityQueryContainer::STOCK_QUANTITY => $productAbstractEntity->getStockQuantity(),
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity->getReservationQuantity())->toString(),
+                SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
+                AvailabilityQueryContainer::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
                 static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($isNeverOutOfStock) ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
@@ -167,18 +167,28 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param int $quantity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      * @param bool $isNeverOutOfStock
      *
      * @return string
      */
-    protected function getAvailabilityLabel($quantity, $isNeverOutOfStock)
+    protected function getAvailabilityLabel(SpyProductAbstract $productAbstractEntity, bool $isNeverOutOfStock): string
     {
-        if ($quantity > 0 || $isNeverOutOfStock) {
+        if ((new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY)))->greaterThan(0) || $isNeverOutOfStock) {
             return $this->generateLabel(static::AVAILABLE, 'label-info');
         }
 
         return $this->generateLabel(static::NOT_AVAILABLE, '');
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getStockQuantity(SpyProductAbstract $productAbstractEntity): Decimal
+    {
+        return (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::STOCK_QUANTITY)));
     }
 
     /**
@@ -216,13 +226,13 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param string $reservationQuantity
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateReservation($reservationQuantity): Decimal
+    protected function calculateReservation(SpyProductAbstract $productAbstractEntity): Decimal
     {
-        $reservationItems = explode(',', $reservationQuantity);
+        $reservationItems = explode(',', $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY));
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);
@@ -233,7 +243,7 @@ class AvailabilityAbstractTable extends AbstractTable
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getReservationUniqueValue($reservationItems): Decimal
+    protected function getReservationUniqueValue(array $reservationItems): Decimal
     {
         $reservation = new Decimal(0);
         foreach ($reservationItems as $item) {

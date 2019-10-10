@@ -148,9 +148,9 @@ class AvailabilityTable extends AbstractTable
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
-                AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $this->calculateReservation($productItem)->toString(),
+                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => (new Decimal($productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY]))->trim(),
+                AvailabilityQueryContainer::STOCK_QUANTITY => (new Decimal($productItem[AvailabilityQueryContainer::STOCK_QUANTITY]))->trim(),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $this->calculateReservation($productItem)->trim(),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),

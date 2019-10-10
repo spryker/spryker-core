@@ -12,28 +12,28 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $productPackagingUnitReader;
+    protected $productPackagingUnitRepository;
 
     /**
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
      */
     public function __construct(
-        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade,
-        ProductPackagingUnitReaderInterface $productPackagingUnitReader
+        ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository,
+        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
     ) {
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
         parent::__construct($availabilityFacade);
-        $this->productPackagingUnitReader = $productPackagingUnitReader;
     }
 
     /**
@@ -91,8 +91,8 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     protected function expandItemWithLeadProduct(ItemTransfer $itemTransfer)
     {
         $itemTransfer->requireSku();
-        $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
-            ->findProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
+        $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
+            ->findProductPackagingLeadProductBySiblingProductSku($itemTransfer->getSku());
 
         if ($productPackagingLeadProductTransfer) {
             $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);

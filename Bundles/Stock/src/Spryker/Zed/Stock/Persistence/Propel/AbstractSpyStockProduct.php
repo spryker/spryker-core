@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Stock\Persistence\Propel;
 
 use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_stock_product' table.
@@ -21,24 +22,26 @@ use Orm\Zed\Stock\Persistence\Base\SpyStockProduct as BaseSpyStockProduct;
 abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
 {
     /**
-     * @param int $amount
+     * @param string|int|float $amount
      *
      * @return void
      */
-    public function decrement($amount = 1)
+    public function decrement($amount)
     {
-        $this->setQuantity($this->getQuantity() - $amount);
-        $this->save();
+        $this->setQuantity(
+            (new Decimal($this->getQuantity()))->subtract($amount)
+        );
     }
 
     /**
-     * @param int $amount
+     * @param string|int|float $amount
      *
      * @return void
      */
-    public function increment($amount = 1)
+    public function increment($amount)
     {
-        $this->setQuantity($this->getQuantity() + $amount);
-        $this->save();
+        $this->setQuantity(
+            (new Decimal($this->getQuantity()))->add($amount)
+        );
     }
 }

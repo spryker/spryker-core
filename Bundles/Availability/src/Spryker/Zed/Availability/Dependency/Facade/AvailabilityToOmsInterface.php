@@ -13,17 +13,6 @@ use Spryker\DecimalObject\Decimal;
 interface AvailabilityToOmsInterface
 {
     /**
-     * @deprecated Using this method will affect the performance,
-     * use AvailabilityToOmsInterface::getOmsReservedProductQuantityForSku() instead.
-     *
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

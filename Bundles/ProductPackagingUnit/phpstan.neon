@@ -1,4 +1,5 @@
 parameters:
     ignoreErrors:
             - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
-            - '#Call to an undefined method .+SpySalesOrderItemQuery::groupByFkOmsOrderProcess\(\).#'
+            - '#Call to an undefined method .+SpySalesOrderItemQuery::innerJoinProcess\(\).#'
+            - '#Call to an undefined method .+ModelCriteria::useOrderQuery\(\).#'

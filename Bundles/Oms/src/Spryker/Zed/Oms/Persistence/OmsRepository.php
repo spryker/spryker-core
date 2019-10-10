@@ -53,19 +53,21 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
-            ->select([
-                SpySalesOrderItemTableMap::COL_SKU,
-            ])->filterBySku($sku)
-            ->innerJoinProcess()
+            ->filterBySku($sku)
+            ->groupBySku()
             ->useStateQuery()
                 ->filterByName_In($stateNames)
             ->endUse()
             ->groupByFkOmsOrderItemState()
+            ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
             ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::SKU_COLUMN)
             ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN);
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN)
+            ->select([
+                SpySalesOrderItemTableMap::COL_SKU,
+            ]);
 
         if ($storeTransfer !== null) {
             $salesOrderItemQuery

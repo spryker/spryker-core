@@ -20,7 +20,8 @@ class LeadProductReservationHandlerPlugin extends AbstractPlugin implements Rese
     /**
      * {@inheritDoc}
      * - Updates the lead product's reservation for the provided product packaging unit SKU.
-     * - Updates the lead product's availability for the provided product packaging unit SKU.
+     * - Skips updating if the product packaging unit has self as lead product.
+     * - Oms Reservation plugins is expexted to update availability.
      *
      * @api
      *
@@ -30,10 +31,6 @@ class LeadProductReservationHandlerPlugin extends AbstractPlugin implements Rese
      */
     public function handle($sku): void
     {
-        $this->getFacade()
-            ->updateLeadProductReservation($sku);
-
-        $this->getFacade()
-            ->updateLeadProductAvailability($sku);
+        $this->getFacade()->updateLeadProductReservation($sku);
     }
 }

@@ -36,4 +36,10 @@
         <property name="value" type="string"/>
         <property name="parameters" type="array"/>
     </transfer>
+
+    <transfer name="ContentWidgetTemplate">
+        <property name="identifier" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

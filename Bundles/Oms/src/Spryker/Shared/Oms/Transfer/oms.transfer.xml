@@ -18,6 +18,8 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="Locale"></transfer>
+
     <transfer name="OmsAvailabilityReservationRequest">
         <property name="sku" type="string"/>
         <property name="reservationAmount" type="decimal"/>
@@ -45,7 +47,7 @@
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
-        <property name="sumAmount" type="int"/>
+        <property name="sumAmount" type="decimal"/>
     </transfer>
 
     <transfer name="ShipmentGroup">

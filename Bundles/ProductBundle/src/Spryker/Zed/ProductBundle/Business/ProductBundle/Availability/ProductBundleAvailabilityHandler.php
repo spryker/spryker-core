@@ -111,7 +111,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
-        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0, $storeTransfer);
+        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, new Decimal(0), $storeTransfer);
     }
 
     /**
@@ -198,17 +198,16 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param iterable $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateBundleQuantity(iterable $bundleItems, StoreTransfer $storeTransfer): Decimal
+    protected function calculateBundleQuantity(array $bundleItems, StoreTransfer $storeTransfer): Decimal
     {
         $bundleAvailabilityQuantity = new Decimal(0);
         foreach ($bundleItems as $bundleItemEntity) {
-            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
-                ->getSku();
+            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
 
             $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku(
                 $bundledItemSku,
@@ -277,7 +276,10 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return new Decimal(0);
         }
 
-        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->divide($bundleItemEntity->getQuantity(), static::DIVISION_SCALE);
+        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))
+            ->divide($bundleItemEntity->getQuantity(), static::DIVISION_SCALE)
+            ->floor();
+
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }
