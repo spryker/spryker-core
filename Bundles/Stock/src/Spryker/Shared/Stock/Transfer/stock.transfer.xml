@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="StockProduct">
+        <property name="sku" type="string"/>
+        <property name="stockType" type="string"/>
+        <property name="fkStock" type="int"/>
+        <property name="quantity" type="decimal"/>
+        <property name="isNeverOutOfStock" type="string"/>
+        <property name="idStockProduct" type="int"/>
+    </transfer>
+
+    <transfer name="Type" deprecated="Use StockTransfer instead">
+        <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStore"/>
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="StockCriteriaFilter">
+        <property name="idStock" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+    </transfer>
+
+    <transfer name="StockResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="stock" type="Stock"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="stocks" type="StockProduct[]" singular="stock"/>
+    </transfer>
+
+</transfers>
+

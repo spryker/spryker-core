@@ -12,6 +12,7 @@ use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockMapper;
+use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockProductMapper;
 use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockStoreRelationMapper;
 
 /**
@@ -60,5 +61,13 @@ class StockPersistenceFactory extends AbstractPersistenceFactory
     public function createStockStoreRelationMapper(): StockStoreRelationMapper
     {
         return new StockStoreRelationMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Persistence\Propel\Mapper\StockProductMapper
+     */
+    public function createStockProductMapper(): StockProductMapper
+    {
+        return new StockProductMapper();
     }
 }

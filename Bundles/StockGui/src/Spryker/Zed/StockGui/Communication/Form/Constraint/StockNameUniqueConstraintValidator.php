@@ -27,7 +27,12 @@ class StockNameUniqueConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, StockNameUniqueConstraint::class);
         }
 
-        if ($constraint->getStockFacade()->findStockByName($value) === null) {
+        $stockTransfer = $constraint->getStockFacade()->findStockByName($value);
+        if ($stockTransfer === null) {
+            return;
+        }
+
+        if ($stockTransfer->getIdStock() === (int)$this->context->getRoot()->getViewData()->getIdStock()) {
             return;
         }
 

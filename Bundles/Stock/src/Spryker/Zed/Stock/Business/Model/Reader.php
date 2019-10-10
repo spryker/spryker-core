@@ -105,7 +105,7 @@ class Reader implements ReaderInterface
     public function getStockTypesForStore(StoreTransfer $storeTransfer): array
     {
         $storeTransfer->requireName();
-        $stockNames = $this->stockRepository->getStockNames();
+        $stockNames = $this->stockRepository->getStockNamesForStore($storeTransfer->getName());
 
         return array_combine($stockNames, $stockNames);
     }

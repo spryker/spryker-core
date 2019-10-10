@@ -31,6 +31,15 @@
                         <icon>fa-angle-double-right</icon>
                         <visible>0</visible>
                     </create-warehouses>
+                    <edit-warehouses>
+                        <label>Edit Warehouses</label>
+                        <title>Edit Warehouses</title>
+                        <bundle>stock-gui</bundle>
+                        <controller>edit-warehouse</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </edit-warehouses>
                 </pages>
             </warehouses>
         </pages>

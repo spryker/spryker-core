@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -109,6 +110,45 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
         return $this->getFactory()
             ->createStockMapper()
             ->mapStockEntityToStockTransfer($stockEntity, new StockTransfer());
+    }
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdStock(int $idStock): array
+    {
+        $stockProductQuery = $this->getFactory()
+            ->createStockProductQuery()
+            ->leftJoinWithStock()
+            ->leftJoinWithSpyProduct()
+            ->filterByFkStock($idStock);
+
+        return $this->getFactory()
+            ->createStockProductMapper()
+            ->mapStockProductEntitiesToStockProductTransfers($stockProductQuery->find()->getArrayCopy());
+    }
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdStock(int $idStock): StoreRelationTransfer
+    {
+        $stockStoreQuery = $this->getFactory()
+            ->createStockStoreQuery()
+            ->leftJoinWithStore()
+            ->filterByFkStock($idStock);
+
+        return $this->getFactory()
+            ->createStockStoreRelationMapper()
+            ->mapStockStoreEntityToStoreRelationTransfer(
+                $idStock,
+                $stockStoreQuery->find()->getArrayCopy(),
+                new StoreRelationTransfer()
+            );
     }
 
     /**

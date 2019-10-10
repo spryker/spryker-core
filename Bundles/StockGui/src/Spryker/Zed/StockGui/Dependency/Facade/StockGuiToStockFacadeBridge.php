@@ -26,6 +26,16 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->stockFacade->updateStock($stockTransfer);
+    }
+
+    /**
      * @return array
      */
     public function getWarehouseToStoreMapping()

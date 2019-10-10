@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StockGui\Communication;
 
+use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -40,11 +41,13 @@ class StockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StockTransfer|null $stockTransfer
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getStockForm(): FormInterface
+    public function getStockForm(?StockTransfer $stockTransfer = null): FormInterface
     {
-        return $this->getFormFactory()->create(StockForm::class);
+        return $this->getFormFactory()->create(StockForm::class, $stockTransfer);
     }
 
     /**

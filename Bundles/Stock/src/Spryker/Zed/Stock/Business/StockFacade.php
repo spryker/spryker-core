@@ -334,4 +334,20 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
             ->createStockCreator()
             ->createStock($stockTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStockUpdater()
+            ->updateStock($stockTransfer);
+    }
 }

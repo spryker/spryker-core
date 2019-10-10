@@ -13,6 +13,13 @@ use Generated\Shared\Transfer\StockTransfer;
 interface StockGuiToStockFacadeInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
      * @return array
      */
     public function getWarehouseToStoreMapping();

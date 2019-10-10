@@ -10,24 +10,24 @@ namespace Spryker\Zed\Stock\Persistence\Propel\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Store\Persistence\SpyStore;
 
 class StockStoreRelationMapper
 {
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
+     * @param int $idStock
+     * @param \Orm\Zed\Stock\Persistence\SpyStockStore[] $stockStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStockStoreEntityToStoreRelationTransfer(SpyStock $stockEntity, StoreRelationTransfer $storeRelationTransfer): StoreRelationTransfer
+    public function mapStockStoreEntityToStoreRelationTransfer(int $idStock, array $stockStoreEntities, StoreRelationTransfer $storeRelationTransfer): StoreRelationTransfer
     {
-        $storeTransfers = $this->mapStoreTransfers($stockEntity);
+        $storeTransfers = $this->mapStoreTransfers($stockStoreEntities);
         $idStores = $this->getIdStoresFromStoreTransferCollection($storeTransfers);
 
         $storeRelationTransfer
-            ->setIdEntity($stockEntity->getIdStock())
+            ->setIdEntity($idStock)
             ->setStores(new ArrayObject($storeTransfers))
             ->setIdStores($idStores);
 
@@ -35,14 +35,14 @@ class StockStoreRelationMapper
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
+     * @param \Orm\Zed\Stock\Persistence\SpyStockStore[] $stockStoreEntities
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected function mapStoreTransfers(SpyStock $stockEntity): array
+    protected function mapStoreTransfers(array $stockStoreEntities): array
     {
         $storeTransfers = [];
-        foreach ($stockEntity->getStockStores() as $stockStoreEntity) {
+        foreach ($stockStoreEntities as $stockStoreEntity) {
             $storeTransfers[] = $this->mapStoreEntityToStoreTransfer($stockStoreEntity->getStore(), new StoreTransfer());
         }
 

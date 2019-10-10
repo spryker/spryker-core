@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Persistence;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface StockRepositoryInterface
 {
@@ -44,4 +45,18 @@ interface StockRepositoryInterface
      * @return \Generated\Shared\Transfer\StockTransfer|null
      */
     public function findStockByName(string $stockName): ?StockTransfer;
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByIdStock(int $idStock): array;
+
+    /**
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdStock(int $idStock): StoreRelationTransfer;
 }
