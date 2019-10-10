@@ -37,6 +37,7 @@
         <property name="storeCurrencyPrice" type="int"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="shipmentMethodKey" type="string"/>
     </transfer>
 
     <transfer name="Order">
