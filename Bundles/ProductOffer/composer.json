@@ -1,0 +1,28 @@
+{
+  "name": "spryker/product-offer",
+  "description": "ProductOffer module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
+    "spryker/kernel": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "spryker\\": "src/spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
