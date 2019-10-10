@@ -61,4 +61,14 @@ class CustomerConfig extends AbstractBundleConfig
             AddressTransfer::IS_DELETED,
         ];
     }
+
+    /**
+     * @return string[]
+     */
+    public function getAddressFieldsToSanitizeValuesList(): array
+    {
+        return [
+            AddressTransfer::UUID,
+        ];
+    }
 }

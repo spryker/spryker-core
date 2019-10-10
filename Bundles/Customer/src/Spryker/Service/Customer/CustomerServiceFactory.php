@@ -9,6 +9,8 @@ namespace Spryker\Service\Customer;
 
 use Spryker\Service\Customer\Address\CustomerAddressKeyGenerator;
 use Spryker\Service\Customer\Address\CustomerAddressKeyGeneratorInterface;
+use Spryker\Service\Customer\Address\CustomerAddressSanitizer;
+use Spryker\Service\Customer\Address\CustomerAddressSanitizerInterface;
 use Spryker\Service\Customer\Dependency\Service\CustomerToUtilEncodingServiceInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
@@ -34,5 +36,13 @@ class CustomerServiceFactory extends AbstractServiceFactory
     public function getCustomerToUtilEncodingService(): CustomerToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Service\Customer\Address\CustomerAddressSanitizerInterface
+     */
+    public function createCustomerAddressSanitizer(): CustomerAddressSanitizerInterface
+    {
+        return new CustomerAddressSanitizer($this->getConfig());
     }
 }

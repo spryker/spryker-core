@@ -13,7 +13,7 @@ interface CustomerServiceInterface
 {
     /**
      * Specification:
-     * - Generates unique key for address based on address transfer properties without excluded properties list.
+     * - Generates unique key for address based on address transfer properties using allowed properties list.
      *
      * @api
      *
@@ -22,4 +22,16 @@ interface CustomerServiceInterface
      * @return string
      */
     public function getUniqueAddressKey(AddressTransfer $addressTransfer): string;
+
+    /**
+     * Specification:
+     * - Sanitizes unique address fields' values based on a properties list.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function sanitizeUniqueAddressValues(AddressTransfer $addressTransfer): AddressTransfer;
 }
