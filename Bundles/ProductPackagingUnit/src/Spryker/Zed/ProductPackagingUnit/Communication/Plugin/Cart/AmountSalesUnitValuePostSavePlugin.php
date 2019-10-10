@@ -25,7 +25,7 @@ class AmountSalesUnitValuePostSavePlugin extends AbstractPlugin implements PostS
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {

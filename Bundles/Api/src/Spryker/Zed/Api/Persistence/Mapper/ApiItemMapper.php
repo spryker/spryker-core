@@ -14,7 +14,7 @@ class ApiItemMapper implements ApiItemMapperInterface
 {
     /**
      * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
-     * @param int|null $id
+     * @param string|null $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer
      */
