@@ -621,12 +621,12 @@ class QuoteApprovalFacadeTest extends Unit
     protected function getQuoteApprovalFacadeMock(array $requiredQuoteFields): QuoteApprovalFacadeInterface
     {
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
-            ->setMethods(['getRequiredQuoteFields', 'isShipmentPriceIncludedInQuoteApprovalPermissionCheck'])
+            ->setMethods(['getRequiredQuoteFieldsForApprovalProcess', 'isShipmentPriceIncludedInQuoteApprovalPermissionCheck'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $quoteApprovalConfigMock
-            ->method('getRequiredQuoteFields')
+            ->method('getRequiredQuoteFieldsForApprovalProcess')
             ->willReturn($requiredQuoteFields);
 
         /** @var \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacade $quoteApprovalFacade */

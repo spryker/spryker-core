@@ -40,7 +40,7 @@ class QuoteShipmentChecker implements QuoteShipmentCheckerInterface
     public function checkQuoteShipment(QuoteTransfer $quoteTransfer): bool
     {
         if ($this->hasItemsWithoutShipment($quoteTransfer)) {
-            return $this->isQuoteLevelShipment($quoteTransfer);
+            return $this->isValidQuoteLevelShipment($quoteTransfer);
         }
 
         if ($quoteTransfer->getItems()->count() === 0) {
@@ -89,7 +89,7 @@ class QuoteShipmentChecker implements QuoteShipmentCheckerInterface
         $shipmentHashKey = $this->shipmentService->getShipmentHashKey($shipmentTransfer);
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($this->matchShipmentExpense($expenseTransfer, $shipmentHashKey)) {
-                return $shipmentTransfer->getShipmentSelection() !== null;
+                return true;
             }
         }
 
@@ -116,7 +116,7 @@ class QuoteShipmentChecker implements QuoteShipmentCheckerInterface
      *
      * @return bool
      */
-    protected function isQuoteLevelShipment(QuoteTransfer $quoteTransfer): bool
+    protected function isValidQuoteLevelShipment(QuoteTransfer $quoteTransfer): bool
     {
         if (!$quoteTransfer->getShipment() || !$quoteTransfer->getShippingAddress()) {
             return false;
@@ -124,7 +124,7 @@ class QuoteShipmentChecker implements QuoteShipmentCheckerInterface
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === static::SHIPMENT_EXPENSE_TYPE) {
-                return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
+                return true;
             }
         }
 
