@@ -108,4 +108,19 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
+     */
+    public function getProductPackagingLeadProductEntityByFilter(FilterTransfer $filterTransfer): array
+    {
+        $query = $this->getFactory()
+            ->getProductPackagingLeadProductQuery()
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset());
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
 }

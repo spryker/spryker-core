@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
@@ -87,6 +88,17 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     {
         return $this->productPackagingUnitStorageRepository
             ->findProductAbstractPackagingStorageEntitiesByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
+     */
+    public function getProductPackagingLeadProductEntityByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->productPackagingUnitStorageRepository
+            ->getProductPackagingLeadProductEntityByFilter($filterTransfer);
     }
 
     /**

@@ -7,21 +7,20 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingLeadProductTableMap;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
- * @deprecated Use ProductAbstractPackagingEventResourceBulkRepositoryPlugin instead.
- *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ProductAbstractPackagingEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -37,17 +36,20 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
 
     /**
      * {@inheritDoc}
-     * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs.
+     * - Retrieves ProductAbstractPackagingStorageTransfer collection.
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $productAbstractIds = []): array
+    public function getData(int $offset, int $limit): array
     {
-        return $this->getRepository()->getProductPackagingLeadProductEntityTransfersByProductAbstractIds($productAbstractIds);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->getProductPackagingLeadProductEntityByFilter($filterTransfer);
     }
 
     /**
@@ -74,5 +76,18 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
     public function getIdColumnName(): ?string
     {
         return SpyProductPackagingLeadProductTableMap::COL_FK_PRODUCT_ABSTRACT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

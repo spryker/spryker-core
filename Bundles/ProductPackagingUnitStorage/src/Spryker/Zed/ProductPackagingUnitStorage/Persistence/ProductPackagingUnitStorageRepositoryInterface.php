@@ -31,6 +31,8 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findAllProductAbstractPackagingStorageEntities(): array;
 
     /**
+     * @deprecated Use getProductPackagingLeadProductEntityByFilter instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
@@ -44,4 +46,11 @@ interface ProductPackagingUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findFilteredProductAbstractPackagingUnitStorages(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
+     */
+    public function getProductPackagingLeadProductEntityByFilter(FilterTransfer $filterTransfer): array;
 }

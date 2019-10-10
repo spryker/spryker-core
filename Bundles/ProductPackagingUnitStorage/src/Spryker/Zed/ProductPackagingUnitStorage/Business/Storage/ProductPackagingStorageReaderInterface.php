@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductPackagingStorageReaderInterface
 {
     /**
@@ -22,4 +24,11 @@ interface ProductPackagingStorageReaderInterface
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function getProductAbstractPackagingStorageEntities(array $productAbstractIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
+     */
+    public function getProductPackagingLeadProductEntityByFilter(FilterTransfer $filterTransfer): array;
 }
