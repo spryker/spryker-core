@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Http\Communication\Plugin\Http;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\HttpExtension\Dependency\Plugin\FragmentHandlerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface;
 use Symfony\Component\HttpKernel\Fragment\InlineFragmentRenderer;
@@ -79,7 +79,7 @@ class InlineRendererFragmentHandlerPlugin extends AbstractPlugin implements Frag
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
     protected function getEventDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
