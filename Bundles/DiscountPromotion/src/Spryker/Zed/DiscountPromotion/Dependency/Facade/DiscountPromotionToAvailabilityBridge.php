@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+
 class DiscountPromotionToAvailabilityBridge implements DiscountPromotionToAvailabilityInterface
 {
     /**
@@ -24,12 +27,12 @@ class DiscountPromotionToAvailabilityBridge implements DiscountPromotionToAvaila
 
     /**
      * @param int $idProductAbstract
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function getProductAbstractAvailability($idProductAbstract, $idLocale)
+    public function findProductAbstractAvailabilityForStore(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
     {
-        return $this->availabilityFacade->getProductAbstractAvailability($idProductAbstract, $idLocale);
+        return $this->availabilityFacade->findProductAbstractAvailabilityForStore($idProductAbstract, $storeTransfer);
     }
 }

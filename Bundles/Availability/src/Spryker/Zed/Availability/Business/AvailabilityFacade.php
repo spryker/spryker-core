@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -130,6 +132,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
+     * @deprecated Use `findProductAbstractAvailabilityForStore()` instead.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -146,6 +150,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `findProductAbstractAvailabilityForStore()` instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -165,7 +171,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `findProductConcreteAvailabilityForStore()` instead.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -177,6 +183,40 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getFactory()
             ->createProductAvailabilityReader()
             ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailabilityForStore(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
+    {
+        return $this->getFactory()
+            ->createProductAvailabilityReader()
+            ->findProductAbstractAvailabilityForStore($idProductAbstract, $storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailabilityForStore(int $idProductConcrete, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
+    {
+        return $this->getFactory()
+            ->createProductAvailabilityReader()
+            ->findProductConcreteAvailabilityForStore($idProductConcrete, $storeTransfer);
     }
 
     /**

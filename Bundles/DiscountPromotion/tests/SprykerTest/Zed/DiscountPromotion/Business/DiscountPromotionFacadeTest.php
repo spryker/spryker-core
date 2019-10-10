@@ -34,6 +34,8 @@ use Spryker\DecimalObject\Decimal;
  */
 class DiscountPromotionFacadeTest extends Unit
 {
+    protected const DE_STORE_NAME = 'DE';
+
     /**
      * @var \SprykerTest\Zed\DiscountPromotion\DiscountPromotionBusinessTester
      */
@@ -49,11 +51,11 @@ class DiscountPromotionFacadeTest extends Unit
         $promotionItemQuantity = 1;
 
         $discountGeneralTransfer = $this->tester->haveDiscount();
+        $discountTransfer = (new DiscountTransfer())
+            ->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setIdDiscount($discountGeneralTransfer->getIdDiscount());
-
-        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
 
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
         $discountPromotionTransfer->setFkDiscount($discountGeneralTransfer->getIdDiscount());
@@ -89,7 +91,8 @@ class DiscountPromotionFacadeTest extends Unit
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
-        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setAbstractSku($promotionItemSku);
         $itemTransfer->setQuantity($quantity);
@@ -126,6 +129,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
         $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
 
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
@@ -175,7 +179,8 @@ class DiscountPromotionFacadeTest extends Unit
             ->setUnitGrossPrice($grossPrice)
             ->setUnitPrice($price);
 
-        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
         $quoteTransfer->addItem($itemTransfer);
 
         // Act
@@ -423,7 +428,8 @@ class DiscountPromotionFacadeTest extends Unit
 
         $this->getDiscountPromotionFacade()->createPromotionDiscount($discountPromotionTransfer);
 
-        $quoteTransfer = new QuoteTransfer();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
 
         // Act
         $collectedDiscounts = $this->getDiscountPromotionFacade()->collect($discountTransfer, $quoteTransfer);

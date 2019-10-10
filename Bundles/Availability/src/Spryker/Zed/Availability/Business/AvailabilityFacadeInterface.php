@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -113,6 +115,8 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `findProductAbstractAvailabilityForStore()` instead.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -126,6 +130,8 @@ interface AvailabilityFacadeInterface
      *  - Returns data for selected abstract product.
      *
      * @api
+     *
+     * @deprecated Use `findProductAbstractAvailabilityForStore()` instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -141,13 +147,39 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `findProductConcreteAvailabilityForStore()` instead.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
+
+    /**
+     * Specification:
+     *  - Finds product abstract availability as is stored in persistence.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailabilityForStore(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer;
+
+    /**
+     * Specification:
+     *  - Finds product concrete availability as is stored in persistence.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailabilityForStore(int $idProductConcrete, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
 
     /**
      * Specification:
@@ -165,7 +197,7 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Updates availability for given sku, by quantity
+     *  - Updates availability for given concrete sku, by quantity
      *  - Touches availability collector if data changed
      *  - Returns id of availability abstract
      *

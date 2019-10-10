@@ -10,12 +10,14 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
 {
@@ -23,6 +25,11 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
     protected $availabilityQueryContainer;
+
+    /**
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
+     */
+    protected $availabilityRepository;
 
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
@@ -36,20 +43,25 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         AvailabilityQueryContainerInterface $availabilityQueryContainer,
+        AvailabilityRepositoryInterface $availabilityRepository,
         AvailabilityToStockInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
+        $this->availabilityRepository = $availabilityRepository;
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -103,6 +115,48 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailabilityForStore(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
+    {
+        $productAbstractAvailabilityTransfer = $this->availabilityRepository
+            ->findProductAbstractAvailabilityByIdProductAbstractAndStore(
+                $idProductAbstract,
+                $storeTransfer
+            );
+
+        if ($productAbstractAvailabilityTransfer === null) {
+            return null;
+        }
+
+        return $productAbstractAvailabilityTransfer;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailabilityForStore(int $idProductConcrete, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
+    {
+        $productConcreteAvailabilityTransfer = $this->availabilityRepository
+            ->findProductConcreteAvailabilityByIdProductConcreteAndStore(
+                $idProductConcrete,
+                $storeTransfer
+            );
+
+        if ($productConcreteAvailabilityTransfer === null) {
+            return null;
+        }
+
+        return $productConcreteAvailabilityTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
@@ -118,7 +172,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
             ->queryAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
             ->findOne();
 
-        if (!$availabilityEntity) {
+        if ($availabilityEntity === null) {
             return null;
         }
 
@@ -132,7 +186,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      */
     protected function calculateReservation(string $reservationQuantity): Decimal
     {
-        $reservationItems = explode(',', (string)$reservationQuantity);
+        $reservationItems = explode(',', $reservationQuantity);
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);
@@ -147,10 +201,14 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     {
         $reservation = new Decimal(0);
         foreach ($reservationItems as $item) {
-            $value = explode(':', $item);
+            if (strpos($item, ':') === false) {
+                continue;
+            }
 
-            if (count($value) > 1) {
-                $reservation = $reservation->add($value[1]);
+            [$sku, $value] = explode(':', $item);
+
+            if (is_numeric($value)) {
+                $reservation = $reservation->add($value);
             }
         }
 
@@ -176,12 +234,13 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      */
     protected function mapAbstractProductAvailabilityEntityToTransfer(SpyProductAbstract $productAbstractEntity)
     {
-        $productAbstractAvailabilityTransfer = new ProductAbstractAvailabilityTransfer();
-        $productAbstractAvailabilityTransfer->fromArray($productAbstractEntity->toArray(), true);
-        $productAbstractAvailabilityTransfer->setAvailability($this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity));
-        $productAbstractAvailabilityTransfer->setReservationQuantity(
-            $this->calculateReservation($this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity))
-        );
+        $productAbstractAvailabilityTransfer = (new ProductAbstractAvailabilityTransfer())
+            ->setSku($productAbstractEntity->getSku())
+            ->setProductName($productAbstractEntity->getVirtualColumn('productName'))
+            ->setAvailability($this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity))
+            ->setReservationQuantity(
+                $this->calculateReservation($this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity))
+            );
 
         $this->setAbstractNeverOutOfStock($productAbstractEntity, $productAbstractAvailabilityTransfer);
 

@@ -16,9 +16,10 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
@@ -275,6 +276,39 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindProductAbstractAvailabilityForStore(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $productTransfer = $this->tester->haveProduct([], ['sku' => static::ABSTRACT_SKU]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 3],
+            $storeTransfer
+        );
+
+        // Act
+        $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
+            static::CONCRETE_SKU,
+            new Decimal(2),
+            $storeTransfer
+        );
+
+        // Assert
+        $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findProductAbstractAvailabilityForStore(
+                $productTransfer->getFkProductAbstract(),
+                $storeTransfer
+            );
+
+        $this->assertNotNull($productAbstractAvailabilityTransfer);
+        $this->assertTrue($productAbstractAvailabilityTransfer->getAvailability()->equals(2));
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
     {
         // Arrange
@@ -368,13 +402,16 @@ class AvailabilityFacadeTest extends Unit
         array $stockData,
         StoreTransfer $storeTransfer
     ): SpyStockProduct {
-        $productAbstractEntity = new SpyProductAbstract();
-        $productAbstractEntity->setSku($abstractSku);
+        $productAbstractEntity = (new SpyProductAbstractQuery())
+            ->filterBySku($abstractSku)
+            ->findOneOrCreate();
         $productAbstractEntity->setAttributes('');
         $productAbstractEntity->save();
 
-        $productEntity = new SpyProduct();
-        $productEntity->setSku($concreteSku);
+        $productEntity = (new SpyProductQuery())
+            ->filterBySku($concreteSku)
+            ->findOneOrCreate();
+
         $productEntity->setAttributes('');
         $productEntity->setIsActive(true);
         $productEntity->setFkProductAbstract($productAbstractEntity->getIdProductAbstract());
@@ -386,10 +423,12 @@ class AvailabilityFacadeTest extends Unit
 
         $stockEntity->save();
 
-        $stockProductEntity = new SpyStockProduct();
+        $stockProductEntity = (new SpyStockProductQuery())
+            ->filterByFkProduct($productEntity->getIdProduct())
+            ->filterByFkStock($stockEntity->getIdStock())
+            ->findOneOrCreate();
+
         $stockProductEntity->fromArray($stockData);
-        $stockProductEntity->setFkProduct($productEntity->getIdProduct());
-        $stockProductEntity->setFkStock($stockEntity->getIdStock());
         $stockProductEntity->save();
 
         $this->getAvailabilityFacade()->updateAvailabilityForStore($concreteSku, $storeTransfer);

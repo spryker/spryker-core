@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface PromotionAvailabilityCalculatorInterface
 {
     /**
      * @param int $idProductAbstract
      * @param int $maxQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity): int;
+    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity, StoreTransfer $storeTransfer): int;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -33,4 +34,15 @@ interface AvailabilityRepositoryInterface
         string $sku,
         StoreTransfer $storeTransfer
     ): ?ProductConcreteAvailabilityTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailabilityByIdProductAbstractAndStore(
+        int $idProductAbstract,
+        StoreTransfer $storeTransfer
+    ): ?ProductAbstractAvailabilityTransfer;
 }

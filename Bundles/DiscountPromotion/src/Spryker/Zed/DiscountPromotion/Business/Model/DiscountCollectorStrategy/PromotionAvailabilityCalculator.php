@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
-use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface;
 
 class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculatorInterface
 {
@@ -18,31 +19,28 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface $availabilityFacade
-     * @param \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleInterface $localeFacade
      */
     public function __construct(
-        DiscountPromotionToAvailabilityInterface $availabilityFacade,
-        DiscountPromotionToLocaleInterface $localeFacade
+        DiscountPromotionToAvailabilityInterface $availabilityFacade
     ) {
         $this->availabilityFacade = $availabilityFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
      * @param int $idProductAbstract
      * @param int $maxQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity): int
+    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity, StoreTransfer $storeTransfer): int
     {
-        $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailability($idProductAbstract);
+        $productAbstractAvailabilityTransfer = $this->findProductAbstractAvailability($idProductAbstract, $storeTransfer);
+
+        if ($productAbstractAvailabilityTransfer === null) {
+            return 0;
+        }
 
         if ($productAbstractAvailabilityTransfer->getIsNeverOutOfStock()) {
             return $maxQuantity;
@@ -61,19 +59,16 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
 
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    protected function getProductAbstractAvailability($idProductAbstract)
+    protected function findProductAbstractAvailability(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
     {
-        $localeTransfer = $this->localeFacade->getCurrentLocale();
-
-        $productAbstractAvailabilityTransfer = $this->availabilityFacade
-            ->getProductAbstractAvailability(
+        return $this->availabilityFacade
+            ->findProductAbstractAvailabilityForStore(
                 $idProductAbstract,
-                $localeTransfer->getIdLocale()
+                $storeTransfer
             );
-
-        return $productAbstractAvailabilityTransfer;
     }
 }
