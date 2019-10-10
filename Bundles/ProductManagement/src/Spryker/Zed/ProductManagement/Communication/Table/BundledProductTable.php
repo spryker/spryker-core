@@ -179,28 +179,29 @@ class BundledProductTable extends AbstractTable
             ->leftJoinSpyProductBundleRelatedByFkProduct()
             ->joinSpyProductLocalizedAttributes()
             ->joinStockProduct()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
             ->withColumn(sprintf('SUM(%s)', SpyStockProductTableMap::COL_QUANTITY), static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY)
-            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, self::IS_NEVER_OUT_OF_STOCK)
+            ->withColumn(SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK, static::IS_NEVER_OUT_OF_STOCK)
             ->where(SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE . ' = ?', $this->localeTransfer->getIdLocale())
             ->add(SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE, null, Criteria::ISNULL)
             ->groupBy(SpyProductTableMap::COL_ID_PRODUCT)
-            ->addGroupByColumn(self::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
-            ->addGroupByColumn(self::IS_NEVER_OUT_OF_STOCK);
+            ->addGroupByColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
+            ->addGroupByColumn(static::IS_NEVER_OUT_OF_STOCK);
 
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct[] $queryResults */
         $queryResults = $this->runQuery($query, $config, true);
 
         $productAbstractCollection = [];
-        foreach ($queryResults as $item) {
+        foreach ($queryResults as $productEntity) {
             $productAbstractCollection[] = [
-                static::COL_SELECT => $this->addCheckBox($item),
-                static::COL_ID_PRODUCT_CONCRETE => $item->getIdProduct(),
-                SpyProductLocalizedAttributesTableMap::COL_NAME => $item->getName(),
-                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($item->getSku(), $item->getFkProductAbstract(), $item->getIdProduct()),
-                static::COL_PRICE => $this->getFormattedPrice($item->getSku()),
-                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => (new Decimal($item->getStockQuantity()))->trim(),
-                static::COL_AVAILABILITY => $this->getAvailability($item)->trim(),
-                SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $item->getIsNeverOutOfStock(),
+                static::COL_SELECT => $this->addCheckBox($productEntity),
+                static::COL_ID_PRODUCT_CONCRETE => $productEntity->getIdProduct(),
+                SpyProductLocalizedAttributesTableMap::COL_NAME => $productEntity->getVirtualColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME),
+                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($productEntity->getSku(), $productEntity->getFkProductAbstract(), $productEntity->getIdProduct()),
+                static::COL_PRICE => $this->getFormattedPrice($productEntity->getSku()),
+                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => (new Decimal($productEntity->getVirtualColumn(static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY) ?? 0))->trim(),
+                static::COL_AVAILABILITY => $this->getAvailability($productEntity)->trim(),
+                SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $productEntity->getIsNeverOutOfStock(),
             ];
         }
 

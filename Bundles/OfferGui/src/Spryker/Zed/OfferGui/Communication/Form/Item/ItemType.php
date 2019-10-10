@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
@@ -256,7 +255,7 @@ class ItemType extends AbstractType
             'required' => false,
             'disabled' => true,
             'constraints' => [
-                new Type('numeric'),
+                $this->createNumberConstraint(),
             ],
         ]);
 

@@ -174,7 +174,7 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function getAvailabilityLabel(SpyProductAbstract $productAbstractEntity, bool $isNeverOutOfStock): string
     {
-        if ((new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY)))->greaterThan(0) || $isNeverOutOfStock) {
+        if ((new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY) ?? 0))->greaterThan(0) || $isNeverOutOfStock) {
             return $this->generateLabel(static::AVAILABLE, 'label-info');
         }
 
@@ -188,7 +188,7 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function getStockQuantity(SpyProductAbstract $productAbstractEntity): Decimal
     {
-        return (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::STOCK_QUANTITY)));
+        return (new Decimal($productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::STOCK_QUANTITY) ?? 0));
     }
 
     /**
@@ -247,7 +247,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $reservation = new Decimal(0);
         foreach ($reservationItems as $item) {
-            $itemParts = explode(':', $item);
+            $itemParts = array_filter(explode(':', $item));
             if (count($itemParts) !== 2) {
                 continue;
             }

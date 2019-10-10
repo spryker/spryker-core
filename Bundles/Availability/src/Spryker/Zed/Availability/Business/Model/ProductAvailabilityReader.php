@@ -201,15 +201,12 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     {
         $reservation = new Decimal(0);
         foreach ($reservationItems as $item) {
-            if (strpos($item, ':') === false) {
+            $itemParts = array_filter(explode(':', $item));
+            if (count($itemParts) !== 2 || $itemParts[1] === '') {
                 continue;
             }
 
-            [$sku, $value] = explode(':', $item);
-
-            if (is_numeric($value)) {
-                $reservation = $reservation->add($value);
-            }
+            $reservation = $reservation->add($itemParts[1]);
         }
 
         return $reservation;
@@ -234,37 +231,31 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      */
     protected function mapAbstractProductAvailabilityEntityToTransfer(SpyProductAbstract $productAbstractEntity)
     {
-        $productAbstractAvailabilityTransfer = (new ProductAbstractAvailabilityTransfer())
-            ->setSku($productAbstractEntity->getSku())
-            ->setProductName($productAbstractEntity->getVirtualColumn('productName'))
-            ->setAvailability($this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity))
-            ->setReservationQuantity(
-                $this->calculateReservation($this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity))
-            );
+        $availabilityData = $productAbstractEntity->toArray();
+        $availabilityData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->getAbstractNeverOutOfStock($productAbstractEntity);
+        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity);
+        $availabilityData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
+            $this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity)
+        );
 
-        $this->setAbstractNeverOutOfStock($productAbstractEntity, $productAbstractAvailabilityTransfer);
-
-        return $productAbstractAvailabilityTransfer;
+        return (new ProductAbstractAvailabilityTransfer())->fromArray($availabilityData, true);
     }
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
      *
-     * @return void
+     * @return bool
      */
-    protected function setAbstractNeverOutOfStock(
-        SpyProductAbstract $productAbstractEntity,
-        ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
-    ) {
+    protected function getAbstractNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
+    {
         $neverOutOfStockSet = explode(',', $this->availabilityQueryContainer->getConcreteNeverOutOfStockSet($productAbstractEntity));
 
-        $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(false);
         foreach ($neverOutOfStockSet as $status) {
             if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {
-                $productAbstractAvailabilityTransfer->setIsNeverOutOfStock(true);
-                break;
+                return true;
             }
         }
+
+        return false;
     }
 }

@@ -218,7 +218,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     {
         $reservation = $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
 
-        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY]))
+        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?? 0))
             ->add($reservation);
     }
 
@@ -229,8 +229,7 @@ class BundledProductAvailabilityTable extends AbstractTable
      */
     protected function getStock(array $productItem): Decimal
     {
-        return $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ?
-            (new Decimal($productItem[AvailabilityQueryContainer::STOCK_QUANTITY])) : new Decimal(0);
+        return (new Decimal($productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ?? 0));
     }
 
     /**
@@ -240,8 +239,7 @@ class BundledProductAvailabilityTable extends AbstractTable
      */
     protected function getConcreteAvailability(array $productItem): Decimal
     {
-        return $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ?
-            (new Decimal($productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY])) : new Decimal(0);
+        return (new Decimal($productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ?? 0));
     }
 
     /**
