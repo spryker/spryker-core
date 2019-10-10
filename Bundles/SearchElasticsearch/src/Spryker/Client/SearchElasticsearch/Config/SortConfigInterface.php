@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\SearchExtension\Config;
+namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
 

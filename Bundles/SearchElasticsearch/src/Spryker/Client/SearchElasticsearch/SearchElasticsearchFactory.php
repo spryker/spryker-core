@@ -33,9 +33,9 @@ use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
+use Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface;
+use Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface;
+use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
 use Spryker\Shared\Kernel\Store;
@@ -237,7 +237,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface
      */
     public function createFacetConfig(): FacetConfigInterface
     {
@@ -245,7 +245,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface
      */
     public function createSortConfig(): SortConfigInterface
     {
@@ -253,7 +253,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface
      */
     public function createPaginationConfig(): PaginationConfigInterface
     {

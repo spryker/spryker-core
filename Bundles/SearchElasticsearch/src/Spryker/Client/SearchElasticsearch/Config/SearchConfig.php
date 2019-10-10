@@ -8,28 +8,23 @@
 namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderPluginInterface;
+use Generated\Shared\Transfer\SearchConfigurationTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigBuilderPluginInterface;
 
 class SearchConfig implements SearchConfigInterface
 {
     /**
-     * @var \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @var \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface
      */
     protected $facetConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Config\SortConfigInterface
+     * @var \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface
      */
     protected $sortConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
+     * @var \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface
      */
     protected $paginationConfig;
 
@@ -39,9 +34,9 @@ class SearchConfig implements SearchConfigInterface
     protected $configExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
-     * @param \Spryker\Client\SearchExtension\Config\SortConfigInterface $sortConfig
-     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface $sortConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface $paginationConfig
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface|null $configBuilderPlugin
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $configExpanderPlugins
      */
@@ -62,7 +57,7 @@ class SearchConfig implements SearchConfigInterface
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface
      */
     public function getFacetConfig(): FacetConfigInterface
     {
@@ -70,7 +65,7 @@ class SearchConfig implements SearchConfigInterface
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface
      */
     public function getSortConfig(): SortConfigInterface
     {
@@ -78,7 +73,7 @@ class SearchConfig implements SearchConfigInterface
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface
      */
     public function getPaginationConfig(): PaginationConfigInterface
     {
@@ -96,17 +91,19 @@ class SearchConfig implements SearchConfigInterface
             return;
         }
 
-        if ($configBuilderPlugin instanceof FacetConfigBuilderPluginInterface) {
-            $configBuilderPlugin->buildFacetConfig($this->getFacetConfig());
+        $searchConfigurationTransfer = $configBuilderPlugin->buildConfig(new SearchConfigurationTransfer());
+
+        foreach ($searchConfigurationTransfer->getFacetConfigItems() as $facetConfigTransfer) {
+            $this->facetConfig->addFacet($facetConfigTransfer);
         }
 
-        if ($configBuilderPlugin instanceof SortConfigBuilderPluginInterface) {
-            $configBuilderPlugin->buildSortConfig($this->getSortConfig());
+        foreach ($searchConfigurationTransfer->getSortConfigItems() as $sortConfigTransfer) {
+            $this->sortConfig->addSort($sortConfigTransfer);
         }
 
-        if ($configBuilderPlugin instanceof PaginationConfigBuilderPluginInterface) {
-            $configBuilderPlugin->buildPaginationConfig($this->getPaginationConfig());
-        }
+        $this->paginationConfig->setPagination(
+            $searchConfigurationTransfer->getPaginationConfig()
+        );
     }
 
     /**

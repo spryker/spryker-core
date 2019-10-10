@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 
 class FacetConfig implements FacetConfigInterface
 {

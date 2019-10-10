@@ -14,7 +14,7 @@ use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
+use Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -53,7 +53,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface $facetConfig
      * @param array $requestParameters
      *
      * @return \Elastica\Query\AbstractQuery[]
@@ -141,7 +141,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Elastica\Query $query
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface $facetConfig
      * @param \Elastica\Query\AbstractQuery[] $facetFilters
      * @param array $requestParameters
      *

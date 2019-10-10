@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\SortConfigTransfer;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
 
 class SortConfig implements SortConfigInterface
 {

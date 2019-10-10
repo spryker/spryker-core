@@ -92,4 +92,10 @@
         <property name="index" type="string"/>
     </transfer>
 
+    <transfer name="SearchConfiguration">
+        <property name="facetConfigItems" type="FacetConfig[]" singular="facetConfigItem"/>
+        <property name="sortConfigItems" type="SortConfig[]" singular="sortConfigItem"/>
+        <property name="paginationConfig" type="PaginationConfig"/>
+    </transfer>
+
 </transfers>
