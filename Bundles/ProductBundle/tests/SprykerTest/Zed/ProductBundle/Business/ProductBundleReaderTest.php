@@ -15,7 +15,6 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit\Framework\MockObject\MockObject;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -158,7 +157,7 @@ class ProductBundleReaderTest extends Unit
 
     /**
      * @param array $fixtures
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleReaderMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleReaderMock
      *
      * @return void
      */
@@ -176,12 +175,9 @@ class ProductBundleReaderTest extends Unit
 
         $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
 
-        $bundledProducts = new ObjectCollection();
-        $bundledProducts->append($productBundleEntity);
-
         $productBundleReaderMock->expects($this->once())
             ->method('findBundledProducts')
             ->with($fixtures['idProductConcrete'])
-            ->willReturn($bundledProducts);
+            ->willReturn([$productBundleEntity]);
     }
 }
