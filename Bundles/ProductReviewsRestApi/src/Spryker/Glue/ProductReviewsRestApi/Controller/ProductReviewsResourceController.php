@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Controller;
 
+use Generated\Shared\Transfer\RestProductReviewsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -27,8 +28,8 @@ class ProductReviewsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Product review id is not specified.",
-     *              "404": "Product review not found."
+     *              "400": "Product review id is missing.",
+     *              "404": "Product review is not found."
      *          }
      *     }
      * })
@@ -46,5 +47,32 @@ class ProductReviewsResourceController extends AbstractController
         }
 
         return $this->getFactory()->createProductReviewReader()->findProductReviews($restRequest);
+    }
+
+    /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Creates review."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
+    ): RestResponseInterface {
+        return $this->getFactory()
+            ->createProductReviewCreator()
+            ->createReview($restRequest, $restProductReviewsAttributesTransfer);
     }
 }

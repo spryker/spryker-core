@@ -29,7 +29,9 @@ class ProductReviewsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        return $resourceRouteCollection->addGet('get', false);
+        return $resourceRouteCollection
+            ->addGet('get', false)
+            ->addPost('post');
     }
 
     /**

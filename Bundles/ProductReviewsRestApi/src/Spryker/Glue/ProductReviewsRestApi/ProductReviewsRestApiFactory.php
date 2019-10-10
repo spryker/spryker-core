@@ -11,6 +11,8 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreator;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreatorInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewResourceRelationshipExpander;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewsAbstractProductsResourceExpander;
@@ -57,6 +59,17 @@ class ProductReviewsRestApiFactory extends AbstractFactory
             $this->createProductReviewMapper(),
             $this->getResourceBuilder(),
             $this->getProductStorageClient(),
+            $this->getProductReviewClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreatorInterface
+     */
+    public function createProductReviewCreator(): ProductReviewCreatorInterface
+    {
+        return new ProductReviewCreator(
+            $this->getResourceBuilder(),
             $this->getProductReviewClient()
         );
     }
