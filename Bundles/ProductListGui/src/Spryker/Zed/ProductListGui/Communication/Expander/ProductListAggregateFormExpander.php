@@ -58,9 +58,7 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
         $assignedProductIds = array_unique(array_merge($assignedProductIds, $productIdsToBeAssigned));
         $assignedProductIds = array_diff($assignedProductIds, $productIdsToBeDeassigned);
 
-        /**
-         * @var \Generated\Shared\Transfer\ProductListAggregateFormTransfer $productListProductConcreteRelationTransfer
-         */
+        /** @var \Generated\Shared\Transfer\ProductListAggregateFormTransfer $productListProductConcreteRelationTransfer */
         $productListProductConcreteRelationTransfer = $this->getFieldValue(ProductListAggregateFormTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION, $formEvent);
         $productListProductConcreteRelationTransfer->offsetSet(ProductListProductConcreteRelationFormType::PRODUCT_IDS, $assignedProductIds);
 

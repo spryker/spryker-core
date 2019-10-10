@@ -34,9 +34,7 @@ class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTa
      */
     public function getTables(): array
     {
-        /**
-         * @var \Spryker\Zed\Gui\Communication\Table\AbstractTable[] $configurableBundleTemplateSlotEditTables
-         */
+        /** @var \Spryker\Zed\Gui\Communication\Table\AbstractTable[] $configurableBundleTemplateSlotEditTables */
         $configurableBundleTemplateSlotEditTables = [];
 
         foreach ($this->configurableBundleTemplateSlotEditTablesProviderPlugins as $configurableBundleTemplateSlotEditTablesProviderPlugin) {
