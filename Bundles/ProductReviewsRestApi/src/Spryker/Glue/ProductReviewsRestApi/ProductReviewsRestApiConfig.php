@@ -11,4 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ProductReviewsRestApiConfig extends AbstractBundleConfig
 {
+    public const RESOURCE_PRODUCT_REVIEWS = 'product-reviews';
+
+    public const CONTROLLER_PRODUCT_REVIEWS = 'product-reviews-resource';
 }

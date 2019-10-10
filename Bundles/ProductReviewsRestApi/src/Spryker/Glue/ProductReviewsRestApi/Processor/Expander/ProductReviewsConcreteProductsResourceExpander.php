@@ -35,6 +35,13 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
         $productReviewsStorageTransfer = $this->productReviewsStorageClient
             ->findProductAbstractReview($concreteProductsRestAttributesTransfer->getIdProductAbstract());
 
+        if (!$productReviewsStorageTransfer) {
+            $concreteProductsRestAttributesTransfer->setAverageRating(0);
+            $concreteProductsRestAttributesTransfer->setReviewCount(0);
+
+            return $concreteProductsRestAttributesTransfer;
+        }
+
         return $concreteProductsRestAttributesTransfer->fromArray($productReviewsStorageTransfer->toArray(), true);
     }
 }
