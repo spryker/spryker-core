@@ -35,7 +35,7 @@ class ConfigurableBundleTemplateSlotEditTabs extends AbstractConfigurableBundleT
     {
         $tabsViewTransfer = parent::build($tabsViewTransfer);
 
-        return $this->expandWithConfigurableBundleTemplateSlotEditTabsExpanderPlugins($tabsViewTransfer);
+        return $this->executeExpanderPlugins($tabsViewTransfer);
     }
 
     /**
@@ -43,7 +43,7 @@ class ConfigurableBundleTemplateSlotEditTabs extends AbstractConfigurableBundleT
      *
      * @return \Generated\Shared\Transfer\TabsViewTransfer
      */
-    protected function expandWithConfigurableBundleTemplateSlotEditTabsExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
+    protected function executeExpanderPlugins(TabsViewTransfer $tabsViewTransfer): TabsViewTransfer
     {
         foreach ($this->configurableBundleTemplateSlotEditTabsExpanderPlugins as $configurableBundleTemplateSlotEditTabsExpanderPlugin) {
             $tabsViewTransfer = $configurableBundleTemplateSlotEditTabsExpanderPlugin->expand($tabsViewTransfer);
