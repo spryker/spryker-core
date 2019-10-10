@@ -54,7 +54,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
      */
     public function saveMerchantProfileGlossaryAttributes(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        if (empty($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes())) {
+        if (count($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes()) === 0) {
             return $merchantProfileTransfer;
         }
 
@@ -80,7 +80,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
         foreach ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes() as $merchantProfileLocalizedGlossaryAttributesTransfer) {
-            if ((int)$merchantProfileLocalizedGlossaryAttributesTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+            if ($merchantProfileLocalizedGlossaryAttributesTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
                 $merchantProfileTransfer = $this->saveMerchantProfileGlossaryAttributesByProvidedLocale(
                     $localeTransfer,
                     $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributeValues(),
@@ -140,9 +140,11 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
         string $merchantProfileGlossaryKeyFieldName,
         int $fkMerchant
     ): string {
-        return empty($merchantProfileData[$merchantProfileGlossaryKeyFieldName])
-            ? $this->merchantProfileGlossaryKeyBuilder->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName)
-            : $merchantProfileData[$merchantProfileGlossaryKeyFieldName];
+        if (empty($merchantProfileData[$merchantProfileGlossaryKeyFieldName])) {
+            return $this->merchantProfileGlossaryKeyBuilder->buildGlossaryKey($fkMerchant, $merchantProfileGlossaryKeyFieldName);
+        }
+
+        return $merchantProfileData[$merchantProfileGlossaryKeyFieldName];
     }
 
     /**

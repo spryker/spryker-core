@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantProfile\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossaryFacadeInterface
 {
@@ -30,7 +29,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return int
      */
-    public function createKey($keyName): int
+    public function createKey($keyName)
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -40,7 +39,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return bool
      */
-    public function hasKey($keyName): bool
+    public function hasKey($keyName)
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -53,33 +52,20 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true): TranslationTransfer
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
         return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
     }
 
     /**
-     * @api
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
-    }
-
-    /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
-     */
-    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer
-    {
-        return $this->glossaryFacade->getTranslation($keyName, $locale);
     }
 
     /**
@@ -90,7 +76,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true): TranslationTransfer
+    public function updateTranslation($keyName, $locale, $value, $isActive = true)
     {
         return $this->glossaryFacade->updateTranslation($keyName, $locale, $value, $isActive);
     }

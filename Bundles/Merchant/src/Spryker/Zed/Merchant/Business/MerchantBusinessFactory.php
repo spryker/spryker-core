@@ -53,7 +53,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantReader(
             $this->getRepository(),
-            $this->getMerchantHydrationPlugins()
+            $this->getMerchantExpanderPlugins()
         );
     }
 
@@ -115,10 +115,10 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantHydrationPluginInterface[]
+     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[]
      */
-    public function getMerchantHydrationPlugins(): array
+    public function getMerchantExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_HYDRATION);
+        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_EXPANDER);
     }
 }

@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\TranslationTransfer;
 interface MerchantProfileGuiToGlossaryFacadeInterface
 {
     /**
-     * @api
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *

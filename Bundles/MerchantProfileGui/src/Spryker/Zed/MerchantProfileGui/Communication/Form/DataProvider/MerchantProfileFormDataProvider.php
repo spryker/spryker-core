@@ -213,12 +213,12 @@ class MerchantProfileFormDataProvider
      */
     protected function getLocalizedTranslationValue(string $key, LocaleTransfer $localeTransfer): ?string
     {
-        if ($this->glossaryFacade->hasTranslation($key, $localeTransfer)) {
-            $translationTransfer = $this->glossaryFacade->getTranslation($key, $localeTransfer);
-
-            return $translationTransfer->getIsActive() ? $translationTransfer->getValue() : null;
+        if ($this->glossaryFacade->hasTranslation($key, $localeTransfer) === false) {
+            return null;
         }
 
-        return null;
+        $translationTransfer = $this->glossaryFacade->getTranslation($key, $localeTransfer);
+
+        return $translationTransfer->getIsActive() ? $translationTransfer->getValue() : null;
     }
 }

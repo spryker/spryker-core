@@ -18,7 +18,8 @@ use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
  * @group MerchantProfile
  * @group Business
  * @group MerchantProfileFacade
- * @group SaveMerchantProfileTest
+ * @group Facade
+ * @group MerchantProfileFacadeTest
  * Add your own group annotations below this line
  */
 class MerchantProfileFacadeTest extends Unit
@@ -50,7 +51,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveMerchantProfile(): void
+    public function testCreateMerchantProfile(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -60,6 +61,32 @@ class MerchantProfileFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($merchantProfileTransfer->getIdMerchantProfile());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateMerchantProfile(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantProfileSeedData = [
+            'contactPersonRole' => 'Role one',
+            'contactPersonFirstName' => 'First Name One',
+        ];
+        $merchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer, $merchantProfileSeedData);
+        $expectedIdMerchantProfile = $merchantProfileTransfer->getIdMerchantProfile();
+
+        $merchantProfileTransfer->setContactPersonRole('Role two')
+            ->setContactPersonFirstName('First Name Two');
+
+        // Act
+        $updatedMerchantProfileTransfer = $this->tester->getFacade()->updateMerchantProfile($merchantProfileTransfer);
+
+        // Assert
+        $this->assertSame($expectedIdMerchantProfile, $updatedMerchantProfileTransfer->getIdMerchantProfile());
+        $this->assertEquals('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
+        $this->assertEquals('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
     }
 
     /**

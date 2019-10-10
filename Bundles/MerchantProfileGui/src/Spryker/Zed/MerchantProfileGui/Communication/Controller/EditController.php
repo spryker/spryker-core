@@ -18,10 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    public const URL_PARAM_ID_MERCHANT_PROFILE = 'id-merchant-profile';
+    protected const URL_PARAM_ID_MERCHANT_PROFILE = 'id-merchant-profile';
 
-    public const MESSAGE_SUCCESS_DEACTIVATE = 'merchant_profile.deactivated';
-    public const MESSAGE_SUCCESS_ACTIVATE = 'merchant_profile.activated';
+    protected const MESSAGE_SUCCESS_DEACTIVATE = 'merchant_profile.deactivated';
+    protected const MESSAGE_SUCCESS_ACTIVATE = 'merchant_profile.activated';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

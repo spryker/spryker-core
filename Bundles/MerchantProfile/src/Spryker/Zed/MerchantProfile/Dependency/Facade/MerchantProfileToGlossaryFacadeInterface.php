@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantProfile\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\TranslationTransfer;
 
 interface MerchantProfileToGlossaryFacadeInterface
 {
@@ -17,14 +16,14 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey($keyName): int;
+    public function createKey($keyName);
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($keyName): bool;
+    public function hasKey($keyName);
 
     /**
      * @param string $keyName
@@ -34,7 +33,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true): TranslationTransfer;
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
      * @param string $keyName
@@ -42,15 +41,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool;
-
-    /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
-     */
-    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer;
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 
     /**
      * @param string $keyName
@@ -60,7 +51,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true): TranslationTransfer;
+    public function updateTranslation($keyName, $locale, $value, $isActive = true);
 
     /**
      * @param string $keyName

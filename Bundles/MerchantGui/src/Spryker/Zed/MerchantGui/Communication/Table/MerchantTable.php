@@ -38,22 +38,22 @@ class MerchantTable extends AbstractTable
     protected $merchantFacade;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
      */
     protected $merchantTableActionExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
      */
     protected $merchantTableHeaderExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
      */
     protected $merchantTableDataExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
+     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
      */
     protected $merchantTableConfigExpanderPlugins;
 
@@ -166,7 +166,7 @@ class MerchantTable extends AbstractTable
     /**
      * @return array
      */
-    protected function executeTableHeaderExpanderPlugins()
+    protected function executeTableHeaderExpanderPlugins(): array
     {
         $expandedData = [];
         foreach ($this->merchantTableHeaderExpanderPlugins as $plugin) {
@@ -215,7 +215,7 @@ class MerchantTable extends AbstractTable
 
         $buttons = array_merge(
             $buttons,
-            $this->generateMerchantTableExpanderPluginsActionButtons($item),
+            $this->generateMerchantTableActionButtons($item),
             $this->buildAvailableStatusButtons($item)
         );
 
@@ -250,7 +250,7 @@ class MerchantTable extends AbstractTable
      *
      * @return string[]
      */
-    protected function generateMerchantTableExpanderPluginsActionButtons(array $item): array
+    protected function generateMerchantTableActionButtons(array $item): array
     {
         $buttonTransfers = $this->executeActionButtonExpanderPlugins($item);
 
@@ -270,9 +270,9 @@ class MerchantTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    protected function executeActionButtonExpanderPlugins(array $item)
+    protected function executeActionButtonExpanderPlugins(array $item): array
     {
         $buttonTransfers = [];
         foreach ($this->merchantTableActionExpanderPlugins as $merchantsTableExpanderPlugin) {

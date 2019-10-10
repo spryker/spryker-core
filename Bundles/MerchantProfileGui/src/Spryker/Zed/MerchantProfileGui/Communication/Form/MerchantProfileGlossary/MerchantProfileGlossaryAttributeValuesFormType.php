@@ -18,21 +18,21 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
 {
-    public const FIELD_DESCRIPTION_GLOSSARY = 'descriptionGlossaryKey';
-    public const FIELD_BANNER_URL_GLOSSARY = 'bannerUrlGlossaryKey';
-    public const FIELD_DELIVERY_TIME_GLOSSARY = 'deliveryTimeGlossaryKey';
-    public const FIELD_TERMS_CONDITIONS_GLOSSARY = 'termsConditionsGlossaryKey';
-    public const FIELD_CANCELLATION_POLICY_GLOSSARY = 'cancellationPolicyGlossaryKey';
-    public const FIELD_IMPRINT_GLOSSARY = 'imprintGlossaryKey';
-    public const FIELD_DATA_PRIVACY_GLOSSARY = 'dataPrivacyGlossaryKey';
+    protected const FIELD_DESCRIPTION_GLOSSARY = 'descriptionGlossaryKey';
+    protected const FIELD_BANNER_URL_GLOSSARY = 'bannerUrlGlossaryKey';
+    protected const FIELD_DELIVERY_TIME_GLOSSARY = 'deliveryTimeGlossaryKey';
+    protected const FIELD_TERMS_CONDITIONS_GLOSSARY = 'termsConditionsGlossaryKey';
+    protected const FIELD_CANCELLATION_POLICY_GLOSSARY = 'cancellationPolicyGlossaryKey';
+    protected const FIELD_IMPRINT_GLOSSARY = 'imprintGlossaryKey';
+    protected const FIELD_DATA_PRIVACY_GLOSSARY = 'dataPrivacyGlossaryKey';
 
-    public const LABEL_DESCRIPTION_GLOSSARY = 'Description';
-    public const LABEL_BANNER_URL_GLOSSARY = 'Banner URL';
-    public const LABEL_DELIVERY_TIME_GLOSSARY = 'Average Delivery Time';
-    public const LABEL_TERMS_CONDITIONS_GLOSSARY = 'Terms and Conditions';
-    public const LABEL_CANCELLATION_POLICY_GLOSSARY = 'Cancellation Policy';
-    public const LABEL_IMPRINT_GLOSSARY = 'Imprint';
-    public const LABEL_DATA_PRIVACY_GLOSSARY = 'Data Privacy';
+    protected const LABEL_DESCRIPTION_GLOSSARY = 'Description';
+    protected const LABEL_BANNER_URL_GLOSSARY = 'Banner URL';
+    protected const LABEL_DELIVERY_TIME_GLOSSARY = 'Average Delivery Time';
+    protected const LABEL_TERMS_CONDITIONS_GLOSSARY = 'Terms and Conditions';
+    protected const LABEL_CANCELLATION_POLICY_GLOSSARY = 'Cancellation Policy';
+    protected const LABEL_IMPRINT_GLOSSARY = 'Imprint';
+    protected const LABEL_DATA_PRIVACY_GLOSSARY = 'Data Privacy';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

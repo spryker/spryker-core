@@ -11,7 +11,7 @@ interface MerchantTableDataExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands table row data
+     * - Expands table row data.
      *
      * @api
      *

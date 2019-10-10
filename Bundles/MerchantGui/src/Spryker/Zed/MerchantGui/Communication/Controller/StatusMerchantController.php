@@ -21,7 +21,7 @@ class StatusMerchantController extends AbstractController
     protected const PARAM_MERCHANT_STATUS = 'status';
 
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'merchant_gui.error_wrong_params';
-    protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'Status has been updated.';
+    protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'merchant_gui.success_merchant_status_update';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

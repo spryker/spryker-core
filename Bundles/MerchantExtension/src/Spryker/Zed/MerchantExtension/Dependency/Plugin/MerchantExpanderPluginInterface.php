@@ -9,11 +9,11 @@ namespace Spryker\Zed\MerchantExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 
-interface MerchantHydrationPluginInterface
+interface MerchantExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Hydrates a merchant data.
+     * - Expands a merchant data.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface MerchantHydrationPluginInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function hydrate(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer;
 }

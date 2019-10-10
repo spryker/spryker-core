@@ -76,18 +76,18 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
 
                 $glossaryFieldKey = $this->generateMerchantGlossaryKey($attributeName, $idMerchant);
                 $glossaryKeyEntity = SpyGlossaryKeyQuery::create()
-                ->filterByKey($glossaryFieldKey)
-                ->findOneOrCreate();
+                    ->filterByKey($glossaryFieldKey)
+                    ->findOneOrCreate();
 
                 $glossaryKeyEntity->save();
 
                 $glossaryTranslationEntity = SpyGlossaryTranslationQuery::create()
-                ->filterByFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey())
-                ->filterByFkLocale($idLocale)
-                ->findOneOrCreate();
+                    ->filterByFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey())
+                    ->filterByFkLocale($idLocale)
+                    ->findOneOrCreate();
 
                 $glossaryTranslationEntity
-                ->setValue($attributeValue);
+                    ->setValue($attributeValue);
 
                 if ($glossaryTranslationEntity->isNew() || $glossaryTranslationEntity->isModified()) {
                     $glossaryTranslationEntity->save();
@@ -155,7 +155,7 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
     protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
     {
         if (!$dataSet[$requiredDataSetKey]) {
-            throw new InvalidDataException('"' . $requiredDataSetKey . '" is required.');
+            throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
         }
     }
 

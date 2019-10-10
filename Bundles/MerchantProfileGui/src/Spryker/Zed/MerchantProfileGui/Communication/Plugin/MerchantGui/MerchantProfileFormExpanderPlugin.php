@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileFormExpanderPlugin extends AbstractPlugin implements MerchantFormExpanderPluginInterface
 {
-    public const FIELD_MERCHANT_PROFILE = 'merchantProfile';
+    protected const FIELD_MERCHANT_PROFILE = 'merchantProfile';
 
     /**
      * {@inheritDoc}

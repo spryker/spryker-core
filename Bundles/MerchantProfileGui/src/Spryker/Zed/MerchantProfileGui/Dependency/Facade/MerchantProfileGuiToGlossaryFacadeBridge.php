@@ -26,8 +26,6 @@ class MerchantProfileGuiToGlossaryFacadeBridge implements MerchantProfileGuiToGl
     }
 
     /**
-     * @api
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *

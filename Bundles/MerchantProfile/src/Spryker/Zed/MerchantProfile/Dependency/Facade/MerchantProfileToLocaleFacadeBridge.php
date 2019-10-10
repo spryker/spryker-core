@@ -25,7 +25,7 @@ class MerchantProfileToLocaleFacadeBridge implements MerchantProfileToLocaleFaca
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection(): array
+    public function getLocaleCollection()
     {
         return $this->localeFacade->getLocaleCollection();
     }

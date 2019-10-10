@@ -73,7 +73,7 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeInterface
      */
-    protected function getGlossaryFacade(): MerchantProfileGuiToGlossaryFacadeInterface
+    public function getGlossaryFacade(): MerchantProfileGuiToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_GLOSSARY);
     }
@@ -81,7 +81,7 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): MerchantProfileGuiToLocaleFacadeInterface
+    public function getLocaleFacade(): MerchantProfileGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_LOCALE);
     }

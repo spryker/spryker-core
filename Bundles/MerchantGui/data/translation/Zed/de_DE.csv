@@ -31,3 +31,4 @@ Name,Name
 Email,Email
 General,Allgemein
 merchant_gui.error_wrong_params,"Status kann nicht aktualisiert werden."
+merchant_gui.success_merchant_status_update,"Status wurde aktualisiert."
