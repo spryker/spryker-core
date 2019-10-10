@@ -23,16 +23,6 @@ class ProductBundleToProductImageBridge implements ProductBundleToProductImageIn
     }
 
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getProductImagesSetCollectionByProductId($idProduct)
-    {
-        return $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
-    }
-
-    /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      * @param int $idLocale

@@ -134,7 +134,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setStore($store);
-        $synchronizationDataTransfer->setReference($idProductAbstract);
+        $synchronizationDataTransfer->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService->getStorageKeyBuilder(AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }

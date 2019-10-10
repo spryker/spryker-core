@@ -29,12 +29,4 @@ class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
     {
         return $this->priceFacade->getNetPriceModeIdentifier();
     }
-
-    /**
-     * @return string
-     */
-    public function getGrossPriceModeIdentifier()
-    {
-        return $this->priceFacade->getGrossPriceModeIdentifier();
-    }
 }

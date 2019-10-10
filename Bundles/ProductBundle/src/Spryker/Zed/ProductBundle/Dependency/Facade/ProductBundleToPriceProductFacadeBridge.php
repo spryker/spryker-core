@@ -25,17 +25,6 @@ class ProductBundleToPriceProductFacadeBridge implements ProductBundleToPricePro
     }
 
     /**
-     * @param string $sku
-     * @param string|null $priceType
-     *
-     * @return int|null
-     */
-    public function findPriceBySku($sku, $priceType = null)
-    {
-        return $this->priceProductFacade->findPriceBySku($sku, $priceType);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return int|null

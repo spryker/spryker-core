@@ -13,9 +13,4 @@ interface ProductBundleToPriceInterface
      * @return string
      */
     public function getNetPriceModeIdentifier();
-
-    /**
-     * @return string
-     */
-    public function getGrossPriceModeIdentifier();
 }
