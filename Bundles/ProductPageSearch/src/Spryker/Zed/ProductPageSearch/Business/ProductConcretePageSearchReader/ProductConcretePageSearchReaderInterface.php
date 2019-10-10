@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductConcretePageSearchReaderInterface
 {
     /**
@@ -38,4 +40,11 @@ interface ProductConcretePageSearchReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array;
 }

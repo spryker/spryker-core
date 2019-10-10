@@ -7,22 +7,21 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
- * @deprecated Use ProductConcretePageSearchEventResourceBulkRepositoryPlugin instead.
- *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  */
-class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -41,13 +40,16 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
-    public function getData(array $productIds = []): array
+    public function getData(int $offset, int $limit): array
     {
-        return $this->getRepository()->getProductEntityTransfers($productIds);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->getProductEntityByFilter($filterTransfer);
     }
 
     /**
@@ -72,5 +74,18 @@ class ProductConcretePageSearchEventResourceRepositoryPlugin extends AbstractPlu
     public function getIdColumnName(): ?string
     {
         return SpyProductTableMap::COL_ID_PRODUCT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

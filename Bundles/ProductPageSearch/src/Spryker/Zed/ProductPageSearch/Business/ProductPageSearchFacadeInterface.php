@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductPageSearchFacadeInterface
 {
     /**
@@ -114,4 +116,16 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
+
+    /**
+     * Specification
+     * - Returns array of ProductEntityTransfer objects.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array;
 }

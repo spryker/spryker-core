@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
@@ -158,6 +159,23 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         if ($productIds !== []) {
             $query->filterByIdProduct_In($productIds);
         }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module Product
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array
+    {
+        $query = $this->getFactory()
+            ->getProductQuery()
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset());
 
         return $this->buildQueryFromCriteria($query)->find();
     }

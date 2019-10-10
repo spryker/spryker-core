@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductPageSearchRepositoryInterface
 {
     /**
@@ -24,9 +26,18 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 
     /**
+     * @deprecated Use getProductEntityByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
     public function getProductEntityTransfers(array $productIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     */
+    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array;
 }
