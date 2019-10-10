@@ -516,6 +516,8 @@
     "spryker/scheduler-extension": "*",
     "spryker/scheduler-jenkins": "*",
     "spryker/search": "*",
+    "spryker/security": "*",
+    "spryker/security-extension": "*",
     "spryker/sequence-number": "*",
     "spryker/session": "*",
     "spryker/session-extension": "*",

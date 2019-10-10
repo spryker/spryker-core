@@ -25,7 +25,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Yves\\EventDispatcher\\Helper\\": "tests/SprykerTest/Yves/EventDispatcher/_support/Helper/"
     }
   },
   "minimum-stability": "dev",

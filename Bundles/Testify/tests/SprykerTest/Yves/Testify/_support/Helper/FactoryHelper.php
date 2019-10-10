@@ -37,7 +37,7 @@ class FactoryHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Yves\Kernel\AbstractFactory
+     * @return \Spryker\Yves\Kernel\AbstractFactory
      */
     public function mockFactoryMethod(string $methodName, $return)
     {
@@ -48,7 +48,9 @@ class FactoryHelper extends Module
         }
 
         $this->mockedFactoryMethods[$methodName] = $return;
-        $this->factoryStub = Stub::make($className, $this->mockedFactoryMethods);
+        /** @var \Spryker\Yves\Kernel\AbstractFactory $factoryStub */
+        $factoryStub = Stub::make($className, $this->mockedFactoryMethods);
+        $this->factoryStub = $factoryStub;
 
         return $this->factoryStub;
     }
@@ -67,7 +69,10 @@ class FactoryHelper extends Module
 
         $moduleFactory = $this->createFactory();
 
-        return $this->injectConfig($moduleFactory);
+        $moduleFactory = $this->injectConfig($moduleFactory);
+        $moduleFactory = $this->injectContainer($moduleFactory);
+
+        return $moduleFactory;
     }
 
     /**
@@ -110,7 +115,10 @@ class FactoryHelper extends Module
      */
     protected function getConfig(): AbstractBundleConfig
     {
-        return $this->getConfigHelper()->getModuleConfig();
+        /** @var \Spryker\Yves\Kernel\AbstractBundleConfig $moduleConfig */
+        $moduleConfig = $this->getConfigHelper()->getModuleConfig();
+
+        return $moduleConfig;
     }
 
     /**
@@ -118,7 +126,10 @@ class FactoryHelper extends Module
      */
     protected function getConfigHelper(): ConfigHelper
     {
-        return $this->getModule('\\' . ConfigHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
+        $configHelper = $this->getModule('\\' . ConfigHelper::class);
+
+        return $configHelper;
     }
 
     /**
@@ -148,7 +159,10 @@ class FactoryHelper extends Module
      */
     protected function getDependencyProviderHelper(): DependencyProviderHelper
     {
-        return $this->getModule('\\' . DependencyProviderHelper::class);
+        /** @var \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper $dependencyProviderHelper */
+        $dependencyProviderHelper = $this->getModule('\\' . DependencyProviderHelper::class);
+
+        return $dependencyProviderHelper;
     }
 
     /**

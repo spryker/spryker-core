@@ -33,7 +33,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Yves\\Router\\Helper\\": "tests/SprykerTest/Yves/Router/_support/Helper/"
     }
   },
   "minimum-stability": "dev",

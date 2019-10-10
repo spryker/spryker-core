@@ -53,4 +53,22 @@ interface ContainerInterface extends PsrContainerInterface
      * @return void
      */
     public function remove(string $id): void;
+
+    /**
+     * @param \Closure|object $service
+     *
+     * @throws \Spryker\Service\Container\Exception\ContainerException
+     *
+     * @return \Closure|object
+     */
+    public function protect($service);
+
+    /**
+     * @param \Closure|object $service
+     *
+     * @throws \Spryker\Service\Container\Exception\ContainerException
+     *
+     * @return \Closure|object
+     */
+    public function factory($service);
 }

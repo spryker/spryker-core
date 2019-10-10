@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Yves\Security\Plugin\Security;
+
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface;
+use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
+use Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider;
+use Symfony\Component\Security\Http\Firewall\RememberMeListener;
+use Symfony\Component\Security\Http\RememberMe\ResponseListener;
+use Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices;
+
+class RememberMeSecurityPlugin implements SecurityPluginInterface
+{
+    /**
+     * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     */
+    protected const SERVICE_DISPATCHER = 'dispatcher';
+
+    /**
+     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     */
+    public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
+    {
+        $container->set('security.authentication_listener.factory.remember_me', $container->protect(function ($name, $options) use ($container) {
+            if (empty($options['key'])) {
+                $options['key'] = $name;
+            }
+
+            if (!$container->has('security.remember_me.service.' . $name)) {
+                $container->set('security.remember_me.service.' . $name, $container->get('security.remember_me.service._proto')($name, $options));
+            }
+
+            if (!$container->has('security.authentication_listener.' . $name . '.remember_me')) {
+                $container->set('security.authentication_listener.' . $name . '.remember_me', $container->get('security.authentication_listener.remember_me._proto')($name));
+            }
+
+            if (!$container->has('security.authentication_provider.' . $name . '.remember_me')) {
+                $container->set('security.authentication_provider.' . $name . '.remember_me', $container->get('security.authentication_provider.remember_me._proto')($name, $options));
+            }
+
+            return [
+                'security.authentication_provider.' . $name . '.remember_me',
+                'security.authentication_listener.' . $name . '.remember_me',
+                null, // entry point
+                'remember_me',
+            ];
+        }));
+
+        $container->set('security.remember_me.service._proto', $container->protect(function ($providerKey, $options) use ($container) {
+            return function () use ($providerKey, $options, $container) {
+                $options = array_replace([
+                    'name' => 'REMEMBERME',
+                    'lifetime' => 31536000,
+                    'path' => '/',
+                    'domain' => null,
+                    'secure' => false,
+                    'httponly' => true,
+                    'always_remember_me' => false,
+                    'remember_me_parameter' => '_remember_me',
+                ], $options);
+
+                $logger = $container->has('logger') ? $container->get('logger') : null;
+
+                return new TokenBasedRememberMeServices([$container->get('security.user_provider.' . $providerKey)], $options['key'], $providerKey, $options, $logger);
+            };
+        }));
+
+        $container->set('security.authentication_listener.remember_me._proto', $container->protect(function ($providerKey) use ($container) {
+            return function () use ($container, $providerKey) {
+                $listener = new RememberMeListener(
+                    $container->get('security.token_storage'),
+                    $container->get('security.remember_me.service.' . $providerKey),
+                    $container->get('security.authentication_manager'),
+                    $container->has('logger') ? $container->get('logger') : null,
+                    $container->get(static::SERVICE_DISPATCHER)
+                );
+
+                return $listener;
+            };
+        }));
+
+        $container->set('security.authentication_provider.remember_me._proto', $container->protect(function ($name, $options) use ($container) {
+            return function () use ($container, $name, $options) {
+                return new RememberMeAuthenticationProvider($container->get('security.user_checker'), $options['key'], $name);
+            };
+        }));
+
+        $securityBuilder->addEventSubscriber(function () {
+            return new ResponseListener();
+        });
+
+        return $securityBuilder;
+    }
+}

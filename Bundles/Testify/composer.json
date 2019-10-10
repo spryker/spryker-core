@@ -21,6 +21,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/console": "*",
+    "spryker/http": "*",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
     "spryker/twig": "^3.0.0"
@@ -44,7 +45,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Yves\\Testify\\Helper\\": "tests/SprykerTest/Yves/Testify/_support/Helper/"
     }
   },
   "minimum-stability": "dev",
