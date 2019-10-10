@@ -523,7 +523,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindAvailableMethodsByShipmentShouldReturnShipmentMethodsTransfer(): void
+    public function getAvailableMethodsByShipmentShouldReturnAvailableShipmentMethods(): void
     {
         // Arrange
         $quoteTransfer = (new QuoteBuilder())->build();
