@@ -266,7 +266,7 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
     public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteApprovalStepAccessChecker()
+            ->createQuoteStatusChecker()
             ->isQuoteInApprovalProcess($quoteTransfer);
     }
 }

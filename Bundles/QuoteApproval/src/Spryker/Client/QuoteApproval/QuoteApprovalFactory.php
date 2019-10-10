@@ -8,8 +8,6 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\QuoteApproval\Checker\QuoteApprovalStatusChecker;
-use Spryker\Client\QuoteApproval\Checker\QuoteApprovalStatusCheckerInterface;
 use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
 use Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
@@ -106,17 +104,6 @@ class QuoteApprovalFactory extends AbstractFactory
         return new QuoteApprovalCreator(
             $this->createQuoteApprovalStub(),
             $this->createQuoteChecker()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\QuoteApproval\Checker\QuoteApprovalStatusCheckerInterface
-     */
-    public function createQuoteApprovalStepAccessChecker(): QuoteApprovalStatusCheckerInterface
-    {
-        return new QuoteApprovalStatusChecker(
-            $this->createQuoteStatusChecker(),
-            $this->getQuoteClient()
         );
     }
 

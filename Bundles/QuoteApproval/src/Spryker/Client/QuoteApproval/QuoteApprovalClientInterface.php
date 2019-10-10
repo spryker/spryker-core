@@ -236,7 +236,8 @@ interface QuoteApprovalClientInterface
 
     /**
      * Specification:
-     * - Returns false if quote is locked and has at least one quote approval not in status declined, true otherwise.
+     * - Returns true if quote approval status is approved or waiting.
+     * - Returns false otherwise.
      *
      * @api
      *
