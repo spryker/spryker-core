@@ -50,7 +50,7 @@ class CartCodeAdder implements CartCodeAdderInterface
         }
 
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->addCandidate(
-            $this->createQuoteTransfer($restRequest),
+            $this->createQuoteTransfer($cartResource->getId()),
             $restDiscountRequestAttributesTransfer->getCode()
         );
 
@@ -58,12 +58,12 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param RestRequestInterface $restRequest
+     * @param string $uuid
      *
      * @return QuoteTransfer
      */
-    protected function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
+    protected function createQuoteTransfer(string $uuid): QuoteTransfer
     {
-        return (new QuoteTransfer())->setUuid($restRequest->getResource()->getId());
+        return (new QuoteTransfer())->setUuid($uuid);
     }
 }

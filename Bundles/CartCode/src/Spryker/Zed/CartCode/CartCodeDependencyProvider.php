@@ -29,6 +29,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addFacadeCalculation($container);
         $container = $this->addQuoteFacade($container);
+        $container = $this->addCartCodePluginCollection($container);
 
         return $container;
     }

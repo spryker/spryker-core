@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartCodesRestApi;
 
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeBridge;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToQuoteFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -39,7 +41,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addCartCodeFacade(Container $container): Container
     {
         $container->set(static::FACADE_CART_CODE, function (Container $container) {
-            $container->getLocator()->cartCode()->facade();
+            return new CartCodesRestApiToCartCodeFacadeBridge($container->getLocator()->cartCode()->facade());
         });
 
         return $container;
@@ -53,7 +55,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addQuoteFacade(Container $container): Container
     {
         $container->set(static::FACADE_QUOTE, function (Container $container) {
-            $container->getLocator()->quote()->facade();
+            return new CartCodesRestApiToQuoteFacadeBridge($container->getLocator()->quote()->facade());
         });
 
         return $container;

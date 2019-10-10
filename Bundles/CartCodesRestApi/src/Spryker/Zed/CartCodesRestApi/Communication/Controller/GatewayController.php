@@ -1,6 +1,6 @@
 <?php
 
-namespace Spryker\CartCodesRestApi\src\Spryker\Zed\Communication\Controller;
+namespace Spryker\Zed\CartCodesRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;

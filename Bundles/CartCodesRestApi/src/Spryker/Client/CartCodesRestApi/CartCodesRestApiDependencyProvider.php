@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CartCodesRestApi;
 
+use Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -34,7 +35,7 @@ class CartCodesRestApiDependencyProvider extends AbstractDependencyProvider
     protected function addZedRequestClient(Container $container): Container
     {
         $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
-            return $container->getLocator()->zedRequest()->client();
+            return new CartCodesRestApiToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
         });
 
         return $container;
