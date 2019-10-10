@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateReaderInterface
@@ -19,11 +20,20 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     protected $configurableBundleRepository;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface
      */
-    public function __construct(ConfigurableBundleRepositoryInterface $configurableBundleRepository)
-    {
+    protected $configurableBundleTranslationExpander;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
+     */
+    public function __construct(
+        ConfigurableBundleRepositoryInterface $configurableBundleRepository,
+        ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
+    ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
+        $this->configurableBundleTranslationExpander = $configurableBundleTranslationExpander;
     }
 
     /**
@@ -34,6 +44,31 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer {
-        return $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        if (!$configurableBundleTemplateTransfer) {
+            return null;
+        }
+
+        return $this->configurableBundleTranslationExpander
+            ->expandConfigurableBundleTemplateWithTranslationForCurrentLocale($configurableBundleTemplateTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    public function findConfigurableBundleTemplateWithDefaultLocaleTranslation(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ?ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateTransfer = $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        if (!$configurableBundleTemplateTransfer) {
+            return null;
+        }
+
+        return $this->configurableBundleTranslationExpander
+            ->expandConfigurableBundleTemplateWithDefaultLocaleTranslation($configurableBundleTemplateTransfer);
     }
 }

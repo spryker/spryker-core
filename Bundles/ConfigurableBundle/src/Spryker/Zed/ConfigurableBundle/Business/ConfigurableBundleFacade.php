@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -30,11 +31,11 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     public function createConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer {
+    ): ConfigurableBundleResponseTransfer {
         return $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
             ->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
@@ -47,11 +48,11 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateResponseTransfer {
+    ): ConfigurableBundleResponseTransfer {
         return $this->getFactory()
             ->createConfigurableBundleTemplateWriter()
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
@@ -168,5 +169,84 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
         return $this->getFactory()
             ->createConfigurableBundleTemplateSlotReader()
             ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     */
+    public function createConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleResponseTransfer {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotWriter()
+            ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     */
+    public function updateConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleResponseTransfer {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotWriter()
+            ->updateConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void
+    {
+        $this->getEntityManager()->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
+     */
+    public function findConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ?ConfigurableBundleTemplateSlotTransfer {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotReader()
+            ->findConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    {
+        return $this->getRepository()->getProductListIdByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
     }
 }

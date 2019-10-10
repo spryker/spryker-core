@@ -22,7 +22,7 @@ interface MerchantRelationshipProductListToProductListFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     * @return void
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function deleteProductList(ProductListTransfer $productListTransfer): void;
 }

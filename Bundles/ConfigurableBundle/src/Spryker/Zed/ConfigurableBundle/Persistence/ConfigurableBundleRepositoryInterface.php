@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
 interface ConfigurableBundleRepositoryInterface
@@ -35,4 +36,20 @@ interface ConfigurableBundleRepositoryInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
     public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
+     */
+    public function findConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ?ConfigurableBundleTemplateSlotTransfer;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int;
 }

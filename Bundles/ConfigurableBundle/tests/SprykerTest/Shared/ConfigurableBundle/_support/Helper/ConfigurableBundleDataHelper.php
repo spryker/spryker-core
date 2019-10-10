@@ -8,7 +8,10 @@ namespace SprykerTest\Shared\ConfigurableBundle\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateBuilder;
+use Generated\Shared\DataBuilder\ConfigurableBundleTemplateSlotBuilder;
+use Generated\Shared\DataBuilder\ConfigurableBundleTemplateSlotTranslationBuilder;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateTranslationBuilder;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -37,5 +40,28 @@ class ConfigurableBundleDataHelper extends Module
             ->facade()
             ->createConfigurableBundleTemplate($configurableBundleTemplateBuilder->build())
             ->getConfigurableBundleTemplate();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function haveConfigurableBundleTemplateSlot(array $seed = []): ConfigurableBundleTemplateSlotTransfer
+    {
+        $configurableBundleTemplateSlotBuilder = new ConfigurableBundleTemplateSlotBuilder($seed);
+        $configurableBundleTemplateSlotTranslationSeeds = $seed[ConfigurableBundleTemplateSlotTransfer::TRANSLATIONS] ?? [];
+
+        foreach ($configurableBundleTemplateSlotTranslationSeeds as $configurableBundleTemplateSlotTranslationSeed) {
+            $configurableBundleTemplateSlotBuilder->withTranslation(
+                new ConfigurableBundleTemplateSlotTranslationBuilder($configurableBundleTemplateSlotTranslationSeed)
+            );
+        }
+
+        return $this->getLocator()
+            ->configurableBundle()
+            ->facade()
+            ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotBuilder->build())
+            ->getConfigurableBundleTemplateSlot();
     }
 }

@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Generator;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleTemplateNameGeneratorInterface
+interface ConfigurableBundleNameGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
@@ -19,4 +20,13 @@ interface ConfigurableBundleTemplateNameGeneratorInterface
     public function setConfigurableBundleTemplateName(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     */
+    public function setConfigurableBundleTemplateSlotName(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    ): ConfigurableBundleTemplateSlotTransfer;
 }

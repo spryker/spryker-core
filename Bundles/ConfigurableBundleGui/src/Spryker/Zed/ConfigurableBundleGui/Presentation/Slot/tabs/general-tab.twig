@@ -1,0 +1,9 @@
+<div class="well">
+    {{ tips | raw }}
+</div>
+
+{% embed '@ConfigurableBundleGui/Template/_partials/translations.twig' with {
+    currentLocale: currentLocale,
+    translations: form.translations
+} %}
+{% endembed %}

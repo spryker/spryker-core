@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 
@@ -49,6 +50,30 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
         $configurableBundleTemplateTransfer->requireName();
 
         $translation = $this->getTranslation($configurableBundleTemplateTransfer->getName());
+        $translation = $this->glossaryFacade->translate($configurableBundleTemplateTransfer->getName());
+        $configurableBundleTemplateTransfer->addTranslation(
+            (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
+        );
+
+        return $configurableBundleTemplateTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    public function expandConfigurableBundleTemplateWithDefaultLocaleTranslation(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    ): ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateTransfer->requireName();
+
+        $translation = $this->glossaryFacade->translate(
+            $configurableBundleTemplateTransfer->getName(),
+            [],
+            $this->getDefaultLocale()
+        );
+
         $configurableBundleTemplateTransfer->addTranslation(
             (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
         );
@@ -105,5 +130,15 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
         }
 
         return $translationKey;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getDefaultLocale(): LocaleTransfer
+    {
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+
+        return reset($localeTransfers);
     }
 }

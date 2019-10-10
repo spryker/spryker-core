@@ -15,6 +15,12 @@ use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProvider;
 use Spryker\Zed\ProductListGui\Communication\ButtonsProvider\TopButtonsProviderInterface;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpander;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormExpander;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormExpanderInterface;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpander;
+use Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpanderInterface;
 use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporter;
 use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterface;
 use Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListAggregateFormDataProvider;
@@ -93,7 +99,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductListCreateAggregationTabs(): TabsInterface
     {
-        return new ProductListCreateAggregationTabs();
+        return new ProductListCreateAggregationTabs($this->createProductListCreateAggregationTabsExpander());
     }
 
     /**
@@ -101,7 +107,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductListEditAggregationTabs(): TabsInterface
     {
-        return new ProductListEditAggregationTabs();
+        return new ProductListEditAggregationTabs($this->createProductListCreateAggregationTabsExpander());
     }
 
     /**
@@ -118,6 +124,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createAssignedProductConcreteRelationTabs(): TabsInterface
     {
         return new AssignedProductConcreteRelationTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Expander\ProductListCreateAggregationTabsExpanderInterface
+     */
+    public function createProductListCreateAggregationTabsExpander(): ProductListCreateAggregationTabsExpanderInterface
+    {
+        return new ProductListCreateAggregationTabsExpander();
     }
 
     /**
@@ -166,7 +180,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListAggregateFormDataProvider(
             $this->createProductListFormDataProvider(),
-            $this->createProductListCategoryRelationFormDataProvider()
+            $this->createProductListAggregateFormDataProviderExpander()
         );
     }
 
@@ -176,6 +190,22 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createTopButtonsProvider(): TopButtonsProviderInterface
     {
         return new TopButtonsProvider($this->getProductListTopButtonsExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormExpanderInterface
+     */
+    public function createProductListAggregateFormExpander(): ProductListAggregateFormExpanderInterface
+    {
+        return new ProductListAggregateFormExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Expander\ProductListAggregateFormDataProviderExpanderInterface
+     */
+    public function createProductListAggregateFormDataProviderExpander(): ProductListAggregateFormDataProviderExpanderInterface
+    {
+        return new ProductListAggregateFormDataProviderExpander($this->createProductListCategoryRelationFormDataProvider());
     }
 
     /**

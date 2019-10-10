@@ -1,0 +1,36 @@
+{
+  "name": "spryker/configurable-bundle-gui-extension",
+  "type": "library",
+  "description": "ConfigurableBundleGuiExtension module",
+  "license": "proprietary",
+  "require": {
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to use ConfigurableBundleGui form expander plugins."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

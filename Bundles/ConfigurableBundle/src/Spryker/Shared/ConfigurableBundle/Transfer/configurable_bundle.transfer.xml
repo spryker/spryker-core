@@ -35,7 +35,9 @@
         <property name="idConfigurableBundleTemplateSlot" type="int" />
         <property name="name" type="string" />
         <property name="uuid" type="string" />
+        <property name="fkConfigurableBundleTemplate" type="int" />
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="productList" type="ProductList" />
         <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
     </transfer>
 
@@ -66,10 +68,12 @@
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
         <property name="idProductList" type="int" />
+        <property name="idConfigurableBundleTemplateSlot" type="int" />
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateResponse">
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot" />
         <property name="isSuccessful" type="bool" />
         <property name="messages" type="Message[]"  singular="message" />
     </transfer>
@@ -83,6 +87,26 @@
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+        <property name="type" type="string"/>
+        <property name="title" type="string"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+    </transfer>
+
+    <transfer name="ProductListProductConcreteRelation">
+    </transfer>
+
+    <transfer name="ProductListCategoryRelation">
+    </transfer>
+
+    <transfer name="ProductListResponse">
+        <property name="isSuccessful" type="bool" />
+        <property name="productList" type="ProductList" />
+        <property name="messages" type="Message[]" singular="message" />
     </transfer>
 
 </transfers>

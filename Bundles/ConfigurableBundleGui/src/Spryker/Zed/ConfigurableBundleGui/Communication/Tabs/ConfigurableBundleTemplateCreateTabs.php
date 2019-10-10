@@ -7,6 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Tabs;
 
-class ConfigurableBundleTemplateCreateTabs extends AbstractConfigurableBundleTemplateTabs
+class ConfigurableBundleTemplateCreateTabs extends AbstractConfigurableBundleTabs
 {
 }

@@ -5,4 +5,4 @@
 
 'use strict';
 
-require('./modules/configurable-bundle-template-slot/main');
+require('./modules/configurable-bundle-template-slot/slot-edit');

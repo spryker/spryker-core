@@ -11,8 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGenerator;
-use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGenerator;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceBridge;
 
 /**
@@ -22,10 +22,10 @@ use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTe
  * @group ConfigurableBundle
  * @group Business
  * @group Generator
- * @group ConfigurableBundleTemplateNameGeneratorTest
+ * @group ConfigurableBundleNameGeneratorTest
  * Add your own group annotations below this line
  */
-class ConfigurableBundleTemplateNameGeneratorTest extends Unit
+class ConfigurableBundleNameGeneratorTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ConfigurableBundle\ConfigurableBundleBusinessTester
@@ -46,7 +46,7 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
         $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateTransfer($rawName);
 
         // Act
-        $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateNameGenerator()
+        $configurableBundleTemplateTransfer = $this->createConfigurableBundleNameGenerator()
             ->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
         // Assert
@@ -68,11 +68,11 @@ class ConfigurableBundleTemplateNameGeneratorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleTemplateNameGeneratorInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface
      */
-    protected function createConfigurableBundleTemplateNameGenerator(): ConfigurableBundleTemplateNameGeneratorInterface
+    protected function createConfigurableBundleNameGenerator(): ConfigurableBundleNameGeneratorInterface
     {
-        return new ConfigurableBundleTemplateNameGenerator($this->createConfigurableBundleToUtilTextServiceBridgeMock());
+        return new ConfigurableBundleNameGenerator($this->createConfigurableBundleToUtilTextServiceBridgeMock());
     }
 
     /**

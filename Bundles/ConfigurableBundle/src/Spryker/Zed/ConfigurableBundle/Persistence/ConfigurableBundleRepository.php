@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlotTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
@@ -47,6 +48,31 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
+     */
+    public function findConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ?ConfigurableBundleTemplateSlotTransfer {
+        $configurableBundleTemplateSlotQuery = $this->getFactory()->createConfigurableBundleTemplateSlotQuery();
+        $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
+            $configurableBundleTemplateSlotQuery,
+            $configurableBundleTemplateSlotFilterTransfer
+        );
+
+        $configurableBundleTemplateSlotEntity = $configurableBundleTemplateSlotQuery->find()->getFirst();
+
+        if (!$configurableBundleTemplateSlotEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapConfigurableBundleTemplateSlotEntityToTransfer($configurableBundleTemplateSlotEntity, new ConfigurableBundleTemplateSlotTransfer());
+    }
+
+    /**
      * @param string[] $allowedTemplateUuids
      *
      * @return string[]
@@ -59,9 +85,9 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         return $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
-            ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
             ->filterByUuid_In($allowedTemplateUuids)
             ->filterByIsActive(true)
+            ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
             ->find()
             ->toArray();
     }
@@ -102,6 +128,20 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return int
+     */
+    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateSlotQuery()
+            ->filterByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplate)
+            ->select([SpyConfigurableBundleTemplateSlotTableMap::COL_FK_PRODUCT_LIST])
+            ->findOne();
+    }
+
+    /**
      * @param \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery $configurableBundleTemplateQuery
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
@@ -135,6 +175,12 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         if ($configurableBundleTemplateSlotFilterTransfer->getIdProductList()) {
             $configurableBundleTemplateSlotQuery->filterByFkProductList(
                 $configurableBundleTemplateSlotFilterTransfer->getIdProductList()
+            );
+        }
+
+        if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()) {
+            $configurableBundleTemplateSlotQuery->filterByIdConfigurableBundleTemplateSlot(
+                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()
             );
         }
 

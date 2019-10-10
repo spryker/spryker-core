@@ -14,13 +14,21 @@
         <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation" />
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateSlot">
+        <property name="idConfigurableBundleTemplateSlot" type="int" />
+        <property name="name" type="string"/>
+        <property name="fkConfigurableBundleTemplate" type="int" />
+        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
+    </transfer>
+
     <transfer name="ConfigurableBundleTemplateTranslation">
         <property name="name" type="string" />
         <property name="locale" type="Locale" />
     </transfer>
 
-    <transfer name="ConfigurableBundleTemplateResponse">
+    <transfer name="ConfigurableBundleResponse">
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot" />
         <property name="isSuccessful" type="bool" />
         <property name="messages" type="Message[]"  singular="message" />
     </transfer>
@@ -32,6 +40,10 @@
 
     <transfer name="ConfigurableBundleTemplateFilter">
         <property name="idConfigurableBundleTemplate" type="int" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotFilter">
+        <property name="idConfigurableBundleTemplateSlot" type="int" />
     </transfer>
 
     <transfer name="ButtonCollection">
@@ -57,6 +69,20 @@
 
     <transfer name="ProductList">
         <property name="idProductList" type="int" />
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotEditForm">
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="productListAggregateForm" type="ProductListAggregateForm"/>
+    </transfer>
+
+    <transfer name="ProductListAggregateForm">
+        <property name="productList" type="ProductList"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+        <property name="assignedProductIds" type="string"/>
+        <property name="productIdsToBeAssigned" type="string"/>
+        <property name="productIdsToBeDeAssigned" type="string"/>
     </transfer>
 
 </transfers>

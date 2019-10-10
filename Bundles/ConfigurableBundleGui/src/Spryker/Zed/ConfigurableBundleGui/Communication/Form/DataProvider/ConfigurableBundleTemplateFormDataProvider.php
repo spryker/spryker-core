@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
@@ -112,6 +113,8 @@ class ConfigurableBundleTemplateFormDataProvider
             $configurableBundleTemplateTransfer->getName(),
             $availableLocaleTransfers
         );
+
+        $configurableBundleTemplateTransfer->setTranslations(new ArrayObject());
 
         foreach ($availableLocaleTransfers as $localeTransfer) {
             $configurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())

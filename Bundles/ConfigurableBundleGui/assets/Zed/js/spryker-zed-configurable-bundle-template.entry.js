@@ -5,8 +5,4 @@
 
 'use strict';
 
-var slotProductsTable = require('./slot-products-table');
-
-$(document).ready(function () {
-    slotProductsTable.init();
-});
+require('./modules/configurable-bundle-template/template-edit');
