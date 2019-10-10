@@ -83,8 +83,6 @@ class QuoteCheckerTest extends Unit
         // Arrange
         $quoteTransfer = (new QuoteBuilder())
             ->withBillingAddress()
-            ->withShippingAddress()
-            ->withPayment()
             ->build();
 
         // Act
