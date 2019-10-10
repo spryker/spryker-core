@@ -36,7 +36,6 @@ class ProductReviewsAbstractProductsResourceExpander implements ProductReviewsAb
             ->findProductAbstractReview($abstractProductsRestAttributesTransfer->getIdProductAbstract());
 
         if (!$productReviewsStorageTransfer) {
-            $abstractProductsRestAttributesTransfer->setAverageRating(0);
             $abstractProductsRestAttributesTransfer->setReviewCount(0);
 
             return $abstractProductsRestAttributesTransfer;
