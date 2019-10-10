@@ -127,7 +127,7 @@
     </transfer>
 
     <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="Address"/>
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
     <transfer name="Address">
@@ -148,7 +148,7 @@
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
-        <property name="shipmentMethods" type="ShipmentMethods[]" singular="ShipmentMethods"/>
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
     </transfer>
 
     <transfer name="PaymentProviderCollection">

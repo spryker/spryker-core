@@ -130,7 +130,7 @@
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
-        <property name="shipmentMethods" type="ShipmentMethods[]" singular="ShipmentMethods"/>
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
     </transfer>
 
     <transfer name="ShipmentPrice">

@@ -6,7 +6,7 @@
     <transfer name="AvailabilityStock">
         <property name="idAvailability" type="int"/>
         <property name="sku" type="string"/>
-        <property name="stocks" type="StockProduct[]" singular="StockProduct"/>
+        <property name="stocks" type="StockProduct[]" singular="stockProduct"/>
     </transfer>
 
     <transfer name="StorageAvailability">

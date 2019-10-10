@@ -44,7 +44,7 @@
 
     <transfer name="ItemValidation">
         <property name="item" type="Item"/>
-        <property name="messages" type="Message[]" singular="Message"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">

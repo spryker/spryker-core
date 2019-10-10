@@ -15,7 +15,7 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
-        <property name="DummyPayment" type="DummyPayment"/>
+        <property name="dummyPayment" type="DummyPayment"/>
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
@@ -24,9 +24,9 @@
     </transfer>
 
     <transfer name="Payment">
-        <property name="DummyPayment" type="DummyPayment"/>
-        <property name="DummyPaymentInvoice" type="DummyPayment"/>
-        <property name="DummyPaymentCreditCard" type="DummyPayment"/>
+        <property name="dummyPayment" type="DummyPayment"/>
+        <property name="dummyPaymentInvoice" type="DummyPayment"/>
+        <property name="dummyPaymentCreditCard" type="DummyPayment"/>
     </transfer>
 
 </transfers>

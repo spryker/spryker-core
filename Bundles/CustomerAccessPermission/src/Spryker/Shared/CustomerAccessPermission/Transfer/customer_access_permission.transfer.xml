@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="CustomerAccess">
-        <property name="contentTypeAccess" type="ContentTypeAccess[]" singular="ContentTypeAccess"/>
+        <property name="contentTypeAccess" type="ContentTypeAccess[]" singular="contentTypeAccess"/>
     </transfer>
 
 </transfers>

@@ -18,7 +18,7 @@
         <property name="validTo" type="string"/>
         <property name="collectorQueryString" type="string"/>
         <property name="decisionRuleQueryString" type="string"/>
-        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue"/>
+        <property name="moneyValueCollection" type="MoneyValue[]" singular="moneyValue"/>
         <property name="currency" type="Currency"/>
         <property name="priceMode" type="string"/>
     </transfer>
@@ -137,7 +137,7 @@
         <property name="calculatorPlugin" type="string"/>
         <property name="collectorQueryString" type="string"/>
         <property name="collectorStrategyType" type="string"/>
-        <property name="moneyValueCollection" type="MoneyValue[]" singular="MoneyValue"/>
+        <property name="moneyValueCollection" type="MoneyValue[]" singular="moneyValue"/>
     </transfer>
 
     <transfer name="DiscountCondition">
