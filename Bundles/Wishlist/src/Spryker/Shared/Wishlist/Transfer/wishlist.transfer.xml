@@ -6,6 +6,7 @@
     <transfer name="Wishlist">
         <property name="idWishlist" type="int"/>
         <property name="fkCustomer" type="int"/>
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
         <property name="name" type="string"/>
         <property name="numberOfItems" type="int"/>
         <property name="createdAt" type="string"/>
@@ -59,6 +60,16 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
     <transfer name="WishlistPagination">
         <property name="page" type="int"/>
         <property name="pagesTotal" type="int"/>
@@ -74,6 +85,12 @@
         <property name="wishlist" type="Wishlist"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
+    </transfer>
+
+    <transfer name="WishlistFilter">
+        <property name="idCustomer" type="int"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="WishlistOverviewMeta">
