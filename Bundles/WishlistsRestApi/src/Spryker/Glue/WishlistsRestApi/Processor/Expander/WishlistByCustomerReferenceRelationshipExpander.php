@@ -8,21 +8,21 @@
 namespace Spryker\Glue\WishlistsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface;
+use Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface;
 
-class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipExpanderByResourceIdInterface
+class WishlistByCustomerReferenceRelationshipExpander implements WishlistByCustomerReferenceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface
+     * @var \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface
      */
-    protected $wishlistsReader;
+    protected $wishlistReader;
 
     /**
-     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface $wishlistsReader
+     * @param \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistReaderInterface $wishlistReader
      */
-    public function __construct(WishlistsReaderInterface $wishlistsReader)
+    public function __construct(WishlistReaderInterface $wishlistReader)
     {
-        $this->wishlistsReader = $wishlistsReader;
+        $this->wishlistReader = $wishlistReader;
     }
 
     /**
@@ -31,11 +31,11 @@ class WishlistRelationshipExpanderByResourceId implements WishlistRelationshipEx
      *
      * @return void
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $wishlistsResources = $this->wishlistsReader
-                ->getWishlistsByCustomerReference($resource->getId());
+            $wishlistsResources = $this->wishlistReader->getWishlistsByCustomerReference($resource->getId());
+
             foreach ($wishlistsResources as $wishlistsResource) {
                 $resource->addRelationship($wishlistsResource);
             }

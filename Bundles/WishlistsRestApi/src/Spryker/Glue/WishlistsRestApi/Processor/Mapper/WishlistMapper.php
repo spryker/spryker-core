@@ -10,7 +10,7 @@ namespace Spryker\Glue\WishlistsRestApi\Processor\Mapper;
 use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
-class WishlistsResourceMapper implements WishlistsResourceMapperInterface
+class WishlistMapper implements WishlistMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -27,12 +27,12 @@ class WishlistsResourceMapper implements WishlistsResourceMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      * @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $attributesTransfer
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function mapWishlistAttributesToWishlistTransfer(WishlistTransfer $wishlistTransfer, RestWishlistsAttributesTransfer $attributesTransfer): WishlistTransfer
+    public function mapWishlistAttributesToWishlistTransfer(RestWishlistsAttributesTransfer $attributesTransfer, WishlistTransfer $wishlistTransfer): WishlistTransfer
     {
         return $wishlistTransfer->fromArray($attributesTransfer->modifiedToArray(), true);
     }

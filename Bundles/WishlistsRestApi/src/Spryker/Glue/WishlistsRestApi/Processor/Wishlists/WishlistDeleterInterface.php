@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\WishlistsRestApi\Processor\Expander;
+namespace Spryker\Glue\WishlistsRestApi\Processor\Wishlists;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface WishlistRelationshipExpanderByResourceIdInterface
+interface WishlistDeleterInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addResourceRelationshipsByResourceId(array $resources, RestRequestInterface $restRequest): void;
+    public function delete(RestRequestInterface $restRequest): RestResponseInterface;
 }
