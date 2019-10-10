@@ -56,10 +56,10 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isOrderPlaceable(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
         return $this->getZedStub()
-            ->isOrderPlaceable($quoteTransfer);
+            ->isPlaceableOrder($quoteTransfer);
     }
 
     /**

@@ -43,7 +43,7 @@ class QuoteFieldsProvider implements QuoteFieldsProviderInterface
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
         if ($this->isQuoteApprovalRequestWaitingOrApproved($quoteTransfer)) {
-            return $this->quoteApprovalConfig->getRequiredQuoteFields();
+            return $this->quoteApprovalConfig->getRequiredQuoteFieldsForApprovalProcess();
         }
 
         return [];

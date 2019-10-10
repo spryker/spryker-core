@@ -48,24 +48,26 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
     {
         $quoteStatus = $this->quoteStatusCalculator
             ->calculateQuoteStatus($quoteTransfer);
 
-        if ($quoteStatus === QuoteApprovalConfig::STATUS_WAITING) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_WAITING_APPROVAL);
+        if (!$quoteTransfer->getCustomer() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
+            return $checkoutResponseTransfer;
+        }
 
-            return false;
+        if ($quoteStatus === QuoteApprovalConfig::STATUS_WAITING) {
+            return $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_WAITING_APPROVAL);
         }
 
         if ($this->isQuoteApprovalRequired($quoteTransfer, $quoteStatus)) {
-            $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL);
+            return $this->addCheckoutError($checkoutResponseTransfer, static::GLOSSARY_KEY_CART_REQUIRE_APPROVAL);
         }
 
-        return $checkoutResponseTransfer->getIsSuccess();
+        return $checkoutResponseTransfer;
     }
 
     /**
@@ -76,9 +78,7 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
      */
     protected function isQuoteApprovalRequired(QuoteTransfer $quoteTransfer, ?string $quoteStatus): bool
     {
-        $idCompanyUser = $quoteTransfer->requireCustomer()
-            ->getCustomer()
-            ->requireCompanyUserTransfer()
+        $idCompanyUser = $quoteTransfer->getCustomer()
                 ->getCompanyUserTransfer()
                 ->requireIdCompanyUser()
                 ->getIdCompanyUser();
@@ -99,8 +99,9 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     protected function addCheckoutError(CheckoutResponseTransfer $checkoutResponseTransfer, string $message): CheckoutResponseTransfer
     {
         $checkoutResponseTransfer->setIsSuccess(false)
-            ->addError((new CheckoutErrorTransfer())
-            ->setMessage($message));
+            ->addError(
+                (new CheckoutErrorTransfer())->setMessage($message)
+            );
 
         return $checkoutResponseTransfer;
     }

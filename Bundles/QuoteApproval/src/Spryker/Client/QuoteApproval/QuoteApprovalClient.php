@@ -263,10 +263,10 @@ class QuoteApprovalClient extends AbstractClient implements QuoteApprovalClientI
      *
      * @return bool
      */
-    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
             ->createQuoteApprovalStepAccessChecker()
-            ->checkCheckoutStepAccessibility($quoteTransfer);
+            ->isQuoteInApprovalProcess($quoteTransfer);
     }
 }

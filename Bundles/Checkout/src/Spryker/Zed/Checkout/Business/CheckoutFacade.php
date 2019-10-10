@@ -44,11 +44,11 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isOrderPlaceable(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
         return $this
             ->getFactory()
             ->createCheckoutWorkflow()
-            ->isOrderPlaceable($quoteTransfer);
+            ->isPlaceableOrder($quoteTransfer);
     }
 }

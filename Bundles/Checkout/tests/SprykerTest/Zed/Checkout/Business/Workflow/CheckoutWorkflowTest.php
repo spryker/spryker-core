@@ -39,7 +39,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderPlaceableResponseIsSuccessful(): void
+    public function testIsPlaceableOrderResponseIsSuccessful(): void
     {
         // Arrange
         $checkoutResponse = $this->createBaseCheckoutResponse();
@@ -52,7 +52,7 @@ class CheckoutWorkflowTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         // Act
-        $checkoutResponseTransfer = $checkoutWorkflow->isOrderPlaceable($quoteTransfer);
+        $checkoutResponseTransfer = $checkoutWorkflow->isPlaceableOrder($quoteTransfer);
 
         // Assert
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
@@ -61,7 +61,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testIsOrderPlaceableResponseIsNotSuccessful(): void
+    public function testIsPlaceableOrderResponseIsNotSuccessful(): void
     {
         // Arrange
         $mockBuilder = $this->getMockBuilder(CheckoutPreConditionPluginInterface::class)->getMock();
@@ -81,7 +81,7 @@ class CheckoutWorkflowTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         // Act
-        $checkoutResponseTransfer = $checkoutWorkflow->isOrderPlaceable($quoteTransfer);
+        $checkoutResponseTransfer = $checkoutWorkflow->isPlaceableOrder($quoteTransfer);
 
         // Assert
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());

@@ -16,5 +16,5 @@ interface QuoteShipmentCheckerInterface
      *
      * @return bool
      */
-    public function shipmentCheck(QuoteTransfer $quoteTransfer): bool;
+    public function checkQuoteShipment(QuoteTransfer $quoteTransfer): bool;
 }

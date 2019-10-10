@@ -14,7 +14,7 @@ use Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForAp
 /**
  * @method \Spryker\Client\QuoteApprovalShipmentConnector\QuoteApprovalShipmentConnectorClientInterface getClient()
  */
-class ShipmentQuoteApplicableForApprovalCheckPlugin extends AbstractPlugin implements QuoteApplicableForApprovalCheckPluginInterface
+class ShipmentApplicableForQuoteApprovalCheckPlugin extends AbstractPlugin implements QuoteApplicableForApprovalCheckPluginInterface
 {
     /**
      * {@inheritDoc}

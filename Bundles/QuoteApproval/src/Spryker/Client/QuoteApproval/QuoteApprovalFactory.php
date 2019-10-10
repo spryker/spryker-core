@@ -8,6 +8,8 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteApproval\Checker\QuoteApprovalStatusChecker;
+use Spryker\Client\QuoteApproval\Checker\QuoteApprovalStatusCheckerInterface;
 use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
 use Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
@@ -24,8 +26,6 @@ use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreator;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalCreatorInterface;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReader;
 use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
-use Spryker\Client\QuoteApproval\StepAccessChecker\QuoteApprovalStepAccessChecker;
-use Spryker\Client\QuoteApproval\StepAccessChecker\QuoteApprovalStepAccessCheckerInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
@@ -110,11 +110,11 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteApproval\StepAccessChecker\QuoteApprovalStepAccessCheckerInterface
+     * @return \Spryker\Client\QuoteApproval\Checker\QuoteApprovalStatusCheckerInterface
      */
-    public function createQuoteApprovalStepAccessChecker(): QuoteApprovalStepAccessCheckerInterface
+    public function createQuoteApprovalStepAccessChecker(): QuoteApprovalStatusCheckerInterface
     {
-        return new QuoteApprovalStepAccessChecker(
+        return new QuoteApprovalStatusChecker(
             $this->createQuoteStatusChecker(),
             $this->getQuoteClient()
         );

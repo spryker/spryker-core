@@ -131,10 +131,10 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Returns response with boolean isSuccess and an array of errors
+     * - Returns response with boolean isSuccess and an array of errors.
      * - Returns isSuccess false if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
      * - Returns isSuccess false if executing of PlaceOrderPermissionPlugin permission returns true.
-     * - Returns isSuccess false if quote approval status is `approved`.
+     * - Returns isSuccess false if quote approval status is not `approved`.
      * - Returns isSuccess true otherwise.
      *
      * @api
@@ -142,9 +142,9 @@ interface QuoteApprovalFacadeInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
+    public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer;
 
     /**
      * Specification:
@@ -156,11 +156,12 @@ interface QuoteApprovalFacadeInterface
      *
      * @return string[]
      */
-    public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array;
+    public function getQuoteFieldsAllowedForSavingByQuoteApprovalStatus(QuoteTransfer $quoteTransfer): array;
 
     /**
      * Specification:
-     * - Calculates quote status.
+     * - Calculates quote approval status.
+     * - Returns null if quote does not have quote approval request.
      *
      * @api
      *

@@ -20,8 +20,12 @@ class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
+     * - Checks if the quote is ready to checkout.
      * - Returns response with boolean isSuccess and an array of errors.
+     * - Returns isSuccess false if customer does't have RequestQuoteApprovalPermissionPlugin permission assigned.
+     * - Returns isSuccess false if executing of PlaceOrderPermissionPlugin permission returns true.
+     * - Returns isSuccess false if quote approval status is not `approved`.
+     * - Returns isSuccess true otherwise.
      *
      * @api
      *
@@ -32,6 +36,8 @@ class QuoteApprovalCheckoutPreConditionPlugin extends AbstractPlugin implements 
      */
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
-        return $this->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+        $checkoutResponseTransfer = $this->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+
+        return $checkoutResponseTransfer->getIsSuccess();
     }
 }

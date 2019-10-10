@@ -22,7 +22,7 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     /**
      * @return string[]
      */
-    public function getRequiredQuoteFields(): array
+    public function getRequiredQuoteFieldsForApprovalProcess(): array
     {
         return [];
     }
@@ -30,7 +30,7 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     /**
      * @return bool
      */
-    public function isPermissionCalculationIncludeShipment(): bool
+    public function isShipmentPriceIncludedInQuoteApprovalPermissionCheck(): bool
     {
         return false;
     }

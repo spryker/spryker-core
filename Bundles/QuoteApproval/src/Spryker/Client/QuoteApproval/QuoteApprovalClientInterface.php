@@ -244,5 +244,5 @@ interface QuoteApprovalClientInterface
      *
      * @return bool
      */
-    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool;
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

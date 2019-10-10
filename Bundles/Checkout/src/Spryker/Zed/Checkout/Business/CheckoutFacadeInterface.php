@@ -44,5 +44,5 @@ interface CheckoutFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isOrderPlaceable(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
 }

@@ -29,6 +29,6 @@ class QuoteApprovalQuoteFieldsAllowedForSavingProviderPlugin extends AbstractPlu
      */
     public function execute(QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFacade()->getQuoteFieldsAllowedForSaving($quoteTransfer);
+        return $this->getFacade()->getQuoteFieldsAllowedForSavingByQuoteApprovalStatus($quoteTransfer);
     }
 }

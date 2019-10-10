@@ -28,6 +28,6 @@ class QuoteApprovalShipmentConnectorClient extends AbstractClient implements Quo
     {
         return $this->getFactory()
             ->createQuoteShipmentChecker()
-            ->shipmentCheck($quoteTransfer);
+            ->checkQuoteShipment($quoteTransfer);
     }
 }

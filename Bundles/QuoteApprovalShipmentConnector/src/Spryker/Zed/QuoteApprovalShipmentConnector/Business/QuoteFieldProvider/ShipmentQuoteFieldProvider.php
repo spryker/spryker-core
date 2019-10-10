@@ -51,7 +51,7 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
             return [];
         }
 
-        if (!$this->isQuoteLevelShipmentSet($quoteTransfer)) {
+        if (!$this->isQuoteLevelShipment($quoteTransfer)) {
             return [];
         }
 
@@ -68,7 +68,7 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
      *
      * @return bool
      */
-    protected function isQuoteLevelShipmentSet(QuoteTransfer $quoteTransfer): bool
+    protected function isQuoteLevelShipment(QuoteTransfer $quoteTransfer): bool
     {
         if (!$quoteTransfer->getShipment()) {
             return false;

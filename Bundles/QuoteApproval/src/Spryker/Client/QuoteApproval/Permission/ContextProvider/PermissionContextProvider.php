@@ -51,14 +51,28 @@ class PermissionContextProvider implements PermissionContextProviderInterface
             return 0;
         }
 
-        if ($this->config->isPermissionCalculationIncludeShipment()) {
-            return $quoteTransfer->getTotals()->getGrandTotal();
+        if (!$this->config->isShipmentPriceIncludedInQuoteApprovalPermissionCheck()) {
+            return $this->getQuoteSumWithoutShipment($quoteTransfer);
         }
 
+        return $quoteTransfer->getTotals()->getGrandTotal();
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getQuoteSumWithoutShipment(QuoteTransfer $quoteTransfer): int
+    {
         return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);
     }
 
     /**
+     * @deprecated Will be removed without replacement. BC-reason only.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int

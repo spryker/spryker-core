@@ -17,16 +17,16 @@ class QuoteApprovalConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getRequiredQuoteFields(): array
+    public function getRequiredQuoteFieldsForApprovalProcess(): array
     {
-        return $this->getSharedConfig()->getRequiredQuoteFields();
+        return $this->getSharedConfig()->getRequiredQuoteFieldsForApprovalProcess();
     }
 
     /**
      * @return bool
      */
-    public function isPermissionCalculationIncludeShipment(): bool
+    public function isShipmentPriceIncludedInQuoteApprovalPermissionCheck(): bool
     {
-        return $this->getSharedConfig()->isPermissionCalculationIncludeShipment();
+        return $this->getSharedConfig()->isShipmentPriceIncludedInQuoteApprovalPermissionCheck();
     }
 }

@@ -46,9 +46,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    public function isOrderPlaceableAction(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    public function isPlaceableOrderAction(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
-        return $this->getFacade()->isOrderPlaceable($quoteTransfer);
+        return $this->getFacade()->isPlaceableOrder($quoteTransfer);
     }
 
     /**

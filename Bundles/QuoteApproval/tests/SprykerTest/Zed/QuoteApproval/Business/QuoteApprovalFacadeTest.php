@@ -92,7 +92,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQuoteFieldsAllowedForSavingReturnsCorrectQuoteFields(): void
+    public function testGetQuoteFieldsAllowedForSavingByQuoteApprovalStatusReturnsCorrectQuoteFields(): void
     {
         // Arrange
         $quoteTransfer = $this->createQuoteWithGrandTotal(static::VALUE_GRAND_TOTAL);
@@ -103,7 +103,7 @@ class QuoteApprovalFacadeTest extends Unit
 
         // Act
         $quoteFieldsAllowedForSaving = $this->getQuoteApprovalFacadeMock($requiredQuoteFields)
-            ->getQuoteFieldsAllowedForSaving($quoteTransfer);
+            ->getQuoteFieldsAllowedForSavingByQuoteApprovalStatus($quoteTransfer);
 
         // Assert
         $this->assertCount(0, $quoteFieldsAllowedForSaving);
@@ -112,7 +112,7 @@ class QuoteApprovalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQuoteFieldsAllowedForSavingNotReturnsRequiredQuoteFields(): void
+    public function testGetQuoteFieldsAllowedForSavingByQuoteApprovalStatusNotReturnsRequiredQuoteFields(): void
     {
         // Arrange
         $quoteApprovalCreateRequestTransfer = $this->createValidQuoteApprovalCreateRequestTransfer();
@@ -124,7 +124,7 @@ class QuoteApprovalFacadeTest extends Unit
         // Act
         $this->getQuoteApprovalFacadeMock($requiredQuoteFields)->approveQuoteApproval($quoteApprovalRequestTransfer);
         $quoteFieldsAllowedForSaving = $this->getQuoteApprovalFacadeMock($requiredQuoteFields)
-            ->getQuoteFieldsAllowedForSaving($this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()));
+            ->getQuoteFieldsAllowedForSavingByQuoteApprovalStatus($this->findQuoteById($quoteApprovalCreateRequestTransfer->getQuote()->getIdQuote()));
 
         // Assert
         $this->assertSame($requiredQuoteFields, $quoteFieldsAllowedForSaving);

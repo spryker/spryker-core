@@ -41,8 +41,8 @@ class QuoteChecker implements QuoteCheckerInterface
     {
         $quoteData = $quoteTransfer->toArray(false, true);
 
-        foreach ($this->quoteApprovalConfig->getRequiredQuoteFields() as $requiredQuoteField) {
-            if ($quoteData[$requiredQuoteField] === null) {
+        foreach ($this->quoteApprovalConfig->getRequiredQuoteFieldsForApprovalProcess() as $requiredQuoteField) {
+            if (empty($quoteData[$requiredQuoteField])) {
                 return false;
             }
         }

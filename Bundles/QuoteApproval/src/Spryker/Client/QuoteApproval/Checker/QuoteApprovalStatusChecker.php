@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteApproval\StepAccessChecker;
+namespace Spryker\Client\QuoteApproval\Checker;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
 use Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface;
 
-class QuoteApprovalStepAccessChecker implements QuoteApprovalStepAccessCheckerInterface
+class QuoteApprovalStatusChecker implements QuoteApprovalStatusCheckerInterface
 {
     /**
      * @var \Spryker\Client\QuoteApproval\Quote\QuoteStatusCheckerInterface
@@ -38,7 +38,7 @@ class QuoteApprovalStepAccessChecker implements QuoteApprovalStepAccessCheckerIn
      *
      * @return bool
      */
-    public function checkCheckoutStepAccessibility(QuoteTransfer $quoteTransfer): bool
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
         return !($quoteTransfer->getQuoteApprovals()->count()
             && $this->quoteClient->isQuoteLocked($quoteTransfer)
