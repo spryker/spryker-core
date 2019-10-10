@@ -255,7 +255,7 @@ class ItemType extends AbstractType
             'required' => false,
             'disabled' => true,
             'constraints' => [
-                $this->createNumberConstraint(),
+                $this->createNumberConstraint($options),
             ],
         ]);
 
