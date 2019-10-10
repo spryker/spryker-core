@@ -1,5 +1,15 @@
-{% set mappedItems = order.items | reduce((collection, item) => collection | merge({('_' ~ item.idSalesOrderItem): (item)}), {}) %}
+{% set mappedItems = (items ?: order.items) | reduce((collection, item) => collection | merge({('_' ~ item.idSalesOrderItem): (item)}), {}) %}
+{% set mappedBundles = [] %}
+
 {% for bundle in order.salesOrderConfiguredBundles %}
+    {% set break = false %}
+    {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined and not break %}
+        {% set mappedBundles = mappedBundles | merge([bundle]) %}
+        {% set break = true %}
+    {% endfor %}
+{% endfor %}
+
+{% for bundle in mappedBundles %}
     <tr>
         <td colspan="5">
             {{ bundle.name | trans }}
@@ -9,7 +19,7 @@
             {% set bundleSumSubtotalAggregation = 0 %}
             {% set bundleSumPriceToPayAggregation = 0 %}
 
-            {% for item in bundle.salesOrderConfiguredBundleItems %}
+            {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
                 {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
                 {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + product.sumSubtotalAggregation %}
                 {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
@@ -18,7 +28,7 @@
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
-    {% for item in bundle.salesOrderConfiguredBundleItems %}
+    {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
         <tr>
             {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
             {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image} %}{% endembed %}
