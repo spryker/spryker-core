@@ -152,27 +152,6 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductConcreteStorageDataByIds(array $productConcreteIds, string $localeName): array
-    {
-        $productConcreteIds = array_filter($productConcreteIds, function ($idProductConcrete) {
-            return $idProductConcrete && !$this->isProductConcreteRestricted($idProductConcrete);
-        });
-
-        $storageKeys = array_map(function ($idProductConcrete) use ($localeName) {
-            return $this->getStorageKey((string)$idProductConcrete, $localeName);
-        }, $productConcreteIds);
-
-        return array_map(function ($storageData) {
-            return $this->utilEncodingService->decodeJson($storageData, true);
-        }, $this->storageClient->getMulti($storageKeys));
-    }
-
-    /**
      * @param array $data
      *
      * @return array
@@ -280,22 +259,16 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function getProductConcreteStorageDataByMappingAndIdentifiers(string $mappingType, array $identifiers, string $localeName): array
     {
-        $mappingKeys = array_map(function ($identifier) use ($mappingType, $localeName) {
-            return $this->getStorageKey($mappingType . ':' . $identifier, $localeName);
-        }, $identifiers);
-        $mappingData = array_map(function ($storageData) {
-            return $this->utilEncodingService->decodeJson($storageData, true);
+        $mappingKeys = $this->generateMappingKeys($mappingType, $identifiers, $localeName);
+        $concreteProductIds = array_map(function (string $storageData) {
+            return $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
         }, $this->storageClient->getMulti($mappingKeys));
 
-        if (!$mappingData) {
+        if (!$concreteProductIds) {
             return [];
         }
 
-        $concreteProductIds = array_map(function ($mappingData) {
-            return $mappingData[static::KEY_ID];
-        }, $mappingData);
-
-        return $this->getProductConcreteStorageDataByIds($concreteProductIds, $localeName);
+        return $this->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($concreteProductIds, $localeName);
     }
 
     /**
@@ -441,6 +414,24 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         return $storageKeys;
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function generateMappingKeys(string $mappingType, array $identifiers, string $localeName)
+    {
+        $mappingKeys = [];
+
+        foreach ($identifiers as $identifier) {
+            $mappingKeys[] = $this->getStorageKey($mappingType . ':' . $identifier, $localeName);
+        }
+
+        return $mappingKeys;
     }
 
     /**

@@ -33,7 +33,7 @@ class ProductLabelStorageToStorageClientBridge implements ProductLabelStorageToS
     }
 
     /**
-     * @param string[] $keys
+     * @param array $keys
      *
      * @return array
      */

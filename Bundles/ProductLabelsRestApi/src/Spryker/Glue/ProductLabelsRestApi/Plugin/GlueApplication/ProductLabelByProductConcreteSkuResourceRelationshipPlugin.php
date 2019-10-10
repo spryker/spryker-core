@@ -15,11 +15,11 @@ use Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductLabelsRestApi\ProductLabelsRestApiFactory getFactory()
  */
-class ProductLabelByConcreteProductSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductLabelByProductConcreteSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds product-labels resource as relationship by concreteProductSku.
+     * - Adds product-labels resource as relationship by concrete product sku.
      *
      * @api
      *

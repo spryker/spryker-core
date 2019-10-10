@@ -17,7 +17,7 @@ interface ProductLabelStorageToStorageClientInterface
     public function get($key);
 
     /**
-     * @param string[] $keys
+     * @param array $keys
      *
      * @return array
      */

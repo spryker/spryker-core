@@ -28,14 +28,6 @@ interface ProductConcreteStorageReaderInterface
     public function findProductConcreteStorageData($idProductConcrete, $localeName): ?array;
 
     /**
-     * @param int[] $productConcreteIds
-     * @param string $localeName
-     *
-     * @return array
-     */
-    public function getProductConcreteStorageDataByIds(array $productConcreteIds, string $localeName): array;
-
-    /**
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]

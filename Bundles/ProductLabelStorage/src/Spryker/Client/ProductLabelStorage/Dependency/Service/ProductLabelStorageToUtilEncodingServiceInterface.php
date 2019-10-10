@@ -17,5 +17,5 @@ interface ProductLabelStorageToUtilEncodingServiceInterface
      *
      * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductLabelStorage\Dependency\Service;
 
-class ProductLabelStorageToUtilEncodingService implements ProductLabelStorageToUtilEncodingServiceInterface
+class ProductLabelStorageToUtilEncodingServiceBridge implements ProductLabelStorageToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
@@ -30,7 +30,7 @@ class ProductLabelStorageToUtilEncodingService implements ProductLabelStorageToU
      *
      * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }

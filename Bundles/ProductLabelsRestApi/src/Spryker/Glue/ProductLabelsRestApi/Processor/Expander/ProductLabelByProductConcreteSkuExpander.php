@@ -11,7 +11,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface;
 
-class ProductLabelByConcreteProductSkuExpander implements ProductLabelByConcreteProductSkuExpanderInterface
+class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductConcreteSkuExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ProductLabelsRestApi\Processor\Reader\ProductLabelReaderInterface
@@ -27,37 +27,37 @@ class ProductLabelByConcreteProductSkuExpander implements ProductLabelByConcrete
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): array
     {
-        $concreteSkuList = array_map(function (RestResourceInterface $resource) {
-            return $resource->getId();
-        }, $resources);
+        $concreteSkus = array_map(function (RestResourceInterface $restResource) {
+            return $restResource->getId();
+        }, $restResources);
 
-        $productLabels = $this->productLabelReader->getLabelByConcreteProductSkuList(
-            $concreteSkuList,
+        $productLabelResources = $this->productLabelReader->getByProductConcreteSkus(
+            $concreteSkus,
             $restRequest->getMetadata()->getLocale()
         );
 
-        return $this->addProductLabelsToResources($resources, $productLabels);
+        return $this->addProductLabelsResourceRelationships($restResources, $productLabelResources);
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $productLabels
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $productLabelResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function addProductLabelsToResources(array $resources, array $productLabels): array
+    protected function addProductLabelsResourceRelationships(array $restResources, array $productLabelResources): array
     {
-        return array_map(function (RestResourceInterface $resource) use ($productLabels) {
-            foreach ($productLabels[$resource->getId()] as $productLabel) {
-                $resource->addRelationship($productLabel);
+        return array_map(function (RestResourceInterface $restResource) use ($productLabelResources) {
+            foreach ($productLabelResources[$restResource->getId()] as $productLabelResource) {
+                $restResource->addRelationship($productLabelResource);
             }
-        }, $resources);
+        }, $restResources);
     }
 }

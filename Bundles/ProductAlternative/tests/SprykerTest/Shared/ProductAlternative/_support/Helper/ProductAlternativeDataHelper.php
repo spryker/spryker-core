@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Shared\ProductAlternative\Helper;
 
-use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -33,10 +32,8 @@ class ProductAlternativeDataHelper extends Module
             $productConcreteTransfer->getIdProductConcrete(),
             $skuProductAlternative
         );
-        $productConcreteTransfer->setProductAlternativeCreateRequests(new ArrayObject([$productAlternativeCreateRequestTransfer]));
-        $this->getLocator()
-            ->productAlternative()
-            ->facade()
+        $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
+        $this->getLocator()->productAlternative()->facade()
             ->persistProductAlternative($productConcreteTransfer);
     }
 

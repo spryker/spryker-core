@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductLabelStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
+use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
@@ -90,9 +91,37 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
             return [];
         }
 
-        return array_map(function ($productLabelIds) use ($localeName) {
-            return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName);
-        }, $productLabelIdsByAbstractProductIds);
+        $productLabelIds = array_unique(array_merge(...$productLabelIdsByAbstractProductIds));
+        $productLabelDictionaryItemTransfers = $this->setProductLabelDictionaryItemTransfersProductLabelIdKeys(
+            $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName)
+        );
+        $productLabelDictionaryItemTransfersByAbstractProductIds = [];
+
+        foreach ($productLabelIdsByAbstractProductIds as $productAbstractId => $productLabelIds) {
+            $productLabelDictionaryItemTransfersByAbstractProductIds[$productAbstractId] = array_intersect_key(
+                $productLabelDictionaryItemTransfers,
+                array_flip($productLabelIds)
+            );
+        }
+
+        return $productLabelDictionaryItemTransfersByAbstractProductIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     */
+    protected function setProductLabelDictionaryItemTransfersProductLabelIdKeys(array $productLabelDictionaryItemTransfers): array
+    {
+        $productLabelIds = array_map(function (ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer) {
+            return $productLabelDictionaryItemTransfer->getIdProductLabel();
+        }, $productLabelDictionaryItemTransfers);
+
+        return array_combine(
+            $productLabelIds,
+            $productLabelDictionaryItemTransfers
+        );
     }
 
     /**
@@ -116,14 +145,14 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
             return $labelIds;
         }
 
-        $storageKey = $this->getProductLabelStorageKeyByIdAbstractProduct($idProductAbstract);
+        $storageKey = $this->generateProductLabelStorageKey($idProductAbstract);
         $storageDataItem = $this->storageClient->get($storageKey);
 
         if (!$storageDataItem) {
             return [];
         }
 
-        return $this->mapProductLabelStorageDataItemToProductLabelIds($storageDataItem);
+        return $this->getProductLabelIdsFromProductLabelStorageDataItem($storageDataItem);
     }
 
     /**
@@ -133,10 +162,10 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     protected function getProductLabelIdsByAbstractProductIds(array $abstractProductIds): array
     {
-        $storageKeys = $this->mapAbstractProductIdsToProductLabelStorageKeys($abstractProductIds);
+        $storageKeys = $this->generateProductLabelStorageKeys($abstractProductIds);
         $storageDataItems = $this->getProductLabelStorageDataItemsByProductLabelStorageKeys($storageKeys);
 
-        return $this->mapProductLabelStorageDataItemsToProductLabelIds($storageDataItems);
+        return $this->getProductLabelIdsGroupedByIdProductAbstract($storageDataItems);
     }
 
     /**
@@ -144,12 +173,12 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      *
      * @return string[]
      */
-    protected function mapAbstractProductIdsToProductLabelStorageKeys(array $abstractProductIds): array
+    protected function generateProductLabelStorageKeys(array $abstractProductIds): array
     {
         $storageKeys = [];
 
         foreach ($abstractProductIds as $idProductAbstract) {
-            $storageKeys[$idProductAbstract] = $this->getProductLabelStorageKeyByIdAbstractProduct($idProductAbstract);
+            $storageKeys[$idProductAbstract] = $this->generateProductLabelStorageKey($idProductAbstract);
         }
 
         return $storageKeys;
@@ -164,8 +193,8 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     {
         $storageData = array_filter($this->storageClient->getMulti($storageKeys));
 
-        return array_map(function ($storageData) {
-            return $this->utilEncodingService->decodeJson($storageData, true);
+        return array_map(function (string $productLabelStorageEncodedData) {
+            return $this->utilEncodingService->decodeJson($productLabelStorageEncodedData, true);
         }, $storageData);
     }
 
@@ -174,13 +203,13 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      *
      * @return int[][]
      */
-    protected function mapProductLabelStorageDataItemsToProductLabelIds(array $storageDataItems): array
+    protected function getProductLabelIdsGroupedByIdProductAbstract(array $storageDataItems): array
     {
         $productLabelIds = [];
 
         foreach ($storageDataItems as $storageDataItem) {
             $productLabelIds[$storageDataItem[static::KEY_ID_PRODUCT_ABSTRACT]] =
-                $this->mapProductLabelStorageDataItemToProductLabelIds($storageDataItem);
+                $this->getProductLabelIdsFromProductLabelStorageDataItem($storageDataItem);
         }
 
         return array_filter($productLabelIds);
@@ -191,7 +220,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      *
      * @return string
      */
-    protected function getProductLabelStorageKeyByIdAbstractProduct(int $idProductAbstract): string
+    protected function generateProductLabelStorageKey(int $idProductAbstract): string
     {
         return $this->synchronizationService
             ->getStorageKeyBuilder(SharedProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME)
@@ -206,7 +235,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      *
      * @return array
      */
-    protected function mapProductLabelStorageDataItemToProductLabelIds(array $storageDataItem): array
+    protected function getProductLabelIdsFromProductLabelStorageDataItem(array $storageDataItem): array
     {
         return (new ProductAbstractLabelStorageTransfer())
             ->fromArray($storageDataItem, true)

@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientBridge;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceBridge;
-use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingService;
+use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceBridge;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -31,6 +31,7 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addUtilEncodingService($container);
@@ -75,7 +76,7 @@ class ProductLabelStorageDependencyProvider extends AbstractDependencyProvider
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductLabelStorageToUtilEncodingService(
+            return new ProductLabelStorageToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
         });

@@ -36,9 +36,7 @@ class OauthHelper extends Module
             ->setUsername($customerTransfer->getEmail())
             ->setPassword($customerTransfer->getNewPassword());
 
-        return $this->getLocator()
-            ->oauth()
-            ->facade()
+        return $this->getLocator()->oauth()->facade()
             ->processAccessTokenRequest($oauthRequestTransfer);
     }
 }

@@ -44,9 +44,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      */
     public function getLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
     {
-        return $this
-            ->getFactory()
-            ->createProductAbstractLabelStorageReader()
+        return $this->getFactory()->createProductAbstractLabelStorageReader()
             ->getLabelsByProductAbstractIds($productAbstractIds, $localeName);
     }
 

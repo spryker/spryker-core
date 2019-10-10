@@ -10,8 +10,8 @@ namespace Spryker\Glue\ProductLabelsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductLabelStorageClientInterface;
 use Spryker\Glue\ProductLabelsRestApi\Dependency\Client\ProductLabelsRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByConcreteProductSkuExpander;
-use Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByConcreteProductSkuExpanderInterface;
+use Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByProductConcreteSkuExpander;
+use Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByProductConcreteSkuExpanderInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelResourceRelationshipExpander;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductLabelsRestApi\Processor\Mapper\ProductLabelMapper;
@@ -67,10 +67,10 @@ class ProductLabelsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByConcreteProductSkuExpanderInterface
+     * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByProductConcreteSkuExpanderInterface
      */
-    public function createProductLabelByConcreteProductSkuExpander(): ProductLabelByConcreteProductSkuExpanderInterface
+    public function createProductLabelByConcreteProductSkuExpander(): ProductLabelByProductConcreteSkuExpanderInterface
     {
-        return new ProductLabelByConcreteProductSkuExpander($this->createProductLabelReader());
+        return new ProductLabelByProductConcreteSkuExpander($this->createProductLabelReader());
     }
 }
