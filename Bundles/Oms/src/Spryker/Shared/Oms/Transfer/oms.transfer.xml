@@ -18,7 +18,8 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
-    <transfer name="Locale"></transfer>
+    <transfer name="Locale">
+    </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
         <property name="sku" type="string"/>
