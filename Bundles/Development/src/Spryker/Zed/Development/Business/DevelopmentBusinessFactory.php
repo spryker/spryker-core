@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business;
 
 use Nette\DI\Config\Loader;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinder;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinderInterface;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
@@ -1888,6 +1890,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated use `createAllModuleFinder` instead.
+     *
      * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinderInterface
      */
     public function createArchitectureBundleFinder()
@@ -1897,6 +1901,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createCamelCaseToDashFilter(),
             $this->getConfig()->getProjectNamespaces(),
             $this->getConfig()->getCoreNamespaces()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinderInterface
+     */
+    public function createAllModuleFinder(): AllModuleFinderInterface
+    {
+        return new AllModuleFinder(
+            $this->createFinder(),
+            $this->getConfig(),
+            $this->createCamelCaseToDashFilter()
         );
     }
 
