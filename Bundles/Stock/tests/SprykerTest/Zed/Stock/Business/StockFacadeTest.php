@@ -18,6 +18,7 @@ use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
@@ -226,7 +227,7 @@ class StockFacadeTest extends Unit
         $this->stockFacade->decrementStockProduct(
             self::CONCRETE_SKU,
             $this->stockEntity1->getName(),
-            10
+            new Decimal(10)
         );
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
@@ -242,7 +243,7 @@ class StockFacadeTest extends Unit
         $this->stockFacade->incrementStockProduct(
             self::CONCRETE_SKU,
             $this->stockEntity1->getName(),
-            10
+            new Decimal(10)
         );
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);

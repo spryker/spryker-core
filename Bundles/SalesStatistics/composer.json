@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.30.0",
-    "spryker/oms": "^8.0.0 || ^10.0.0",
+    "spryker/oms": "^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/twig": "^3.3.1"
