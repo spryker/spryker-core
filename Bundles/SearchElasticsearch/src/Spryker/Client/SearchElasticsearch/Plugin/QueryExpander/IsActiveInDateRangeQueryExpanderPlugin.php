@@ -23,7 +23,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     * - Expands range query with active_from and active_to fields.
      *
      * @api
      *

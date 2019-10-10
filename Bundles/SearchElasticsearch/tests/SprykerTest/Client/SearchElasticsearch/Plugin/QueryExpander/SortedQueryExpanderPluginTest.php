@@ -11,9 +11,9 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SortConfigTransfer;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SortedQueryExpanderPlugin;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
 
 /**
  * Auto-generated group annotations
@@ -28,29 +28,32 @@ use Spryker\Client\SearchExtension\Config\SortConfigInterface;
  */
 class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
+    protected const DIRECTION_ASC = 'asc';
+
     /**
      * @dataProvider sortedQueryExpanderDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\SortConfigInterface $sortConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param \Elastica\Query $expectedQuery
      * @param array $params
      *
      * @return void
      */
     public function testSortedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(
-        SortConfigInterface $sortConfig,
+        SearchConfigInterface $searchConfigMock,
         Query $expectedQuery,
         array $params = []
     ): void {
-        $searchFactoryMock = $this->createSearchElasticsearchFactoryMockWithSortConfig($sortConfig);
-
+        // Arrange
+        $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfigMock);
         $queryExpander = new SortedQueryExpanderPlugin();
         $queryExpander->setFactory($searchFactoryMock);
 
+        // Act
         $query = $queryExpander->expandQuery($this->createBaseQueryPlugin(), $params);
 
+        // Assert
         $query = $query->getSearchQuery();
-
         $this->assertEquals($expectedQuery, $query);
     }
 
@@ -71,14 +74,14 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function getDataWithoutSorting(): array
     {
-        $sortConfig = $this->createSimpleSortSearchConfig();
+        $searchConfigMock = $this->createSimpleSortSearchConfig();
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery());
 
         $requestParameters = [];
 
-        return [$sortConfig, $expectedQuery, $requestParameters];
+        return [$searchConfigMock, $expectedQuery, $requestParameters];
     }
 
     /**
@@ -86,14 +89,14 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function getDataForSimpleStringSort(): array
     {
-        $sortConfig = $this->createSimpleSortSearchConfig();
+        $searchConfigMock = $this->createSimpleSortSearchConfig();
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
             ->addSort(
                 [
                     PageIndexMap::STRING_SORT . '.foo' => [
-                        'order' => SortConfig::DIRECTION_ASC,
+                        'order' => static::DIRECTION_ASC,
                         'mode' => 'min',
                     ],
                 ]
@@ -103,7 +106,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             SortConfig::DEFAULT_SORT_PARAM_KEY => 'foo-param',
         ];
 
-        return [$sortConfig, $expectedQuery, $requestParameters];
+        return [$searchConfigMock, $expectedQuery, $requestParameters];
     }
 
     /**
@@ -124,18 +127,19 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createSimpleSortSearchConfig(): SortConfigInterface
+    protected function createSimpleSortSearchConfig(): SearchConfigInterface
     {
-        $sortConfig = $this->createSortConfig();
-        $sortConfig->addSort(
-            (new SortConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getSortConfig()
+            ->addSort(
+                (new SortConfigTransfer())
                     ->setName('foo')
                     ->setParameterName('foo-param')
                     ->setFieldName(PageIndexMap::STRING_SORT)
-        );
+            );
 
-        return $sortConfig;
+        return $searchConfigMock;
     }
 }

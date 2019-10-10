@@ -10,9 +10,9 @@ namespace SprykerTest\Client\SearchElasticsearch\Plugin\ResultFormatter;
 use Elastica\ResultSet;
 use Generated\Shared\Transfer\PaginationConfigTransfer;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +30,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @dataProvider resultFormatterDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param int $totalHits
      * @param array $requestParameters
      * @param \Generated\Shared\Transfer\PaginationSearchResultTransfer $expectedResult
@@ -38,7 +38,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
      * @return void
      */
     public function testFormatResultShouldReturnCorrectFormat(
-        PaginationConfigInterface $paginationConfig,
+        SearchConfigInterface $searchConfigMock,
         int $totalHits,
         array $requestParameters,
         PaginationSearchResultTransfer $expectedResult
@@ -46,11 +46,11 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
         // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getPaginationConfig'])
+            ->setMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
-            ->method('getPaginationConfig')
-            ->willReturn($paginationConfig);
+            ->method('getSearchConfig')
+            ->willReturn($searchConfigMock);
 
         $paginatedResultFormatterPlugin = new PaginatedResultFormatterPlugin();
         $paginatedResultFormatterPlugin->setFactory($searchFactoryMock);
@@ -93,8 +93,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     protected function getDataForFirstPageWithoutRequestParameters(): array
     {
         $totalHits = 100;
-
-        $paginationConfig = $this->createSimpleSearchConfigMock();
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
 
         $requestParameters = [];
 
@@ -103,9 +102,9 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setCurrentPage(1)
             ->setMaxPage(10)
             ->setCurrentItemsPerPage(10)
-            ->setConfig($paginationConfig->get());
+            ->setConfig($searchConfigMock->getPaginationConfig()->get());
 
-        return [$paginationConfig, $totalHits, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $totalHits, $requestParameters, $expectedResult];
     }
 
     /**
@@ -114,9 +113,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     protected function getZeroResultData(): array
     {
         $totalHits = 0;
-
-        $paginationConfig = $this->createSimpleSearchConfigMock();
-
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
         $requestParameters = [];
 
         $expectedResult = (new PaginationSearchResultTransfer())
@@ -124,9 +121,9 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setCurrentPage(0)
             ->setMaxPage(0)
             ->setCurrentItemsPerPage(10)
-            ->setConfig($paginationConfig->get());
+            ->setConfig($searchConfigMock->getPaginationConfig()->get());
 
-        return [$paginationConfig, $totalHits, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $totalHits, $requestParameters, $expectedResult];
     }
 
     /**
@@ -135,9 +132,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     protected function getDataForExplicitFirstPage(): array
     {
         $totalHits = 100;
-
-        $paginationConfig = $this->createSimpleSearchConfigMock();
-
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
         $requestParameters = [
             'page' => 1,
         ];
@@ -147,9 +142,9 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setCurrentPage(1)
             ->setMaxPage(10)
             ->setCurrentItemsPerPage(10)
-            ->setConfig($paginationConfig->get());
+            ->setConfig($searchConfigMock->getPaginationConfig()->get());
 
-        return [$paginationConfig, $totalHits, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $totalHits, $requestParameters, $expectedResult];
     }
 
     /**
@@ -161,9 +156,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     protected function getInvalidPageData(int $page, int $expectedPage): array
     {
         $totalHits = 100;
-
-        $paginationConfig = $this->createSimpleSearchConfigMock();
-
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
         $requestParameters = [
             'page' => $page,
         ];
@@ -173,9 +166,9 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setCurrentPage($expectedPage)
             ->setMaxPage(10)
             ->setCurrentItemsPerPage(10)
-            ->setConfig($paginationConfig->get());
+            ->setConfig($searchConfigMock->getPaginationConfig()->get());
 
-        return [$paginationConfig, $totalHits, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $totalHits, $requestParameters, $expectedResult];
     }
 
     /**
@@ -184,9 +177,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     protected function getDataForValidItemsPerPageParameter(): array
     {
         $totalHits = 100;
-
-        $paginationConfig = $this->createSimpleSearchConfigMock();
-
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
         $requestParameters = [
             'ipp' => 50,
         ];
@@ -196,9 +187,9 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setCurrentPage(1)
             ->setMaxPage(2)
             ->setCurrentItemsPerPage(50)
-            ->setConfig($paginationConfig->get());
+            ->setConfig($searchConfigMock->getPaginationConfig()->get());
 
-        return [$paginationConfig, $totalHits, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $totalHits, $requestParameters, $expectedResult];
     }
 
     /**
@@ -208,7 +199,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     {
         $totalHits = 100;
 
-        $paginationConfig = $this->createSimpleSearchConfigMock();
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
 
         $requestParameters = [
             'ipp' => 15,
@@ -219,23 +210,24 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
             ->setCurrentPage(1)
             ->setMaxPage(10)
             ->setCurrentItemsPerPage(10)
-            ->setConfig($paginationConfig->get());
+            ->setConfig($searchConfigMock->getPaginationConfig()->get());
 
-        return [$paginationConfig, $totalHits, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $totalHits, $requestParameters, $expectedResult];
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createSimpleSearchConfigMock(): PaginationConfigInterface
+    protected function createSimpleSearchConfigMock(): SearchConfigInterface
     {
-        $paginationConfig = $this->createPaginationConfig();
-        $paginationConfig->setPagination((new PaginationConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getPaginationConfig()
+            ->setPagination((new PaginationConfigTransfer())
                 ->setParameterName('page')
                 ->setItemsPerPageParameterName('ipp')
                 ->setDefaultItemsPerPage(10)
                 ->setValidItemsPerPageOptions([10, 50, 100]));
 
-        return $paginationConfig;
+        return $searchConfigMock;
     }
 }

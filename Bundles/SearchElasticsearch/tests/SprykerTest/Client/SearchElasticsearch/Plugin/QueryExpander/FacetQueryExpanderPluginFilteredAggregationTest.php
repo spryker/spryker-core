@@ -49,7 +49,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
      */
     protected function createFilteredStringFacetData(): array
     {
-        $facetConfig = $this->createStringSearchConfig();
+        $searchConfigMock = $this->createStringSearchConfig();
         $expectedStringFacetAggregation = $this->getExpectedStringFacetAggregation();
 
         $expectedAggregations = [
@@ -65,7 +65,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
             'foo-param' => 'asdf',
         ];
 
-        return [$facetConfig, $expectedAggregations, $parameters];
+        return [$searchConfigMock, $expectedAggregations, $parameters];
     }
 
     /**
@@ -73,7 +73,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
      */
     protected function createMultiFilteredStringFacetData(): array
     {
-        $facetConfig = $this->createMultiStringSearchConfig();
+        $searchConfigMock = $this->createMultiStringSearchConfig();
         $expectedStringFacetAggregation = $this->getExpectedStringFacetAggregation();
 
         $expectedAggregations = [
@@ -145,7 +145,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
             'baz-param' => 'yxcv',
         ];
 
-        return [$facetConfig, $expectedAggregations, $parameters];
+        return [$searchConfigMock, $expectedAggregations, $parameters];
     }
 
     /**
@@ -153,7 +153,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
      */
     protected function createFilteredIntegerFacetData(): array
     {
-        $facetConfig = $this->createIntegerSearchConfig();
+        $searchConfigMock = $this->createIntegerSearchConfig();
         $expectedIntegerFacetAggregation = $this->getExpectedIntegerFacetAggregation();
 
         $expectedAggregations = [
@@ -169,7 +169,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
             'foo-param' => 123,
         ];
 
-        return [$facetConfig, $expectedAggregations, $parameters];
+        return [$searchConfigMock, $expectedAggregations, $parameters];
     }
 
     /**
@@ -177,7 +177,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
      */
     protected function createMultiFilteredIntegerFacetData(): array
     {
-        $facetConfig = $this->createMultiIntegerSearchConfig();
+        $searchConfigMock = $this->createMultiIntegerSearchConfig();
         $expectedIntegerFacetAggregation = $this->getExpectedIntegerFacetAggregation();
 
         $expectedAggregations = [
@@ -257,7 +257,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
             ],
         ];
 
-        return [$facetConfig, $expectedAggregations, $parameters];
+        return [$searchConfigMock, $expectedAggregations, $parameters];
     }
 
     /**
@@ -265,7 +265,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
      */
     protected function createFilteredCategoryFacetData(): array
     {
-        $facetConfig = $this->createCategorySearchConfig();
+        $searchConfigMock = $this->createCategorySearchConfig();
         $expectedCategoryFacetAggregation = $this->getExpectedCategoryFacetAggregation();
 
         $expectedAggregations = [
@@ -280,7 +280,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
             'foo-param' => 'c1',
         ];
 
-        return [$facetConfig, $expectedAggregations, $parameters];
+        return [$searchConfigMock, $expectedAggregations, $parameters];
     }
 
     /**
@@ -288,7 +288,7 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
      */
     protected function createFilteredMixedFacetData(): array
     {
-        $facetConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedStringFacetAggregation = $this->getExpectedStringFacetAggregation();
         $expectedIntegerFacetAggregation = $this->getExpectedIntegerFacetAggregation();
         $expectedCategoryFacetAggregation = $this->getExpectedCategoryFacetAggregation();
@@ -355,6 +355,6 @@ class FacetQueryExpanderPluginFilteredAggregationTest extends AbstractFacetQuery
             'baz-param' => 'c1',
         ];
 
-        return [$facetConfig, $expectedAggregations, $parameters];
+        return [$searchConfigMock, $expectedAggregations, $parameters];
     }
 }

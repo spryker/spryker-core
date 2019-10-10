@@ -31,7 +31,7 @@ abstract class AbstractRepository
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,

@@ -23,7 +23,7 @@ class MockPermissionPlugin extends AbstractPlugin implements ExecutablePermissio
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param array $configuration
      * @param mixed|null $context

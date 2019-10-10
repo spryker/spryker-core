@@ -20,6 +20,10 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
     public const PATH_SEPARATOR = '.';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -36,11 +40,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
         $facetData = [];
-
-        $facetConfig = $this
-            ->getFactory()
-            ->getFacetConfig();
-
+        $facetConfig = $this->getFactory()->getSearchConfig()->getFacetConfig();
         $aggregations = $searchResult->getAggregations();
 
         foreach ($facetConfig->getAll() as $facetName => $facetConfigTransfer) {

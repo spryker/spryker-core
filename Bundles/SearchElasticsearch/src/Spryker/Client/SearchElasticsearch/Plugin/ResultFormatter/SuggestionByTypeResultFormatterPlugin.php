@@ -19,6 +19,10 @@ class SuggestionByTypeResultFormatterPlugin extends AbstractElasticsearchResultF
     public const NAME = 'suggestionByType';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()

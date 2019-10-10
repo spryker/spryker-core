@@ -19,7 +19,7 @@ class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPl
     protected const RELATIONSHIP_RESOURCE_TYPE = 'abstract-products';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class CatalogSearchAbstractProductsResourceRelationshipPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

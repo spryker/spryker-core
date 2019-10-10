@@ -81,7 +81,7 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     protected function generateIndexMapClass(string $mappingName, array $mapping): void
     {
         $targetDirectory = $this->config->getClassTargetDirectory();
-        $fileName = $mappingName . self::CLASS_NAME_SUFFIX . self::CLASS_EXTENSION;
+        $fileName = $mappingName . static::CLASS_NAME_SUFFIX . static::CLASS_EXTENSION;
         $templateData = $this->getTemplateData($mappingName, $mapping);
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 

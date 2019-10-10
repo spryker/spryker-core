@@ -32,7 +32,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds category sorting.
      *
      * @api
@@ -79,7 +79,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     protected function hasActiveSortParam(array $requestParameters): bool
     {
-        $sortConfig = $this->getFactory()->getSortConfig();
+        $sortConfig = $this->getFactory()->getSearchConfig()->getSortConfig();
         $sortParamName = $sortConfig->getActiveParamName($requestParameters);
 
         return !empty($sortParamName);
@@ -92,10 +92,10 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      */
     protected function hasActiveCategoryFacet(array $requestParameters): bool
     {
-        $facetConfig = $this->getFactory()->getFacetConfig();
+        $facetConfig = $this->getFactory()->getSearchConfig()->getFacetConfig();
         $activeFacetParamNames = $facetConfig->getActiveParamNames($requestParameters);
 
-        return in_array($this->categoryParamName, $activeFacetParamNames);
+        return in_array($this->categoryParamName, $activeFacetParamNames, true);
     }
 
     /**

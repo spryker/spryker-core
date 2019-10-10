@@ -43,10 +43,10 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createStringFacetData(): array
     {
-        $facetConfig = $this->createStringSearchConfig();
+        $searchConfigMock = $this->createStringSearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 
     /**
@@ -54,10 +54,10 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createMultiStringFacetData(): array
     {
-        $facetConfig = $this->createMultiStringSearchConfig();
+        $searchConfigMock = $this->createMultiStringSearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 
     /**
@@ -65,10 +65,10 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createIntegerFacetData(): array
     {
-        $facetConfig = $this->createIntegerSearchConfig();
+        $searchConfigMock = $this->createIntegerSearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 
     /**
@@ -76,10 +76,10 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createMultiIntegerFacetData(): array
     {
-        $facetConfig = $this->createMultiIntegerSearchConfig();
+        $searchConfigMock = $this->createMultiIntegerSearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 
     /**
@@ -87,10 +87,10 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createCategoryFacetData(): array
     {
-        $facetConfig = $this->createCategorySearchConfig();
+        $searchConfigMock = $this->createCategorySearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 
     /**
@@ -98,10 +98,10 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createMultiCategoryFacetData(): array
     {
-        $facetConfig = $this->createMultiCategorySearchConfig();
+        $searchConfigMock = $this->createMultiCategorySearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 
     /**
@@ -109,9 +109,9 @@ class FacetQueryExpanderPluginQueryTest extends AbstractFacetQueryExpanderPlugin
      */
     protected function createMixedFacetData(): array
     {
-        $facetConfig = $this->createMixedSearchConfig();
+        $searchConfigMock = $this->createMixedSearchConfig();
         $expectedQuery = new BoolQuery();
 
-        return [$facetConfig, $expectedQuery];
+        return [$searchConfigMock, $expectedQuery];
     }
 }

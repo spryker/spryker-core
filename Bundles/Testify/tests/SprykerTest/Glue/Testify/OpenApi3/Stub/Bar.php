@@ -12,7 +12,7 @@ use Spryker\Glue\Testify\OpenApi3\Primitive\AbstractPrimitive;
 class Bar extends AbstractPrimitive
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function cast($value)
     {

@@ -31,7 +31,7 @@ class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPlu
      *
      * @return void
      */
-    public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest()
+    public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest(): void
     {
         $baseQueryPlugin = $this->createBaseQueryPlugin();
         $queryExpander = new SpellingSuggestionQueryExpanderPlugin();

@@ -19,7 +19,7 @@ use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMa
 class ItemCartNoteToShoppingListItemNoteMapperPlugin extends AbstractPlugin implements ItemToShoppingListItemMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Copies the item cart note to shopping list item note if not empty.
      *
      * @api

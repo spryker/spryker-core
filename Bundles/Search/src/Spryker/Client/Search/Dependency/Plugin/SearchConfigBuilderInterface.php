@@ -8,9 +8,9 @@
 namespace Spryker\Client\Search\Dependency\Plugin;
 
 /**
- * @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigPluginInterface` instead.
- * @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface` instead.
- * @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigPluginInterface` instead.
+ * @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\FacetConfigBuilderPluginInterface` instead.
+ * @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigBuilderPluginInterface` instead.
+ * @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\PaginationConfigBuilderPluginInterface` instead.
  */
 interface SearchConfigBuilderInterface
 {

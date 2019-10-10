@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Client\SearchElasticsearch\Plugin\QueryExpander;
 
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 
 /**
  * Auto-generated group annotations
@@ -26,16 +26,16 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQ
     /**
      * @dataProvider facetQueryExpanderDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param array $expectedAggregations
      * @param array $params
      *
      * @return void
      */
-    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(FacetConfigInterface $facetConfig, array $expectedAggregations, array $params = []): void
+    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(SearchConfigInterface $searchConfigMock, array $expectedAggregations, array $params = []): void
     {
         // Arrange
-        $searchFactoryMock = $this->createSearchElasticsearchFactoryMockWithFacetConfig($facetConfig);
+        $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfigMock);
 
         $queryExpander = new FacetQueryExpanderPlugin();
         $queryExpander->setFactory($searchFactoryMock);

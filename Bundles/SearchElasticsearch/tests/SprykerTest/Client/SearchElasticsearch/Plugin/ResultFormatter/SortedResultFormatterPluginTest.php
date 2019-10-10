@@ -10,10 +10,10 @@ namespace SprykerTest\Client\SearchElasticsearch\Plugin\ResultFormatter;
 use Elastica\ResultSet;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Generated\Shared\Transfer\SortSearchResultTransfer;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SortedResultFormatterPlugin;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
 
 /**
  * Auto-generated group annotations
@@ -28,24 +28,27 @@ use Spryker\Client\SearchExtension\Config\SortConfigInterface;
  */
 class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
 {
+    protected const DIRECTION_ASC = 'asc';
+
     /**
      * @dataProvider resultFormatterDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\SortConfigInterface $sortConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param array $requestParameters
      * @param \Generated\Shared\Transfer\SortSearchResultTransfer $expectedResult
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SortConfigInterface $sortConfig, array $requestParameters, SortSearchResultTransfer $expectedResult): void
+    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfigMock, array $requestParameters, SortSearchResultTransfer $expectedResult): void
     {
+        // Arrange
         /** @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchElasticsearchFactory::class)
-            ->setMethods(['getSortConfig'])
+            ->setMethods(['getSearchConfig'])
             ->getMock();
         $searchFactoryMock
-            ->method('getSortConfig')
-            ->willReturn($sortConfig);
+            ->method('getSearchConfig')
+            ->willReturn($searchConfigMock);
 
         $sortedResultFormatterPlugin = new SortedResultFormatterPlugin();
         $sortedResultFormatterPlugin->setFactory($searchFactoryMock);
@@ -55,8 +58,10 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->disableOriginalConstructor()
             ->getMock();
 
+        // Act
         $formattedResult = $sortedResultFormatterPlugin->formatResult($resultSetMock, $requestParameters);
 
+        // Assert
         $this->assertEquals($expectedResult, $formattedResult);
     }
 
@@ -76,7 +81,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getDataForInactiveSort(): array
     {
-        $sortConfig = $this->createSimpleSearchConfigMock();
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
 
         $requestParameters = [];
 
@@ -85,7 +90,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
             ->setCurrentSortParam(null)
             ->setCurrentSortOrder(null);
 
-        return [$sortConfig, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $requestParameters, $expectedResult];
     }
 
     /**
@@ -93,7 +98,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      */
     protected function getDataForActiveSort(): array
     {
-        $sortConfig = $this->createSimpleSearchConfigMock();
+        $searchConfigMock = $this->createSimpleSearchConfigMock();
 
         $requestParameters = [
             SortConfig::DEFAULT_SORT_PARAM_KEY => 'foo-param',
@@ -102,22 +107,23 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $expectedResult = (new SortSearchResultTransfer())
             ->setSortParamNames(['foo-param'])
             ->setCurrentSortParam('foo-param')
-            ->setCurrentSortOrder(SortConfig::DIRECTION_ASC);
+            ->setCurrentSortOrder(static::DIRECTION_ASC);
 
-        return [$sortConfig, $requestParameters, $expectedResult];
+        return [$searchConfigMock, $requestParameters, $expectedResult];
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
      */
-    protected function createSimpleSearchConfigMock(): SortConfigInterface
+    protected function createSimpleSearchConfigMock(): SearchConfigInterface
     {
-        $sortConfig = $this->createSortConfig();
-        $sortConfig->addSort((new SortConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getSortConfig()
+            ->addSort((new SortConfigTransfer())
                 ->setName('foo')
                 ->setParameterName('foo-param')
                 ->setFieldName('foo'));
 
-        return $sortConfig;
+        return $searchConfigMock;
     }
 }

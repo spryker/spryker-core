@@ -7,10 +7,8 @@
 
 namespace Spryker\Client\SearchElasticsearch\Config;
 
-use Generated\Shared\Transfer\SearchConfigExtensionTransfer;
 use Generated\Shared\Transfer\SortConfigTransfer;
 use Spryker\Client\SearchExtension\Config\SortConfigInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface;
 
 class SortConfig implements SortConfigInterface
 {
@@ -30,19 +28,11 @@ class SortConfig implements SortConfigInterface
     protected $sortParamKey;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface|null $sortSearchConfigBuilderPlugin
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
      * @param string $sortParamName
      */
-    public function __construct(
-        ?SortConfigPluginInterface $sortSearchConfigBuilderPlugin = null,
-        array $searchConfigExpanderPlugins = [],
-        string $sortParamName = self::DEFAULT_SORT_PARAM_KEY
-    ) {
+    public function __construct(string $sortParamName = self::DEFAULT_SORT_PARAM_KEY)
+    {
         $this->sortParamKey = $sortParamName;
-
-        $this->buildSortConfig($sortSearchConfigBuilderPlugin);
-        $this->expandSortConfig($searchConfigExpanderPlugins);
     }
 
     /**
@@ -88,9 +78,7 @@ class SortConfig implements SortConfigInterface
      */
     public function getActiveParamName(array $requestParameters): ?string
     {
-        $sortParamName = array_key_exists($this->sortParamKey, $requestParameters) ? $requestParameters[$this->sortParamKey] : null;
-
-        return $sortParamName;
+        return $requestParameters[$this->sortParamKey] ?? null;
     }
 
     /**
@@ -107,10 +95,10 @@ class SortConfig implements SortConfigInterface
         }
 
         if ($sortConfigTransfer->getIsDescending()) {
-            return self::DIRECTION_DESC;
+            return static::DIRECTION_DESC;
         }
 
-        return self::DIRECTION_ASC;
+        return static::DIRECTION_ASC;
     }
 
     /**
@@ -124,44 +112,5 @@ class SortConfig implements SortConfigInterface
             ->requireName()
             ->requireParameterName()
             ->requireFieldName();
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SortConfigPluginInterface|null $sortSearchConfigBuilderPlugin
-     *
-     * @return void
-     */
-    protected function buildSortConfig(?SortConfigPluginInterface $sortSearchConfigBuilderPlugin): void
-    {
-        if (!$sortSearchConfigBuilderPlugin) {
-            return;
-        }
-
-        $sortSearchConfigBuilderPlugin->buildSortConfig($this);
-    }
-
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
-     *
-     * @return void
-     */
-    protected function expandSortConfig(array $searchConfigExpanderPlugins): void
-    {
-        foreach ($searchConfigExpanderPlugins as $searchConfigExpanderPlugin) {
-            $searchConfigExtensionTransfer = $searchConfigExpanderPlugin->getSearchConfigExtension();
-            $this->addSortConfigToSortConfigBuilder($searchConfigExtensionTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchConfigExtensionTransfer $searchConfigExtensionTransfer
-     *
-     * @return void
-     */
-    protected function addSortConfigToSortConfigBuilder(SearchConfigExtensionTransfer $searchConfigExtensionTransfer): void
-    {
-        foreach ($searchConfigExtensionTransfer->getSortConfigs() as $sortConfigTransfer) {
-            $this->addSort($sortConfigTransfer);
-        }
     }
 }

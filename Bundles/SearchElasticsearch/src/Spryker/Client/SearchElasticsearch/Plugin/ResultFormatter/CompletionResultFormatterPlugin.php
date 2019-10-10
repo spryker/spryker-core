@@ -8,16 +8,21 @@
 namespace Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
 class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'completion';
+    protected const NAME = 'completion';
+    protected const KEY_BUCKETS = 'buckets';
+    protected const KEY_KEY = 'key';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -46,10 +51,10 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
     protected function getCompletionFromSuggests(ResultSet $searchResult): array
     {
         $result = [];
-        $aggregation = $searchResult->getAggregation(CompletionQueryExpanderPlugin::AGGREGATION_NAME);
+        $aggregation = $searchResult->getAggregation(static::NAME);
 
-        foreach ($aggregation['buckets'] as $agg) {
-            $result[] = $agg['key'];
+        foreach ($aggregation[static::KEY_BUCKETS] as $agg) {
+            $result[] = $agg[static::KEY_KEY];
         }
 
         return $result;

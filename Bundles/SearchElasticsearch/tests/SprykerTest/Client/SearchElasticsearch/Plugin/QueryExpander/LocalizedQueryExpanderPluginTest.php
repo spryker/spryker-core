@@ -35,12 +35,14 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     public function testLocalizedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery): void
     {
+        // Arrange
         $queryExpander = $this->createLocalizedQueryExpanderPluginMock();
 
+        // Act
         $query = $queryExpander->expandQuery($this->createBaseQueryPlugin());
 
+        // Assert
         $query = $query->getSearchQuery();
-
         $this->assertEquals($expectedQuery, $query);
     }
 
@@ -55,7 +57,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     }
 
     /**
-     * @return array
+     * @return \Elastica\Query[]
      */
     protected function getDataForSimpleLocaleFilteredQuery(): array
     {

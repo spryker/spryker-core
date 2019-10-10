@@ -19,7 +19,7 @@ use Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinu
 class BundledProductsProductDiscontinuedPreDeleteCheckPlugin extends AbstractPlugin implements ProductDiscontinuedPreDeleteCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks discontinued status of bundled products.
      * - Returns ProductDiscontinuedResponseTransfer with isSuccessful=true if all bundled products are not discontinued.
      *

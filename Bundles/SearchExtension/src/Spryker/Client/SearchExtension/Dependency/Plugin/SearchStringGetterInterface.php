@@ -15,7 +15,7 @@ interface SearchStringGetterInterface
      *
      * @api
      *
-     * @return string|string
+     * @return string
      */
     public function getSearchString();
 }

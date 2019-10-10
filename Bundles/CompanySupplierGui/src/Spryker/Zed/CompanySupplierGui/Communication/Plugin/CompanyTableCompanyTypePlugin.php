@@ -24,7 +24,7 @@ class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTab
     protected const FK_COMPANY_TYPE = SpyCompanyTableMap::COL_FK_COMPANY_TYPE;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTab
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTab
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

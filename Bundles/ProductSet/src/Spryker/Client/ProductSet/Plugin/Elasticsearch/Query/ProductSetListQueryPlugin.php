@@ -50,7 +50,7 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns a query object for product set list search.
      *
      * @api
@@ -63,7 +63,7 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Defines a context for product set list search.
      *
      * @api

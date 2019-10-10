@@ -46,7 +46,7 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Defines a context for string search.
      *
      * @api

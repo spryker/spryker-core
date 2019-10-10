@@ -136,7 +136,11 @@ class Config
      */
     public static function hasKey($key)
     {
-        return array_key_exists($key, static::$config);
+        if (static::$config === null) {
+            return false;
+        }
+
+        return static::$config->offsetExists($key);
     }
 
     /**

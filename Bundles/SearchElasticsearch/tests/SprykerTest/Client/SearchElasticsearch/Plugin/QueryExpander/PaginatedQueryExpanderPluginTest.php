@@ -10,8 +10,8 @@ namespace SprykerTest\Client\SearchElasticsearch\Plugin\QueryExpander;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Generated\Shared\Transfer\PaginationConfigTransfer;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\PaginatedQueryExpanderPlugin;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
 
 /**
  * Auto-generated group annotations
@@ -29,19 +29,19 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @dataProvider paginatedQueryExpanderDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\PaginationConfigInterface $paginationConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param \Elastica\Query $expectedQuery
      * @param array $params
      *
      * @return void
      */
     public function testPaginatedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(
-        PaginationConfigInterface $paginationConfig,
+        SearchConfigInterface $searchConfigMock,
         Query $expectedQuery,
         array $params = []
     ): void {
         // Arrange
-        $searchFactoryMock = $this->createSearchElasticsearchFactoryMockWithPaginationConfig($paginationConfig);
+        $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfigMock);
 
         $queryExpander = new PaginatedQueryExpanderPlugin();
         $queryExpander->setFactory($searchFactoryMock);
@@ -72,13 +72,14 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function getDataForFirstPageWithEmptyParameters(): array
     {
-        $paginationConfig = $this->createPaginationConfig();
-        $paginationConfig->setPagination(
-            (new PaginationConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getPaginationConfig()
+            ->setPagination(
+                (new PaginationConfigTransfer())
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
                     ->setDefaultItemsPerPage(10)
-        );
+            );
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
@@ -87,7 +88,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 
         $requestParameters = [];
 
-        return [$paginationConfig, $expectedQuery, $requestParameters];
+        return [$searchConfigMock, $expectedQuery, $requestParameters];
     }
 
     /**
@@ -95,13 +96,14 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function getDataForExplicitFirstPage(): array
     {
-        $paginationConfig = $this->createPaginationConfig();
-        $paginationConfig->setPagination(
-            (new PaginationConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getPaginationConfig()
+            ->setPagination(
+                (new PaginationConfigTransfer())
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
                     ->setDefaultItemsPerPage(10)
-        );
+            );
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
@@ -112,7 +114,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             'page' => 1,
         ];
 
-        return [$paginationConfig, $expectedQuery, $requestParameters];
+        return [$searchConfigMock, $expectedQuery, $requestParameters];
     }
 
     /**
@@ -120,14 +122,15 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function getDataForNonDefaultItemCount(): array
     {
-        $paginationConfig = $this->createPaginationConfig();
-        $paginationConfig->setPagination(
-            (new PaginationConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getPaginationConfig()
+            ->setPagination(
+                (new PaginationConfigTransfer())
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
                     ->setDefaultItemsPerPage(10)
                     ->setValidItemsPerPageOptions([10, 20, 30])
-        );
+            );
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
@@ -138,7 +141,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             'ipp' => 20,
         ];
 
-        return [$paginationConfig, $expectedQuery, $requestParameters];
+        return [$searchConfigMock, $expectedQuery, $requestParameters];
     }
 
     /**
@@ -146,14 +149,15 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      */
     protected function getDataForNonDefaultInvalidItemCount(): array
     {
-        $paginationConfig = $this->createPaginationConfig();
-        $paginationConfig->setPagination(
-            (new PaginationConfigTransfer())
+        $searchConfigMock = $this->createSearchConfigMock();
+        $searchConfigMock->getPaginationConfig()
+            ->setPagination(
+                (new PaginationConfigTransfer())
                     ->setParameterName('page')
                     ->setItemsPerPageParameterName('ipp')
                     ->setDefaultItemsPerPage(10)
                     ->setValidItemsPerPageOptions([10, 20, 30])
-        );
+            );
 
         $expectedQuery = (new Query())
             ->setQuery(new BoolQuery())
@@ -164,6 +168,6 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
             'ipp' => 15,
         ];
 
-        return [$paginationConfig, $expectedQuery, $requestParameters];
+        return [$searchConfigMock, $expectedQuery, $requestParameters];
     }
 }

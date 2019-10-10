@@ -8,8 +8,8 @@
 namespace SprykerTest\Client\SearchElasticsearch\Plugin\QueryExpander;
 
 use Elastica\Query\BoolQuery;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin;
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
 
 /**
  * Auto-generated group annotations
@@ -27,19 +27,19 @@ abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractQueryEx
     /**
      * @dataProvider facetQueryExpanderDataProvider
      *
-     * @param \Spryker\Client\SearchExtension\Config\FacetConfigInterface $facetConfig
+     * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param \Elastica\Query\BoolQuery $expectedQuery
      * @param array $params
      *
      * @return void
      */
     public function testFacetQueryExpanderShouldCreateSearchQueryBasedOnSearchConfig(
-        FacetConfigInterface $facetConfig,
+        SearchConfigInterface $searchConfigMock,
         BoolQuery $expectedQuery,
         array $params = []
     ): void {
         // Arrange
-        $searchFactoryMock = $this->createSearchElasticsearchFactoryMockWithFacetConfig($facetConfig);
+        $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfigMock);
 
         $queryExpander = new FacetQueryExpanderPlugin();
         $queryExpander->setFactory($searchFactoryMock);

@@ -15,7 +15,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterf
 abstract class AbstractElasticsearchResultFormatterPlugin extends AbstractPlugin implements ResultFormatterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

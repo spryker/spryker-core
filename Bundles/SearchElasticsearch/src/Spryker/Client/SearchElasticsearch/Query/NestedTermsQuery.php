@@ -44,8 +44,8 @@ class NestedTermsQuery extends AbstractNestedQuery
         $nestedFieldName = $this->facetConfigTransfer->getName();
 
         return $this->bindMultipleNestedQuery($fieldName, [
-            $this->queryBuilder->createTermQuery($fieldName . self::FACET_NAME_SUFFIX, $nestedFieldName),
-            $this->queryBuilder->createTermsQuery($fieldName . self::FACET_VALUE_SUFFIX, $this->filterValues),
+            $this->queryBuilder->createTermQuery($fieldName . static::FACET_NAME_SUFFIX, $nestedFieldName),
+            $this->queryBuilder->createTermsQuery($fieldName . static::FACET_VALUE_SUFFIX, $this->filterValues),
         ]);
     }
 }

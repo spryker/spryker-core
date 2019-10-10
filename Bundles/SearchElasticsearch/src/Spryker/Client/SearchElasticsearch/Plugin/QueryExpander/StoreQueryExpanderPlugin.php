@@ -21,7 +21,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

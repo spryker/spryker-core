@@ -18,7 +18,7 @@ use Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsReso
 class ProductDiscontinuedConcreteProductsResourceExpanderPlugin extends AbstractPlugin implements ConcreteProductsResourceExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Expands concrete-products resource with discontinued data.
      *
      * @api

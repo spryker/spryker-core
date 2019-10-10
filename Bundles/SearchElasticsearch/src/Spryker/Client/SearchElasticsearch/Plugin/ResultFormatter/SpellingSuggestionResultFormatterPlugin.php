@@ -18,6 +18,10 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
     public const NAME = 'spellingSuggestion';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()

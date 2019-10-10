@@ -23,7 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OauthFacade extends AbstractFacade implements OauthFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +81,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -95,7 +95,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -109,7 +109,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -123,7 +123,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

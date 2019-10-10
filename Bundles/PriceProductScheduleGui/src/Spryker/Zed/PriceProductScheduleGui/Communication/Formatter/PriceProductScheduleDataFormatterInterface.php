@@ -19,13 +19,6 @@ interface PriceProductScheduleDataFormatterInterface
     public function formatTitle(PriceProductTransfer $priceProductTransfer): string;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return string
-     */
-    public function formatRedirectUrl(PriceProductTransfer $priceProductTransfer): string;
-
-    /**
      * @param string|null $timezone
      *
      * @return string

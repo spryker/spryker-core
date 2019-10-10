@@ -23,7 +23,7 @@ interface FacetConfigInterface
      *
      * @return \Generated\Shared\Transfer\FacetConfigTransfer|null
      */
-    public function get($facetName): ?FacetConfigTransfer;
+    public function get(string $facetName): ?FacetConfigTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\FacetConfigTransfer[]

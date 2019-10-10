@@ -15,7 +15,10 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class CategoryExtractor implements AggregationExtractorInterface
 {
-    public const DOC_COUNT = 'doc_count';
+    protected const DOC_COUNT = 'doc_count';
+    protected const KEY_BUCKETS = 'buckets';
+    protected const KEY_KEY = 'key';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -62,10 +65,10 @@ class CategoryExtractor implements AggregationExtractorInterface
     protected function extractFacetData(array $aggregation): ArrayObject
     {
         $facetValues = new ArrayObject();
-        foreach ($aggregation['buckets'] as $bucket) {
+        foreach ($aggregation[static::KEY_BUCKETS] as $bucket) {
             $facetResultValueTransfer = new FacetSearchResultValueTransfer();
             $facetResultValueTransfer
-                ->setValue($bucket['key'])
+                ->setValue($bucket[static::KEY_KEY])
                 ->setDocCount($bucket[static::DOC_COUNT]);
 
             $facetValues->append($facetResultValueTransfer);

@@ -14,11 +14,6 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTrans
 class FacetValueTransformerFactory implements FacetValueTransformerFactoryInterface
 {
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface
-     */
-    protected $valueTransformerPlugin;
-
-    /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @throws \Spryker\Client\SearchElasticsearch\Exception\InvalidFacetSearchResultValueTransformerPluginException

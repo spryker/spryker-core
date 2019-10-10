@@ -20,4 +20,4 @@ use Orm\Zed\Acl\Persistence\Base\SpyAclGroupArchiveQuery as BaseSpyAclGroupArchi
  */
 abstract class AbstractSpyAclGroupArchiveQuery extends BaseSpyAclGroupArchiveQuery
 {
-} // SpyAclGroupArchiveQuery
+}

@@ -18,6 +18,10 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
@@ -38,7 +42,7 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      */
     protected function addPaginationToQuery(Query $query, array $requestParameters): void
     {
-        $paginationConfig = $this->getFactory()->getPaginationConfig();
+        $paginationConfig = $this->getFactory()->getSearchConfig()->getPaginationConfig();
         $currentPage = $paginationConfig->getCurrentPage($requestParameters);
         $itemsPerPage = $paginationConfig->getCurrentItemsPerPage($requestParameters);
 

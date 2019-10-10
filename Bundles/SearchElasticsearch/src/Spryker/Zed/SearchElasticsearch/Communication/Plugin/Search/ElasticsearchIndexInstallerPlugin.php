@@ -19,7 +19,7 @@ use Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface;
 class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements InstallPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

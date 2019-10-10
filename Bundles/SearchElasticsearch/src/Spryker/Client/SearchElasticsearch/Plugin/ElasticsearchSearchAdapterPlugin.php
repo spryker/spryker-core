@@ -19,7 +19,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
 class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Performs search in Elasticsearch.
      *
      * @api
@@ -37,7 +37,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,7 +81,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -95,7 +95,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +110,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -24,6 +24,7 @@ class SkuUniqueValidator extends ConstraintValidator
             return;
         }
 
+        /** @var \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\SkuUnique $constraint */
         $this->validateUniqueness($value, $constraint);
     }
 

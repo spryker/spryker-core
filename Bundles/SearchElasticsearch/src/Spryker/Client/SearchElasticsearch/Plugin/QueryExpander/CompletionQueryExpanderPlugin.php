@@ -20,14 +20,12 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface
  */
 class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    public const AGGREGATION_NAME = 'completion';
-
-    public const SIZE = 10;
-
-    public const SEARCH_WILDCARD = '.*';
+    protected const AGGREGATION_NAME = 'completion';
+    protected const SIZE = 10;
+    protected const SEARCH_WILDCARD = '.*';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +51,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface
      */
-    protected function assertSearchStringGetterQuery(QueryInterface $searchQuery)
+    protected function assertSearchStringGetterQuery(QueryInterface $searchQuery): QueryInterface
     {
         if (!$searchQuery instanceof SearchStringGetterInterface) {
             throw new InvalidSearchQueryException(sprintf(
@@ -91,12 +89,11 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      */
     protected function getRegexpQueryString(?string $searchString): string
     {
-        $searchString = mb_strtolower($searchString);
+        if (!$searchString) {
+            return '';
+        }
 
-        /*
-         * Split the text by whitespace and add double-quotes around them to interpret them literally.
-         * Double quotes inside the search string has to be outside of the literally interpreted search string.
-         */
+        $searchString = mb_strtolower($searchString);
         $searchString = str_replace('"', '"\\""', $searchString);
         $searchString = preg_replace('/\s+/', sprintf('"%s"', static::SEARCH_WILDCARD), $searchString);
 
