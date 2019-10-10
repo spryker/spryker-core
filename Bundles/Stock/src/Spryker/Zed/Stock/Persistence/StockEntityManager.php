@@ -34,6 +34,8 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
 
         $stockEntity->save();
 
+        $map = $this->getFactory()->createStockMapper()->mapStockEntityToStockTransfer($stockEntity, $stockTransfer);
+
         return $stockTransfer->setIdStock($stockEntity->getIdStock());
     }
 
@@ -46,8 +48,8 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
     public function addStockStoreRelations(int $idStock, array $storeIds): void
     {
         foreach ($storeIds as $idStore) {
-            $stockStoreEntity = new SpyStockStore();
-            $stockStoreEntity->setFkStock($idStock)
+            (new SpyStockStore())
+                ->setFkStock($idStock)
                 ->setFkStore($idStore)
                 ->save();
         }
