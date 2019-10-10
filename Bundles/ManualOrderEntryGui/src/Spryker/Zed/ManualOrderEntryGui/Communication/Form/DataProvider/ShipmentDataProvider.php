@@ -119,6 +119,10 @@ class ShipmentDataProvider implements FormDataProviderInterface
     protected function setItemLevelEmptyShipmentFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteShipmentTransfer = $quoteTransfer->getShipment();
+        if ($quoteShipmentTransfer === null) {
+            return $quoteTransfer;
+        }
+
         $quoteShipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
