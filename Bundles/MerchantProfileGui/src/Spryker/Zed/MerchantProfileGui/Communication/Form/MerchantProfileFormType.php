@@ -29,36 +29,36 @@ class MerchantProfileFormType extends AbstractType
 {
     public const SALUTATION_CHOICES_OPTION = 'salutation_choices';
 
-    public const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
-    public const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
-    public const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
-    public const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
-    public const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
-    public const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
-    public const FIELD_LOGO_URL = 'logo_url';
-    public const FIELD_PUBLIC_EMAIL = 'public_email';
-    public const FIELD_PUBLIC_PHONE = 'public_phone';
-    public const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
-    public const FIELD_IS_ACTIVE = 'is_active';
-    public const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
-    public const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
-    public const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
-    public const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
-    public const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
-    public const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
-    public const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
+    protected const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
+    protected const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
+    protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
+    protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
+    protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
+    protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
+    protected const FIELD_LOGO_URL = 'logo_url';
+    protected const FIELD_PUBLIC_EMAIL = 'public_email';
+    protected const FIELD_PUBLIC_PHONE = 'public_phone';
+    protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    protected const FIELD_IS_ACTIVE = 'is_active';
+    protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
+    protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
+    protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
+    protected const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
+    protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
+    protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
+    protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
 
-    public const LABEL_CONTACT_PERSON_ROLE = 'Role';
-    public const LABEL_CONTACT_PERSON_TITLE = 'Title';
-    public const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
-    public const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
-    public const LABEL_CONTACT_PERSON_PHONE = 'Phone';
-    public const LABEL_LOGO_URL = 'Logo URL';
-    public const LABEL_PUBLIC_EMAIL = 'Public Email';
-    public const LABEL_PUBLIC_PHONE = 'Public Phone';
-    public const LABEL_IS_ACTIVE = 'Is Active';
+    protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
+    protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
+    protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
+    protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
+    protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
+    protected const LABEL_LOGO_URL = 'Logo URL';
+    protected const LABEL_PUBLIC_EMAIL = 'Public Email';
+    protected const LABEL_PUBLIC_PHONE = 'Public Phone';
+    protected const LABEL_IS_ACTIVE = 'Is Active';
 
-    public const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
+    protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

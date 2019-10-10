@@ -18,9 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
 {
-    public const FIELD_FK_LOCALE = 'fkLocale';
-    public const FIELD_LOCALE_NAME = 'localeName';
-    public const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES = 'merchantProfileGlossaryAttributeValues';
+    protected const FIELD_FK_LOCALE = 'fkLocale';
+    protected const FIELD_LOCALE_NAME = 'localeName';
+    protected const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES = 'merchantProfileGlossaryAttributeValues';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -86,7 +86,7 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
     {
         return new CallbackTransformer(
             function ($value) {
-                return $value;
+                return (string)$value;
             },
             function ($value) {
                 return (int)$value;
