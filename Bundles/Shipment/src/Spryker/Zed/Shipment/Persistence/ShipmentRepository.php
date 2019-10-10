@@ -174,13 +174,22 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param int $idShipmentMethod
+     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer
+    public function findShipmentMethodByIdAndIdStore(int $idShipmentMethod, int $idStore): ?ShipmentMethodTransfer
     {
         $salesShipmentMethodEntity = $this->queryMethods()
+            ->useShipmentMethodStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
             ->filterByIdShipmentMethod($idShipmentMethod)
+            ->filterByPricePlugin(null, Criteria::ISNOTNULL)
+            ->_or()
+            ->useShipmentMethodPriceQuery(null, Criteria::LEFT_JOIN)
+                ->filterByFkStore($idStore)
+            ->endUse()
             ->findOne();
 
         if ($salesShipmentMethodEntity === null) {
@@ -252,6 +261,34 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $shipmentMethodList = [];
         $shipmentMethodEntities = $this->queryActiveMethodsWithMethodPricesAndCarrier()->find();
+
+        if ($shipmentMethodEntities->count() === 0) {
+            return $shipmentMethodList;
+        }
+
+        foreach ($shipmentMethodEntities as $shipmentMethodEntity) {
+            $shipmentMethodTransfer = $this->getFactory()
+                ->createShipmentMethodMapper()
+                ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
+                    $shipmentMethodEntity,
+                    new ShipmentMethodTransfer()
+                );
+
+            $shipmentMethodList[] = $shipmentMethodTransfer;
+        }
+
+        return $shipmentMethodList;
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getActiveShipmentMethodsForStore(int $idStore): array
+    {
+        $shipmentMethodList = [];
+        $shipmentMethodEntities = $this->queryActiveMethodsWithMethodPricesAndCarrierForStore($idStore)->find();
 
         if ($shipmentMethodEntities->count() === 0) {
             return $shipmentMethodList;
@@ -489,6 +526,29 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         return $this->queryMethodsWithMethodPricesAndCarrier()
             ->filterByIsActive(true);
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function queryActiveMethodsWithMethodPricesAndCarrierForStore(int $idStore): SpyShipmentMethodQuery
+    {
+        return $this->queryMethods()
+            ->filterByIsActive(true)
+            ->leftJoinWithShipmentMethodPrice()
+            ->leftJoinWithShipmentCarrier()
+            ->useShipmentMethodStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->filterByPricePlugin(null, Criteria::ISNOTNULL)
+            ->_or()
+            ->useShipmentMethodPriceQuery(null, Criteria::LEFT_JOIN)
+            ->leftJoinWithCurrency()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->groupByIdShipmentMethod();
     }
 
     /**

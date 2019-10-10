@@ -108,15 +108,6 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getActiveShipmentMethods() instead.
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryActiveMethodsWithMethodPricesAndCarrier();
-
-    /**
-     * @api
-     *
      * @param int $idShipmentMethod
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery

@@ -81,7 +81,8 @@ class MethodReader implements MethodReaderInterface
      */
     public function findAvailableMethodById(int $idShipmentMethod, QuoteTransfer $quoteTransfer): ?ShipmentMethodTransfer
     {
-        $shipmentMethodTransfer = $this->shipmentRepository->findShipmentMethodById($idShipmentMethod);
+        $idStore = $this->getIdStoreFromQuote($quoteTransfer);
+        $shipmentMethodTransfer = $this->shipmentRepository->findShipmentMethodByIdAndIdStore($idShipmentMethod, $idStore);
         if ($shipmentMethodTransfer === null) {
             return null;
         }
@@ -118,7 +119,8 @@ class MethodReader implements MethodReaderInterface
     protected function getAvailableMethodsCollection(QuoteTransfer $quoteTransfer, iterable $shipmentGroupCollection): ShipmentMethodsCollectionTransfer
     {
         $shipmentMethodsCollection = new ShipmentMethodsCollectionTransfer();
-        $activeShipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethods();
+        $idStore = $this->getIdStoreFromQuote($quoteTransfer);
+        $activeShipmentMethodTransfers = $this->shipmentRepository->getActiveShipmentMethodsForStore($idStore);
 
         foreach ($shipmentGroupCollection as $shipmentGroupTransfer) {
             $shipmentMethodsTransfer = $this->getAvailableMethodsTransfer(
@@ -326,5 +328,19 @@ class MethodReader implements MethodReaderInterface
         }
 
         return new ShipmentGroupTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getIdStoreFromQuote(QuoteTransfer $quoteTransfer): int
+    {
+        $quoteTransfer->requireStore();
+        $storeTransfer = $quoteTransfer->getStore();
+        $storeTransfer->requireIdStore();
+
+        return $storeTransfer->getIdStore();
     }
 }

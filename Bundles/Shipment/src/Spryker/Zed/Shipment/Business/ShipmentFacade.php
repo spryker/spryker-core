@@ -122,24 +122,6 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFactory()
-            ->createMethod()
-            ->getAvailableMethods($quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
@@ -167,24 +149,6 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getFactory()
             ->createMethodReader()
             ->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use findMethodById() instead.
-     *
-     * @param int $idMethod
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    public function getShipmentMethodTransferById($idMethod)
-    {
-        return $this->getFactory()
-            ->createMethod()
-            ->getShipmentMethodTransferById($idMethod);
     }
 
     /**

@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShipmentMethodDataHelper extends Module
@@ -44,11 +45,16 @@ class ShipmentMethodDataHelper extends Module
      * @param array $overrideShipmentMethod
      * @param array $overrideCarrier
      * @param array $priceList
+     * @param array $idStoreList
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function haveShipmentMethod(array $overrideShipmentMethod = [], array $overrideCarrier = [], array $priceList = self::DEFAULT_PRICE_LIST)
-    {
+    public function haveShipmentMethod(
+        array $overrideShipmentMethod = [],
+        array $overrideCarrier = [],
+        array $priceList = self::DEFAULT_PRICE_LIST,
+        array $idStoreList = []
+    ): ShipmentMethodTransfer {
         $shipmentMethodTransfer = (new ShipmentMethodBuilder($overrideShipmentMethod))->build();
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 
@@ -67,8 +73,25 @@ class ShipmentMethodDataHelper extends Module
 
         $idShipmentMethod = $this->getShipmentFacade()->createMethod($shipmentMethodTransfer);
         $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
+        $this->setShipmentMethodToStoreList($idShipmentMethod, $idStoreList);
 
         return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     * @param int[] $idStoreList
+     *
+     * @return void
+     */
+    protected function setShipmentMethodToStoreList(int $idShipmentMethod, array $idStoreList): void
+    {
+        foreach ($idStoreList as $idStore) {
+            (new SpyShipmentMethodStore())
+                ->setFkStore($idStore)
+                ->setFkShipmentMethod($idShipmentMethod)
+                ->save();
+        }
     }
 
     /**
