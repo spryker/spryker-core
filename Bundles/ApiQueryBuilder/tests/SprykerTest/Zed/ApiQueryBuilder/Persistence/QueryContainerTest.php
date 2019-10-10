@@ -22,6 +22,7 @@ use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Functional
  * @group Spryker
  * @group Zed

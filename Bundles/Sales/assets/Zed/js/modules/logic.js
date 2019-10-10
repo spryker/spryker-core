@@ -1,106 +1,53 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 'use strict';
 
-function getSelectedItems(idOrderItem) {
-    var selectedItems = [];
-
-    if (parseInt(idOrderItem) > 0) {
-        selectedItems.push(idOrderItem);
-
-        return selectedItems;
-    }
-
-    $('.item-check').each(function(){
-        if ($(this).prop('checked') === true) {
-            selectedItems.push($(this).val());
-        }
-    });
-
-    return selectedItems;
-}
-
-/**
- * @deprecated not used any more
- */
-function createTriggerUrl(idOrder, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order';
-    var parameters = {
-        event: eventName,
-        'id-sales-order': idOrder,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
-/**
- * @deprecated not used any more
- */
-function createTriggerItemUrl(idOrder, idOrderItem, eventName) {
-    var url = '/oms/trigger/trigger-event-for-order-items';
-    var parameters = {
-        event: eventName,
-        'id-sales-order-item': idOrderItem,
-        redirect: '/sales/detail?id-sales-order=' + idOrder
-    };
-
-    parameters.items = getSelectedItems();
-
-    var finalUrl = url + '?' + $.param(parameters);
-
-    return decodeURIComponent(finalUrl);
-}
-
-/**
- * @deprecated not used any more
- */
-function disableTrigger($item) {
-    $item
-        .prop('disabled', true)
-        .addClass('disabled');
-}
-
 $(document).ready(function () {
-    $('.trigger-event').click(function (e) {
+    $('.sales-order-item-group-element button').click(function(e) {
         e.preventDefault();
-
-        $(this).prop('disabled', true).addClass('disabled');
-
+        var keyItemGroup = $(this).closest('.sales-order-item-group-element').data('group-key');
+        var $groupTable = $('.order-group-items-table-' + keyItemGroup);
+        var $idGroupItems = $groupTable.find('input[name="order-item"]');
+        var idGroupItemsCheckedList = [];
+        var idGroupItemsFullList = [];
         var $form = $(this).closest('form');
         var formAction = $form.attr('action');
-        var finalUrl = formAction + '&' + $.param({items: getSelectedItems()});
 
+        $idGroupItems.each(function () {
+            idGroupItemsFullList.push($(this).val());
+
+            if ($(this).prop('checked')) {
+                idGroupItemsCheckedList.push($(this).val());
+            }
+        });
+
+        if (!idGroupItemsCheckedList.length) {
+            idGroupItemsCheckedList = idGroupItemsFullList;
+        }
+
+        var finalUrl = formAction + '&' + $.param({items: idGroupItemsCheckedList});
+
+        $(this).prop('disabled', true).addClass('disabled');
         $form.attr('action', finalUrl);
-
-        $(this).parents('form').first().submit();
-
-        disableTrigger($(this));
-    });
-
-    $('.trigger-order-event').click(function(e){
-        e.preventDefault();
-
-        var $item = $(this);
-
-        disableTrigger($item);
+        $form.submit();
     });
 
     $('.item-check').click(function(){
-        var countChecked = $(".item-check[type='checkbox']:checked").length;
-        var totalCheckboxItems = $('.item-check').length;
+        var $table = $(this).closest('table');
+        var $checkAllOrders = $table.find('.check-all-orders');
+        var countChecked = $table.find('.item-check[type="checkbox"]:checked').length;
+        var totalCheckboxItems = $table.find('.item-check').length;
 
         if (totalCheckboxItems === countChecked) {
-            $('#check-all-orders').prop('checked', true);
+            $checkAllOrders.prop('checked', true);
 
-            return true;
+            return;
         }
 
-        $('#check-all-orders').prop('checked', false);
-
-        return true;
+        $checkAllOrders.prop('checked', false);
     });
 
     $('.more-attributes').click(function(e){
@@ -134,15 +81,7 @@ $(document).ready(function () {
         $('#split_form_row_' + theID).toggle();
     });
 
-    $('#check-all-orders').click(function(){
-        if ($(this).prop('checked') === true) {
-            var checked = true;
-        } else {
-            var checked = false;
-        }
-
-        $('.item-check').each(function(){
-            $(this).prop('checked', checked);
-        });
+    $('.check-all-orders').click(function(){
+        $(this).closest('table').find('.item-check').prop('checked', $(this).prop('checked'));
     });
 });

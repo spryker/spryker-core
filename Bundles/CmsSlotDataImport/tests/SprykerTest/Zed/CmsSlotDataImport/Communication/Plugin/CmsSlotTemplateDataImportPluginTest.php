@@ -15,6 +15,7 @@ use Spryker\Zed\CmsSlotDataImport\Communication\Plugin\CmsSlotTemplateDataImport
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsSlotDataImport

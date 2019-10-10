@@ -169,7 +169,7 @@ class TwigCmsBlock extends AbstractPlugin implements TwigFunctionPluginInterface
     }
 
     /**
-     * @param array $cmsBlockData
+     * @param array|null $cmsBlockData
      *
      * @return bool
      */

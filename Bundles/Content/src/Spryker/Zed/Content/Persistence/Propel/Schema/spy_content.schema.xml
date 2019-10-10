@@ -4,7 +4,7 @@
     <table name="spy_content" phpName="SpyContent" identifierQuoting="true">
         <column name="id_content" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
-        <column name="description" required="false" type="LONGVARCHAR" />
+        <column name="description" required="false" type="LONGVARCHAR"/>
         <column name="content_term_key" required="true" type="VARCHAR" size="255"/>
         <column name="content_type_key" required="true" type="VARCHAR" size="255"/>
         <column name="key" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>

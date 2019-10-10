@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\ProductReviewBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReview

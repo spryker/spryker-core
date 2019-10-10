@@ -13,6 +13,7 @@ use Spryker\Zed\Chart\ChartConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Chart

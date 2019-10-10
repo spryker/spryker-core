@@ -35,8 +35,8 @@
         <column name="id_file_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_file" required="true" type="INTEGER"/>
         <column name="fk_locale" required="true" type="INTEGER"/>
-        <column name="title" required="false" type="VARCHAR" default="NULL" size="255" />
-        <column name="alt" required="false" type="LONGVARCHAR" default="NULL" />
+        <column name="title" required="false" type="VARCHAR" default="NULL" size="255"/>
+        <column name="alt" required="false" type="LONGVARCHAR" default="NULL"/>
 
         <foreign-key name="spy_file_localized_attributes-fk_file" foreignTable="spy_file" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_file" foreign="id_file"/>

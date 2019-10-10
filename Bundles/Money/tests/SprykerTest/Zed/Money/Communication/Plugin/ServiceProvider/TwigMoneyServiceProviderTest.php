@@ -18,6 +18,7 @@ use Twig\Loader\FilesystemLoader;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Money

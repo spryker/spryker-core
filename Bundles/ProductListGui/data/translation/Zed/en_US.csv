@@ -26,6 +26,7 @@ Selected,Selected
 SKU,SKU
 Type,Type
 Whitelist,Whitelist
+"Edit Product List","Edit Product List"
 "Unable to delete Product List since it's used by Configurable Bundle Template ""%template%"" (""%slot%"" slot).","Unable to delete Product List since it used by Configurable Bundle Template ""%template%"" (""%slot%"" slot)."
 "Unable to delete Product List since it's used by Merchant Relation ""%merchant_relation%"".","Unable to delete Product List since it used by Merchant Relation ""%merchant_relation%""."
 "Configurable Bundle Template","Configurable Bundle Template"

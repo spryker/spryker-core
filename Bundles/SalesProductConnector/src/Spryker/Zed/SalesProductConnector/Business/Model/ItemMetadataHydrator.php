@@ -60,7 +60,7 @@ class ItemMetadataHydrator implements ItemMetadataHydratorInterface
     /**
      * @param int $idSalesOrderItem
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadata|null
      */
     protected function findMetadata($idSalesOrderItem)
     {

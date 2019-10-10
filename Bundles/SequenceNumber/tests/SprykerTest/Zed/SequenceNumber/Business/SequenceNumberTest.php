@@ -17,6 +17,7 @@ use Spryker\Zed\SequenceNumber\SequenceNumberConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SequenceNumber

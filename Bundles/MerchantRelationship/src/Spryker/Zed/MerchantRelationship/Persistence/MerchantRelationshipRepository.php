@@ -145,6 +145,8 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @module CompanyBusinessUnit
      * @module Merchant
      *

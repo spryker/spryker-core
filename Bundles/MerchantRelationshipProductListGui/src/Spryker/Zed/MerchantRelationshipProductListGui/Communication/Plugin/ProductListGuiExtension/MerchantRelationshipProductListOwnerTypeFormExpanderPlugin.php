@@ -22,7 +22,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
     public const OWNER_TYPE = 'Merchant Relationship';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends Abstrac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

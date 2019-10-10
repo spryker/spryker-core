@@ -15,6 +15,7 @@ use Spryker\Yves\Money\Plugin\MoneyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Money

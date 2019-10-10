@@ -32,7 +32,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class Components extends AbstractObject
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getObjectSpecification(): ObjectSpecification
     {

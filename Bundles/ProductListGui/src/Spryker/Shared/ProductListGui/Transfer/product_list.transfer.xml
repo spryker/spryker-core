@@ -14,16 +14,16 @@
     </transfer>
 
     <transfer name="QueryCriteria">
-        <property name="joins" type="QueryJoin[]" singular="join" />
+        <property name="joins" type="QueryJoin[]" singular="join"/>
         <property name="withColumns" type="array" singular="withColumn"/>
     </transfer>
 
     <transfer name="QueryJoin">
-        <property name="left" type="array" />
-        <property name="right" type="array" />
-        <property name="joinType" type="string" />
-        <property name="relation" type="string" />
-        <property name="condition" type="string" />
+        <property name="left" type="array"/>
+        <property name="right" type="array"/>
+        <property name="joinType" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="condition" type="string"/>
     </transfer>
 
     <transfer name="ButtonCollection">

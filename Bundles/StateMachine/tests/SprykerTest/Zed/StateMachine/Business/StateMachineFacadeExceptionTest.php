@@ -22,6 +22,7 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group StateMachine

@@ -20,4 +20,4 @@ use Orm\Zed\Permission\Persistence\Base\SpyPermissionQuery;
  */
 abstract class AbstractSpyPermissionQuery extends SpyPermissionQuery
 {
-} // SpyPermissionQuery
+}

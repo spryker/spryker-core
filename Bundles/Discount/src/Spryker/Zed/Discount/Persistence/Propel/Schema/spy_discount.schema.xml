@@ -4,7 +4,7 @@
     <table name="spy_discount" phpName="SpyDiscount">
         <column name="id_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
-        <column name="fk_store" type="INTEGER" required="false" />
+        <column name="fk_store" type="INTEGER" required="false"/>
 
         <column name="display_name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="1024"/>
@@ -30,15 +30,15 @@
         </foreign-key>
 
         <unique name="spy_discount-unique-fk_discount_voucher_pool">
-            <unique-column name="fk_discount_voucher_pool" />
+            <unique-column name="fk_discount_voucher_pool"/>
         </unique>
 
         <unique name="spy_discount-unique-display_name">
-            <unique-column name="display_name" />
+            <unique-column name="display_name"/>
         </unique>
 
         <index name="spy_discount-index-discount_type">
-            <index-column name="discount_type" />
+            <index-column name="discount_type"/>
         </index>
 
         <id-method-parameter value="spy_discount_pk_seq"/>
@@ -98,14 +98,14 @@
 
     <table name="spy_discount_amount" phpName="SpyDiscountAmount">
         <column name="id_discount_amount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_currency" type="INTEGER" required="true" />
-        <column name="fk_discount" type="INTEGER" required="true" />
+        <column name="fk_currency" type="INTEGER" required="true"/>
+        <column name="fk_discount" type="INTEGER" required="true"/>
         <column name="gross_amount" type="INTEGER" required="false"/>
         <column name="net_amount" type="INTEGER" required="false"/>
 
         <unique name="spy_discount_amount-unique-currency-discount">
-            <unique-column name="fk_currency" />
-            <unique-column name="fk_discount" />
+            <unique-column name="fk_currency"/>
+            <unique-column name="fk_discount"/>
         </unique>
 
         <foreign-key name="spy_discount_amount-fk_currency" foreignTable="spy_currency" phpName="Currency" refPhpName="DiscountAmount">

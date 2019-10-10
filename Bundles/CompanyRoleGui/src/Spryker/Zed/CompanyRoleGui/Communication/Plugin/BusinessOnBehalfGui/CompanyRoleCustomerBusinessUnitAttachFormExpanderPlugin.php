@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyRoleCustomerBusinessUnitAttachFormExpanderPlugin extends AbstractPlugin implements CustomerBusinessUnitAttachFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands CustomerBusinessUnitAttachForm with choice field of company roles form CompanyUserRoleChoiceFormType.
      * - Returns CustomerBusinessUnitAttachForm without expanding if Company does not exist in CompanyUserTransfer.
      *

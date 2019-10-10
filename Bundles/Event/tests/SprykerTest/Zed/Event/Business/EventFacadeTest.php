@@ -20,13 +20,17 @@ use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Event\EventDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Zed\Event\Stub\TestEventBulkListenerPluginStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Event
@@ -38,6 +42,11 @@ use Spryker\Zed\Kernel\Container;
 class EventFacadeTest extends Unit
 {
     public const TEST_EVENT_NAME = 'test.event';
+
+    /**
+     * @var \SprykerTest\Zed\Event\EventBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -175,6 +184,30 @@ class EventFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testProcessEnqueuedMessageWillSendOnlyErroredMessageFromBulkToRetry(): void
+    {
+        //Arrange
+        $eventCollection = $this->createEventListenerCollection();
+        $eventBulkListenerStub = new TestEventBulkListenerPluginStub();
+        $eventCollection->addListenerQueued(static::TEST_EVENT_NAME, $eventBulkListenerStub);
+        $messages = [
+            $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock()),
+            $this->createQueueReceiveMessageTransfer($eventBulkListenerStub, $this->createTransferObjectMock()),
+        ];
+
+        //Act
+        $processedMessages = $this->createEventFacade()->processEnqueuedMessages($messages);
+
+        //Assert
+        $this->assertTrue($processedMessages[0]->getAcknowledge());
+        $this->assertEquals('retry', $processedMessages[0]->getRoutingKey());
+        $this->assertTrue($processedMessages[1]->getAcknowledge());
+        $this->assertNull($processedMessages[1]->getRoutingKey());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Client\EventToQueueInterface
      */
     protected function createQueueClientMock()
@@ -189,6 +222,15 @@ class EventFacadeTest extends Unit
     protected function createEventListenerMock()
     {
         return $this->getMockBuilder(EventHandlerInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface
+     */
+    protected function createEventBulkListenerMock()
+    {
+        return $this->getMockBuilder(EventBulkHandlerInterface::class)
             ->getMock();
     }
 
@@ -246,7 +288,6 @@ class EventFacadeTest extends Unit
         ?EventCollectionInterface $eventCollection = null,
         ?EventSubscriberCollectionInterface $eventSubscriberCollection = null
     ) {
-
         if ($queueClientMock === null) {
             $queueClientMock = $this->createQueueClientMock();
         }
@@ -284,16 +325,15 @@ class EventFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface|null $eventListenerMock
+     * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface|null $eventListenerMock
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     protected function createQueueReceiveMessageTransfer(
-        ?EventHandlerInterface $eventListenerMock = null,
+        ?EventBaseHandlerInterface $eventListenerMock = null,
         ?TransferInterface $transferObject = null
     ) {
-
         $message = [
             EventQueueSendMessageBodyTransfer::LISTENER_CLASS_NAME => ($eventListenerMock) ? get_class($eventListenerMock) : null,
             EventQueueSendMessageBodyTransfer::TRANSFER_CLASS_NAME => ($transferObject) ? get_class($transferObject) : null,

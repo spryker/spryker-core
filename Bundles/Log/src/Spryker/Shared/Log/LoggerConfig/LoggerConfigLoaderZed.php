@@ -17,11 +17,7 @@ class LoggerConfigLoaderZed implements LoggerConfigLoaderInterface
      */
     public function accept()
     {
-        if (APPLICATION === 'ZED' && Config::hasKey(LogConstants::LOGGER_CONFIG_ZED)) {
-            return true;
-        }
-
-        return false;
+        return $this->isZedApplication() && Config::hasKey(LogConstants::LOGGER_CONFIG_ZED);
     }
 
     /**
@@ -32,5 +28,13 @@ class LoggerConfigLoaderZed implements LoggerConfigLoaderInterface
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_ZED);
 
         return new $loggerClassName();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isZedApplication(): bool
+    {
+        return APPLICATION === 'ZED';
     }
 }

@@ -18,7 +18,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements CurrencyPostChangePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

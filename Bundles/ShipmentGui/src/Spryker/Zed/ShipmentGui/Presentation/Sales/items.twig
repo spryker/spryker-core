@@ -1,0 +1,81 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Items' } %}
+    {% block widget_title -%}
+        <div class="row">
+            <div class="col-sm-9">
+                <h5>{{ 'Order Items' | trans }}</h5>
+            </div>
+
+            {% if order.items | length > 1 %}
+                <div class="col-sm-3 text-right">
+                    {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' %}
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block widget_content %}
+        {% for shipmentOrderItems in groupedOrderItemsByShipment %}
+            <div class="row">
+                <div class="col-sm-9">
+                    <h3>Shipment {{ loop.index }} of {{ loop.length }}</h3>
+                </div>
+                <div class="col-sm-3 text-right">
+                    {% include '@ShipmentGui/Edit/_partials/edit-shipment-link.twig' %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <p><b>{{ 'Delivery Address' | trans }}:</b> {{ shipmentOrderItems.shipment.shippingAddress.salutation
+                        ~ ' ' ~ shipmentOrderItems.shipment.shippingAddress.firstName ~ ' '
+                        ~ shipmentOrderItems.shipment.shippingAddress.lastName ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.address1 ~ ' '
+                        ~ shipmentOrderItems.shipment.shippingAddress.address2 ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.address3 ~ ' '
+                        ~ shipmentOrderItems.shipment.shippingAddress.company ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.zipCode ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.city ~ ', '
+                        ~ shipmentOrderItems.shipment.shippingAddress.country.name}}</p>
+                    <p><b>{{ 'Delivery Method' | trans }}:</b> {{ shipmentOrderItems.shipment.carrier.name }}</p>
+                    <p><b>{{ 'Shipping Method' | trans }}:</b> {{ shipmentOrderItems.shipment.method.name }}</p>
+                    <p><b>{{ 'Request delivery date' | trans }}:</b> {{ shipmentOrderItems.shipment.requestedDeliveryDate | default('ASAP') }}</p>
+                </div>
+            </div>
+
+            {% if eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment] is defined %}
+                {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Trigger all matching states of order inside this shipment' } %}
+                    {% block widget_content %}
+                        <div class="sales-order-item-group-element" data-group-key="{{ shipmentOrderItems.shipment.idSalesShipment }}">
+                            {% include '@Oms/RenderForm/_partial/order-actions.twig' with {
+                                redirectUrl: changeStatusRedirectUrl,
+                                idSalesOrder: order.idSalesOrder,
+                                events: eventsGroupedByShipment[shipmentOrderItems.shipment.idSalesShipment],
+                            } only %}
+                        </div>
+                    {% endblock %}
+                {% endembed %}
+            {% endif %}
+
+            <table class="footable table toggle-arrow-tiny order-group-items-table-{{ shipmentOrderItems.shipment.idSalesShipment }}" data-qa="order-item-list">
+                <thead>
+                    <tr class="text-left">
+                        <th><input type="checkbox" class="check-all-orders" /></th>
+                        <th colspan="2">{{ 'Product' | trans }}</th>
+                        <th>{{ 'Quantity' | trans }}</th>
+                        <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+                        <th>{{ 'Total' | trans }}</th>
+                        <th>{{ 'State' | trans }}</th>
+                        <th>{{ 'Trigger event' | trans }}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
+                        {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order} %}
+                    {% endif %}
+                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items} %}
+                </tbody>
+            </table>
+        {% endfor %}
+    {% endblock %}
+{% endembed %}

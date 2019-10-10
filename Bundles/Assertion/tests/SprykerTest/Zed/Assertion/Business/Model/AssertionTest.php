@@ -14,6 +14,7 @@ use stdClass;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Assertion

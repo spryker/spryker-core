@@ -4,91 +4,108 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Wishlist">
-        <property name="idWishlist" type="int" />
-        <property name="fkCustomer" type="int" />
-        <property name="name" type="string" />
-        <property name="numberOfItems" type="int" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
+        <property name="idWishlist" type="int"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
+        <property name="name" type="string"/>
+        <property name="numberOfItems" type="int"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
     <transfer name="WishlistCollection">
-        <property name="wishlists" type="Wishlist[]" singular="wishlist" />
+        <property name="wishlists" type="Wishlist[]" singular="wishlist"/>
     </transfer>
 
     <transfer name="WishlistItem">
-        <property name="idWishlistItem" type="int" />
-        <property name="wishlistName" type="string" />
-        <property name="fkWishlist" type="int" />
-        <property name="fkCustomer" type="int" />
-        <property name="idProduct" type="int" />
-        <property name="sku" type="string" />
-        <property name="product" type="StorageProduct" />
+        <property name="idWishlistItem" type="int"/>
+        <property name="wishlistName" type="string"/>
+        <property name="fkWishlist" type="int"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="product" type="StorageProduct"/>
     </transfer>
 
     <transfer name="WishlistItemCollection">
-        <property name="items" type="WishlistItem[]" singular="item" />
+        <property name="items" type="WishlistItem[]" singular="item"/>
     </transfer>
 
     <transfer name="WishlistMoveToCartRequest">
-        <property name="sku" type="string" />
-        <property name="wishlistItem" type="WishlistItem" />
+        <property name="sku" type="string"/>
+        <property name="wishlistItem" type="WishlistItem"/>
     </transfer>
 
     <transfer name="WishlistMoveToCartRequestCollection">
-        <property name="requests" type="WishlistMoveToCartRequest[]" singular="request" />
+        <property name="requests" type="WishlistMoveToCartRequest[]" singular="request"/>
     </transfer>
 
     <transfer name="WishlistOverviewRequest">
-        <property name="wishlist" type="Wishlist" />
-        <property name="page" type="int" />
-        <property name="itemsPerPage" type="int" />
-        <property name="orderBy" type="string" />
-        <property name="orderDirection" type="string" />
+        <property name="wishlist" type="Wishlist"/>
+        <property name="page" type="int"/>
+        <property name="itemsPerPage" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="WishlistOverviewResponse">
-        <property name="wishlist" type="Wishlist" />
-        <property name="items" type="WishlistItem[]" singular="item" />
-        <property name="pagination" type="WishlistPagination" />
-        <property name="meta" type="WishlistOverviewMeta" />
+        <property name="wishlist" type="Wishlist"/>
+        <property name="items" type="WishlistItem[]" singular="item"/>
+        <property name="pagination" type="WishlistPagination"/>
+        <property name="meta" type="WishlistOverviewMeta"/>
     </transfer>
 
     <transfer name="StorageProduct">
-        <property name="idProductConcrete" type="int" />
-        <property name="sku" type="string" />
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="WishlistPagination">
-        <property name="page" type="int" />
-        <property name="pagesTotal" type="int" />
-        <property name="itemsPerPage" type="int" />
-        <property name="itemsTotal" type="int" />
+        <property name="page" type="int"/>
+        <property name="pagesTotal" type="int"/>
+        <property name="itemsPerPage" type="int"/>
+        <property name="itemsTotal" type="int"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="idCustomer" type="int" />
+        <property name="idCustomer" type="int"/>
     </transfer>
 
     <transfer name="WishlistResponse">
-        <property name="wishlist" type="Wishlist" />
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="array" singular="error" />
+        <property name="wishlist" type="Wishlist"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+    </transfer>
+
+    <transfer name="WishlistFilter">
+        <property name="idCustomer" type="int"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="WishlistOverviewMeta">
-        <property name="wishlistCollection" type="WishlistCollection" />
-        <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta" />
+        <property name="wishlistCollection" type="WishlistCollection"/>
+        <property name="wishlistItemMetaCollection" type="WishlistItemMeta[]" singular="wishlistItemMeta"/>
     </transfer>
 
     <transfer name="WishlistItemMeta">
-        <property name="idProductAbstract" type="int" />
-        <property name="idProduct" type="int" />
-        <property name="sku" type="string" />
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="bundleItems" type="Item[]" singular="bundleItem" />
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 

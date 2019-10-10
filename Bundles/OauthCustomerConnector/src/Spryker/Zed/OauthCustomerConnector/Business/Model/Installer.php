@@ -77,7 +77,7 @@ class Installer implements InstallerInterface
     /**
      * @param string[] $customerScopes
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
      */
     protected function getScopesByIdentifiers(array $customerScopes): array
     {

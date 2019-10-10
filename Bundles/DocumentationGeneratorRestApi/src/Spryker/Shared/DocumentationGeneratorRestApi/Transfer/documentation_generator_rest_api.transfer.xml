@@ -4,129 +4,123 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PathMethodData">
-        <property name="path" type="string" />
-        <property name="method" type="string" />
-        <property name="summary" type="string[]" />
-        <property name="resource" type="string" />
-        <property name="isProtected" type="bool" />
-        <property name="parameters" singular="parameter" type="PathParameterComponent[]" />
-        <property name="requestSchema" type="PathSchemaData" />
-        <property name="isEmptyResponse" type="bool" />
-        <property name="responseSchemas" singular="responseSchema" type="PathSchemaData[]" />
+        <property name="path" type="string"/>
+        <property name="method" type="string"/>
+        <property name="summary" type="string[]"/>
+        <property name="resource" type="string"/>
+        <property name="isProtected" type="bool"/>
+        <property name="parameters" singular="parameter" type="PathParameterComponent[]"/>
+        <property name="requestSchema" type="PathSchemaData"/>
+        <property name="isEmptyResponse" type="bool"/>
+        <property name="responseSchemas" singular="responseSchema" type="PathSchemaData[]"/>
     </transfer>
 
     <transfer name="PathParameter">
-        <property name="name" type="string" />
-        <property name="in" type="string" />
-        <property name="description" type="string" />
-        <property name="required" type="bool" />
-        <property name="deprecated" type="bool" />
-        <property name="allowEmptyValue" type="bool" />
-        <property name="schemaType" type="string" />
+        <property name="name" type="string"/>
+        <property name="in" type="string"/>
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="deprecated" type="bool"/>
+        <property name="allowEmptyValue" type="bool"/>
+        <property name="schemaType" type="string"/>
     </transfer>
 
     <transfer name="PathSchemaData">
         <property name="code" type="string"/>
-        <property name="description" type="string" />
+        <property name="description" type="string"/>
         <property name="schemaReference" type="string"/>
     </transfer>
 
     <transfer name="SchemaData">
-        <property name="name" type="string" />
-        <property name="properties" singular="property" type="SchemaProperty[]" />
-        <property name="required" type="string[]" />
+        <property name="name" type="string"/>
+        <property name="properties" singular="property" type="SchemaProperty[]"/>
+        <property name="required" type="string[]"/>
     </transfer>
 
     <transfer name="SchemaProperty">
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="reference" type="string" />
-        <property name="itemsReference" type="string" />
-        <property name="itemsType" type="string" />
-        <property name="isNullable" type="bool" />
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="itemsReference" type="string"/>
+        <property name="itemsType" type="string"/>
+        <property name="isNullable" type="bool"/>
     </transfer>
 
     <transfer name="SecurityScheme">
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="scheme" type="string" />
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="scheme" type="string"/>
     </transfer>
 
     <transfer name="PathMethodComponent">
-        <property name="method" type="string" />
-        <property name="summary" type="string" />
-        <property name="tags" type="string[]" singular="tag" />
-        <property name="parameters" type="array" singular="parameter" />
-        <property name="request" type="array" />
-        <property name="security" type="array" />
-        <property name="responses" type="array" singular="response" />
+        <property name="method" type="string"/>
+        <property name="summary" type="string"/>
+        <property name="tags" type="string[]" singular="tag"/>
+        <property name="parameters" type="array" singular="parameter"/>
+        <property name="request" type="array"/>
+        <property name="security" type="array"/>
+        <property name="responses" type="array" singular="response"/>
     </transfer>
 
     <transfer name="PathParameterComponent">
-        <property name="name" type="string" />
-        <property name="in" type="string" />
-        <property name="description" type="string" />
-        <property name="required" type="bool" />
-        <property name="deprecated" type="bool" />
-        <property name="allowEmptyValue" type="bool" />
-        <property name="schemaType" type="string" />
+        <property name="name" type="string"/>
+        <property name="in" type="string"/>
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="deprecated" type="bool"/>
+        <property name="allowEmptyValue" type="bool"/>
+        <property name="schemaType" type="string"/>
     </transfer>
 
     <transfer name="PathRequestComponent">
-        <property name="description" type="string" />
-        <property name="required" type="bool" />
-        <property name="jsonSchemaRef" type="string" />
-    </transfer>
-
-    <transfer name="PathRequestComponent">
-        <property name="description" type="string" />
-        <property name="required" type="bool" />
-        <property name="jsonSchemaRef" type="string" />
+        <property name="description" type="string"/>
+        <property name="required" type="bool"/>
+        <property name="jsonSchemaRef" type="string"/>
     </transfer>
 
     <transfer name="PathResponseComponent">
-        <property name="code" type="string" />
-        <property name="description" type="string" />
-        <property name="jsonSchemaRef" type="string" />
+        <property name="code" type="string"/>
+        <property name="description" type="string"/>
+        <property name="jsonSchemaRef" type="string"/>
     </transfer>
 
     <transfer name="SchemaComponent">
-        <property name="name" type="string" />
-        <property name="properties" type="array" singular="property" />
-        <property name="required" type="string[]" />
+        <property name="name" type="string"/>
+        <property name="properties" type="array" singular="property"/>
+        <property name="required" type="string[]"/>
     </transfer>
 
     <transfer name="SchemaPropertyComponent">
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="schemaReference" type="string" />
-        <property name="itemsSchemaReference" type="string" />
-        <property name="itemsType" type="string" />
-        <property name="isNullable" type="bool" />
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="schemaReference" type="string"/>
+        <property name="itemsSchemaReference" type="string"/>
+        <property name="itemsType" type="string"/>
+        <property name="isNullable" type="bool"/>
     </transfer>
 
     <transfer name="SecuritySchemeComponent">
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="scheme" type="string" />
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="scheme" type="string"/>
     </transfer>
 
     <transfer name="PathAnnotations">
-        <property name="getCollection" type="Annotation" />
-        <property name="getResourceById" type="Annotation" />
-        <property name="post" type="Annotation" />
-        <property name="patch" type="Annotation" />
-        <property name="delete" type="Annotation" />
+        <property name="getCollection" type="Annotation"/>
+        <property name="getResourceById" type="Annotation"/>
+        <property name="post" type="Annotation"/>
+        <property name="patch" type="Annotation"/>
+        <property name="delete" type="Annotation"/>
     </transfer>
 
     <transfer name="Annotation">
-        <property name="path" type="string" />
-        <property name="summary" type="string[]" />
-        <property name="parameters" singular="parameter" type="PathParameterComponent[]" />
-        <property name="responseAttributesClassName" type="string" />
-        <property name="isEmptyResponse" type="bool" />
-        <property name="responses" singular="response" type="array" />
-        <property name="isIdNullable" type="bool" />
+        <property name="path" type="string"/>
+        <property name="summary" type="string[]"/>
+        <property name="parameters" singular="parameter" type="PathParameterComponent[]"/>
+        <property name="responseAttributesClassName" type="string"/>
+        <property name="isEmptyResponse" type="bool"/>
+        <property name="responses" singular="response" type="array"/>
+        <property name="isIdNullable" type="bool"/>
     </transfer>
 
 </transfers>

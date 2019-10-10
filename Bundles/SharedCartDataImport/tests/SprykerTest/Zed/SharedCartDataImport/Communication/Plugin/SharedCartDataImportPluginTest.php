@@ -24,6 +24,7 @@ use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SharedCartDataImport

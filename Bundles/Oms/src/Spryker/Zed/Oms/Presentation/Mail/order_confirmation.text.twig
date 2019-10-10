@@ -17,12 +17,12 @@
 {{ 'mail.order.confirmation.price_including_tax' | trans }}: {{ mail.order.totals.grandTotal | money }}
 {{ 'mail.order.confirmation.date' | trans }}: {{ mail.order.createdAt | date }}
 
-{{ 'mail.order.confirmation.shipping_address' | trans }}: {{ mail.order.shippingAddress.firstName }} {{ mail.order.shippingAddress.lastName }}<br />
-{{ mail.order.shippingAddress.address1 }} {{ mail.order.shippingAddress.address2 }} {{ mail.order.shippingAddress.address3 }}<br />
-{{ mail.order.shippingAddress.zipCode }} {{ mail.order.shippingAddress.city }}<br />
-{{ mail.order.shippingAddress.region }}
-
-{{ 'mail.order.confirmation.billing_address' | trans }}: {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }}<br />
-{{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }}<br />
-{{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }}<br />
+{{ 'mail.order.confirmation.billing_address' | trans }}: {{ mail.order.billingAddress.firstName }} {{ mail.order.billingAddress.lastName }},
+{{ mail.order.billingAddress.address1 }} {{ mail.order.billingAddress.address2 }} {{ mail.order.billingAddress.address3 }},
+{{ mail.order.billingAddress.zipCode }} {{ mail.order.billingAddress.city }},
 {{ mail.order.billingAddress.region }}
+
+{% include [
+    '@ShipmentGui/Oms/mail/order_confirmation-shipping-addresses.text.twig',
+    '@Oms/Mail/order_confirmation-shipping-addresses.text.twig'
+] %}

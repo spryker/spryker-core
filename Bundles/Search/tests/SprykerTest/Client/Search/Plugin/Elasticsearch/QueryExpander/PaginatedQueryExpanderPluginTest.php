@@ -15,6 +15,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\PaginatedQueryExpan
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

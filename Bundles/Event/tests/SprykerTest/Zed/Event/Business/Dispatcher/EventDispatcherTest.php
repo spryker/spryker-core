@@ -19,6 +19,7 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Event

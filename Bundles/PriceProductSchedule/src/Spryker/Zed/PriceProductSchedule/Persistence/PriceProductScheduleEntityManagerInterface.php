@@ -32,6 +32,15 @@ interface PriceProductScheduleEntityManagerInterface
     ): PriceProductScheduleTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
+     */
+    public function createPriceProductSchedule(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleListTransfer $priceProductScheduleListTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleListTransfer
@@ -50,4 +59,18 @@ interface PriceProductScheduleEntityManagerInterface
     public function updatePriceProductScheduleList(
         PriceProductScheduleListTransfer $priceProductScheduleListTransfer
     ): PriceProductScheduleListTransfer;
+
+    /**
+     * @param int $idPriceProductSchedule
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleById(int $idPriceProductSchedule): void;
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleListById(int $idPriceProductScheduleList): void;
 }

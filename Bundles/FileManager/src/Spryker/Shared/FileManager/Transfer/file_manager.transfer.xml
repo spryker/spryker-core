@@ -4,95 +4,95 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="FileManagerData">
-        <property name="file" type="File" />
-        <property name="fileInfo" type="FileInfo" />
-        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" />
-        <property name="content" type="string" />
+        <property name="file" type="File"/>
+        <property name="fileInfo" type="FileInfo"/>
+        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="content" type="string"/>
     </transfer>
 
     <transfer name="File">
-        <property name="idFile" type="int" />
-        <property name="fileName" type="string" />
-        <property name="fkFileDirectory" type="int" />
-        <property name="fileInfo" type="FileInfo[]" />
-        <property name="localizedAttributes" type="FileLocalizedAttributes[]" />
-        <property name="useRealName" type="bool" />
-        <property name="fileContent" type="string" />
-        <property name="fileUpload" type="FileUpload" />
+        <property name="idFile" type="int"/>
+        <property name="fileName" type="string"/>
+        <property name="fkFileDirectory" type="int"/>
+        <property name="fileInfo" type="FileInfo[]"/>
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="useRealName" type="bool"/>
+        <property name="fileContent" type="string"/>
+        <property name="fileUpload" type="FileUpload"/>
     </transfer>
 
     <transfer name="FileUpload">
-        <property name="realPath" type="string" />
-        <property name="clientOriginalName" type="string" />
-        <property name="mimeTypeName" type="string" />
-        <property name="clientOriginalExtension" type="string" />
-        <property name="size" type="int" />
+        <property name="realPath" type="string"/>
+        <property name="clientOriginalName" type="string"/>
+        <property name="mimeTypeName" type="string"/>
+        <property name="clientOriginalExtension" type="string"/>
+        <property name="size" type="int"/>
     </transfer>
 
     <transfer name="FileInfo">
-        <property name="idFileInfo" type="int" />
-        <property name="fkFile" type="int" />
-        <property name="type" type="string" />
-        <property name="size" type="int" />
-        <property name="extension" type="string" />
-        <property name="version" type="int" />
-        <property name="versionName" type="string" />
-        <property name="storageName" type="string" />
-        <property name="storageFileName" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="updatedAt" type="string" />
-        <property name="localizedAttributes" type="FileInfoLocalizedAttributes[]" />
+        <property name="idFileInfo" type="int"/>
+        <property name="fkFile" type="int"/>
+        <property name="type" type="string"/>
+        <property name="size" type="int"/>
+        <property name="extension" type="string"/>
+        <property name="version" type="int"/>
+        <property name="versionName" type="string"/>
+        <property name="storageName" type="string"/>
+        <property name="storageFileName" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="localizedAttributes" type="FileInfoLocalizedAttributes[]"/>
     </transfer>
 
     <transfer name="FileLocalizedAttributes">
-        <property name="idFileLocalizedAttributes" type="int" />
-        <property name="fkFile" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="alt" type="string" />
-        <property name="title" type="string" />
-        <property name="locale" type="Locale" />
+        <property name="idFileLocalizedAttributes" type="int"/>
+        <property name="fkFile" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="alt" type="string"/>
+        <property name="title" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="FileDirectory">
-        <property name="idFileDirectory" type="int" />
-        <property name="fkParentFileDirectory" type="int" />
-        <property name="name" type="string" />
-        <property name="position" type="int" />
-        <property name="isActive" type="bool" />
-        <property name="fileDirectoryLocalizedAttributes" type="FileDirectoryLocalizedAttributes[]" singular="fileDirectoryLocalizedAttribute" />
+        <property name="idFileDirectory" type="int"/>
+        <property name="fkParentFileDirectory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="position" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="fileDirectoryLocalizedAttributes" type="FileDirectoryLocalizedAttributes[]" singular="fileDirectoryLocalizedAttribute"/>
     </transfer>
 
     <transfer name="FileDirectoryLocalizedAttributes">
-        <property name="idFileDirectoryLocalizedAttributes" type="int" />
-        <property name="fkFileDirectory" type="int" />
-        <property name="fkLocale" type="int" />
-        <property name="title" type="string" />
-        <property name="locale" type="Locale" />
+        <property name="idFileDirectoryLocalizedAttributes" type="int"/>
+        <property name="fkFileDirectory" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="title" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="FileDirectoryTree">
-        <property name="nodes" type="FileDirectoryTreeNode[]" singular="node" />
+        <property name="nodes" type="FileDirectoryTreeNode[]" singular="node"/>
     </transfer>
 
     <transfer name="FileDirectoryTreeNode">
-        <property name="fileDirectory" type="FileDirectory" />
-        <property name="children" type="FileDirectoryTreeNode[]" singular="child" />
+        <property name="fileDirectory" type="FileDirectory"/>
+        <property name="children" type="FileDirectoryTreeNode[]" singular="child"/>
     </transfer>
 
     <transfer name="MimeType">
-        <property name="idMimeType" type="int" />
-        <property name="name" type="string" />
-        <property name="comment" type="string" />
-        <property name="isAllowed" type="bool" />
+        <property name="idMimeType" type="int"/>
+        <property name="name" type="string"/>
+        <property name="comment" type="string"/>
+        <property name="isAllowed" type="bool"/>
     </transfer>
 
     <transfer name="MimeTypeCollection">
-        <property name="items" type="MimeType[]" singular="mimeType" />
+        <property name="items" type="MimeType[]" singular="mimeType"/>
     </transfer>
 
     <transfer name="MimeTypeResponse">
-        <property name="mimeType" type="MimeType" />
-        <property name="isSuccessful" type="bool" />
+        <property name="mimeType" type="MimeType"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
 </transfers>

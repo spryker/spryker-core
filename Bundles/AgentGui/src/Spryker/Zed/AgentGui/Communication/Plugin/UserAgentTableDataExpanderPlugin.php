@@ -16,7 +16,7 @@ use Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInter
 class UserAgentTableDataExpanderPlugin extends AbstractPlugin implements UserTableDataExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

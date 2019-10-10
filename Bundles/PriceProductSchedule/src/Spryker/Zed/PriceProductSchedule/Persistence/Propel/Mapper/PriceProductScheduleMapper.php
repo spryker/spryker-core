@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\PriceProduct\Persistence\Base\SpyPriceType;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule;
+use Orm\Zed\Store\Persistence\SpyStore;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
@@ -64,8 +66,14 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
                 new PriceProductScheduleListTransfer()
             );
 
+        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+            $priceProductScheduleEntity->getStore(),
+            new StoreTransfer()
+        );
+
         return $priceProductScheduleTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
+            ->setStore($storeTransfer)
             ->setPriceProduct($priceProductTransfer)
             ->setPriceProductScheduleList($priceProductScheduleListTransfer);
     }
@@ -80,6 +88,7 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         PriceProductScheduleTransfer $priceProductScheduleTransfer,
         SpyPriceProductSchedule $priceProductScheduleEntity
     ): SpyPriceProductSchedule {
+        $priceProductScheduleEntity->fromArray($priceProductScheduleTransfer->toArray());
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         if ($priceProductTransfer === null) {
@@ -91,25 +100,57 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
         if ($moneyValueTransfer === null) {
             return $priceProductScheduleEntity;
         }
+        $priceProductScheduleEntity->fromArray($priceProductScheduleTransfer->toArray());
 
-        if ($priceProductTransfer->getIdProductAbstract() !== null) {
-            $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+        $idStore = $moneyValueTransfer->getFkStore();
+        $idCurrency = $moneyValueTransfer->getFkCurrency();
+
+        $priceProductScheduleEntity = $this->addProductIdentifierToPriceProductScheduleEntityFromPriceProduct(
+            $priceProductTransfer,
+            $priceProductScheduleEntity
+        );
+
+        if ($idStore === null && $moneyValueTransfer->getStore() !== null) {
+            $idStore = $moneyValueTransfer->getStore()->getIdStore();
         }
 
-        if ($priceProductTransfer->getIdProduct() !== null) {
-            $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
+        if ($idCurrency === null && $moneyValueTransfer->getCurrency() !== null) {
+            $idCurrency = $moneyValueTransfer->getCurrency()->getIdCurrency();
+        }
+
+        $idPriceProductScheduleList = null;
+        $priceProductScheduleListTransfer = $priceProductScheduleTransfer->getPriceProductScheduleList();
+        if ($priceProductScheduleListTransfer !== null) {
+            $idPriceProductScheduleList = (string)$priceProductScheduleListTransfer->getIdPriceProductScheduleList();
         }
 
         return $priceProductScheduleEntity
-            ->setFkCurrency($moneyValueTransfer->getFkCurrency())
-            ->setFkStore($moneyValueTransfer->getFkStore())
+            ->setFkCurrency($idCurrency)
+            ->setFkStore($idStore)
             ->setFkPriceType($priceProductTransfer->getPriceType()->getIdPriceType())
-            ->setFkPriceProductScheduleList((string)$priceProductScheduleTransfer->getPriceProductScheduleList()->getIdPriceProductScheduleList())
+            ->setFkPriceProductScheduleList($idPriceProductScheduleList)
             ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
             ->setActiveFrom($priceProductScheduleTransfer->getActiveFrom())
             ->setActiveTo($priceProductScheduleTransfer->getActiveTo())
             ->setIsCurrent($priceProductScheduleTransfer->getIsCurrent());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $priceProductScheduleEntity
+     *
+     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule
+     */
+    protected function addProductIdentifierToPriceProductScheduleEntityFromPriceProduct(
+        PriceProductTransfer $priceProductTransfer,
+        SpyPriceProductSchedule $priceProductScheduleEntity
+    ): SpyPriceProductSchedule {
+        if ($priceProductTransfer->getIdProduct() !== null) {
+            return $priceProductScheduleEntity->setFkProduct($priceProductTransfer->getIdProduct());
+        }
+
+        return $priceProductScheduleEntity->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
     }
 
     /**
@@ -167,9 +208,12 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
 
         if ($priceProductScheduleEntity->getFkProduct()) {
             $productConcreteEntity = $priceProductScheduleEntity->getProduct();
+            $productAbstractEntity = $productConcreteEntity->getSpyProductAbstract();
 
             $priceProductTransfer->setIdProduct($productConcreteEntity->getIdProduct());
             $priceProductTransfer->setSkuProduct($productConcreteEntity->getSku());
+            $priceProductTransfer->setSkuProductAbstract($productAbstractEntity->getSku());
+            $priceProductTransfer->setIdProductAbstract($productAbstractEntity->getIdProductAbstract());
         }
 
         if ($priceProductScheduleEntity->getFkProductAbstract()) {
@@ -197,11 +241,17 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
             new CurrencyTransfer()
         );
 
+        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+            $priceProductScheduleEntity->getStore(),
+            new StoreTransfer()
+        );
+
         return $moneyValueTransfer
             ->fromArray($priceProductScheduleEntity->toArray(), true)
             ->setNetAmount($priceProductScheduleEntity->getNetPrice())
             ->setGrossAmount($priceProductScheduleEntity->getGrossPrice())
-            ->setCurrency($currencyTransfer);
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer);
     }
 
     /**
@@ -216,6 +266,19 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     ): CurrencyTransfer {
         return $currencyTransfer
             ->fromArray($currencyEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function mapStoreEntityToStoreTransfer(
+        SpyStore $storeEntity,
+        StoreTransfer $storeTransfer
+    ): StoreTransfer {
+        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 
     /**

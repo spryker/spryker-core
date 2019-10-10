@@ -30,6 +30,7 @@ use SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductLabelStorage

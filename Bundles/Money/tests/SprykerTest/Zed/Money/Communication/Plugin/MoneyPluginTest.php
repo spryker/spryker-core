@@ -15,6 +15,7 @@ use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Money

@@ -12,6 +12,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ErrorHandler

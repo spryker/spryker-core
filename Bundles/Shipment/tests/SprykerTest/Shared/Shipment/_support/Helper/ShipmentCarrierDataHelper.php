@@ -22,7 +22,7 @@ class ShipmentCarrierDataHelper extends Module
     public function haveShipmentCarrier(array $override = [])
     {
         /** @var \Generated\Shared\Transfer\ShipmentCarrierTransfer $shipmentCarrierTransfer */
-        $shipmentCarrierTransfer = (new ShipmentCarrierBuilder($override));
+        $shipmentCarrierTransfer = (new ShipmentCarrierBuilder($override))->build();
         $shipmentCarrierTransfer->setIdShipmentCarrier(
             $this->getShipmentFacade()->createCarrier($shipmentCarrierTransfer)
         );

@@ -17,13 +17,13 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface;
 class DiscountPromotionPostCreatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function postCreate(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {
