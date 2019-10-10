@@ -54,7 +54,7 @@ class ShipmentMethodDataHelper extends Module
         array $overrideCarrier = [],
         array $priceList = self::DEFAULT_PRICE_LIST,
         array $idStoreList = []
-    ) {
+    ): ShipmentMethodTransfer {
         $shipmentMethodTransfer = (new ShipmentMethodBuilder($overrideShipmentMethod))->build();
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 
