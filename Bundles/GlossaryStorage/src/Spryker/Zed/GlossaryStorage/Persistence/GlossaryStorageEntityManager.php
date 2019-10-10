@@ -17,24 +17,22 @@ class GlossaryStorageEntityManager extends AbstractEntityManager implements Glos
 {
     /**
      * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
-     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    public function saveGlossaryStorageEntities(array $glossaryStorageEntityTransfers, bool $isSendingToQueue): void
+    public function saveGlossaryStorageEntities(array $glossaryStorageEntityTransfers): void
     {
         foreach ($glossaryStorageEntityTransfers as $glossaryStorageEntityTransfer) {
-            $this->saveGlossaryStorageEntity($glossaryStorageEntityTransfer, $isSendingToQueue);
+            $this->saveGlossaryStorageEntity($glossaryStorageEntityTransfer);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer
-     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    protected function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer, bool $isSendingToQueue)
+    protected function saveGlossaryStorageEntity(SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer)
     {
         $glossaryStorageEntityTransfer->requireFkGlossaryKey();
 
@@ -47,8 +45,6 @@ class GlossaryStorageEntityManager extends AbstractEntityManager implements Glos
         $glossaryStorage = $this->getFactory()
             ->createGlossaryStorageMapper()
             ->hydrateSpyGlossaryStorageEntity($glossaryStorage, $glossaryStorageEntityTransfer);
-
-        $glossaryStorage->setIsSendingToQueue($isSendingToQueue);
 
         $glossaryStorage->save();
     }

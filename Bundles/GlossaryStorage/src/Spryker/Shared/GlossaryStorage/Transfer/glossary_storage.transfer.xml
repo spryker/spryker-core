@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="GlossaryStorage">
+        <property name="idGlossaryStorage" type="int"/>
+        <property name="fkGlossaryKey" type="int"/>
+        <property name="data" type="string"/>
+        <property name="glossaryKey" type="GlossaryKey"/>
+        <property name="key" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+</transfers>

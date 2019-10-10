@@ -11,11 +11,10 @@ interface GlossaryStorageEntityManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
-     * @param bool $isSendingToQueue
      *
      * @return void
      */
-    public function saveGlossaryStorageEntities(array $glossaryStorageEntityTransfers, bool $isSendingToQueue): void;
+    public function saveGlossaryStorageEntities(array $glossaryStorageEntityTransfers): void;
 
     /**
      * @param int $idGlossaryStorage

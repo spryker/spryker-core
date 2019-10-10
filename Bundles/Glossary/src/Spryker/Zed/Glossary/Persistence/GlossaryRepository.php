@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\Glossary\Persistence;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryPersistenceFactory getFactory()
@@ -62,39 +60,5 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
         }
 
         return $translationTransfers;
-    }
-
-    /**
-     * @param array $glossaryKeyIds
-     *
-     * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
-     */
-    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array
-    {
-        if (!$glossaryKeyIds) {
-            return [];
-        }
-
-        $query = $this->getFactory()
-            ->createGlossaryTranslationQuery()
-            ->leftJoinWithGlossaryKey()
-            ->joinWithLocale()
-            ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN);
-
-        return $this->buildQueryFromCriteria($query)->find();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
-     */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
-    {
-        $query = $this->getFactory()->createGlossaryKeyQuery()
-            ->setLimit($filterTransfer->getLimit())
-            ->setOffset($filterTransfer->getOffset());
-
-        return $this->buildQueryFromCriteria($query)->find();
     }
 }

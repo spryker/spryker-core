@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\GlossaryStorage\Persistence;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
 use Spryker\Zed\GlossaryStorage\GlossaryStorageDependencyProvider;
 use Spryker\Zed\GlossaryStorage\Persistence\Propel\Mapper\GlossaryStorageMapper;
@@ -45,5 +47,21 @@ class GlossaryStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createGlossaryStorageMapper()
     {
         return new GlossaryStorageMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function getGlossaryTranslationQuery(): SpyGlossaryTranslationQuery
+    {
+        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::PROPEL_QUERY_GLOSSARY_TRANSLATION);
+    }
+
+    /**
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function getGlossaryKeyQuery(): SpyGlossaryKeyQuery
+    {
+        return $this->getProvidedDependency(GlossaryStorageDependencyProvider::PROPEL_QUERY_GLOSSARY_KEY);
     }
 }

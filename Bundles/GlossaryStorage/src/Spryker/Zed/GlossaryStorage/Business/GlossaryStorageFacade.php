@@ -42,7 +42,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      */
     public function unpublish(array $glossaryKeyIds)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->unpublish($glossaryKeyIds);
+        $this->getFactory()->createGlossaryTranslationStorageDeleter()->unpublish($glossaryKeyIds);
     }
 
     /**
@@ -70,7 +70,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      */
     public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers)
     {
-        $this->getFactory()->createGlossaryTranslationStorageWriter()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
+        $this->getFactory()->createGlossaryTranslationStorageDeleter()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
     }
 
     /**
@@ -98,6 +98,6 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      */
     public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
     {
-        return $this->getFactory()->getGlossaryFacade()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
+        return $this->getRepository()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
     }
 }

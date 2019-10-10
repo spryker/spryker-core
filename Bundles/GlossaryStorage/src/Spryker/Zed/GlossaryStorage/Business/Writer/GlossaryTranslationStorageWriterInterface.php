@@ -19,27 +19,11 @@ interface GlossaryTranslationStorageWriterInterface
     public function publish(array $glossaryKeyIds);
 
     /**
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriterInterface::deleteGlossaryStorageCollectionByGlossaryKeyEvents()` instead
-     *
-     * @param array $glossaryKeyIds
-     *
-     * @return void
-     */
-    public function unpublish(array $glossaryKeyIds);
-
-    /**
      * @param array $eventTransfers
      *
      * @return void
      */
     public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
-
-    /**
-     * @param array $eventTransfers
-     *
-     * @return void
-     */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
 
     /**
      * @param array $eventTransfers

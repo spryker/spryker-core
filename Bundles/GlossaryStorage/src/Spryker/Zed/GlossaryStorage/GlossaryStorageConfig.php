@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class GlossaryStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated will be removed in future version
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool

@@ -9,18 +9,14 @@ namespace Spryker\Zed\GlossaryStorage\Business\Writer;
 
 use Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer;
 use Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface;
 use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeInterface;
 use Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface;
 use Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface;
 
 class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeInterface
-     */
-    protected $glossaryFacade;
+    protected const COL_FK_GLOSSARY_KEY = 'spy_glossary_translation.fk_glossary_key';
 
     /**
      * @var \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface
@@ -38,29 +34,26 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     protected $entityManager;
 
     /**
-     * @var bool
+     * @var \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface
      */
-    protected $isSendingToQueue = true;
+    protected $mapper;
 
     /**
-     * @param \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface $glossaryStorageRepository
      * @param \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageEntityManagerInterface $glossaryStorageEntityManager
-     * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\GlossaryStorage\Business\Mapper\GlossaryTranslationStorageMapperInterface $mapper
      */
     public function __construct(
-        GlossaryStorageToGlossaryFacadeInterface $glossaryFacade,
         GlossaryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         GlossaryStorageRepositoryInterface $glossaryStorageRepository,
         GlossaryStorageEntityManagerInterface $glossaryStorageEntityManager,
-        bool $isSendingToQueue
+        GlossaryTranslationStorageMapperInterface $mapper
     ) {
-        $this->glossaryFacade = $glossaryFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->repository = $glossaryStorageRepository;
         $this->entityManager = $glossaryStorageEntityManager;
-        $this->isSendingToQueue = $isSendingToQueue;
+        $this->mapper = $mapper;
     }
 
     /**
@@ -73,18 +66,6 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     public function publish(array $glossaryKeyIds)
     {
         $this->writerGlossaryStorageCollection($glossaryKeyIds);
-    }
-
-    /**
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriter::deleteGlossaryStorageCollectionByGlossaryKeyEvents()` instead
-     *
-     * @param int[] $glossaryKeyIds
-     *
-     * @return void
-     */
-    public function unpublish(array $glossaryKeyIds)
-    {
-        $this->deleteGlossaryStorageCollection($glossaryKeyIds);
     }
 
     /**
@@ -106,7 +87,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      */
     public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers)
     {
-        $glossaryKeyIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
+        $glossaryKeyIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, self::COL_FK_GLOSSARY_KEY);
 
         $this->writerGlossaryStorageCollection($glossaryKeyIds);
     }
@@ -118,9 +99,9 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      */
     protected function writerGlossaryStorageCollection(array $glossaryKeyIds): void
     {
-        $glossaryTranslationEntityTransfers = $this->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
-        $glossaryStorageEntityTransfers = $this->findGlossaryStorageEntityTransfer($glossaryKeyIds);
-        $mappedGlossaryStorageEntityTransfers = $this->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageEntityTransfers);
+        $glossaryTranslationEntityTransfers = $this->repository->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
+        $glossaryStorageEntityTransfers = $this->repository->findGlossaryStorageEntityTransfer($glossaryKeyIds);
+        $mappedGlossaryStorageEntityTransfers = $this->mapper->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageEntityTransfers);
 
         [$glossaryStorageInactiveEntityTransfer, $glossaryTranslationEntityTransfers] = $this
             ->filterInactiveAndEmptyLocalizedStorageEntityTransfers(
@@ -162,36 +143,6 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param array $eventTransfers
-     *
-     * @return void
-     */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers)
-    {
-        $glossaryKeyIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
-        $this->deleteGlossaryStorageCollection($glossaryKeyIds);
-    }
-
-    /**
-     * @param int[] $glossaryKeyIds
-     *
-     * @return void
-     */
-    protected function deleteGlossaryStorageCollection(array $glossaryKeyIds): void
-    {
-        $glossaryStorageEntityTransfers = $this->findGlossaryStorageEntityTransfer($glossaryKeyIds);
-        $mappedGlossaryStorageEntityTransfers = $this->mapGlossaryStorageEntityTransferByGlossaryIdAndLocale($glossaryStorageEntityTransfers);
-
-        foreach ($mappedGlossaryStorageEntityTransfers as $glossaryStorageEntityTransfers) {
-            /** @var \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer */
-            foreach ($glossaryStorageEntityTransfers as $glossaryStorageEntityTransfer) {
-                $this->entityManager->deleteGlossaryStorageEntity((int)$glossaryStorageEntityTransfer->getIdGlossaryStorage());
-            }
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[] $glossaryTranslationEntityTransfers
      * @param array $mappedGlossaryStorageEntityTransfers
      *
@@ -212,7 +163,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
             $glossaryStorageEntityTransfers[] = $this->storeDataSet($glossaryTranslationEntityTransfer);
         }
 
-        $this->entityManager->saveGlossaryStorageEntities($glossaryStorageEntityTransfers, $this->isSendingToQueue);
+        $this->entityManager->saveGlossaryStorageEntities($glossaryStorageEntityTransfers);
     }
 
     /**
@@ -241,41 +192,6 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $glossaryStorageEntityTransfer->setData($data);
 
         return $glossaryStorageEntityTransfer;
-    }
-
-    /**
-     * @param array $glossaryKeyIds
-     *
-     * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
-     */
-    protected function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds)
-    {
-        return $this->glossaryFacade->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
-    }
-
-    /**
-     * @param array $glossaryKeyIds
-     *
-     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
-     */
-    protected function findGlossaryStorageEntityTransfer(array $glossaryKeyIds)
-    {
-        return $this->repository->findGlossaryStorageEntityTransfer($glossaryKeyIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
-     *
-     * @return array
-     */
-    protected function mapGlossaryStorageEntityTransferByGlossaryIdAndLocale(array $glossaryStorageEntityTransfers)
-    {
-        $glossaryStorageEntitiesByIdAndLocale = [];
-        foreach ($glossaryStorageEntityTransfers as $glossaryStorageEntityTransfer) {
-            $glossaryStorageEntitiesByIdAndLocale[$glossaryStorageEntityTransfer->getFkGlossaryKey()][$glossaryStorageEntityTransfer->getLocale()] = $glossaryStorageEntityTransfer;
-        }
-
-        return $glossaryStorageEntitiesByIdAndLocale;
     }
 
     /**

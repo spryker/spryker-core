@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Glossary\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
@@ -406,33 +405,5 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         return $this->getFactory()
             ->createTranslationReader()
             ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $glossaryKeyIds
-     *
-     * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
-     */
-    public function findGlossaryTranslationEntityTransfer(array $glossaryKeyIds): array
-    {
-        return $this->getRepository()->findGlossaryTranslationEntityTransfer($glossaryKeyIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
-     */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
     }
 }

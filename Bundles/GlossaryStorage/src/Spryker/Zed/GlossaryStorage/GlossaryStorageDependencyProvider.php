@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\GlossaryStorage;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeBridge;
-use Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToGlossaryFacadeBridge;
 use Spryker\Zed\GlossaryStorage\Dependency\QueryContainer\GlossaryStorageToGlossaryQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -19,8 +20,9 @@ use Spryker\Zed\Kernel\Container;
 class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
+    public const PROPEL_QUERY_GLOSSARY_TRANSLATION = 'PROPEL_QUERY_GLOSSARY_TRANSLATE';
+    public const PROPEL_QUERY_GLOSSARY_KEY = 'PROPEL_QUERY_GLOSSARY_KEY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,7 +32,6 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addEventBehaviorFacade($container);
-        $this->addGlossaryFacade($container);
 
         return $container;
     }
@@ -54,11 +55,12 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_GLOSSARY, function (Container $container) {
             return new GlossaryStorageToGlossaryQueryContainerBridge($container->getLocator()->glossary()->queryContainer());
-        };
+        });
 
-        return $container;
+        $this->addGlossaryTranslateQuery($container);
+        $this->addGlossaryKeyQuery($container);
     }
 
     /**
@@ -78,10 +80,22 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addGlossaryFacade(Container $container): void
+    protected function addGlossaryTranslateQuery(Container $container): void
     {
-        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
-            return new GlossaryStorageToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
+        $container->set(static::PROPEL_QUERY_GLOSSARY_TRANSLATION, function (): SpyGlossaryTranslationQuery {
+            return SpyGlossaryTranslationQuery::create();
+        });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addGlossaryKeyQuery(Container $container): void
+    {
+        $container->set(static::PROPEL_QUERY_GLOSSARY_KEY, function (): SpyGlossaryKeyQuery {
+            return SpyGlossaryKeyQuery::create();
         });
     }
 }
