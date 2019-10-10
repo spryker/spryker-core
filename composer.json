@@ -569,6 +569,7 @@
     "spryker/uuid": "*",
     "spryker/vault": "*",
     "spryker/web-profiler": "*",
+    "spryker/web-profiler-extension": "*",
     "spryker/wishlist": "*",
     "spryker/wishlist-extension": "*",
     "spryker/wishlists-rest-api": "*",
