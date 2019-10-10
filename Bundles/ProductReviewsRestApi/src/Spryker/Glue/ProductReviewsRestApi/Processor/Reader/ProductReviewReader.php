@@ -159,16 +159,16 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param string $sku
+     * @param string $abstractSku
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findByAbstractSku(string $sku, string $localeName): array
+    public function findProductReviewsByAbstractSku(string $abstractSku, string $localeName): array
     {
         $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-            $sku,
+            $abstractSku,
             $localeName
         );
 
@@ -177,19 +177,19 @@ class ProductReviewReader implements ProductReviewReaderInterface
         }
 
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
-            (new ProductReviewSearchRequestTransfer())->setIdProductAbstract($sku)
+            (new ProductReviewSearchRequestTransfer())->setIdProductAbstract($abstractSku)
         );
 
-        return $this->prepareRestResourceCollection($sku, $productReviews['productReviews']);
+        return $this->prepareRestResourceCollection($abstractSku, $productReviews['productReviews']);
     }
 
     /**
-     * @param string $sku
+     * @param string $abstractSku
      * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function prepareRestResourceCollection(string $sku, array $productReviewTransfers): array
+    protected function prepareRestResourceCollection(string $abstractSku, array $productReviewTransfers): array
     {
         $productReviewResources = [];
 
@@ -206,7 +206,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
                 $restProductReviewAttributesTransfer
             )->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($sku, $productReviewTransfer->getIdProductReview())
+                $this->createSelfLink($abstractSku, $productReviewTransfer->getIdProductReview())
             );
         }
 
@@ -257,17 +257,17 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param string $idProductAbstract
+     * @param string $abstractSku
      * @param string $idProductReview
      *
      * @return string
      */
-    protected function createSelfLink(string $idProductAbstract, string $idProductReview): string
+    protected function createSelfLink(string $abstractSku, string $idProductReview): string
     {
         return sprintf(
             static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $idProductAbstract,
+            $abstractSku,
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
             $idProductReview
         );

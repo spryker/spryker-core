@@ -28,10 +28,10 @@ interface ProductReviewReaderInterface
     public function findProductReviewById(RestRequestInterface $restRequest, string $productReviewId): RestResponseInterface;
 
     /**
-     * @param string $sku
+     * @param string $abstractSku
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findByAbstractSku(string $sku, string $localeName): array;
+    public function findProductReviewsByAbstractSku(string $abstractSku, string $localeName): array;
 }

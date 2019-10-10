@@ -36,7 +36,7 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
         foreach ($resources as $resource) {
             $abstractSku = $resource->getId();
 
-            $productReviews = $this->productReviewReader->findByAbstractSku(
+            $productReviews = $this->productReviewReader->findProductReviewsByAbstractSku(
                 $abstractSku,
                 $restRequest->getMetadata()->getLocale()
             );
