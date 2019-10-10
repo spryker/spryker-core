@@ -19,7 +19,7 @@ class ProductListManagementConfigurableBundleTemplateSlotEditFormDataProviderExp
 {
     /**
      * {@inheritdoc}
-     * - Expands options for ConfigurableBundleTemplateSlotEditForm with Product List management -related data.
+     * - Expands options for ConfigurableBundleTemplateSlotEditForm with Product List management data.
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductListManagementConfigurableBundleTemplateSlotEditFormDataProviderExp
 
     /**
      * {@inheritdoc}
-     * - Expands form data for ConfigurableBundleTemplateSlotEditForm with Product List management -related data.
+     * - Expands form data for ConfigurableBundleTemplateSlotEditForm with Product List management data.
      *
      * @api
      *

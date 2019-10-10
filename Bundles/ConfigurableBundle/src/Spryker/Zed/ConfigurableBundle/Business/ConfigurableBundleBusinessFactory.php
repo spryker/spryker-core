@@ -166,8 +166,6 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * /**
-     *
      * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ConfigurableBundleToLocaleFacadeInterface

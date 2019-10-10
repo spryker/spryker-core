@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -101,7 +102,7 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
         if (!$productListResponseTransfer->getIsSuccessful()) {
             return $this->createConfigurableBundleResponseTransfer(
                 $configurableBundleTemplateSlotTransfer,
-                $productListResponseTransfer->getMessages()[0]
+                $productListResponseTransfer->getMessages()
             );
         }
 
@@ -143,7 +144,10 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
                     static::ERROR_MESSAGE_PARAM_ID => $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot(),
                 ]);
 
-            return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateSlotTransfer, $messageTransfer);
+            return $this->createConfigurableBundleResponseTransfer(
+                $configurableBundleTemplateSlotTransfer,
+                new ArrayObject([$messageTransfer])
+            );
         }
 
         $this->configurableBundleTemplateSlotTranslationWriter->saveTranslations($configurableBundleTemplateSlotTransfer);
@@ -153,22 +157,26 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     * @param \Generated\Shared\Transfer\MessageTransfer|null $messageTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]|null $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
      */
     protected function createConfigurableBundleResponseTransfer(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
-        ?MessageTransfer $messageTransfer = null
+        ?ArrayObject $messageTransfers = null
     ): ConfigurableBundleResponseTransfer {
         $configurableBundleResponseTransfer = (new ConfigurableBundleResponseTransfer())
             ->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer)
-            ->setIsSuccessful($messageTransfer === null);
+            ->setIsSuccessful($messageTransfers === null || !$messageTransfers->count());
 
         if ($configurableBundleResponseTransfer->getIsSuccessful()) {
             return $configurableBundleResponseTransfer;
         }
 
-        return $configurableBundleResponseTransfer->addMessage($messageTransfer);
+        foreach ($messageTransfers as $messageTransfer) {
+            $configurableBundleResponseTransfer->addMessage($messageTransfer);
+        }
+
+        return $configurableBundleResponseTransfer;
     }
 }

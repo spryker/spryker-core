@@ -17,5 +17,5 @@ interface ConfigurableBundleTemplateSlotEditFormExpanderInterface
      *
      * @return void
      */
-    public function expandWithPlugins(FormBuilderInterface $builder, array $options): void;
+    public function executeExpanderPlugins(FormBuilderInterface $builder, array $options): void;
 }

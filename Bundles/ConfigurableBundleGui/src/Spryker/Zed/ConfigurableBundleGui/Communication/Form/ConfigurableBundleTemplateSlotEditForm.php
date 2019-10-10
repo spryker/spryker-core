@@ -49,7 +49,7 @@ class ConfigurableBundleTemplateSlotEditForm extends AbstractConfigurableBundleT
 
         $this->getFactory()
             ->createConfigurableBundleTemplateSlotEditFormExpander()
-            ->expandWithPlugins($builder, $options);
+            ->executeExpanderPlugins($builder, $options);
 
         $this->setFieldsPropertyPath($builder);
     }

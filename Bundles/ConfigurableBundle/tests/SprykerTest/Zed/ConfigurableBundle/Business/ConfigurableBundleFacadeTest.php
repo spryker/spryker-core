@@ -388,8 +388,6 @@ class ConfigurableBundleFacadeTest extends Unit
         $this->tester->getFacade()->deleteConfigurableBundleTemplateSlotById(
             $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
         );
-
-        // Assert
         $configurableBundleTemplateSlotTransfer = $this->tester->getFacade()
             ->findConfigurableBundleTemplateSlot(
                 (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdConfigurableBundleTemplateSlot(
@@ -397,6 +395,7 @@ class ConfigurableBundleFacadeTest extends Unit
                 )
             );
 
+        // Assert
         $this->assertNull($configurableBundleTemplateSlotTransfer);
     }
 

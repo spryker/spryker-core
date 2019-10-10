@@ -83,7 +83,7 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
         $configurableBundleTemplateSlotEditFormTransfer->setProductListAggregateForm($productListAggregateFormTransfer)
             ->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
 
-        $configurableBundleTemplateSlotEditFormTransfer = $this->expandDataWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins($configurableBundleTemplateSlotEditFormTransfer);
+        $configurableBundleTemplateSlotEditFormTransfer = $this->expandDataWithDataProviderExpanderPlugins($configurableBundleTemplateSlotEditFormTransfer);
 
         $configurableBundleTemplateSlotTransfer = $this->expandConfigurableBundleTemplateSlotTransferWithExistingTranslations(
             $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()
@@ -101,7 +101,7 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
             ConfigurableBundleTemplateForm::OPTION_AVAILABLE_LOCALES => $this->localeFacade->getLocaleCollection(),
         ];
 
-        return $this->expandOptionsWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins($options);
+        return $this->expandOptionsWithDataProviderExpanderPlugins($options);
     }
 
     /**
@@ -157,7 +157,7 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
      *
      * @return array
      */
-    protected function expandOptionsWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(array $options): array
+    protected function expandOptionsWithDataProviderExpanderPlugins(array $options): array
     {
         foreach ($this->configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins as $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin) {
             $options = $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin->expandOptions($options);
@@ -171,7 +171,7 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
      */
-    protected function expandDataWithConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins(
+    protected function expandDataWithDataProviderExpanderPlugins(
         ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
     ): ConfigurableBundleTemplateSlotEditFormTransfer {
         foreach ($this->configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins as $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugin) {

@@ -14,13 +14,17 @@ use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\ConfigurableBundle\Business\Exception\ConfigurableBundleTemplateNotFoundException;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
 
 class ProductListWriter implements ProductListWriterInterface
 {
+    /**
+     * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_WHITELIST
+     */
+    protected const PRODUCT_LIST_DEFAULT_TYPE = 'whitelist';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
      */
@@ -128,7 +132,7 @@ class ProductListWriter implements ProductListWriterInterface
     {
         return (new ProductListTransfer())
             ->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer))
-            ->setType(SpyProductListTableMap::COL_TYPE_WHITELIST)
+            ->setType(static::PRODUCT_LIST_DEFAULT_TYPE)
             ->setProductListProductConcreteRelation(new ProductListProductConcreteRelationTransfer())
             ->setProductListCategoryRelation(new ProductListCategoryRelationTransfer());
     }

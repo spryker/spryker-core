@@ -30,7 +30,7 @@ class ConfigurableBundleTemplateSlotEditFormExpander implements ConfigurableBund
      *
      * @return void
      */
-    public function expandWithPlugins(FormBuilderInterface $builder, array $options): void
+    public function executeExpanderPlugins(FormBuilderInterface $builder, array $options): void
     {
         foreach ($this->configurableBundleTemplateSlotEditFormExpanderPlugins as $configurableBundleTemplateSlotEditFormExpanderPlugin) {
             $configurableBundleTemplateSlotEditFormExpanderPlugin->expand($builder, $options);

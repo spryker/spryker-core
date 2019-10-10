@@ -135,22 +135,11 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
     {
         return $this->getFieldValueByPropertyPath(
             $formEvent->getData(),
-            $this->getFieldPropertyPath($fieldName, $formEvent)
+            $formEvent->getForm()
+                ->get($fieldName)
+                ->getPropertyPath()
+                ->__toString()
         );
-    }
-
-    /**
-     * @param string $fieldName
-     * @param \Symfony\Component\Form\FormEvent $formEvent
-     *
-     * @return string
-     */
-    protected function getFieldPropertyPath(string $fieldName, FormEvent $formEvent): string
-    {
-        return $formEvent->getForm()
-            ->get($fieldName)
-            ->getPropertyPath()
-            ->__toString();
     }
 
     /**
