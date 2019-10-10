@@ -39,7 +39,7 @@ class CartCodeAdder implements CartCodeAdderInterface
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
-        $quoteTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+        $quoteTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer)->getQuoteTransfer();
 
         return $this->cartCodeFacade->addCandidate($quoteTransfer, $voucherCode);
     }

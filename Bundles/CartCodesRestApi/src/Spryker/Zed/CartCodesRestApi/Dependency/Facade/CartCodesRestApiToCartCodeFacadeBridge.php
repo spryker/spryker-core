@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartCodesRestApi\Dependency\Facade;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartCodesRestApiToCartCodeFacadeBridge implements CartCodesRestApiToCartCodeFacadeInterface
