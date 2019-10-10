@@ -25,6 +25,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
+use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
@@ -100,7 +101,26 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getInstallerPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_INSTALLER_PLUGINS);
+        return array_merge(
+            $this->getSchemaInstallerPlugins(),
+            $this->getMapInstallerPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    public function getSchemaInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_SOURCE_INSTALLER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     */
+    public function getMapInstallerPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_MAP_INSTALLER_PLUGINS);
     }
 
     /**
@@ -131,6 +151,16 @@ class SearchBusinessFactory extends AbstractBusinessFactory
             $this->createElasticsearchIndexMapGenerator(),
             $messenger
         );
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    public function createSourceMapInstaller(LoggerInterface $messenger): SearchInstallerInterface
+    {
+        return new SearchInstaller($messenger, $this->getMapInstallerPlugins());
     }
 
     /**

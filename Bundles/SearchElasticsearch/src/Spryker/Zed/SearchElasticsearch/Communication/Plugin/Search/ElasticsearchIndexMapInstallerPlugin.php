@@ -16,12 +16,12 @@ use Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface;
  * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements InstallPluginInterface
+class ElasticsearchIndexMapInstallerPlugin extends AbstractPlugin implements InstallPluginInterface
 {
     /**
      * {@inheritDoc}
      * - Finds schema definition files in modules.
-     * - Installs or updates Elasticsearch indices by found schema definition files.
+     * - Creates or update IndexMapper classes by found index definition files.
      *
      * @api
      *
@@ -31,6 +31,6 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
      */
     public function install(LoggerInterface $logger): void
     {
-        $this->getFacade()->install($logger);
+        $this->getFacade()->installMapper($logger);
     }
 }

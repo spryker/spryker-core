@@ -12,15 +12,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\Search\Communication\Console\GenerateSourceMapConsole` instead.
- *
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
-class GenerateIndexMapConsole extends Console
+class GenerateSourceMapConsole extends Console
 {
-    public const COMMAND_NAME = 'search:setup:index-map';
-    public const DESCRIPTION = 'This command will generate the PageIndexMap without requiring the actual Elasticsearch index';
+    public const COMMAND_NAME = 'search:setup:source-map';
+    public const DESCRIPTION = 'This command will generate the IndexMap classes by found schema definition files';
 
     /**
      * @return void
@@ -42,6 +40,6 @@ class GenerateIndexMapConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->generatePageIndexMap($this->getMessenger());
+        $this->getFacade()->generateSourceMap($this->getMessenger());
     }
 }

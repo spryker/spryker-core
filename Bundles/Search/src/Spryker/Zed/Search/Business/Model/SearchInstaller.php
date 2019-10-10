@@ -39,11 +39,11 @@ class SearchInstaller implements SearchInstallerInterface
         foreach ($this->installer as $installer) {
             if ($installer instanceof SearchInstallerInterface) {
                 $installer->install();
+
                 continue;
             }
 
             $installer->install($this->logger);
-            $installer->installMapper($this->logger);
         }
     }
 }
