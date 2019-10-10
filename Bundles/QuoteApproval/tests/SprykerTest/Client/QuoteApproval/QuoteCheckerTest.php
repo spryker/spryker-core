@@ -114,17 +114,15 @@ class QuoteCheckerTest extends Unit
     protected function createQuoteApprovalConfigMock(): MockObject
     {
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
-            ->setMethods(['getRequiredQuoteFields'])
+            ->setMethods(['getRequiredQuoteFieldsForApprovalProcess'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $quoteApprovalConfigMock
-            ->method('getRequiredQuoteFields')
+            ->method('getRequiredQuoteFieldsForApprovalProcess')
             ->willReturn([
                 QuoteTransfer::BILLING_ADDRESS,
-                QuoteTransfer::SHIPPING_ADDRESS,
                 QuoteTransfer::PAYMENTS,
-                QuoteTransfer::SHIPMENT,
             ]);
 
         return $quoteApprovalConfigMock;

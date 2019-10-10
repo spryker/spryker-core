@@ -61,10 +61,10 @@ class QuoteApprovalFacadeTest extends Unit
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
 
         // Act
-        $isQuoteReadyForCheckout = $this->tester->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertTrue($isQuoteReadyForCheckout);
+        $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
         $this->assertEmpty($checkoutResponseTransfer->getErrors());
     }
 
@@ -82,10 +82,10 @@ class QuoteApprovalFacadeTest extends Unit
         ]));
 
         // Act
-        $isQuoteReadyForCheckout = $this->tester->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
+        $checkoutResponseTransfer = $this->tester->getFacade()->isQuoteReadyForCheckout($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertFalse($isQuoteReadyForCheckout);
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertNotEmpty($checkoutResponseTransfer->getErrors());
     }
 
@@ -621,7 +621,7 @@ class QuoteApprovalFacadeTest extends Unit
     protected function getQuoteApprovalFacadeMock(array $requiredQuoteFields): QuoteApprovalFacadeInterface
     {
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
-            ->setMethods(['getRequiredQuoteFields', 'isPermissionCalculationIncludeShipment'])
+            ->setMethods(['getRequiredQuoteFields', 'isShipmentPriceIncludedInQuoteApprovalPermissionCheck'])
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -149,7 +149,7 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
     {
