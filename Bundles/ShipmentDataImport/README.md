@@ -1,7 +1,7 @@
 # ShipmentDataImport Module
 [![Build Status](https://travis-ci.org/spryker/shipment-data-import.svg)](https://travis-ci.org/spryker/shipment-data-import)
 
-{{ADD DESCRIPTION HERE}}
+This module has demo data and importer for shipment.
 
 ## Installation
 
