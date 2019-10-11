@@ -36,7 +36,7 @@ class ProductAbstractPackagingEventResourceBulkRepositoryPlugin extends Abstract
 
     /**
      * {@inheritDoc}
-     * - Retrieves ProductAbstractPackagingStorageTransfer collection.
+     * - Returns ProductAbstractPackagingStorageTransfer collection by filter.
      *
      * @api
      *

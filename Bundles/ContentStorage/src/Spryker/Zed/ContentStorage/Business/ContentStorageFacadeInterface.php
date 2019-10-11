@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ContentStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ContentStorageFacadeInterface
 {
     /**
@@ -22,4 +24,16 @@ interface ContentStorageFacadeInterface
      * @return void
      */
     public function publish(array $contentIds): void;
+
+    /**
+     * Specification:
+     * - Returns ContentEntityTransfer collection by filter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     */
+    public function getContentByFilter(FilterTransfer $filterTransfer): array;
 }

@@ -7,21 +7,20 @@
 
 namespace Spryker\Zed\ContentStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\Content\Persistence\Map\SpyContentTableMap;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\Content\Dependency\ContentEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use ContentStorageFacadeInterface instead.
- *
  * @method \Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentStorage\Communication\ContentStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentStorage\Persistence\ContentStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ContentStorage\ContentStorageConfig getConfig()
  */
-class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
+class ContentStorageEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -37,16 +36,20 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
 
     /**
      * {@inheritDoc}
+     * - Returns ContentEntityTransfer collection by filter.
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit): array
     {
-        return $this->getRepository()->findContentByContentIds($ids);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        return $this->getFacade()->getContentByFilter($filterTransfer);
     }
 
     /**
@@ -71,5 +74,18 @@ class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin impleme
     public function getIdColumnName(): ?string
     {
         return SpyContentTableMap::COL_ID_CONTENT;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

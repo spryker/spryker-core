@@ -9,6 +9,7 @@ namespace Spryker\Zed\ContentStorage\Persistence;
 
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -82,6 +83,8 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     }
 
     /**
+     * @deprecated Use getContentByFilter instead.
+     *
      * @param array $contentIds
      *
      * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
@@ -93,6 +96,23 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
         if ($contentIds !== []) {
             $query->filterByIdContent_In($contentIds);
         }
+
+        return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module Content
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     */
+    public function getContentByFilter(FilterTransfer $filterTransfer): array
+    {
+        $query = $this->getFactory()
+            ->getContentQuery()
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset());
 
         return $this->buildQueryFromCriteria($query)->find();
     }

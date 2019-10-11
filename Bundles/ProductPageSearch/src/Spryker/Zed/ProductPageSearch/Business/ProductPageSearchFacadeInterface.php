@@ -119,7 +119,7 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification
-     * - Returns array of ProductEntityTransfer collection by filter.
+     * - Returns ProductEntityTransfer collection by filter.
      *
      * @api
      *

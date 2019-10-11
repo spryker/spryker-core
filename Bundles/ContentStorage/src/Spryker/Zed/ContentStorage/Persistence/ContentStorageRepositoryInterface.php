@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ContentStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 /**
  * @method \Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory getFactory()
  */
@@ -32,9 +34,18 @@ interface ContentStorageRepositoryInterface
     public function findAllContentStorage(): array;
 
     /**
+     * @deprecated Use getContentByFilter instead.
+     *
      * @param array $contentIds
      *
      * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
     public function findContentByContentIds(array $contentIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     */
+    public function getContentByFilter(FilterTransfer $filterTransfer): array;
 }
