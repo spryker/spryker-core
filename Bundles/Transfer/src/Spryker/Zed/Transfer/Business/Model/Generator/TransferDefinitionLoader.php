@@ -153,7 +153,7 @@ class TransferDefinitionLoader implements LoaderInterface
         if ($name !== $filteredName) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'Transfer name `%s` does not match expected name `%s` for bundle `%s`',
+                    'Transfer name `%s` does not match expected name `%s` for module `%s`',
                     $name,
                     $filteredName,
                     $bundle
