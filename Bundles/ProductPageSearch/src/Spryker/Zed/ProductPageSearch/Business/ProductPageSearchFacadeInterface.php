@@ -127,5 +127,5 @@ interface ProductPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductByFilter(FilterTransfer $filterTransfer): array;
 }

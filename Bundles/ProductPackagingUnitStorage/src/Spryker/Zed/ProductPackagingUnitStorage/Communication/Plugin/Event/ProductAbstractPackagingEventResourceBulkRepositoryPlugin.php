@@ -49,7 +49,7 @@ class ProductAbstractPackagingEventResourceBulkRepositoryPlugin extends Abstract
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->getProductPackagingLeadProductEntityByFilter($filterTransfer);
+        return $this->getFacade()->getProductPackagingLeadProductByFilter($filterTransfer);
     }
 
     /**

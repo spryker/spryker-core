@@ -49,7 +49,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->getProductEntityByFilter($filterTransfer);
+        return $this->getFacade()->getProductByFilter($filterTransfer);
     }
 
     /**

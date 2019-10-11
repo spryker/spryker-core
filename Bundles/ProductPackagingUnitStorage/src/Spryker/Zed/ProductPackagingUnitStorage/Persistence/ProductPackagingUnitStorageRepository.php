@@ -77,6 +77,8 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @module ProductPackagingUnit
      *
+     * @deprecated Use getProductPackagingLeadProductByFilter instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
@@ -110,11 +112,13 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     }
 
     /**
+     * @module ProductPackagingUnit
+     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductEntityByFilter(FilterTransfer $filterTransfer): array
+    public function getProductPackagingLeadProductByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->getProductPackagingLeadProductQuery()

@@ -71,5 +71,5 @@ interface ProductPackagingUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductEntityByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductPackagingLeadProductByFilter(FilterTransfer $filterTransfer): array;
 }

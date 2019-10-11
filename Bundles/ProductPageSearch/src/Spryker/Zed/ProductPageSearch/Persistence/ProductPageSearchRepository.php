@@ -148,6 +148,8 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module Product
      *
+     * @deprecated Use getProductByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
@@ -170,7 +172,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array
+    public function getProductByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->getProductQuery()

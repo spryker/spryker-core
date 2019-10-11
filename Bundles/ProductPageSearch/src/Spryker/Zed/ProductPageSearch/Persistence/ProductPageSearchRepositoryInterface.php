@@ -26,7 +26,7 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 
     /**
-     * @deprecated Use getProductEntityByFilter instead.
+     * @deprecated Use getProductByFilter instead.
      *
      * @param int[] $productIds
      *
@@ -39,5 +39,5 @@ interface ProductPageSearchRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function getProductEntityByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductByFilter(FilterTransfer $filterTransfer): array;
 }
