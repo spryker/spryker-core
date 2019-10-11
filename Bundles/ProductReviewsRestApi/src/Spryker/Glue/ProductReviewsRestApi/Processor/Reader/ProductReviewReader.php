@@ -81,10 +81,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
         }
 
         $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $parentResource->getId());
-        if (!count($productReviewTransfers)) {
-            return $this->addProductReviewNotFoundErrorToResponse($restResponse);
-        }
-
         foreach ($productReviewTransfers as $productReviewTransfer) {
             $restProductReviewAttributesTransfer = $this->productReviewMapper
                 ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
@@ -102,50 +98,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
             );
 
             $restResponse->addResource($restResource);
-        }
-
-        return $restResponse;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $productReviewId
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function findProductReviewById(RestRequestInterface $restRequest, string $productReviewId): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
-        if (!$parentResource || !$parentResource->getId()) {
-            return $this->createProductAbstractSkuMissingError();
-        }
-
-        $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $parentResource->getId());
-        if (!count($productReviewTransfers)) {
-            return $this->addProductReviewNotFoundErrorToResponse($restResponse);
-        }
-
-        foreach ($productReviewTransfers as $productReviewTransfer) {
-            if ($productReviewTransfer->getIdProductReview() === (int)$productReviewId) {
-                $restProductReviewAttributesTransfer = $this->productReviewMapper
-                    ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
-                        $productReviewTransfer,
-                        new RestProductReviewsAttributesTransfer()
-                    );
-
-                $restResource = $this->restResourceBuilder->createRestResource(
-                    ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-                    $productReviewTransfer->getIdProductReview(),
-                    $restProductReviewAttributesTransfer
-                )->addLink(
-                    RestLinkInterface::LINK_SELF,
-                    $this->createSelfLink($parentResource->getId(), $productReviewTransfer->getIdProductReview())
-                );
-
-                $restResponse->addResource($restResource);
-            }
         }
 
         return $restResponse;
@@ -223,36 +175,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
         }
 
         return $productReviewResources;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function addProductReviewNotFoundErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_CANT_FIND_PRODUCT_REVIEW)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_PRODUCT_REVIEW);
-
-        return $restResponse->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function addProductReviewMissingErrorToResponse(RestResponseInterface $restResponse): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_PRODUCT_REVIEW_ID_IS_MISSING)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_PRODUCT_REVIEW_ID_IS_MISSING);
-
-        return $restResponse->addError($restErrorTransfer);
     }
 
     /**

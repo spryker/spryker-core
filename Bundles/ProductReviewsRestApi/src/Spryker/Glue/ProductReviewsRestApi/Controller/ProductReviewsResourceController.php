@@ -40,11 +40,6 @@ class ProductReviewsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $productReviewId = $restRequest->getResource()->getId();
-        if ($productReviewId) {
-            return $this->getFactory()->createProductReviewReader()->findProductReviewById($restRequest, $productReviewId);
-        }
-
         return $this->getFactory()->createProductReviewReader()->findProductReviews($restRequest);
     }
 

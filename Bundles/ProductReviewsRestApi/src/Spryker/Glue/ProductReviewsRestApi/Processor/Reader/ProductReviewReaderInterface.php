@@ -21,14 +21,6 @@ interface ProductReviewReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $productReviewId
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function findProductReviewById(RestRequestInterface $restRequest, string $productReviewId): RestResponseInterface;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string $abstractSku
      * @param string $localeName
      *
