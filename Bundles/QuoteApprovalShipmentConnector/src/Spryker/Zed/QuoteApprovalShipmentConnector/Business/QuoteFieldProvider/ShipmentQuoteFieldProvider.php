@@ -51,14 +51,11 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
             return [];
         }
 
-        if (!$this->isQuoteLevelShipment($quoteTransfer)) {
-            return [];
+        if ($this->isQuoteLevelShipment($quoteTransfer)) {
+            return $this->getQuoteLevelShipmentQuoteFieldsAllowedForSaving();
         }
 
-        return [
-            QuoteTransfer::SHIPMENT,
-            QuoteTransfer::SHIPPING_ADDRESS,
-        ];
+        return [];
     }
 
     /**
@@ -81,6 +78,19 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
         }
 
         return false;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @return array
+     */
+    protected function getQuoteLevelShipmentQuoteFieldsAllowedForSaving(): array
+    {
+        return [
+            QuoteTransfer::SHIPMENT,
+            QuoteTransfer::SHIPPING_ADDRESS,
+        ];
     }
 
     /**
