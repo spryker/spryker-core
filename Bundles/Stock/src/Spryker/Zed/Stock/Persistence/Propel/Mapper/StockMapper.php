@@ -51,7 +51,7 @@ class StockMapper
     {
         $stockTransfer->fromArray($stockEntity->toArray(), true);
         $stockTransfer->setStoreRelation(
-            $this->stockStoreRelationMapper->mapStockStoreEntityToStoreRelationTransfer(
+            $this->stockStoreRelationMapper->mapStockStoreEntitiesToStoreRelationTransfer(
                 $stockEntity->getIdStock(),
                 $stockEntity->getStockStores()->getArrayCopy(),
                 new StoreRelationTransfer()

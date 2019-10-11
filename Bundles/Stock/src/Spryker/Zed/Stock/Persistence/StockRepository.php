@@ -144,7 +144,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
 
         return $this->getFactory()
             ->createStockStoreRelationMapper()
-            ->mapStockStoreEntityToStoreRelationTransfer(
+            ->mapStockStoreEntitiesToStoreRelationTransfer(
                 $idStock,
                 $stockStoreQuery->find()->getArrayCopy(),
                 new StoreRelationTransfer()

@@ -492,7 +492,11 @@ class StockFacadeTest extends Unit
             'Store to warehouse mapping collection does not match expected value.'
         );
 
-        $this->assertArrayHasKey($storeTransfer2->getName(), $storeToWarehouseMapping);
+        $this->assertArrayHasKey(
+            $storeTransfer2->getName(),
+            $storeToWarehouseMapping,
+            'Store to warehouse mapping collection does not have expected key.'
+        );
         $this->assertEquals(
             [
                 $this->stockTransfer1->getName(),
@@ -658,7 +662,7 @@ class StockFacadeTest extends Unit
         $result = $this->stockFacade->findStockById(-1);
 
         //Assert
-        $this->assertNull($result, '');
+        $this->assertNull($result, 'The result must be null');
     }
 
     /**
