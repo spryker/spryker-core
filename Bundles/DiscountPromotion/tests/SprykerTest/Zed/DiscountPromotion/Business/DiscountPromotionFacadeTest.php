@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -138,8 +137,9 @@ class DiscountPromotionFacadeTest extends Unit
         $this->getDiscountPromotionFacade()->createPromotionDiscount($discountPromotionTransfer);
 
         $productTransfer = $this->tester->haveProduct([], ['sku' => $promotionItemSku]);
-        $this->tester->haveAvailabilityAbstract(
-            (new ProductConcreteTransfer())->setSku($productTransfer->getSku()),
+        $this->tester->haveAvailabilityConcrete(
+            $productTransfer->getSku(),
+            $storeTransfer,
             new Decimal(0)
         );
 

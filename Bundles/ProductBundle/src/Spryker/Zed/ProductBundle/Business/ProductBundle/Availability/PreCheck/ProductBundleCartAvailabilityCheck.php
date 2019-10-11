@@ -189,8 +189,8 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         StoreTransfer $storeTransfer
     ): Decimal {
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
-            ->findProductConcreteAvailabilityForStore(
-                $itemTransfer->getProductConcrete()->getIdProductConcrete(),
+            ->findProductConcreteAvailabilityBySkuForStore(
+                $itemTransfer->getSku(),
                 $storeTransfer
             );
 

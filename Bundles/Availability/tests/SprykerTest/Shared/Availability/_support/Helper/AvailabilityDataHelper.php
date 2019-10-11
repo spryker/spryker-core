@@ -8,7 +8,9 @@
 namespace SprykerTest\Shared\Availability\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
@@ -44,6 +46,27 @@ class AvailabilityDataHelper extends Module
             ->getAvailabilityQueryContainer()
             ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
             ->findOneOrCreate();
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string|int|float|null $quantity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     */
+    public function haveAvailabilityConcrete(string $sku, StoreTransfer $storeTransfer, $quantity = null): ProductConcreteAvailabilityTransfer
+    {
+        $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
+            $sku,
+            $quantity === null ? new Decimal(static::DEFAULT_QUANTITY) : new Decimal($quantity),
+            $storeTransfer
+        );
+
+        return $this->getAvailabilityFacade()->findProductConcreteAvailabilityBySkuForStore(
+            $sku,
+            $storeTransfer
+        );
     }
 
     /**

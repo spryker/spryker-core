@@ -136,16 +136,16 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     }
 
     /**
-     * @param int $idProductConcrete
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityForStore(int $idProductConcrete, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
+    public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
-            ->findProductConcreteAvailabilityByIdProductConcreteAndStore(
-                $idProductConcrete,
+            ->findProductConcreteAvailabilityBySkuAndStore(
+                $sku,
                 $storeTransfer
             );
 
