@@ -51,7 +51,7 @@ class ShipmentDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $shipmentStoreDataImportPlugin->import($dataImportConfigurationTransfer);
 
         //Assert
-        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess(), 'Data import should finish successfully');
 
         $this->assertSame(
             static::EXPECTED_IMPORT_COUNT,

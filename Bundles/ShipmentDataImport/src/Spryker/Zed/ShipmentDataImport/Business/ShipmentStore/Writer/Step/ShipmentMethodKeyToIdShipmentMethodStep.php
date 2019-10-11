@@ -27,7 +27,7 @@ class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
         $shipmentMethodKey = $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_SHIPMENT_METHOD_KEY];
 
         if (!$shipmentMethodKey) {
-            throw new EntityNotFoundException(sprintf('Invalid shipment method key'));
+            throw new EntityNotFoundException(sprintf('Invalid shipment method key: %s', $shipmentMethodKey));
         }
 
         $shipmentMethodEntity = SpyShipmentMethodQuery::create()
@@ -35,7 +35,7 @@ class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
             ->findOne();
 
         if ($shipmentMethodEntity === null) {
-            throw new EntityNotFoundException(sprintf('Shipment method not found'));
+            throw new EntityNotFoundException('Shipment method not found');
         }
 
         $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_SHIPMENT_METHOD] = $shipmentMethodEntity->getIdShipmentMethod();

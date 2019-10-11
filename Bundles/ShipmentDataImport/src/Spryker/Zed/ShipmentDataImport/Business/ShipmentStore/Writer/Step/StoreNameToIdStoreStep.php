@@ -27,7 +27,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
         $storeName = $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_STORE_NAME];
 
         if (!$storeName) {
-            throw new EntityNotFoundException(sprintf('Invalid store name'));
+            throw new EntityNotFoundException(sprintf('Invalid store name: %s', $storeName));
         }
 
         $storeEntity = SpyStoreQuery::create()
@@ -35,7 +35,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
             ->findOne();
 
         if ($storeEntity === null) {
-            throw new EntityNotFoundException(sprintf('Store not found'));
+            throw new EntityNotFoundException('Store not found');
         }
 
         $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_STORE] = $storeEntity->getIdStore();

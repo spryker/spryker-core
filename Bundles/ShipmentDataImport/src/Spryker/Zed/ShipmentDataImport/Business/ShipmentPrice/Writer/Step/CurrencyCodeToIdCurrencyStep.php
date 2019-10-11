@@ -27,7 +27,7 @@ class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
         $currencyCode = $dataSet[ShipmentPriceDataSetInterface::COL_CURRENCY];
 
         if (!$currencyCode) {
-            throw new EntityNotFoundException(sprintf('Invalid currency ISO code'));
+            throw new EntityNotFoundException(sprintf('Invalid currency ISO code: %s', $currencyCode));
         }
 
         $currencyEntity = SpyCurrencyQuery::create()
@@ -35,7 +35,7 @@ class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
             ->findOne();
 
         if ($currencyEntity === null) {
-            throw new EntityNotFoundException(sprintf('Currency not found'));
+            throw new EntityNotFoundException('Currency not found');
         }
 
         $dataSet[ShipmentPriceDataSetInterface::COL_ID_CURRENCY] = $currencyEntity->getIdCurrency();

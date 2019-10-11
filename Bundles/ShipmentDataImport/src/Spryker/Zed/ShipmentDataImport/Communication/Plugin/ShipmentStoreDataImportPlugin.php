@@ -36,7 +36,7 @@ class ShipmentStoreDataImportPlugin extends AbstractPlugin implements DataImport
 
     /**
      * {@inheritDoc}
-     * - Returns the name of shipment store data importer.
+     * - Returns the name of shipment store DataImporter.
      *
      * @api
      *

@@ -27,7 +27,7 @@ class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
         $taxSetName = $dataSet[ShipmentDataSetInterface::COL_TAX_SET_NAME];
 
         if (!$taxSetName) {
-            throw new EntityNotFoundException(sprintf('Invalid tax set name'));
+            throw new EntityNotFoundException(sprintf('Invalid tax set name: %s', $taxSetName));
         }
 
         $taxSetEntity = SpyTaxSetQuery::create()
