@@ -36,10 +36,12 @@ class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
         }
 
         if (!isset(static::$idTaxSetCache[$taxSetName])) {
-            static::$idTaxSetCache[$taxSetName] = SpyTaxSetQuery::create()
+            $taxSetEntity = SpyTaxSetQuery::create()
                 ->filterByName($taxSetName)
-                ->findOneOrCreate()
-                ->getIdTaxSet();
+                ->findOneOrCreate();
+            $taxSetEntity->save();
+
+            static::$idTaxSetCache[$taxSetName] = $taxSetEntity->getIdTaxSet();
         }
 
         $dataSet[ShipmentDataSetInterface::COL_ID_TAX_SET] = static::$idTaxSetCache[$taxSetName];

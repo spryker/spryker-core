@@ -24,6 +24,7 @@ class ShipmentMethodStoreWriterStep implements DataImportStepInterface
         SpyShipmentMethodStoreQuery::create()
             ->filterByFkStore($dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_STORE])
             ->filterByFkShipmentMethod($dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_SHIPMENT_METHOD])
-            ->findOneOrCreate();
+            ->findOneOrCreate()
+            ->save();
     }
 }

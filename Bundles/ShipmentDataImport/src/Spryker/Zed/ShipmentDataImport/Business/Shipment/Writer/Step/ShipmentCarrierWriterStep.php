@@ -36,10 +36,12 @@ class ShipmentCarrierWriterStep implements DataImportStepInterface
         }
 
         if (!isset(static::$idShipmentCarrierCache[$carrierName])) {
-            static::$idShipmentCarrierCache[$carrierName] = SpyShipmentCarrierQuery::create()
+            $shipmentCarrierEntity = SpyShipmentCarrierQuery::create()
                 ->filterByName($carrierName)
-                ->findOneOrCreate()
-                ->getIdShipmentCarrier();
+                ->findOneOrCreate();
+            $shipmentCarrierEntity->save();
+
+            static::$idShipmentCarrierCache[$carrierName] = $shipmentCarrierEntity->getIdShipmentCarrier();
         }
 
         $dataSet[ShipmentDataSetInterface::COL_ID_CARRIER] = static::$idShipmentCarrierCache[$carrierName];
