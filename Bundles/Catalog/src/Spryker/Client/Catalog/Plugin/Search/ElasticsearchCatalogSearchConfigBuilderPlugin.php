@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Catalog\Plugin\Config;
+namespace Spryker\Client\Catalog\Plugin\Search;
 
 use Generated\Shared\Transfer\SearchConfigurationTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
