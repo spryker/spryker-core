@@ -51,7 +51,7 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns a query object for product set page search.
      *
      * @api
@@ -64,7 +64,7 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Defines a context for product set page search.
      *
      * @api

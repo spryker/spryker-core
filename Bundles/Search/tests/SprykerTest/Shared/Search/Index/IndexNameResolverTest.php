@@ -13,6 +13,7 @@ use Spryker\Shared\Search\Index\IndexNameResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Search

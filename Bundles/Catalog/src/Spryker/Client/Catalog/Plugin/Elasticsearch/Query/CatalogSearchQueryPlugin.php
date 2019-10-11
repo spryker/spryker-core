@@ -43,7 +43,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns a query object for catalog search.
      *
      * @api
@@ -56,7 +56,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Defines a context for catalog search.
      *
      * @api
@@ -152,7 +152,6 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
 
         return $boolQuery;
     }
-
 
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer

@@ -12,6 +12,7 @@ use Spryker\Zed\Search\Business\Definition\Finder\IndexDefinitionFinder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

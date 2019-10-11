@@ -83,7 +83,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
