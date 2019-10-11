@@ -97,7 +97,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function addShipmentToOrderItems(OrderTransfer $orderTransfer, ShipmentTransfer $shipmentTransfer): OrderTransfer
     {
@@ -145,7 +145,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param int[] $idSalesOrderItemList
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function addShipmentToOrderItemsSpecifiedByIdSalesOrderItemList(
         OrderTransfer $orderTransfer,

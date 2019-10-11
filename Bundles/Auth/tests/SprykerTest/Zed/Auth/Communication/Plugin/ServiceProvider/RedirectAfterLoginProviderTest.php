@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
+ * @deprecated When the deprecated plugin gets removed, remove this test as well.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

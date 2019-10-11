@@ -21,7 +21,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler
+     * @var \Spryker\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandlerInterface
      */
     protected $requestHandler;
 
@@ -74,7 +74,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     protected function anonymizeSubscriber(SpyNewsletterSubscriber $spyNewsletterSubscriber)
     {
         do {
-            $randomEmail = md5(mt_rand());
+            $randomEmail = md5((string)mt_rand());
         } while ($this->queryContainer->querySubscriberByEmail($randomEmail)->exists());
 
         $spyNewsletterSubscriber->setEmail($randomEmail);
