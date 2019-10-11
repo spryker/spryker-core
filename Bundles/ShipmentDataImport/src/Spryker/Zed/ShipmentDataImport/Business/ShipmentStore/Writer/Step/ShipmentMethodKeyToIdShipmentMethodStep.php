@@ -17,6 +17,11 @@ use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\DataSet\Shipmen
 class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
 {
     /**
+     * @var int[]
+     */
+    protected static $idShipmentMethodCache = [];
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
@@ -32,14 +37,18 @@ class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException('Shipment method key is missing');
         }
 
-        $shipmentMethodEntity = SpyShipmentMethodQuery::create()
-            ->filterByShipmentMethodKey($shipmentMethodKey)
-            ->findOne();
+        if (!isset(static::$idShipmentMethodCache[$shipmentMethodKey])) {
+            $shipmentMethodEntity = SpyShipmentMethodQuery::create()
+                ->filterByShipmentMethodKey($shipmentMethodKey)
+                ->findOne();
 
-        if ($shipmentMethodEntity === null) {
-            throw new EntityNotFoundException(sprintf('Shipment method not found: %s', $shipmentMethodKey));
+            if ($shipmentMethodEntity === null) {
+                throw new EntityNotFoundException(sprintf('Shipment method not found: %s', $shipmentMethodKey));
+            }
+
+            static::$idShipmentMethodCache[$shipmentMethodKey] = $shipmentMethodEntity->getIdShipmentMethod();
         }
 
-        $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_SHIPMENT_METHOD] = $shipmentMethodEntity->getIdShipmentMethod();
+        $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_SHIPMENT_METHOD] = static::$idShipmentMethodCache[$shipmentMethodKey];
     }
 }

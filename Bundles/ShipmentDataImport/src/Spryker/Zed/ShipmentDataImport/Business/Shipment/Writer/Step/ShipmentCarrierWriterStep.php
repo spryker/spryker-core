@@ -35,9 +35,9 @@ class ShipmentCarrierWriterStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException('Carrier name is missing');
         }
 
-        if (!static::$idShipmentCarrierCache[$carrierName]) {
+        if (!isset(static::$idShipmentCarrierCache[$carrierName])) {
             static::$idShipmentCarrierCache[$carrierName] = SpyShipmentCarrierQuery::create()
-                ->filterByName($$carrierName)
+                ->filterByName($carrierName)
                 ->findOneOrCreate()
                 ->getIdShipmentCarrier();
         }

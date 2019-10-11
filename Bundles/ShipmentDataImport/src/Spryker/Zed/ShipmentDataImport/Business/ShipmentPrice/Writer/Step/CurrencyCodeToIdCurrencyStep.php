@@ -37,7 +37,7 @@ class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException('Currency ISO code is missing');
         }
 
-        if (!static::$idCurrencyCache[$currencyCode]) {
+        if (!isset(static::$idCurrencyCache[$currencyCode])) {
             $currencyEntity = SpyCurrencyQuery::create()
                 ->filterByCode($currencyCode)
                 ->findOne();

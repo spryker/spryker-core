@@ -17,6 +17,11 @@ use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\DataSet\Shipmen
 class StoreNameToIdStoreStep implements DataImportStepInterface
 {
     /**
+     * @var int[]
+     */
+    protected static $idStoreCache = [];
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
@@ -32,14 +37,18 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException(sprintf('Store name is missing'));
         }
 
-        $storeEntity = SpyStoreQuery::create()
-            ->filterByName($storeName)
-            ->findOne();
+        if (!isset(static::$idStoreCache[$storeName])) {
+            $storeEntity = SpyStoreQuery::create()
+                ->filterByName($storeName)
+                ->findOne();
 
-        if ($storeEntity === null) {
-            throw new EntityNotFoundException(sprintf('Store not found: %s', $storeName));
+            if ($storeEntity === null) {
+                throw new EntityNotFoundException(sprintf('Store not found: %s', $storeName));
+            }
+
+            static::$idStoreCache[$storeName] = $storeEntity->getIdStore();
         }
 
-        $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_STORE] = $storeEntity->getIdStore();
+        $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_STORE] = static::$idStoreCache[$storeName];
     }
 }

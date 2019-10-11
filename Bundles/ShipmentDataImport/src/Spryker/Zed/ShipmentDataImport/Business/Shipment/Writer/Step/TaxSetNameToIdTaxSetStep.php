@@ -35,7 +35,7 @@ class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
             throw new DataKeyNotFoundInDataSetException('Tax set name is missing');
         }
 
-        if (!static::$idTaxSetCache[$taxSetName]) {
+        if (!isset(static::$idTaxSetCache[$taxSetName])) {
             static::$idTaxSetCache[$taxSetName] = SpyTaxSetQuery::create()
                 ->filterByName($taxSetName)
                 ->findOneOrCreate()
