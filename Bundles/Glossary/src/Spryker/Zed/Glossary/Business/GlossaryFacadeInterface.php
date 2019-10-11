@@ -147,8 +147,10 @@ interface GlossaryFacadeInterface
     /**
      * @api
      *
-     * @param array $keyNames
-     * @param array $localeNames
+     * @param string[] $keyNames
+     * @param string[] $localeNames
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */

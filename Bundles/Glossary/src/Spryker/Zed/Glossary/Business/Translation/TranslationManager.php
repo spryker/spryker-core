@@ -306,16 +306,17 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @TODO: throw MissingTranslationException
+     * @param string[] $keyNames
+     * @param string[] $localeNames
      *
-     * @param array $keyNames
-     * @param array $localeNames
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
     public function getTranslationsByKeyNames(array $keyNames, array $localeNames)
     {
         $translationTransfers = [];
+        $fetchedKeys = [];
         $translations = $this->glossaryQueryContainer->queryTranslations()
             ->useGlossaryKeyQuery()
                 ->filterByKey_In($keyNames)
@@ -323,11 +324,22 @@ class TranslationManager implements TranslationManagerInterface
             ->endUse()
             ->useLocaleQuery()
                 ->filterByLocaleName_In($localeNames)
+                ->withColumn('locale_name', 'localeName')
             ->endUse()
             ->find();
 
         foreach ($translations as $translation) {
-            $translationTransfers[] = $this->convertEntityToTranslationTransfer($translation);
+            $translationTransfer = $this->convertEntityToTranslationTransfer($translation);
+            $translationTransfers[] = $translationTransfer;
+            $fetchedKeys[$translationTransfer->getLocaleName()][$translationTransfer->getGlossaryKey()] = true;
+        }
+
+        foreach ($localeNames as $localeName) {
+            foreach ($keyNames as $keyName) {
+                if (!isset($fetchedKeys[$localeName][$keyName])) {
+                    throw new MissingTranslationException(sprintf('Could not find a translation for key %s, locale %s', $keyName, $localeName));
+                }
+            }
         }
 
         return $translationTransfers;

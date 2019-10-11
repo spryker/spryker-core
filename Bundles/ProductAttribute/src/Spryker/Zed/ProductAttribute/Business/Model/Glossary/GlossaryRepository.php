@@ -46,8 +46,8 @@ class GlossaryRepository implements GlossaryRepositoryInterface
     }
 
     /**
-     * @param array $keyNames
-     * @param array $localeNames
+     * @param string[] $keyNames
+     * @param string[] $localeNames
      *
      * @return void
      */
