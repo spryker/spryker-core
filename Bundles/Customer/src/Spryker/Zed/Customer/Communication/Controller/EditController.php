@@ -104,14 +104,14 @@ class EditController extends AbstractController
      */
     protected function updateCustomerAddresses(CustomerTransfer $customerTransfer)
     {
-        $defaultBilling = $customerTransfer->getBillingAddress() ?: null;
+        $defaultBilling = $customerTransfer->getDefaultBillingAddress() ?: null;
         if (!$defaultBilling) {
-            $this->updateBillingAddress($customerTransfer->getIdCustomer(), $defaultBilling);
+            $this->updateBillingAddress($customerTransfer->getIdCustomer(), (int)$defaultBilling);
         }
 
-        $defaultShipping = $customerTransfer->getShippingAddress() ?: null;
+        $defaultShipping = $customerTransfer->getDefaultShippingAddress() ?: null;
         if (!$defaultShipping) {
-            $this->updateShippingAddress($customerTransfer->getIdCustomer(), $defaultShipping);
+            $this->updateShippingAddress($customerTransfer->getIdCustomer(), (int)$defaultShipping);
         }
     }
 

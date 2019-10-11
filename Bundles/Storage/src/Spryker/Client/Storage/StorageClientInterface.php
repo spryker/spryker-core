@@ -137,7 +137,7 @@ interface StorageClientInterface
     /**
      * @api
      *
-     * @return \Spryker\Client\Storage\StorageClientInterface $service
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
     public function getService();
 
