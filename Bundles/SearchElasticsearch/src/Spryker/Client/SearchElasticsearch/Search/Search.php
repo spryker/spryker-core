@@ -88,7 +88,7 @@ class Search implements SearchInterface
                 $query->getSearchQuery()
             );
         } catch (ResponseException $e) {
-            $rawQuery = json_encode($query->toArray());
+            $rawQuery = json_encode($query->getSearchQuery()->toArray());
 
             throw new SearchResponseException(
                 sprintf('Search failed with the following reason: %s. Query: %s', $e->getMessage(), $rawQuery),
