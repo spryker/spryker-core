@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Spryker\Shared\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockMappingAmbiguousException;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException;
@@ -91,7 +92,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    public function deleteByCmsBlockId($idCmsBlock)
+    public function deleteByCmsBlockId(int $idCmsBlock): void
     {
         $glossaryKeys = $this->cmsBlockQueryContainer
             ->queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
@@ -112,7 +113,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
         $this->handleDatabaseTransaction(function () use ($cmsBlockGlossaryTransfer) {
             $this->saveCmsGlossaryTransaction($cmsBlockGlossaryTransfer);
@@ -126,7 +127,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    protected function saveCmsGlossaryTransaction(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
+    protected function saveCmsGlossaryTransaction(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): void
     {
         foreach ($cmsBlockGlossaryTransfer->getGlossaryPlaceholders() as $glossaryPlaceholder) {
             $glossaryPlaceholder = $this->resolveTranslationKey($glossaryPlaceholder);
@@ -178,8 +179,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
-    protected function resolveTranslationKey(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
-    {
+    protected function resolveTranslationKey(
+        CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
+    ): CmsBlockGlossaryPlaceholderTransfer {
         if (!$glossaryPlaceholderTransfer->getTranslationKey()) {
             $translationKey = $this->cmsBlockGlossaryKeyGenerator->generateGlossaryKeyName(
                 $glossaryPlaceholderTransfer->getFkCmsBlock(),
@@ -198,7 +200,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    protected function savePlaceholderTranslations(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
+    protected function savePlaceholderTranslations(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer): void
     {
         $translationKey = $glossaryPlaceholderTransfer->getTranslationKey();
 
@@ -222,7 +224,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    protected function setDefaultTranslation(CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer)
+    protected function setDefaultTranslation(CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer): void
     {
         if ($placeholderTranslationTransfer->getTranslation() === null) {
             $placeholderTranslationTransfer->setTranslation(static::DEFAULT_TRANSLATION);
@@ -235,8 +237,10 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createTranslationTransfer(CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer, $translationKey)
-    {
+    protected function createTranslationTransfer(
+        CmsBlockGlossaryPlaceholderTranslationTransfer $placeholderTranslationTransfer,
+        string $translationKey
+    ): KeyTranslationTransfer {
         $keyTranslationTransfer = new KeyTranslationTransfer();
         $keyTranslationTransfer->setGlossaryKey($translationKey);
 
@@ -252,7 +256,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
-    protected function findGlossaryKeyEntityByTranslationKey($translationKey)
+    protected function findGlossaryKeyEntityByTranslationKey(string $translationKey): ?SpyGlossaryKey
     {
         return $this->glossaryQueryContainer
             ->queryKey($translationKey)
@@ -264,7 +268,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return int
      */
-    protected function saveCmsGlossaryKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
+    protected function saveCmsGlossaryKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer): int
     {
         if ($glossaryPlaceholderTransfer->getIdCmsBlockGlossaryKeyMapping() === null) {
             return $this->createPageKeyMapping($glossaryPlaceholderTransfer);
@@ -278,7 +282,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return int
      */
-    protected function createPageKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
+    protected function createPageKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer): int
     {
         $this->assertPlaceholderNotAmbiguous(
             $glossaryPlaceholderTransfer->getFkCmsBlock(),
@@ -297,7 +301,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return int
      */
-    protected function updatePageKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer)
+    protected function updatePageKeyMapping(CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer): int
     {
         $glossaryKeyMappingEntity = $this->getGlossaryKeyMappingById($glossaryPlaceholderTransfer->getIdCmsBlockGlossaryKeyMapping());
         $glossaryKeyMappingEntity->fromArray($glossaryPlaceholderTransfer->modifiedToArray());
@@ -329,7 +333,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return void
      */
-    protected function assertPlaceholderNotAmbiguous($idCmsBlock, $placeholder)
+    protected function assertPlaceholderNotAmbiguous(int $idCmsBlock, string $placeholder): void
     {
         $exists = $this->cmsBlockQueryContainer
             ->queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock([$placeholder], $idCmsBlock)
@@ -347,7 +351,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping
      */
-    protected function getGlossaryKeyMappingById($idGlossaryKeyMapping)
+    protected function getGlossaryKeyMappingById(int $idGlossaryKeyMapping): SpyCmsBlockGlossaryKeyMapping
     {
         $mappingEntity = $this->findGlossaryKeyMappingEntityById($idGlossaryKeyMapping);
 
@@ -365,7 +369,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping|null
      */
-    protected function findGlossaryKeyMappingEntityById($idGlossaryKeyMapping)
+    protected function findGlossaryKeyMappingEntityById(int $idGlossaryKeyMapping): ?SpyCmsBlockGlossaryKeyMapping
     {
         return $this->cmsBlockQueryContainer
             ->queryGlossaryKeyMappingById($idGlossaryKeyMapping)
@@ -373,11 +377,11 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param array $glossaryKeys
+     * @param string[] $glossaryKeys
      *
      * @return void
      */
-    protected function deleteGlossaryKeysTransaction(array $glossaryKeys)
+    protected function deleteGlossaryKeysTransaction(array $glossaryKeys): void
     {
         $this->glossaryFacade->deleteTranslationsByFkKeys($glossaryKeys);
         $this->glossaryFacade->deleteKeys($glossaryKeys);

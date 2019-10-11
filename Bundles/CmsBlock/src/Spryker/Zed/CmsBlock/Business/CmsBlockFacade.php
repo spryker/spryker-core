@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlock\Business;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -24,9 +25,9 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @param int $idCmsBlock
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockById($idCmsBlock)
+    public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer
     {
         return $this->getFactory()
             ->createCmsBlockReader()
@@ -42,7 +43,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return void
      */
-    public function activateById($idCmsBlock)
+    public function activateById(int $idCmsBlock): void
     {
         $this->getFactory()
             ->createCmsBlockWrite()
@@ -58,7 +59,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock)
+    public function deactivateById(int $idCmsBlock): void
     {
         $this->getFactory()
             ->createCmsBlockWrite()
@@ -75,11 +76,11 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockNotFoundException
      * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createCmsBlockWrite()
             ->updateCmsBlock($cmsBlockTransfer);
     }
@@ -93,7 +94,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         return $this->getFactory()
             ->createCmsBlockWrite()
@@ -109,7 +110,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return void
      */
-    public function syncTemplate($templatePath)
+    public function syncTemplate(string $templatePath): void
     {
         $this->getFactory()
             ->createCmsBlockTemplateManager()
@@ -125,7 +126,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossary($idCmsBlock)
+    public function findGlossary(int $idCmsBlock): CmsBlockGlossaryTransfer
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryManager()
@@ -144,7 +145,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer)
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryWriter()
@@ -161,7 +162,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function createTemplate($name, $path)
+    public function createTemplate(string $name, string $path): CmsBlockTemplateTransfer
     {
         return $this->getFactory()
             ->createCmsBlockTemplateManager()
@@ -177,7 +178,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
      */
-    public function findTemplate($path)
+    public function findTemplate(string $path): ?CmsBlockTemplateTransfer
     {
         return $this->getFactory()
             ->createCmsBlockTemplateManager()
@@ -193,7 +194,7 @@ class CmsBlockFacade extends AbstractFacade implements CmsBlockFacadeInterface
      *
      * @return bool
      */
-    public function hasTemplateFileById($idCmsBlockTemplate)
+    public function hasTemplateFileById(int $idCmsBlockTemplate): bool
     {
         return $this->getFactory()
             ->createCmsBlockTemplateManager()

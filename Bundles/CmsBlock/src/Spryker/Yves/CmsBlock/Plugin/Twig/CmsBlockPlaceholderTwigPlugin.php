@@ -11,7 +11,6 @@ use Spryker\Yves\Twig\Plugin\AbstractTwigExtensionPlugin;
 use Twig\TwigFunction;
 
 /**
- * @method \Spryker\Client\CmsBlock\CmsBlockClientInterface getClient()
  * @method \Spryker\Yves\CmsBlock\CmsBlockFactory getFactory()
  */
 class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin

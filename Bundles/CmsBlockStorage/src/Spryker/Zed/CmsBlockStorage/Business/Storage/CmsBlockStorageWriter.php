@@ -81,7 +81,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $cmsBlockIds)
+    public function publish(array $cmsBlockIds): void
     {
         $cmsBlockEntities = $this->findCmsBlockEntities($cmsBlockIds);
         $cmsBlockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
@@ -104,7 +104,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    public function unpublish(array $cmsBlockIds)
+    public function unpublish(array $cmsBlockIds): void
     {
         $cmsBlockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
 
@@ -117,7 +117,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function storeData(array $cmsBlockEntities, array $cmsBlockStorageEntities)
+    protected function storeData(array $cmsBlockEntities, array $cmsBlockStorageEntities): void
     {
         $pairedEntities = $this->pairCmsBlockEntitiesWithCmsBlockStorageEntities(
             $cmsBlockEntities,
@@ -143,7 +143,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $cmsBlockStorageEntities)
+    protected function deleteStorageEntities(array $cmsBlockStorageEntities): void
     {
         foreach ($cmsBlockStorageEntities as $cmsBlockStorageEntity) {
             $cmsBlockStorageEntity->delete();
@@ -155,7 +155,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function deleteStorageEntity(SpyCmsBlockStorage $cmsBlockStorageEntity)
+    protected function deleteStorageEntity(SpyCmsBlockStorage $cmsBlockStorageEntity): void
     {
         if (!$cmsBlockStorageEntity->isNew()) {
             $cmsBlockStorageEntity->delete();
@@ -170,8 +170,12 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function updateStoreData(array $cmsBlockEntity, SpyCmsBlockStorage $cmsBlockStorageEntity, $storeName, $localeName)
-    {
+    protected function updateStoreData(
+        array $cmsBlockEntity,
+        SpyCmsBlockStorage $cmsBlockStorageEntity,
+        string $storeName,
+        string $localeName
+    ): void {
         foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {
             $cmsBlockEntity = $contentWidgetDataExpanderPlugin->expand($cmsBlockEntity, $localeName);
         }
@@ -198,8 +202,10 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function pairCmsBlockEntitiesWithCmsBlockStorageEntities(array $cmsBlockEntities, array $cmsBlockStorageEntities)
-    {
+    protected function pairCmsBlockEntitiesWithCmsBlockStorageEntities(
+        array $cmsBlockEntities,
+        array $cmsBlockStorageEntities
+    ): array {
         $mappedCmsBlockStorageEntities = $this->mapCmsBlockStorageEntities($cmsBlockStorageEntities);
         $localeNames = $this->store->getLocales();
 
@@ -225,7 +231,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function mapCmsBlockStorageEntities(array $cmsBlockStorageEntities)
+    protected function mapCmsBlockStorageEntities(array $cmsBlockStorageEntities): array
     {
         $mappedCmsBlockStorageEntities = [];
         foreach ($cmsBlockStorageEntities as $entity) {
@@ -240,7 +246,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function findCmsBlockEntities(array $cmsBlockIds)
+    protected function findCmsBlockEntities(array $cmsBlockIds): array
     {
         return $this->queryContainer->queryBlockWithRelationsByIds($cmsBlockIds)->find()->getData();
     }
@@ -250,7 +256,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[]
      */
-    protected function findCmsBlockStorageEntities(array $cmsBlockIds)
+    protected function findCmsBlockStorageEntities(array $cmsBlockIds): array
     {
         return $this->queryContainer->queryCmsBlockStorageEntities($cmsBlockIds)->find()->getArrayCopy();
     }
@@ -261,7 +267,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function pairRemainingCmsBlockStorageEntities(array $mappedCmsBlockStorageEntities, array $pairs)
+    protected function pairRemainingCmsBlockStorageEntities(array $mappedCmsBlockStorageEntities, array $pairs): array
     {
         array_walk_recursive($mappedCmsBlockStorageEntities, function (SpyCmsBlockStorage $cmsBlockStorageEntity) use (&$pairs) {
             $pairs[] = [
@@ -292,7 +298,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         array $cmsBlockEntity,
         array $mappedCmsBlockStorageEntities,
         array $pairs
-    ) {
+    ): array {
         foreach ($localeNames as $localeName) {
             foreach ($cmsBlockStores as $cmsBlockStore) {
                 $storeName = $cmsBlockStore[static::RELATION_STORE][static::COLUMN_STORE_NAME];

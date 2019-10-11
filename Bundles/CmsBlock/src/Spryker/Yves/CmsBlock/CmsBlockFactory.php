@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\CmsBlock;
 
+use Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class CmsBlockFactory extends AbstractFactory
@@ -14,7 +15,7 @@ class CmsBlockFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
      */
-    public function getCmsBlockTwigContentRendererPlugin()
+    public function getCmsBlockTwigContentRendererPlugin(): CmsTwigContentRendererPluginInterface
     {
         return $this->getProvidedDependency(CmsBlockDependencyProvider::CMS_BLOCK_TWIG_CONTENT_RENDERER_PLUGIN);
     }

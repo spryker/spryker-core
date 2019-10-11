@@ -19,52 +19,16 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
      *
      * @api
      *
-     * @deprecated Use \Spryker\Client\CmsBlockStorage\CmsBlockStorageClient::findBlocksByKeys() instead.
-     *
-     * @param string[] $blockNames
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function findBlocksByNames($blockNames, $localeName, $storeName)
-    {
-        return $this->getFactory()
-            ->createCmsBlockStorage()
-            ->getBlocksByNames($blockNames, $localeName, $storeName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string[] $blockKeys
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function findBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
-    {
-        return $this->getFactory()
-            ->createCmsBlockStorage()
-            ->getBlocksByKeys($blockKeys, $localeName, $storeName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param array $options
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlockKeysByOptions(array $options): array
+    public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array
     {
         return $this->getFactory()
             ->createCmsBlockStorage()
-            ->getBlockKeysByOptions($options);
+            ->getCmsBlocksByOptions($options, $localeName, $storeName);
     }
 }

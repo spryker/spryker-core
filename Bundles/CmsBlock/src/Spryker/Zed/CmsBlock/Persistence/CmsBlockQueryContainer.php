@@ -8,7 +8,14 @@
 namespace Spryker\Zed\CmsBlock\Persistence;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTemplateTableMap;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
+use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -26,7 +33,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockById($idCmsBlock)
+    public function queryCmsBlockById(int $idCmsBlock): SpyCmsBlockQuery
     {
         return $this->queryCmsBlock()
             ->filterByIdCmsBlock($idCmsBlock);
@@ -39,7 +46,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
+    public function queryCmsBlockByIdWithTemplateWithGlossary(int $idCmsBlock): SpyCmsBlockQuery
     {
         return $this->queryCmsBlock()
             ->filterByIdCmsBlock($idCmsBlock)
@@ -54,7 +61,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation($idCmsBlock)
+    public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation(int $idCmsBlock): SpyCmsBlockQuery
     {
         return $this->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
             ->leftJoinWithSpyCmsBlockStore()
@@ -70,7 +77,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByName($name)
+    public function queryCmsBlockByName(string $name): SpyCmsBlockQuery
     {
         return $this->queryCmsBlock()
             ->filterByName($name);
@@ -79,9 +86,9 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     /**
      * @api
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryCmsBlockWithTemplate()
+    public function queryCmsBlockWithTemplate(): ModelCriteria
     {
         return $this->queryCmsBlock()
             ->leftJoinCmsBlockTemplate()
@@ -95,7 +102,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock)
+    public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock(int $idCmsBlock): SpyCmsBlockGlossaryKeyMappingQuery
     {
         return $this->queryCmsBlockGlossaryKeyMapping()
             ->filterByFkCmsBlock($idCmsBlock);
@@ -106,7 +113,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplates()
+    public function queryTemplates(): SpyCmsBlockTemplateQuery
     {
         return $this->getFactory()
             ->createCmsBlockTemplateQuery();
@@ -119,7 +126,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplateByPath($path)
+    public function queryTemplateByPath(string $path): SpyCmsBlockTemplateQuery
     {
         return $this->queryTemplates()
             ->filterByTemplatePath($path);
@@ -132,7 +139,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplateById($idCmsBlockTemplate)
+    public function queryTemplateById(int $idCmsBlockTemplate): SpyCmsBlockTemplateQuery
     {
         return $this->queryTemplates()
             ->filterByIdCmsBlockTemplate($idCmsBlockTemplate);
@@ -146,8 +153,10 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(array $placeholders, $idCmsBlock)
-    {
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(
+        array $placeholders,
+        int $idCmsBlock
+    ): SpyCmsBlockGlossaryKeyMappingQuery {
         return $this->queryCmsBlockGlossaryKeyMapping()
             ->filterByFkCmsBlock($idCmsBlock)
             ->filterByPlaceholder_In($placeholders);
@@ -160,7 +169,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingById($idGlossaryKeyMapping)
+    public function queryGlossaryKeyMappingById(int $idGlossaryKeyMapping): SpyCmsBlockGlossaryKeyMappingQuery
     {
         return $this->queryCmsBlockGlossaryKeyMapping()
             ->filterByIdCmsBlockGlossaryKeyMapping($idGlossaryKeyMapping);
@@ -173,7 +182,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryKey($key)
+    public function queryKey(string $key): SpyGlossaryKeyQuery
     {
         return $this->getGlossaryQueryContainer()
             ->queryKey($key);
@@ -187,7 +196,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreByFkCmsBlockAndFkStores($idCmsBlock, array $idStores)
+    public function queryCmsBlockStoreByFkCmsBlockAndFkStores(int $idCmsBlock, array $idStores): SpyCmsBlockStoreQuery
     {
         return $this->getFactory()
             ->createCmsBlockStoreQuery()
@@ -202,7 +211,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithStoreRelationByFkCmsBlock($idCmsBlock)
+    public function queryCmsBlockWithStoreRelationByFkCmsBlock(int $idCmsBlock): SpyCmsBlockQuery
     {
         return $this
             ->queryCmsBlock()
@@ -220,7 +229,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock(int $idCmsBlock): SpyCmsBlockStoreQuery
     {
         return $this->getFactory()
             ->createCmsBlockStoreQuery()
@@ -231,7 +240,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     /**
      * @return \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
-    protected function getGlossaryQueryContainer()
+    protected function getGlossaryQueryContainer(): GlossaryQueryContainerInterface
     {
         return $this->getProvidedDependency(CmsBlockDependencyProvider::QUERY_CONTAINER_GLOSSARY);
     }
@@ -239,7 +248,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    protected function queryCmsBlock()
+    protected function queryCmsBlock(): SpyCmsBlockQuery
     {
         return $this->getFactory()
             ->createCmsBlockQuery();
@@ -248,7 +257,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    protected function queryCmsBlockGlossaryKeyMapping()
+    protected function queryCmsBlockGlossaryKeyMapping(): SpyCmsBlockGlossaryKeyMappingQuery
     {
         return $this->getFactory()
             ->createCmsBlockGlossaryKeyMappingQuery();

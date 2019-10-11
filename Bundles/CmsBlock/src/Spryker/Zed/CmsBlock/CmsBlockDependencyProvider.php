@@ -34,7 +34,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addTouchFacade($container);
@@ -52,11 +52,11 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTouchFacade(Container $container)
+    protected function addTouchFacade(Container $container): Container
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new CmsBlockToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new CmsBlockToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
 
         return $container;
     }
@@ -80,11 +80,11 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGlossaryFacade(Container $container)
+    protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new CmsBlockToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -94,11 +94,11 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsBlockToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -108,11 +108,11 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGlossaryQueryContainer(Container $container)
+    protected function addGlossaryQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_GLOSSARY, function (Container $container) {
             return new CmsBlockToGlossaryQueryContainerBridge($container->getLocator()->glossary()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -122,11 +122,11 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCmsBlockUpdatePlugins(Container $container)
+    protected function addCmsBlockUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CMS_BLOCK_UPDATE] = function (Container $container) {
+        $container->set(static::PLUGIN_CMS_BLOCK_UPDATE, function (Container $container) {
             return $this->getCmsBlockUpdatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -134,7 +134,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return array
      */
-    protected function getCmsBlockUpdatePlugins()
+    protected function getCmsBlockUpdatePlugins(): array
     {
         return [];
     }

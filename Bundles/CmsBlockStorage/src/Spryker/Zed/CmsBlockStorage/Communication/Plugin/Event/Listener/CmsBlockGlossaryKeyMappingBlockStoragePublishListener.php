@@ -45,7 +45,7 @@ class CmsBlockGlossaryKeyMappingBlockStoragePublishListener extends AbstractPlug
      *
      * @return array
      */
-    public function findCmsBlockIds(array $eventTransfers)
+    public function findCmsBlockIds(array $eventTransfers): array
     {
         return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK);
     }

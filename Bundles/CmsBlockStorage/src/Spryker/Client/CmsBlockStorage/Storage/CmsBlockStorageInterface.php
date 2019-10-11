@@ -10,29 +10,11 @@ namespace Spryker\Client\CmsBlockStorage\Storage;
 interface CmsBlockStorageInterface
 {
     /**
-     * @deprecated Use \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorageInterface::getBlocksByKeys() instead.
-     *
-     * @param string[] $blockNames
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getBlocksByNames(array $blockNames, $localeName, $storeName): array;
-
-    /**
-     * @param string[] $blockKeys
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array;
-
-    /**
      * @param array $options
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return string[]
+     * @return array
      */
-    public function getBlockKeysByOptions(array $options): array;
+    public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array;
 }

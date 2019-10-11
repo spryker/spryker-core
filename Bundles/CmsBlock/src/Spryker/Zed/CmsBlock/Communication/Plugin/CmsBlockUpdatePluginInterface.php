@@ -21,5 +21,5 @@ interface CmsBlockUpdatePluginInterface
      *
      * @return void
      */
-    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer);
+    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer): void;
 }

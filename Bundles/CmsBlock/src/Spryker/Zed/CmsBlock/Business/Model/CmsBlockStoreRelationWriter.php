@@ -27,8 +27,10 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      * @param \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface $cmsBlockQueryContainer
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationReaderInterface $cmsBlockStoreRelationReader
      */
-    public function __construct(CmsBlockQueryContainerInterface $cmsBlockQueryContainer, CmsBlockStoreRelationReaderInterface $cmsBlockStoreRelationReader)
-    {
+    public function __construct(
+        CmsBlockQueryContainerInterface $cmsBlockQueryContainer,
+        CmsBlockStoreRelationReaderInterface $cmsBlockStoreRelationReader
+    ) {
         $this->cmsBlockQueryContainer = $cmsBlockQueryContainer;
         $this->cmsBlockStoreRelationReader = $cmsBlockStoreRelationReader;
     }
@@ -38,7 +40,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      *
      * @return void
      */
-    public function update(StoreRelationTransfer $storeRelationTransfer)
+    public function update(StoreRelationTransfer $storeRelationTransfer): void
     {
         $storeRelationTransfer->requireIdEntity();
 
@@ -58,7 +60,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      *
      * @return void
      */
-    protected function addStores(array $idStores, $idCmsBlock)
+    protected function addStores(array $idStores, int $idCmsBlock): void
     {
         foreach ($idStores as $idStore) {
             (new SpyCmsBlockStore())
@@ -74,7 +76,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      *
      * @return void
      */
-    protected function removeStores(array $idStores, $idCmsBlock)
+    protected function removeStores(array $idStores, int $idCmsBlock): void
     {
         if (count($idStores) === 0) {
             return;
@@ -94,7 +96,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      *
      * @return int[]
      */
-    protected function getIdStoresByIdCmsBlock($idCmsBlock)
+    protected function getIdStoresByIdCmsBlock(int $idCmsBlock): array
     {
         $storeRelation = $this->cmsBlockStoreRelationReader->getStoreRelation(
             (new StoreRelationTransfer())
@@ -109,7 +111,7 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      *
      * @return int[]
      */
-    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
+    protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer): array
     {
         if ($storeRelationTransfer->getIdStores() === null) {
             return [];

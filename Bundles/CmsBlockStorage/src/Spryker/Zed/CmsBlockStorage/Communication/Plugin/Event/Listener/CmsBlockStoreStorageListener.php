@@ -30,7 +30,7 @@ class CmsBlockStoreStorageListener extends AbstractPlugin implements EventBulkHa
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
         $cmsBlockIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockStoreTableMap::COL_FK_CMS_BLOCK);

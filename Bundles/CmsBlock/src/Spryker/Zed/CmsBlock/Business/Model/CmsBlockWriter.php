@@ -95,7 +95,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    public function activateById($idCmsBlock)
+    public function activateById(int $idCmsBlock): void
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, true);
@@ -108,7 +108,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock)
+    public function deactivateById(int $idCmsBlock): void
     {
         $this->handleDatabaseTransaction(function () use ($idCmsBlock) {
             $this->updateIsActiveByIdTransaction($idCmsBlock, false);
@@ -123,7 +123,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         $cmsBlockTransfer->requireIdCmsBlock();
 
@@ -159,7 +159,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer)
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer
     {
         $cmsBlockTransfer->requireFkTemplate();
 
@@ -182,7 +182,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
-    protected function getCmsBlockById($idCmsBlock)
+    protected function getCmsBlockById(int $idCmsBlock): SpyCmsBlock
     {
         $spyCmsBlock = $this->cmsBlockQueryContainer
             ->queryCmsBlockById($idCmsBlock)
@@ -200,7 +200,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function checkTemplateFileExists($idCmsBlockTemplate)
+    protected function checkTemplateFileExists(int $idCmsBlockTemplate): void
     {
         $templateTransfer = $this->templateManager
             ->getTemplateById($idCmsBlockTemplate);
@@ -215,7 +215,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function updateCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
+    protected function updateCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock): void
     {
         if ($spyCmsBlock->getFkTemplate() !== $cmsBlockTransfer->getFkTemplate()) {
             $this->cmsBlockGlossaryWriter->deleteByCmsBlockId($spyCmsBlock->getIdCmsBlock());
@@ -237,7 +237,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, $idCmsBlock)
+    protected function persistStoreRelation(CmsBlockTransfer $cmsBlockTransfer, int $idCmsBlock): void
     {
         if ($cmsBlockTransfer->getStoreRelation() === null) {
             return;
@@ -252,7 +252,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function updateCmsBlockPluginsTransaction(CmsBlockTransfer $cmsBlockTransfer)
+    protected function updateCmsBlockPluginsTransaction(CmsBlockTransfer $cmsBlockTransfer): void
     {
         foreach ($this->cmsBlockUpdatePlugins as $updatePlugin) {
             $updatePlugin->handleUpdate($cmsBlockTransfer);
@@ -264,7 +264,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function createCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer)
+    protected function createCmsBlockTransaction(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $spyCmsBlock = new SpyCmsBlock();
         $spyCmsBlock = $this->cmsBlockMapper->mapCmsBlockTransferToEntity($cmsBlockTransfer, $spyCmsBlock);
@@ -285,7 +285,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      *
      * @return void
      */
-    protected function updateIsActiveByIdTransaction($idCmsBlock, $isActive)
+    protected function updateIsActiveByIdTransaction(int $idCmsBlock, bool $isActive): void
     {
         $spyCmsBlock = $this->getCmsBlockById($idCmsBlock);
         $spyCmsBlock->setIsActive($isActive);

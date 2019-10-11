@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin;
 
-interface CmsBlockStorageBlocksFinderPluginInterface
+interface CmsBlockStorageReaderPluginInterface
 {
     /**
      * Specification:

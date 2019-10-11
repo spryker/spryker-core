@@ -34,7 +34,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock)
+    public function mapCmsBlockEntityToTransfer(SpyCmsBlock $spyCmsBlock): CmsBlockTransfer
     {
         $cmsBlockTransfer = new CmsBlockTransfer();
         $cmsBlockTransfer->fromArray($spyCmsBlock->toArray(), true);
@@ -55,7 +55,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
-    public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock)
+    public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock): SpyCmsBlock
     {
         $spyCmsBlock->fromArray($cmsBlockTransfer->toArray());
 
@@ -67,7 +67,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    protected function createGlossaryTransfer(SpyCmsBlock $spyCmsBlock)
+    protected function createGlossaryTransfer(SpyCmsBlock $spyCmsBlock): CmsBlockGlossaryTransfer
     {
         $cmsBlockGlossary = new CmsBlockGlossaryTransfer();
 
@@ -85,8 +85,10 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
-    protected function createGlossaryPlaceholderTransfer(SpyCmsBlock $spyCmsBlock, SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping)
-    {
+    protected function createGlossaryPlaceholderTransfer(
+        SpyCmsBlock $spyCmsBlock,
+        SpyCmsBlockGlossaryKeyMapping $spyCmsGlossaryKeyMapping
+    ): CmsBlockGlossaryPlaceholderTransfer {
         $placeholderTransfer = new CmsBlockGlossaryPlaceholderTransfer();
 
         $spyGlossaryKey = $spyCmsGlossaryKeyMapping->getGlossaryKey();

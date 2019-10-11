@@ -25,7 +25,7 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function createCmsBlockQuery()
+    public function createCmsBlockQuery(): SpyCmsBlockQuery
     {
         return SpyCmsBlockQuery::create();
     }
@@ -33,7 +33,7 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function createCmsBlockGlossaryKeyMappingQuery()
+    public function createCmsBlockGlossaryKeyMappingQuery(): SpyCmsBlockGlossaryKeyMappingQuery
     {
         return SpyCmsBlockGlossaryKeyMappingQuery::create();
     }
@@ -41,7 +41,7 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function createCmsBlockTemplateQuery()
+    public function createCmsBlockTemplateQuery(): SpyCmsBlockTemplateQuery
     {
         return SpyCmsBlockTemplateQuery::create();
     }
@@ -49,7 +49,7 @@ class CmsBlockPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function createCmsBlockStoreQuery()
+    public function createCmsBlockStoreQuery(): SpyCmsBlockStoreQuery
     {
         return SpyCmsBlockStoreQuery::create();
     }

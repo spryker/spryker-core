@@ -14,6 +14,7 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockTemplateNotFoundException;
 use Spryker\Zed\CmsBlock\CmsBlockConfig;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleInterface;
@@ -56,7 +57,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findPlaceholders($idCmsBlock)
+    public function findPlaceholders(int $idCmsBlock): CmsBlockGlossaryTransfer
     {
         $spyCmsBlock = $this->getCmsBlockEntity($idCmsBlock);
 
@@ -82,7 +83,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return array
      */
-    protected function findCmsBlockPlaceholders(SpyCmsBlockTemplate $spyCmsBlockTemplate)
+    protected function findCmsBlockPlaceholders(SpyCmsBlockTemplate $spyCmsBlockTemplate): array
     {
         $templateFiles = $this->config->getTemplateRealPaths($spyCmsBlockTemplate->getTemplatePath());
 
@@ -102,7 +103,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return array
      */
-    protected function getTemplatePlaceholders($templateFile)
+    protected function getTemplatePlaceholders(string $templateFile): array
     {
         if (!is_readable($templateFile)) {
             throw new CmsBlockTemplateNotFoundException(
@@ -127,7 +128,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return string
      */
-    protected function readTemplateContents($templateFile)
+    protected function readTemplateContents(string $templateFile): string
     {
         return file_get_contents($templateFile);
     }
@@ -137,7 +138,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
      */
-    protected function getCmsBlockEntity($idCmsBlock)
+    protected function getCmsBlockEntity(int $idCmsBlock): SpyCmsBlock
     {
         return $this->cmsBlockQueryContainer
             ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)
@@ -151,7 +152,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]
      */
-    protected function createKeyMappingByPlaceholder($idCmsBlock, array $placeholders)
+    protected function createKeyMappingByPlaceholder(int $idCmsBlock, array $placeholders): array
     {
         $glossaryKeyMappingCollection = $this->getGlossaryMappingCollection($idCmsBlock, $placeholders);
 
@@ -169,7 +170,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getGlossaryMappingCollection($idCmsBlock, array $placeholders)
+    protected function getGlossaryMappingCollection(int $idCmsBlock, array $placeholders): ObjectCollection
     {
         $glossaryKeyMappingCollection = $this->cmsBlockQueryContainer
             ->queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock($placeholders, $idCmsBlock)
@@ -183,7 +184,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    protected function mapGlossaryTransfer(SpyCmsBlock $spyCmsBlock)
+    protected function mapGlossaryTransfer(SpyCmsBlock $spyCmsBlock): CmsBlockGlossaryTransfer
     {
         $glossaryTransfer = $this->createGlossaryTransfer();
         $glossaryTransfer->fromArray($spyCmsBlock->toArray(), true);
@@ -194,7 +195,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     /**
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    protected function createGlossaryTransfer()
+    protected function createGlossaryTransfer(): CmsBlockGlossaryTransfer
     {
         return new CmsBlockGlossaryTransfer();
     }
@@ -205,8 +206,10 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
-    protected function mapGlossaryPlaceholderTransfer(SpyCmsBlock $spyCmsBlock, $placeholder)
-    {
+    protected function mapGlossaryPlaceholderTransfer(
+        SpyCmsBlock $spyCmsBlock,
+        string $placeholder
+    ): CmsBlockGlossaryPlaceholderTransfer {
         $glossaryPlaceholderTransfer = new CmsBlockGlossaryPlaceholderTransfer();
         $glossaryPlaceholderTransfer->setFkCmsBlock($spyCmsBlock->getIdCmsBlock());
         $glossaryPlaceholderTransfer->setPlaceholder($placeholder);
@@ -224,9 +227,9 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      */
     protected function addGlossaryAttributeTranslations(
         array $glossaryKeyEntityMap,
-        $placeholder,
+        string $placeholder,
         CmsBlockGlossaryPlaceholderTransfer $glossaryPlaceholderTransfer
-    ) {
+    ): void {
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
         foreach ($availableLocales as $idLocale => $localeName) {
@@ -259,7 +262,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     protected function setTranslationValue(
         SpyCmsBlockGlossaryKeyMapping $glossaryKeyMappingEntity,
         CmsBlockGlossaryPlaceholderTranslationTransfer $cmsPlaceholderTranslationTransfer
-    ) {
+    ): void {
         $cmsPlaceholderTranslationTransfer->requireFkLocale();
 
         $glossaryKeyEntity = $glossaryKeyMappingEntity->getGlossaryKey();
@@ -273,7 +276,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return string|null
      */
-    protected function findTranslation(SpyGlossaryKey $spyGlossaryKey, $idLocale)
+    protected function findTranslation(SpyGlossaryKey $spyGlossaryKey, int $idLocale): ?string
     {
         foreach ($spyGlossaryKey->getSpyGlossaryTranslations() as $glossaryTranslationEntity) {
             if ($glossaryTranslationEntity->getFkLocale() === $idLocale) {

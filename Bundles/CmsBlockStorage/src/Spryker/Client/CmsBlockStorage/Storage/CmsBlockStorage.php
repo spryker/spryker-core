@@ -14,6 +14,9 @@ use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
+    protected const OPTION_NAME = 'name';
+    protected const OPTION_KEY = 'key';
+
     protected const PREFIX_MAPPING_CMS_BLOCK_KEY = 'name:';
 
     /**
@@ -27,14 +30,14 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[]
+     * @var \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
      */
     protected $cmsBlockStorageBlocksFinderPlugins;
 
     /**
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface[] $cmsBlockStorageBlocksFinderPlugins
+     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[] $cmsBlockStorageBlocksFinderPlugins
      */
     public function __construct(
         CmsBlockStorageToStorageInterface $storageClient,
@@ -47,6 +50,64 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
+     * @param array $options
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array
+    {
+        $cmsBlockKey = $options[static::OPTION_KEY] ?? null;
+
+        if ($cmsBlockKey) {
+            return $this->getBlocksByKeys([$cmsBlockKey], $localeName, $storeName);
+        }
+
+        $cmsBlockName = $options[static::OPTION_NAME] ?? null;
+
+        if ($cmsBlockName) {
+            return $this->getBlocksByNames([$cmsBlockName], $localeName, $storeName);
+        }
+
+        $availableBlockKeys = $this->getBlockKeysByOptions($options);
+
+        return $this->getBlocksByKeys($availableBlockKeys, $localeName, $storeName);
+    }
+
+    /**
+     * @param string[] $blockKeys
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    protected function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
+    {
+        $storageKeys = [];
+
+        foreach ($blockKeys as $blockKey) {
+            $storageKeys[] = $this->generateKey(
+                $blockKey,
+                CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
+                $localeName,
+                $storeName
+            );
+        }
+
+        $resultArray = $this->storageClient->getMulti($storageKeys) ?: [];
+        $resultArray = array_filter($resultArray);
+
+        $blocks = [];
+
+        foreach ($resultArray as $key => $result) {
+            $blocks[] = json_decode($result, true);
+        }
+
+        return $blocks;
+    }
+
+    /**
      * @deprecated Use \Spryker\Client\CmsBlockStorage\Storage\CmsBlockStorage::getBlocksByKeys() instead.
      *
      * @param string[] $blockNames
@@ -55,7 +116,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      *
      * @return array
      */
-    public function getBlocksByNames(array $blockNames, $localeName, $storeName): array
+    protected function getBlocksByNames(array $blockNames, $localeName, $storeName): array
     {
         $searchKeys = [];
 
@@ -87,7 +148,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      *
      * @return string[]
      */
-    public function getBlockKeysByOptions(array $options): array
+    protected function getBlockKeysByOptions(array $options): array
     {
         $blockKeys = [];
 
@@ -102,38 +163,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         }
 
         return $blockKeys;
-    }
-
-    /**
-     * @param string[] $blockKeys
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return array
-     */
-    public function getBlocksByKeys(array $blockKeys, string $localeName, string $storeName): array
-    {
-        $storageKeys = [];
-
-        foreach ($blockKeys as $blockKey) {
-            $storageKeys[] = $this->generateKey(
-                $blockKey,
-                CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
-                $localeName,
-                $storeName
-            );
-        }
-
-        $resultArray = $this->storageClient->getMulti($storageKeys) ?: [];
-        $resultArray = array_filter($resultArray);
-
-        $blocks = [];
-
-        foreach ($resultArray as $key => $result) {
-            $blocks[] = json_decode($result, true);
-        }
-
-        return $blocks;
     }
 
     /**

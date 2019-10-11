@@ -7,13 +7,13 @@
 
 namespace Spryker\Client\CmsBlockCategoryStorage\Plugin\CmsBlockStorage;
 
-use Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageBlocksFinderPluginInterface;
+use Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\CmsBlockCategoryStorage\CmsBlockCategoryStorageFactory getFactory()
  */
-class CmsBlockCategoryCmsBlockStorageBlocksFinderPlugin extends AbstractPlugin implements CmsBlockStorageBlocksFinderPluginInterface
+class CmsBlockCategoryCmsBlockStorageReaderPlugin extends AbstractPlugin implements CmsBlockStorageReaderPluginInterface
 {
     /**
      * {@inheritDoc}
