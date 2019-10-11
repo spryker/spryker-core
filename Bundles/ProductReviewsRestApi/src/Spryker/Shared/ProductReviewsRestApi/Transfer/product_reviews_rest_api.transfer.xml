@@ -23,4 +23,8 @@
         <property name="description" type="string"/>
     </transfer>
 
+    <transfer name="ConcreteProductsRestAttributes">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>

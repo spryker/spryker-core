@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
 
@@ -34,17 +36,50 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
     public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $abstractSku = $resource->getId();
-
-            $productReviews = $this->productReviewReader->findProductReviewsByAbstractSku(
-                $abstractSku,
-                $restRequest->getMetadata()->getLocale()
-            );
-            foreach ($productReviews as $productReview) {
-                $resource->addRelationship($productReview);
-            }
+            $this->addRelationship($resource->getId(), $restRequest, $resource);
         }
 
         return $resources;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): array
+    {
+        foreach ($resources as $resource) {
+            $this->addRelationship(
+                $resource->getAttributes()->offsetGet(ConcreteProductsRestAttributesTransfer::ID_PRODUCT_ABSTRACT),
+                $restRequest,
+                $resource
+            );
+        }
+
+        return $resources;
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return void
+     */
+    protected function addRelationship(
+        string $abstractSku,
+        RestRequestInterface $restRequest,
+        RestResourceInterface $resource
+    ): void {
+        $productReviews = $this->productReviewReader->findProductReviewsByAbstractSku(
+            $restRequest,
+            $abstractSku,
+            $restRequest->getMetadata()->getLocale()
+        );
+        foreach ($productReviews as $productReview) {
+            $resource->addRelationship($productReview);
+        }
     }
 }

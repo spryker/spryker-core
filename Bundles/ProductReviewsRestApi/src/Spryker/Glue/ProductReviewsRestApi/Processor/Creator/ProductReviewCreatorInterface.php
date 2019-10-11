@@ -19,7 +19,7 @@ interface ProductReviewCreatorInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createReview(
+    public function createProductReview(
         RestRequestInterface $restRequest,
         RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
     ): RestResponseInterface;

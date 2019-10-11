@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductReviewsAttributesTransfer;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -79,11 +80,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return $this->createProductAbstractSkuMissingError();
         }
 
-        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
-        $productReviewTransfers = $this->productReviewClient->findProductReviewsInSearch(
-            (new ProductReviewSearchRequestTransfer())->setIdProductAbstract($parentResource->getId())
-        )['productReviews'];
-
+        $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $parentResource->getId());
         if (!count($productReviewTransfers)) {
             return $this->addProductReviewNotFoundErrorToResponse($restResponse);
         }
@@ -125,11 +122,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return $this->createProductAbstractSkuMissingError();
         }
 
-        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
-        $productReviewTransfers = $this->productReviewClient->findProductReviewsInSearch(
-            (new ProductReviewSearchRequestTransfer())->setIdProductAbstract($parentResource->getId())
-        )['productReviews'];
-
+        $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $parentResource->getId());
         if (!count($productReviewTransfers)) {
             return $this->addProductReviewNotFoundErrorToResponse($restResponse);
         }
@@ -159,13 +152,17 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string $abstractSku
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductReviewsByAbstractSku(string $abstractSku, string $localeName): array
-    {
+    public function findProductReviewsByAbstractSku(
+        RestRequestInterface $restRequest,
+        string $abstractSku,
+        string $localeName
+    ): array {
         $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $abstractSku,
@@ -176,11 +173,26 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return [];
         }
 
-        $productReviews = $this->productReviewClient->findProductReviewsInSearch(
-            (new ProductReviewSearchRequestTransfer())->setIdProductAbstract($abstractSku)
-        );
+        $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $abstractSku);
 
-        return $this->prepareRestResourceCollection($abstractSku, $productReviews['productReviews']);
+        return $this->prepareRestResourceCollection($abstractSku, $productReviewTransfers);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewTransfer[]
+     */
+    protected function findProductReviewsInSearch(
+        RestRequestInterface $restRequest,
+        string $idProductAbstract
+    ): array {
+        return $this->productReviewClient->findProductReviewsInSearch(
+            (new ProductReviewSearchRequestTransfer())
+                ->setRequestParams($restRequest->getHttpRequest()->query->all())
+                ->setIdProductAbstract($idProductAbstract)
+        )[ProductReviewsResultFormatterPlugin::NAME];
     }
 
     /**

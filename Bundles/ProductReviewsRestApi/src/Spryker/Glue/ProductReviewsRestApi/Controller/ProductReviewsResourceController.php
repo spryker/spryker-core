@@ -41,7 +41,6 @@ class ProductReviewsResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         $productReviewId = $restRequest->getResource()->getId();
-
         if ($productReviewId) {
             return $this->getFactory()->createProductReviewReader()->findProductReviewById($restRequest, $productReviewId);
         }
@@ -73,6 +72,6 @@ class ProductReviewsResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()
             ->createProductReviewCreator()
-            ->createReview($restRequest, $restProductReviewsAttributesTransfer);
+            ->createProductReview($restRequest, $restProductReviewsAttributesTransfer);
     }
 }
