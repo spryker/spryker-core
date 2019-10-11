@@ -186,6 +186,8 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string[] $keyNames
@@ -193,7 +195,7 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function getTranslations(array $keyNames, array $localeNames)
+    public function getTranslations(array $keyNames, array $localeNames): array
     {
         $translationManager = $this->getFactory()->createTranslationManager();
 

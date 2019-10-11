@@ -78,7 +78,7 @@ class ProductAttributeToGlossaryBridge implements ProductAttributeToGlossaryInte
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function getTranslations(array $keyNames, array $localeNames)
+    public function getTranslations(array $keyNames, array $localeNames): array
     {
         return $this->glossaryFacade->getTranslations($keyNames, $localeNames);
     }

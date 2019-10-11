@@ -18,6 +18,7 @@ use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttribut
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReaderInterface;
 use Spryker\Zed\ProductAttribute\Business\Model\Glossary\GlossaryRepository;
+use Spryker\Zed\ProductAttribute\Business\Model\Glossary\GlossaryRepositoryInterface;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapper;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
@@ -183,7 +184,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductAttribute\Business\Model\Glossary\GlossaryRepositoryInterface
      */
-    protected function createGlossaryRepository()
+    protected function createGlossaryRepository(): GlossaryRepositoryInterface
     {
         return new GlossaryRepository($this->getGlossaryFacade());
     }

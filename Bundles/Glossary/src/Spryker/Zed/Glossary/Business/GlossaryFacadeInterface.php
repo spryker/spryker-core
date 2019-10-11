@@ -145,6 +145,9 @@ interface GlossaryFacadeInterface
     public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
+     * Specifications:
+     * - Finds translations for specified keys and locales.
+     *
      * @api
      *
      * @param string[] $keyNames
@@ -154,7 +157,7 @@ interface GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function getTranslations(array $keyNames, array $localeNames);
+    public function getTranslations(array $keyNames, array $localeNames): array;
 
     /**
      * @api

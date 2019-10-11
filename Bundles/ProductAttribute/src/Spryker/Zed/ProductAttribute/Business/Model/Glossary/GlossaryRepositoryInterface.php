@@ -19,7 +19,7 @@ interface GlossaryRepositoryInterface
      *
      * @return string
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslationByKeyNameAndLocaleTransfer($keyName, LocaleTransfer $locale): string;
 
     /**
      * @param string[] $keyNames
@@ -27,5 +27,5 @@ interface GlossaryRepositoryInterface
      *
      * @return void
      */
-    public function loadTranslations(array $keyNames, array $localeNames);
+    public function loadTranslations(array $keyNames, array $localeNames): void;
 }

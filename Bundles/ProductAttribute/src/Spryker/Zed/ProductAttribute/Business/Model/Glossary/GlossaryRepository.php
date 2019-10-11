@@ -36,7 +36,7 @@ class GlossaryRepository implements GlossaryRepositoryInterface
      *
      * @return string
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslationByKeyNameAndLocaleTransfer($keyName, LocaleTransfer $locale): string
     {
         if (!isset(static::$glossaryMap[$locale->getIdLocale()][$keyName])) {
             $this->loadTranslations([$keyName], [$locale->getIdLocale()]);
@@ -51,7 +51,7 @@ class GlossaryRepository implements GlossaryRepositoryInterface
      *
      * @return void
      */
-    public function loadTranslations(array $keyNames, array $localeNames)
+    public function loadTranslations(array $keyNames, array $localeNames): void
     {
         $translations = $this->glossaryFacade->getTranslations($keyNames, $localeNames);
         foreach ($translations as $translation) {

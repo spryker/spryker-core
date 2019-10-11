@@ -190,6 +190,6 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     {
         $glossaryKey = $this->glossaryKeyBuilder->buildGlossaryKey($attributeKey);
 
-        return $this->glossaryRepository->getTranslation($glossaryKey, $localeTransfer) ?? null;
+        return $this->glossaryRepository->getTranslationByKeyNameAndLocaleTransfer($glossaryKey, $localeTransfer) ?? null;
     }
 }
