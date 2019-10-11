@@ -73,8 +73,8 @@ class ProductAttributeToGlossaryBridge implements ProductAttributeToGlossaryInte
     }
 
     /**
-     * @param array $keyNames
-     * @param array $localeNames
+     * @param string[] $keyNames
+     * @param string[] $localeNames
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
