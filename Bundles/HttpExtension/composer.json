@@ -1,0 +1,34 @@
+{
+  "name": "spryker/http-extension",
+  "type": "library",
+  "description": "HttpExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/symfony": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/container": "If you want to use a FragmentHandlerPluginInterface.",
+    "spryker/symfony": "If you want to use a FragmentHandlerPluginInterface."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
