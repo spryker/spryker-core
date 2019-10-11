@@ -12,17 +12,17 @@ $(document).ready(function () {
     var assignedProductsTable = new SelectTableAPI();
 
     availableProductsTable.init(
-        '#availableProductConcreteTable',
+        '#available-product-concrete-table',
         '#productsToBeAssigned',
-        '.availableProductConcreteTable-all-products-checkbox',
+        '.available-product-concrete-table-all-products-checkbox',
         'a[href="#tab-content-assignment_product"]',
         '#productListAggregate_productIdsToBeAssigned'
     );
 
     assignedProductsTable.init(
-        '#assignedProductConcreteTable',
+        '#assigned-product-concrete-table',
         '#productsToBeDeassigned',
-        '.assignedProductConcreteTable-all-products-checkbox',
+        '.assigned-product-concrete-table-all-products-checkbox',
         'a[href="#tab-content-deassignment_product"]',
         '#productListAggregate_productIdsToBeDeAssigned'
     );
