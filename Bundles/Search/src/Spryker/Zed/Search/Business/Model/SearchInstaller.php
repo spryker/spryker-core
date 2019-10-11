@@ -37,6 +37,7 @@ class SearchInstaller implements SearchInstallerInterface
     public function install()
     {
         foreach ($this->installer as $installer) {
+
             if ($installer instanceof SearchInstallerInterface) {
                 $installer->install();
 

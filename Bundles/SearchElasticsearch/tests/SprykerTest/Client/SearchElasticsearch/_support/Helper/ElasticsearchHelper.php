@@ -84,6 +84,19 @@ class ElasticsearchHelper extends Module
     }
 
     /**
+     * @param string $indexName
+     *
+     * @return void
+     */
+    public function assertIndexExists(string $indexName): void
+    {
+        $client = $this->getClient();
+        $index = $client->getIndex($indexName);
+
+        $this->asserTrue($index->exists(), sprintf('Expected that index "%s" exists but doesn\'t exist.' . $indexName));
+    }
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
