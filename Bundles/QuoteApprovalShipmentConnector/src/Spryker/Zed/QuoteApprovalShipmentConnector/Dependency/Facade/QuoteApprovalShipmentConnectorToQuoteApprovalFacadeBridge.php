@@ -27,10 +27,10 @@ class QuoteApprovalShipmentConnectorToQuoteApprovalFacadeBridge implements Quote
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string|null
+     * @return bool
      */
-    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
-        return $this->quoteApprovalFacade->calculateQuoteStatus($quoteTransfer);
+        return $this->quoteApprovalFacade->isQuoteInApprovalProcess($quoteTransfer);
     }
 }

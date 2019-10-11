@@ -19,4 +19,11 @@ interface QuoteStatusCheckerInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function isQuoteReadyForCheckout(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

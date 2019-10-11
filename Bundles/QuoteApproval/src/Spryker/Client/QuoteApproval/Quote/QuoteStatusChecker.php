@@ -108,6 +108,8 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     }
 
     /**
+     * @see \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusChecker::isQuoteInApprovalProcess()
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool

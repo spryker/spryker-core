@@ -181,12 +181,12 @@ class QuoteApprovalFacade extends AbstractFacade implements QuoteApprovalFacadeI
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string|null
+     * @return bool
      */
-    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createQuoteStatusCalculator()
-            ->calculateQuoteStatus($quoteTransfer);
+            ->createQuoteStatusChecker()
+            ->isQuoteInApprovalProcess($quoteTransfer);
     }
 }

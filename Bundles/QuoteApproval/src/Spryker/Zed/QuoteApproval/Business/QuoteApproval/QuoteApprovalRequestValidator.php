@@ -90,10 +90,7 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     {
         $this->assertQuoteApprovalCreateRequestValid($quoteApprovalRequestTransfer);
 
-        $quoteTransfer = $this->mergeQuotes(
-            $this->getQuoteById($quoteApprovalRequestTransfer->getQuote()->getIdQuote()),
-            $quoteApprovalRequestTransfer->getQuote()
-        );
+        $quoteTransfer = $this->resolveQuote($quoteApprovalRequestTransfer);
 
         if (!$quoteTransfer->getItems()->count()) {
             return $this->createUnsuccessfulValidationResponseTransfer(static::GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE);
@@ -172,12 +169,12 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $persistentQuoteTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $persistentQuoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mergeQuotes(QuoteTransfer $persistentQuoteTransfer, QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function mergeQuotes(QuoteTransfer $quoteTransfer, QuoteTransfer $persistentQuoteTransfer): QuoteTransfer
     {
         $quoteTransfer->fromArray($persistentQuoteTransfer->modifiedToArray(), true);
 
@@ -203,8 +200,11 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
     protected function assertQuoteApprovalCreateRequestValid(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): void
     {
         $quoteApprovalRequestTransfer->requireApproverCompanyUserId()
-            ->requireRequesterCompanyUserId()
-            ->requireQuote();
+            ->requireRequesterCompanyUserId();
+
+        if (!$quoteApprovalRequestTransfer->getQuote()) {
+            $quoteApprovalRequestTransfer->requireIdQuote();
+        }
     }
 
     /**
@@ -347,5 +347,26 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         }
 
         return $this->getQuoteById($idQuote);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function resolveQuote(QuoteApprovalRequestTransfer $quoteApprovalRequestTransfer): QuoteTransfer
+    {
+        $idQuote = $quoteApprovalRequestTransfer->getIdQuote() ?? $quoteApprovalRequestTransfer->getQuote()->getIdQuote();
+
+        $quoteTransfer = $this->getQuoteById($idQuote);
+
+        if (!$quoteApprovalRequestTransfer->getQuote()) {
+            return $quoteTransfer;
+        }
+
+        return $this->mergeQuotes(
+            $quoteApprovalRequestTransfer->getQuote(),
+            $quoteTransfer
+        );
     }
 }

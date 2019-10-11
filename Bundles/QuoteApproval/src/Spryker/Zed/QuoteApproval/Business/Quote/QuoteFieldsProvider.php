@@ -8,15 +8,14 @@
 namespace Spryker\Zed\QuoteApproval\Business\Quote;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\QuoteApproval\QuoteApprovalConfig as SharedApprovalConfig;
 use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
 
 class QuoteFieldsProvider implements QuoteFieldsProviderInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface
+     * @var \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCheckerInterface
      */
-    protected $quoteStatusCalculator;
+    protected $quoteStatusChecker;
 
     /**
      * @var \Spryker\Zed\QuoteApproval\QuoteApprovalConfig
@@ -24,14 +23,14 @@ class QuoteFieldsProvider implements QuoteFieldsProviderInterface
     protected $quoteApprovalConfig;
 
     /**
-     * @param \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCalculatorInterface $quoteStatusCalculator
+     * @param \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusCheckerInterface $quoteStatusChecker
      * @param \Spryker\Zed\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfig
      */
     public function __construct(
-        QuoteStatusCalculatorInterface $quoteStatusCalculator,
+        QuoteStatusCheckerInterface $quoteStatusChecker,
         QuoteApprovalConfig $quoteApprovalConfig
     ) {
-        $this->quoteStatusCalculator = $quoteStatusCalculator;
+        $this->quoteStatusChecker = $quoteStatusChecker;
         $this->quoteApprovalConfig = $quoteApprovalConfig;
     }
 
@@ -42,23 +41,10 @@ class QuoteFieldsProvider implements QuoteFieldsProviderInterface
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
-        if ($this->isQuoteApprovalRequestWaitingOrApproved($quoteTransfer)) {
+        if ($this->quoteStatusChecker->isQuoteInApprovalProcess($quoteTransfer)) {
             return $this->quoteApprovalConfig->getRequiredQuoteFieldsForApprovalProcess();
         }
 
         return [];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteApprovalRequestWaitingOrApproved(QuoteTransfer $quoteTransfer): bool
-    {
-        return in_array($this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer), [
-            SharedApprovalConfig::STATUS_WAITING,
-            SharedApprovalConfig::STATUS_APPROVED,
-        ]);
     }
 }

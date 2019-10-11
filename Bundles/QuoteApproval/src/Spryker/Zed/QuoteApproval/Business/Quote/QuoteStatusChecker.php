@@ -45,6 +45,21 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
     }
 
     /**
+     * @see \Spryker\Client\QuoteApproval\Quote\QuoteStatusChecker::isQuoteInApprovalProcess()
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return in_array($this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer), [
+            QuoteApprovalConfig::STATUS_WAITING,
+            QuoteApprovalConfig::STATUS_APPROVED,
+        ]);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *

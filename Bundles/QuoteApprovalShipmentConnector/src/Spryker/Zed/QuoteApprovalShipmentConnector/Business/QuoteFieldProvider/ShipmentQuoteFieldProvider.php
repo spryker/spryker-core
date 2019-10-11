@@ -47,7 +47,7 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
-        if (!$this->isQuoteApprovalRequestWaitingOrApproved($quoteTransfer)) {
+        if (!$this->quoteApprovalFacade->isQuoteInApprovalProcess($quoteTransfer)) {
             return [];
         }
 
@@ -73,7 +73,7 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
 
         foreach ($quoteTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() === static::SHIPMENT_EXPENSE_TYPE) {
-                return $quoteTransfer->getShipment()->getShipmentSelection() !== null;
+                return true;
             }
         }
 
@@ -91,18 +91,5 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
             QuoteTransfer::SHIPMENT,
             QuoteTransfer::SHIPPING_ADDRESS,
         ];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteApprovalRequestWaitingOrApproved(QuoteTransfer $quoteTransfer): bool
-    {
-        return in_array($this->quoteApprovalFacade->calculateQuoteStatus($quoteTransfer), [
-            static::QUOTE_APPROVAL_STATUS_WAITING,
-            static::QUOTE_APPROVAL_STATUS_APPROVED,
-        ]);
     }
 }

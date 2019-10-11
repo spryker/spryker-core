@@ -136,7 +136,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     public function createQuoteFieldsProvider(): QuoteFieldsProviderInterface
     {
         return new QuoteFieldsProvider(
-            $this->createQuoteStatusCalculator(),
+            $this->createQuoteStatusChecker(),
             $this->getConfig()
         );
     }

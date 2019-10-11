@@ -160,14 +160,14 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
-     * - Calculates quote approval status.
-     * - Returns null if quote does not have quote approval request.
+     * - Returns true if quote approval status is approved or waiting.
+     * - Returns false otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string|null
+     * @return bool
      */
-    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }

@@ -14,7 +14,7 @@ interface QuoteApprovalShipmentConnectorToQuoteApprovalFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string|null
+     * @return bool
      */
-    public function calculateQuoteStatus(QuoteTransfer $quoteTransfer): ?string;
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
 }
