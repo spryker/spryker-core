@@ -19,57 +19,57 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
-        <property name="idConfigurableBundleTemplate" type="int" />
-        <property name="uuid" type="string" />
-        <property name="name" type="string" />
-        <property name="isActive" type="bool" />
-        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation" />
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateTranslation">
-        <property name="name" type="string" />
-        <property name="locale" type="Locale" />
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
-        <property name="idConfigurableBundleTemplateSlot" type="int" />
-        <property name="name" type="string" />
-        <property name="uuid" type="string" />
-        <property name="fkConfigurableBundleTemplate" type="int" />
-        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
-        <property name="productList" type="ProductList" />
-        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="name" type="string"/>
+        <property name="uuid" type="string"/>
+        <property name="fkConfigurableBundleTemplate" type="int"/>
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="productList" type="ProductList"/>
+        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotTranslation">
-        <property name="name" type="string" />
-        <property name="locale" type="Locale" />
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ProductListResponse">
-        <property name="productList" type="ProductList" />
-        <property name="messages" type="Message[]" singular="message" />
-        <property name="isSuccessful" type="bool" />
+        <property name="productList" type="ProductList"/>
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ProductList">
-        <property name="idProductList" type="int" />
+        <property name="idProductList" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateFilter">
-        <property name="idConfigurableBundleTemplate" type="int" />
+        <property name="idConfigurableBundleTemplate" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
-        <property name="idProductList" type="int" />
-        <property name="idConfigurableBundleTemplateSlot" type="int" />
+        <property name="idProductList" type="int"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateResponse">
-        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
-        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot" />
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Message">

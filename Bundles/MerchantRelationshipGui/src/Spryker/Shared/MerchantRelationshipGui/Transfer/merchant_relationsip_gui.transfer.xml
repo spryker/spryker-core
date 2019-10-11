@@ -4,28 +4,28 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ButtonCollection">
-        <property name="buttons" type="Button[]" singular="button" />
+        <property name="buttons" type="Button[]" singular="button"/>
     </transfer>
 
     <transfer name="Button">
-        <property name="url" type="string" />
-        <property name="title" type="string" />
-        <property name="defaultOptions" type="array" />
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
     </transfer>
 
     <transfer name="ProductListUsedByTableData">
-        <property name="productList" type="ProductList" />
-        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
+        <property name="productList" type="ProductList"/>
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
     </transfer>
 
     <transfer name="ProductListUsedByTableRow">
-        <property name="title" type="string" />
-        <property name="name" type="string" />
-        <property name="actionButtons" type="ButtonCollection" />
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
+        <property name="actionButtons" type="ButtonCollection"/>
     </transfer>
 
     <transfer name="ProductList">
-        <property name="idProductList" type="int" />
+        <property name="idProductList" type="int"/>
     </transfer>
 
 </transfers>

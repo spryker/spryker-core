@@ -18,6 +18,6 @@
     </transfer>
 
     <transfer name="MerchantRelationship">
-        <property name="productListIds" type="int[]" />
+        <property name="productListIds" type="int[]"/>
     </transfer>
 </transfers>
