@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductConcretePageSearchReaderInterface
 {
     /**
+     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -38,4 +42,12 @@ interface ProductConcretePageSearchReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array;
 }

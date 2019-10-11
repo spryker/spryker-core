@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 
 class ProductConcretePageSearchReader implements ProductConcretePageSearchReaderInterface
@@ -25,6 +26,8 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
+     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return array
@@ -74,5 +77,16 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array
     {
         return $this->repository->getProductConcretePageSearchTransfersByProductAbstractStoreMap($productAbstractStoreMap);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    {
+        return $this->repository->getProductConcretePageSearchByFilter($filterTransfer, $productIds);
     }
 }

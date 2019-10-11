@@ -119,6 +119,8 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
      *
      * @api
      *
+     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -158,5 +160,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     public function getProductByFilter(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()->getProductByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcretePageSearchReader()
+            ->getProductConcretePageSearchByFilter($filterTransfer, $productIds);
     }
 }

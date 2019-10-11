@@ -22,6 +22,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
     /**
+     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -180,5 +182,27 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->offset($filterTransfer->getOffset());
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @module ProductPageSearch
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    {
+        $productConcretePageSearchEntities = $this->getFactory()
+            ->createProductConcretePageSearchQuery()
+            ->filterByFkProduct_In($productIds)
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset())
+            ->find();
+
+        return $this->mapProductConcretePageSearchEntities(
+            $productConcretePageSearchEntities
+        );
     }
 }

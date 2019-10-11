@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPageSearchRepositoryInterface
 {
     /**
+     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -40,4 +42,12 @@ interface ProductPageSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
     public function getProductByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array;
 }

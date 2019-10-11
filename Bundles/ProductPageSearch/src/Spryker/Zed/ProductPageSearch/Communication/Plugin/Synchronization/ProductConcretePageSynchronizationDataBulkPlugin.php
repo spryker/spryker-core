@@ -7,23 +7,22 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use ProductConcretePageSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  */
-class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -51,18 +50,23 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
 
     /**
      * {@inheritDoc}
+     * - Returns ContentEntityTransfer collection.
      *
      * @api
      *
+     * @param int $offset
+     * @param int $limit
      * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $productConcreteIds = []): array
+    public function getData(int $offset, int $limit, array $productConcreteIds = []): array
     {
-        $synchronizationDataTransfers = [];
-        $productConcretePageSearchTransfers = $this->getProductConcretePageSearchTransfers($productConcreteIds);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
+        $productConcretePageSearchTransfers = $this->getProductConcretePageSearch($filterTransfer, $productConcreteIds);
+
+        $synchronizationDataTransfers = [];
         /** @var \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -112,20 +116,6 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
-     */
-    protected function getProductConcretePageSearchTransfers(array $productIds): array
-    {
-        if (empty($productIds)) {
-            $productIds = $this->getAllProductIds();
-        }
-
-        return $this->getFacade()->getProductConcretePageSearchTransfersByProductIds($productIds);
-    }
-
-    /**
      * @return int[]
      */
     protected function getAllProductIds(): array
@@ -134,5 +124,33 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
             ->select([SpyProductTableMap::COL_ID_PRODUCT])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    protected function getProductConcretePageSearch(FilterTransfer $filterTransfer, array $productIds): array
+    {
+        if (empty($productIds)) {
+            $productIds = $this->getAllProductIds();
+        }
+
+        return $this->getFacade()->getProductConcretePageSearchByFilter($filterTransfer, $productIds);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

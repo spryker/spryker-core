@@ -99,6 +99,8 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -128,4 +130,18 @@ interface ProductPageSearchFacadeInterface
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
     public function getProductByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification
+     * - Finds product concrete page search entities by given concrete product ids.
+     * - Returns ContentEntityTransfer collection by filter.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     */
+    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array;
 }

@@ -36,7 +36,7 @@ class ContentStorageEventResourceBulkRepositoryPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritDoc}
-     * - Returns ContentEntityTransfer collection by filter.
+     * - Returns ContentEntityTransfer collection.
      *
      * @api
      *
