@@ -41,6 +41,8 @@
     "sort-packages": true
   },
   "bin": [
-    "bin/console"
+    "bin/console",
+    "bin/yves",
+    "bin/zed"
   ]
 }

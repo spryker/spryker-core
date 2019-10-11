@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console\Business\Model;
+namespace Spryker\Shared\Console\Hook;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @deprecated Use `\Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface` instead.
- */
 interface ConsoleRunnerHookInterface
 {
     /**

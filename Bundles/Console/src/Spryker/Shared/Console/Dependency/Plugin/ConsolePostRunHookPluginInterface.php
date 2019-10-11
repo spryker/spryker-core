@@ -5,29 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console\Business\Model;
+namespace Spryker\Shared\Console\Dependency\Plugin;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @deprecated Use `\Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface` instead.
- */
-interface ConsoleRunnerHookInterface
+interface ConsolePostRunHookPluginInterface
 {
     /**
+     * Specification
+     *  - The post-run plugins will be executed after each console commands
+     *
+     * @api
+     *
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
-     */
-    public function preRun(InputInterface $input, OutputInterface $output);
-
-    /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return void
+     * @return int
      */
     public function postRun(InputInterface $input, OutputInterface $output);
 }

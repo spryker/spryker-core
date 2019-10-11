@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console;
+namespace Spryker\Yves\Console;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 /**
  * @method \Spryker\Shared\Console\ConsoleConfig getSharedConfig()

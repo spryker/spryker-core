@@ -17,5 +17,7 @@ if (!defined('SPRYKER_COMPOSER_INSTALL')) {
 
 require_once SPRYKER_COMPOSER_INSTALL;
 
-$bootstrap = new Spryker\Zed\Console\Communication\ConsoleBootstrap('Spryker (@deprecated Use `vendor/bin/zed` instead.)');
+use Spryker\Yves\Console\ConsoleBootstrap;
+
+$bootstrap = new ConsoleBootstrap();
 $bootstrap->run();

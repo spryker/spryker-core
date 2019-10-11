@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console;
+namespace Spryker\Shared\Console;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Shared\Console\ConsoleConfig getSharedConfig()
- */
 class ConsoleConfig extends AbstractBundleConfig
 {
     /**
@@ -19,6 +16,6 @@ class ConsoleConfig extends AbstractBundleConfig
      */
     public function shouldCatchExceptions(): bool
     {
-        return $this->getSharedConfig()->shouldCatchExceptions();
+        return $this->get(ConsoleConstants::CATCH_EXCEPTIONS, false);
     }
 }
