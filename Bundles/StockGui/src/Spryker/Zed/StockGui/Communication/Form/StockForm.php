@@ -9,7 +9,6 @@ namespace Spryker\Zed\StockGui\Communication\Form;
 
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\StockGui\Communication\Form\Constraint\StockNameUniqueConstraint;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -78,9 +77,7 @@ class StockForm extends AbstractType
                 new Required(),
                 new NotBlank(['normalizer' => 'trim']),
                 new Length(['max' => static::FIELD_NAME_MAX_LENGTH]),
-                new StockNameUniqueConstraint([
-                    StockNameUniqueConstraint::OPTION_STOCK_FACADE => $this->getFactory()->getStockFacade(),
-                ]),
+                $this->getFactory()->createStockNameUniqueConstraint(),
             ],
         ]);
 

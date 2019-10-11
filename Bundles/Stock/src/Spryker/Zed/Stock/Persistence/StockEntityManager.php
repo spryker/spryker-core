@@ -34,8 +34,6 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
 
         $stockEntity->save();
 
-        $map = $this->getFactory()->createStockMapper()->mapStockEntityToStockTransfer($stockEntity, $stockTransfer);
-
         return $stockTransfer->setIdStock($stockEntity->getIdStock());
     }
 

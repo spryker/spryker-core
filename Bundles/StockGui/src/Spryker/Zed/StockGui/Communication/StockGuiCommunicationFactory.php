@@ -11,6 +11,7 @@ use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Gui\Communication\Tabs\TabsInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\StockGui\Communication\Form\Constraint\StockNameUniqueConstraint;
 use Spryker\Zed\StockGui\Communication\Form\StockForm;
 use Spryker\Zed\StockGui\Communication\Table\StockTable;
 use Spryker\Zed\StockGui\Communication\Tabs\StockTabs;
@@ -37,6 +38,16 @@ class StockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createStockTabs(): TabsInterface
     {
         return new StockTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\StockGui\Communication\Form\Constraint\StockNameUniqueConstraint
+     */
+    public function createStockNameUniqueConstraint(): StockNameUniqueConstraint
+    {
+        return new StockNameUniqueConstraint([
+            StockNameUniqueConstraint::OPTION_STOCK_FACADE => $this->getStockFacade(),
+        ]);
     }
 
     /**

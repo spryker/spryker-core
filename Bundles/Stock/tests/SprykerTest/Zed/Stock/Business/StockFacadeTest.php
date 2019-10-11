@@ -571,11 +571,10 @@ class StockFacadeTest extends Unit
     public function testFindStockByNameWillReturnNullForNonExistedStockName(): void
     {
         //Act
-        $stockTransfer = $this->stockFacade->findStockByName($this->stockTransfer1->getName());
+        $result = $this->stockFacade->findStockByName('Non-existing stock name');
 
         //Assert
-        $this->assertEquals($stockTransfer->getIdStock(), $this->stockTransfer1->getIdStock(), 'Stock ID does not match expected value.');
-        $this->assertEquals($stockTransfer->getName(), $this->stockTransfer1->getName(), 'Stock name does not match expected value.');
+        $this->assertNull($result, 'Result should be null.');
     }
 
     /**
@@ -648,7 +647,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindStockByIdShouldReturnStockTransferForNonExistingStockId(): void
+    public function testFindStockByIdShouldReturnNullForNonExistingStockId(): void
     {
         //Act
         $result = $this->stockFacade->findStockById(-1);
