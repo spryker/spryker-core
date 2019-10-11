@@ -124,6 +124,7 @@ class TransferDefinitionLoader implements LoaderInterface
                 $transfer[self::KEY_BUNDLE] = $bundle;
                 $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
 
+                $transfer = $this->normalize($transfer);
                 $this->transferDefinitions[] = $transfer;
             }
         } else {
@@ -132,6 +133,8 @@ class TransferDefinitionLoader implements LoaderInterface
 
             $transfer[self::KEY_BUNDLE] = $bundle;
             $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+
+            $transfer = $this->normalize($transfer);
             $this->transferDefinitions[] = $transfer;
         }
     }
@@ -176,5 +179,37 @@ class TransferDefinitionLoader implements LoaderInterface
         }
 
         return self::$filter;
+    }
+
+    /**
+     * We need to shim casing issues for property names or singular names for BC reasons.
+     *
+     * @param array $transfer
+     *
+     * @return array
+     */
+    protected function normalize(array $transfer): array
+    {
+        if (empty($transfer['property'])) {
+            return $transfer;
+        }
+
+        if (isset($transfer['property'][0])) {
+            foreach ($transfer['property'] as $key => $property) {
+                $transfer['property'][$key]['name'] = lcfirst($property['name']);
+                if (!empty($property['singular'])) {
+                    $transfer['property'][$key]['singular'] = lcfirst($property['singular']);
+                }
+            }
+
+            return $transfer;
+        }
+
+        $transfer['property']['name'] = lcfirst($transfer['property']['name']);
+        if (!empty($transfer['property']['singular'])) {
+            $transfer['property']['singular'] = lcfirst($transfer['property']['singular']);
+        }
+
+        return $transfer;
     }
 }
