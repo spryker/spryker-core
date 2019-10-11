@@ -10,26 +10,26 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="quantity" type="int" />
-        <property name="configuredBundleItem" type="ConfiguredBundleItem" />
-        <property name="configuredBundle" type="ConfiguredBundle" />
+        <property name="quantity" type="int"/>
+        <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
+        <property name="configuredBundle" type="ConfiguredBundle"/>
     </transfer>
 
     <transfer name="ConfiguredBundle">
-        <property name="quantity" type="int" />
-        <property name="groupKey" type="string" />
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
-        <property name="quantityPerSlot" type="int" />
+        <property name="quantityPerSlot" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
