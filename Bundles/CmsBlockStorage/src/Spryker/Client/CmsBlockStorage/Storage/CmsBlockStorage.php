@@ -153,7 +153,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $blockKeys = [];
 
         foreach ($this->cmsBlockStorageBlocksFinderPlugins as $cmsBlockStorageBlocksFinderPlugin) {
-            $cmsBlockTransfers = $cmsBlockStorageBlocksFinderPlugin->getRelatedCmsBlocks($options);
+            $cmsBlockTransfers = $cmsBlockStorageBlocksFinderPlugin->getCmsBlocks($options);
 
             if (count($cmsBlockTransfers) < 1) {
                 continue;

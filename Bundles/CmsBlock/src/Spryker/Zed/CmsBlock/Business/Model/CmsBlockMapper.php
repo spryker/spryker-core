@@ -57,7 +57,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      */
     public function mapCmsBlockTransferToEntity(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $spyCmsBlock): SpyCmsBlock
     {
-        $spyCmsBlock->fromArray($cmsBlockTransfer->toArray());
+        $spyCmsBlock->fromArray($cmsBlockTransfer->toArray(false));
 
         return $spyCmsBlock;
     }

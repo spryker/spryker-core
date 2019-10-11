@@ -290,7 +290,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
         );
 
         $cmsGlossaryKeyMappingEntity = new SpyCmsBlockGlossaryKeyMapping();
-        $cmsGlossaryKeyMappingEntity->fromArray($glossaryPlaceholderTransfer->toArray());
+        $cmsGlossaryKeyMappingEntity->fromArray($glossaryPlaceholderTransfer->toArray(false));
         $cmsGlossaryKeyMappingEntity->save();
 
         return $cmsGlossaryKeyMappingEntity->getPrimaryKey();

@@ -24,7 +24,7 @@ class CmsBlockCategoryCmsBlockStorageReaderPlugin extends AbstractPlugin impleme
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getRelatedCmsBlocks(array $cmsBlockOptions): array
+    public function getCmsBlocks(array $cmsBlockOptions): array
     {
         return $this->getFactory()->createCmsBlockCategoryStorageReader()->getCmsBlocksByOptions($cmsBlockOptions);
     }
