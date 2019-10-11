@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\Propel\Communication\Command\Input;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -16,14 +15,16 @@ class PropelCommandInputBuilder implements PropelCommandInputBuilderInterface
 {
     /**
      * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
-     * @param \Symfony\Component\Console\Command\Command $command
+     * @param \Symfony\Component\Console\Input\InputDefinition $wrappedInputDefinition
+     * @param string $commandName
      *
      * @return \Symfony\Component\Console\Input\InputInterface
      */
-    public function buildInput(InputDefinition $inputDefinition, Command $command): InputInterface
-    {
-        $wrappedInputDefinition = $command->getDefinition();
-
+    public function buildInput(
+        InputDefinition $inputDefinition,
+        InputDefinition $wrappedInputDefinition,
+        string $commandName
+    ): InputInterface {
         $wrappedInputDefinition->addArguments(
             $inputDefinition->getArguments()
         );
@@ -32,6 +33,6 @@ class PropelCommandInputBuilder implements PropelCommandInputBuilderInterface
             $inputDefinition->getOptions()
         );
 
-        return new ArgvInput([null, $command->getName()], $wrappedInputDefinition);
+        return new ArrayInput(['command' => $commandName], $wrappedInputDefinition);
     }
 }
