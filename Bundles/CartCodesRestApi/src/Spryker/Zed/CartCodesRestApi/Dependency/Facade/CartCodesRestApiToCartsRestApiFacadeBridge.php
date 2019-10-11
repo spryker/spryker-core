@@ -10,19 +10,19 @@ namespace Spryker\Zed\CartCodesRestApi\Dependency\Facade;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class CartCodesRestApiToQuoteFacadeBridge implements CartCodesRestApiToQuoteFacadeInterface
+class CartCodesRestApiToCartsRestApiFacadeBridge implements CartCodesRestApiToCartsRestApiFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\Quote\Business\QuoteFacadeInterface
+     * @var \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface
      */
-    protected $quoteFacade;
+    protected $cartsRestApiFacade;
 
     /**
-     * @param \Spryker\Zed\Quote\Business\QuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface $cartsRestApiFacade
      */
-    public function __construct($quoteFacade)
+    public function __construct($cartsRestApiFacade)
     {
-        $this->quoteFacade = $quoteFacade;
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
     }
 
     /**
@@ -32,6 +32,6 @@ class CartCodesRestApiToQuoteFacadeBridge implements CartCodesRestApiToQuoteFaca
      */
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteFacade->findQuoteByUuid($quoteTransfer);
+        return $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
     }
 }

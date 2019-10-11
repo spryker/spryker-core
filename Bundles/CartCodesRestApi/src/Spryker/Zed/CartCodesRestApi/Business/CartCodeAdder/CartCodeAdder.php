@@ -5,7 +5,7 @@ namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
-use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToQuoteFacadeInterface;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
@@ -15,20 +15,20 @@ class CartCodeAdder implements CartCodeAdderInterface
     protected $cartCodeFacade;
 
     /**
-     * @var CartCodesRestApiToQuoteFacadeInterface
+     * @var CartCodesRestApiToCartsRestApiFacadeInterface
      */
-    protected $quoteFacade;
+    protected $cartsRestApi;
 
     /**
      * @param CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade
-     * @param CartCodesRestApiToQuoteFacadeInterface $quoteFacade
+     * @param CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
      */
     public function __construct(
         CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade,
-        CartCodesRestApiToQuoteFacadeInterface $quoteFacade
+        CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
     ) {
         $this->cartCodeFacade = $cartCodeFacade;
-        $this->quoteFacade = $quoteFacade;
+        $this->cartsRestApi = $cartsRestApi;
     }
 
     /**
@@ -39,7 +39,7 @@ class CartCodeAdder implements CartCodeAdderInterface
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
-        $quoteTransfer = $this->quoteFacade->findQuoteByUuid($quoteTransfer)->getQuoteTransfer();
+        $quoteTransfer = $this->cartsRestApi->findQuoteByUuid($quoteTransfer)->getQuoteTransfer();
 
         return $this->cartCodeFacade->addCandidate($quoteTransfer, $voucherCode);
     }

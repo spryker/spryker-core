@@ -42,6 +42,6 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     public function buildCartRestResponse(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): RestResponseInterface
     {
         //TODO:
-        return $this->restResourceBuilder->createRestResponse()->addResource(new RestResource('test'));
+        return $this->restResourceBuilder->createRestResponse()->addResource(new RestResource('test222'));
     }
 }

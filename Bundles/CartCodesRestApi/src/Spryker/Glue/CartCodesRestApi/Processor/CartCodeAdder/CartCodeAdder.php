@@ -2,6 +2,7 @@
 
 namespace Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
 use Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface;
@@ -43,14 +44,8 @@ class CartCodeAdder implements CartCodeAdderInterface
      */
     public function addCandidate(RestRequestInterface $restRequest, RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer): RestResponseInterface
     {
-        $cartResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
-
-        if (!$cartResource) {
-           //TODO:
-        }
-
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->addCandidate(
-            $this->createQuoteTransfer($cartResource->getId()),
+            $this->createQuoteTransfer($restRequest),
             $restDiscountRequestAttributesTransfer->getCode()
         );
 
@@ -58,12 +53,19 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param string $uuid
+     * @param RestRequestInterface $restRequest
      *
      * @return QuoteTransfer
      */
-    protected function createQuoteTransfer(string $uuid): QuoteTransfer
+    protected function createQuoteTransfer(RestRequestInterface $restRequest): QuoteTransfer
     {
-        return (new QuoteTransfer())->setUuid($uuid);
+        $cartResource = $restRequest->findParentResourceByType(CartsRestApiConfig::RESOURCE_CARTS);
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+
+        return (new QuoteTransfer())
+            ->setUuid($cartResource->getId())
+            ->setCustomer($customerTransfer)
+            ->setCustomerReference($customerReference);
     }
 }

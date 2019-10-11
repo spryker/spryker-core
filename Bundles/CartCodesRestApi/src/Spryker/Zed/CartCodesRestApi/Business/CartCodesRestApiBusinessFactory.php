@@ -11,6 +11,8 @@ use Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder\CartCodeAdder;
 use Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder\CartCodeAdderInterface;
 use Spryker\Zed\CartCodesRestApi\CartCodesRestApiDependencyProvider;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeBridge;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -26,7 +28,7 @@ class CartCodesRestApiBusinessFactory extends AbstractBusinessFactory
     {
         return new CartCodeAdder(
             $this->getCartCodeFacade(),
-            $this->getQuoteFacade()
+            $this->getCartsRestApiFacade()
         );
     }
 
@@ -39,10 +41,10 @@ class CartCodesRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartCodesRestApiToQuoteFacadeInterface
+     * @return CartCodesRestApiToCartsRestApiFacadeInterface
      */
-    public function getQuoteFacade(): CartCodesRestApiToQuoteFacadeInterface
+    public function getCartsRestApiFacade(): CartCodesRestApiToCartsRestApiFacadeInterface
     {
-        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::FACADE_QUOTE);
+        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::FACADE_CARTS_REST_API);
     }
 }
