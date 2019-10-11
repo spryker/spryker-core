@@ -49,7 +49,12 @@ class TravisDependencyFinder extends AbstractFileDependencyFinder
     public function findDependencies(DependencyFinderContextInterface $context, DependencyContainerInterface $dependencyContainer): DependencyContainerInterface
     {
         $fileContent = $context->getFileInfo()->getContents();
-        if (preg_match('/code-sniffer\/(Spryker|SprykerStrict)\/ruleset.xml/', $fileContent)) {
+
+        if (preg_match('/composer cs-check/', $fileContent)) {
+            $dependencyContainer->addDependency('CodeSniffer', $this->getType(), false, true);
+        }
+
+        if (preg_match('/code-sniffer\/(Spryker|SprykerStrict)/', $fileContent)) {
             $dependencyContainer->addDependency('CodeSniffer', $this->getType(), false, true);
         }
 

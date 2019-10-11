@@ -50,7 +50,7 @@ class CarrierDiscountDecisionRule extends CarrierDiscountDecisionRuleWithoutMult
     {
         $idShipmentCarrier = $this->getIdShipmentCarrier($shipmentTransfer);
 
-        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentCarrier)) {
+        if ($idShipmentCarrier && $this->discountFacade->queryStringCompare($clauseTransfer, (string)$idShipmentCarrier)) {
             return true;
         }
 
