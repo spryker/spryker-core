@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step;
 
-use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\DataSet\ShipmentDataSetInterface;
 
-class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
+class ShipmentCarrierWriterStep implements DataImportStepInterface
 {
     /**
      * @var int[]
      */
-    protected static $idTaxSetCache = [];
+    protected static $idShipmentCarrierCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -29,19 +29,19 @@ class TaxSetNameToIdTaxSetStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $taxSetName = $dataSet[ShipmentDataSetInterface::COL_TAX_SET_NAME];
+        $carrierName = $dataSet[ShipmentDataSetInterface::COL_CARRIER_NAME];
 
-        if (!$taxSetName) {
-            throw new DataKeyNotFoundInDataSetException('Tax set name is missing');
+        if (!$carrierName) {
+            throw new DataKeyNotFoundInDataSetException('Carrier name is missing');
         }
 
-        if (!static::$idTaxSetCache[$taxSetName]) {
-            static::$idTaxSetCache[$taxSetName] = SpyTaxSetQuery::create()
-                ->filterByName($taxSetName)
+        if (!static::$idShipmentCarrierCache[$carrierName]) {
+            static::$idShipmentCarrierCache[$carrierName] = SpyShipmentCarrierQuery::create()
+                ->filterByName($$carrierName)
                 ->findOneOrCreate()
-                ->getIdTaxSet();
+                ->getIdShipmentCarrier();
         }
 
-        $dataSet[ShipmentDataSetInterface::COL_ID_TAX_SET] = static::$idTaxSetCache[$taxSetName];
+        $dataSet[ShipmentDataSetInterface::COL_ID_CARRIER] = static::$idShipmentCarrierCache[$carrierName];
     }
 }

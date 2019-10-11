@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step;
 
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -24,18 +23,12 @@ class ShipmentWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $shipmentCarrier = SpyShipmentCarrierQuery::create()
-            ->filterByName($dataSet[ShipmentDataSetInterface::COL_NAME])
-            ->findOneOrCreate();
-
-        $shipmentCarrier->save();
-
         $shipmentMethod = SpyShipmentMethodQuery::create()
             ->filterByShipmentMethodKey($dataSet[ShipmentDataSetInterface::COL_SHIPMENT_METHOD_KEY])
             ->findOneOrCreate();
 
         $shipmentMethod
-            ->setFkShipmentCarrier($shipmentCarrier->getIdShipmentCarrier())
+            ->setFkShipmentCarrier($dataSet[ShipmentDataSetInterface::COL_ID_CARRIER])
             ->setName($dataSet[ShipmentDataSetInterface::COL_NAME])
             ->setFkTaxSet($dataSet[ShipmentDataSetInterface::COL_ID_TAX_SET])
             ->save();

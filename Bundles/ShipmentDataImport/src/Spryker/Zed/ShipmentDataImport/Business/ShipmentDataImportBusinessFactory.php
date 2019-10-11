@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\ShipmentCarrierWriterStep;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\ShipmentWriterStep;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\TaxSetNameToIdTaxSetStep;
 use Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\Step\CurrencyCodeToIdCurrencyStep;
@@ -53,6 +54,7 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(ShipmentWriterStep::BULK_SIZE);
         $dataSetStepBroker
             ->addStep($this->createTaxSetNameToIdTaxSetStep())
+            ->addStep($this->createShipmentCarrierWriterStep())
             ->addStep($this->createShipmentWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -101,6 +103,14 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     public function createTaxSetNameToIdTaxSetStep(): DataImportStepInterface
     {
         return new TaxSetNameToIdTaxSetStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createShipmentCarrierWriterStep(): DataImportStepInterface
+    {
+        return new ShipmentCarrierWriterStep();
     }
 
     /**

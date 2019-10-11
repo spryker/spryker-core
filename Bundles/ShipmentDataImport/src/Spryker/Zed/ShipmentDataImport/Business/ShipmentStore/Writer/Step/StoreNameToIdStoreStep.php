@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\Step;
 
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
+use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -19,6 +20,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
      *
      * @return void
      */
@@ -27,7 +29,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
         $storeName = $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_STORE_NAME];
 
         if (!$storeName) {
-            throw new EntityNotFoundException(sprintf('Invalid store name: %s', $storeName));
+            throw new DataKeyNotFoundInDataSetException(sprintf('Store name is missing'));
         }
 
         $storeEntity = SpyStoreQuery::create()
@@ -35,7 +37,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
             ->findOne();
 
         if ($storeEntity === null) {
-            throw new EntityNotFoundException('Store not found');
+            throw new EntityNotFoundException(sprintf('Store not found: %s', $storeName));
         }
 
         $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_STORE] = $storeEntity->getIdStore();

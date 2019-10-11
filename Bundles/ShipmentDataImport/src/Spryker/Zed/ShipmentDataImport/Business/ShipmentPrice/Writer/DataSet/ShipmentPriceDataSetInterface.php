@@ -9,9 +9,9 @@ namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\DataSet;
 
 interface ShipmentPriceDataSetInterface
 {
-    public const COL_STORE = 'store';
+    public const COL_STORE_NAME = 'store';
     public const COL_ID_STORE = 'fk_store';
-    public const COL_CURRENCY = 'currency';
+    public const COL_CURRENCY_NAME = 'currency';
     public const COL_ID_CURRENCY = 'fk_currency';
     public const COL_SHIPMENT_METHOD_KEY = 'shipment_method_key';
     public const COL_NET_AMOUNT = 'value_net';
