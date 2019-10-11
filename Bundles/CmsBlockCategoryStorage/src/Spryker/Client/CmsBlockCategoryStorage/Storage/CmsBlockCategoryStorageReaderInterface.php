@@ -7,12 +7,14 @@
 
 namespace Spryker\Client\CmsBlockCategoryStorage\Storage;
 
+use Generated\Shared\Transfer\CmsBlockRequestTransfer;
+
 interface CmsBlockCategoryStorageReaderInterface
 {
     /**
-     * @param array $cmsBlockOptions
+     * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocksByOptions(array $cmsBlockOptions): array;
+    public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array;
 }

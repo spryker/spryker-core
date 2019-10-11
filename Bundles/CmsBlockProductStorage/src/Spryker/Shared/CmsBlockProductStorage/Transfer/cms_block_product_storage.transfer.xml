@@ -18,4 +18,8 @@
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
     </transfer>
+
+    <transfer name="CmsBlockRequest">
+        <property name="product" type="int"/>
+    </transfer>
 </transfers>

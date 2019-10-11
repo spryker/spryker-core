@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsBlockStorage\Storage;
 
+use Generated\Shared\Transfer\CmsBlockRequestTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface;
 use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface;
@@ -152,8 +153,10 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     {
         $blockKeys = [];
 
+        $cmsBlockRequestTransfer = $this->mapOptionsToTransfer($options);
+
         foreach ($this->cmsBlockStorageBlocksFinderPlugins as $cmsBlockStorageBlocksFinderPlugin) {
-            $cmsBlockTransfers = $cmsBlockStorageBlocksFinderPlugin->getCmsBlocks($options);
+            $cmsBlockTransfers = $cmsBlockStorageBlocksFinderPlugin->getCmsBlocks($cmsBlockRequestTransfer);
 
             if (count($cmsBlockTransfers) < 1) {
                 continue;
@@ -214,5 +217,15 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $synchronizationDataTransfer->setReference($blockKey);
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockRequestTransfer
+     */
+    protected function mapOptionsToTransfer(array $options): CmsBlockRequestTransfer
+    {
+        return (new CmsBlockRequestTransfer())->fromArray($options);
     }
 }

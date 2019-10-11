@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsBlockCategoryStorage\Storage;
 
+use Generated\Shared\Transfer\CmsBlockRequestTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsBlockCategoryStorage\Dependency\Client\CmsBlockCategoryStorageToStorageClientInterface;
@@ -15,7 +16,6 @@ use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 
 class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInterface
 {
-    protected const OPTION_KEY_CATEGORY = 'category';
     protected const OPTION_KEY_POSITION = 'position';
     protected const KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
     protected const KEY_BLOCK_KEYS = 'block_keys';
@@ -43,19 +43,19 @@ class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInte
     }
 
     /**
-     * @param array $cmsBlockOptions
+     * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocksByOptions(array $cmsBlockOptions): array
+    public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {
-        if (!isset($cmsBlockOptions[static::OPTION_KEY_CATEGORY])) {
+        if (!$cmsBlockRequestTransfer->getCategory()) {
             return [];
         }
 
-        $position = $cmsBlockOptions[static::OPTION_KEY_POSITION] ?? null;
+        $position = $cmsBlockRequestTransfer->getPosition();
         $searchKey = $this->generateKey(
-            $cmsBlockOptions[static::OPTION_KEY_CATEGORY],
+            (string)$cmsBlockRequestTransfer->getCategory(),
             CmsBlockCategoryStorageConstants::CMS_BLOCK_CATEGORY_RESOURCE_NAME
         );
 

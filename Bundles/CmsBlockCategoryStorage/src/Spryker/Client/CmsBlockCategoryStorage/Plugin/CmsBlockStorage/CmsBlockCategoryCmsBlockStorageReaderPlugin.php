@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsBlockCategoryStorage\Plugin\CmsBlockStorage;
 
+use Generated\Shared\Transfer\CmsBlockRequestTransfer;
 use Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
@@ -20,12 +21,12 @@ class CmsBlockCategoryCmsBlockStorageReaderPlugin extends AbstractPlugin impleme
      *
      * @api
      *
-     * @param array $cmsBlockOptions
+     * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocks(array $cmsBlockOptions): array
+    public function getCmsBlocks(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {
-        return $this->getFactory()->createCmsBlockCategoryStorageReader()->getCmsBlocksByOptions($cmsBlockOptions);
+        return $this->getFactory()->createCmsBlockCategoryStorageReader()->getCmsBlocksByOptions($cmsBlockRequestTransfer);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CmsBlockProductStorage\Storage;
 
+use Generated\Shared\Transfer\CmsBlockRequestTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsBlockProductStorage\Dependency\Client\CmsBlockProductStorageToStorageClientInterface;
@@ -14,7 +15,6 @@ use Spryker\Client\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStor
 
 class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterface
 {
-    protected const OPTION_KEY_PRODUCT = 'product';
     protected const RESOURCE_CMS_BLOCK_PRODUCT = 'cms_block_product';
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
@@ -41,17 +41,20 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     }
 
     /**
-     * @param array $cmsBlockOptions
+     * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocksByOptions(array $cmsBlockOptions): array
+    public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {
-        if (!isset($cmsBlockOptions[static::OPTION_KEY_PRODUCT])) {
+        if (!$cmsBlockRequestTransfer->getProduct()) {
             return [];
         }
 
-        $searchKey = $this->generateKey($cmsBlockOptions[static::OPTION_KEY_PRODUCT], static::RESOURCE_CMS_BLOCK_PRODUCT);
+        $searchKey = $this->generateKey(
+            (string)$cmsBlockRequestTransfer->getProduct(),
+            static::RESOURCE_CMS_BLOCK_PRODUCT
+        );
 
         $block = $this->storageClient->get($searchKey);
 
