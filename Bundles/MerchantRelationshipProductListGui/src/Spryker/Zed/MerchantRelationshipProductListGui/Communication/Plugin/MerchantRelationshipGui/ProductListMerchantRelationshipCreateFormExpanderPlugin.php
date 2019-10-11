@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ProductListMerchantRelationshipCreateFormExpanderPlugin extends AbstractPlugin implements MerchantRelationshipCreateFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds Product List multi-select field to merchant relationship create form.
      *
      * @api

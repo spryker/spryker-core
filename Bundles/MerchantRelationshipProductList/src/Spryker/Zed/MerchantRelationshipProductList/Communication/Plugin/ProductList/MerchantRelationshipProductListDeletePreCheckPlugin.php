@@ -19,7 +19,7 @@ use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheck
 class MerchantRelationshipProductListDeletePreCheckPlugin extends AbstractPlugin implements ProductListDeletePreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Finds merchant relationships which use given product list by ProductListTransfer::idProductList.
      * - Returns ProductListResponseTransfer with check results.
      * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.

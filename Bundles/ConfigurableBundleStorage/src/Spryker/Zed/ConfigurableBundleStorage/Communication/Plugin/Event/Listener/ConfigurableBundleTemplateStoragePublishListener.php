@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ConfigurableBundleTemplateStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Publishes active configurable bundle template changes to Storage.
      * - Unpublish inactive configurable bundle templates Storage.
      *

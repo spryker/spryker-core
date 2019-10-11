@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductListManagementConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands options for ConfigurableBundleTemplateSlotEditForm with Product List management data.
      *
      * @api
@@ -35,7 +35,7 @@ class ProductListManagementConfigurableBundleTemplateSlotEditFormDataProviderExp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands form data for ConfigurableBundleTemplateSlotEditForm with Product List management data.
      *
      * @api

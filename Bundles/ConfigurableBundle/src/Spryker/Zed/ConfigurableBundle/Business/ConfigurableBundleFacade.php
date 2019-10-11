@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBundleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -42,7 +42,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -76,7 +76,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -108,7 +108,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -124,7 +124,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -140,7 +140,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -156,7 +156,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -172,7 +172,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -189,7 +189,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -206,7 +206,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -220,7 +220,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -237,7 +237,7 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

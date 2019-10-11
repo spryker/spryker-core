@@ -19,7 +19,7 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsE
 class ConfigurableBundleTemplateListProductListTopButtonsExpanderPlugin extends AbstractPlugin implements ProductListTopButtonsExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands buttons list with button leads to a Cofigurable Bundle Template list page.
      *
      * @api

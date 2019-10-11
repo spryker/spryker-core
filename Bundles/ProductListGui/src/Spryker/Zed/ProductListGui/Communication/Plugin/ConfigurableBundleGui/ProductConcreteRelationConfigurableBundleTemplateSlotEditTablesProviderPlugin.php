@@ -20,7 +20,7 @@ class ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlu
     public const ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME = 'assignedProductConcreteTable';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Provides tables for Assign Products tab.
      *
      * @api

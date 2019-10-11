@@ -71,7 +71,7 @@ class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements Configu
             return $configurableBundleTemplateSlotEditFormTransfer;
         }
 
-        return $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin->hanldeFileUpload(
+        return $configurableBundleTemplateSlotEditFormFileUploadHandlerPlugin->handleFileUpload(
             $uploadedFile,
             $configurableBundleTemplateSlotEditFormTransfer
         );

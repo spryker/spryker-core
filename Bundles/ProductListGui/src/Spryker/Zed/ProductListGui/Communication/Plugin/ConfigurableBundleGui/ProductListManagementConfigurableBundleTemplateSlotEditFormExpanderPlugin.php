@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ProductListManagementConfigurableBundleTemplateSlotEditFormExpanderPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands ConfigurableBundleTemplateSlotEditForm with Product List assignment subforms.
      *
      * @api

@@ -18,7 +18,7 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsE
 class MerchantRelationListProductListTopButtonsExpanderPlugin extends AbstractPlugin implements ProductListTopButtonsExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands buttons list with button leads to a Merchant Relations list page.
      *
      * @api

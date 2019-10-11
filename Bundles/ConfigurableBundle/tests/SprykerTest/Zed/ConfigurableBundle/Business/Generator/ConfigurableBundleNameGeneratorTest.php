@@ -17,6 +17,7 @@ use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTe
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ConfigurableBundle

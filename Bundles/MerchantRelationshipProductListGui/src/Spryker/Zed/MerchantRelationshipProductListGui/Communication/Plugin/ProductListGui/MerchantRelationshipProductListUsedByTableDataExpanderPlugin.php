@@ -18,7 +18,7 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTable
 class MerchantRelationshipProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands table data with Merchant Relationships which use Product List.
      *
      * @api

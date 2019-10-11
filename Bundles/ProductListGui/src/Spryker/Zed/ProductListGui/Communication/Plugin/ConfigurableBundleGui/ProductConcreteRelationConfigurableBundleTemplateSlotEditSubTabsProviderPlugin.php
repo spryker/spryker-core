@@ -20,7 +20,7 @@ class ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPl
     public const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Provides subtabs for Assign Products tab.
      *
      * @api

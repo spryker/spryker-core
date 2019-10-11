@@ -4,71 +4,71 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Locale">
-        <property name="idLocale" type="int" />
-        <property name="name" type="string" />
+        <property name="idLocale" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
-        <property name="idConfigurableBundleTemplate" type="int" />
-        <property name="name" type="string" />
-        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation" />
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="name" type="string"/>
+        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
-        <property name="idConfigurableBundleTemplateSlot" type="int" />
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
         <property name="name" type="string"/>
-        <property name="fkConfigurableBundleTemplate" type="int" />
-        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation" />
+        <property name="fkConfigurableBundleTemplate" type="int"/>
+        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateTranslation">
-        <property name="name" type="string" />
-        <property name="locale" type="Locale" />
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ConfigurableBundleResponse">
-        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate" />
-        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot" />
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string" />
-        <property name="parameters" type="array" />
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateFilter">
-        <property name="idConfigurableBundleTemplate" type="int" />
+        <property name="idConfigurableBundleTemplate" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
-        <property name="idConfigurableBundleTemplateSlot" type="int" />
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
     </transfer>
 
     <transfer name="ButtonCollection">
-        <property name="buttons" type="Button[]" singular="button" />
+        <property name="buttons" type="Button[]" singular="button"/>
     </transfer>
 
     <transfer name="Button">
-        <property name="url" type="string" />
-        <property name="title" type="string" />
-        <property name="defaultOptions" type="array" />
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
     </transfer>
 
     <transfer name="ProductListUsedByTableData">
-        <property name="productList" type="ProductList" />
-        <property name="rows" type="ProductListUsedByTableRow[]" singular="row" />
+        <property name="productList" type="ProductList"/>
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
     </transfer>
 
     <transfer name="ProductListUsedByTableRow">
-        <property name="title" type="string" />
-        <property name="name" type="string" />
-        <property name="actionButtons" type="ButtonCollection" />
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
+        <property name="actionButtons" type="ButtonCollection"/>
     </transfer>
 
     <transfer name="ProductList">
-        <property name="idProductList" type="int" />
+        <property name="idProductList" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotEditForm">

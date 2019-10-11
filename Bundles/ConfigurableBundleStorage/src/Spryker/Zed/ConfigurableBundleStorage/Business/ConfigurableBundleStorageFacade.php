@@ -33,7 +33,7 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

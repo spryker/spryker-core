@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CartConfigurableBundlePreReloadPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes item from QuoteTransfer if its configurable bundle template is removed.
      * - Removes item from QuoteTransfer if its configurable bundle template is inactive.
      *

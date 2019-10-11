@@ -23,16 +23,17 @@ class ProductConcreteRelationCsvConfigurableBundleTemplateSlotEditFormFileUpload
     protected const FIELD_PATH_SEPARATOR = '.';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles Product Concrete Relation file upload.
      *
      * @api
      *
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
      */
-    public function hanldeFileUpload(UploadedFile $uploadedFile, ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotEditFormTransfer
+    public function handleFileUpload(UploadedFile $uploadedFile, ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotEditFormTransfer
     {
         $productListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
 
@@ -51,7 +52,7 @@ class ProductConcreteRelationCsvConfigurableBundleTemplateSlotEditFormFileUpload
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns Product Concrete Relation field path.
      *
      * @api

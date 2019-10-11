@@ -19,11 +19,11 @@
     </transfer>
 
     <transfer name="ProductList">
-        <property name="idProductList" type="int" />
+        <property name="idProductList" type="int"/>
     </transfer>
 
     <transfer name="MerchantRelationshipFilter">
-        <property name="merchantRelationshipIds" type="int[]" />
+        <property name="merchantRelationshipIds" type="int[]"/>
     </transfer>
 
 </transfers>

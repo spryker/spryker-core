@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductListManagementConfigurableBundleTemplateSlotEditTabsExpanderPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands ConfigurableBundleTemplateSlotEditTabs with Product List assignment tabs.
      *
      * @api

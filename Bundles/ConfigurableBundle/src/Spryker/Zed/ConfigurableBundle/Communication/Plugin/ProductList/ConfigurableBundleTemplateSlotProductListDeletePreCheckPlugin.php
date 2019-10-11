@@ -20,7 +20,7 @@ use Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheck
 class ConfigurableBundleTemplateSlotProductListDeletePreCheckPlugin extends AbstractPlugin implements ProductListDeletePreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Finds configurable bundle template slots which use given product list by ProductListTransfer::idProductList.
      * - Returns ProductListResponseTransfer with check results.
      * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.

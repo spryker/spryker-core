@@ -10,7 +10,7 @@
 
     <transfer name="MerchantRelationship">
         <property name="idMerchantRelationship" type="int"/>
-        <property name="productListIds" type="int[]" />
+        <property name="productListIds" type="int[]"/>
     </transfer>
 
     <transfer name="Customer">
@@ -36,18 +36,18 @@
     </transfer>
 
     <transfer name="MerchantRelationshipFilter">
-        <property name="merchantRelationshipIds" type="int[]" />
+        <property name="merchantRelationshipIds" type="int[]"/>
     </transfer>
 
     <transfer name="ProductListResponse">
-        <property name="productList" type="ProductList" />
-        <property name="messages" type="Message[]" singular="message" />
-        <property name="isSuccessful" type="bool" />
+        <property name="productList" type="ProductList"/>
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="Message">
-        <property name="value" type="string" />
-        <property name="parameters" type="array" />
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
 </transfers>

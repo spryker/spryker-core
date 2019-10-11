@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/configurable-bundle": "^1.0.0",
+    "spryker/configurable-bundle-gui-extension": "^1.0.0",
     "spryker/glossary": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.33.0",

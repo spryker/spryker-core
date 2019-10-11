@@ -19,7 +19,7 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTable
 class ConfigurableBundleTemplateProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands table data with Configurable Bundle Templates and Slots which use Product List.
      *
      * @api

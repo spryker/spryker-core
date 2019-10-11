@@ -8,6 +8,7 @@
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-relationship": "^1.2.0",
+    "spryker/merchant-relationship-gui-extension": "^1.0.0",
     "spryker/merchant-relationship-product-list": "^1.2.0",
     "spryker/product-list-gui-extension": "^1.1.0",
     "spryker/symfony": "^3.0.0",

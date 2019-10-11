@@ -86,7 +86,7 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

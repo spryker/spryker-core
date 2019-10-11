@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelation
 class ProductListMerchantRelationshipPostCreatePlugin extends AbstractPlugin implements MerchantRelationshipPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Assigns product lists to merchant relationship.
      *
      * @api

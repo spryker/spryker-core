@@ -54,7 +54,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +70,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -86,7 +86,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
