@@ -28,7 +28,8 @@ class WishlistsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Wishlist not found."
+     *              "404": "Wishlist not found.",
+     *              "422": "Unprocessable entity."
      *          }
      *     },
      *     "getCollection": {
@@ -49,7 +50,7 @@ class WishlistsResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistsReader()
+            ->createWishlistReader()
             ->findWishlists($restRequest);
     }
 
@@ -64,7 +65,8 @@ class WishlistsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Wishlist with the same name already exists."
+     *              "400": "Wishlist with the same name already exists, Wishlist name has wrong format.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
@@ -77,7 +79,7 @@ class WishlistsResourceController extends AbstractController
     public function postAction(RestRequestInterface $restRequest, RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistsWriter()
+            ->createWishlistCreator()
             ->create($restWishlistsAttributesTransfer, $restRequest);
     }
 
@@ -93,7 +95,8 @@ class WishlistsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "A wishlist with the same name already exists.",
-     *              "404": "Wishlist not found."
+     *              "404": "Wishlist not found.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
@@ -106,7 +109,7 @@ class WishlistsResourceController extends AbstractController
     public function patchAction(RestRequestInterface $restRequest, RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistsWriter()
+            ->createWishlistUpdater()
             ->update($restWishlistsAttributesTransfer, $restRequest);
     }
 
@@ -121,7 +124,8 @@ class WishlistsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Wishlist not found."
+     *              "404": "Wishlist not found.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })
@@ -133,7 +137,7 @@ class WishlistsResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createWishlistsWriter()
+            ->createWishlistDeleter()
             ->delete($restRequest);
     }
 }
