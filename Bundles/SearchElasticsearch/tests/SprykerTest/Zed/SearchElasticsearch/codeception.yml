@@ -1,23 +1,28 @@
 namespace: SprykerTest\Zed\SearchElasticsearch
+
 paths:
     tests: .
     data: ../../../_data
     support: _support
     log: ../../../_output
+
 coverage:
     enabled: true
     remote: false
     whitelist:
         include:
             - '../../../../src/*'
+
 suites:
-    Shared:
-        path: .
+    Business:
+        path: Business
         class_name: SearchElasticsearchZedTester
         modules:
             enabled:
             - Asserts
+            - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchDataHelper
             - \SprykerTest\Shared\Testify\Helper\Environment
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+            - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper

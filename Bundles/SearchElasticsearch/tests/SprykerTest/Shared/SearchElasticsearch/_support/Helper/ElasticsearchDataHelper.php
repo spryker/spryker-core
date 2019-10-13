@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\SearchElasticsearch\Helper;
+namespace SprykerTest\Shared\SearchElasticsearch\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
@@ -13,9 +13,9 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Index;
 use Elastica\Request;
-use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
+use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
-class ElasticsearchHelper extends Module
+class ElasticsearchDataHelper extends Module
 {
     /**
      * @var array
@@ -42,6 +42,19 @@ class ElasticsearchHelper extends Module
         $index->request('', Request::PUT, $data);
 
         return $index;
+    }
+
+    /**
+     * @param string $indexName
+     *
+     * @return void
+     */
+    public function addCleanupForIndexByName(string $indexName): void
+    {
+        $client = $this->getClient();
+        $index = $client->getIndex($indexName);
+
+        $this->addCleanup($index);
     }
 
     /**
@@ -93,7 +106,7 @@ class ElasticsearchHelper extends Module
         $client = $this->getClient();
         $index = $client->getIndex($indexName);
 
-        $this->asserTrue($index->exists(), sprintf('Expected that index "%s" exists but doesn\'t exist.' . $indexName));
+        $this->assertTrue($index->exists(), sprintf('Index "%s" doesn\'t exist.', $indexName));
     }
 
     /**
@@ -109,7 +122,7 @@ class ElasticsearchHelper extends Module
     }
 
     /**
-     * @return \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
+     * @return \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig
      */
     public function getConfig(): SearchElasticsearchConfig
     {

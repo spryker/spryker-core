@@ -1,15 +1,18 @@
 namespace: SprykerTest\Client\SearchElasticsearch
+
 paths:
     tests: .
     data: ../../../_data
     support: _support
     log: ../../../_output
+
 coverage:
     enabled: true
     remote: false
     whitelist:
         include:
             - '../../../../src/*'
+
 suites:
     Client:
         path: .
@@ -17,8 +20,9 @@ suites:
         modules:
             enabled:
             - Asserts
+            - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchDataHelper
             - \SprykerTest\Shared\Testify\Helper\Environment
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-            - \SprykerTest\Client\SearchElasticsearch\Helper\ElasticsearchHelper
+            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
