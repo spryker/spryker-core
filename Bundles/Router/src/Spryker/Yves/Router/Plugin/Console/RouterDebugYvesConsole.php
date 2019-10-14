@@ -20,10 +20,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouterDebugYvesConsole extends Command
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'router:debug:yves';
+    private const NAME = 'router:debug';
 
     /**
      * @return void
@@ -31,18 +28,12 @@ class RouterDebugYvesConsole extends Command
     protected function configure(): void
     {
         $this
+            ->setName(static::NAME)
+            ->setAliases(['router:debug:yves'])
             ->setDefinition([
-                new InputArgument('name', InputArgument::OPTIONAL, 'A route name'),
-                new InputOption('show-controllers', null, InputOption::VALUE_NONE, 'Show assigned controllers in overview'),
-            ])
-            ->setDescription('Displays current routes for an application')
-            ->setHelp(<<<'EOF'
-The <info>%command.name%</info> displays the configured routes:
-
-  <info>php %command.full_name%</info>
-
-EOF
-            );
+                new InputArgument('name', InputArgument::OPTIONAL, 'A route name.'),
+                new InputOption('show-controllers', 'c', InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
+            ]);
     }
 
     /**
