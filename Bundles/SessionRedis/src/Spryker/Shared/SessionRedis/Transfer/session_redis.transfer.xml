@@ -14,6 +14,7 @@
         <property name="host" type="string"/>
         <property name="port" type="string"/>
         <property name="database" type="int"/>
+        <property name="password" type="string"/>
     </transfer>
 
 </transfers>
