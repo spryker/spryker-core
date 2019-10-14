@@ -297,8 +297,8 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
-            ->findProductAbstractAvailabilityForStore(
-                $productTransfer->getFkProductAbstract(),
+            ->findProductAbstractAvailabilityBySkuForStore(
+                $productTransfer->getAbstractSku(),
                 $storeTransfer
             );
 

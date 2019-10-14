@@ -16,6 +16,7 @@ use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
@@ -60,15 +61,13 @@ class IndexController extends AbstractController
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
         $localeTransfer = $this->getCurrentLocaleTransfer();
-        $productAbstractAvailabilityTransfer = $this->getProductAbstractAvailabilityTransfer($localeTransfer->getIdLocale(), $idStore);
+        $productAbstractAvailabilityTransfer = $this->getFactory()
+            ->createProductAvailabilityHelper()
+            ->findProductAbstractAvailabilityTransfer($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
 
-        if ($productAbstractAvailabilityTransfer != null) {
-            $productAbstractAvailabilityTransfer = $this->getFactory()
-                ->createProductStockHelper()
-                ->trimProductAbstractAvailabilityQuantities($productAbstractAvailabilityTransfer);
+        if ($productAbstractAvailabilityTransfer === null) {
+            throw new NotFoundHttpException();
         }
-
-        $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore);
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
@@ -77,7 +76,7 @@ class IndexController extends AbstractController
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
-            'bundledProductAvailabilityTable' => $bundledProductAvailabilityTable->render(),
+            'bundledProductAvailabilityTable' => '',
             'stores' => $stores,
             'idStore' => $idStore,
             'idProduct' => $idProductAbstract,
@@ -216,12 +215,12 @@ class IndexController extends AbstractController
 
     /**
      * @param int $idStore
-     * @param int|null $idProductBundle
-     * @param int|null $idBundleProductAbstract
+     * @param int $idProductBundle
+     * @param int $idBundleProductAbstract
      *
      * @return \Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable
      */
-    protected function getBundledProductAvailabilityTable($idStore, $idProductBundle = null, $idBundleProductAbstract = null)
+    protected function getBundledProductAvailabilityTable(int $idStore, int $idProductBundle, int $idBundleProductAbstract)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
 
@@ -281,42 +280,5 @@ class IndexController extends AbstractController
         }
 
         return $this->castId($idStore);
-    }
-
-    /**
-     * @param int $idLocale
-     * @param int $idStore
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
-     */
-    protected function getProductAbstractAvailabilityTransfer(int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer
-    {
-        $storeTransfer = $this->getFactory()
-            ->getStoreFacade()
-            ->getStoreById($idStore);
-
-        $stockTypes = $this->getFactory()
-            ->getStockFacade()
-            ->getStoreToWarehouseMapping()[$storeTransfer->getName()];
-
-        $productAbstractAvailabilityEntity = $this->getFactory()
-            ->getAvailabilityQueryContainer()
-            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore, $stockTypes)
-            ->withColumn(
-                "SUM(" . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . ")",
-                ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY
-            )->findOne();
-
-        if ($productAbstractAvailabilityEntity === null) {
-            return $productAbstractAvailabilityEntity;
-        }
-
-        return (new ProductAbstractAvailabilityTransfer())
-            ->setProductName($productAbstractAvailabilityEntity->getVirtualColumn('productName'))
-            ->setSku($productAbstractAvailabilityEntity->getSku())
-            ->setAvailability($productAbstractAvailabilityEntity->getVirtualColumn('availabilityQuantity') ?? 0)
-            ->setStockQuantity($productAbstractAvailabilityEntity->getVirtualColumn('stockQuantity') ?? 0)
-            ->setReservationQuantity($productAbstractAvailabilityEntity->getVirtualColumn('reservationQuantity') ?? 0)
-            ->setIsNeverOutOfStock($productAbstractAvailabilityEntity->getVirtualColumn('concreteNeverOutOfStockSet'));
     }
 }

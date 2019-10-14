@@ -7,16 +7,15 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Table;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
-use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
+use Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -39,6 +38,11 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected $idProductBundle;
 
     /**
+     * @var \Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface
+     */
+    protected $availabilityHelper;
+
+    /**
      * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $productAbstractQuery;
@@ -51,7 +55,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     /**
      * @var int
      */
-    protected $idLocale;
+    protected $idStore;
 
     /**
      * @var int
@@ -59,37 +63,40 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected $idBundleProductAbstract;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
-    protected $storeTransfer;
+    private $storeFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface
-     */
-    private $omsFacade;
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     * @param \Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface $availabilityHelper
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
-     * @param int|null $idProductBundle
-     * @param int|null $idBundleProductAbstract
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param int $idLocale
+     * @param int $idStore
+     * @param int $idProductBundle
+     * @param int $idBundleProductAbstract
      */
     public function __construct(
-        SpyProductAbstractQuery $productAbstractQuery,
+        AvailabilityHelperInterface $availabilityHelper,
         AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
-        StoreTransfer $storeTransfer,
-        AvailabilityGuiToOmsFacadeInterface $omsFacade,
-        $idProductBundle = null,
-        $idBundleProductAbstract = null
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        int $idLocale,
+        int $idStore,
+        int $idProductBundle,
+        int $idBundleProductAbstract
     ) {
-        $this->productAbstractQuery = $productAbstractQuery;
-        $this->idProductBundle = $idProductBundle;
+        $this->availabilityHelper = $availabilityHelper;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
+        $this->storeFacade = $storeFacade;
+        $this->idStore = $idStore;
+        $this->idProductBundle = $idProductBundle;
         $this->idBundleProductAbstract = $idBundleProductAbstract;
-        $this->storeTransfer = $storeTransfer;
-        $this->omsFacade = $omsFacade;
+
+        $this->productAbstractQuery = $this->availabilityHelper->queryAvailabilityWithStockByIdProductAbstractAndIdLocale(
+            $idProductBundle,
+            $idLocale,
+            $idStore
+        );
     }
 
     /**
@@ -102,28 +109,28 @@ class BundledProductAvailabilityTable extends AbstractTable
         $url = Url::generate('bundled-product-availability-table', [
             BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle,
             BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
-            static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
+            static::URL_PARAM_ID_STORE => $this->idStore,
         ])->build();
 
         $config->setUrl($url);
 
         $config->setHeader([
-            AvailabilityQueryContainer::CONCRETE_SKU => 'SKU',
-            AvailabilityQueryContainer::CONCRETE_NAME => 'Name',
-            AvailabilityQueryContainer::CONCRETE_AVAILABILITY => 'Availability',
-            AvailabilityQueryContainer::STOCK_QUANTITY => 'Current Stock',
-            AvailabilityQueryContainer::RESERVATION_QUANTITY => 'Reserved Products',
+            AvailabilityHelperInterface::CONCRETE_SKU => 'SKU',
+            AvailabilityHelperInterface::CONCRETE_NAME => 'Name',
+            AvailabilityHelperInterface::CONCRETE_AVAILABILITY => 'Availability',
+            AvailabilityHelperInterface::STOCK_QUANTITY => 'Current Stock',
+            AvailabilityHelperInterface::RESERVATION_QUANTITY => 'Reserved Products',
             SpyProductBundleTableMap::COL_QUANTITY => 'Quantity in Bundle',
-            AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => 'Is never out of stock',
+            AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => 'Is never out of stock',
             static::TABLE_COL_ACTION => 'Actions',
         ]);
 
         $config->setSortable([
-            AvailabilityQueryContainer::CONCRETE_SKU,
-            AvailabilityQueryContainer::CONCRETE_NAME,
-            AvailabilityQueryContainer::CONCRETE_AVAILABILITY,
-            AvailabilityQueryContainer::STOCK_QUANTITY,
-            AvailabilityQueryContainer::RESERVATION_QUANTITY,
+            AvailabilityHelperInterface::CONCRETE_SKU,
+            AvailabilityHelperInterface::CONCRETE_NAME,
+            AvailabilityHelperInterface::CONCRETE_AVAILABILITY,
+            AvailabilityHelperInterface::STOCK_QUANTITY,
+            AvailabilityHelperInterface::RESERVATION_QUANTITY,
         ]);
 
         $config->setSearchable([
@@ -172,41 +179,23 @@ class BundledProductAvailabilityTable extends AbstractTable
         $result = [];
         foreach ($queryResult as $productItem) {
             $neverOutOfStockFlag = 'n/a';
-            if ($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) {
-                $neverOutOfStockFlag = $this->isNeverOutOfStock($productItem[AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No';
+            if ($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET]) {
+                $neverOutOfStockFlag = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No';
             }
 
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
                 AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $this->getConcreteAvailability($productItem)->trim(),
-                AvailabilityQueryContainer::STOCK_QUANTITY => $this->getStock($productItem)->trim(),
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->trim(),
+                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productItem)->trim(),
+                AvailabilityHelperInterface::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->trim(),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
-                AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
+                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];
         }
 
         return $result;
-    }
-
-    /**
-     * @param string $neverOutOfStockSet
-     *
-     * @return bool
-     */
-    protected function isNeverOutOfStock($neverOutOfStockSet)
-    {
-        $statusSet = explode(',', $neverOutOfStockSet);
-
-        foreach ($statusSet as $status) {
-            if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -216,10 +205,13 @@ class BundledProductAvailabilityTable extends AbstractTable
      */
     protected function calculateReservation(array $productItem): Decimal
     {
-        $reservation = $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
+        $reservationQuantity = new Decimal($productItem[AvailabilityHelperInterface::RESERVATION_QUANTITY] ?? 0);
 
-        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?? 0))
-            ->add($reservation);
+        return $this->availabilityHelper->sumReservationsFromOtherStores(
+            $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
+            $this->storeFacade->getStoreById($this->idStore),
+            $reservationQuantity
+        );
     }
 
     /**
@@ -227,9 +219,9 @@ class BundledProductAvailabilityTable extends AbstractTable
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getStock(array $productItem): Decimal
+    protected function getStockQuantity(array $productItem): Decimal
     {
-        return (new Decimal($productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ?? 0));
+        return (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0));
     }
 
     /**
@@ -255,7 +247,7 @@ class BundledProductAvailabilityTable extends AbstractTable
                 static::URL_PARAM_ID_PRODUCT => $productItem[AvailabilityQueryContainer::ID_PRODUCT],
                 static::URL_PARAM_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
-                static::URL_PARAM_ID_STORE => $this->storeTransfer->getIdStore(),
+                static::URL_PARAM_ID_STORE => $this->idStore,
             ]
         );
 

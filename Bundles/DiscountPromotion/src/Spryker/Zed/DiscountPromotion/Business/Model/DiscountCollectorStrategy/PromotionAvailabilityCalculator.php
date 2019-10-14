@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy;
 
-use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityInterface;
 
@@ -28,15 +27,16 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param string $sku
      * @param int $maxQuantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getMaximumQuantityBasedOnAvailability(int $idProductAbstract, int $maxQuantity, StoreTransfer $storeTransfer): int
+    public function getMaximumQuantityBasedOnAvailability(string $sku, int $maxQuantity, StoreTransfer $storeTransfer): int
     {
-        $productAbstractAvailabilityTransfer = $this->findProductAbstractAvailability($idProductAbstract, $storeTransfer);
+        $productAbstractAvailabilityTransfer = $this->availabilityFacade
+            ->findProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
 
         if ($productAbstractAvailabilityTransfer === null) {
             return 0;
@@ -55,20 +55,5 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
         }
 
         return $maxQuantity;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
-     */
-    protected function findProductAbstractAvailability(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
-    {
-        return $this->availabilityFacade
-            ->findProductAbstractAvailabilityForStore(
-                $idProductAbstract,
-                $storeTransfer
-            );
     }
 }

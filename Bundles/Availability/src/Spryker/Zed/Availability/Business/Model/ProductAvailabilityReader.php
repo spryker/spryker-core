@@ -16,6 +16,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -115,18 +116,15 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityForStore(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
+    public function findProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
     {
         $productAbstractAvailabilityTransfer = $this->availabilityRepository
-            ->findProductAbstractAvailabilityByIdProductAbstractAndStore(
-                $idProductAbstract,
-                $storeTransfer
-            );
+            ->findProductAbstractAvailabilityBySkuAndStore($sku, $storeTransfer);
 
         if ($productAbstractAvailabilityTransfer === null) {
             return null;
@@ -144,10 +142,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
-            ->findProductConcreteAvailabilityBySkuAndStore(
-                $sku,
-                $storeTransfer
-            );
+            ->findProductConcreteAvailabilityBySkuAndStore($sku, $storeTransfer);
 
         if ($productConcreteAvailabilityTransfer === null) {
             return null;
@@ -233,9 +228,9 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     {
         $availabilityData = $productAbstractEntity->toArray();
         $availabilityData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->getAbstractNeverOutOfStock($productAbstractEntity);
-        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity);
+        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY) ?? 0;
         $availabilityData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
-            $this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity)
+            $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY) ?? ''
         );
 
         return (new ProductAbstractAvailabilityTransfer())->fromArray($availabilityData, true);
@@ -248,7 +243,8 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      */
     protected function getAbstractNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        $neverOutOfStockSet = explode(',', $this->availabilityQueryContainer->getConcreteNeverOutOfStockSet($productAbstractEntity));
+        $neverOutOfStockSet = $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? '';
+        $neverOutOfStockSet = explode(',', $neverOutOfStockSet);
 
         foreach ($neverOutOfStockSet as $status) {
             if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {

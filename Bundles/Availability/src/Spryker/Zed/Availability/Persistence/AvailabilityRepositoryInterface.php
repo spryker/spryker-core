@@ -36,13 +36,13 @@ interface AvailabilityRepositoryInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
-     * @param int $idProductAbstract
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityByIdProductAbstractAndStore(
-        int $idProductAbstract,
+    public function findProductAbstractAvailabilityBySkuAndStore(
+        string $sku,
         StoreTransfer $storeTransfer
     ): ?ProductAbstractAvailabilityTransfer;
 }

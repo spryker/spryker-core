@@ -16,6 +16,11 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="ProductAbstractAvailability">
+        <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
     <transfer name="PersistentCartChange">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>

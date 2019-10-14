@@ -90,7 +90,7 @@ class AvailabilityHandlerTest extends Unit
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface|null $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface|null $touchFacade
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface|null $availabilityQueryContainer
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface|null $AvailabilityToProductFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface|null $availabilityToProductFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $availabilityToStoreFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface|null $availabilityToEventFacade
      *
@@ -101,7 +101,7 @@ class AvailabilityHandlerTest extends Unit
         ?AvailabilityToStockInterface $stockFacade = null,
         ?AvailabilityToTouchInterface $touchFacade = null,
         ?AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
-        ?AvailabilityToProductInterface $AvailabilityToProductFacade = null,
+        ?AvailabilityToProductInterface $availabilityToProductFacade = null,
         ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
     ) {
@@ -122,8 +122,8 @@ class AvailabilityHandlerTest extends Unit
             $availabilityQueryContainer = $this->createAvailabilityQueryContainerMock();
         }
 
-        if ($AvailabilityToProductFacade === null) {
-            $AvailabilityToProductFacade = $this->createAvailabilityToProductFacade();
+        if ($availabilityToProductFacade === null) {
+            $availabilityToProductFacade = $this->createAvailabilityToProductFacade();
         }
 
         if ($availabilityToStoreFacade === null) {
@@ -141,7 +141,7 @@ class AvailabilityHandlerTest extends Unit
             $stockFacade,
             $touchFacade,
             $availabilityQueryContainer,
-            $AvailabilityToProductFacade,
+            $availabilityToProductFacade,
             $availabilityToStoreFacade,
             $availabilityToEventFacade
         );

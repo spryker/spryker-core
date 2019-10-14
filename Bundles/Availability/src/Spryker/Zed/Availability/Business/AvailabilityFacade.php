@@ -132,7 +132,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use `findProductAbstractAvailabilityForStore()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -151,7 +151,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use `findProductAbstractAvailabilityForStore()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -171,7 +171,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use `findProductConcreteAvailabilityForStore()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -190,16 +190,16 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityForStore(int $idProductAbstract, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
+    public function findProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
     {
         return $this->getFactory()
             ->createProductAvailabilityReader()
-            ->findProductAbstractAvailabilityForStore($idProductAbstract, $storeTransfer);
+            ->findProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 
     /**

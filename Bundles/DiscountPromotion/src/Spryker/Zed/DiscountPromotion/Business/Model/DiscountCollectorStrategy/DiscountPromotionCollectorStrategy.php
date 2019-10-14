@@ -69,16 +69,8 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
             return [];
         }
 
-        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
-        if (!$idProductAbstract) {
-            return [];
-        }
-
-        $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
-        $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
-
         $promotionMaximumQuantity = $this->promotionAvailabilityCalculator->getMaximumQuantityBasedOnAvailability(
-            $idProductAbstract,
+            $discountPromotionEntity->getAbstractSku(),
             $discountPromotionEntity->getQuantity(),
             $quoteTransfer->getStore()
         );
@@ -86,6 +78,9 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
         if ($promotionMaximumQuantity === 0) {
             return [];
         }
+
+        $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
+        $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
         $promotionItemInQuote = $this->findPromotionItem($quoteTransfer, $discountPromotionEntity);
 

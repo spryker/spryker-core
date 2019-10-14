@@ -11,10 +11,6 @@
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
-        <foreign-key name="spy_availability_abstract-abstract_sku" foreignTable="spy_product_abstract" phpName="ProductAbstract" refPhpName="AvailabilityAbstract" skipSql="true">
-            <reference local="abstract_sku" foreign="sku"/>
-        </foreign-key>
-
         <unique name="spy_availability_abstract-sku">
             <unique-column name="abstract_sku"/>
             <unique-column name="fk_store"/>
