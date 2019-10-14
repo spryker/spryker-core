@@ -7,7 +7,7 @@
         <property name="voucherCode" type="string"/>
         <property name="storeCurrency" type="string"/>
         <property name="products" type="Item[]" singular="products"/>
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="items"/>
         <property name="isProductPosted" type="bool"/>
         <property name="isSubmitOrder" type="bool"/>
     </transfer>
