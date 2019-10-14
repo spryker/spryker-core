@@ -21,6 +21,7 @@
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Payment">
@@ -34,10 +35,13 @@
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="payment" type="Payment"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="originalQuote" type="Quote"/>
     </transfer>
 
     <transfer name="Item">
         <property name="giftCardMetadata" type="GiftCardMetadata"/>
+        <property name="abstractSku" type="string"/>
     </transfer>
 
     <transfer name="GiftCardAbstractProductConfiguration">
@@ -59,6 +63,7 @@
     <transfer name="ShipmentGroup">
         <property name="items" type="Item[]" singular="item"/>
         <property name="availableShipmentMethods" type="ShipmentMethods"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="ShipmentMethods">
@@ -67,6 +72,40 @@
 
     <transfer name="ShipmentMethod">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CollectedDiscount">
+        <property name="discountableItems" type="DiscountableItem[]"/>
+    </transfer>
+
+    <transfer name="DiscountableItem">
+        <property name="originalItem" type="Item"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+        <property name="shipmentSelection" type="string"/>
     </transfer>
 
 </transfers>

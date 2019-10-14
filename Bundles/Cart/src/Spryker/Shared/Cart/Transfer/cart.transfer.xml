@@ -8,6 +8,7 @@
         <property name="totals" type="Totals"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="isLocked" type="bool"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -42,6 +43,10 @@
         <property name="value" type="string"/>
         <property name="type" type="string"/>
         <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
 </transfers>

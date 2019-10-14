@@ -6,6 +6,7 @@
     <transfer name="Customer">
         <property name="isOnBehalf" type="bool"/>
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="idCustomer" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">

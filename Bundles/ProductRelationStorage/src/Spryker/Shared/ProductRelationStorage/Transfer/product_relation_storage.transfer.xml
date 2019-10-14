@@ -14,4 +14,13 @@
         <property name="productRelations" singular="productRelations" type="ProductRelationStorage[]"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="StorageProductAbstractRelation">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>
