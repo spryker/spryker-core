@@ -106,6 +106,7 @@
         <property name="idProduct" type="int"/>
         <property name="fkPriceType" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="skuProductAbstract" type="string"/>
     </transfer>
 
     <transfer name="PriceType">
@@ -134,6 +135,7 @@
     <transfer name="TabItem">
         <property name="name" type="string"/>
         <property name="title" type="string"/>
+        <property name="template" type="string"/>
     </transfer>
 
     <transfer name="TabsView">

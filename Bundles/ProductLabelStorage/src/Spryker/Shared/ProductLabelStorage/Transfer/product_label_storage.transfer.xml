@@ -27,6 +27,7 @@
         <property name="type" type="string"/>
         <property name="name" type="string"/>
         <property name="isMultiValued" type="bool"/>
+        <property name="valueTransformer" type="string"/>
     </transfer>
 
     <transfer name="SynchronizationData">

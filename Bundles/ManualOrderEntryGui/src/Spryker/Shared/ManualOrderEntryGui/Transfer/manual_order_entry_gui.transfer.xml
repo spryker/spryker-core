@@ -18,7 +18,7 @@
         <property name="customer" type="Customer"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="items" type="Item[]"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="payment" type="Payment"/>
@@ -34,9 +34,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="priceMode" type="string"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
         <property name="orderSource" type="OrderSource"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
     </transfer>
 
     <transfer name="Item">
@@ -53,6 +51,14 @@
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="originalQuote" type="Quote"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="payment" type="Payment"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -82,6 +88,13 @@
     <transfer name="Address">
         <property name="idCustomerAddress" type="int"/>
         <property name="fkCustomer" type="int"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
     </transfer>
 
     <transfer name="Currency">

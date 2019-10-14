@@ -96,7 +96,7 @@
         <property name="companyUserId" type="int"/>
         <property name="name" type="string"/>
         <property name="priceMode" type="string"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="customer" type="Customer"/>
         <property name="currency" type="Currency"/>
@@ -200,6 +200,7 @@
     <transfer name="PersistentCartChangeQuantity">
         <property name="idQuote" type="int"/>
         <property name="item" type="Item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
 </transfers>

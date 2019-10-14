@@ -16,6 +16,7 @@
         <property name="isActive" type="bool"/>
         <property name="idProductLabel" type="int"/>
         <property name="isExclusive" type="bool"/>
+        <property name="isPublished" type="bool"/>
     </transfer>
 
     <transfer name="Locale">

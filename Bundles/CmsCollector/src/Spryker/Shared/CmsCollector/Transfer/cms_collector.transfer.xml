@@ -26,6 +26,8 @@
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
         <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

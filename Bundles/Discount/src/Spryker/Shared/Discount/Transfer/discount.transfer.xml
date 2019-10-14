@@ -240,6 +240,7 @@
         <property name="name" type="string"/>
         <property name="hasError" type="bool"/>
         <property name="title" type="string"/>
+        <property name="template" type="string"/>
     </transfer>
 
 </transfers>

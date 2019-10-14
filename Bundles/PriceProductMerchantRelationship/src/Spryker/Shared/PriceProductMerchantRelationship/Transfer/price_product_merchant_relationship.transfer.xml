@@ -63,4 +63,8 @@
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
     </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
 </transfers>

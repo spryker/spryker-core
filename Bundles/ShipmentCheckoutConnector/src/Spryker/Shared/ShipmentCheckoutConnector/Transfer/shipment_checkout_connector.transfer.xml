@@ -26,6 +26,7 @@
     <transfer name="ShipmentMethod">
         <property name="name" type="string"/>
         <property name="carrierName" type="string"/>
+        <property name="idShipmentMethod" type="int"/>
     </transfer>
 
     <transfer name="Item">

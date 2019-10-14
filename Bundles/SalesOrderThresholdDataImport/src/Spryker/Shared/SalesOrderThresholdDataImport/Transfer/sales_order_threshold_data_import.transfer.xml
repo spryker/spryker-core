@@ -6,11 +6,14 @@
     <transfer name="SalesOrderThreshold">
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
+        <property name="salesOrderThresholdValue" type="SalesOrderThresholdValue"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdValue">
         <property name="threshold" type="int"/>
         <property name="fee" type="int"/>
+        <property name="messageGlossaryKey" type="string"/>
+        <property name="salesOrderThresholdType" type="SalesOrderThresholdType"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdType">

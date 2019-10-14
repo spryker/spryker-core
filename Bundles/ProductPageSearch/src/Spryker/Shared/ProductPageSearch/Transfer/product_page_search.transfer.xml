@@ -87,6 +87,8 @@
     <transfer name="RawProductAttributes">
         <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
         <property name="abstractLocalizedAttributes" type="array" singular="abstractLocalizedAttribute"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="concreteLocalizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
     </transfer>
 
     <transfer name="Locale">

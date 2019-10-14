@@ -7,7 +7,7 @@
         <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order"/>
         <property name="offerFee" type="int"/>
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="priceMode" type="string"/>
         <property name="checkoutConfirmed" type="bool"/>
         <property name="items" type="Item[]" singular="item"/>

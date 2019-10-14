@@ -26,5 +26,6 @@
     <transfer name="MoneyValue">
         <property name="priceData" type="string"/>
         <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
     </transfer>
 </transfers>

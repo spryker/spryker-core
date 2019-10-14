@@ -84,6 +84,7 @@
         <property name="offset" type="int"/>
         <property name="orderBy" type="string"/>
         <property name="limit" type="int"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

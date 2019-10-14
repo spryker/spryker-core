@@ -9,6 +9,7 @@
     <transfer name="Content">
         <property name="name" type="string"/>
         <property name="description" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ContentValidationResponse">
@@ -19,6 +20,10 @@
     <transfer name="ContentParameterMessage">
         <property name="messages" type="Message[]" singular="message"/>
         <property name="parameter" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

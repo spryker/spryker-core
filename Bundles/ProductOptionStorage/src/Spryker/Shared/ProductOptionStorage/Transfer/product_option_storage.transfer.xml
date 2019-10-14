@@ -55,6 +55,7 @@
 
     <transfer name="MoneyValue">
         <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="StorageProductOptionGroup">

@@ -10,7 +10,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
         <property name="voucherCode" type="string"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="items" type="Item[]"/>
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>

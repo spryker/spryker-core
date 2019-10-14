@@ -48,6 +48,7 @@
         <property name="dummyPayment" type="DummyPayment"/>
         <property name="paymentSelection" type="string"/>
         <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
     </transfer>
 
     <transfer name="Address">

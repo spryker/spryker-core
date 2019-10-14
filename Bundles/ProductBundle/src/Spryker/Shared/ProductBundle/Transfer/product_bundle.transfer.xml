@@ -150,6 +150,8 @@
         <property name="sku" type="string"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="priceMode" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="ProductImageSet">

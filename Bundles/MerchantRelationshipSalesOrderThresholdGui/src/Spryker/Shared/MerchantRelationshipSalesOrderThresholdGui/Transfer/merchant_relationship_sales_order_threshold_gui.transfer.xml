@@ -13,6 +13,8 @@
         <property name="idMerchantRelationshipSalesOrderThreshold" type="int"/>
         <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage"/>
         <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="merchantRelationship" type="MerchantRelationship"/>
     </transfer>
 
     <transfer name="Company">

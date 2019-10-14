@@ -8,6 +8,7 @@
         <property name="idSalesOrderThreshold" type="int"/>
         <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage"/>
         <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Currency">

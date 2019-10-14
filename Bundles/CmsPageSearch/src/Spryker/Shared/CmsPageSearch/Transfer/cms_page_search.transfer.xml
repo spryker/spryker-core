@@ -20,11 +20,15 @@
     <transfer name="PaginationSearchResult">
         <property name="numFound" type="int"/>
         <property name="currentPage" type="int"/>
+        <property name="maxPage" type="int"/>
+        <property name="currentItemsPerPage" type="int"/>
+        <property name="config" type="PaginationConfig"/>
     </transfer>
 
     <transfer name="SortSearchResult">
         <property name="sortParamNames" type="array"/>
         <property name="currentSortParam" type="string"/>
+        <property name="currentSortOrder" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -46,6 +50,8 @@
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
         <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

@@ -6,6 +6,7 @@
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
         <property name="locale" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
 </transfers>

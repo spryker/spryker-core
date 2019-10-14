@@ -27,6 +27,8 @@
     <transfer name="PriceProductCriteria">
         <property name="idCurrency" type="int"/>
         <property name="idStore" type="int"/>
+        <property name="priceType" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="PriceProductDimension">

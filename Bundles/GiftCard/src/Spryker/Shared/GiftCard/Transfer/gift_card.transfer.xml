@@ -34,6 +34,7 @@
         <property name="paymentProvider" type="string"/>
         <property name="idSalesPayment" type="int"/>
         <property name="paymentSelection" type="string"/>
+        <property name="paymentMethod" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">

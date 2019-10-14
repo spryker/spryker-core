@@ -97,6 +97,7 @@
     <transfer name="TabItem">
         <property name="name" type="string"/>
         <property name="title" type="string"/>
+        <property name="template" type="string"/>
     </transfer>
 
     <transfer name="TabsView">
@@ -112,5 +113,20 @@
         <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
         <property name="message" type="string"/>
         <property name="parameters" type="string[]"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImport">
+        <property name="metaData" type="PriceProductScheduleImportMetaData"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleImportMetaData">
+        <property name="identifier" type="string"/>
     </transfer>
 </transfers>
