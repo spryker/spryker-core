@@ -23,5 +23,5 @@ interface ConsolePostRunHookPluginInterface
      *
      * @return int
      */
-    public function postRun(InputInterface $input, OutputInterface $output);
+    public function postRun(InputInterface $input, OutputInterface $output): int;
 }
