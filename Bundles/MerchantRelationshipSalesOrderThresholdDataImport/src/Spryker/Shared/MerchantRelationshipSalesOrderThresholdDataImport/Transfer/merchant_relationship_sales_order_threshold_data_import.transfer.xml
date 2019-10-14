@@ -16,6 +16,7 @@
 
     <transfer name="MerchantRelationshipSalesOrderThreshold">
         <property name="merchantRelationship" type="MerchantRelationship"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="MerchantRelationship">

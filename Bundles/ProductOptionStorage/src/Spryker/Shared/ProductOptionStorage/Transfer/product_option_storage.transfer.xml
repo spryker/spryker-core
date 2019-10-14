@@ -37,6 +37,7 @@
 
     <transfer name="SynchronizationData">
         <property name="store" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -53,6 +54,10 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="StorageProductOptionGroup">
     </transfer>
 
 </transfers>

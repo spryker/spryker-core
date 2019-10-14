@@ -86,6 +86,7 @@
 
     <transfer name="RawProductAttributes">
         <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
+        <property name="abstractLocalizedAttributes" type="array" singular="abstractLocalizedAttribute"/>
     </transfer>
 
     <transfer name="Locale">
@@ -110,11 +111,18 @@
 
     <transfer name="PriceProductFilter">
         <property name="sku" type="string"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
         <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="fkStore" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
     </transfer>
 
 </transfers>

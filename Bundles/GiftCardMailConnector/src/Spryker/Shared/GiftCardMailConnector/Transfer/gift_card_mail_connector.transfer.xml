@@ -6,6 +6,7 @@
     <transfer name="Mail">
         <property name="customer" type="Customer"/>
         <property name="type" type="string"/>
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
     </transfer>
 
     <transfer name="Order">
@@ -17,11 +18,17 @@
 
     <transfer name="Customer">
         <property name="email" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+    </transfer>
+
+    <transfer name="GiftCard">
+        <property name="idGiftCard" type="int"/>
     </transfer>
 
 </transfers>

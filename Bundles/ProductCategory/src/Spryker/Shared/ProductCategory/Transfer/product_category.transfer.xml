@@ -35,4 +35,8 @@
         <property name="categories" type="Category[]" singular="category"/>
     </transfer>
 
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+    </transfer>
+
 </transfers>

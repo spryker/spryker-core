@@ -129,6 +129,8 @@
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="defaultShippingAddress" type="string"/>
         <property name="defaultBillingAddress" type="string"/>
+        <property name="isDirty" type="bool"/>
+        <property name="isGuest" type="bool"/>
     </transfer>
 
     <transfer name="CustomerResponse">
@@ -145,6 +147,10 @@
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
         <property name="surrogateIdentifier" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

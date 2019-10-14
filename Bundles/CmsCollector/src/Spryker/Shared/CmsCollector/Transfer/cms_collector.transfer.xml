@@ -25,6 +25,7 @@
         <property name="store" type="string"/>
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
+        <property name="locale" type="string"/>
     </transfer>
 
 </transfers>

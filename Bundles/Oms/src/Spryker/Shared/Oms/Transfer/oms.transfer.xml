@@ -110,5 +110,9 @@
         <property name="saveOrder" type="SaveOrder"/>
     </transfer>
 
+    <transfer name="SaveOrder">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
 </transfers>
 

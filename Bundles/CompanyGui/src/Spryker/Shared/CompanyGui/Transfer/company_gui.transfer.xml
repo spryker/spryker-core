@@ -9,6 +9,8 @@
 
     <transfer name="Company">
         <property name="idCompany" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="Button">

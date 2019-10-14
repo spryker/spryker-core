@@ -24,6 +24,7 @@
         <property name="useRealName" type="bool"/>
         <property name="fileName" type="string"/>
         <property name="idFile" type="int"/>
+        <property name="fkFileDirectory" type="int"/>
     </transfer>
 
     <transfer name="FileInfo">
@@ -53,6 +54,7 @@
 
     <transfer name="FileDirectoryLocalizedAttributes">
         <property name="locale" type="Locale"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="FileDirectory">
@@ -61,6 +63,7 @@
 
     <transfer name="FileLocalizedAttributes">
         <property name="locale" type="Locale"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="TabsView">
@@ -71,6 +74,7 @@
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
 </transfers>

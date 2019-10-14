@@ -9,6 +9,7 @@
         <property name="fkCustomer" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="customer" type="Customer"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -96,5 +97,6 @@
     </transfer>
 
     <transfer name="Company">
+        <property name="idCompany" type="int"/>
     </transfer>
 </transfers>

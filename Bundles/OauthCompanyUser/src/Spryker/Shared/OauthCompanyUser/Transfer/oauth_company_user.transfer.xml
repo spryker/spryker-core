@@ -41,6 +41,7 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="OauthScope">
@@ -49,6 +50,7 @@
 
     <transfer name="OauthAccessTokenValidationRequest">
         <property name="accessToken" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="OauthAccessTokenValidationResponse">
@@ -59,6 +61,7 @@
     <transfer name="CustomerResponse">
         <property name="isSuccess" type="bool"/>
         <property name="customerTransfer" type="Customer"/>
+        <property name="hasCustomer" type="bool"/>
     </transfer>
 
     <transfer name="OauthScopeRequest">
@@ -68,6 +71,7 @@
 
     <transfer name="OauthGrantTypeConfiguration">
         <property name="identifier" type="string"/>
+        <property name="fullyQualifiedClassName" type="string"/>
     </transfer>
 
 </transfers>

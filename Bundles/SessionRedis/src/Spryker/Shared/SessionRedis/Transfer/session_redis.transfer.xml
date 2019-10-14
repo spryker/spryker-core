@@ -5,10 +5,12 @@
 
     <transfer name="RedisConfiguration">
         <property name="dataSourceNames" type="array"/>
+        <property name="connectionCredentials" type="RedisCredentials"/>
     </transfer>
 
     <transfer name="RedisCredentials">
         <property name="protocol" type="string"/>
+        <property name="host" type="string"/>
     </transfer>
 
 </transfers>

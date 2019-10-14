@@ -177,4 +177,9 @@
         <property name="customerTransfer" type="Customer"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="groupKeyPrefix" type="string"/>
+    </transfer>
+
 </transfers>

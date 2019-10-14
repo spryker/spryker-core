@@ -6,6 +6,7 @@
     <transfer name="Mail">
         <property name="type" type="string"/>
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="resetPasswordLink" type="string"/>
     </transfer>
 
     <transfer name="MailRecipient">

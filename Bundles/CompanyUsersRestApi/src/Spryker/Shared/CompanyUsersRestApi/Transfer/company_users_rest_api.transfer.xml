@@ -13,6 +13,8 @@
         <property name="uuid" type="string"/>
         <property name="idCompanyUser" type="int"/>
         <property name="company" type="Company"/>
+        <property name="fkCompany" type="int"/>
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
     </transfer>
 
     <transfer name="OauthResponse">
@@ -72,6 +74,7 @@
 
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -79,6 +82,10 @@
     </transfer>
 
     <transfer name="CompanyRole">
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>

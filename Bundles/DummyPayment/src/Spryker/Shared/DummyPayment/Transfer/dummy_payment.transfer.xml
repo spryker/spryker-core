@@ -14,11 +14,44 @@
 
     <transfer name="CheckoutError">
         <property name="errorCode" type="int"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="DummyPayment">
+        <property name="dateOfBirth" type="string"/>
+        <property name="cardSecurityCode" type="int"/>
+        <property name="cardExpiresYear" type="int"/>
+        <property name="cardExpiresMonth" type="int"/>
+        <property name="nameOnCard" type="string"/>
+        <property name="cardNumber" type="int"/>
+        <property name="cardType" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="dummyPayment" type="DummyPayment"/>
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="dummyPaymentCreditCard" type="DummyPayment"/>
+        <property name="dummyPaymentInvoice" type="DummyPayment"/>
+        <property name="dummyPayment" type="DummyPayment"/>
+        <property name="paymentSelection" type="string"/>
+        <property name="paymentProvider" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="lastName" type="string"/>
     </transfer>
 
 </transfers>

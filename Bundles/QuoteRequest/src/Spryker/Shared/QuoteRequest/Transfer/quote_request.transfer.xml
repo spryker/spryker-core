@@ -25,6 +25,7 @@
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
         <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -86,6 +87,7 @@
         <property name="idCompanyUser" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="customer" type="Customer"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -122,6 +124,8 @@
     </transfer>
 
     <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Company">

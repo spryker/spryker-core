@@ -22,4 +22,9 @@
     <transfer name="PriceProductFilter">
         <property name="quantity" type="int"/>
     </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="priceData" type="string"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
 </transfers>

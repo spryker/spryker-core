@@ -183,6 +183,8 @@
 
     <transfer name="TaxSet">
         <property name="effectiveRate" type="float"/>
+        <property name="idTaxSet" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -193,6 +195,7 @@
 
     <transfer name="Currency">
         <property name="idCurrency" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="TaxSetCollection">

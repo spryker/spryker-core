@@ -126,6 +126,7 @@
     <transfer name="CheckoutResponse">
         <property name="saveOrder" type="SaveOrder"/>
         <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
     <transfer name="CheckoutError">

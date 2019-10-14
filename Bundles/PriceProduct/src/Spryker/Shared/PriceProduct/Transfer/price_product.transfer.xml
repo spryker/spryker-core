@@ -98,4 +98,17 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="QueryCriteria">
+        <property name="withColumns" type="array" singular="withColumn"/>
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="condition" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="joinType" type="string"/>
+        <property name="right" type="array"/>
+        <property name="left" type="array"/>
+    </transfer>
+
 </transfers>

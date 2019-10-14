@@ -18,6 +18,7 @@
 
     <transfer name="CompanyUnitAddressResponse">
         <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
 </transfers>

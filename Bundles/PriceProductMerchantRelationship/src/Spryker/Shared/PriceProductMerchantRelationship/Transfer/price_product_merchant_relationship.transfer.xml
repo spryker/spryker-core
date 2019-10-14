@@ -19,6 +19,7 @@
         <property name="right" type="array"/>
         <property name="joinType" type="string"/>
         <property name="relation" type="string"/>
+        <property name="condition" type="string"/>
     </transfer>
 
     <transfer name="Customer">
@@ -49,5 +50,17 @@
     <transfer name="PriceProductCriteria">
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="idEntity" type="int"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
     </transfer>
 </transfers>

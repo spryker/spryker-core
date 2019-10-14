@@ -5,6 +5,8 @@
 
     <transfer name="ProductConcrete">
         <property name="idProductConcrete" type="int"/>
+        <property name="validTo" type="string"/>
+        <property name="validFrom" type="string"/>
     </transfer>
 
 </transfers>

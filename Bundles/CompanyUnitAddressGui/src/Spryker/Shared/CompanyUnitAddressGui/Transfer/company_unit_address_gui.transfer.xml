@@ -15,6 +15,7 @@
 
     <transfer name="CompanyUnitAddress">
         <property name="idCompanyUnitAddress" type="int"/>
+        <property name="address1" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
@@ -38,6 +39,16 @@
 
     <transfer name="CountryCollection">
         <property name="countries" type="Country[]"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -18,6 +18,7 @@
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="TabsView">
@@ -26,6 +27,7 @@
 
     <transfer name="ProductAlternativeCreateRequest">
         <property name="idProduct" type="int"/>
+        <property name="alternativeSku" type="string"/>
     </transfer>
 
 </transfers>

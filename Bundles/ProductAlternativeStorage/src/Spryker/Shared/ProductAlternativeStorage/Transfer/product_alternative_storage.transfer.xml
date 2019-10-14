@@ -25,4 +25,8 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="AttributeMapStorage">
+        <property name="productConcreteIds" type="array"/>
+    </transfer>
+
 </transfers>

@@ -44,6 +44,7 @@
 
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
     </transfer>
 
 </transfers>

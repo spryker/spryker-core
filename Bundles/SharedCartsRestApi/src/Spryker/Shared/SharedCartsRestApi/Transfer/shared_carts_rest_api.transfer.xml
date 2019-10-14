@@ -93,4 +93,9 @@
         <property name="naturalIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
 </transfers>

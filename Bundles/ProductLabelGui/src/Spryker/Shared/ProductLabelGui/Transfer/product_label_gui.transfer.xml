@@ -9,6 +9,7 @@
         <property name="isActive" type="bool"/>
         <property name="localizedAttributesCollection" singular="localizedAttributes" type="ProductLabelLocalizedAttributes[]"/>
         <property name="name" type="string"/>
+        <property name="isDynamic" type="bool"/>
     </transfer>
 
     <transfer name="Locale">
@@ -17,6 +18,7 @@
 
     <transfer name="ProductLabelLocalizedAttributes">
         <property name="fkLocale" type="int"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="TabsView">
@@ -27,6 +29,18 @@
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabelAggregateForm">
+        <property name="productAbstractRelations" type="ProductLabelProductAbstractRelations"/>
+        <property name="productLabel" type="ProductLabel"/>
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstractRelations">
+        <property name="idsProductAbstractToDeAssign" type="array"/>
+        <property name="idsProductAbstractToAssign" type="array"/>
+        <property name="idProductLabel" type="int"/>
     </transfer>
 
 </transfers>

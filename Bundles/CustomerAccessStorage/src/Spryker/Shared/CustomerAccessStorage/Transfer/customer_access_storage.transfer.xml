@@ -19,6 +19,7 @@
     </transfer>
 
     <transfer name="ContentTypeAccess">
+        <property name="isRestricted" type="bool"/>
     </transfer>
 
 </transfers>

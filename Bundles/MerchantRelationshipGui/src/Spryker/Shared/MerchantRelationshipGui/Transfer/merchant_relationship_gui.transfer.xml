@@ -26,6 +26,18 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

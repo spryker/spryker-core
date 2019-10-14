@@ -57,6 +57,7 @@
 
     <transfer name="CartChange">
         <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="FlashMessages">
@@ -71,6 +72,7 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Customer">
@@ -79,6 +81,11 @@
         <property name="lastName" type="string"/>
         <property name="idCustomer" type="int"/>
         <property name="email" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -15,6 +15,7 @@
         <property name="frontEndReference" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="idProductLabel" type="int"/>
+        <property name="isExclusive" type="bool"/>
     </transfer>
 
     <transfer name="Locale">

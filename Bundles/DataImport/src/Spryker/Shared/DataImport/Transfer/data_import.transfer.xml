@@ -19,4 +19,56 @@
         <property name="body" type="string"/>
     </transfer>
 
+    <transfer name="DataImporterConfiguration">
+        <property name="throwException" type="bool"/>
+        <property name="readerConfiguration" type="DataImporterReaderConfiguration"/>
+        <property name="importGroup" type="string"/>
+        <property name="importType" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterReaderConfiguration">
+        <property name="csvHasHeader" type="bool"/>
+        <property name="csvFlags" type="int"/>
+        <property name="csvEscape" type="string"/>
+        <property name="csvEnclosure" type="string"/>
+        <property name="csvDelimiter" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="directories" type="array" singular="directory"/>
+        <property name="fileEncoding" type="string"/>
+        <property name="fileName" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterReport">
+        <property name="dataImporterReports" type="DataImporterReport[]" singular="dataImporterReport"/>
+        <property name="messages" type="DataImporterReportMessage[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="isReaderCountable" type="bool"/>
+        <property name="expectedImportableDataSetCount" type="int"/>
+        <property name="importedDataSetCount" type="int"/>
+        <property name="importTime" type="float"/>
+        <property name="importType" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterReportMessage">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="QueueDataImporterConfiguration">
+        <property name="throwException" type="bool"/>
+        <property name="readerConfiguration" type="DataImporterQueueReaderConfiguration"/>
+        <property name="importType" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterQueueReaderConfiguration">
+        <property name="queueConsumerOptions" type="array"/>
+        <property name="chunkSize" type="int"/>
+        <property name="queueName" type="string"/>
+    </transfer>
+
+    <transfer name="DataImporterQueueWriterConfiguration">
+        <property name="chunkSize" type="int"/>
+        <property name="queueName" type="string"/>
+    </transfer>
+
 </transfers>

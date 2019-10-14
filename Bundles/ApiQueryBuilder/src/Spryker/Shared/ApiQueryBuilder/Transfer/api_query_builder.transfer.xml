@@ -20,6 +20,8 @@
 
     <transfer name="ApiFilter">
         <property name="sort" type="array"/>
+        <property name="criteriaJson" type="string"/>
+        <property name="fields" type="array"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderPagination">
@@ -28,10 +30,16 @@
 
     <transfer name="PropelQueryBuilderSort">
         <property name="column" type="PropelQueryBuilderColumn"/>
+        <property name="sortDirection" type="string"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderColumn">
         <property name="alias" type="string"/>
+    </transfer>
+
+    <transfer name="ApiQueryBuilderQuery">
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+        <property name="apiRequest" type="ApiRequest"/>
     </transfer>
 
 </transfers>

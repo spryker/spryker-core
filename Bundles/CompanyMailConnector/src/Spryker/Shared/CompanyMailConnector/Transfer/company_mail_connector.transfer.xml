@@ -10,6 +10,7 @@
     <transfer name="Mail">
         <property name="customer" type="Customer"/>
         <property name="type" type="string"/>
+        <property name="company" type="Company" singular="company"/>
     </transfer>
 
     <transfer name="CompanyResponse">

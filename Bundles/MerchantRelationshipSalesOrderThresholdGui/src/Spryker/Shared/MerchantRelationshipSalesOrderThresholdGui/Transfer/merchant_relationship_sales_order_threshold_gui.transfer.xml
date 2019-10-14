@@ -12,6 +12,7 @@
         <property name="salesOrderThresholdValue" type="SalesOrderThresholdValue"/>
         <property name="idMerchantRelationshipSalesOrderThreshold" type="int"/>
         <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Company">
@@ -35,6 +36,7 @@
 
     <transfer name="SalesOrderThresholdLocalizedMessage">
         <property name="localeCode" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -44,10 +46,17 @@
     <transfer name="SalesOrderThresholdValue">
         <property name="salesOrderThresholdType" type="SalesOrderThresholdType"/>
         <property name="fee" type="int"/>
+        <property name="threshold" type="int"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdType">
         <property name="key" type="string"/>
+        <property name="thresholdGroup" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="company" type="Company"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
 </transfers>

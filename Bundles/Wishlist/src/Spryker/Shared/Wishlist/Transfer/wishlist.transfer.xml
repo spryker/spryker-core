@@ -118,6 +118,7 @@
 
     <transfer name="Item">
         <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">

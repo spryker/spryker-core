@@ -49,6 +49,7 @@
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="PersistentCartChange">

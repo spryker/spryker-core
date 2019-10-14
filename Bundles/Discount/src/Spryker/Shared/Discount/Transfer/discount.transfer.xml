@@ -195,6 +195,7 @@
 
     <transfer name="ProductOption">
         <property name="idSalesOrderItemOption" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="Totals">
@@ -214,6 +215,7 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -231,11 +233,13 @@
     <transfer name="TabsView">
         <property name="footerTemplate" type="string"/>
         <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
         <property name="hasError" type="bool"/>
+        <property name="title" type="string"/>
     </transfer>
 
 </transfers>

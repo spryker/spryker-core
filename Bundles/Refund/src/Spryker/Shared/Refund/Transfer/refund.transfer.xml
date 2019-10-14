@@ -39,4 +39,9 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
+    <transfer name="ProductOption">
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+    </transfer>
+
 </transfers>

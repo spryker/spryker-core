@@ -16,6 +16,7 @@
         <property name="email" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="idCustomer" type="int"/>
+        <property name="password" type="string"/>
     </transfer>
 
     <transfer name="OauthUser">

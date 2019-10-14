@@ -17,4 +17,9 @@
         <property name="successMessages" type="array" singular="successMessage"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="parameters" type="array"/>
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>

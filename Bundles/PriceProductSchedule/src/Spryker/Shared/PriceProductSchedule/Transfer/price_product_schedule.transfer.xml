@@ -130,6 +130,7 @@
 
     <transfer name="PriceProductFilter">
         <property name="priceTypeName" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="PriceType">

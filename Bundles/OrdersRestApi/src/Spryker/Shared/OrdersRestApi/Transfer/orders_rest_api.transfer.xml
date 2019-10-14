@@ -176,10 +176,12 @@
         <property name="idCustomer" type="int"/>
         <property name="pagination" type="Pagination"/>
         <property name="orders" type="Order[]" singular="order"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
         <property name="code" type="string"/>
+        <property name="status" type="int"/>
     </transfer>
 
 </transfers>

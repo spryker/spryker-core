@@ -97,10 +97,12 @@
 
     <transfer name="Money">
         <property name="amount" type="string"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="Translation">
@@ -125,5 +127,6 @@
 
     <transfer name="KeyTranslation">
         <property _="" name="glossaryKey" type="int"/>
+        <property _="" name="locales" type="array"/>
     </transfer>
 </transfers>

@@ -58,6 +58,15 @@
 
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementBaseUnit">
+        <property name="fkProductMeasurementUnit" type="int"/>
     </transfer>
 
 </transfers>

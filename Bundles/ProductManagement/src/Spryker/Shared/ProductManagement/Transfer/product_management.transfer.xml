@@ -23,6 +23,8 @@
         <property name="currency" type="Currency"/>
         <property name="fkCurrency" type="int"/>
         <property name="fkStore" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
@@ -103,6 +105,7 @@
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="idProduct" type="int"/>
         <property name="fkPriceType" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="PriceType">
@@ -118,6 +121,10 @@
     <transfer name="StockProduct">
         <property name="stockType" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="fkStock" type="int"/>
+        <property name="idStockProduct" type="int"/>
+        <property name="isNeverOutOfStock" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="TaxSetCollection">
@@ -126,21 +133,32 @@
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
     <transfer name="ProductImage">
     </transfer>
 
     <transfer name="ProductForBundle">
+        <property name="quantity" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductBundle">
         <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
+        <property name="bundlesToRemove" type="array" singular="bundleToRemove"/>
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="idTaxSet" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

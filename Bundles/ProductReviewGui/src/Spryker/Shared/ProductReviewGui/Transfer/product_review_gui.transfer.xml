@@ -5,6 +5,7 @@
 
     <transfer name="ProductReview">
         <property name="idProductReview" type="int"/>
+        <property name="status" type="int"/>
     </transfer>
 
     <transfer name="Locale">

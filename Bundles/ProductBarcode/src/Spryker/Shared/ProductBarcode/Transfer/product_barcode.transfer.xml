@@ -8,4 +8,9 @@
         <property name="idProductConcrete" type="int"/>
     </transfer>
 
+    <transfer name="BarcodeResponse">
+        <property name="code" type="string"/>
+        <property name="encoding" type="string"/>
+    </transfer>
+
 </transfers>

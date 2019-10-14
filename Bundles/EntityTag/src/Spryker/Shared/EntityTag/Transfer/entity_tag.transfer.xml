@@ -5,6 +5,7 @@
 
     <transfer name="SynchronizationData">
         <property name="key" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>

@@ -17,4 +17,8 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

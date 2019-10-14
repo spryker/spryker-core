@@ -17,6 +17,12 @@
 
     <transfer name="StorageProductLabel">
         <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabelLocalizedAttributes">
+        <property name="fkLocale" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

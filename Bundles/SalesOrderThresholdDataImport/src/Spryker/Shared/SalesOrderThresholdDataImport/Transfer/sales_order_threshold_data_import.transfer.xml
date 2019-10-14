@@ -5,10 +5,12 @@
 
     <transfer name="SalesOrderThreshold">
         <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdValue">
         <property name="threshold" type="int"/>
+        <property name="fee" type="int"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdType">

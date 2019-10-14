@@ -13,6 +13,8 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="company" type="Company"/>
+        <property name="fkCustomer" type="int"/>
     </transfer>
 
     <transfer name="CompanyUserResponse">
@@ -30,6 +32,11 @@
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

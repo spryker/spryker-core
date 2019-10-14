@@ -7,6 +7,7 @@
         <property name="idProductManagementAttribute" type="int"/>
         <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
         <property name="localizedKeys" type="LocalizedProductManagementAttributeKey[]" singular="localizedKey"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="Locale">

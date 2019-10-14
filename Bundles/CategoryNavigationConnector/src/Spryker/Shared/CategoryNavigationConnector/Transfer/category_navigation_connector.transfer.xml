@@ -12,4 +12,8 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+    </transfer>
+
 </transfers>

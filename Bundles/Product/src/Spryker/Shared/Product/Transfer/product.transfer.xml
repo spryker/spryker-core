@@ -103,6 +103,8 @@
     <transfer name="Url">
         <property name="url" type="string"/>
         <property name="idUrl" type="int"/>
+        <property name="fkResourceProductAbstract" type="int"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
 </transfers>

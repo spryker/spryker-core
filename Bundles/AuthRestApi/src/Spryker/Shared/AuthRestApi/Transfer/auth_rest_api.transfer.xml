@@ -45,6 +45,7 @@
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
         <property name="surrogateIdentifier" type="int"/>
+        <property name="scopes" type="string[]" singular="scope"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

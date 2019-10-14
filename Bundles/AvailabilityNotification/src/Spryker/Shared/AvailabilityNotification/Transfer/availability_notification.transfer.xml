@@ -11,10 +11,13 @@
 
     <transfer name="Customer">
         <property name="customerReference" type="string"/>
+        <property name="availabilityNotificationSubscriptionSkus" type="string[]" singular="availabilityNotificationSubscriptionSku"/>
     </transfer>
 
     <transfer name="Mail">
         <property name="type" type="string"/>
+        <property name="availabilityNotificationSubscriptionMailData" type="AvailabilityNotificationSubscriptionMailData"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="Store">
@@ -32,6 +35,49 @@
 
     <transfer name="LocalizedUrl">
         <property name="url" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscription">
+        <property name="store" type="Store"/>
+        <property name="locale" type="Locale"/>
+        <property name="subscriptionKey" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="email" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idAvailabilityNotificationSubscription" type="int"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionResponse">
+        <property name="errorMessage" type="string"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="product" type="ProductConcrete"/>
+        <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionRequest">
+        <property name="customerReference" type="string"/>
+        <property name="email" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="subscriptionKey" type="string"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationSubscriptionMailData">
+        <property name="productImageUrl" type="string"/>
+        <property name="productUrl" type="string"/>
+        <property name="productName" type="string"/>
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="availabilityUnsubscriptionLink" type="string"/>
+        <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription"/>
+    </transfer>
+
+    <transfer name="AvailabilityNotificationData">
+        <property name="store" type="Store"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="locale" type="Locale"/>
     </transfer>
 
 </transfers>

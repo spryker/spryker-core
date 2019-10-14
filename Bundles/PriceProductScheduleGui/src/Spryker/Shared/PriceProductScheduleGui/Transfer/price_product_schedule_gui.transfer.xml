@@ -28,6 +28,8 @@
         <property name="idProduct" type="int"/>
         <property name="skuProduct" type="string"/>
         <property name="skuProductAbstract" type="string"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="PriceProductScheduleListResponse">
@@ -40,6 +42,7 @@
         <property name="idPriceProductScheduleList" type="int"/>
         <property name="name" type="string"/>
         <property name="createdAt" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="PriceProductScheduleCsvValidationResult">
@@ -87,14 +90,27 @@
     </transfer>
 
     <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="idCurrency" type="int"/>
     </transfer>
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="activeTabName" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleListImportError">
+        <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="string[]"/>
     </transfer>
 </transfers>

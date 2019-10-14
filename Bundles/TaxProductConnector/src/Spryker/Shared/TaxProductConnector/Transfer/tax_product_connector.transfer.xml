@@ -22,6 +22,7 @@
         <property name="shipment" type="Shipment"/>
         <property name="sku" type="string"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="taxRate" type="float"/>
     </transfer>
 
     <transfer name="Address">
@@ -37,6 +38,7 @@
     </transfer>
 
     <transfer name="TaxRate">
+        <property name="country" type="Country"/>
     </transfer>
 
     <transfer name="Country">

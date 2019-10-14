@@ -40,6 +40,7 @@
         <property name="unitNetPrice" type="int"/>
         <property name="shipment" type="Shipment"/>
         <property name="unitGrossPrice" type="int"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="ShipmentGroup">

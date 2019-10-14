@@ -5,6 +5,7 @@
 
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method"/>
+        <property name="shipmentHash" type="string"/>
     </transfer>
 
     <transfer name="ShipmentMethod">

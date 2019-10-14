@@ -274,9 +274,12 @@
     <transfer name="ProductOption">
         <property name="idProductOptionValue" type="int"/>
         <property name="quantity" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="Country">
+        <property name="idCountry" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ItemState">

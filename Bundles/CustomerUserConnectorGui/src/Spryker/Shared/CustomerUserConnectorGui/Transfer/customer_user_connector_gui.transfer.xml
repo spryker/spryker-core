@@ -13,6 +13,7 @@
 
     <transfer name="Button">
         <property name="url" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
 </transfers>

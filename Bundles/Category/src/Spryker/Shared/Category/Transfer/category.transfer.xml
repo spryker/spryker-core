@@ -76,6 +76,7 @@
         <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
         <property name="fkLocale" type="int"/>
         <property name="idUrl" type="int"/>
+        <property name="fkResourceCategorynode" type="int"/>
     </transfer>
 
     <transfer name="Locale">
@@ -89,11 +90,13 @@
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
 </transfers>

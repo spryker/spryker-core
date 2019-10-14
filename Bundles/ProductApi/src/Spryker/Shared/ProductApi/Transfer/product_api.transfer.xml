@@ -61,4 +61,9 @@
         <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
     </transfer>
 
+    <transfer name="ApiFilter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
 </transfers>

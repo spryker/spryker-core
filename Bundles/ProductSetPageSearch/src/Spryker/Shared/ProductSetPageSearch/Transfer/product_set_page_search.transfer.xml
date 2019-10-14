@@ -36,6 +36,10 @@
 
     <transfer name="PageMap">
         <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImage">
     </transfer>
 
 </transfers>

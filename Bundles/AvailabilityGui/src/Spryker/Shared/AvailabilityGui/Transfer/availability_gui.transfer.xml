@@ -22,6 +22,7 @@
         <property name="isNeverOutOfStock" type="string"/>
         <property name="quantity" type="int"/>
         <property name="stockType" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

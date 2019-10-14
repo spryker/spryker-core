@@ -7,4 +7,8 @@
         <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
     </transfer>
 
+    <transfer name="ProductCategoryStorage">
+        <property name="categoryNodeId" type="int"/>
+    </transfer>
+
 </transfers>

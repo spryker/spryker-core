@@ -26,4 +26,9 @@
         <property name="companies" type="Company[]" singular="company"/>
     </transfer>
 
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

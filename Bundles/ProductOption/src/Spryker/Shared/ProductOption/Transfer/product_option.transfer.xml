@@ -208,6 +208,12 @@
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="idTaxSet" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

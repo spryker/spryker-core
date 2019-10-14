@@ -30,9 +30,43 @@
 
     <transfer name="Navigation">
         <property name="idNavigation" type="int"/>
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="NavigationStorage">
+        <property name="nodes" type="NavigationNodeStorage[]"/>
+        <property name="locale" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="NavigationNodeStorage">
+        <property name="children" type="NavigationNodeStorage[]"/>
+        <property name="validTo" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="cssClass" type="string"/>
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="nodeType" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="NavigationNode">
+        <property name="navigationNodeLocalizedAttributes" type="NavigationNodeLocalizedAttributes[]" singular="navigationNodeLocalizedAttribute"/>
+        <property name="idNavigationNode" type="int"/>
+        <property name="nodeType" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
 </transfers>

@@ -8,4 +8,9 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="User">
+        <property name="localeName" type="string"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
 </transfers>

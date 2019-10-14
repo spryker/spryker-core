@@ -90,6 +90,7 @@
 
     <transfer name="Button">
         <property name="url" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -106,6 +107,7 @@
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
 </transfers>

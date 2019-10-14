@@ -71,4 +71,13 @@
         <property name="errors" type="CustomerError[]" singular="error"/>
     </transfer>
 
+    <transfer name="ApiFilter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
+    </transfer>
+
 </transfers>

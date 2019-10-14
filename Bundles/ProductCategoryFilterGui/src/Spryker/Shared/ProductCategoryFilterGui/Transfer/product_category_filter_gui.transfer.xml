@@ -22,6 +22,8 @@
 
     <transfer name="ProductCategoryFilterItem">
         <property name="key" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="label" type="string"/>
     </transfer>
 
 </transfers>

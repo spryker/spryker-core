@@ -162,13 +162,20 @@
         <property name="fkRedirect" type="int" deprecated="Use fkResourceRedirect instead."/>
         <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
         <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="url" type="string"/>
+        <property name="fkResourcePage" type="int"/>
     </transfer>
 
     <transfer name="Redirect">
+        <property name="toUrl" type="string"/>
+        <property name="status" type="int"/>
     </transfer>
 
     <transfer name="UrlRedirect">
         <property name="idUrlRedirect" type="int"/>
+        <property name="status" type="int"/>
+        <property name="toUrl" type="string"/>
+        <property name="source" type="Url"/>
     </transfer>
 
     <transfer name="UrlRedirectValidationResponse">

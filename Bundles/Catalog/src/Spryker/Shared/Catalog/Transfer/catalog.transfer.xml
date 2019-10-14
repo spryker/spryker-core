@@ -38,14 +38,17 @@
 
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
     </transfer>
 
     <transfer name="SortConfig">
         <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
     </transfer>
 
     <transfer name="FacetConfig">
         <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
     </transfer>
 
 </transfers>

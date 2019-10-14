@@ -5,10 +5,12 @@
 
     <transfer name="ProductAbstractGroups">
         <property name="idProductAbstract" type="int"/>
+        <property name="idProductGroups" type="array" singular="idProductGroup"/>
     </transfer>
 
     <transfer name="ProductGroup">
         <property name="idProductGroup" type="int"/>
+        <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
     </transfer>
 
 </transfers>

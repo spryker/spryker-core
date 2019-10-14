@@ -61,6 +61,7 @@
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
         <property name="name" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -136,6 +137,8 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="errorType" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="Locale">
@@ -145,6 +148,8 @@
 
     <transfer name="PriceProductFilter">
         <property name="sku" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="ProductImageSet">
@@ -159,6 +164,10 @@
     <transfer name="StockProduct">
         <property name="sku" type="string"/>
         <property name="stockType" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

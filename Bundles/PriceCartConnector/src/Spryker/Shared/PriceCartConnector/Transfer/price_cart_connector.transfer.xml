@@ -67,4 +67,9 @@
         <property name="code" type="string"/>
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
 </transfers>

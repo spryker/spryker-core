@@ -47,6 +47,7 @@
         <property name="quantity" type="int"/>
         <property name="groupKey" type="string"/>
         <property name="unitGrossPrice" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="OmsStateCollection">
@@ -95,6 +96,7 @@
         <property name="precision" type="int"/>
         <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
         <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="value" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -104,6 +106,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="CheckoutResponse">

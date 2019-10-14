@@ -12,6 +12,8 @@
 
     <transfer name="Item">
         <property name="cartNote" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="Order">

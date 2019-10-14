@@ -47,6 +47,7 @@
 
     <transfer name="DiscountCalculator">
         <property name="discountPromotion" type="DiscountPromotion"/>
+        <property name="collectorStrategyType" type="string"/>
     </transfer>
 
     <transfer name="DiscountPromotion">
@@ -90,6 +91,10 @@
     <transfer name="CollectedDiscount">
         <property name="discount" type="Discount"/>
         <property name="discountableItems" type="DiscountableItem[]"/>
+    </transfer>
+
+    <transfer name="DiscountGeneral">
+        <property name="idDiscount" type="int"/>
     </transfer>
 
 </transfers>

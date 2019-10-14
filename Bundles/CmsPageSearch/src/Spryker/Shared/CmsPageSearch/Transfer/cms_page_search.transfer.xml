@@ -19,10 +19,12 @@
 
     <transfer name="PaginationSearchResult">
         <property name="numFound" type="int"/>
+        <property name="currentPage" type="int"/>
     </transfer>
 
     <transfer name="SortSearchResult">
         <property name="sortParamNames" type="array"/>
+        <property name="currentSortParam" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -36,12 +38,14 @@
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="url" type="string"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="PageMap">
         <property name="store" type="string"/>
         <property name="activeFrom" type="string"/>
         <property name="activeTo" type="string"/>
+        <property name="locale" type="string"/>
     </transfer>
 
 </transfers>

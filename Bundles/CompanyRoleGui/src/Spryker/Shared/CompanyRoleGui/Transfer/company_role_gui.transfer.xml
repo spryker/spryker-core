@@ -17,6 +17,7 @@
         <property name="isDefault" type="bool"/>
         <property name="name" type="string"/>
         <property name="companyUserCollection" type="CompanyUserCollection"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="Permission">
@@ -34,6 +35,7 @@
 
     <transfer name="Company">
         <property name="idCompany" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CompanyRoleCriteriaFilter">

@@ -43,6 +43,7 @@
         <property name="locale" type="string"/>
         <property name="data" type="string"/>
         <property name="key" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="ProductDiscontinuedCollection">
@@ -66,5 +67,11 @@
 
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNote">
+        <property name="fkLocale" type="int"/>
+        <property name="note" type="string"/>
     </transfer>
 </transfers>

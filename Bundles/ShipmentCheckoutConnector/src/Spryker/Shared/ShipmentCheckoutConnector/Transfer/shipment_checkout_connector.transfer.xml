@@ -16,6 +16,7 @@
 
     <transfer name="CheckoutResponse">
         <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
@@ -29,6 +30,10 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
     </transfer>
 
 </transfers>

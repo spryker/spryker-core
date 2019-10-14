@@ -8,4 +8,9 @@
         <property name="adapterConfig" type="array"/>
     </transfer>
 
+    <transfer name="FlysystemConfigLocal">
+        <property name="path" type="string"/>
+        <property name="root" type="string"/>
+    </transfer>
+
 </transfers>

@@ -13,4 +13,9 @@
         <property name="idsProductAbstractToDeAssign" type="array"/>
     </transfer>
 
+    <transfer name="ProductAbstract">
+        <property name="newTo" type="string"/>
+        <property name="newFrom" type="string"/>
+    </transfer>
+
 </transfers>

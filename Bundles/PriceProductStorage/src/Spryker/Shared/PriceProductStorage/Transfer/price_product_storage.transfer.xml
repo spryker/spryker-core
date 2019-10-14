@@ -9,6 +9,7 @@
         <property name="isMergeable" type="bool"/>
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="PriceProductStorage">
@@ -70,6 +71,7 @@
 
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="Store">

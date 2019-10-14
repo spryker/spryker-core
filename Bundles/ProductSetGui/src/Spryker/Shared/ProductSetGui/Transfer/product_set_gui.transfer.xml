@@ -37,6 +37,11 @@
     </transfer>
 
     <transfer name="ProductSetData">
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
     </transfer>
 
     <transfer name="Url">
@@ -45,11 +50,13 @@
 
     <transfer name="TabItem">
         <property name="name" type="string"/>
+        <property name="title" type="string"/>
     </transfer>
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
 </transfers>

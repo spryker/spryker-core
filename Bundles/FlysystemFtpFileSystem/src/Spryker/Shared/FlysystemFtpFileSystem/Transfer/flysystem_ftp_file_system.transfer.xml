@@ -8,4 +8,15 @@
         <property name="adapterConfig" type="array"/>
     </transfer>
 
+    <transfer name="FlysystemConfigFtp">
+        <property name="timeout" type="int"/>
+        <property name="ssl" type="bool"/>
+        <property name="passive" type="bool"/>
+        <property name="root" type="string"/>
+        <property name="port" type="int"/>
+        <property name="password" type="string"/>
+        <property name="username" type="string"/>
+        <property name="host" type="string"/>
+    </transfer>
+
 </transfers>

@@ -82,9 +82,13 @@
 
     <transfer name="KeyTranslation">
         <property _="" name="glossaryKey" type="int"/>
+        <property _="" name="locales" type="array"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdType">
+        <property name="thresholdGroup" type="string"/>
+        <property name="idSalesOrderThresholdType" type="int"/>
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>

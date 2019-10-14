@@ -119,6 +119,7 @@
 
     <transfer name="RestErrorMessage">
         <property name="code" type="string"/>
+        <property name="status" type="int"/>
     </transfer>
 
     <transfer name="Currency">

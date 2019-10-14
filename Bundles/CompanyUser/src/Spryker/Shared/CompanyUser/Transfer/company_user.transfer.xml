@@ -5,6 +5,7 @@
 
     <transfer name="Company">
         <property name="initialUserTransfer" type="CompanyUser"/>
+        <property name="idCompany" type="int"/>
     </transfer>
 
     <transfer name="Customer">

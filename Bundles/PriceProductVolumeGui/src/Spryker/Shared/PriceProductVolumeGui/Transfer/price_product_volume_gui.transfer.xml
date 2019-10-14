@@ -11,6 +11,11 @@
 
     <transfer name="MoneyValue">
         <property name="priceDataChecksum" type="string"/>
+        <property name="priceData" type="string"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="PriceProduct">
@@ -21,9 +26,11 @@
 
     <transfer name="PriceProductCriteria">
         <property name="idCurrency" type="int"/>
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="Store">

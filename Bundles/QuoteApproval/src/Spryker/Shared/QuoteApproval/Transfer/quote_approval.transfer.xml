@@ -55,12 +55,15 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
         <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -108,10 +111,12 @@
 
     <transfer name="ShareCartRequest">
         <property name="idQuote" type="int"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
 
     <transfer name="ShareDetail">
         <property name="idCompanyUser" type="int"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
     <transfer name="QuotePermissionGroupCriteriaFilter">

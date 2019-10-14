@@ -7,4 +7,40 @@
         <property name="file" type="File"/>
     </transfer>
 
+    <transfer name="ContentFileListTerm">
+        <property name="fileIds" type="int[]"/>
+    </transfer>
+
+    <transfer name="LocalizedContent">
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ContentValidationResponse">
+        <property name="parameterMessages" type="ContentParameterMessage[]"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ContentParameterMessage">
+        <property name="messages" type="Message[]"/>
+        <property name="parameter" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="parameters" type="array"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ContentWidgetTemplate">
+        <property name="name" type="string"/>
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="File">
+        <property name="idFile" type="int"/>
+    </transfer>
+
 </transfers>

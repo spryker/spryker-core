@@ -35,6 +35,8 @@
         <property name="priceMode" type="string"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="orderSource" type="OrderSource"/>
+        <property name="voucherDiscounts" type="Discount[]"/>
     </transfer>
 
     <transfer name="Item">
@@ -50,6 +52,7 @@
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -83,6 +86,7 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -109,6 +113,7 @@
     <transfer name="Payment">
         <property name="paymentSelection" type="string"/>
         <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -125,6 +130,10 @@
 
     <transfer name="ShipmentMethod">
         <property name="storeCurrencyPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="idShipmentMethod" type="int"/>
     </transfer>
 
     <transfer name="Discount">
@@ -140,6 +149,19 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="OrderSource">
+        <property name="name" type="string"/>
+        <property name="idOrderSource" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
 </transfers>

@@ -188,11 +188,13 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="Permission">
         <property name="key" type="string"/>
         <property name="idPermission" type="int"/>
+        <property name="configuration" type="array"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -221,6 +223,7 @@
 
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

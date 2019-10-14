@@ -73,6 +73,8 @@
         <property name="idWishlistItem" type="int"/>
         <property name="fkWishlist" type="int"/>
         <property name="sku" type="string"/>
+        <property name="wishlistName" type="string"/>
+        <property name="fkCustomer" type="int"/>
     </transfer>
 
     <transfer name="RestUser">

@@ -24,13 +24,17 @@
     </transfer>
 
     <transfer name="ProductAbstractStorage">
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
         <property name="code" type="string"/>
+        <property name="status" type="int"/>
     </transfer>
 
     <transfer name="ProductConcreteStorage">
+        <property name="idProductConcrete" type="int"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
 </transfers>
