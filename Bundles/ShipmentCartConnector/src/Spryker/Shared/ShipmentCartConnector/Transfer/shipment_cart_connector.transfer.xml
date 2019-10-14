@@ -25,6 +25,7 @@
     <transfer name="Quote">
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Item">
@@ -55,6 +56,14 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

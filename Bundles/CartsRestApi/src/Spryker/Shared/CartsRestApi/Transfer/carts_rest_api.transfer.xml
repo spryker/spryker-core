@@ -39,6 +39,7 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
     </transfer>
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
@@ -94,6 +95,9 @@
         <property name="customerReference" type="string"/>
         <property name="companyUserId" type="int"/>
         <property name="name" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -136,6 +140,21 @@
     <transfer name="OauthResponse">
         <property name="anonymousCustomerReference" type="string"/>
         <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="taxTotal" type="TaxTotal"/>
+    </transfer>
+
+    <transfer name="Discount">
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
     </transfer>
 
 </transfers>

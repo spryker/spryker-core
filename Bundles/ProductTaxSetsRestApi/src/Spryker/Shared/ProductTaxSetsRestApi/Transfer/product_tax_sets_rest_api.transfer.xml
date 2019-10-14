@@ -5,7 +5,7 @@
 
     <transfer name="RestProductTaxSetsAttributes">
         <property name="name" type="string"/>
-        <property name="RestTaxRates" type="RestProductTaxRate[]" singular="RestProductTaxRate"/>
+        <property name="restTaxRates" type="RestProductTaxRate[]" singular="restProductTaxRate"/>
     </transfer>
 
     <transfer name="RestProductTaxRate">

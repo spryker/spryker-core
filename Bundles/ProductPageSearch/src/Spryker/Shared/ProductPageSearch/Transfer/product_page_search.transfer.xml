@@ -74,4 +74,10 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
 </transfers>
