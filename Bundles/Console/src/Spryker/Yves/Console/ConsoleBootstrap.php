@@ -44,7 +44,9 @@ class ConsoleBootstrap extends Application
 
         parent::__construct($name, $version);
 
-        $this->setCatchExceptions($this->getConfig()->shouldCatchExceptions());
+        /** @var \Spryker\Yves\Console\ConsoleConfig $config */
+        $config = $this->getConfig();
+        $this->setCatchExceptions($config->shouldCatchExceptions());
         $this->addEventDispatcher();
 
         $this->application = new SprykerApplication();
