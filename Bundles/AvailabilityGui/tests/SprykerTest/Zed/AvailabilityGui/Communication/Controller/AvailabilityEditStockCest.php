@@ -34,7 +34,8 @@ class AvailabilityEditStockCest
      */
     public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, Example $example)
     {
-        $productConcreteTransfer = $i->haveProduct();
+        $productConcreteTransfer = $i->haveFullProduct();
+        $i->haveAvailabilityAbstract($productConcreteTransfer);
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
 
@@ -70,8 +71,8 @@ class AvailabilityEditStockCest
     protected function stockProvider(): array
     {
         return [
-            'int stock' => ['quantity' => 50, 'expectedResponseCode' => 200],
-            'float stock' => ['quantity' => 50.88, 'expectedResponseCode' => 200],
+            'int stock' => ['quantity' => '50', 'expectedResponseCode' => 200],
+            'float stock' => ['quantity' => '50.88', 'expectedResponseCode' => 200],
         ];
     }
 }
