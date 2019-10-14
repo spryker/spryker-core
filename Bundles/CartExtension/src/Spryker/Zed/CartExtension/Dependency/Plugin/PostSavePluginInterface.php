@@ -13,7 +13,8 @@ interface PostSavePluginInterface
 {
     /**
      * Specification:
-     *  - This plugin executed after add and remove operations, you will receive modified quote which is ready to store in client side.
+     *  - This plugin stack is executed after add and remove operations.
+     *  - Returned modified quote is ready to be stored on Client side.
      *
      * @api
      *
