@@ -94,7 +94,7 @@
     </transfer>
 
     <transfer name="CollectedDiscount">
-        <property name="discountableItems" type="DiscountableItem[]"/>
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
     </transfer>
 
     <transfer name="DiscountableItem">

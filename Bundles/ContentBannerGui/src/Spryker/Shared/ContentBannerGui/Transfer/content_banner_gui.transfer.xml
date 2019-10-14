@@ -23,7 +23,7 @@
 
     <transfer name="ContentValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="parameterMessages" type="ContentParameterMessage[]"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]" singular="parameterMessages"/>
     </transfer>
 
     <transfer name="ContentParameterMessage">

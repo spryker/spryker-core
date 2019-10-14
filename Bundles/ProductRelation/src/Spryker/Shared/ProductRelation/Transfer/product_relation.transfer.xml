@@ -37,7 +37,7 @@
 
     <transfer name="PropelQueryBuilderRuleSet">
         <property name="condition" type="string"/>
-        <property name="rules" type="PropelQueryBuilderRuleSet[]"/>
+        <property name="rules" type="PropelQueryBuilderRuleSet[]" singular="rules"/>
         <property name="id" type="string"/>
         <property name="field" type="string"/>
         <property name="type" type="string"/>

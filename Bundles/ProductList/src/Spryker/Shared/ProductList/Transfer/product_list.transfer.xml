@@ -25,12 +25,12 @@
 
     <transfer name="ProductListCategoryRelation">
         <property name="idProductList" type="int"/>
-        <property name="categoryIds" type="int[]"/>
+        <property name="categoryIds" type="int[]" singular="categoryIds"/>
     </transfer>
 
     <transfer name="ProductListProductConcreteRelation">
         <property name="idProductList" type="int"/>
-        <property name="productIds" type="int[]"/>
+        <property name="productIds" type="int[]" singular="productIds"/>
     </transfer>
 
     <transfer name="CartChange">

@@ -44,8 +44,8 @@
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="companyUserIds" type="array"/>
-        <property name="companyBusinessUnitUuids" type="string[]"/>
-        <property name="companyRolesUuids" type="string[]"/>
+        <property name="companyBusinessUnitUuids" type="string[]" singular="companyBusinessUnitUuids"/>
+        <property name="companyRolesUuids" type="string[]" singular="companyRolesUuids"/>
         <property name="isActive" type="bool"/>
     </transfer>
 

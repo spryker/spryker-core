@@ -42,7 +42,7 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="stores" type="Store[]"/>
+        <property name="stores" type="Store[]" singular="stores"/>
         <property name="idProductConcrete" type="int"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="isActive" type="bool"/>

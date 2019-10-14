@@ -5,7 +5,7 @@
 
     <transfer name="QuoteValidationResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="errors"/>
     </transfer>
 
     <transfer name="QuoteError">

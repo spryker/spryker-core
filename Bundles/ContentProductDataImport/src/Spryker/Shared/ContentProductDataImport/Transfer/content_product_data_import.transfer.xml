@@ -11,11 +11,11 @@
 
     <transfer name="ContentValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="parameterMessages" type="ContentParameterMessage[]"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]" singular="parameterMessages"/>
     </transfer>
 
     <transfer name="ContentProductAbstractListTerm">
-        <property name="idProductAbstracts" type="int[]"/>
+        <property name="idProductAbstracts" type="int[]" singular="idProductAbstracts"/>
     </transfer>
 
     <transfer name="Message">

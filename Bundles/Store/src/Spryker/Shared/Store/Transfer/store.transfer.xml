@@ -18,7 +18,7 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
     </transfer>
 
     <transfer name="Quote">
@@ -27,7 +27,7 @@
 
     <transfer name="QuoteValidationResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="errors"/>
     </transfer>
 
     <transfer name="QuoteError">

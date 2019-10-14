@@ -19,7 +19,7 @@
     <transfer name="Category">
         <property name="categoryNode" type="Node"/>
         <property name="idCategory" type="int"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="Locale">

@@ -21,7 +21,7 @@
     </transfer>
 
     <transfer name="ProductAbstractSuggestionCollection">
-        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstracts"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 

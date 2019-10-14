@@ -11,7 +11,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
-        <property name="stores" type="Store[]"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -75,8 +75,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="ProductSuggestionDetails">
@@ -96,7 +96,7 @@
     </transfer>
 
     <transfer name="ProductAbstractSuggestionCollection">
-        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstracts"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 

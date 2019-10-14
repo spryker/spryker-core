@@ -112,7 +112,7 @@
     <transfer name="PriceProductScheduleListImportError">
         <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
         <property name="message" type="string"/>
-        <property name="parameters" type="string[]"/>
+        <property name="parameters" type="string[]" singular="parameters"/>
     </transfer>
 
     <transfer name="MoneyValue">

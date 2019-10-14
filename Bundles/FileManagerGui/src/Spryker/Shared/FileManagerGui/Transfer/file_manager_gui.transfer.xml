@@ -15,12 +15,12 @@
         <property name="file" type="File"/>
         <property name="fileInfo" type="FileInfo"/>
         <property name="content" type="string"/>
-        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" singular="fileLocalizedAttributes"/>
     </transfer>
 
     <transfer name="File">
         <property name="fileUpload" type="FileUpload"/>
-        <property name="localizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="useRealName" type="bool"/>
         <property name="fileName" type="string"/>
         <property name="idFile" type="int"/>

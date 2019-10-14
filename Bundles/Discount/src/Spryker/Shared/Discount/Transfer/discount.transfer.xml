@@ -64,7 +64,7 @@
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
-        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
         <property name="originalItem" type="Item"/>
     </transfer>
 
@@ -78,7 +78,7 @@
     </transfer>
 
     <transfer name="CollectedDiscount">
-        <property name="discountableItems" type="DiscountableItem[]"/>
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
         <property name="discount" type="Discount"/>
     </transfer>
 
@@ -129,8 +129,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="Store">

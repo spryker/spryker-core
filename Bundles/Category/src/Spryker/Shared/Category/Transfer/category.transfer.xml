@@ -21,7 +21,7 @@
 
         <property name="categoryNode" type="Node"/>
         <property name="nodeCollection" type="NodeCollection"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
 
         <property name="parentCategoryNode" type="Node"/>
         <property name="extraParents" singular="extraParent" type="Node[]"/>
@@ -51,7 +51,7 @@
         <property name="nodeOrder" type="int"/>
         <property name="name" type="string"/>
         <property name="path" type="string"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">

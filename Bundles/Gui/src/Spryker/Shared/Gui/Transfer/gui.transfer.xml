@@ -5,8 +5,8 @@
 
     <transfer name="DataTables">
         <property name="draw" type="int"/>
-        <property name="columns" type="DataTablesColumn[]"/>
-        <property name="order" type="DataTablesOrder[]"/>
+        <property name="columns" type="DataTablesColumn[]" singular="columns"/>
+        <property name="order" type="DataTablesOrder[]" singular="order"/>
         <property name="start" type="int"/>
         <property name="length" type="int"/>
         <property name="search" type="array"/>

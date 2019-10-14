@@ -38,7 +38,7 @@
     </transfer>
 
     <transfer name="CountryCollection">
-        <property name="countries" type="Country[]"/>
+        <property name="countries" type="Country[]" singular="countries"/>
     </transfer>
 
     <transfer name="Company">

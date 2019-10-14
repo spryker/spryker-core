@@ -19,7 +19,7 @@
     </transfer>
 
     <transfer name="ProductListProductConcreteRelation">
-        <property name="productIds" type="int[]"/>
+        <property name="productIds" type="int[]" singular="productIds"/>
     </transfer>
 
     <transfer name="ProductListResponse">

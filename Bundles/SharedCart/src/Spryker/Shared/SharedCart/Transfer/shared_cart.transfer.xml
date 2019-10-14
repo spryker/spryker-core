@@ -22,7 +22,7 @@
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
-        <property name="quoteIds" type="int[]"/>
+        <property name="quoteIds" type="int[]" singular="quoteIds"/>
         <property name="idCompanyUser" type="int"/>
         <property name="idStore" type="int"/>
     </transfer>

@@ -7,7 +7,7 @@
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
-        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
         <property name="originalItem" type="Item"/>
     </transfer>
 

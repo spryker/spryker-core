@@ -53,8 +53,8 @@
         <property name="salutation" type="string"/>
         <property name="password" type="string"/>
         <property name="newPassword" type="string"/>
-        <property name="billingAddress" type="Address[]"/>
-        <property name="shippingAddress" type="Address[]"/>
+        <property name="billingAddress" type="Address[]" singular="billingAddress"/>
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="defaultBillingAddress" type="string"/>
         <property name="defaultShippingAddress" type="string"/>

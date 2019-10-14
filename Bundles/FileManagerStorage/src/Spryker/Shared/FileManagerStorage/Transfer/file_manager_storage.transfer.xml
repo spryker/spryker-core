@@ -9,7 +9,7 @@
         <property name="type" type="string"/>
         <property name="size" type="int"/>
         <property name="version" type="int"/>
-        <property name="versions" type="FileInfo[]"/>
+        <property name="versions" type="FileInfo[]" singular="versions"/>
         <property name="storageName" type="string"/>
         <property name="storageFileName" type="string"/>
         <property name="title" type="string"/>
@@ -44,9 +44,9 @@
 
     <transfer name="File">
         <property name="idFile" type="int"/>
-        <property name="fileInfo" type="FileInfo[]"/>
+        <property name="fileInfo" type="FileInfo[]" singular="fileInfo"/>
         <property name="fileName" type="string"/>
-        <property name="localizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="Locale">

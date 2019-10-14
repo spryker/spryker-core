@@ -95,7 +95,7 @@
     </transfer>
 
     <transfer name="StoreRelation">
-        <property name="stores" type="Store[]"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="TabItem">

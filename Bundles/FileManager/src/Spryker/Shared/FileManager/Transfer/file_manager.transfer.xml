@@ -6,7 +6,7 @@
     <transfer name="FileManagerData">
         <property name="file" type="File"/>
         <property name="fileInfo" type="FileInfo"/>
-        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" singular="fileLocalizedAttributes"/>
         <property name="content" type="string"/>
     </transfer>
 
@@ -14,8 +14,8 @@
         <property name="idFile" type="int"/>
         <property name="fileName" type="string"/>
         <property name="fkFileDirectory" type="int"/>
-        <property name="fileInfo" type="FileInfo[]"/>
-        <property name="localizedAttributes" type="FileLocalizedAttributes[]"/>
+        <property name="fileInfo" type="FileInfo[]" singular="fileInfo"/>
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="useRealName" type="bool"/>
         <property name="fileContent" type="string"/>
         <property name="fileUpload" type="FileUpload"/>
@@ -41,7 +41,7 @@
         <property name="storageFileName" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
-        <property name="localizedAttributes" type="FileInfoLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="FileInfoLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="FileLocalizedAttributes">

@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="ContentFileListTerm">
-        <property name="fileIds" type="int[]"/>
+        <property name="fileIds" type="int[]" singular="fileIds"/>
     </transfer>
 
     <transfer name="LocalizedContent">
@@ -20,12 +20,12 @@
     </transfer>
 
     <transfer name="ContentValidationResponse">
-        <property name="parameterMessages" type="ContentParameterMessage[]"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]" singular="parameterMessages"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="ContentParameterMessage">
-        <property name="messages" type="Message[]"/>
+        <property name="messages" type="Message[]" singular="message"/>
         <property name="parameter" type="string"/>
     </transfer>
 

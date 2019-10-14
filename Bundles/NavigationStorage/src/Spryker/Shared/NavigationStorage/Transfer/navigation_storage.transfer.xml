@@ -40,7 +40,7 @@
     </transfer>
 
     <transfer name="NavigationStorage">
-        <property name="nodes" type="NavigationNodeStorage[]"/>
+        <property name="nodes" type="NavigationNodeStorage[]" singular="nodes"/>
         <property name="locale" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="name" type="string"/>
@@ -49,7 +49,7 @@
     </transfer>
 
     <transfer name="NavigationNodeStorage">
-        <property name="children" type="NavigationNodeStorage[]"/>
+        <property name="children" type="NavigationNodeStorage[]" singular="children"/>
         <property name="validTo" type="string"/>
         <property name="validFrom" type="string"/>
         <property name="cssClass" type="string"/>

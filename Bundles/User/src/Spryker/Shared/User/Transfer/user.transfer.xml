@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="Collection">
-        <property name="user" type="User[]"/>
+        <property name="user" type="User[]" singular="user"/>
     </transfer>
 
     <transfer name="Groups">

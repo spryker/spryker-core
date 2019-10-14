@@ -13,8 +13,8 @@
         <property name="numberOfItems" type="int"/>
         <property name="owner" type="string"/>
         <property name="idCompanyUser" type="int"/>
-        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]"/>
-        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]"/>
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" singular="sharedCompanyUsers"/>
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="sharedCompanyBusinessUnits"/>
         <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 

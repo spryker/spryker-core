@@ -6,7 +6,7 @@
     <transfer name="ManualOrder">
         <property name="voucherCode" type="string"/>
         <property name="storeCurrency" type="string"/>
-        <property name="products" type="Item[]"/>
+        <property name="products" type="Item[]" singular="products"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="isProductPosted" type="bool"/>
         <property name="isSubmitOrder" type="bool"/>
@@ -22,7 +22,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="payment" type="Payment"/>
-        <property name="payments" type="Payment[]"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
         <property name="manualOrder" type="ManualOrder"/>
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
