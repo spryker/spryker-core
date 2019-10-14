@@ -88,20 +88,33 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     public function convertProductAttributeCollection(ObjectCollection $productAttributeEntityCollection)
     {
         $transferList = [];
-        $glossaryKeys = [];
-        foreach ($productAttributeEntityCollection as $productAttributeEntity) {
-            $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
-                $productAttributeEntity->getSpyProductAttributeKey()->getKey()
-            );
-        }
-        $availableLocales = $this->localeFacade->getLocaleCollection();
-        $this->glossaryRepository->loadTranslations($glossaryKeys, $availableLocales);
+        $this->glossaryRepository->loadTranslations(
+            $this->prepareGlossaryKeys($productAttributeEntityCollection),
+            $this->localeFacade->getLocaleCollection()
+        );
 
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
             $transferList[] = $this->convertProductAttribute($productAttributeEntity);
         }
 
         return $transferList;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productAttributeEntityCollection
+     *
+     * @return array
+     */
+    protected function prepareGlossaryKeys(ObjectCollection $productAttributeEntityCollection): array
+    {
+        $glossaryKeys = [];
+        foreach ($productAttributeEntityCollection as $productAttributeEntity) {
+            $glossaryKeys[] = $this->glossaryKeyBuilder->buildGlossaryKey(
+                $productAttributeEntity->getSpyProductAttributeKey()->getKey()
+            );
+        }
+
+        return $glossaryKeys;
     }
 
     /**

@@ -38,11 +38,11 @@ class GlossaryRepository implements GlossaryRepositoryInterface
      */
     public function getTranslationByKeyNameAndLocaleTransfer($keyName, LocaleTransfer $localeTransfer): string
     {
-        if (!isset(static::$glossaryMap[$localeTransfer->getIdLocale()][$keyName])) {
+        if (!isset(static::$glossaryMap[$keyName][$localeTransfer->getLocaleName()])) {
             $this->loadTranslations([$keyName], [$localeTransfer]);
         }
 
-        return static::$glossaryMap[$localeTransfer->getIdLocale()][$keyName];
+        return static::$glossaryMap[$keyName][$localeTransfer->getLocaleName()];
     }
 
     /**
@@ -55,7 +55,7 @@ class GlossaryRepository implements GlossaryRepositoryInterface
     {
         $translations = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocales($keyNames, $localeTransfers);
         foreach ($translations as $translation) {
-            static::$glossaryMap[$translation->getFkLocale()][$translation->getGlossaryKey()] = $translation->getValue();
+            static::$glossaryMap[$translation->getGlossaryKey()][$translation->getLocaleName()] = $translation->getValue();
         }
     }
 }
