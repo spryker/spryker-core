@@ -20,7 +20,12 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouterDebugYvesConsole extends Command
 {
-    private const NAME = 'router:debug';
+    protected const NAME = 'router:debug';
+    protected const NAME_ALIAS = 'router:debug:yves';
+
+    protected const ARGUMENT_ROUTE_NAME = 'name';
+    protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+    protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
 
     /**
      * @return void
@@ -29,10 +34,10 @@ class RouterDebugYvesConsole extends Command
     {
         $this
             ->setName(static::NAME)
-            ->setAliases(['router:debug:yves'])
+            ->setAliases([static::NAME_ALIAS])
             ->setDefinition([
-                new InputArgument('name', InputArgument::OPTIONAL, 'A route name.'),
-                new InputOption('show-controllers', 'c', InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
+                new InputArgument(static::ARGUMENT_ROUTE_NAME, InputArgument::OPTIONAL, 'A route name.'),
+                new InputOption(static::OPTION_SHOW_CONTROLLERS, static::OPTION_SHOW_CONTROLLERS_SHORT, InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
             ]);
     }
 
@@ -55,7 +60,7 @@ class RouterDebugYvesConsole extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $name = $input->getArgument('name');
+        $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
         $helper = new DescriptorHelper();
 
         $router = $this->getFactory()->createRouter();
@@ -73,12 +78,12 @@ class RouterDebugYvesConsole extends Command
             }
 
             $helper->describe($io, $route, [
-                'name' => $name,
+                static::ARGUMENT_ROUTE_NAME => $name,
                 'output' => $io,
             ]);
         } else {
             $helper->describe($io, $routes, [
-                'show_controllers' => $input->getOption('show-controllers'),
+                'show_controllers' => $input->getOption(static::OPTION_SHOW_CONTROLLERS),
                 'output' => $io,
             ]);
         }

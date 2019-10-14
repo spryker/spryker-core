@@ -16,13 +16,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RouterCacheWarmUpConsole extends Console
 {
+    protected const NAME = 'router:cache:warm-up';
+
     /**
      * @return void
      */
     protected function configure(): void
     {
         $this
-            ->setName('router:cache:warm-up')
+            ->setName(static::NAME)
             ->setDescription('Builds a fresh cache for the Yves router.');
     }
 

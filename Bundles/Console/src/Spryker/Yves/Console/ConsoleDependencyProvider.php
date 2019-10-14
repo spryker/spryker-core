@@ -28,7 +28,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addCommands($container);
         $container = $this->addEventSubscriber($container);
@@ -43,9 +43,9 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addCommands(Container $container)
+    protected function addCommands(Container $container): Container
     {
-        $container->set(static::COMMANDS, function (Container $container) {
+        $container->set(static::COMMANDS, function (Container $container): array {
             return $this->getConsoleCommands($container);
         });
 
@@ -69,7 +69,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventSubscriber(Container $container): Container
     {
-        $container->set(static::EVENT_SUBSCRIBER, function (Container $container) {
+        $container->set(static::EVENT_SUBSCRIBER, function (Container $container): array {
             return $this->getEventSubscriber($container);
         });
 
@@ -93,11 +93,11 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConsoleHookPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CONSOLE_PRE_RUN_HOOK, function (Container $container) {
+        $container->set(static::PLUGINS_CONSOLE_PRE_RUN_HOOK, function (Container $container): array {
             return $this->getConsolePreRunHookPlugins($container);
         });
 
-        $container->set(static::PLUGINS_CONSOLE_POST_RUN_HOOK, function (Container $container) {
+        $container->set(static::PLUGINS_CONSOLE_POST_RUN_HOOK, function (Container $container): array {
             return $this->getConsolePostRunHookPlugins($container);
         });
 
@@ -131,7 +131,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplicationPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_APPLICATION, function (Container $container) {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
             return $this->getApplicationPlugins($container);
         });
 

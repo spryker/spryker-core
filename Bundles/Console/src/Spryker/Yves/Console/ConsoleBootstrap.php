@@ -24,6 +24,9 @@ class ConsoleBootstrap extends Application
 {
     use BundleConfigResolverAwareTrait;
 
+    protected const VERSION = '1';
+    protected const NAME = 'Spryker Yves Console';
+
     /**
      * @var \Spryker\Yves\Console\ConsoleFactory
      */
@@ -38,7 +41,7 @@ class ConsoleBootstrap extends Application
      * @param string $name
      * @param string $version
      */
-    public function __construct($name = 'Spryker Yves Console', $version = '1')
+    public function __construct($name = self::NAME, $version = self::VERSION)
     {
         ConsoleEnvironment::initialize();
 

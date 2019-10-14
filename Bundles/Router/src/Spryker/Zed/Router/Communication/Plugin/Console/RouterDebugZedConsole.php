@@ -23,17 +23,23 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class RouterDebugZedConsole extends Console
 {
+    protected const NAME = 'router:debug';
+    protected const NAME_ALIAS = 'router:debug:zed';
+    protected const ARGUMENT_ROUTE_NAME = 'name';
+    protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+    protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
+
     /**
      * @return void
      */
     protected function configure(): void
     {
         $this
-            ->setName('router:debug')
-            ->setAliases(['router:debug:zed'])
+            ->setName(static::NAME)
+            ->setAliases([static::NAME_ALIAS])
             ->setDefinition([
-                new InputArgument('name', InputArgument::OPTIONAL, 'A route name.'),
-                new InputOption('show-controllers', 'c', InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
+                new InputArgument(static::ARGUMENT_ROUTE_NAME, InputArgument::OPTIONAL, 'A route name.'),
+                new InputOption(static::OPTION_SHOW_CONTROLLERS, static::OPTION_SHOW_CONTROLLERS_SHORT, InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
             ]);
     }
 
@@ -48,7 +54,7 @@ class RouterDebugZedConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $name = $input->getArgument('name');
+        $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
         $helper = new DescriptorHelper();
 
         $router = $this->getFacade()->getRouter();
@@ -66,12 +72,12 @@ class RouterDebugZedConsole extends Console
             }
 
             $helper->describe($io, $route, [
-                'name' => $name,
+                static::ARGUMENT_ROUTE_NAME => $name,
                 'output' => $io,
             ]);
         } else {
             $helper->describe($io, $routes, [
-                'show_controllers' => $input->getOption('show-controllers'),
+                'show_controllers' => $input->getOption(static::OPTION_SHOW_CONTROLLERS),
                 'output' => $io,
             ]);
         }

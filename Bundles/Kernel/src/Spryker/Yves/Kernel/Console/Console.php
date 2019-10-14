@@ -7,14 +7,14 @@
 
 namespace Spryker\Yves\Kernel\Console;
 
-use Spryker\Shared\Kernel\Console\Console as ConsoleConsole;
+use Spryker\Shared\Kernel\Console\Console as SharedConsole;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 
 /**
  * @method \Symfony\Component\Console\Application getApplication()
  */
-class Console extends ConsoleConsole
+class Console extends SharedConsole
 {
     /**
      * @var \Spryker\Yves\Kernel\AbstractFactory|null

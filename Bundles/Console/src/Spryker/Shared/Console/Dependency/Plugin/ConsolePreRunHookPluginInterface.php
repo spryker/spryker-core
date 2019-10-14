@@ -23,5 +23,5 @@ interface ConsolePreRunHookPluginInterface
      *
      * @return int
      */
-    public function preRun(InputInterface $input, OutputInterface $output): int;
+    public function preRun(InputInterface $input, OutputInterface $output);
 }
