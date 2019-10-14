@@ -6,4 +6,10 @@
     <transfer name="CustomerNoteCollection">
         <property name="notes" type="SpyCustomerNoteEntity[]"/>
     </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
 </transfers>

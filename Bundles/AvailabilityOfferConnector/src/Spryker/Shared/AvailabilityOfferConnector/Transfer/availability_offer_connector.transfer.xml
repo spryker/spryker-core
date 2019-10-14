@@ -12,4 +12,9 @@
         <property name="stock" type="int"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

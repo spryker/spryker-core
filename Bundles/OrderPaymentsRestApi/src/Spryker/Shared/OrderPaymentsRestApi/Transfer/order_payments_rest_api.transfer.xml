@@ -17,4 +17,8 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>

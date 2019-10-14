@@ -5,6 +5,8 @@
 
     <transfer name="Mail">
         <property name="customer" type="Customer"/>
+        <property name="type" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="Address">
@@ -123,10 +125,12 @@
 
     <transfer name="CheckoutResponse">
         <property name="saveOrder" type="SaveOrder"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="CheckoutError">
         <property name="errorCode" type="int"/>
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -139,5 +143,27 @@
         <property name="lastPage" type="int"/>
         <property name="nextPage" type="int"/>
         <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int"/>
+        <property name="name" type="string"/>
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
+    </transfer>
+
+    <transfer name="SequenceNumberSettings">
+        <property name="name" type="string"/>
+        <property name="prefix" type="string"/>
     </transfer>
 </transfers>

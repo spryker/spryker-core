@@ -7,10 +7,12 @@
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Order">
         <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ConfiguredBundle">

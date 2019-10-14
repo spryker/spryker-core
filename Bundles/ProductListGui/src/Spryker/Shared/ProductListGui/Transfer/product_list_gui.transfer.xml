@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductListResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="productList" type="ProductList"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="title" type="string"/>
+        <property name="idProductList" type="int"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+    </transfer>
+
+    <transfer name="CsvFile">
+        <property name="header" type="array"/>
+        <property name="fileName" type="string"/>
+        <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="ProductListProductConcreteRelation">
+        <property name="productIds" type="int[]"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="isNavigable" type="bool"/>
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>

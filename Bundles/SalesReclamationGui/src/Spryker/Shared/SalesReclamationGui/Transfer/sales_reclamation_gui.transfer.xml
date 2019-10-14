@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Reclamation">
+        <property name="idSalesReclamation" type="int"/>
+        <property name="order" type="Order"/>
+        <property name="reclamationItems" type="ReclamationItem[]" singular="reclamationItem"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="orderReference" type="string"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ReclamationCreateRequest">
+        <property name="order" type="Order"/>
+    </transfer>
+
+</transfers>

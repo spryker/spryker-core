@@ -32,4 +32,8 @@
         <property name="companies" type="Company[]" singular="company"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
 </transfers>

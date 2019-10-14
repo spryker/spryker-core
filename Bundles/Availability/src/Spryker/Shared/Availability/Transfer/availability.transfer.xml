@@ -52,5 +52,20 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>
 

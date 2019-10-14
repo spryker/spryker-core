@@ -146,4 +146,34 @@
         <property name="idStore" type="int"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="KeyTranslation">
+        <property _="" name="glossaryKey" type="int"/>
+        <property _="" name="locales" type="array"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="fkRedirect" type="int" deprecated="Use fkResourceRedirect instead."/>
+        <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+    </transfer>
+
+    <transfer name="Redirect">
+    </transfer>
+
+    <transfer name="UrlRedirect">
+        <property name="idUrlRedirect" type="int"/>
+    </transfer>
+
+    <transfer name="UrlRedirectValidationResponse">
+        <property name="isValid" type="bool"/>
+        <property name="error" type="string"/>
+    </transfer>
+
 </transfers>

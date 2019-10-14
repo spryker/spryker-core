@@ -32,4 +32,9 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
 </transfers>

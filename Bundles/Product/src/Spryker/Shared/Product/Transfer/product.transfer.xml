@@ -100,4 +100,9 @@
         <property name="pagination" type="Pagination"/>
     </transfer>
 
+    <transfer name="Url">
+        <property name="url" type="string"/>
+        <property name="idUrl" type="int"/>
+    </transfer>
+
 </transfers>

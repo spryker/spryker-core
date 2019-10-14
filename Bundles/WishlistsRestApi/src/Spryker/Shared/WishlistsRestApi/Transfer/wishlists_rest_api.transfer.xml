@@ -20,6 +20,7 @@
         <property name="fkCustomer" type="int"/>
         <property name="name" type="string"/>
         <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
+        <property name="numberOfItems" type="int"/>
     </transfer>
 
     <transfer name="WishlistResponse">
@@ -66,6 +67,17 @@
 
     <transfer name="WishlistCollection">
         <property name="wishlists" type="Wishlist[]" singular="wishlist"/>
+    </transfer>
+
+    <transfer name="WishlistItem">
+        <property name="idWishlistItem" type="int"/>
+        <property name="fkWishlist" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="surrogateIdentifier" type="int"/>
+        <property name="naturalIdentifier" type="string"/>
     </transfer>
 
 </transfers>

@@ -31,5 +31,36 @@
     <transfer name="Filter">
         <property name="offset" type="int"/>
         <property name="limit" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="File">
+        <property name="idFile" type="int"/>
+        <property name="fileInfo" type="FileInfo[]"/>
+        <property name="fileName" type="string"/>
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="FileInfo">
+        <property name="type" type="string"/>
+        <property name="version" type="int"/>
+        <property name="size" type="int"/>
+        <property name="storageName" type="string"/>
+        <property name="storageFileName" type="string"/>
+    </transfer>
+
+    <transfer name="FileLocalizedAttributes">
     </transfer>
 </transfers>

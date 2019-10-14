@@ -22,4 +22,8 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="Content">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

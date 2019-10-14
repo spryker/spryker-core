@@ -24,6 +24,7 @@
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -71,6 +72,9 @@
         <property name="quoteRequestReference" type="string"/>
         <property name="name" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="Item">
@@ -81,6 +85,7 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -114,6 +119,12 @@
 
     <transfer name="CompanyUserCollection">
         <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="Company">
     </transfer>
 
 </transfers>

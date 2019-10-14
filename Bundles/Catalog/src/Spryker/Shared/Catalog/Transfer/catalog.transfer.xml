@@ -36,5 +36,17 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>
 

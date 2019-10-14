@@ -16,6 +16,7 @@
     <transfer name="Quote">
         <property name="store" type="Store"/>
         <property name="priceMode" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

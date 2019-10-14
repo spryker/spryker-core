@@ -15,4 +15,8 @@
         <property name="contentTypeAccess" type="ContentTypeAccess[]" singular="contentTypeAccess"/>
     </transfer>
 
+    <transfer name="ContentTypeAccess">
+        <property name="contentType" type="string"/>
+    </transfer>
+
 </transfers>

@@ -52,4 +52,17 @@
         <property name="externalUrlLarge" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+        <property name="idUrl" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="idProductImageSet" type="int"/>
+    </transfer>
+
 </transfers>

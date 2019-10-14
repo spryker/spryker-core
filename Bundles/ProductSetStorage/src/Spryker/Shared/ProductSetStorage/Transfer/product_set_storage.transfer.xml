@@ -38,4 +38,12 @@
         <property name="externalUrlLarge" type="string"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductSetStorage">
+    </transfer>
+
 </transfers>

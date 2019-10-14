@@ -46,6 +46,18 @@
         <property name="merge" type="bool"/>
         <property name="mergeLanguage" type="string"/>
         <property name="globalMergeVars" type="string[]" associative="true"/>
+        <property name="type" type="string"/>
+        <property name="subject" type="string"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
     </transfer>
 
 </transfers>

@@ -35,6 +35,12 @@
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="selectedCurrencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

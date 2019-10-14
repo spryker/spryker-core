@@ -9,6 +9,7 @@
 
     <transfer name="Mail">
         <property name="customer" type="Customer"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="CompanyResponse">
@@ -19,6 +20,10 @@
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="customer" type="Customer"/>
     </transfer>
 
 </transfers>

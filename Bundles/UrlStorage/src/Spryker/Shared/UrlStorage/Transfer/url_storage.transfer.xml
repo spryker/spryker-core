@@ -32,4 +32,10 @@
         <property name="reference" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+    </transfer>
+
 </transfers>

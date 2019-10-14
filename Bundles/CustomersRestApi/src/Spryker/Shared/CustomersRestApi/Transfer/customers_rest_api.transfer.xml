@@ -63,6 +63,9 @@
 
     <transfer name="Address">
         <property name="uuid" type="string"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="idCustomerAddress" type="int"/>
+        <property name="country" type="Country"/>
     </transfer>
 
     <transfer name="RestCustomerForgottenPasswordAttributes">
@@ -118,6 +121,30 @@
 
     <transfer name="Country">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
+        <property name="addresses" type="Addresses" singular="address"/>
+        <property name="defaultShippingAddress" type="string"/>
+        <property name="defaultBillingAddress" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+        <property name="hasCustomer" type="bool"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int"/>
     </transfer>
 
 </transfers>

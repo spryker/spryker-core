@@ -7,6 +7,8 @@
         <property name="moneyValue" type="MoneyValue"/>
         <property name="groupKey" type="string"/>
         <property name="isMergeable" type="bool"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="PriceProductStorage">
@@ -24,6 +26,10 @@
 
     <transfer name="MoneyValue">
         <property name="priceData" type="string"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkStore" type="int"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
@@ -40,6 +46,8 @@
 
     <transfer name="CurrentProductPrice">
         <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="ItemValidation">
@@ -50,5 +58,26 @@
     <transfer name="Message">
         <property name="type" type="string"/>
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 </transfers>

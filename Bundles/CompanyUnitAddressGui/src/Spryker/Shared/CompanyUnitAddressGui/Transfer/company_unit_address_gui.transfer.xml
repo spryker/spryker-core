@@ -6,6 +6,38 @@
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="fkCompany" type="int"/>
+        <property name="addressCollection" type="CompanyUnitAddressCollection"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddress">
+        <property name="idCompanyUnitAddress" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCollection">
+        <property name="companyUnitAddresses" type="CompanyUnitAddress[]" singular="companyUnitAddress"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="maxPerPage" type="int"/>
+        <property name="page" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressCriteriaFilter">
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company"/>
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]"/>
     </transfer>
 
 </transfers>

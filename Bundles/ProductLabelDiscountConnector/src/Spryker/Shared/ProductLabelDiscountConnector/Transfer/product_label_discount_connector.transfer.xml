@@ -28,6 +28,11 @@
         <property name="unitNetPrice" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="ProductLabel">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

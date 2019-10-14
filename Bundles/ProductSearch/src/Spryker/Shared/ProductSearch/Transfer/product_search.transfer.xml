@@ -39,4 +39,33 @@
         <property name="foreignKeys" type="array"/>
     </transfer>
 
+    <transfer name="SearchConfigExtension">
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKey">
+        <property name="idProductAttributeKey" type="int"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>

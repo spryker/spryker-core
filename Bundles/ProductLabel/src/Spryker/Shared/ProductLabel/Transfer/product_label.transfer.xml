@@ -48,6 +48,7 @@
         <property name="name" type="string"/>
         <property name="parameterName" type="string"/>
         <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
 </transfers>

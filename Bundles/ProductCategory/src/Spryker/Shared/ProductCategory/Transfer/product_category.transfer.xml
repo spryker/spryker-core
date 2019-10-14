@@ -10,4 +10,29 @@
         <property name="productOrder" type="int"/>
     </transfer>
 
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="attributes" type="array" singular="attribute"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="categoryNode" type="Node"/>
+        <property name="idCategory" type="int"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
 </transfers>

@@ -82,9 +82,19 @@
     <transfer name="CompanyUserResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Company">
     </transfer>
 </transfers>

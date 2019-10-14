@@ -44,6 +44,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="Expense">
@@ -87,9 +88,42 @@
 
     <transfer name="SaveOrder">
         <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="Totals">
         <property name="subtotal" type="int"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="fkLocale" type="int"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="idCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="KeyTranslation">
+        <property _="" name="glossaryKey" type="int"/>
     </transfer>
 </transfers>

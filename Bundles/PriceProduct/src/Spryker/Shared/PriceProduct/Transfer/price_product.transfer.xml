@@ -47,6 +47,8 @@
 
     <transfer name="ProductConcrete">
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="StorageProduct">
@@ -89,6 +91,11 @@
         <property name="priceMode" type="string"/>
         <property name="quantity" type="int"/>
         <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

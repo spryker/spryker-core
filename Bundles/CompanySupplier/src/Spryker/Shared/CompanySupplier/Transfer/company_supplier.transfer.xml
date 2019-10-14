@@ -24,6 +24,7 @@
         <property name="companySuppliers" type="SpyCompanyEntity[]"/>
         <property name="supplierPrice" type="string"/>
         <property name="defaultPrice" type="string"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="ProductSupplierCollection">

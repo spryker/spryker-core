@@ -17,5 +17,18 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ContentBannerTerm">
+    </transfer>
+
+    <transfer name="ContentValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]"/>
+    </transfer>
+
+    <transfer name="ContentParameterMessage">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="parameter" type="string"/>
+    </transfer>
+
 </transfers>
 

@@ -43,6 +43,10 @@
 
     <transfer name="ProductConcrete">
         <property name="stores" type="Store[]"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="isActive" type="bool"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductConcretePageSearch">
@@ -78,6 +82,39 @@
         <property name="data" type="string"/>
         <property name="key" type="string"/>
         <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="RawProductAttributes">
+        <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
 </transfers>

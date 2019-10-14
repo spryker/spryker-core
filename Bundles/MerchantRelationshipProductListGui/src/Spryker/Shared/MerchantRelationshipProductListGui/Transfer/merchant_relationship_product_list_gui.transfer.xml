@@ -24,4 +24,10 @@
     <transfer name="CompanyBusinessUnit">
         <property name="name" type="string"/>
     </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="merchant" type="Merchant"/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="idMerchantRelationship" type="int"/>
+    </transfer>
 </transfers>

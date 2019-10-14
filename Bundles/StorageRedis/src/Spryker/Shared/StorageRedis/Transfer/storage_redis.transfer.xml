@@ -8,4 +8,12 @@
         <property name="keys" type="array"/>
     </transfer>
 
+    <transfer name="RedisConfiguration">
+        <property name="dataSourceNames" type="array"/>
+    </transfer>
+
+    <transfer name="RedisCredentials">
+        <property name="protocol" type="string"/>
+    </transfer>
+
 </transfers>

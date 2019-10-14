@@ -32,4 +32,12 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ProductBundleCriteriaFilter">
+        <property name="idBundledProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductBundleCollection">
+        <property name="productBundles" type="ProductBundle[]" singular="productBundle"/>
+    </transfer>
+
 </transfers>

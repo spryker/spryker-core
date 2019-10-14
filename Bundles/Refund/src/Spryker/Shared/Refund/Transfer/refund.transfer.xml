@@ -16,11 +16,16 @@
     <transfer name="Item">
         <property name="idOrderItem" type="int"/>
         <property name="refundableAmount" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
     </transfer>
 
     <transfer name="Expense">
         <property name="idExpense" type="int"/>
         <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="Totals">
@@ -29,6 +34,9 @@
 
     <transfer name="Order">
         <property name="currencyIsoCode" type="string"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
 </transfers>

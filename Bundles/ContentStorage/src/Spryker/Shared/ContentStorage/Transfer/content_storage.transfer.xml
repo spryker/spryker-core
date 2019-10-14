@@ -9,6 +9,7 @@
         <property name="contentTermKey" type="string"/>
         <property name="contentTypeKey" type="string"/>
         <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ContentStorage">
@@ -37,6 +38,13 @@
 
     <transfer name="Locale">
         <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 </transfers>
 

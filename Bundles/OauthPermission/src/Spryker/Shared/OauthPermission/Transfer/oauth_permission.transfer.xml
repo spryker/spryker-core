@@ -22,4 +22,13 @@
         <property name="configuration" type="array"/>
     </transfer>
 
+    <transfer name="OauthAccessTokenData">
+        <property name="oauthUserId" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
 </transfers>

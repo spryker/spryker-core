@@ -68,6 +68,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="Address">
@@ -111,6 +112,7 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+        <property name="idCurrency" type="int"/>
     </transfer>
 
     <transfer name="Money">
@@ -177,6 +179,35 @@
         <property name="idProductAbstract" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="productOptionGroupName" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="TaxSetCollection">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="template" type="string"/>
+        <property name="title" type="string"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
     </transfer>
 
 </transfers>

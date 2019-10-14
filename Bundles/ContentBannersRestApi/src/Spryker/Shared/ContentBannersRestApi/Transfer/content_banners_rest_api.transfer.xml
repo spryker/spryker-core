@@ -18,4 +18,8 @@
         <property name="clickUrl" type="string"/>
         <property name="altText" type="string"/>
     </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
 </transfers>

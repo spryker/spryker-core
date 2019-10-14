@@ -38,4 +38,8 @@
     <transfer name="ProductImage">
     </transfer>
 
+    <transfer name="PageMap">
+        <property name="store" type="string"/>
+    </transfer>
+
 </transfers>

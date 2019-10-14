@@ -9,10 +9,15 @@
 
     <transfer name="CompanyUnitAddress">
         <property name="labelCollection" type="CompanyUnitAddressLabelCollection"/>
+        <property name="idCompanyUnitAddress" type="int"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressLabel">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUnitAddressResponse">
+        <property name="companyUnitAddressTransfer" type="CompanyUnitAddress"/>
     </transfer>
 
 </transfers>

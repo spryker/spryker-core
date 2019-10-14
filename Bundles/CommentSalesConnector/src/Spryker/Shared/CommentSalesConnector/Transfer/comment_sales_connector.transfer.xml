@@ -30,6 +30,8 @@
 
     <transfer name="CommentThread">
         <property name="comments" type="Comment[]" singular="comment"/>
+        <property name="ownerType" type="string"/>
+        <property name="ownerId" type="int"/>
     </transfer>
 
     <transfer name="Comment">

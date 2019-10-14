@@ -79,4 +79,28 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="CurrentProductPrice">
+        <property name="prices" type="array" singular="price"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductUrl">
+        <property name="urls" type="LocalizedUrl[]" singular="url"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="template" type="string"/>
+        <property name="title" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
 </transfers>

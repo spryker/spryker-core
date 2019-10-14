@@ -8,4 +8,8 @@
         <property name="filterData" type="array"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+    </transfer>
+
 </transfers>

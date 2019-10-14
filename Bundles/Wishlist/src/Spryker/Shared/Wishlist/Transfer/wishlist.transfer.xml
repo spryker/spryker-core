@@ -58,6 +58,8 @@
     <transfer name="StorageProduct">
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
+        <property name="prices" type="array" singular="price"/>
+        <property name="price" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -79,6 +81,7 @@
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="WishlistResponse">
@@ -111,6 +114,15 @@
 
     <transfer name="WishlistPreAddItemCheckResponse">
         <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
     </transfer>
 
 </transfers>

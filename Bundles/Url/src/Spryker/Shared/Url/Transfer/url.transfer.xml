@@ -42,4 +42,9 @@
         <property name="localeUrls" type="Url[]"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
 </transfers>

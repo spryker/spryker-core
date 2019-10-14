@@ -15,11 +15,13 @@
 
     <transfer name="Quote">
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
         <property name="sku" type="string"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="Address">
@@ -28,5 +30,15 @@
 
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="taxRates" type="TaxRate[]" singular="taxRate"/>
+    </transfer>
+
+    <transfer name="TaxRate">
+    </transfer>
+
+    <transfer name="Country">
     </transfer>
 </transfers>

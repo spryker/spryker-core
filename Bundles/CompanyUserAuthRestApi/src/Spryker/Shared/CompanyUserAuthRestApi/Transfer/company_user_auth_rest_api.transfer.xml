@@ -6,6 +6,7 @@
     <transfer name="OauthRequest">
         <property name="customerReference" type="string"/>
         <property name="idCompanyUser" type="string"/>
+        <property name="grantType" type="string"/>
     </transfer>
 
     <transfer name="RestCompanyUserAccessTokensAttributes">
@@ -23,6 +24,18 @@
         <property name="idCompanyUser" type="int"/>
         <property name="uuidCompanyUser" type="string"/>
         <property name="idCompany" type="int"/>
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="OauthResponse">
+        <property name="isValid" type="bool"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserStorage">
     </transfer>
 
 </transfers>

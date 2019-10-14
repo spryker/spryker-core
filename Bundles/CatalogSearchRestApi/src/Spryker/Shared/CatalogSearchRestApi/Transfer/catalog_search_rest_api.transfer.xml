@@ -113,4 +113,15 @@
     <transfer name="FacetConfig">
     </transfer>
 
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
 </transfers>

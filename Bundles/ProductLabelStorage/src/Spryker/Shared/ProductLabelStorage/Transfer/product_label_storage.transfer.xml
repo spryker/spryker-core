@@ -25,6 +25,16 @@
         <property name="parameterName" type="string"/>
         <property name="fieldName" type="string"/>
         <property name="type" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="StorageProductLabel">
+        <property name="idProductLabel" type="int"/>
     </transfer>
 
 </transfers>

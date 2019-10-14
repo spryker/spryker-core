@@ -10,6 +10,8 @@
         <property name="currency" type="Currency"/>
         <property name="isLocked" type="bool"/>
         <property name="uuid" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="QuoteCollection">
@@ -32,6 +34,7 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -47,6 +50,14 @@
     <transfer name="QuoteError">
         <property name="message" type="string"/>
         <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 
 </transfers>

@@ -9,4 +9,16 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="CustomerAccess">
+        <property name="contentTypeAccess" type="ContentTypeAccess[]" singular="contentTypeAccess"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ContentTypeAccess">
+    </transfer>
+
 </transfers>

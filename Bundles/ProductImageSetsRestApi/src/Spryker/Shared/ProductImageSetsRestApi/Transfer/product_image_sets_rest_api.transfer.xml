@@ -17,4 +17,20 @@
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
+    <transfer name="ProductAbstractImageStorage">
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
+    </transfer>
+
+    <transfer name="ProductAbstractStorage">
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcreteStorage">
+    </transfer>
+
 </transfers>

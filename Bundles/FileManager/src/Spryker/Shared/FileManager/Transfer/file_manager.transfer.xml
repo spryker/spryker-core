@@ -95,4 +95,38 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
+    <transfer name="FileSystemStream">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemQuery">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemContent">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemDelete">
+    </transfer>
+
+    <transfer name="FileSystemDeleteDirectory">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemRename">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="newPath" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
 </transfers>

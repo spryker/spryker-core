@@ -13,6 +13,7 @@
         <property name="validTo" type="string"/>
         <property name="pageAttributes" type="CmsPageAttributes[]" singular="pageAttribute"/>
         <property name="metaAttributes" type="CmsPageMetaAttributes[]" singular="metaAttribute"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="CmsPageAttributes">
@@ -70,6 +71,41 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CmsVersionData">
+        <property name="cmsPage" type="CmsPage"/>
+        <property name="cmsGlossary" type="CmsGlossary"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="fkResourcePage" type="int"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="template" type="string"/>
+        <property name="title" type="string"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
     </transfer>
 
 </transfers>

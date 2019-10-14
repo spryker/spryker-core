@@ -6,6 +6,8 @@
         <property name="volumeQuantity" type="int"/>
         <property name="groupKey" type="string"/>
         <property name="isMergeable" type="bool"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="skuProduct" type="string"/>
     </transfer>
 
     <transfer name="PriceProductVolume">
@@ -15,5 +17,9 @@
 
     <transfer name="PriceProductVolumeCollection">
         <property name="volumePrices" type="PriceProductVolume[]" singular="volumePrice"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="quantity" type="int"/>
     </transfer>
 </transfers>

@@ -11,4 +11,10 @@
         <property name="code" type="string"/>
     </transfer>
 
+    <transfer name="FlashMessages">
+        <property name="errorMessages" type="array" singular="errorMessage"/>
+        <property name="infoMessages" type="array" singular="infoMessage"/>
+        <property name="successMessages" type="array" singular="successMessage"/>
+    </transfer>
+
 </transfers>

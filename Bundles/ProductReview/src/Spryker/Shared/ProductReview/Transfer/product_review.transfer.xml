@@ -52,5 +52,25 @@
         <property name="reviewCount" type="int"/>
     </transfer>
 
+    <transfer name="PaginationSearchResult">
+        <property name="numFound" type="int"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
 </transfers>
 

@@ -50,4 +50,9 @@
         <property name="templateName" type="string"/>
         <property name="templatePath" type="string"/>
     </transfer>
+
+    <transfer name="KeyTranslation">
+        <property _="" name="glossaryKey" type="int"/>
+        <property _="" name="locales" type="array"/>
+    </transfer>
 </transfers>

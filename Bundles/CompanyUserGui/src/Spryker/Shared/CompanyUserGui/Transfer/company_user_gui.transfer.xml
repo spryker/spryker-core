@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CompanyUserResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+</transfers>

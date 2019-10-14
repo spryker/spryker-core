@@ -5,6 +5,44 @@
 
     <transfer name="CompanyUser">
         <property name="company" type="Company"/>
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+    </transfer>
+
+    <transfer name="CompanyRoleResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="CompanyRole">
+        <property name="idCompanyRole" type="int"/>
+        <property name="isDefault" type="bool"/>
+        <property name="name" type="string"/>
+        <property name="companyUserCollection" type="CompanyUserCollection"/>
+    </transfer>
+
+    <transfer name="Permission">
+        <property name="idPermission" type="int"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCollection">
+        <property name="roles" type="CompanyRole[]" singular="role"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCriteriaFilter">
+        <property name="idCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company"/>
     </transfer>
 
 </transfers>

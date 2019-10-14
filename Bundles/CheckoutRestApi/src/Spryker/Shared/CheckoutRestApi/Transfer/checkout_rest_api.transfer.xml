@@ -114,6 +114,8 @@
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="isExternalRedirect" type="bool"/>
     </transfer>
 
     <transfer name="SaveOrder">
@@ -171,10 +173,13 @@
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
         <property name="items" type="Item[]"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Item">
         <property name="sku" type="string"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="Customer">
@@ -191,6 +196,20 @@
     </transfer>
 
     <transfer name="CheckoutData">
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
 </transfers>

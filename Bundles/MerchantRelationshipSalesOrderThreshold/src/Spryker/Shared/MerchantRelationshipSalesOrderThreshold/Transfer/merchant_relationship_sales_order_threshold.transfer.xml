@@ -20,6 +20,7 @@
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
         <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">
@@ -41,6 +42,49 @@
 
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+    </transfer>
+
+    <transfer name="SalesOrderThresholdValue">
+        <property name="value" type="int" description="to be compared with threshold"/>
+        <property name="messageGlossaryKey" type="string"/>
+        <property name="salesOrderThresholdType" type="SalesOrderThresholdType"/>
+        <property name="threshold" type="int"/>
+        <property name="fee" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="idCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="SalesOrderThresholdLocalizedMessage">
+        <property name="localeCode" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="KeyTranslation">
+        <property _="" name="glossaryKey" type="int"/>
+    </transfer>
+
+    <transfer name="SalesOrderThresholdType">
     </transfer>
 
 </transfers>

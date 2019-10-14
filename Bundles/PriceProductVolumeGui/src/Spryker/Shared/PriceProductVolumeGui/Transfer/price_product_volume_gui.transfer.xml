@@ -13,4 +13,26 @@
         <property name="priceDataChecksum" type="string"/>
     </transfer>
 
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="idProduct" type="int"/>
+        <property name="idPriceProduct" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="idCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="fractionDigits" type="int"/>
+    </transfer>
+
 </transfers>

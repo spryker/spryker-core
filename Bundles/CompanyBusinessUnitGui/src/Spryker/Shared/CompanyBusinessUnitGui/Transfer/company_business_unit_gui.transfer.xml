@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company"/>
+    </transfer>
+
+</transfers>

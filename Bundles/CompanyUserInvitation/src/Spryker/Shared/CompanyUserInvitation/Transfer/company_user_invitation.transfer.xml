@@ -36,6 +36,7 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="companyUserInvitationHash" type="string"/>
+        <property name="idCustomer" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -43,6 +44,7 @@
         <property name="fkCompany" type="int"/>
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationCriteriaFilter">
@@ -137,6 +139,19 @@
         <property name="type" type="string"/>
         <property name="invitationLink" type="string"/>
         <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompany" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyUserResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
 </transfers>

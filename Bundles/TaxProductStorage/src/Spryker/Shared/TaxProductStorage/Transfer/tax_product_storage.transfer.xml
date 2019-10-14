@@ -9,4 +9,9 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+    </transfer>
+
 </transfers>

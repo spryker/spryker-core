@@ -5,6 +5,33 @@
 
     <transfer name="ProductConcrete">
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductUrl">
+        <property name="urls" type="LocalizedUrl[]" singular="url"/>
+    </transfer>
+
+    <transfer name="LocalizedUrl">
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

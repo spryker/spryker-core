@@ -34,4 +34,41 @@
         <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
     </transfer>
 
+    <transfer name="ApiData">
+        <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="ApiItem">
+        <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="ApiRequest">
+        <property name="filter" type="ApiFilter"/>
+    </transfer>
+
+    <transfer name="ApiPagination">
+        <property name="itemsPerPage" type="int"/>
+        <property name="page" type="int"/>
+        <property name="total" type="int"/>
+        <property name="pageTotal" type="int"/>
+    </transfer>
+
+    <transfer name="ApiCollection">
+        <property name="pagination" type="ApiPagination"/>
+    </transfer>
+
+    <transfer name="ApiQueryBuilderQuery">
+        <property name="apiRequest" type="ApiRequest"/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+    </transfer>
+
 </transfers>

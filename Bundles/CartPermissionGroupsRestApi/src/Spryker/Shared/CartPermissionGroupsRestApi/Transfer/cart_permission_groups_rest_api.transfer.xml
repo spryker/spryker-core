@@ -25,4 +25,8 @@
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>

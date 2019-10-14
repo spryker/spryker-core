@@ -15,14 +15,132 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="MoneyValue">
         <property name="priceData" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="fkStore" type="int"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
         <property name="isSearchable" type="bool"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="productBundle" type="ProductBundle"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="abstractSku" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="stocks" type="StockProduct[]" singular="stock"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="locale" type="Locale"/>
+        <property name="idProductImageSet" type="int"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="code" type="string"/>
+        <property name="fractionDigits" type="int"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttribute">
+        <property name="idProductManagementAttribute" type="int"/>
+        <property name="isSuper" type="bool"/>
+        <property name="inputType" type="string"/>
+        <property name="allowInput" type="bool"/>
+        <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceType" type="PriceType"/>
+        <property name="idPriceProduct" type="int"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="idProduct" type="int"/>
+        <property name="fkPriceType" type="int"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="idPriceType" type="int"/>
+        <property name="name" type="string"/>
+        <property name="priceModeConfiguration" type="string"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValue">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="stockType" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="TaxSetCollection">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="ProductForBundle">
+    </transfer>
+
+    <transfer name="ProductBundle">
+        <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
     </transfer>
 
 </transfers>

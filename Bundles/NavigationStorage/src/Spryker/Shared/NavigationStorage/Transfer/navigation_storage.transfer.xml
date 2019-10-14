@@ -6,6 +6,33 @@
     <transfer name="NavigationNodeLocalizedAttributes">
         <property name="categoryUrl" type="string"/>
         <property name="cmsPageUrl" type="string"/>
+        <property name="title" type="string"/>
+        <property name="cssClass" type="string"/>
+        <property name="link" type="string"/>
+        <property name="externalUrl" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="NavigationTree">
+        <property name="nodes" type="NavigationTreeNode[]" singular="node"/>
+        <property name="navigation" type="Navigation"/>
+    </transfer>
+
+    <transfer name="NavigationTreeNode">
+        <property name="navigationNode" type="NavigationNode"/>
+        <property name="children" type="NavigationTreeNode[]" singular="child"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="Navigation">
+        <property name="idNavigation" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
     </transfer>
 
 </transfers>

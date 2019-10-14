@@ -26,6 +26,12 @@
     <transfer name="ProductPayload">
         <property name="averageRating" type="float"/>
         <property name="reviewCount" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array"/>
+        <property name="payloadTransfers" type="array"/>
     </transfer>
 
 </transfers>

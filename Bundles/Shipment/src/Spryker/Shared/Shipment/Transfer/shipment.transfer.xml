@@ -38,6 +38,12 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="shipmentMethods" type="ShipmentMethod[]" singular="shipmentMethod" deprecated="Obsolete. Not used."/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="Address">
@@ -59,6 +65,8 @@
         <property name="fkCountry" type="int"/>
         <property name="fkRegion" type="int"/>
         <property name="iso2Code" type="string"/>
+        <property name="idSalesOrderAddress" type="int"/>
+        <property name="country" type="Country"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -75,17 +83,22 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="priceMode" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
         <property name="sku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int"/>
         <property name="orderItems" type="Item[]" singular="orderItem"/>
         <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="Expense">
@@ -98,6 +111,16 @@
         <property name="sumTaxAmount" type="int"/>
         <property name="taxRate" type="float"/>
         <property name="shipment" type="Shipment"/>
+        <property name="fkSalesOrder" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -151,10 +174,33 @@
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Mail">
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="effectiveRate" type="float"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="selectedCurrencyIsoCode" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="TaxSetCollection">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
     </transfer>
 
 </transfers>

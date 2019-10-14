@@ -30,4 +30,67 @@
         <property name="flysystemConfig" type="array"/>
     </transfer>
 
+    <transfer name="FileSystemQuery">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemResourceMetadata">
+    </transfer>
+
+    <transfer name="FileSystemList">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="recursive" type="bool"/>
+    </transfer>
+
+    <transfer name="FileSystemResource">
+    </transfer>
+
+    <transfer name="FileSystemStream">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="config" type="array"/>
+    </transfer>
+
+    <transfer name="FileSystemVisibility">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemCreateDirectory">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="config" type="array"/>
+    </transfer>
+
+    <transfer name="FileSystemDeleteDirectory">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemCopy">
+        <property name="fileSystemName" type="string"/>
+        <property name="sourcePath" type="string"/>
+        <property name="destinationPath" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemDelete">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="FileSystemContent">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="content" type="string"/>
+        <property name="config" type="array"/>
+    </transfer>
+
+    <transfer name="FileSystemRename">
+        <property name="fileSystemName" type="string"/>
+        <property name="path" type="string"/>
+        <property name="newPath" type="string"/>
+    </transfer>
+
 </transfers>
