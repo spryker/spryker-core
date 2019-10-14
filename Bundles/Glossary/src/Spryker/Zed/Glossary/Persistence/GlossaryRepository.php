@@ -42,6 +42,33 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
+     * @param string[] $glossaryKeys
+     * @param string[] $localeIsoCodes
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleIsoCodes(array $glossaryKeys, array $localeIsoCodes): array
+    {
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities */
+        $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
+            ->useGlossaryKeyQuery()
+                ->filterByKey_In($glossaryKeys)
+                ->withColumn('key', 'glossaryKey')
+            ->endUse()
+            ->useLocaleQuery()
+                ->filterByLocaleName_In($localeIsoCodes)
+                ->withColumn('locale_name', 'localeName')
+            ->endUse()
+            ->find();
+
+        if ($glossaryTranslationEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapGlossaryTranslationEntitiesToTranslationTransfers($glossaryTranslationEntities);
+    }
+
+    /**
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]

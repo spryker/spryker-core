@@ -23,9 +23,9 @@ interface GlossaryRepositoryInterface
 
     /**
      * @param string[] $keyNames
-     * @param string[] $localeNames
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return void
      */
-    public function loadTranslations(array $keyNames, array $localeNames): void;
+    public function loadTranslations(array $keyNames, array $localeTransfers): void;
 }

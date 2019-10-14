@@ -53,11 +53,11 @@ interface ProductAttributeToGlossaryInterface
 
     /**
      * @param string[] $keyNames
-     * @param string[] $localeNames
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function getTranslations(array $keyNames, array $localeNames): array;
+    public function getTranslationsByGlossaryKeysAndLocales(array $keyNames, array $localeTransfers): array;
 
     /**
      * @param string $keyName

@@ -145,21 +145,6 @@ interface GlossaryFacadeInterface
     public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
-     * Specifications:
-     * - Finds translations for specified keys and locales.
-     *
-     * @api
-     *
-     * @param string[] $keyNames
-     * @param string[] $localeNames
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
-     */
-    public function getTranslations(array $keyNames, array $localeNames): array;
-
-    /**
      * @api
      *
      * @param string $keyName
@@ -325,4 +310,17 @@ interface GlossaryFacadeInterface
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
     public function getTranslationsByGlossaryKeyAndLocales(string $glossaryKey, array $localeTransfers): array;
+
+    /**
+     * Specifications:
+     * - Finds all translations for specified keys and locales.
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocales(array $glossaryKeys, array $localeTransfers): array;
 }

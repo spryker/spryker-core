@@ -32,28 +32,28 @@ class GlossaryRepository implements GlossaryRepositoryInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string
      */
-    public function getTranslationByKeyNameAndLocaleTransfer($keyName, LocaleTransfer $locale): string
+    public function getTranslationByKeyNameAndLocaleTransfer($keyName, LocaleTransfer $localeTransfer): string
     {
-        if (!isset(static::$glossaryMap[$locale->getIdLocale()][$keyName])) {
-            $this->loadTranslations([$keyName], [$locale->getIdLocale()]);
+        if (!isset(static::$glossaryMap[$localeTransfer->getIdLocale()][$keyName])) {
+            $this->loadTranslations([$keyName], [$localeTransfer]);
         }
 
-        return static::$glossaryMap[$locale->getIdLocale()][$keyName];
+        return static::$glossaryMap[$localeTransfer->getIdLocale()][$keyName];
     }
 
     /**
      * @param string[] $keyNames
-     * @param string[] $localeNames
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return void
      */
-    public function loadTranslations(array $keyNames, array $localeNames): void
+    public function loadTranslations(array $keyNames, array $localeTransfers): void
     {
-        $translations = $this->glossaryFacade->getTranslations($keyNames, $localeNames);
+        $translations = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocales($keyNames, $localeTransfers);
         foreach ($translations as $translation) {
             static::$glossaryMap[$translation->getFkLocale()][$translation->getGlossaryKey()] = $translation->getValue();
         }

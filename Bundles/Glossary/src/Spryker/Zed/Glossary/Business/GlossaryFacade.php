@@ -186,23 +186,6 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string[] $keyNames
-     * @param string[] $localeNames
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
-     */
-    public function getTranslations(array $keyNames, array $localeNames): array
-    {
-        $translationManager = $this->getFactory()->createTranslationManager();
-
-        return $translationManager->getTranslationsByKeyNames($keyNames, $localeNames);
-    }
-
-    /**
      * @api
      *
      * @param string $keyName
@@ -422,5 +405,22 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
         return $this->getFactory()
             ->createTranslationReader()
             ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocales(array $glossaryKeys, array $localeTransfers): array
+    {
+        return $this->getFactory()
+            ->createTranslationReader()
+            ->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $localeTransfers);
     }
 }

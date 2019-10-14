@@ -306,46 +306,6 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param string[] $keyNames
-     * @param string[] $localeNames
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
-     */
-    public function getTranslationsByKeyNames(array $keyNames, array $localeNames)
-    {
-        $translationTransfers = [];
-        $fetchedKeys = [];
-        $translations = $this->glossaryQueryContainer->queryTranslations()
-            ->useGlossaryKeyQuery()
-                ->filterByKey_In($keyNames)
-                ->withColumn('key', 'glossaryKey')
-            ->endUse()
-            ->useLocaleQuery()
-                ->filterByLocaleName_In($localeNames)
-                ->withColumn('locale_name', 'localeName')
-            ->endUse()
-            ->find();
-
-        foreach ($translations as $translation) {
-            $translationTransfer = $this->convertEntityToTranslationTransfer($translation);
-            $translationTransfers[] = $translationTransfer;
-            $fetchedKeys[$translationTransfer->getLocaleName()][$translationTransfer->getGlossaryKey()] = true;
-        }
-
-        foreach ($localeNames as $localeName) {
-            foreach ($keyNames as $keyName) {
-                if (!isset($fetchedKeys[$localeName][$keyName])) {
-                    throw new MissingTranslationException(sprintf('Could not find a translation for key %s, locale %s', $keyName, $localeName));
-                }
-            }
-        }
-
-        return $translationTransfers;
-    }
-
-    /**
      * @param int $idItem
      *
      * @return void

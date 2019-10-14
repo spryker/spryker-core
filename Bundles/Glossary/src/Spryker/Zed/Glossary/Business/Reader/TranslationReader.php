@@ -40,6 +40,21 @@ class TranslationReader implements TranslationReaderInterface
     }
 
     /**
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
+    {
+        if (!$localeTransfers) {
+            return [];
+        }
+
+        return $this->glossaryRepository->getTranslationsByGlossaryKeysAndLocaleIsoCodes($glossaryKeys, $this->getLocaleIsoCodes($localeTransfers));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return string[]

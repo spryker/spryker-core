@@ -157,16 +157,6 @@ interface TranslationManagerInterface
     public function getTranslationByKeyName($keyName, LocaleTransfer $locale);
 
     /**
-     * @param string[] $keyNames
-     * @param string[] $localeNames
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
-     */
-    public function getTranslationsByKeyNames(array $keyNames, array $localeNames);
-
-    /**
      * @param int $idKey
      *
      * @return void

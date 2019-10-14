@@ -94,12 +94,8 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
                 $productAttributeEntity->getSpyProductAttributeKey()->getKey()
             );
         }
-        $localeNames = [];
         $availableLocales = $this->localeFacade->getLocaleCollection();
-        foreach ($availableLocales as $localeTransfer) {
-            $localeNames[] = $localeTransfer->getLocaleName();
-        }
-        $this->glossaryRepository->loadTranslations($glossaryKeys, $localeNames);
+        $this->glossaryRepository->loadTranslations($glossaryKeys, $availableLocales);
 
         foreach ($productAttributeEntityCollection as $productAttributeEntity) {
             $transferList[] = $this->convertProductAttribute($productAttributeEntity);
