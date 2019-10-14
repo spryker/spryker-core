@@ -18,7 +18,7 @@
         <property name="sku" type="string"/>
         <property name="idProductConcrete" type="int"/>
         <property name="fkProductAbstract" type="int"/>
-        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="Item">

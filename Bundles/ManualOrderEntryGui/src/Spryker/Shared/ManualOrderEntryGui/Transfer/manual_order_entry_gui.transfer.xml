@@ -7,7 +7,7 @@
         <property name="voucherCode" type="string"/>
         <property name="storeCurrency" type="string"/>
         <property name="products" type="Item[]"/>
-        <property name="items" type="Item[]"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="isProductPosted" type="bool"/>
         <property name="isSubmitOrder" type="bool"/>
     </transfer>
@@ -19,7 +19,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
-        <property name="items" type="Item[]"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="payment" type="Payment"/>
         <property name="payments" type="Payment[]"/>

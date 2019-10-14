@@ -17,6 +17,7 @@
 
     <transfer name="ReclamationCreateRequest">
         <property name="order" type="Order"/>
+        <property name="orderItems" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">

@@ -17,6 +17,7 @@
         <property name="idProductLabel" type="int"/>
         <property name="isExclusive" type="bool"/>
         <property name="isPublished" type="bool"/>
+        <property name="localizedAttributesCollection" singular="localizedAttributes" type="ProductLabelLocalizedAttributes[]"/>
     </transfer>
 
     <transfer name="Locale">

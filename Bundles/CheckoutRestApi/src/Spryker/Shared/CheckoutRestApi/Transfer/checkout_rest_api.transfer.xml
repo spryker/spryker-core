@@ -172,7 +172,7 @@
 
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
-        <property name="items" type="Item[]"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="uuid" type="string"/>
         <property name="customerReference" type="string"/>

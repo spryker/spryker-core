@@ -66,6 +66,7 @@
 
     <transfer name="ProductConcrete">
         <property name="fkProductAbstract" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">

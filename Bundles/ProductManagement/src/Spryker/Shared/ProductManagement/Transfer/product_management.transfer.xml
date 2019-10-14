@@ -47,7 +47,7 @@
         <property name="sku" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
-        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="productBundle" type="ProductBundle"/>
         <property name="idProductConcrete" type="int"/>
         <property name="attributes" type="array" singular="attribute"/>
@@ -107,6 +107,7 @@
         <property name="fkPriceType" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="skuProductAbstract" type="string"/>
+        <property name="skuProduct" type="string"/>
     </transfer>
 
     <transfer name="PriceType">

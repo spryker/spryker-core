@@ -11,7 +11,7 @@
         <property name="billingAddress" type="Address"/>
         <property name="voucherCode" type="string"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
-        <property name="items" type="Item[]"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="store" type="Store"/>

@@ -5,7 +5,7 @@
 
     <transfer name="ProductConcrete">
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
-        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="fkProductAbstract" type="int"/>
     </transfer>
 

@@ -60,7 +60,7 @@
 
     <transfer name="ProductConcrete">
         <property name="attributes" type="array" singular="attribute"/>
-        <property name="localizedAttributes" type="LocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="idProductConcrete" type="int"/>
     </transfer>
 
