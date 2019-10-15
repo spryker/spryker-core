@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuoteApproval\Checker;
 
+use Countable;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\QuoteApproval\QuoteApprovalConfig;
 
@@ -43,6 +44,10 @@ class QuoteChecker implements QuoteCheckerInterface
 
         foreach ($this->quoteApprovalConfig->getRequiredQuoteFieldsForApprovalProcess() as $requiredQuoteField) {
             if (empty($quoteData[$requiredQuoteField])) {
+                return false;
+            }
+
+            if ($quoteData[$requiredQuoteField] instanceof Countable && !count($quoteData[$requiredQuoteField])) {
                 return false;
             }
         }

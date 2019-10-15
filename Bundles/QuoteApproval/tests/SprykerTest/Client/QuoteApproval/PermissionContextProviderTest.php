@@ -81,7 +81,7 @@ class PermissionContextProviderTest extends Unit
     {
         /** @var \Spryker\Client\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfigMock */
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalConfig::class)
-            ->setMethods(['getRequiredQuoteFieldsForApprovalProcess', 'isShipmentPriceIncludedInQuoteApprovalPermissionCheck'])
+            ->setMethods(['isShipmentPriceIncludedInQuoteApprovalPermissionCheck'])
             ->disableOriginalConstructor()
             ->getMock();
 

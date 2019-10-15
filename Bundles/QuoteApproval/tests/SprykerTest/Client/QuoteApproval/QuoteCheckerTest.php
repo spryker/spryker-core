@@ -120,7 +120,7 @@ class QuoteCheckerTest extends Unit
             ->method('getRequiredQuoteFieldsForApprovalProcess')
             ->willReturn([
                 QuoteTransfer::BILLING_ADDRESS,
-                QuoteTransfer::PAYMENTS,
+                QuoteTransfer::PAYMENT,
             ]);
 
         return $quoteApprovalConfigMock;
