@@ -34,6 +34,11 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
     protected $offset;
 
     /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
+    /**
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
@@ -82,10 +87,26 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+        if (!$this->searchContextTransfer) {
+            $this->setupSearchContext();
+        }
 
-        return $searchContextTransfer;
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for string search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -120,5 +141,14 @@ class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterf
         if ($this->offset !== null) {
             $baseQuery->setFrom($this->offset);
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupSearchContext(): void
+    {
+        $this->searchContextTransfer = new SearchContextTransfer();
+        $this->searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
     }
 }

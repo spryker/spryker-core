@@ -24,16 +24,15 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      *
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     * @param array $resultFormatters
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, SearchContextTransfer $searchContextTransfer, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        return $this->getClient()->search($searchQuery, $searchContextTransfer, $resultFormatters, $requestParameters);
+        return $this->getClient()->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
     /**

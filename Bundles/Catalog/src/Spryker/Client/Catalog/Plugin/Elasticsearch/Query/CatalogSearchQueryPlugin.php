@@ -36,6 +36,11 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     protected $query;
 
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
     public function __construct()
     {
         $this->query = $this->createSearchQuery();
@@ -64,10 +69,26 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+        if (!$this->searchContextTransfer) {
+            $this->setupSearchContext();
+        }
 
-        return $searchContextTransfer;
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for catalog search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -150,5 +171,14 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
         $boolQuery->addMust($matchQuery);
 
         return $boolQuery;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupSearchContext(): void
+    {
+        $this->searchContextTransfer = new SearchContextTransfer();
+        $this->searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
     }
 }

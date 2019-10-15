@@ -38,6 +38,11 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     protected $productReviewSearchRequestTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
      */
     public function __construct(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
@@ -69,10 +74,35 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+        if (!$this->searchContextTransfer) {
+            $this->setupSearchContext();
+        }
 
-        return $searchContextTransfer;
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for product review search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupSearchContext(): void
+    {
+        $this->searchContextTransfer = new SearchContextTransfer();
+        $this->searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
     }
 
     /**

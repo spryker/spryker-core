@@ -31,16 +31,15 @@ class Search implements SearchInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
      */
-    public function search(QueryInterface $searchQuery, SearchContextTransfer $searchContextTransfer, array $resultFormatters = [], array $requestParameters = [])
+    public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        $rawSearchResult = $this->executeQuery($searchQuery, $searchContextTransfer);
+        $rawSearchResult = $this->executeQuery($searchQuery);
 
         if (!$resultFormatters) {
             return $rawSearchResult;
@@ -68,18 +67,17 @@ class Search implements SearchInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $query
      *
      * @throws \Spryker\Client\SearchElasticsearch\Exception\SearchResponseException
      *
      * @return \Elastica\ResultSet
      */
-    protected function executeQuery(QueryInterface $query, SearchContextTransfer $searchContextTransfer): ResultSet
+    protected function executeQuery(QueryInterface $query): ResultSet
     {
         try {
             $searchQuery = $query->getSearchQuery();
-            $index = $this->getIndexForQuery($searchContextTransfer);
+            $index = $this->getIndexForQuery($query->getSearchContext());
             $rawSearchResult = $index->search($searchQuery);
         } catch (ResponseException $e) {
             $rawQuery = json_encode($searchQuery->toArray());

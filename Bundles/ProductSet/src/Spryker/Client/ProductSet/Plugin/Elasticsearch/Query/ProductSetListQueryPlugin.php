@@ -38,6 +38,11 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
     protected $query;
 
     /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
+
+    /**
      * @param int|null $limit
      * @param int|null $offset
      */
@@ -72,10 +77,35 @@ class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+        if (!$this->searchContextTransfer) {
+            $this->setupSearchContext();
+        }
 
-        return $searchContextTransfer;
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for product set list search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupSearchContext(): void
+    {
+        $this->searchContextTransfer = new SearchContextTransfer();
+        $this->searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
     }
 
     /**
