@@ -25,20 +25,6 @@ interface ProductBundleToProductInterface
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductAbstract($idProductAbstract);
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function activateProductConcrete($idProductConcrete);
-
-    /**
      * @param string $concreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

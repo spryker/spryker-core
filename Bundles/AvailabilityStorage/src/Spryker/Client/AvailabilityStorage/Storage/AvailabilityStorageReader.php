@@ -53,7 +53,8 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
 
-        $isAbstractProductAvailable = $this->isAbstractProductAvailable($spyAvailabilityAbstractTransfer);
+        $isAbstractProductAvailable = $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
+            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
         $storageAvailabilityTransfer->setIsAbstractProductAvailable($isAbstractProductAvailable);
 
         $concreteAvailabilities = [];
@@ -68,17 +69,6 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $storageAvailabilityTransfer->setConcreteProductAvailableItems($concreteAvailabilities);
 
         return $storageAvailabilityTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer
-     *
-     * @return bool
-     */
-    protected function isAbstractProductAvailable(SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer): bool
-    {
-        return $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
-            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
     }
 
     /**
@@ -134,7 +124,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
 
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setStore($store);
-        $synchronizationDataTransfer->setReference($idProductAbstract);
+        $synchronizationDataTransfer->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService->getStorageKeyBuilder(AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
     }

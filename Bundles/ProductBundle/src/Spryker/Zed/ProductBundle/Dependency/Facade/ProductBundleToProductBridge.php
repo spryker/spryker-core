@@ -38,26 +38,6 @@ class ProductBundleToProductBridge implements ProductBundleToProductInterface
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
-    public function touchProductAbstract($idProductAbstract)
-    {
-        $this->productFacade->touchProductAbstract($idProductAbstract);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
-    public function activateProductConcrete($idProductConcrete)
-    {
-        $this->productFacade->activateProductConcrete($idProductConcrete);
-    }
-
-    /**
      * @param string $concreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

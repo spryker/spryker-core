@@ -9,7 +9,6 @@ namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\DecimalObject\Decimal;
 
 class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
 {
@@ -24,26 +23,6 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     public function __construct($stockFacade)
     {
         $this->stockFacade = $stockFacade;
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateStockForProduct(string $sku): Decimal
-    {
-        return $this->stockFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function isNeverOutOfStock($sku)
-    {
-        return $this->stockFacade->isNeverOutOfStock($sku);
     }
 
     /**
@@ -64,14 +43,6 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     public function updateStockProduct(StockProductTransfer $stockProductTransfer)
     {
         return $this->stockFacade->updateStockProduct($stockProductTransfer);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAvailableStockTypes()
-    {
-        return $this->stockFacade->getAvailableStockTypes();
     }
 
     /**

@@ -22,11 +22,11 @@ use Spryker\DecimalObject\Decimal;
 abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
 {
     /**
-     * @param string|int|float $amount
+     * @param \Spryker\DecimalObject\Decimal $amount
      *
      * @return void
      */
-    public function decrement($amount)
+    public function decrement(Decimal $amount)
     {
         $this->setQuantity(
             (new Decimal($this->getQuantity()))->subtract($amount)
@@ -34,11 +34,11 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
     }
 
     /**
-     * @param string|int|float $amount
+     * @param \Spryker\DecimalObject\Decimal $amount
      *
      * @return void
      */
-    public function increment($amount)
+    public function increment(Decimal $amount)
     {
         $this->setQuantity(
             (new Decimal($this->getQuantity()))->add($amount)

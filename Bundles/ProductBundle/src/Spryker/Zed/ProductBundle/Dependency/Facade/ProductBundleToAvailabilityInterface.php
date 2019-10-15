@@ -15,29 +15,6 @@ interface ProductBundleToAvailabilityInterface
     /**
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool;
-
-    /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return void
-     */
-    public function touchAvailabilityAbstract($idAvailabilityAbstract);
-
-    /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability(string $sku, Decimal $quantity): int;
-
-    /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
