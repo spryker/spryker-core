@@ -68,13 +68,5 @@
          <property name="promotionItem" type="PromotionItem"/>
     </transfer>
 
-    <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="PersistentCartChange">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
 </transfers>
 

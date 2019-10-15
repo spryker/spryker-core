@@ -30,10 +30,6 @@
         <property name="originUnitNetPrice" type="int"/>
     </transfer>
 
-    <transfer name="Totals">
-        <property name="grandTotal" type="int"/>
-    </transfer>
-
     <transfer name="OfferList">
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
