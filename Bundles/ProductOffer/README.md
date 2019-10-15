@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-offer.svg)](https://travis-ci.org/spryker/product-offer)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-offer/badge.svg)](https://coveralls.io/github/spryker/product-offer)
 
-{{ADD DESCRIPTION HERE}}
+This module provides the core functionality for product offer features.
 
 ## Installation
 
