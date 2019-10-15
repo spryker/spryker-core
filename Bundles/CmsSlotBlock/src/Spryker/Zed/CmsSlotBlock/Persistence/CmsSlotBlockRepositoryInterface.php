@@ -9,4 +9,10 @@ namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
 interface CmsSlotBlockRepositoryInterface
 {
+    /**
+     * @param int[] $slotIds
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[]
+     */
+    public function getCmsSlotBlocksBySlotIds(array $slotIds): array;
 }

@@ -14,4 +14,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockRepositoryInterface
 {
+    /**
+     * @param int[] $slotIds
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[]
+     */
+    public function getCmsSlotBlocksBySlotIds(array $slotIds): array
+    {
+        $cmsSLotBlocks = $this->getFactory()
+            ->getCmsSLotBlockQuery()
+            ->filterByFkCmsSlot_In($slotIds)
+            ->find();
+
+        return $this->getFactory()->createCmsSlotBlockMapper()->mapCmsSlotBlockEntitiesToTransfers($cmsSLotBlocks);
+    }
 }
