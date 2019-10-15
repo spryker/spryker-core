@@ -70,4 +70,29 @@ interface ProductAlternativeStorageFacadeInterface
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
+
+    /**
+     * Specification:
+     * - Returns ProductReplacementForStorage collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function getAllProductReplacementForStorageByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Returns ProductReplacementForStorage collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function getProductReplacementForStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
 }

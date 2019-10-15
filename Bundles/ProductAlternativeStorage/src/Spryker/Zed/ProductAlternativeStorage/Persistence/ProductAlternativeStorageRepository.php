@@ -242,6 +242,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @deprecated Use getAllProductReplacementForStorageByFilter instead.
+     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array
@@ -253,6 +255,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @deprecated Use getProductReplacementForStorageByFilter instead.
+     *
      * @param int[] $productReplacementForStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
@@ -296,6 +300,38 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
         return $this->getFactory()
             ->createProductAlternativeStoragePropelQuery()
             ->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds)
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset())
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function getAllProductReplacementForStorageByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery()
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset())
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function getProductReplacementForStorageByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array
+    {
+        return $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery()
+            ->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds)
             ->limit($filterTransfer->getLimit())
             ->offset($filterTransfer->getOffset())
             ->find()

@@ -91,4 +91,33 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
     {
         return $this->getRepository()->getProductAlternativeStorageByFilter($filterTransfer, $ids);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function getAllProductReplacementForStorageByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getAllProductReplacementForStorageByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     */
+    public function getProductReplacementForStorageByFilter(FilterTransfer $filterTransfer, array $ids): array
+    {
+        return $this->getRepository()->getProductReplacementForStorageByFilter($filterTransfer, $ids);
+    }
 }
