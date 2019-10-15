@@ -9,12 +9,11 @@ namespace SprykerTest\Shared\Stock\Helper;
 
 use ArrayObject;
 use Codeception\Module;
+use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\DataBuilder\StockProductBuilder;
-use Generated\Shared\DataBuilder\TypeBuilder;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockStore;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -36,7 +35,6 @@ class StockDataHelper extends Module
         $stockProductTransfer = (new StockProductBuilder($seedData))->build();
         $stockProductTransfer->setStockType($stockTransfer->getName());
 
-        $stockFacade->createStockType($stockTransfer);
         $stockFacade->createStockProduct(
             (new StockProductBuilder($seedData))
                 ->build()
@@ -47,14 +45,14 @@ class StockDataHelper extends Module
     /**
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\TypeTransfer
+     * @return \Generated\Shared\Transfer\StockTransfer
      */
-    public function haveStock(array $seedData = []): TypeTransfer
+    public function haveStock(array $seedData = []): StockTransfer
     {
-        $stockTransfer = (new TypeBuilder($seedData))->build();
-        $this->getStockFacade()->createStockType($stockTransfer);
+        $stockTransfer = (new StockBuilder($seedData))->build();
+        $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
 
-        return $stockTransfer;
+        return $stockResponseTransfer->getStock();
     }
 
     /**

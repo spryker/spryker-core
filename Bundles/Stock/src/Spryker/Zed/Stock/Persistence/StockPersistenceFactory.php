@@ -18,6 +18,7 @@ use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockStoreRelationMapper;
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
  * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface getEntityManager()
  */
 class StockPersistenceFactory extends AbstractPersistenceFactory
 {

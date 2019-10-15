@@ -37,4 +37,11 @@ interface StockRepositoryInterface
      * @return \Generated\Shared\Transfer\StockTransfer[]
      */
     public function getStocksWithRelatedStoresByCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): array;
+
+    /**
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer;
 }

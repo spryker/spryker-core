@@ -22,6 +22,15 @@
                         <icon>fa-angle-double-right</icon>
                         <visible>0</visible>
                     </warehouse-view>
+                    <create-warehouses>
+                        <label>Create Warehouses</label>
+                        <title>Create Warehouses</title>
+                        <bundle>stock-gui</bundle>
+                        <controller>create-warehouse</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </create-warehouses>
                 </pages>
             </warehouses>
         </pages>

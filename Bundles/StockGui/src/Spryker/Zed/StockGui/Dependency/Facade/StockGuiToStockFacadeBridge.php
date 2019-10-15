@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\StockGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 
 class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
@@ -48,5 +49,25 @@ class StockGuiToStockFacadeBridge implements StockGuiToStockFacadeInterface
     public function findStockById(int $idStock): ?StockTransfer
     {
         return $this->stockFacade->findStockById($idStock);
+    }
+
+    /**
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer
+    {
+        return $this->stockFacade->findStockByName($stockName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->stockFacade->createStock($stockTransfer);
     }
 }

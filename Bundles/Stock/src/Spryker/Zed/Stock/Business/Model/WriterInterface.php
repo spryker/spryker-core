@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\TypeTransfer;
 interface WriterInterface
 {
     /**
+     * @deprecated Use \Spryker\Zed\Stock\Business\Stock\StockCreatorInterface::createStock() instead.
+     *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
      * @return int

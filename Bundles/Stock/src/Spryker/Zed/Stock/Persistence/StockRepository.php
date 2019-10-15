@@ -91,6 +91,27 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     }
 
     /**
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer
+    {
+        $stockEntity = $this->getFactory()
+            ->createStockQuery()
+            ->filterByName($stockName)
+            ->findOne();
+
+        if ($stockEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createStockMapper()
+            ->mapStockEntityToStockTransfer($stockEntity, new StockTransfer());
+    }
+
+    /**
      * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
