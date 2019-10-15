@@ -81,8 +81,8 @@
     </transfer>
 
     <transfer name="KeyTranslation">
-        <property _="" name="glossaryKey" type="int"/>
-        <property _="" name="locales" type="array" singular="locales"/>
+        <property name="glossaryKey" type="int"/>
+        <property name="locales" type="array" singular="locales"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdType">
