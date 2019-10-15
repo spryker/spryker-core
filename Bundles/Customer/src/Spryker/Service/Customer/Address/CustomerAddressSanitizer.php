@@ -33,7 +33,7 @@ class CustomerAddressSanitizer implements CustomerAddressSanitizerInterface
     public function sanitizeUniqueAddressValues(AddressTransfer $addressTransfer): AddressTransfer
     {
         $addressFieldsList = $this->customerConfig->getAddressFieldsToSanitizeValuesList();
-        if (count($addressFieldsList) === 0) {
+        if ($addressFieldsList === []) {
             return $addressTransfer;
         }
 
