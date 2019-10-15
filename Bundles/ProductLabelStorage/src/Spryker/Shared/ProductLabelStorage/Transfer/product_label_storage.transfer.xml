@@ -21,4 +21,10 @@
         <property name="frontEndReference" type="string"/>
     </transfer>
 
+    <transfer name="FacetConfig">
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
 </transfers>

@@ -25,4 +25,17 @@
         <property name="externalUrlLarge" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="name" type="string"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
 </transfers>

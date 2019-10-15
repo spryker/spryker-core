@@ -58,6 +58,7 @@
         <property name="pagination" type="Pagination"/>
         <property name="withHidden" type="bool"/>
         <property name="idQuoteRequest" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="QuoteRequestVersionFilter">

@@ -28,10 +28,16 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
 </transfers>

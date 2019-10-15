@@ -23,4 +23,13 @@
         <property name="metaKeywords" type="string"/>
     </transfer>
 
+    <transfer name="UrlStorage">
+        <property name="fkResourceCategorynode" type="int"/>
+    </transfer>
+
+    <transfer name="UrlStorageResourceMap">
+        <property name="resourceKey" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
 </transfers>

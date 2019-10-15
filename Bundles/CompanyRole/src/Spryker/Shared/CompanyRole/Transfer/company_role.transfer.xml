@@ -23,6 +23,7 @@
         <property name="permissionCollection" type="PermissionCollection"/>
         <property name="companyUserCollection" type="CompanyUserCollection"/>
         <property name="company" type="Company"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Company">
@@ -85,7 +86,7 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="Permissions" type="PermissionCollection"/>
+        <property name="permissions" type="PermissionCollection"/>
     </transfer>
 
     <transfer name="ResponseMessage">

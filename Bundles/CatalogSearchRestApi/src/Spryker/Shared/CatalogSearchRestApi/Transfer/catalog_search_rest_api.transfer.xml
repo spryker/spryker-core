@@ -102,4 +102,15 @@
         <property name="isMultiValued" type="bool"/>
     </transfer>
 
+    <transfer name="FacetSearchResult">
+        <property name="config" type="FacetConfig"/>
+    </transfer>
+
+    <transfer name="RangeSearchResult">
+        <property name="config" type="FacetConfig"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+    </transfer>
+
 </transfers>
