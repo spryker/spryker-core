@@ -7,19 +7,18 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use ProductAlternativeSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
  */
-class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductAlternativeSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -83,16 +82,21 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
 
     /**
      * {@inheritDoc}
+     * - Returns SynchronizationDataTransfer collection.
      *
      * @api
      *
+     * @param int $offset
+     * @param int $limit
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $productAlternativeStorageEntities = $this->findProductAlternativeStorageEntities($ids);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
+        $productAlternativeStorageEntities = $this->findProductAlternativeStorageEntities($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductAlternativeStorageMapper()
@@ -100,16 +104,30 @@ class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin impleme
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
-    protected function findProductAlternativeStorageEntities(array $ids): array
+    protected function findProductAlternativeStorageEntities(FilterTransfer $filterTransfer, array $ids): array
     {
         if ($ids === []) {
-            return $this->getRepository()->findAllProductAlternativeStorageEntities();
+            return $this->getFacade()->getAllProductAlternativeStorageByFilter($filterTransfer);
         }
 
-        return $this->getRepository()->findProductAlternativeStorageEntitiesByIds($ids);
+        return $this->getFacade()->getProductAlternativeStorageByFilter($filterTransfer, $ids);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

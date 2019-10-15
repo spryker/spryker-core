@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductAlternativeStorageFacadeInterface
 {
     /**
@@ -43,4 +45,29 @@ interface ProductAlternativeStorageFacadeInterface
      * @return void
      */
     public function publishConcreteReplacements(array $productIds): void;
+
+    /**
+     * Specification:
+     *  - Returns SpyProductAlternativeStorage collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function getAllProductAlternativeStorageByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     *  - Returns SpyProductAlternativeStorage collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
 }

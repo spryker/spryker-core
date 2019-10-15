@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -212,6 +213,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @deprecated Use getAllProductAlternativeStorageByFilter instead.
+     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array
@@ -223,6 +226,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @deprecated Use getProductAlternativeStorageByFilter instead.
+     *
      * @param int[] $productAlternativeStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
@@ -257,6 +262,42 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
         return $this->getFactory()
             ->createProductReplacementForStoragePropelQuery()
             ->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds)
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @module ProductAlternative
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function getAllProductAlternativeStorageByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductAlternativeStoragePropelQuery()
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset())
+            ->find()
+            ->getArrayCopy();
+    }
+
+    /**
+     * @module ProductAlternative
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array
+    {
+        return $this->getFactory()
+            ->createProductAlternativeStoragePropelQuery()
+            ->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds)
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset())
             ->find()
             ->getArrayCopy();
     }

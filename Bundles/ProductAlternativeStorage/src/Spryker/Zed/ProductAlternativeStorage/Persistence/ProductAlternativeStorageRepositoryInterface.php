@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 
 interface ProductAlternativeStorageRepositoryInterface
@@ -98,11 +99,15 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 
     /**
+     * @deprecated Use getAllProductAlternativeStorageByFilter instead.
+     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array;
 
     /**
+     * @deprecated Use getProductAlternativeStorageByFilter instead.
+     *
      * @param int[] $productAlternativeStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
@@ -120,4 +125,19 @@ interface ProductAlternativeStorageRepositoryInterface
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findProductReplacementForStorageEntitiesByIds(array $productReplacementForStorageIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function getAllProductAlternativeStorageByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     */
+    public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
 }
