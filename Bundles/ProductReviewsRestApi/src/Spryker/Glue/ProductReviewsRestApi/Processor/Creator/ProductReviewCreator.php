@@ -10,15 +10,19 @@ namespace Spryker\Glue\ProductReviewsRestApi\Processor\Creator;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductReviewsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
 {
+    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s/%s';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -53,8 +57,14 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
+        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+        if (!$parentResource || !$parentResource->getId()) {
+            return $this->createProductAbstractSkuMissingError();
+        }
+
         $productReviewResponseTransfer = $this->productReviewClient->submitCustomerReview(
             (new ProductReviewRequestTransfer())->fromArray($restProductReviewAttributesTransfer->toArray())
+                ->setIdProductAbstract($parentResource->getId())
                 ->setLocaleName($restRequest->getMetadata()->getLocale())
                 ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
         );
@@ -72,6 +82,36 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
             $restProductReviewAttributesTransfer
         );
 
-        return $restResponse->addResource($restResource)->setStatus(Response::HTTP_ACCEPTED);
+        return $restResponse
+            ->addResource($restResource->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink($parentResource->getId())))
+            ->setStatus(Response::HTTP_ACCEPTED);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createProductAbstractSkuMissingError(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return string
+     */
+    protected function createSelfLink(string $abstractSku): string
+    {
+        return sprintf(
+            static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $abstractSku,
+            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS
+        );
     }
 }

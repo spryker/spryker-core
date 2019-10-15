@@ -25,8 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductReviewReader implements ProductReviewReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
-    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s/%s/%s';
+    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s/%s';
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface
@@ -80,7 +81,17 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return $this->createProductAbstractSkuMissingError();
         }
 
-        $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $parentResource->getId());
+        $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
+            static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+            $parentResource->getId(),
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        $productReviewTransfers = $this->findProductReviewsInSearch(
+            $restRequest,
+            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+        );
+
         foreach ($productReviewTransfers as $productReviewTransfer) {
             $restProductReviewAttributesTransfer = $this->productReviewMapper
                 ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
@@ -94,7 +105,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
                 $restProductReviewAttributesTransfer
             )->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($parentResource->getId(), $productReviewTransfer->getIdProductReview())
+                $this->createSelfLink($parentResource->getId())
             );
 
             $restResponse->addResource($restResource);
@@ -125,7 +136,10 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return [];
         }
 
-        $productReviewTransfers = $this->findProductReviewsInSearch($restRequest, $abstractSku);
+        $productReviewTransfers = $this->findProductReviewsInSearch(
+            $restRequest,
+            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+        );
 
         return $this->prepareRestResourceCollection($abstractSku, $productReviewTransfers);
     }
@@ -170,7 +184,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
                 $restProductReviewAttributesTransfer
             )->addLink(
                 RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($abstractSku, $productReviewTransfer->getIdProductReview())
+                $this->createSelfLink($abstractSku)
             );
         }
 
@@ -192,18 +206,16 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @param string $abstractSku
-     * @param string $idProductReview
      *
      * @return string
      */
-    protected function createSelfLink(string $abstractSku, string $idProductReview): string
+    protected function createSelfLink(string $abstractSku): string
     {
         return sprintf(
             static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
             $abstractSku,
-            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $idProductReview
+            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS
         );
     }
 }

@@ -25,6 +25,6 @@ class ProductReviewMapper implements ProductReviewMapperInterface
         return $restProductReviewsAttributesTransfer->fromArray(
             $productReviewTransfer->toArray(),
             true
-        )->setIdProductAbstract($productReviewTransfer->getFkProductAbstract());
+        );
     }
 }

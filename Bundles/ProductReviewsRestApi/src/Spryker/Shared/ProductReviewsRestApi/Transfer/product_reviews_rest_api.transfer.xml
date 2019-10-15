@@ -16,7 +16,6 @@
     </transfer>
 
     <transfer name="RestProductReviewsAttributes">
-        <property name="idProductAbstract" type="int"/>
         <property name="rating" type="int"/>
         <property name="nickname" type="string"/>
         <property name="summary" type="string"/>
