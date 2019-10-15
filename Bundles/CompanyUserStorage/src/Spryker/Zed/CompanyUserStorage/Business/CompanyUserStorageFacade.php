@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -62,5 +63,34 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
         $this->getFactory()
             ->createCompanyUserStorageWriter()
             ->unpublishByCompanyUserIds($companyUserIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     */
+    public function getAllCompanyUserStorageByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getAllCompanyUserStorageByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     */
+    public function getCompanyUserStorageByFilter(FilterTransfer $filterTransfer, array $ids): array
+    {
+        return $this->getRepository()->getCompanyUserStorageByFilter($filterTransfer, $ids);
     }
 }

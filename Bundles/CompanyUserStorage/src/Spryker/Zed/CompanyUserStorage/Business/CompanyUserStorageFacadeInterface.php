@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface CompanyUserStorageFacadeInterface
 {
     /**
@@ -48,4 +50,29 @@ interface CompanyUserStorageFacadeInterface
      * @return void
      */
     public function unpublishByCompanyUserIds(array $companyUserIds): void;
+
+    /**
+     * Specification:
+     * - Returns all CompanyUserStorage collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     */
+    public function getAllCompanyUserStorageByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Returns CompanyUserStorage collection by ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
+     */
+    public function getCompanyUserStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
 }
