@@ -9,9 +9,11 @@ namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
+use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterface
 {
@@ -26,22 +28,36 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     protected $cartCodeMapper;
 
     /**
+     * @var CartsRestApiResourceInterface
+     */
+    protected $cartsRestApiResource;
+
+    /**
      * @param RestResourceBuilderInterface $restResourceBuilder
      * @param CartCodeMapperInterface $cartCodeMapper
+     * @param CartsRestApiResourceInterface $cartsRestApiResource
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder, CartCodeMapperInterface $cartCodeMapper)
-    {
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        CartCodeMapperInterface $cartCodeMapper,
+        CartsRestApiResourceInterface $cartsRestApiResource
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->cartCodeMapper = $cartCodeMapper;
+        $this->cartsRestApiResource = $cartsRestApiResource;
     }
 
     /**
      * @param CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param RestRequestInterface $restRequest
      * @return RestResponseInterface
      */
-    public function buildCartRestResponse(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): RestResponseInterface
-    {
-        //TODO:
-        return $this->restResourceBuilder->createRestResponse()->addResource(new RestResource('test222'));
+    public function buildCartRestResponse(
+        CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
+        $cartResource = $this->cartsRestApiResource->mapCartsResource($cartCodeOperationResultTransfer->getQuote(), $restRequest);
+
+        return $this->restResourceBuilder->createRestResponse()->addResource($cartResource);
     }
 }

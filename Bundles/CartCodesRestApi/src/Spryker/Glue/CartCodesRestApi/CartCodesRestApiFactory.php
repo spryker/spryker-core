@@ -13,6 +13,7 @@ use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilder;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
+use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -35,7 +36,8 @@ class CartCodesRestApiFactory extends AbstractFactory
     {
         return new CartCodeRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCartCodeMapper()
+            $this->createCartCodeMapper(),
+            $this->getCartsRestApiResource()
         );
     }
 
@@ -45,5 +47,11 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function createCartCodeMapper(): CartCodeMapperInterface
     {
         return new CartCodeMapper();
+    }
+
+    //TODO
+    public function getCartsRestApiResource(): CartsRestApiResourceInterface
+    {
+        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::CARTS_RESOURCE);
     }
 }

@@ -22,8 +22,10 @@ class DiscountsResourceController extends AbstractController
      * @param RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
      * @return RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()->createCartCodeAdder()->addCandidate($restRequest, $restDiscountRequestAttributesTransfer);
     }
 }

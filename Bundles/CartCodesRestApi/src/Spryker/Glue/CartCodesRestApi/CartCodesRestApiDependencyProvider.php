@@ -12,6 +12,9 @@ use Spryker\Glue\Kernel\Container;
 
 class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    //TODO
+    public const CARTS_RESOURCE = 'CARTS_RESOURCE';
+
     /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
@@ -19,7 +22,23 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = parent::provideDependencies($container);
+        $container = $this->addCartsResource($container);
+
+        return $container;
+    }
+
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addCartsResource(Container $container): Container
+    {
+        $container->set(static::CARTS_RESOURCE, function (Container $container) {
+            //TODO::
+            return $container->getLocator()->cartsRestApi()->resource();
+        });
 
         return $container;
     }

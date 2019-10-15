@@ -49,7 +49,7 @@ class CartCodeAdder implements CartCodeAdderInterface
             $restDiscountRequestAttributesTransfer->getCode()
         );
 
-        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer);
+        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
     }
 
     /**
