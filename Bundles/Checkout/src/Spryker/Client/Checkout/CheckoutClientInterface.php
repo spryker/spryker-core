@@ -40,7 +40,7 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
      * - Returns response with boolean isSuccess and an array of errors.
      *

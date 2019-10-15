@@ -119,6 +119,6 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
         return in_array($this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer), [
             QuoteApprovalConfig::STATUS_WAITING,
             QuoteApprovalConfig::STATUS_APPROVED,
-        ]);
+        ], true);
     }
 }

@@ -20,7 +20,7 @@
     </transfer>
 
     <transfer name="QuoteApprovalRequest">
-        <property name="idQuote" type="int" deprecated="Use Quote property instead."/>
+        <property name="idQuote" type="int" deprecated="Use quote property instead."/>
         <property name="quote" type="Quote"/>
         <property name="approverCompanyUserId" type="int"/>
         <property name="requesterCompanyUserId" type="int"/>

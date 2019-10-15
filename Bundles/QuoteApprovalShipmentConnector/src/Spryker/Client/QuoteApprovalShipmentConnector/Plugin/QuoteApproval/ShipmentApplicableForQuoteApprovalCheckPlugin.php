@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\QuoteApprovalShipmentConnector\Plugin;
+namespace Spryker\Client\QuoteApprovalShipmentConnector\Plugin\QuoteApproval;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;

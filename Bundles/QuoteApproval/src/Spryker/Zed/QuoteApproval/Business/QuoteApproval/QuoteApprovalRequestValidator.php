@@ -202,9 +202,14 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
         $quoteApprovalRequestTransfer->requireApproverCompanyUserId()
             ->requireRequesterCompanyUserId();
 
+        // For BC reasons only.
         if (!$quoteApprovalRequestTransfer->getQuote()) {
             $quoteApprovalRequestTransfer->requireIdQuote();
+
+            return;
         }
+
+        $quoteApprovalRequestTransfer->requireQuote();
     }
 
     /**
