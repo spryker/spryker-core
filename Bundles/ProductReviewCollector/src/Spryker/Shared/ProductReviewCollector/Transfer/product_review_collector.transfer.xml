@@ -23,5 +23,10 @@
         <property name="reviewCount" type="int"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
 </transfers>
 

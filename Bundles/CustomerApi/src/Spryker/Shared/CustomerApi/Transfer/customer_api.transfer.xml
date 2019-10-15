@@ -25,4 +25,13 @@
         <property name="fkLocale" type="int"/>
     </transfer>
 
+    <transfer name="PropelQueryBuilderColumn">
+        <property name="name" type="string"/>
+        <property name="alias" type="string"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumnSelection">
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
+    </transfer>
+
 </transfers>

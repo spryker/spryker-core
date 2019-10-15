@@ -17,4 +17,13 @@
         <property name="user" type="User[]"/>
     </transfer>
 
+    <transfer name="Groups">
+        <property name="groups" type="Group[]" singular="group"/>
+    </transfer>
+
+    <transfer name="Group">
+        <property name="idAclGroup" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

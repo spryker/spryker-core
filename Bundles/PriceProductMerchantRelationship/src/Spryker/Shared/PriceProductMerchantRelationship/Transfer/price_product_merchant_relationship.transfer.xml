@@ -18,4 +18,12 @@
         <property name="right" type="array"/>
         <property name="joinType" type="string"/>
     </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
 </transfers>

@@ -39,4 +39,12 @@
         <property name="fkProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
 </transfers>

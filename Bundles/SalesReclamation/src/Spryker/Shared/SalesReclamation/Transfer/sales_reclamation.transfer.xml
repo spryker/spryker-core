@@ -10,8 +10,8 @@
         <property name="customerEmail" type="string"/>
         <property name="isOpen" type="bool"/>
         <property name="order" type="Order"/>
-        <property name="reclamationItems" type="ReclamationItem[]" singular="ReclamationItem"/>
-        <property name="createdOrders" type="Order[]" singular="Order"/>
+        <property name="reclamationItems" type="ReclamationItem[]" singular="reclamationItem"/>
+        <property name="createdOrders" type="Order[]" singular="order"/>
     </transfer>
 
     <transfer name="ReclamationItem">
@@ -22,6 +22,6 @@
 
     <transfer name="ReclamationCreateRequest">
         <property name="order" type="Order"/>
-        <property name="orderItems" type="Item[]" singular="Item"/>
+        <property name="orderItems" type="Item[]" singular="item"/>
     </transfer>
 </transfers>

@@ -33,4 +33,9 @@
         <property name="idShipmentCarrier" type="int"/>
     </transfer>
 
+    <transfer name="Expense">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="unitNetPrice" type="int"/>
+    </transfer>
+
 </transfers>

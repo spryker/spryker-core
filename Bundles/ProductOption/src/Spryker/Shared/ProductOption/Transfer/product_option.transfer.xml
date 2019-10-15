@@ -18,6 +18,13 @@
         <property name="unitTaxAmount" type="int"/>
         <property name="sumTaxAmount" type="int"/>
         <property name="isOrdered" type="bool"/>
+        <property name="sumPrice" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="idSalesOrderItemOption" type="int"/>
     </transfer>
 
     <transfer name="ProductOptionCollection">
@@ -25,14 +32,14 @@
     </transfer>
 
     <transfer name="ProductOptionCriteria">
-        <property name="ProductOptionIds" type="array"/>
+        <property name="productOptionIds" type="array"/>
         <property name="productOptionGroupIsActive" type="bool"/>
         <property name="productConcreteSku" type="string"/>
     </transfer>
 
     <transfer name="Item">
         <property name="idProductAbstract" type="int"/>
-        <property name="IdSalesOrderItem" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
         <property name="name" type="string"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="quantity" type="int"/>
@@ -43,6 +50,8 @@
         <property name="refundableAmount" type="int"/>
         <property name="canceledAmount" type="int"/>
         <property name="shipment" type="Shipment"/>
+        <property name="sumProductOptionPriceAggregation" type="int"/>
+        <property name="unitProductOptionPriceAggregation" type="int"/>
     </transfer>
 
     <transfer name="Shipment">
