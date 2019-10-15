@@ -39,7 +39,7 @@
     <transfer name="SalesOrderConfiguredBundleFilter">
         <property name="configurableBundleTemplateUuid" type="string"/>
         <property name="configurableBundleTemplateSlotUuid" type="string"/>
-        <property name="salesOrderItemIds" type="array"/>
+        <property name="salesOrderItemIds" type="array" singular="salesOrderItemIds"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleCollection">

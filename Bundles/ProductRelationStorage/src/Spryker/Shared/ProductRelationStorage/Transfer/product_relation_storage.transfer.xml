@@ -5,7 +5,7 @@
 
     <transfer name="ProductRelationStorage">
         <property name="key" type="string"/>
-        <property name="productAbstractIds" type="array"/>
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
         <property name="isActive" type="bool"/>
     </transfer>
 

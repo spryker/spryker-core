@@ -5,7 +5,7 @@
 
     <transfer name="ProductSearchAttributeMap">
         <property name="attributeName" type="string"/>
-        <property name="targetFields" type="array"/>
+        <property name="targetFields" type="array" singular="targetFields"/>
     </transfer>
 
     <transfer name="ProductSearchPreferences">
@@ -37,7 +37,7 @@
 
     <transfer name="EventEntity">
         <property name="id" type="int"/>
-        <property name="foreignKeys" type="array"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
 
     <transfer name="SearchConfigExtension">

@@ -39,7 +39,7 @@
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
-        <property name="companyUserIds" type="array"/>
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
         <property name="isActive" type="bool"/>
     </transfer>
 

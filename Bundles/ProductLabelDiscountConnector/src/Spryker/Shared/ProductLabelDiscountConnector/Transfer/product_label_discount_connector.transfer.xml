@@ -21,7 +21,7 @@
         <property name="attribute" type="string"/>
         <property name="operator" type="string"/>
         <property name="value" type="string"/>
-        <property name="acceptedTypes" type="array"/>
+        <property name="acceptedTypes" type="array" singular="acceptedTypes"/>
     </transfer>
 
     <transfer name="Item">

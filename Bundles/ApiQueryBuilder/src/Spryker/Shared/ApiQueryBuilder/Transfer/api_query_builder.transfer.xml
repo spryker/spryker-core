@@ -19,9 +19,9 @@
     </transfer>
 
     <transfer name="ApiFilter">
-        <property name="sort" type="array"/>
+        <property name="sort" type="array" singular="sort"/>
         <property name="criteriaJson" type="string"/>
-        <property name="fields" type="array"/>
+        <property name="fields" type="array" singular="fields"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderPagination">

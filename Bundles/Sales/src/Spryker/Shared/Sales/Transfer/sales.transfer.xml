@@ -211,7 +211,7 @@
     <transfer name="StatemachineTrigger" deprecated="Not in use anymore, will be removed with next major">
         <property name="eventName" type="string"/>
         <property name="orderId" type="string"/>
-        <property name="references" type="array"/>
+        <property name="references" type="array" singular="references"/>
         <property name="context" type="string"/>
         <property name="observer" type="string"/>
     </transfer>

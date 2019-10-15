@@ -10,7 +10,7 @@
     <transfer name="ProductCategoryFilter">
         <property name="idProductCategoryFilter" type="int"/>
         <property name="filters" type="ProductCategoryFilterItem[]" singular="productCategoryFilterItem"/>
-        <property name="filterDataArray" type="array"/>
+        <property name="filterDataArray" type="array" singular="filterDataArray"/>
         <property name="fkCategory" type="int"/>
         <property name="filterData" type="string"/>
     </transfer>

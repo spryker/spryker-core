@@ -169,7 +169,7 @@
     <transfer name="Permission">
         <property name="key" type="string"/>
         <property name="idPermission" type="int"/>
-        <property name="configuration" type="array"/>
+        <property name="configuration" type="array" singular="configuration"/>
     </transfer>
 
     <transfer name="CustomerResponse">

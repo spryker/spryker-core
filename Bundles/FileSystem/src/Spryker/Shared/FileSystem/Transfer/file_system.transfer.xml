@@ -36,7 +36,7 @@
     <transfer name="FileSystemCreateDirectory">
         <property name="fileSystemName" type="string"/>
         <property name="path" type="string"/>
-        <property name="config" type="array"/>
+        <property name="config" type="array" singular="config"/>
     </transfer>
 
     <transfer name="FileSystemDeleteDirectory">
@@ -59,7 +59,7 @@
         <property name="fileSystemName" type="string"/>
         <property name="path" type="string"/>
         <property name="content" type="string"/>
-        <property name="config" type="array"/>
+        <property name="config" type="array" singular="config"/>
     </transfer>
 
     <transfer name="FileSystemRename">
@@ -71,7 +71,7 @@
     <transfer name="FileSystemStream">
         <property name="fileSystemName" type="string"/>
         <property name="path" type="string"/>
-        <property name="config" type="array"/>
+        <property name="config" type="array" singular="config"/>
     </transfer>
 
     <transfer name="FileSystemList">

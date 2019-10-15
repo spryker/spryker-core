@@ -13,13 +13,13 @@
     </transfer>
 
     <transfer name="PriceProductStorage">
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
     </transfer>
 
     <transfer name="ProductView">
         <property name="quantity" type="int"/>
         <property name="price" type="int"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="currentProductPrice" type="CurrentProductPrice"/>
         <property name="idProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>

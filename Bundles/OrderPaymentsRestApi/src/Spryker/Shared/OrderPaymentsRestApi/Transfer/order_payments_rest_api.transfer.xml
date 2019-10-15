@@ -5,12 +5,12 @@
 
     <transfer name="RestOrderPaymentsAttributes">
         <property name="paymentIdentifier" type="string" restRequestParameter="required"/>
-        <property name="dataPayload" type="array" restRequestParameter="required"/>
+        <property name="dataPayload" type="array" restRequestParameter="required" singular="dataPayload"/>
     </transfer>
 
     <transfer name="UpdateOrderPaymentRequest">
         <property name="paymentIdentifier" type="string"/>
-        <property name="dataPayload" type="array"/>
+        <property name="dataPayload" type="array" singular="dataPayload"/>
     </transfer>
 
     <transfer name="UpdateOrderPaymentResponse">

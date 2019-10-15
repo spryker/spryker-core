@@ -7,7 +7,7 @@
         <property name="idProductOptionValue" type="int"/>
         <property name="sku" type="string"/>
         <property name="price" type="int"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="value" type="string"/>
     </transfer>
 
@@ -50,7 +50,7 @@
     </transfer>
 
     <transfer name="ProductOptionValueStorePricesResponse">
-        <property name="storePrices" type="array"/>
+        <property name="storePrices" type="array" singular="storePrices"/>
     </transfer>
 
     <transfer name="MoneyValue">

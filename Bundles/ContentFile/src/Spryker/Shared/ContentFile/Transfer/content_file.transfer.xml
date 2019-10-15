@@ -7,13 +7,13 @@
     </transfer>
 
     <transfer name="ContentFileListType">
-        <property name="fileIds" type="array"/>
+        <property name="fileIds" type="array" singular="fileIds"/>
     </transfer>
 
     <transfer name="ContentTypeContext">
         <property name="idContent" type="int"/>
         <property name="term" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ContentValidationResponse">
@@ -28,6 +28,6 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 </transfers>

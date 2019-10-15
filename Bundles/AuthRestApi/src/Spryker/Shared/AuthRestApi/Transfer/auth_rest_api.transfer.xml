@@ -27,7 +27,7 @@
     </transfer>
 
     <transfer name="OauthAccessTokenData">
-        <property name="oauthScopes" type="array"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
     </transfer>
 
@@ -65,7 +65,7 @@
 
     <transfer name="OauthAccessTokenValidationResponse">
         <property name="isValid" type="bool"/>
-        <property name="oauthScopes" type="array"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
     </transfer>
 

@@ -76,7 +76,7 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int"/>
         <property name="message" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -102,7 +102,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Translation">
@@ -127,6 +127,6 @@
 
     <transfer name="KeyTranslation">
         <property _="" name="glossaryKey" type="int"/>
-        <property _="" name="locales" type="array"/>
+        <property _="" name="locales" type="array" singular="locales"/>
     </transfer>
 </transfers>

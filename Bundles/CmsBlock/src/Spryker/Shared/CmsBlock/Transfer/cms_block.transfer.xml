@@ -53,6 +53,6 @@
 
     <transfer name="KeyTranslation">
         <property _="" name="glossaryKey" type="int"/>
-        <property _="" name="locales" type="array"/>
+        <property _="" name="locales" type="array" singular="locales"/>
     </transfer>
 </transfers>
