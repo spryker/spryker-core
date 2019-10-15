@@ -108,7 +108,7 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getSynchronizationQueuePoolName(): ?string
     {
-        return $this->getFactory()->getConfig()->getCmsSlotSynchronizationPoolName();
+        return $this->getFactory()->getConfig()->getCmsSlotStorageSynchronizationPoolName();
     }
 
     /**

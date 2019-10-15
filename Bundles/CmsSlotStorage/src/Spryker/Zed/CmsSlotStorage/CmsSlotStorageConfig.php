@@ -14,7 +14,7 @@ class CmsSlotStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getCmsSlotSynchronizationPoolName(): ?string
+    public function getCmsSlotStorageSynchronizationPoolName(): ?string
     {
         return null;
     }
