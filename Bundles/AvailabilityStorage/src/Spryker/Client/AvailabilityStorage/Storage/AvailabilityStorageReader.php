@@ -15,7 +15,6 @@ use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Client\AvailabilityStorage\Dependency\Client\AvailabilityStorageToStorageClientInterface;
 use Spryker\Client\AvailabilityStorage\Dependency\Service\AvailabilityStorageToSynchronizationServiceInterface;
 use Spryker\Client\Kernel\Locator;
-use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -80,7 +79,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     protected function isProductAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer): bool
     {
         return $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
-            (new Decimal($spyAvailabilityAbstractTransfer->getQuantity()))->greaterThan(0);
+            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
     }
 
     /**
@@ -91,7 +90,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
     protected function isProductConcreteAvailable(SpyAvailabilityEntityTransfer $spyAvailability): bool
     {
         return $spyAvailability->getIsNeverOutOfStock() ||
-            ($spyAvailability->getQuantity() !== null && (new Decimal($spyAvailability->getQuantity()))->greaterThan(0));
+            ($spyAvailability->getQuantity() !== null && $spyAvailability->getQuantity()->greaterThan(0));
     }
 
     /**
