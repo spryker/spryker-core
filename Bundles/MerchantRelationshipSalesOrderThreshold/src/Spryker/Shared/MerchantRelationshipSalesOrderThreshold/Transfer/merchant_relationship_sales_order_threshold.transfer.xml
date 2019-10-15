@@ -19,10 +19,28 @@
     <transfer name="Quote">
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Item">
         <property name="priceProduct" type="PriceProduct"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
 </transfers>

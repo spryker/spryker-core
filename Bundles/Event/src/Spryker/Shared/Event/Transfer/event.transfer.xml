@@ -10,5 +10,9 @@
         <property name="eventName" type="string"/>
     </transfer>
 
+    <transfer name="QueueReceiveMessage">
+        <property name="routingKey" type="string"/>
+    </transfer>
+
 </transfers>
 

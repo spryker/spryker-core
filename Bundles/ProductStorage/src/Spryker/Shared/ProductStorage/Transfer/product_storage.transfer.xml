@@ -55,4 +55,13 @@
         <property name="attributeMap" type="AttributeMapStorage"/>
     </transfer>
 
+    <transfer name="UrlStorage">
+        <property name="fkResourceProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="UrlStorageResourceMap">
+        <property name="resourceKey" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
 </transfers>

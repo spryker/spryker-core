@@ -48,4 +48,16 @@
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
     </transfer>
 
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

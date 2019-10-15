@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="totals" type="Totals"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+</transfers>

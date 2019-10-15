@@ -78,6 +78,11 @@
 
     <transfer name="CompanyUser">
         <property name="uuid" type="string"/>
+        <property name="fkCompany" type="int"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>
