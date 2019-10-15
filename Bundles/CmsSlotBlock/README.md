@@ -1,7 +1,7 @@
 # CmsSlotBlock Module
 [![Build Status](https://travis-ci.org/spryker/cms-slot-block.svg)](https://travis-ci.org/spryker/cms-slot-block)
 
-CmsSlotBlockModule provides DB structure and facade methods to save/remove relations between CMS Slots and CMS blocks.
+CmsSlotBlock module provides DB structure and facade methods to save/remove relations between CMS Slots and CMS blocks.
 
 ## Installation
 
