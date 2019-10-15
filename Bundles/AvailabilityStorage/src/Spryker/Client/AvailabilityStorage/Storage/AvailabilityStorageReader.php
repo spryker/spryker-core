@@ -8,6 +8,7 @@
 namespace Spryker\Client\AvailabilityStorage\Storage;
 
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
+use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageConfig;
@@ -53,13 +54,12 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
 
-        $isAbstractProductAvailable = $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
-            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
+        $isAbstractProductAvailable = $this->isProductAbstractAvailable($spyAvailabilityAbstractTransfer);
         $storageAvailabilityTransfer->setIsAbstractProductAvailable($isAbstractProductAvailable);
 
         $concreteAvailabilities = [];
         foreach ($spyAvailabilityAbstractTransfer->getSpyAvailabilities() as $spyAvailability) {
-            $isProductConcreteAvailable = $spyAvailability->getQuantity()->greaterThan(0) || $spyAvailability->getIsNeverOutOfStock();
+            $isProductConcreteAvailable = $this->isProductConcreteAvailable($spyAvailability);
             $concreteAvailabilities[$spyAvailability->getSku()] = $isProductConcreteAvailable;
             if ($isProductConcreteAvailable === true && $isAbstractProductAvailable === false) {
                 $storageAvailabilityTransfer->setIsAbstractProductAvailable(true);
@@ -69,6 +69,28 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $storageAvailabilityTransfer->setConcreteProductAvailableItems($concreteAvailabilities);
 
         return $storageAvailabilityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer
+     *
+     * @return bool
+     */
+    protected function isProductAbstractAvailable(SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer): bool
+    {
+        return $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
+            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityEntityTransfer $spyAvailability
+     *
+     * @return bool
+     */
+    protected function isProductConcreteAvailable(SpyAvailabilityEntityTransfer $spyAvailability): bool
+    {
+        return $spyAvailability->getIsNeverOutOfStock() ||
+            ($spyAvailability->getQuantity() !== null && $spyAvailability->getQuantity()->greaterThan(0));
     }
 
     /**

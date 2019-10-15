@@ -12,4 +12,8 @@
         <property name="productConcreteIds" type="array"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="available" type="bool"/>
+    </transfer>
+
 </transfers>

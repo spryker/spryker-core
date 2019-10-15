@@ -24,6 +24,7 @@
         <property name="company" type="Company"/>
         <property name="fkParentCompanyBusinessUnit" type="int"/>
         <property name="parentCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitResponse">

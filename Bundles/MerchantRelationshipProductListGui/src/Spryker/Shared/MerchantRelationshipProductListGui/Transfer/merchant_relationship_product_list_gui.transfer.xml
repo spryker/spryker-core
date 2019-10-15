@@ -16,4 +16,12 @@
         <property name="relation" type="string"/>
         <property name="condition" type="string"/>
     </transfer>
+
+    <transfer name="Merchant">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="name" type="string"/>
+    </transfer>
 </transfers>

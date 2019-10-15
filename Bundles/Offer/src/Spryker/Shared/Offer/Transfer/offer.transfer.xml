@@ -30,20 +30,6 @@
         <property name="originUnitNetPrice" type="int"/>
     </transfer>
 
-    <transfer name="CalculableObject">
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="totals" type="Totals"/>
-        <property name="originalQuote" type="Quote"/>
-    </transfer>
-
-    <transfer name="Discount">
-        <property name="voucherCode" type="string"/>
-    </transfer>
-
-    <transfer name="Totals">
-        <property name="grandTotal" type="int"/>
-    </transfer>
-
     <transfer name="OfferList">
         <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
@@ -72,5 +58,19 @@
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
         <property name="offer" type="Offer"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="totals" type="Totals"/>
+        <property name="originalQuote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
     </transfer>
 </transfers>

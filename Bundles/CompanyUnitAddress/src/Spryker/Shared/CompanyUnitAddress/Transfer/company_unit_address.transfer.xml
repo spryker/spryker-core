@@ -30,6 +30,7 @@
         <property name="iso2Code" type="string"/>
         <property name="isDefaultBilling" type="bool"/>
         <property name="companyBusinessUnits" type="CompanyBusinessUnitCollection"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">

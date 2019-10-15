@@ -9,6 +9,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="currency" type="Currency"/>
         <property name="isLocked" type="bool"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="QuoteCollection">
@@ -26,6 +27,7 @@
         <property name="quoteTransfer" type="Quote"/>
         <property name="customer" type="Customer"/>
         <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
     </transfer>
 
     <transfer name="Customer">

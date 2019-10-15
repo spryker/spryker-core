@@ -91,6 +91,7 @@
 
     <transfer name="RestCustomer">
         <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int" restRequestParameter="no"/>
     </transfer>
 
     <transfer name="RestAddress">
@@ -113,6 +114,10 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

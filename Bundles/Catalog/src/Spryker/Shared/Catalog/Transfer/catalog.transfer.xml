@@ -26,5 +26,15 @@
         <property name="fkCatalogAttributeSet" type="int"/>
     </transfer>
 
+    <transfer name="ProductConcretePageSearch">
+        <property name="fkProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteriaFilter">
+        <property name="requestParams" type="array"/>
+        <property name="searchString" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
 </transfers>
 

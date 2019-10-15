@@ -7,6 +7,8 @@
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
         <property name="totals" type="Totals"/>
         <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
     </transfer>
 
     <transfer name="QuoteApproval">

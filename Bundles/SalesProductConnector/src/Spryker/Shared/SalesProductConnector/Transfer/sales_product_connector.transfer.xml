@@ -18,6 +18,8 @@
         <property name="id" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="metadata" type="ItemMetadata"/>
+        <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
     </transfer>
 
     <transfer name="Quote">
