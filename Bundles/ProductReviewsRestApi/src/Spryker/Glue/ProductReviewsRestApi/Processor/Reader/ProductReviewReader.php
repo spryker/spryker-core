@@ -87,11 +87,13 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        $productReviewTransfers = $this->findProductReviewsInSearch(
+        $productReviews = $this->findProductReviewsInSearch(
             $restRequest,
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
         );
 
+        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
+        $productReviewTransfers = $productReviews[ProductReviewsResultFormatterPlugin::NAME];
         foreach ($productReviewTransfers as $productReviewTransfer) {
             $restProductReviewAttributesTransfer = $this->productReviewMapper
                 ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
@@ -139,7 +141,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviewTransfers = $this->findProductReviewsInSearch(
             $restRequest,
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
-        );
+        )[ProductReviewsResultFormatterPlugin::NAME];
 
         return $this->prepareRestResourceCollection($abstractSku, $productReviewTransfers);
     }
@@ -148,7 +150,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductReviewTransfer[]
+     * @return array
      */
     protected function findProductReviewsInSearch(
         RestRequestInterface $restRequest,
@@ -158,7 +160,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($restRequest->getHttpRequest()->query->all())
                 ->setIdProductAbstract($idProductAbstract)
-        )[ProductReviewsResultFormatterPlugin::NAME];
+        );
     }
 
     /**
