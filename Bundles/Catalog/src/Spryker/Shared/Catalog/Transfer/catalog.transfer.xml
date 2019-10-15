@@ -31,7 +31,7 @@
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">
-        <property name="requestParams" type="array"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
         <property name="searchString" type="string"/>
         <property name="limit" type="int"/>
     </transfer>
@@ -40,7 +40,7 @@
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
         <property name="defaultItemsPerPage" type="int"/>
-        <property name="validItemsPerPageOptions" type="array"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="SortConfig">
@@ -55,7 +55,7 @@
         <property name="parameterName" type="string"/>
         <property name="fieldName" type="string"/>
         <property name="type" type="string"/>
-        <property name="aggregationParams" type="array"/>
+        <property name="aggregationParams" type="array" singular="aggregationParams"/>
     </transfer>
 
 </transfers>

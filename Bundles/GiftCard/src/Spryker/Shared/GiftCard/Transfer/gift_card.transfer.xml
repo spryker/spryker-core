@@ -13,7 +13,7 @@
         <property name="value" type="int"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="actualValue" type="int" description="The rest amount assigned to a gift card"/>
-        <property name="attributes" type="array"/>
+        <property name="attributes" type="array" singular="attributes"/>
         <property name="isActive" type="bool"/>
     </transfer>
 

@@ -13,9 +13,9 @@
 
     <transfer name="SynchronizationQueueMessage">
         <property name="key" type="string"/>
-        <property name="value" type="array"/>
+        <property name="value" type="array" singular="value"/>
         <property name="resource" type="string"/>
-        <property name="params" type="array"/>
+        <property name="params" type="array" singular="params"/>
     </transfer>
 
     <transfer name="QueueReceiveMessage">
@@ -38,7 +38,7 @@
         <property name="type" type="string"/>
         <property name="index" type="string"/>
         <property name="id" type="string"/>
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
 </transfers>

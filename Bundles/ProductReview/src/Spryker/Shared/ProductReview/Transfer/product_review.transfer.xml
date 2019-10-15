@@ -43,7 +43,7 @@
 
     <transfer name="ProductReviewSearchRequest">
         <property name="idProductAbstract" type="int"/>
-        <property name="requestParams" type="array"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
 
     <transfer name="ProductAbstractReview">
@@ -79,7 +79,7 @@
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
         <property name="defaultItemsPerPage" type="int"/>
-        <property name="validItemsPerPageOptions" type="array"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="Locale">

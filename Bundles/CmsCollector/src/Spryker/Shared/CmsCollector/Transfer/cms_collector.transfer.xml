@@ -13,7 +13,7 @@
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
-        <property name="placeholders" type="array"/>
+        <property name="placeholders" type="array" singular="placeholders"/>
     </transfer>
 
     <transfer name="Locale">

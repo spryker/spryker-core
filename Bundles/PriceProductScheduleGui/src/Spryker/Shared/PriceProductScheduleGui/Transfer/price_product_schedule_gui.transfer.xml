@@ -71,8 +71,8 @@
 
     <transfer name="CsvFile">
         <property name="fileName" type="string"/>
-        <property name="data" type="array"/>
-        <property name="header" type="array"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="header" type="array" singular="header"/>
     </transfer>
 
     <transfer name="PriceType">

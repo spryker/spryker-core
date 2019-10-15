@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="DataSetItem">
-        <property name="payload" type="array"/>
+        <property name="payload" type="array" singular="payload"/>
     </transfer>
 
     <transfer name="QueueSendMessage">
@@ -61,7 +61,7 @@
     </transfer>
 
     <transfer name="DataImporterQueueReaderConfiguration">
-        <property name="queueConsumerOptions" type="array"/>
+        <property name="queueConsumerOptions" type="array" singular="queueConsumerOptions"/>
         <property name="chunkSize" type="int"/>
         <property name="queueName" type="string"/>
     </transfer>

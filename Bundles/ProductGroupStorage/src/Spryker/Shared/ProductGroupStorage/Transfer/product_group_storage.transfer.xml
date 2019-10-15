@@ -5,7 +5,7 @@
 
     <transfer name="ProductAbstractGroupStorage">
         <property name="idProductAbstract" type="int"/>
-        <property name="groupProductAbstractIds" type="array"/>
+        <property name="groupProductAbstractIds" type="array" singular="groupProductAbstractIds"/>
     </transfer>
 
     <transfer name="SynchronizationData">

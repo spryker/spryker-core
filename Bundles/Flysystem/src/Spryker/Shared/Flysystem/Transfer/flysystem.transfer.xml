@@ -26,8 +26,8 @@
     <transfer name="FlysystemConfig">
         <property name="name" type="string"/>
         <property name="type" type="string"/>
-        <property name="adapterConfig" type="array"/>
-        <property name="flysystemConfig" type="array"/>
+        <property name="adapterConfig" type="array" singular="adapterConfig"/>
+        <property name="flysystemConfig" type="array" singular="flysystemConfig"/>
     </transfer>
 
     <transfer name="FileSystemQuery">
@@ -50,7 +50,7 @@
     <transfer name="FileSystemStream">
         <property name="fileSystemName" type="string"/>
         <property name="path" type="string"/>
-        <property name="config" type="array"/>
+        <property name="config" type="array" singular="config"/>
     </transfer>
 
     <transfer name="FileSystemVisibility">
@@ -61,7 +61,7 @@
     <transfer name="FileSystemCreateDirectory">
         <property name="fileSystemName" type="string"/>
         <property name="path" type="string"/>
-        <property name="config" type="array"/>
+        <property name="config" type="array" singular="config"/>
     </transfer>
 
     <transfer name="FileSystemDeleteDirectory">
@@ -84,7 +84,7 @@
         <property name="fileSystemName" type="string"/>
         <property name="path" type="string"/>
         <property name="content" type="string"/>
-        <property name="config" type="array"/>
+        <property name="config" type="array" singular="config"/>
     </transfer>
 
     <transfer name="FileSystemRename">

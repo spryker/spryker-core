@@ -31,14 +31,14 @@
     </transfer>
 
     <transfer name="ApiData">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
     <transfer name="ProductConcrete">
     </transfer>
 
     <transfer name="ApiItem">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
     <transfer name="ApiRequest">
