@@ -100,7 +100,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     *  - For each new item runs the item expander plugins (requires a SKU for each new item).
+     *  - For each item runs the item expander plugins (requires a SKU for each new item).
      *  - Decreases the given quantity for the given item(s) from the quote.
      *  - Recalculates quote (-> Calculation).
      *  - Adds success message to messenger (-> Messenger).

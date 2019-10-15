@@ -149,7 +149,9 @@ interface CartClientInterface
      * Specification:
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
-     *  - Adds items to cart using quote storage strategy.
+     *  - Uses quote storage strategy.
+     *  - Adds items to cart.
+     *  - Increases quantity for items that are already in cart.
      *  - Does nothing if cart is locked.
      *
      * @api
@@ -164,7 +166,9 @@ interface CartClientInterface
      * Specification:
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
-     *  - Removes items from cart using quote storage strategy.
+     *  - Uses quote storage strategy.
+     *  - Decreases quantity for items using the provided quantities.
+     *  - Removes items from cart that reach 0 quantity.
      *  - Does nothing if cart is locked.
      *
      * @api
@@ -179,7 +183,8 @@ interface CartClientInterface
      * Specification:
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
-     *  - Updates item quantity for each item using quote storage strategy.
+     *  - Uses quote storage strategy.
+     *  - Updates item quantity to the provided quantities.
      *  - Does nothing if cart is locked.
      *
      * @api

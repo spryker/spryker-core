@@ -155,20 +155,20 @@ class CartOperation implements CartOperationInterface
     {
         $cartChangeTransferForAdding = $this->createCartChangeTransfer();
 
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
+        foreach ($cartChangeTransfer->getItems() as $changeItem) {
+            $quoteItem = $this->findItem($changeItem->getSku(), $changeItem->getGroupKey());
 
-            if (!$quoteItemTransfer || $itemTransfer->getQuantity() === 0) {
+            if (!$quoteItem || $changeItem->getQuantity() <= 0) {
                 continue;
             }
 
-            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+            $delta = $changeItem->getQuantity() - $quoteItem->getQuantity();
 
-            if ($delta === 0 || $quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
+            if ($delta <= 0) {
                 continue;
             }
 
-            $changeItemTransfer = clone $quoteItemTransfer;
+            $changeItemTransfer = clone $quoteItem;
             $changeItemTransfer->setQuantity($delta);
 
             $cartChangeTransferForAdding->addItem($changeItemTransfer);
@@ -190,26 +190,26 @@ class CartOperation implements CartOperationInterface
     {
         $cartChangeTransferForRemoval = $this->createCartChangeTransfer();
 
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $quoteItemTransfer = $this->findItem($itemTransfer->getSku(), $itemTransfer->getGroupKey());
+        foreach ($cartChangeTransfer->getItems() as $changeItem) {
+            $quoteItem = $this->findItem($changeItem->getSku(), $changeItem->getGroupKey());
 
-            if (!$quoteItemTransfer) {
+            if (!$quoteItem) {
                 continue;
             }
 
-            if ($itemTransfer->getQuantity() === 0) {
-                $cartChangeTransferForRemoval->addItem($quoteItemTransfer);
+            if ($changeItem->getQuantity() === 0) {
+                $cartChangeTransferForRemoval->addItem($quoteItem);
                 continue;
             }
 
-            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+            $delta = $changeItem->getQuantity() - $quoteItem->getQuantity();
 
-            if ($delta === 0 || $quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
+            if ($delta >= 0) {
                 continue;
             }
 
-            $changeItemTransfer = clone $quoteItemTransfer;
-            $changeItemTransfer->setQuantity($delta);
+            $changeItemTransfer = clone $quoteItem;
+            $changeItemTransfer->setQuantity(abs($delta));
 
             $cartChangeTransferForRemoval->addItem($changeItemTransfer);
         }

@@ -96,6 +96,8 @@ class PersistentCartStub implements PersistentCartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\PersistentCart\Communication\Controller\GatewayController::updateQuantityAction()
+     *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

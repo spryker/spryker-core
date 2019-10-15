@@ -276,20 +276,20 @@ class CartOperation implements CartOperationInterface
     {
         $itemsToAdding = [];
 
-        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            $quoteItemTransfer = $this->findItemInQuote($itemTransfer, $quoteTransfer);
+        foreach ($persistentCartChangeTransfer->getItems() as $changeItem) {
+            $quoteItem = $this->findItemInQuote($changeItem, $quoteTransfer);
 
-            if (!$quoteItemTransfer || $itemTransfer->getQuantity() === 0) {
+            if (!$quoteItem || $changeItem->getQuantity() <= 0) {
                 continue;
             }
 
-            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+            $delta = $changeItem->getQuantity() - $quoteItem->getQuantity();
 
-            if ($delta === 0 || $quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
+            if ($delta <= 0) {
                 continue;
             }
 
-            $changeItemTransfer = clone $quoteItemTransfer;
+            $changeItemTransfer = clone $quoteItem;
             $changeItemTransfer->setQuantity($delta);
 
             $itemsToAdding[] = $changeItemTransfer;
@@ -308,26 +308,26 @@ class CartOperation implements CartOperationInterface
     {
         $itemsToRemove = [];
 
-        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            $quoteItemTransfer = $this->findItemInQuote($itemTransfer, $quoteTransfer);
+        foreach ($persistentCartChangeTransfer->getItems() as $changeItem) {
+            $quoteItem = $this->findItemInQuote($changeItem, $quoteTransfer);
 
-            if (!$quoteItemTransfer) {
+            if (!$quoteItem) {
                 continue;
             }
 
-            if ($itemTransfer->getQuantity() === 0) {
-                $itemsToRemove[] = $quoteItemTransfer;
+            if ($changeItem->getQuantity() === 0) {
+                $itemsToRemove[] = $quoteItem;
                 continue;
             }
 
-            $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
+            $delta = $changeItem->getQuantity() - $quoteItem->getQuantity();
 
-            if ($delta === 0 || $quoteItemTransfer->getQuantity() <= $itemTransfer->getQuantity()) {
+            if ($delta >= 0) {
                 continue;
             }
 
-            $changeItemTransfer = clone $quoteItemTransfer;
-            $changeItemTransfer->setQuantity($delta);
+            $changeItemTransfer = clone $quoteItem;
+            $changeItemTransfer->setQuantity(abs($delta));
 
             $itemsToRemove[] = $changeItemTransfer;
         }

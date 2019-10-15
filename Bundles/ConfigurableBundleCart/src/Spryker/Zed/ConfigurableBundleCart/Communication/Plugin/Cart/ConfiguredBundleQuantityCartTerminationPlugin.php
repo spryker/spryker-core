@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ConfigurableBundleCart\Business\ConfigurableBundleCartFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleCart\ConfigurableBundleCartConfig getConfig()
  */
-class ConfiguredBundleQuantityTerminationPlugin extends AbstractPlugin implements CartTerminationPluginInterface
+class ConfiguredBundleQuantityCartTerminationPlugin extends AbstractPlugin implements CartTerminationPluginInterface
 {
     protected const SUBSCRIBED_TERMINATION_EVENTS = [
         'add',

@@ -42,6 +42,8 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::addToCartAction()
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -68,6 +70,8 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::removeFromCartAction()
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
