@@ -21,6 +21,8 @@ interface CustomerAccessStorageRepositoryInterface
     public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
 
     /**
+     * @deprecated Use findFilteredCustomerAccessStorageEntities instead.
+     *
      * @return array
      */
     public function findAllCustomerAccessStorageEntities(): array;
