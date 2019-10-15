@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ConfigurableBundleCart\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\CartExtension\Dependency\Plugin\PostSavePluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleCart\Business\ConfigurableBundleCartFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleCart\ConfigurableBundleCartConfig getConfig()
  */
-class ConfiguredBundleQuantityPostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
+class ConfiguredBundleQuantityPostSavePlugin extends AbstractPlugin implements CartOperationPostSavePluginInterface
 {
     /**
      * {@inheritDoc}
