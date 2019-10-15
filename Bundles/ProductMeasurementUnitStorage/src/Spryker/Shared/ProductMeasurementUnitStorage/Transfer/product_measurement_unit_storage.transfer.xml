@@ -34,6 +34,7 @@
 
     <transfer name="ProductConcrete">
         <property name="baseMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>

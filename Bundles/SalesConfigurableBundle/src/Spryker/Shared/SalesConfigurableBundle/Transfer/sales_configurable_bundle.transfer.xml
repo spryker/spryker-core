@@ -59,4 +59,8 @@
         <property name="configurableBundleTemplateSlotUuid" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>

@@ -42,4 +42,8 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="RestCompanyBusinessUnitAttributes">
+        <property name="defaultBillingAddress" type="string"/>
+    </transfer>
+
 </transfers>

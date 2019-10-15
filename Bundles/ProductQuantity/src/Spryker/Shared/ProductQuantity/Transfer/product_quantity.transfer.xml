@@ -17,10 +17,12 @@
         <property name="quantity" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Quote">

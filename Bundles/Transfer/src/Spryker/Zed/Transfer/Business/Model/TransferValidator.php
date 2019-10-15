@@ -88,7 +88,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    public function validate(array $options)
+    public function validate(array $options): bool
     {
         $files = $this->finder->getXmlTransferDefinitionFiles();
 
@@ -115,7 +115,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    protected function validateDefinition($module, array $definition, array $options)
+    protected function validateDefinition(string $module, array $definition, array $options): bool
     {
         if ($options['verbose']) {
             $this->messenger->info(sprintf('Checking %s module', $module));
@@ -164,6 +164,30 @@ class TransferValidator implements TransferValidatorInterface
 
                     continue;
                 }
+
+                if ($this->transferConfig->isCaseValidated() && !$this->isValidPropertyName($property['name'])) {
+                    $isValid = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s is an invalid property name',
+                        $module,
+                        $transfer['name'],
+                        $property['name']
+                    ));
+
+                    continue;
+                }
+                if ($this->transferConfig->isCaseValidated() && !$this->hasValidSingularName($property)) {
+                    $isValid = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s: %s is an invalid singular name',
+                        $module,
+                        $transfer['name'],
+                        $property['name'],
+                        $property['singular']
+                    ));
+
+                    continue;
+                }
             }
         }
 
@@ -185,7 +209,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    protected function isValidSimpleType($type)
+    protected function isValidSimpleType(string $type): bool
     {
         $whitelist = array_merge($this->simpleTypeWhitelist, ['array']);
         if (in_array($type, $whitelist, true)) {
@@ -204,7 +228,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
-    protected function isValidArrayType($type)
+    protected function isValidArrayType(string $type): bool
     {
         if (!preg_match('#^([a-z]+)\[\]$#', $type, $matches)) {
             return true;
@@ -213,7 +237,7 @@ class TransferValidator implements TransferValidatorInterface
         $extractedType = $matches[1];
         $extractedTypeLowercase = strtolower($extractedType);
 
-        if (!in_array($extractedTypeLowercase, $this->simpleTypeWhitelist)) {
+        if (!in_array($extractedTypeLowercase, $this->simpleTypeWhitelist, true)) {
             return false;
         }
 
@@ -229,7 +253,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return array
      */
-    protected function normalize(array $definition)
+    protected function normalize(array $definition): array
     {
         $transferDefinition = $definition['transfer'];
         if (!isset($transferDefinition[0])) {
@@ -254,7 +278,7 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return string
      */
-    protected function getModuleFromPathName($fileName)
+    protected function getModuleFromPathName(string $fileName): string
     {
         $filter = new UnderscoreToCamelCase();
 
@@ -277,5 +301,33 @@ class TransferValidator implements TransferValidatorInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function isValidPropertyName(string $name): bool
+    {
+        if (!preg_match('/^[a-z]/', $name)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function hasValidSingularName(array $property): bool
+    {
+        if (!isset($property['singular'])) {
+            return true;
+        }
+
+        return $this->isValidPropertyName($property['singular']);
     }
 }

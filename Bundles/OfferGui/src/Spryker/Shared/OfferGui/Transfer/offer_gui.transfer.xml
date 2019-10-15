@@ -29,4 +29,8 @@
         <property name="grandTotal" type="int"/>
     </transfer>
 
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+    </transfer>
+
 </transfers>

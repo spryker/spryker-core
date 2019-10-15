@@ -5,7 +5,7 @@
 
         <transfer name="ProductConcrete">
             <property name="idProductConcrete" type="int"/>
-            <property name="ProductBundle" type="ProductBundle"/>
+            <property name="productBundle" type="ProductBundle"/>
         </transfer>
 
         <transfer name="ProductBundle">

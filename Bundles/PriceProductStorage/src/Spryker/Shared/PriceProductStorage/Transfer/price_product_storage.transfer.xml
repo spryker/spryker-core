@@ -18,6 +18,8 @@
         <property name="price" type="int"/>
         <property name="prices" type="array"/>
         <property name="currentProductPrice" type="CurrentProductPrice"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -42,7 +44,7 @@
 
     <transfer name="ItemValidation">
         <property name="item" type="Item"/>
-        <property name="messages" type="Message[]" singular="Message"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">

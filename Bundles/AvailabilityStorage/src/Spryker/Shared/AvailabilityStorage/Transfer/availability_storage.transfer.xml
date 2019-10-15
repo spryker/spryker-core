@@ -8,6 +8,7 @@
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="available" type="bool"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

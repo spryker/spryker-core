@@ -52,13 +52,13 @@
     </transfer>
 
     <transfer name="ShoppingListItemResponse">
-        <property name="ShoppingListItem" type="ShoppingListItem"/>
+        <property name="shoppingListItem" type="ShoppingListItem"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
     </transfer>
 
     <transfer name="ShoppingListResponse">
-        <property name="ShoppingList" type="ShoppingList"/>
+        <property name="shoppingList" type="ShoppingList"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
         <property name="permissions" singular="permission" type="Permission[]"/>
@@ -140,7 +140,7 @@
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListPreAddItemCheckResponse">
@@ -154,6 +154,18 @@
 
     <transfer name="ProductView">
         <property name="currentProductPrice" type="CurrentProductPrice"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="StorageProduct">
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="permissions" type="PermissionCollection"/>
     </transfer>
 
 </transfers>

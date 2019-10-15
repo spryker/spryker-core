@@ -13,4 +13,18 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+    </transfer>
+
 </transfers>

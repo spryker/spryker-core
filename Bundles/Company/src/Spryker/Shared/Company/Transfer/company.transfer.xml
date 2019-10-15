@@ -9,6 +9,7 @@
         <property name="isActive" type="bool"/>
         <property name="status" type="string"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CompanyResponse">
