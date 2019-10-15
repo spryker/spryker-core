@@ -21,13 +21,13 @@ class StockProductUpdater implements StockProductUpdaterInterface
     protected $stockRepository;
 
     /**
-     * @var \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected $stockUpdateHandlerPlugins;
 
     /**
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
-     * @param \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
+     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
      */
     public function __construct(StockRepositoryInterface $stockRepository, array $stockUpdateHandlerPlugins)
     {
