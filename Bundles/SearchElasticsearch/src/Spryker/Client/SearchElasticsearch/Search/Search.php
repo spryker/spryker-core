@@ -76,11 +76,12 @@ class Search implements SearchInterface
     protected function executeQuery(QueryInterface $query): ResultSet
     {
         try {
-            $searchQuery = $query->getSearchQuery();
             $index = $this->getIndexForQuery($query->getSearchContext());
-            $rawSearchResult = $index->search($searchQuery);
+            $rawSearchResult = $index->search(
+                $query->getSearchQuery()
+            );
         } catch (ResponseException $e) {
-            $rawQuery = json_encode($searchQuery->toArray());
+            $rawQuery = json_encode($query->getSearchQuery()->toArray());
 
             throw new SearchResponseException(
                 sprintf('Search failed with the following reason: %s. Query: %s', $e->getMessage(), $rawQuery),

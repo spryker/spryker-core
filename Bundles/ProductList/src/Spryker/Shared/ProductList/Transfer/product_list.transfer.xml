@@ -38,4 +38,27 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerProductListCollection" type="CustomerProductListCollection"/>
+    </transfer>
+
+    <transfer name="CustomerProductListCollection">
+        <property name="blacklistIds" type="int[]" singular="blacklistId"/>
+        <property name="whitelistIds" type="int[]" singular="whitelistId"/>
+    </transfer>
+
 </transfers>

@@ -45,9 +45,9 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSearchClient(Container $container): Container
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return $container->getLocator()->searchElasticsearch()->client();
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addUtilEncodingFacade(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

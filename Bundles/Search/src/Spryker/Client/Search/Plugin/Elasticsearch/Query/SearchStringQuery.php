@@ -45,6 +45,11 @@ class SearchStringQuery implements QueryInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a query object for string search.
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()

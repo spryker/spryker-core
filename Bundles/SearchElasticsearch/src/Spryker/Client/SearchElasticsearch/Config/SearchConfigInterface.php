@@ -7,24 +7,20 @@
 
 namespace Spryker\Client\SearchElasticsearch\Config;
 
-use Spryker\Client\SearchExtension\Config\FacetConfigInterface;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
-use Spryker\Client\SearchExtension\Config\SortConfigInterface;
-
 interface SearchConfigInterface
 {
     /**
-     * @return \Spryker\Client\SearchExtension\Config\FacetConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface
      */
     public function getFacetConfig(): FacetConfigInterface;
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\SortConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface
      */
     public function getSortConfig(): SortConfigInterface;
 
     /**
-     * @return \Spryker\Client\SearchExtension\Config\PaginationConfigInterface
+     * @return \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface
      */
     public function getPaginationConfig(): PaginationConfigInterface;
 }

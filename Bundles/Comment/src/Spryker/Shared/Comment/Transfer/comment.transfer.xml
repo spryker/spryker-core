@@ -57,6 +57,7 @@
 
     <transfer name="Quote">
         <property name="commentThread" type="CommentThread"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
 </transfers>

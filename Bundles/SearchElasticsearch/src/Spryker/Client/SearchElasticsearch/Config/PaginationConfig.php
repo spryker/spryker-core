@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchElasticsearch\Config;
 
 use Generated\Shared\Transfer\PaginationConfigTransfer;
-use Spryker\Client\SearchExtension\Config\PaginationConfigInterface;
 
 class PaginationConfig implements PaginationConfigInterface
 {

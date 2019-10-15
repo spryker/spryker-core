@@ -44,4 +44,10 @@
         <property name="idsProductAbstractToDeAssign" type="array"/>
     </transfer>
 
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+    </transfer>
+
 </transfers>

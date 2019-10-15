@@ -49,6 +49,11 @@ class SearchKeysQuery implements QueryInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a query object for keys search.
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()

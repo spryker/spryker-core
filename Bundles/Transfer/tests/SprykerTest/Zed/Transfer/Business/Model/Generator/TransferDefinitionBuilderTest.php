@@ -61,7 +61,7 @@ class TransferDefinitionBuilderTest extends Unit
         $config->expects($this->any())->method('isTransferNameValidated')->willReturn(true);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Transfer name `category` does not match expected name `Category` for bundle `Test`');
+        $this->expectExceptionMessage('Transfer name `category` does not match expected name `Category` for module `Test`');
 
         $transferDefinitionBuilder = $this->getTransferDefinitionBuilder($sourceDirectories, $config);
         $transferDefinitionBuilder->getDefinitions();
