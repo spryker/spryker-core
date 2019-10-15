@@ -36,7 +36,7 @@
     </transfer>
 
     <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="Address"/>
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
     <transfer name="Customer">
@@ -95,6 +95,7 @@
     <transfer name="Order">
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CustomerCollection">
@@ -107,6 +108,9 @@
         <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
+        <property name="customer" type="Customer"/>
+        <property name="billingSameAsShipping" type="bool"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">
@@ -115,5 +119,25 @@
 
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 </transfers>

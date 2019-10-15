@@ -27,4 +27,13 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
 </transfers>

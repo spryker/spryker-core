@@ -87,5 +87,10 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="SaveOrder">
+        <property name="orderReference" type="string"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+    </transfer>
+
 </transfers>
 

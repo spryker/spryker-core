@@ -33,6 +33,9 @@
     <transfer name="CalculableObject">
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="originalQuote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -72,9 +75,21 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int"/>
         <property name="message" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
         <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="orderExpenses" type="Expense[]" singular="orderExpense"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="subtotal" type="int"/>
     </transfer>
 </transfers>

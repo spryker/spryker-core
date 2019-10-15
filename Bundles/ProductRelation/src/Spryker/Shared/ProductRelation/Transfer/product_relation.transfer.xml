@@ -56,4 +56,27 @@
         <property name="columns" type="array"/>
     </transfer>
 
+    <transfer name="StorageProductRelations">
+        <property name="isActive" type="bool"/>
+        <property name="type" type="string"/>
+        <property name="abstractProducts" type="StorageProductAbstractRelation[]" singular="abstractProduct"/>
+    </transfer>
+
+    <transfer name="StorageProductAbstractRelation">
+        <property name="prices" type="array"/>
+        <property name="price" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="order" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>

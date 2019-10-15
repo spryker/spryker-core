@@ -26,4 +26,8 @@
         <property name="idProductConcrete" type="int"/>
     </transfer>
 
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
 </transfers>

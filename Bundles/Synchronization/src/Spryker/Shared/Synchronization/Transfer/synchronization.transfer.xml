@@ -18,4 +18,9 @@
         <property name="params" type="array"/>
     </transfer>
 
+    <transfer name="QueueReceiveMessage">
+        <property name="deliveryTag" type="string"/>
+        <property name="routingKey" type="string"/>
+    </transfer>
+
 </transfers>

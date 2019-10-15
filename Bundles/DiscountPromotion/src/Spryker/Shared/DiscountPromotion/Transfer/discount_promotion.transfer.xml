@@ -12,14 +12,6 @@
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
     </transfer>
 
-    <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="PersistentCartChange">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
     <transfer name="PromotionItem">
         <property name="idDiscountPromotion" type="int"/>
         <property name="idProductAbstract" type="int"/>
@@ -32,10 +24,10 @@
     <transfer name="Item">
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="sku" type="string"/>
-        <property name="quantity" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="maxQuantity" type="int"/>
         <property name="idDiscountPromotion" type="int"/>
+        <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="groupKey" type="string"/>
@@ -65,6 +57,14 @@
 
     <transfer name="StorageProduct">
          <property name="promotionItem" type="PromotionItem"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

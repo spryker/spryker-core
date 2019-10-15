@@ -24,10 +24,21 @@
         <property name="payment" type="Payment"/>
         <property name="payments" type="Payment[]"/>
         <property name="manualOrder" type="ManualOrder"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="Item">
         <property name="forcedUnitGrossPrice" type="bool"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+        <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
     </transfer>
 
 </transfers>

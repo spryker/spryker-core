@@ -60,7 +60,7 @@
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Quote">
@@ -84,7 +84,7 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="ProductBundle" type="ProductBundle"/>
+        <property name="productBundle" type="ProductBundle"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">

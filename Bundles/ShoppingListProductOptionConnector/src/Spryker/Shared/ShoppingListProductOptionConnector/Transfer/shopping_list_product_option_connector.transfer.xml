@@ -21,9 +21,13 @@
     </transfer>
 
     <transfer name="ProductOptionCriteria">
-        <property name="ProductOptionIds" type="array"/>
+        <property name="productOptionIds" type="array"/>
         <property name="productOptionGroupIsActive" type="bool"/>
         <property name="productConcreteSku" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="groupKey" type="string"/>
     </transfer>
 
 </transfers>
