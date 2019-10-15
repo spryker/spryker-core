@@ -59,4 +59,11 @@ interface StockRepositoryInterface
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
     public function getStoreRelationByIdStock(int $idStock): StoreRelationTransfer;
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array;
 }

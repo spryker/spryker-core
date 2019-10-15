@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
@@ -39,6 +40,8 @@ class AvailabilityHandlerTest extends Unit
 {
     public const PRODUCT_SKU = 'sku-123-321';
 
+    protected const STORE_NAME = 'DE';
+
     /**
      * @return void
      */
@@ -49,12 +52,16 @@ class AvailabilityHandlerTest extends Unit
         $sellableMock = $this->createSellableMock();
         $sellableMock->method('calculateAvailabilityForProductWithStore')->willReturn(new Decimal(15));
 
+        $stockFacadeMock = $this->createStockFacadeMock();
+        $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
+            ->willReturn([$this->createStoreTransfer()]);
+
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
 
         $availabilityHandler = $this->createAvailabilityHandler(
             $sellableMock,
-            null,
+            $stockFacadeMock,
             $touchFacadeMock,
             $availabilityContainerMock
         );
@@ -72,12 +79,16 @@ class AvailabilityHandlerTest extends Unit
         $sellableMock = $this->createSellableMock();
         $sellableMock->method('calculateAvailabilityForProductWithStore')->willReturn(new Decimal(0));
 
+        $stockFacadeMock = $this->createStockFacadeMock();
+        $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
+            ->willReturn([$this->createStoreTransfer()]);
+
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
 
         $availabilityHandler = $this->createAvailabilityHandler(
             $sellableMock,
-            null,
+            $stockFacadeMock,
             $touchFacadeMock,
             $availabilityContainerMock
         );
@@ -267,5 +278,15 @@ class AvailabilityHandlerTest extends Unit
     protected function createAvailabilityToEventFacade()
     {
         return $this->getMockBuilder(AvailabilityToEventFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function createStoreTransfer(): StoreTransfer
+    {
+        return (new StoreBuilder([
+            StoreTransfer::NAME => static::STORE_NAME,
+        ]))->build();
     }
 }

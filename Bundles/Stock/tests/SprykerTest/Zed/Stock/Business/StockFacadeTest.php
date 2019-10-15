@@ -564,6 +564,33 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetStoresWhereProductStockIsDefinedWillReturnArrayOfStoreTransfers(): void
+    {
+        //Act
+        $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined(static::CONCRETE_SKU);
+
+        //Assert
+        $this->assertCount(1, $storeTransfers, 'Number of store does not match expected value.');
+        $this->assertInstanceOf(
+            StoreTransfer::class,
+            $storeTransfers[0],
+            sprintf('Store transfer should be an instance of %s.', StoreTransfer::class)
+        );
+        $this->assertEquals(
+            $this->storeTransfer->getIdStore(),
+            $storeTransfers[0]->getIdStore(),
+            'Store ID does not match expected value.'
+        );
+        $this->assertEquals(
+            $this->storeTransfer->getName(),
+            $storeTransfers[0]->getName(),
+            'Store name does not match expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testFindStockByNameWillFindExistingStock(): void
     {
         //Act

@@ -315,4 +315,16 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Returns all stores that have relationship with stock where product with given sku is defined.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array;
 }

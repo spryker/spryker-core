@@ -12,6 +12,7 @@ use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -51,21 +52,29 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface
+     */
+    protected $stockFacade;
+
+    /**
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface $stockFacade
      */
     public function __construct(
         ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         ProductBundleToAvailabilityInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleToStockFacadeInterface $stockFacade
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
+        $this->stockFacade = $stockFacade;
     }
 
     /**
@@ -155,13 +164,9 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     protected function updateBundleProductAvailability(array $bundleItems, string $bundleProductSku): void
     {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($bundleProductSku);
 
-        $stores = $currentStoreTransfer->getStoresWithSharedPersistence();
-        $stores[] = $this->storeFacade->getCurrentStore()->getName();
-
-        foreach ($stores as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+        foreach ($storeTransfers as $storeTransfer) {
             $bundleAvailabilityQuantity = $this->calculateBundleQuantity($bundleItems, $storeTransfer);
 
             $this->availabilityFacade->saveProductAvailabilityForStore(
