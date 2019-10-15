@@ -65,8 +65,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexDefinitionLoader(
             $this->createIndexDefinitionFinder(),
-            $this->createIndexDefinitionReader(),
-            $this->createIndexNameResolver()
+            $this->createIndexDefinitionReader()
         );
     }
 

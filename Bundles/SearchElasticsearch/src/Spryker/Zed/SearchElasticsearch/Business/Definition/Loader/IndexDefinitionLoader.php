@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Loader;
 
-use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface;
 use Symfony\Component\Finder\SplFileInfo;
@@ -17,7 +16,7 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @var \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface
      */
-    protected $indexDefinitionFinder;
+    protected $schemaDefinitionFinder;
 
     /**
      * @var \Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface
@@ -25,20 +24,13 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     protected $indexDefinitionReader;
 
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
-     */
-    protected $indexNameResolver;
-
-    /**
-     * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface $indexDefinitionFinder
+     * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface $schemaDefinitionFinder
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface $indexDefinitionReader
-     * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      */
-    public function __construct(SchemaDefinitionFinderInterface $indexDefinitionFinder, IndexDefinitionReaderInterface $indexDefinitionReader, IndexNameResolverInterface $indexNameResolver)
+    public function __construct(SchemaDefinitionFinderInterface $schemaDefinitionFinder, IndexDefinitionReaderInterface $indexDefinitionReader)
     {
-        $this->indexDefinitionFinder = $indexDefinitionFinder;
+        $this->schemaDefinitionFinder = $schemaDefinitionFinder;
         $this->indexDefinitionReader = $indexDefinitionReader;
-        $this->indexNameResolver = $indexNameResolver;
     }
 
     /**
@@ -47,12 +39,12 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     public function load(): array
     {
         $indexDefinitions = [];
-        foreach ($this->indexDefinitionFinder->find() as $indexDefinitionFile) {
-            $indexName = $this->getIndexNameFromFile($indexDefinitionFile);
+        foreach ($this->schemaDefinitionFinder->find() as $schemaDefinitionFile) {
+            $indexName = $this->getIndexNameFromFile($schemaDefinitionFile);
 
             $indexDefinition = [
                 'name' => $indexName,
-                'definition' => $this->indexDefinitionReader->read($indexDefinitionFile),
+                'definition' => $this->indexDefinitionReader->read($schemaDefinitionFile),
             ];
 
             $indexDefinitions[] = $indexDefinition;

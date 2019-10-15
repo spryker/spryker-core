@@ -6,6 +6,9 @@
  */
 namespace Spryker\Zed\Search\Business\Definition\Merger;
 
+/**
+ * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMergeInterface` instead.
+ */
 interface IndexDefinitionMergerInterface
 {
     /**
