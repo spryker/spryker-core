@@ -50,7 +50,6 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
 
     /**
      * {@inheritDoc}
-     * - Returns ContentEntityTransfer collection.
      *
      * @api
      *
