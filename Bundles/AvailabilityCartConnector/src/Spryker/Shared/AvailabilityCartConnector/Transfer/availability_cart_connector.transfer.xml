@@ -5,6 +5,7 @@
 
     <transfer name="Quote">
         <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Store">

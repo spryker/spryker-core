@@ -5,6 +5,33 @@
 
     <transfer name="ProductLabelLocalizedAttributes">
         <property name="locale" type="Locale"/>
+        <property name="fkLocale" type="int"/>
+        <property name="fkProductLabel" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabel">
+        <property name="name" type="string"/>
+        <property name="frontEndReference" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="idProductLabel" type="int"/>
+        <property name="isExclusive" type="bool"/>
+        <property name="isPublished" type="bool"/>
+        <property name="localizedAttributesCollection" singular="localizedAttributes" type="ProductLabelLocalizedAttributes[]"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstractRelations">
+        <property name="idProductLabel" type="int"/>
+        <property name="idsProductAbstractToAssign" type="array"/>
+        <property name="idsProductAbstractToDeAssign" type="array"/>
+    </transfer>
+
+    <transfer name="ProductAlternative">
+        <property name="idProduct" type="int"/>
     </transfer>
 
 </transfers>

@@ -6,6 +6,9 @@
     <transfer name="PriceProduct">
         <property name="groupKey" type="string"/>
         <property name="isMergeable" type="bool"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="PriceProductStorage">
@@ -45,6 +48,43 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+        <property name="idMerchantRelationship" type="int"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

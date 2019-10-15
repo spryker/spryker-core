@@ -9,6 +9,12 @@
 
     <transfer name="ProductPayload">
         <property name="labelIds" type="array"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array"/>
+        <property name="payloadTransfers" type="array"/>
     </transfer>
 
 </transfers>

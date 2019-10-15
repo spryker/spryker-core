@@ -6,7 +6,7 @@
     <transfer name="PathMethodData">
         <property name="path" type="string"/>
         <property name="method" type="string"/>
-        <property name="summary" type="string[]"/>
+        <property name="summary" type="string[]" singular="summary"/>
         <property name="resource" type="string"/>
         <property name="isProtected" type="bool"/>
         <property name="parameters" singular="parameter" type="PathParameterComponent[]"/>
@@ -34,7 +34,7 @@
     <transfer name="SchemaData">
         <property name="name" type="string"/>
         <property name="properties" singular="property" type="SchemaProperty[]"/>
-        <property name="required" type="string[]"/>
+        <property name="required" type="string[]" singular="required"/>
     </transfer>
 
     <transfer name="SchemaProperty">
@@ -87,7 +87,7 @@
     <transfer name="SchemaComponent">
         <property name="name" type="string"/>
         <property name="properties" type="array" singular="property"/>
-        <property name="required" type="string[]"/>
+        <property name="required" type="string[]" singular="required"/>
     </transfer>
 
     <transfer name="SchemaPropertyComponent">
@@ -115,7 +115,7 @@
 
     <transfer name="Annotation">
         <property name="path" type="string"/>
-        <property name="summary" type="string[]"/>
+        <property name="summary" type="string[]" singular="summary"/>
         <property name="parameters" singular="parameter" type="PathParameterComponent[]"/>
         <property name="responseAttributesClassName" type="string"/>
         <property name="isEmptyResponse" type="bool"/>

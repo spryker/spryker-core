@@ -10,6 +10,8 @@
         <property name="currency" type="Currency"/>
         <property name="isLocked" type="bool"/>
         <property name="uuid" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="QuoteCollection">
@@ -18,7 +20,7 @@
 
     <transfer name="QuoteCriteriaFilter">
         <property name="customerReference" type="string"/>
-        <property name="quoteIds" type="int[]"/>
+        <property name="quoteIds" type="int[]" singular="quoteIds"/>
         <property name="filter" type="Filter"/>
         <property name="idStore" type="int"/>
     </transfer>
@@ -32,6 +34,7 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -41,12 +44,21 @@
     <transfer name="QuoteValidationResponse">
         <property name="isSuccess" type="bool" deprecated="use isSuccessful property instead"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="errors"/>
     </transfer>
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
         <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

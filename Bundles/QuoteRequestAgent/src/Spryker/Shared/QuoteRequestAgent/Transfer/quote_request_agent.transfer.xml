@@ -25,6 +25,7 @@
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
         <property name="metadata" type="array"/>
+        <property name="versionReference" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -54,6 +55,8 @@
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteRequestCollection">

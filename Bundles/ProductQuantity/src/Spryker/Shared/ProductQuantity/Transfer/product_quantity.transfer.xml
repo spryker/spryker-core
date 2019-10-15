@@ -40,4 +40,8 @@
         <property name="parameters" type="array"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

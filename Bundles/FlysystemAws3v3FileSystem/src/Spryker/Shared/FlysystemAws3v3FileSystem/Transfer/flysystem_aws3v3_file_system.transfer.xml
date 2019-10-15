@@ -8,4 +8,14 @@
         <property name="adapterConfig" type="array"/>
     </transfer>
 
+    <transfer name="FlysystemConfigAws3v3">
+        <property name="region" type="string"/>
+        <property name="version" type="string"/>
+        <property name="bucket" type="string"/>
+        <property name="secret" type="string"/>
+        <property name="key" type="string"/>
+        <property name="path" type="string"/>
+        <property name="root" type="string"/>
+    </transfer>
+
 </transfers>

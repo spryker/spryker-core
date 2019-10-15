@@ -6,6 +6,7 @@
     <transfer name="ProductDiscontinuedResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="productDiscontinued" type="ProductDiscontinued"/>
     </transfer>
 
     <transfer name="Message">
@@ -15,6 +16,7 @@
 
     <transfer name="ProductConcrete">
         <property name="idProductConcrete" type="int"/>
+        <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
     </transfer>
 
     <transfer name="TabItem">
@@ -25,6 +27,24 @@
 
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinueRequest">
+        <property name="idProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinued">
+        <property name="productDiscontinuedNotes" type="ProductDiscontinuedNote[]" singular="productDiscontinuedNote"/>
+        <property name="idProductDiscontinued" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNote">
+        <property name="fkProductDiscontinued" type="int"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
 </transfers>

@@ -36,18 +36,18 @@
     </transfer>
 
     <transfer name="PageMap">
-        <property name="searchResultData" type="SearchResultDataMap[]"/>
+        <property name="searchResultData" type="SearchResultDataMap[]" singular="searchResultData"/>
         <property name="type" type="string"/>
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
         <property name="fullText" type="array"/>
         <property name="fullTextBoosted" type="array"/>
-        <property name="stringFacet" type="StringFacetMap[]"/>
-        <property name="integerFacet" type="IntegerFacetMap[]"/>
+        <property name="stringFacet" type="StringFacetMap[]" singular="stringFacet"/>
+        <property name="integerFacet" type="IntegerFacetMap[]" singular="integerFacet"/>
         <property name="completionTerms" type="array"/>
         <property name="suggestionTerms" type="array"/>
-        <property name="stringSort" type="StringSortMap[]"/>
-        <property name="integerSort" type="IntegerSortMap[]"/>
+        <property name="stringSort" type="StringSortMap[]" singular="stringSort"/>
+        <property name="integerSort" type="IntegerSortMap[]" singular="integerSort"/>
         <property name="category" type="CategoryMap"/>
         <property name="isActive" type="bool"/>
         <property name="activeFrom" type="string"/>

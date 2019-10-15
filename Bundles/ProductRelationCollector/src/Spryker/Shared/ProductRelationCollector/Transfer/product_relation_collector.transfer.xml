@@ -20,4 +20,8 @@
         <property name="imageSets" type="array" singular="imageSet"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
 </transfers>

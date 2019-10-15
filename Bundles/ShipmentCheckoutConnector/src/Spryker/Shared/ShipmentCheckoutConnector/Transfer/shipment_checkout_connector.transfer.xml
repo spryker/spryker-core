@@ -9,4 +9,32 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="idShipmentMethod" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
 </transfers>

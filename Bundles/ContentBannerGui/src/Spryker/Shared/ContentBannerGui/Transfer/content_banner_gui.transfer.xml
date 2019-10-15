@@ -15,6 +15,20 @@
 
     <transfer name="Message">
         <property name="parameters" type="array"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ContentBannerTerm">
+    </transfer>
+
+    <transfer name="ContentValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]" singular="parameterMessages"/>
+    </transfer>
+
+    <transfer name="ContentParameterMessage">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="parameter" type="string"/>
     </transfer>
 
 </transfers>

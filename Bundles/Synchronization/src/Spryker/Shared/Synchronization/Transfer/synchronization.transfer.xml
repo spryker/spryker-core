@@ -21,6 +21,24 @@
     <transfer name="QueueReceiveMessage">
         <property name="deliveryTag" type="string"/>
         <property name="routingKey" type="string"/>
+        <property name="queueName" type="string"/>
+        <property name="acknowledge" type="bool"/>
+        <property name="queueMessage" type="QueueSendMessage"/>
+        <property name="reject" type="bool"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="QueueSendMessage">
+        <property name="body" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="queuePoolName" type="string"/>
+    </transfer>
+
+    <transfer name="SearchDocument">
+        <property name="type" type="string"/>
+        <property name="index" type="string"/>
+        <property name="id" type="string"/>
+        <property name="data" type="array"/>
     </transfer>
 
 </transfers>

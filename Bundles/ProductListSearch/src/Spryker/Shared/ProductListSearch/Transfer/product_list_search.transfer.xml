@@ -23,6 +23,16 @@
 
     <transfer name="ProductPayload">
         <property name="productLists" type="array"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array"/>
+        <property name="payloadTransfers" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>

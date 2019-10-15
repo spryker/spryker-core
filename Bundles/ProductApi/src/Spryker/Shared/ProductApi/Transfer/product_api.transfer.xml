@@ -7,7 +7,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="sku" type="string"/>
         <property name="attributes" type="array" singular="attribute"/>
-        <property name="localizedAttributes" type="LocalizedAttributesApi[]"/>
+        <property name="localizedAttributes" type="LocalizedAttributesApi[]" singular="localizedAttributes"/>
         <property name="isActive" type="bool"/>
     </transfer>
 
@@ -28,6 +28,42 @@
 
     <transfer name="PropelQueryBuilderColumnSelection">
         <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
+    </transfer>
+
+    <transfer name="ApiData">
+        <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+    </transfer>
+
+    <transfer name="ApiItem">
+        <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="ApiRequest">
+        <property name="filter" type="ApiFilter"/>
+    </transfer>
+
+    <transfer name="ApiPagination">
+        <property name="itemsPerPage" type="int"/>
+        <property name="page" type="int"/>
+        <property name="total" type="int"/>
+        <property name="pageTotal" type="int"/>
+    </transfer>
+
+    <transfer name="ApiCollection">
+        <property name="pagination" type="ApiPagination"/>
+    </transfer>
+
+    <transfer name="ApiQueryBuilderQuery">
+        <property name="apiRequest" type="ApiRequest"/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+    </transfer>
+
+    <transfer name="ApiFilter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
 </transfers>

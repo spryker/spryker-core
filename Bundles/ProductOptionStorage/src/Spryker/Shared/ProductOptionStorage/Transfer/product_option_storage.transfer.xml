@@ -27,4 +27,38 @@
         <property name="productOptionGroupName" type="string"/>
     </transfer>
 
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="StorageProductOptionGroupCollection">
+        <property name="productOptionGroups" type="StorageProductOptionGroup[]" singular="productOptionGroup"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOptionValueStorePricesRequest">
+        <property name="prices" type="MoneyValue[]" singular="price"/>
+    </transfer>
+
+    <transfer name="ProductOptionValueStorePricesResponse">
+        <property name="storePrices" type="array"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="StorageProductOptionGroup">
+    </transfer>
+
 </transfers>

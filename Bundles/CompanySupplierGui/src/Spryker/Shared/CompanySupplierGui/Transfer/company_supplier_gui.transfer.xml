@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CompanySupplierCollection">
+        <property name="suppliers" type="SpyCompanyEntity[]" singular="suppliers"/>
+    </transfer>
+
+    <transfer name="CompanyTypeCollection">
+        <property name="companyTypes" type="SpyCompanyTypeEntity[]" singular="companyType"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="companySuppliers" type="SpyCompanyEntity[]" singular="companySuppliers"/>
+        <property name="supplierPrice" type="string"/>
+        <property name="defaultPrice" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="symbol" type="string"/>
+    </transfer>
+
+</transfers>

@@ -12,6 +12,16 @@
 
     <transfer name="QueueReceiveMessage">
         <property name="routingKey" type="string"/>
+        <property name="queueMessage" type="QueueSendMessage"/>
+        <property name="acknowledge" type="bool"/>
+        <property name="reject" type="bool"/>
+        <property name="hasError" type="bool"/>
+        <property name="queueName" type="string"/>
+    </transfer>
+
+    <transfer name="QueueSendMessage">
+        <property name="queuePoolName" type="string"/>
+        <property name="body" type="string"/>
     </transfer>
 
 </transfers>

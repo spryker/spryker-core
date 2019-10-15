@@ -64,4 +64,29 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="fkProductAbstract" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="RawProductAttributes">
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
+        <property name="concreteLocalizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
+        <property name="abstractLocalizedAttributes" type="array" singular="abstractLocalizedAttribute"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
 </transfers>

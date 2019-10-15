@@ -138,12 +138,49 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="KeyTranslation">
+        <property _="" name="glossaryKey" type="int"/>
+        <property _="" name="locales" type="array"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="fkRedirect" type="int" deprecated="Use fkResourceRedirect instead."/>
+        <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="url" type="string"/>
+        <property name="fkResourcePage" type="int"/>
+    </transfer>
+
+    <transfer name="Redirect">
+        <property name="toUrl" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="UrlRedirect">
+        <property name="idUrlRedirect" type="int"/>
+        <property name="status" type="int"/>
+        <property name="toUrl" type="string"/>
+        <property name="source" type="Url"/>
+    </transfer>
+
+    <transfer name="UrlRedirectValidationResponse">
+        <property name="isValid" type="bool"/>
+        <property name="error" type="string"/>
     </transfer>
 
 </transfers>

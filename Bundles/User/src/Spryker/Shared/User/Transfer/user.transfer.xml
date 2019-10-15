@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="Collection">
-        <property name="user" type="User[]"/>
+        <property name="user" type="User[]" singular="user"/>
     </transfer>
 
     <transfer name="Groups">
@@ -24,6 +24,13 @@
     <transfer name="Group">
         <property name="idAclGroup" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
     </transfer>
 
 </transfers>

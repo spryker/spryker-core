@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ApiRequest">
+        <property name="filter" type="ApiFilter"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderCriteria">
+        <property name="ruleSet" type="PropelQueryBuilderRuleSet"/>
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+        <property name="pagination" type="PropelQueryBuilderPagination"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumnSelection">
+        <property name="tableColumns" type="PropelQueryBuilderColumn[]" singular="tableColumn"/>
+        <property name="selectedColumns" type="PropelQueryBuilderColumn[]" singular="selectedColumn"/>
+    </transfer>
+
+    <transfer name="ApiFilter">
+        <property name="sort" type="array"/>
+        <property name="criteriaJson" type="string"/>
+        <property name="fields" type="array"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderPagination">
+        <property name="sortItems" type="PropelQueryBuilderSort[]" singular="sortItem"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderSort">
+        <property name="column" type="PropelQueryBuilderColumn"/>
+        <property name="sortDirection" type="string"/>
+    </transfer>
+
+    <transfer name="PropelQueryBuilderColumn">
+        <property name="alias" type="string"/>
+    </transfer>
+
+    <transfer name="ApiQueryBuilderQuery">
+        <property name="columnSelection" type="PropelQueryBuilderColumnSelection"/>
+        <property name="apiRequest" type="ApiRequest"/>
+    </transfer>
+
+</transfers>

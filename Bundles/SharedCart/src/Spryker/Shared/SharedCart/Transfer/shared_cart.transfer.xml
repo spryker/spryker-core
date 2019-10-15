@@ -22,8 +22,9 @@
     </transfer>
 
     <transfer name="QuoteCriteriaFilter">
-        <property name="quoteIds" type="int[]"/>
+        <property name="quoteIds" type="int[]" singular="quoteIds"/>
         <property name="idCompanyUser" type="int"/>
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="QuotePermissionGroupResponse">
@@ -36,6 +37,8 @@
         <property name="isSuccessful" type="bool"/>
         <property name="sharedCustomerQuotes" type="QuoteCollection"/>
         <property name="customerPermissions" type="PermissionCollection"/>
+        <property name="customer" type="Customer"/>
+        <property name="customerQuotes" type="QuoteCollection"/>
     </transfer>
 
     <transfer name="ShareDetail">
@@ -57,6 +60,8 @@
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
         <property name="customerReference" type="string"/>
         <property name="customer" type="Customer"/>
+        <property name="name" type="string"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -140,6 +145,41 @@
     <transfer name="ShareCartResponse">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
         <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote[]" singular="quote"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequest">
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="idQuote" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission"/>
+    </transfer>
+
+    <transfer name="Permission">
+        <property name="key" type="string"/>
+        <property name="idPermission" type="int"/>
+        <property name="configuration" type="array"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="groupKeyPrefix" type="string"/>
     </transfer>
 
 </transfers>

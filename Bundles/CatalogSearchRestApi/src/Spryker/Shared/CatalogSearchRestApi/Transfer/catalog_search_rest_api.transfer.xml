@@ -27,7 +27,7 @@
     </transfer>
 
     <transfer name="RestCatalogSearchAbstractProducts">
-        <property name="images" type="RestCatalogSearchProductImage[]"/>
+        <property name="images" type="RestCatalogSearchProductImage[]" singular="images"/>
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>
         <property name="prices" type="array"/>
@@ -60,14 +60,14 @@
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
-        <property name="completion" type="string[]"/>
+        <property name="completion" type="string[]" singular="completion"/>
         <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct"/>
         <property name="categories" type="array"/>
         <property name="cmsPages" type="array"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionAbstractProducts">
-        <property name="images" type="RestCatalogSearchSuggestionProductImage[]"/>
+        <property name="images" type="RestCatalogSearchSuggestionProductImage[]" singular="images"/>
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>
         <property name="abstractSku" type="string"/>
@@ -111,6 +111,19 @@
     </transfer>
 
     <transfer name="FacetConfig">
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 
 </transfers>

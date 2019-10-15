@@ -16,4 +16,13 @@
         <property name="locales" type="array"></property>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>

@@ -8,4 +8,19 @@
         <property name="keys" type="array"/>
     </transfer>
 
+    <transfer name="RedisConfiguration">
+        <property name="dataSourceNames" type="array"/>
+        <property name="connectionCredentials" type="RedisCredentials"/>
+        <property name="clientOptions" type="array" singular="clientOption" associative="true"/>
+    </transfer>
+
+    <transfer name="RedisCredentials">
+        <property name="protocol" type="string"/>
+        <property name="host" type="string"/>
+        <property name="port" type="string"/>
+        <property name="database" type="int"/>
+        <property name="password" type="string"/>
+        <property name="isPersistent" type="bool"/>
+    </transfer>
+
 </transfers>

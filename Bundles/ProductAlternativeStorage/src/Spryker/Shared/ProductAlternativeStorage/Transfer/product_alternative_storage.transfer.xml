@@ -14,6 +14,19 @@
 
     <transfer name="ProductView">
         <property name="available" type="bool"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
+        <property name="productConcreteIds" type="array"/>
     </transfer>
 
 </transfers>

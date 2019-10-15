@@ -9,6 +9,8 @@
         <property name="isDefault" type="bool"/>
         <property name="store" type="Store"/>
         <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -37,6 +39,7 @@
         <property name="name" type="string"/>
         <property name="totals" type="Totals"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Expense">
@@ -54,6 +57,26 @@
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequest">
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
     </transfer>
 
 </transfers>

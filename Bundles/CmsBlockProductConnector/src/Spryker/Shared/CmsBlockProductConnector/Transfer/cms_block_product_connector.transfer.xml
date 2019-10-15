@@ -17,11 +17,16 @@
     <transfer name="Pagination">
         <property name="page" type="int"/>
         <property name="lastPage" type="int"/>
+        <property name="maxPerPage" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstractSuggestionCollection">
-        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstracts"/>
         <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
 </transfers>

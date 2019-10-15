@@ -6,6 +6,7 @@
     <transfer name="CompanyBusinessUnit">
         <property name="defaultBillingAddress" type="int"/>
         <property name="addressCollection" type="CompanyUnitAddressCollection"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">
@@ -66,5 +67,17 @@
 
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
     </transfer>
 </transfers>

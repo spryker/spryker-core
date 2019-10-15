@@ -5,10 +5,13 @@
 
     <transfer name="Company">
         <property name="initialUserTransfer" type="CompanyUser"/>
+        <property name="idCompany" type="int"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -66,6 +69,22 @@
     <transfer name="CompanyUserCriteria">
         <property name="pattern" type="string"/>
         <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="customerTransfer" type="Customer"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

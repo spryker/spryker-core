@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductListResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="productList" type="ProductList"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="title" type="string"/>
+        <property name="idProductList" type="int"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+    </transfer>
+
+    <transfer name="CsvFile">
+        <property name="header" type="array"/>
+        <property name="fileName" type="string"/>
+        <property name="data" type="array"/>
+    </transfer>
+
+    <transfer name="ProductListProductConcreteRelation">
+        <property name="productIds" type="int[]" singular="productIds"/>
+        <property name="idProductList" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="isNavigable" type="bool"/>
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="ProductListAggregateForm">
+        <property name="productIdsToBeDeAssigned" type="string"/>
+        <property name="productIdsToBeAssigned" type="string"/>
+        <property name="assignedProductIds" type="string"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productList" type="ProductList"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="QueryCriteria">
+        <property name="withColumns" type="array" singular="withColumn"/>
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="condition" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="joinType" type="string"/>
+        <property name="right" type="array"/>
+        <property name="left" type="array"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="parameters" type="array"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+</transfers>

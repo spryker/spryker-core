@@ -22,12 +22,19 @@
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Payment">
         <property name="giftCard" type="GiftCard"/>
         <property name="isLimitedAmount" type="bool"/>
         <property name="availableAmount" type="int"/>
+        <property name="amount" type="int"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="idSalesPayment" type="int"/>
+        <property name="paymentSelection" type="string"/>
+        <property name="paymentMethod" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">
@@ -42,6 +49,9 @@
     <transfer name="Item">
         <property name="giftCardMetadata" type="GiftCardMetadata"/>
         <property name="abstractSku" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="GiftCardAbstractProductConfiguration">
@@ -84,7 +94,7 @@
     </transfer>
 
     <transfer name="CollectedDiscount">
-        <property name="discountableItems" type="DiscountableItem[]"/>
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
     </transfer>
 
     <transfer name="DiscountableItem">
@@ -106,6 +116,18 @@
     <transfer name="Shipment">
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" singular="method" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
 </transfers>
